@@ -11,7 +11,7 @@
     "nx.json": "*"
   },
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "npmScope": "fullerstack",
   "tasksRunnerOptions": {
