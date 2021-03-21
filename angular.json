@@ -25,7 +25,8 @@
     "@nrwl/angular:library": {
       "style": "scss",
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "strict": true
     },
     "@nrwl/angular:component": {
       "style": "scss"
@@ -207,6 +208,43 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
+          }
+        }
+      }
+    },
+    "cfg": {
+      "projectType": "library",
+      "root": "libs/cfg",
+      "sourceRoot": "libs/cfg/src",
+      "prefix": "fullerstack-cfg",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/cfg/tsconfig.lib.json",
+            "project": "libs/cfg/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/cfg/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/cfg/src/**/*.ts",
+              "libs/cfg/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/cfg"],
+          "options": {
+            "jestConfig": "libs/cfg/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
