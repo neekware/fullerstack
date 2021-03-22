@@ -28,10 +28,10 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "stats": "webpack-bundle-analyzer dist/apps/fullerstack/stats.json",
-    "lint:ci": "NX_BRANCH=ci npx nx run-many --target=lint --all --configuration=ci --parallel",
-    "build:ci": "NX_BRANCH=ci npx nx run-many --target=build --all --configuration=ci --parallel",
-    "test:ci": "NX_BRANCH=ci npx nx run-many --target=test --all --configuration=ci --parallel",
-    "e2e:ci": "NX_BRANCH=ci npx nx run fullerstack-e2e:e2e --configuration=ci"
+    "lint:ci": "npx nx run-many --target=lint --all --configuration=ci --parallel",
+    "build:ci": "npx nx run-many --target=build --all --configuration=ci --parallel",
+    "test:ci": "npx nx run-many --target=test --all --configuration=ci --parallel",
+    "e2e:ci": "npx nx run fullerstack-e2e:e2e --configuration=ci"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",
