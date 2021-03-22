@@ -4,6 +4,30 @@
 
 This project is a mono-repo for FullerStack which is an open source dashboard powered by Angular for the frontend and NetJs for the backend.
 
+## Mission
+
+To create an open source dashboard similar to [avidtrader.co](https://app.avidtrader.co/)
+
+- Quality of Experience and Security First
+- Geo Location Support
+  - Geo Fencing
+  - IP address filtering
+- Translations
+  - Internationalization (i18n
+  - Localization (i10n)
+  - Left2Right, Right2Left Support
+- GraphQL
+  - Frontend & Backend
+- PubSub
+  - RxJS (Subscription, Push)
+- Built-in Auth & Auth (Authentication & Authorization)
+  - Powered by JWT (Auth & Access)
+  - Fully Stateless
+- Full SQL Support
+  - PostgresQL as 1st class citizen
+- Dark Mode Support
+- ...Etc
+
 ### The mono-repo was created via Nrwl/Nx.
 
 npx create-nx-workspace fullerstack
@@ -106,4 +130,4 @@ X.Y.Z Version
 
 ## Sponsors
 
-This project was generated using [Nx](https://nx.dev).
+[ [Neekware Inc.](http://neekware.com) ] [ [Nx](https://nx.dev) ]
