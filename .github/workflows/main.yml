@@ -1,0 +1,47 @@
+# Action Name
+name: CI
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [main, ci]
+  pull_request:
+    branches: [main, ci]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # NPM install
+      - name: Install
+        run: |
+          cd fullerstack
+          npm i
+
+      # Lint
+      - name: Lint
+        run: npm run lint:ci
+
+      # Build
+      - name: Build
+        run: npm run build:ci
+
+      # Test
+      - name: Build
+        run: npm run test:ci
+
+      # E2E
+      - name: End to end
+        run: npm run e2e:ci
