@@ -2,7 +2,7 @@
 
 ## Powered By
 
-[<img style="margin-bottom: 0px" width="30" src="apps/fullerstack/src/assets/images/nx-x250.png">](https://nx.dev/)
+[<img style="margin-bottom: 4px" width="30" src="apps/fullerstack/src/assets/images/nx-x250.png">](https://nx.dev/)
 [<img style="margin-bottom: -6px" width="30" src="apps/fullerstack/src/assets/images/angular-x250.png">](https://angular.io)
 [<img style="margin-bottom: -5px" width="27" src="apps/fullerstack/src/assets/images/nestjs-x250.png">](https://nestjs.com/)
 [<img style="margin-bottom: -7px" width="30" src="apps/fullerstack/src/assets/images/prisma-x250.png">](https://www.prisma.io/)
