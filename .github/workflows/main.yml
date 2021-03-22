@@ -24,16 +24,25 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     steps:
+      # Checkout repository
       - uses: actions/checkout@v2
+
+      # Grab the branch name
+      - name: Get branch name
+        id: vars
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+      # Running node version
       - name: Setup node 12
         uses: actions/setup-node@v2
         with:
           node-version: 12.x
-      # - run: npm ci
-      - run: echo ${{ github.head_ref }}
-      - run: echo $(echo $GITHUB_REF | cut -d'/' -f 3)
-      # - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run format:check
-      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run lint:ci
-      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run build:ci
-      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run test:ci
-      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run e2e:ci
+
+      # Install packages
+      - run: npm ci
+
+      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run format:check
+      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run lint:ci
+      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run build:ci
+      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run test:ci
+      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run e2e:ci
