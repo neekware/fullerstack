@@ -29,9 +29,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 12.x
-      - run: npm ci
-      - run: NX_BRANCH=${GITHUB_REF##*/} npm run format:check
-      - run: NX_BRANCH=${GITHUB_REF##*/} npm run lint:ci
-      - run: NX_BRANCH=${GITHUB_REF##*/} npm run build:ci
-      - run: NX_BRANCH=${GITHUB_REF##*/} npm run test:ci
-      - run: NX_BRANCH=${GITHUB_REF##*/} npm run e2e:ci
+      # - run: npm ci
+      - run: echo ${GITHUB_REF##*/}
+
+      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run format:check
+      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run lint:ci
+      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run build:ci
+      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run test:ci
+      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run e2e:ci
