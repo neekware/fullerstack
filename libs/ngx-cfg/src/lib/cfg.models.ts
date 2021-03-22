@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /**
  * Http Methods - GET / POST Supported
  */
@@ -57,3 +59,5 @@ export interface ApplicationCfg extends EnvironmentCfg {
   // extra modules (ext.auth, ext.log)
   [id: string]: any;
 }
+
+export type RemoteType = Promise<any>;

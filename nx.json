@@ -25,6 +25,6 @@
     "fullerstack-e2e": { "tags": [], "implicitDependencies": ["fullerstack"] },
     "api": { "tags": [] },
     "api-interfaces": { "tags": [] },
-    "cfg": { "tags": ["name:ngx-cfg", "scope:ngx-utils"] }
+    "ngx-cfg": { "tags": ["name:ngx-cfg", "scope:ngx-utils"] }
   }
 }

@@ -149,7 +149,7 @@ describe('CfgService: remoteCfg via POST', () => {
   });
 
   it('should get remote config via POST', () => {
-    expect(service.options.remoteCfg!.method).toBe(HttpMethod.POST);
+    expect(service.options.remoteCfg.method).toBe(HttpMethod.POST);
     const mockReq = httpMock.expectOne(service.options.remoteCfg.endpoint);
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.method).toEqual('POST');

@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@fullerstack/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@fullerstack/ngx-cfg": ["libs/cfg/src/index.ts"]
+      "@fullerstack/ngx-cfg": ["libs/ngx-cfg/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

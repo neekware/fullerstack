@@ -3,10 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { of } from 'rxjs';
 import { timeout, catchError } from 'rxjs/operators';
-import { merge as ldNestedMerge } from 'lodash.merge';
+import { merge as ldNestedMerge } from 'lodash-es';
 
 import { DEFAULT_HTTP_TIMEOUT } from './cfg.constants';
-import { ApplicationCfg, HttpMethod } from './cfg.models';
+import { ApplicationCfg, HttpMethod, RemoteType } from './cfg.models';
 import { CFG_TOKEN, DefaultApplicationCfg } from './cfg.defaults';
 
 @Injectable({
@@ -35,12 +35,12 @@ export class CfgService {
   /**
    * Fetches remote configuration options via get or post
    */
-  fetchRemoteCfg(): Promise<any> {
+  fetchRemoteCfg(): RemoteType {
     const remoteCfg = this._options.remoteCfg;
     if (remoteCfg) {
       const url = remoteCfg.endpoint;
       if (url) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           let headers = remoteCfg.headers || {};
           if (!Object.keys(headers).length) {
             headers = new HttpHeaders(headers);
@@ -76,6 +76,6 @@ export class CfgService {
         });
       }
     }
-    return new Promise((resolve, reject) => resolve({}));
+    return new Promise((resolve) => resolve({}));
   }
 }
