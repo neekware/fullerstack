@@ -53,17 +53,17 @@ nx build fullerstack --stats-json --prod && npm run stats
 
 npm run affected -- --target dep-graph --uncommitted
 
-#### Graph dependencies changes from affected libs/apps on master
+#### Graph dependencies changes from affected libs/apps on main
 
-npm run affected -- --target dep-graph --base=master
+npm run affected -- --target dep-graph --base=main
 
 #### Test uncommitted changes from affected libs/apps
 
 npm run affected -- --target test --uncommitted
 
-#### Test committed changes on master
+#### Test committed changes on main
 
-npm run affected -- --target test --base=master
+npm run affected -- --target test --base=main
 
 #### Format changed files
 
