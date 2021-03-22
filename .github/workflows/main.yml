@@ -30,9 +30,9 @@ jobs:
         with:
           node-version: 12.x
       # - run: npm ci
-      - run: echo ${GITHUB_REF##*/}
-
-      # - run: NX_BRANCH=${GITHUB_REF##*/} npm run format:check
+      - run: echo ${{ github.head_ref }}
+      - run: echo $(echo $GITHUB_REF | cut -d'/' -f 3)
+      # - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run format:check
       # - run: NX_BRANCH=${GITHUB_REF##*/} npm run lint:ci
       # - run: NX_BRANCH=${GITHUB_REF##*/} npm run build:ci
       # - run: NX_BRANCH=${GITHUB_REF##*/} npm run test:ci
