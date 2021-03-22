@@ -3,15 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ApplicationCfg } from './cfg.models';
 import { CfgService } from './cfg.service';
 import { CFG_TOKEN } from './cfg.defaults';
-
-/**
- * Remote Config Fetch Factory
- * @param cfgService CfgService Injectable
- */
-function remoteCfgFactory(cfgService: CfgService): () => Promise<any> {
-  return () => cfgService.fetchRemoteCfg();
-}
-
+import { remoteCfgFactory } from './cfg.utils';
 @NgModule({
   imports: [CommonModule],
 })

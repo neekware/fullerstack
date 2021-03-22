@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '@fullerstack/api-interfaces';
+import { CfgService } from '@fullerstack/ngx-cfg';
 
 @Component({
   selector: 'fullerstack-root',
@@ -9,5 +10,7 @@ import { Message } from '@fullerstack/api-interfaces';
 })
 export class AppComponent {
   hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public cfgService: CfgService) {
+    console.dir(cfgService.options);
+  }
 }

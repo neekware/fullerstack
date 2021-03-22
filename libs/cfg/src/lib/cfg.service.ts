@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { of } from 'rxjs';
 import { timeout, catchError } from 'rxjs/operators';
-import { merge as ldNestedMerge } from 'lodash';
+import { merge as ldNestedMerge } from 'lodash.merge';
 
 import { DEFAULT_HTTP_TIMEOUT } from './cfg.constants';
 import { ApplicationCfg, HttpMethod } from './cfg.models';
