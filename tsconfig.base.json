@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fullerstack/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@fullerstack/api-dto": ["libs/api-dto/src/index.ts"],
       "@fullerstack/ngx-cfg": ["libs/ngx-cfg/src/index.ts"]
     }
   },

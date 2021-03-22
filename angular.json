@@ -199,15 +199,15 @@
         }
       }
     },
-    "api-interfaces": {
-      "root": "libs/api-interfaces",
-      "sourceRoot": "libs/api-interfaces/src",
+    "api-dto": {
+      "root": "libs/api-dto",
+      "sourceRoot": "libs/api-dto/src",
       "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
+            "lintFilePatterns": ["libs/api-dto/**/*.ts"]
           }
         }
       }

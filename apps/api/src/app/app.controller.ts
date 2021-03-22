@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 
-import { Message } from '@fullerstack/api-interfaces';
+import type { Message } from '@fullerstack/api-dto';
 
 import { AppService } from './app.service';
 

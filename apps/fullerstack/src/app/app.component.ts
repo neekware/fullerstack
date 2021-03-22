@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Message } from '@fullerstack/api-interfaces';
+import { Message } from '@fullerstack/api-dto';
 import { CfgService } from '@fullerstack/ngx-cfg';
 
 @Component({
