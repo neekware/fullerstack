@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 12.x
       - run: npm ci
-      - run: NX_BRANCH=${GITHUB_REF##*/} npm run format:check"
+      - run: NX_BRANCH=${GITHUB_REF##*/} npm run format:check
       - run: NX_BRANCH=${GITHUB_REF##*/} npm run lint:ci
       - run: NX_BRANCH=${GITHUB_REF##*/} npm run build:ci
       - run: NX_BRANCH=${GITHUB_REF##*/} npm run test:ci
