@@ -30,7 +30,7 @@ jobs:
       # Grab the branch name
       - name: Get branch name
         id: vars
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+        run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
       # Running node version
       - name: Setup node 12
@@ -41,8 +41,8 @@ jobs:
       # Install packages
       - run: npm ci
 
-      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run format:check
-      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run lint:ci
-      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run build:ci
-      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run test:ci
-      - run: NX_BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3) npm run e2e:ci
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run format:check
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run lint:ci
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run build:ci
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run test:ci
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run e2e:ci
