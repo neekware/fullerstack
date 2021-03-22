@@ -28,18 +28,17 @@
 ### Libraries
 
 - AG = Agnostic (not target specific)
-- NG = Angular (angular.io)
+- NG = [Angular](angular.io)
   - NGAG = Platform Agnostic Angular
   - NGAGX = Platform Agnostic Angular Extension (library)
-- NT = Nest (nestjs.com)
+- NT = [Nest](nestjs.com)
   - NTAG = Platform Agnostic Nest
   - NTAGX = Platform Agnostic Nest Extension (library)
 - WB = Web (Chrome, Firefox, Safari, Edge, etc)
-- EL = Electron (electronjs.org)
-- NS = NativeScript (nativescript.org)
-- IO = Apple's iOS (apple.com/ios)
-- AN = Google's Andriod (android.com)
-- IC = Ionic (ionicframework.com)
+- EL = [Electron] (electronjs.org)
+- NS = ]NativeScript] (nativescript.org)
+- AN = Google's [Android] (android.com)
+- IC = ]Ionic] (ionicframework.com)
 
 ### Applications
 
@@ -48,15 +47,17 @@
 - ns.appname = NativeScript (Andriod, iOS)
 - ic.appname = Ionic (Andriod, iOS)
 
-# Instruction
+# Description
 
-#### Install Nrwl
+This project is a mono-repo for FullerStack which is an open source dashboard powered by Angular for the frontend and NetJs for the backend.
 
-npm install -g @nrwl/schematics@latest
+#### The mono-repo was created via Nrwl/Nx.
 
-#### Create a mono repo
+npx create-nx-workspace fullerstack
 
-npm init nx-workspace fullerstack
+#### Instruction (for developers)
+
+git clone https://github.com/neekware/fullerstack.git && cd fullerstack && npm install
 
 #### Graph dependencies
 
