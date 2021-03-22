@@ -10,7 +10,5 @@ import { CfgService } from '@fullerstack/ngx-cfg';
 })
 export class AppComponent {
   hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient, public cfgService: CfgService) {
-    console.dir(cfgService.options);
-  }
+  constructor(private http: HttpClient, public cfgService: CfgService) {}
 }

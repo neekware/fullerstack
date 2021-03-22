@@ -27,7 +27,11 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "stats": "webpack-bundle-analyzer dist/apps/fullerstack/stats.json"
+    "stats": "webpack-bundle-analyzer dist/apps/fullerstack/stats.json",
+    "build:ci": "NX_BRANCH=ci npx nx run-many --target=build --all --configuration=ci --parallel",
+    "lint:ci": "NX_BRANCH=ci npx nx run-many --target=lint --all --configuration=ci --parallel",
+    "test:ci": "NX_BRANCH=ci npx nx run-many --target=test --all --configuration=ci --parallel",
+    "e2e:ci": "NX_BRANCH=ci npx nx run fullerstack-e2e:e2e --configuration=ci"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",

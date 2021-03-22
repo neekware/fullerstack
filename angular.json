@@ -82,6 +82,33 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "ci": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/fullerstack/src/environments/environment.ts",
+                  "with": "apps/fullerstack/src/environments/environment.ci.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
             }
           }
         },
@@ -89,18 +116,19 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "fullerstack:build",
-            "proxyConfig": "apps/fullerstack/proxy.conf.json"
+            "proxyConfig": "apps/fullerstack/proxy/proxy.dev.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fullerstack:build:production"
+              "browserTarget": "fullerstack:build:production",
+              "proxyConfig": "apps/fullerstack/proxy/proxy.prod.json",
+              "port": 4301
+            },
+            "ci": {
+              "browserTarget": "fullerstack:build:ci",
+              "proxyConfig": "apps/fullerstack/proxy/proxy.ci.json",
+              "port": 4401
             }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "fullerstack:build"
           }
         },
         "lint": {
@@ -118,6 +146,12 @@
           "options": {
             "jestConfig": "apps/fullerstack/jest.config.js",
             "passWithNoTests": true
+          },
+          "ci": {
+            "sourceMap": false,
+            "codeCoverage": true,
+            "progress": false,
+            "watch": false
           }
         }
       }
@@ -136,7 +170,12 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "fullerstack:serve:production"
+              "devServerTarget": "fullerstack:serve:production",
+              "port": 4300
+            },
+            "ci": {
+              "devServerTarget": "fullerstack:serve:ci",
+              "port": 4400
             }
           }
         },
@@ -174,6 +213,17 @@
                   "with": "apps/api/src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "ci": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.ci.ts"
+                }
+              ]
             }
           }
         },
@@ -181,6 +231,14 @@
           "builder": "@nrwl/node:execute",
           "options": {
             "buildTarget": "api:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "api:build:production"
+            },
+            "ci": {
+              "buildTarget": "api:build:ci"
+            }
           }
         },
         "lint": {
@@ -196,6 +254,12 @@
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
         }
       }
     },
@@ -227,6 +291,9 @@
           "configurations": {
             "production": {
               "tsConfig": "libs/ngx-cfg/tsconfig.lib.prod.json"
+            },
+            "ci": {
+              "tsConfig": "libs/ngx-cfg/tsconfig.lib.prod.json"
             }
           }
         },
@@ -245,6 +312,12 @@
           "options": {
             "jestConfig": "libs/ngx-cfg/jest.config.js",
             "passWithNoTests": true
+          },
+          "ci": {
+            "sourceMap": false,
+            "codeCoverage": true,
+            "progress": false,
+            "watch": false
           }
         }
       }
