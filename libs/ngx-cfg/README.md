@@ -1,4 +1,4 @@
-# @fullerstack/ngx-cfg [![angular-image]][angular-link]
+# @fullerstack/ngx-cfg [![fullerstack-image]][fullerstack-link]
 
 **An Angular Configuration Library - Handles local and remote configurations**
 
@@ -165,6 +165,8 @@ X.Y.Z Version
 [download-link]: https://www.npmjs.com/package/@fullerstack/ngx-cfg
 [angular-image]: https://raw.githubusercontent.com/neekware/neekware-assets/master/images/angular-x30.png
 [angular-link]: https://angular.io
+[fullerstack-image]: https://raw.githubusercontent.com/neekware/neekware-assets/master/images/fullerstack-x32.png
+[fullerstack-link]: https://github.com/neekware/fullerstack
 
 # Sponsors
 

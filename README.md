@@ -1,4 +1,17 @@
-# Fullerstack
+# Fullerstack <img style="margin-bottom: -6px" width="30" src="apps/fullerstack/src/assets/images/fullerstack-x250.png">
+
+## Powered By
+
+[<img style="margin-bottom: -6px" width="30" src="apps/fullerstack/src/assets/images/angular-x250.png">](https://angular.io) [<img style="margin-bottom: -1px" width="30" src="apps/fullerstack/src/assets/images/nx-x250.png">](https://nx.dev/) [<img style="margin-bottom: -7px" width="30" src="apps/fullerstack/src/assets/images/nestjs-x250.png">](https://nestjs.com/)
+[<img style="margin-bottom: -7px" width="30" src="apps/fullerstack/src/assets/images/prisma-x250.png">](https://www.prisma.io/)
+[<img style="margin-bottom: -4px" width="24" src="apps/fullerstack/src/assets/images/graphql-x250.png">](https://graphql.org/)
+[<img style="margin-bottom: -4px" width="24" src="apps/fullerstack/src/assets/images/apollo-x250.png">](https://www.apollographql.com/)
+[<img style="margin-bottom: -4px" width="24" src="apps/fullerstack/src/assets/images/html5-x250.png">](https://en.wikipedia.org/wiki/HTML5)
+[<img style="margin-bottom: -4px" width="24" src="apps/fullerstack/src/assets/images/css3-x250.png">](https://www.w3.org/)
+[<img style="margin-bottom: -4px" width="22" src="apps/fullerstack/src/assets/images/scss-x250.png">](https://sass-lang.com/)
+[<img style="margin-bottom: -4px" width="22" src="apps/fullerstack/src/assets/images/psql-x250.png">](https://www.postgresql.org/)
+[<img style="margin-bottom: -4px" width="18" src="apps/fullerstack/src/assets/images/jest-x250.png">](https://jestjs.io/docs/getting-started)
+[<img style="margin-bottom: -4px" width="24" src="apps/fullerstack/src/assets/images/cypress-x250.png">](https://www.cypress.io/)
 
 ## Supported Platforms
 
