@@ -45,6 +45,10 @@ npm init nx-workspace fullerstack
 
 npm run dep-graph
 
+#### Webpack analyzer
+
+nx build fullerstack --stats-json --prod && npm run stats
+
 #### Graph dependencies uncommitted changes from affected libs/apps
 
 npm run affected -- --target dep-graph --uncommitted
