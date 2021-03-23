@@ -1,0 +1,34 @@
+dist: bionic
+addons:
+  apt:
+    # if using Ubuntu 16 need this library - an Electron dependency
+    # https://github.com/cypress-io/cypress-documentation/pull/1647
+    packages:
+      - libgconf-2-4
+
+language: node_js
+node_js:
+  - '12'
+
+cache:
+  # cache both npm modules and Cypress binary
+  directories:
+    - ~/.npm
+    - ~/.cache
+  override:
+    - npm ci
+    - npm run cy:verify
+
+install:
+  - npm install
+  - npm install cypress --only=dev
+
+script:
+  - NX_BRANCH=$TRAVIS_BRANCH yarn format:check --base=$TRAVIS_BRANCH --head=HEAD
+  - NX_BRANCH=$TRAVIS_BRANCH yarn lint:ci
+  - NX_BRANCH=$TRAVIS_BRANCH yarn build:ci
+  - NX_BRANCH=$TRAVIS_BRANCH yarn test:ci
+  - NX_BRANCH=$TRAVIS_BRANCH yarn e2e:ci
+
+after_script:
+  - cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js

@@ -2,6 +2,7 @@
   "name": "fullerstack",
   "version": "0.0.1",
   "license": "MIT",
+  "author": "Val Neekman",
   "private": true,
   "scripts": {
     "ng": "nx",
@@ -31,8 +32,8 @@
     "format:ci": "nx format:check",
     "lint:ci": "nx run-many --target=lint --all --configuration=ci --parallel",
     "build:ci": "nx run-many --target=build --all --configuration=ci --parallel",
-    "test:ci": "nx run-many --target=test --all --configuration=ci --parallel",
-    "e2e:ci": "nx run fullerstack-e2e:e2e --configuration=ci"
+    "test:ci": "nx run-many --target=test --codeCoverage --all --configuration=ci --parallel",
+    "e2e:ci": "nx run fullerstack-e2e:e2e --configuration=ci --headless"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",
