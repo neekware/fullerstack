@@ -28,6 +28,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "stats": "webpack-bundle-analyzer dist/apps/fullerstack/stats.json",
+    "format:ci": "nx format:check",
     "lint:ci": "nx run-many --target=lint --all --configuration=ci --parallel",
     "build:ci": "nx run-many --target=build --all --configuration=ci --parallel",
     "test:ci": "nx run-many --target=test --all --configuration=ci --parallel",
