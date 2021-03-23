@@ -27,4 +27,5 @@ script:
   - NX_BRANCH=$TRAVIS_BRANCH yarn e2e:ci
 
 after_script:
-  - cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - find coverage -name lcov.info -exec echo -a {} \; | xargs lcov -o lcov.combo.info
+  - cat ./coverage/lcov.combo.info | ./node_modules/coveralls/bin/coveralls.js
