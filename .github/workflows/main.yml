@@ -41,8 +41,8 @@ jobs:
       # Install packages
       - run: npm ci
 
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run format:check --base=${{ steps.vars.outputs.current_branch }} --head=HEAD
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run lint:ci
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run build:ci
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run test:ci
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} npm run e2e:ci
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn format:check --base=${{ steps.vars.outputs.current_branch }} --head=HEAD
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn build:ci
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn test:ci
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
