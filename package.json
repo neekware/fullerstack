@@ -33,7 +33,8 @@
     "lint:ci": "nx run-many --target=lint --all --configuration=ci --parallel",
     "build:ci": "nx run-many --target=build --all --configuration=ci --parallel",
     "test:ci": "nx run-many --target=test --codeCoverage --all --configuration=ci --parallel",
-    "e2e:ci": "nx run fullerstack-e2e:e2e --configuration=ci --headless"
+    "e2e:ci": "nx e2e fullerstack-e2e --configuration=ci --headless",
+    "api:ci": "nx server api --configuration=ci"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",

@@ -122,12 +122,12 @@
             "production": {
               "browserTarget": "fullerstack:build:production",
               "proxyConfig": "apps/fullerstack/proxy/proxy.prod.json",
-              "port": 4301
+              "port": 4300
             },
             "ci": {
               "browserTarget": "fullerstack:build:ci",
               "proxyConfig": "apps/fullerstack/proxy/proxy.ci.json",
-              "port": 4401
+              "port": 4400
             }
           }
         },

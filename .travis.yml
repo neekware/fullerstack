@@ -28,6 +28,7 @@ script:
   - NX_BRANCH=$TRAVIS_BRANCH yarn lint:ci
   - NX_BRANCH=$TRAVIS_BRANCH yarn build:ci
   - NX_BRANCH=$TRAVIS_BRANCH yarn test:ci
+  - NX_BRANCH=$TRAVIS_BRANCH yarn api:ci &
   - NX_BRANCH=$TRAVIS_BRANCH yarn e2e:ci
 
 after_script:
