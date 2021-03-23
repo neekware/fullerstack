@@ -1,5 +1,5 @@
 # Action Name
-name: LintBuildTestE2E
+name: CI
 
 # Controls when the action will run.
 on:
@@ -9,7 +9,7 @@ on:
   push:
     branches:
       - main
-      - ci/*
+      - ci
       - releases/*
     paths-ignore:
       - '**.md'

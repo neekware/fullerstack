@@ -1,5 +1,10 @@
 # Fullerstack <img style="margin-bottom: -6px" width="30" src="apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
+<p align="left">
+  <a href="https://github.com/neekware/fullerstack/actions/workflows/main.yml/badge.svg">
+<img alt="build-test status" src="https://github.com/actions/setup-node/workflows/build-test/badge.svg"></a>
+</p>
+
 ## Description
 
 This project is a mono-repo for FullerStack which is an open source dashboard powered by Angular for the frontend and NetJs for the backend.
