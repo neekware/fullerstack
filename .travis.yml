@@ -1,11 +1,5 @@
+os: linux
 dist: bionic
-addons:
-  apt:
-    # if using Ubuntu 16 need this library - an Electron dependency
-    # https://github.com/cypress-io/cypress-documentation/pull/1647
-    packages:
-      - libgconf-2-4
-
 language: node_js
 node_js:
   - '12'
