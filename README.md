@@ -1,9 +1,6 @@
 # Fullerstack <img style="margin-bottom: -6px" width="30" src="apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
-<p align="left">
-  <a href="https://github.com/neekware/fullerstack/actions/workflows/main.yml/badge.svg">
-<img alt="build-test status" src="https://github.com/actions/setup-node/workflows/build-test/badge.svg"></a>
-</p>
+![CI](https://github.com/neekware/fullerstack/actions/workflows/main.yml/badge.svg)
 
 ## Description
 
