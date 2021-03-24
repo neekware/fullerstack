@@ -63,6 +63,7 @@ jobs:
           start: yarn api:ci &
           if: ${{ steps.vars.outputs.current_branch }} = dev
           wait-on: 'http://localhost:4201'
+          wait-on-timeout: 120
           # if: ${{ steps.vars.outputs.current_branch }} == ci
           # wait-on: 'http://localhost:4301'
           # if: ${{ steps.vars.outputs.current_branch }} = main
