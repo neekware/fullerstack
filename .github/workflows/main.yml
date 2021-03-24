@@ -67,4 +67,4 @@ jobs:
           wait-on: 'http://localhost:4301'
           if: ${{ steps.vars.outputs.current_branch }} = main
           wait-on: 'http://localhost:4401'
-          - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
+          command: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
