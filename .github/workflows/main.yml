@@ -28,22 +28,31 @@ jobs:
 
       # Grab the branch name
       - name: Get branch name
+        id: branch
         run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
       # Grab dev api port
       - name: Get ci api port
-        if: ${{ steps.vars.outputs.current_branch }} = dev
+        if: ${{ steps.branch.outputs.current_branch }} = dev
+        id: port
         run: echo ::set-output name=api_port::4201
 
       # Grab ci api port
       - name: Get ci api port
-        if: ${{ steps.vars.outputs.current_branch }} = ci
+        if: ${{ steps.branch.outputs.current_branch }} = ci
+        id: port
         run: echo ::set-output name=api_port::4301
 
       # Grab main api port
       - name: Get main api port
-        if: ${{ steps.vars.outputs.current_branch }} = main
+        if: ${{ steps.branch.outputs.current_branch }} = main
+        id: port
         run: echo ::set-output name=api_port::4401
+
+      - name: We do
+        run: echo Branch:${{ steps.branch.outputs.current_branch }}
+        run: echo Port${{ steps.port.outputs.api_port }}
+
 
       # Running node version
       # - name: Setup node 12
@@ -73,8 +82,8 @@ jobs:
       - name: Run e2e
         uses: cypress-io/github-action@v2
         with:
-          start: yarn api:ci &
-          command: echo 'http://localhost:${{ steps.vars.outputs.api_port }}
-      #     wait-on: 'http://localhost:${{ steps.vars.outputs.api_port }}/api/ping'
-      #     wait-on-timeout: 120
-      #     command: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
+          # start: yarn api:ci &
+          command: echo 'http://localhost:${{ steps.vars.outputs.api_port }}/api/ping'
+          # wait-on: 'http://localhost:${{ steps.vars.outputs.api_port }}/api/ping'
+          # wait-on-timeout: 120
+          # command: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
