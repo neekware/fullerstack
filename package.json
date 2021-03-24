@@ -34,7 +34,7 @@
     "build:ci": "nx run-many --target=build --all --configuration=ci --parallel",
     "test:ci": "nx run-many --target=test --codeCoverage --all --configuration=ci --parallel",
     "e2e:ci": "nx e2e fullerstack-e2e --configuration=ci --headless",
-    "api:ci": "nx server api --configuration=ci"
+    "api:ci": "nx serve api --configuration=ci"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",
