@@ -41,21 +41,21 @@ jobs:
       # Install packages
       - run: npm ci
 
-      - name: Run format check
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn format:check --base=${{ steps.vars.outputs.current_branch }} --head=HEAD
+      # - name: Run format check
+      # - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn format:check --base=${{ steps.vars.outputs.current_branch }} --head=HEAD
 
-      - name: Run linter
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
+      # - name: Run linter
+      # - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
 
-      - name: Run build
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn build:ci
+      # - name: Run build
+      # - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn build:ci
 
-      - name: Run unit tests
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn test:ci
+      # - name: Run unit tests
+      # - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn test:ci
 
-      - name: Push coverage
-      - run: find coverage -name lcov.info -exec echo -a {} \; | xargs lcov -o ./coverage/lcov.combo.info
-      - run: cat ./coverage/lcov.combo.info | ./node_modules/coveralls/bin/coveralls.js
+      # - name: Push coverage
+      # - run: find coverage -name lcov.info -exec echo -a {} \; | xargs lcov -o ./coverage/lcov.combo.info
+      # - run: cat ./coverage/lcov.combo.info | ./node_modules/coveralls/bin/coveralls.js
 
       - name: Run e2e
         uses: cypress-io/github-action@v2
