@@ -49,7 +49,7 @@ jobs:
         id: port
         run: echo ::set-output name=api_port::4401
 
-      - name: We do
+      - name: Information
         run: echo Branch:${{ steps.branch.outputs.current_branch }}, Port${{ steps.port.outputs.api_port }}
 
       # Running node version
