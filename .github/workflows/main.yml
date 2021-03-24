@@ -70,10 +70,11 @@ jobs:
       # - run: find coverage -name lcov.info -exec echo -a {} \; | xargs lcov -o ./coverage/lcov.combo.info
       # - run: cat ./coverage/lcov.combo.info | ./node_modules/coveralls/bin/coveralls.js
 
-      # - name: Run e2e
-      #   uses: cypress-io/github-action@v2
-      #   with:
-      #     start: yarn api:ci &
+      - name: Run e2e
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn api:ci &
+          command: echo 'http://localhost:${{ steps.vars.outputs.api_port }}
       #     wait-on: 'http://localhost:${{ steps.vars.outputs.api_port }}/api/ping'
       #     wait-on-timeout: 120
       #     command: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
