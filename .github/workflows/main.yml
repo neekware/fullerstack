@@ -72,6 +72,6 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: yarn api:ci &
-          wait-on: 'http://localhost:${{ steps.vars.outputs.api_port }}'
+          wait-on: 'http://localhost:${{ steps.vars.outputs.api_port }}/api/ping'
           wait-on-timeout: 120
           command: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
