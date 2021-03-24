@@ -60,7 +60,7 @@ jobs:
       - name: Run e2e
         uses: cypress-io/github-action@v2
         with:
-          start: yarn api:ci
+          start: yarn api:ci &
           if: ${{ steps.vars.outputs.current_branch }} = dev
           wait-on: 'http://localhost:4201'
           if: ${{ steps.vars.outputs.current_branch }} == ci
