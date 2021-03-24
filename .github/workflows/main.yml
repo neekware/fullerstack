@@ -28,18 +28,15 @@ jobs:
 
       # Grab the branch name
       - name: Get branch name
-        id: vars
         run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
       # Grab ci api port
       - name: Get ci api port
-        id: vars
         if: ${{ steps.vars.outputs.current_branch }} = ci
         run: echo ::set-output name=api_port::4301
 
       # Grab main api port
       - name: Get main api port
-        id: vars
         if: ${{ steps.vars.outputs.current_branch }} = ci
         run: echo ::set-output name=api_port::4401
 
