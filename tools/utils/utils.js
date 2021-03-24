@@ -9,7 +9,7 @@ exports.projName = 'fullerstack';
 exports.projDir = path.resolve(__dirname, '../..');
 exports.projPkgJson = require(path.join(exports.projDir, 'package.json'));
 exports.coverageDir = require(path.join(exports.projDir, 'coverage'));
-exports.distDir = require(path.join(exports.projDir, 'package.json'));
+exports.distDir = require(path.join(exports.projDir, 'dist'));
 /**
  * Runs a command, capture and return the output
  * @param script {string} an executable command

@@ -7,7 +7,7 @@ export const projName = 'fullerstack';
 export const projDir = path.resolve(__dirname, '../..');
 export const projPkgJson = require(path.join(projDir, 'package.json'));
 export const coverageDir = require(path.join(projDir, 'coverage'));
-export const distDir = require(path.join(projDir, 'package.json'));
+export const distDir = require(path.join(projDir, 'dist'));
 
 /**
  * Runs a command, capture and return the output

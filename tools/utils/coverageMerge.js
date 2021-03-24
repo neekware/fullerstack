@@ -93,6 +93,6 @@ function main() {
 }
 program
     .version('0.0.1', '-v, --version')
-    .option('-v, --verbose', 'Prints console log')
+    .option('--verbose', 'Runs the command in verbose mode')
     .parse(process.argv);
 main();
