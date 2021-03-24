@@ -10,7 +10,6 @@ on:
     branches:
       - main
       - ci
-      - dev
     paths-ignore:
       - '**.md'
 
@@ -31,6 +30,18 @@ jobs:
       - name: Get branch name
         id: vars
         run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
+
+      # Grab ci api port
+      - name: Get ci api port
+        id: vars
+        if: ${{ steps.vars.outputs.current_branch }} = ci
+        run: echo ::set-output name=api_port::4301
+
+      # Grab main api port
+      - name: Get main api port
+        id: vars
+        if: ${{ steps.vars.outputs.current_branch }} = ci
+        run: echo ::set-output name=api_port::4401
 
       # Running node version
       - name: Setup node 12
@@ -61,11 +72,6 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: yarn api:ci &
-          if: ${{ steps.vars.outputs.current_branch }} = dev
-          wait-on: 'http://localhost:4201'
+          wait-on: 'http://localhost:${{ steps.vars.outputs.api_port }}'
           wait-on-timeout: 120
-          # if: ${{ steps.vars.outputs.current_branch }} == ci
-          # wait-on: 'http://localhost:4301'
-          # if: ${{ steps.vars.outputs.current_branch }} = main
-          # wait-on: 'http://localhost:4401'
           command: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
