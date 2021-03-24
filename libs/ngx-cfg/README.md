@@ -141,7 +141,7 @@ export class AppComponent {
 
 To run the tests against the current environment:
 
-    npm run ci:all
+    yarn ci:all
 
 # License
 

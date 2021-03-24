@@ -92,31 +92,31 @@ git clone https://github.com/neekware/fullerstack.git && cd fullerstack && npm i
 
 ### Graph dependencies
 
-npm run dep-graph
+yarn dep-graph
 
 ### Webpack analyzer
 
-nx build fullerstack --stats-json --prod && npm run stats
+nx build fullerstack --stats-json --prod && yarn stats
 
 ### Graph dependencies uncommitted changes from affected libs/apps
 
-npm run affected -- --target dep-graph --uncommitted
+yarn affected -- --target dep-graph --uncommitted
 
 ### Graph dependencies changes from affected libs/apps on main
 
-npm run affected -- --target dep-graph --base=main
+yarn affected -- --target dep-graph --base=main
 
 ### Test uncommitted changes from affected libs/apps
 
-npm run affected -- --target test --uncommitted
+yarn affected -- --target test --uncommitted
 
 ### Test committed changes on main
 
-npm run affected -- --target test --base=main
+yarn affected -- --target test --base=main
 
 ### Format changed files
 
-npm run format
+yarn format
 
 ## License
 
