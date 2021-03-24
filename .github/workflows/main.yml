@@ -30,6 +30,11 @@ jobs:
       - name: Get branch name
         run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
+      # Grab dev api port
+      - name: Get ci api port
+        if: ${{ steps.vars.outputs.current_branch }} = dev
+        run: echo ::set-output name=api_port::4201
+
       # Grab ci api port
       - name: Get ci api port
         if: ${{ steps.vars.outputs.current_branch }} = ci
@@ -37,7 +42,7 @@ jobs:
 
       # Grab main api port
       - name: Get main api port
-        if: ${{ steps.vars.outputs.current_branch }} = ci
+        if: ${{ steps.vars.outputs.current_branch }} = main
         run: echo ::set-output name=api_port::4401
 
       # Running node version
