@@ -24,13 +24,6 @@ script:
   - NX_BRANCH=$TRAVIS_BRANCH yarn test:ci
   - NX_BRANCH=$TRAVIS_BRANCH yarn api:ci &
   - travis_wait 30
-  - if [[ $TRAVIS_BRANCH == "dev" ]]; then
-    export API_PORT=4201;
-    else if [[ $TRAVIS_BRANCH == "ci" ]]; then
-    export API_PORT=4301;
-    if [[ $TRAVIS_BRANCH == "main" ]]; then
-    export API_PORT=4401;
-    fi
   - NX_BRANCH=$TRAVIS_BRANCH yarn e2e:ci
 
 after_script:
