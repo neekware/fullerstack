@@ -35,7 +35,7 @@
     "test:ci": "nx run-many --target=test --codeCoverage --all --configuration=ci --parallel",
     "e2e:ci": "nx e2e fullerstack-e2e --configuration=ci --headless",
     "api:ci": "nx serve api --configuration=ci",
-    "coverage:merge": "ts-node ./tools/utils/coverageMerge.ts"
+    "coverage:merge": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/coverageMerge.ts"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",

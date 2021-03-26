@@ -5,9 +5,9 @@ import * as glob from 'glob';
 
 export const projName = 'fullerstack';
 export const projDir = path.resolve(__dirname, '../..');
+export const coverageDir = path.resolve(path.join(projDir, 'coverage'));
+export const distDir = path.resolve(path.join(projDir, 'dist'));
 export const projPkgJson = require(path.join(projDir, 'package.json'));
-export const coverageDir = require(path.join(projDir, 'coverage'));
-export const distDir = require(path.join(projDir, 'dist'));
 
 /**
  * Runs a command, capture and return the output

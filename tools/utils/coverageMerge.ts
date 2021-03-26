@@ -16,6 +16,11 @@ async function combineLcovFiles(
   }
 
   const lcovFiles = await getGlobFiles(coverageGlobPattern);
+  if (!lcovFiles.length) {
+    console.log('No lcov file found');
+    return;
+  }
+
   const mergedReport = lcovFiles.reduce(
     (mergedReport, currFile) => (mergedReport += fs.readFileSync(currFile)),
     ''
