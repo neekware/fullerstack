@@ -14,6 +14,7 @@ export class CfgModule {
     parentModule: CfgModule
   ) {
     if (parentModule) {
+      /* istanbul ignore next */
       throw new Error(
         'CfgModule is already loaded. Import it in the AppModule only'
       );

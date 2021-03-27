@@ -1,3 +1,3 @@
-export interface Message {
-  message: string;
+export interface HealthCheck {
+  ping: boolean;
 }

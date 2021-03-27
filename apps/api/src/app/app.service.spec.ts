@@ -13,9 +13,9 @@ describe('AppService', () => {
     service = app.get<AppService>(AppService);
   });
 
-  describe('getData', () => {
-    it('should return "Welcome to api!"', () => {
-      expect(service.getData()).toEqual({ message: 'Welcome to api!' });
+  describe('Health Check', () => {
+    it('should return health check ping:pong', () => {
+      expect(service.ping()).toEqual({ ping: true });
     });
   });
 });

@@ -21,6 +21,7 @@ export class CfgService {
   ) {
     this._options = ldNestedMerge(this._options, config);
     if (!this._options.production) {
+      /* istanbul ignore next */
       console.log(`CfgService ready ...`);
     }
   }
@@ -28,7 +29,7 @@ export class CfgService {
   /**
    * Make the internal options publicly accessible.
    */
-  get options() {
+  get options(): Readonly<ApplicationCfg> {
     return this._options;
   }
 
@@ -67,6 +68,7 @@ export class CfgService {
             .then((resp) => {
               if (Object.keys(resp || {}).length) {
                 if (!this._options.production) {
+                  /* istanbul ignore next */
                   console.log(`CfgService remote cfg fetched ...`);
                 }
                 this._options = { ...this._options, remoteData: resp };
