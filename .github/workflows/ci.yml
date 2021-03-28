@@ -56,11 +56,6 @@ jobs:
         with:
           node-version: '12'
 
-      run: |
-        bash git --version
-        bash node --version
-        bash yarn --version
-
       # - name: Get branch name
       #   id: branch
       #   run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
