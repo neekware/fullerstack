@@ -25,9 +25,14 @@ on:
       - 'tools/**'
       - 'graphs/**'
 
+  # Manual trigger OK
+  workflow_dispatch:
+
 env:
   PRISMA_TELEMETRY_INFORMATION: 'fullerstack ci.yml'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+
 
 jobs:
   os-deps:
