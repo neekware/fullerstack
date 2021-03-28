@@ -1,31 +1,31 @@
-os: linux
-dist: bionic
-language: node_js
-node_js:
-  - '12'
+# os: linux
+# dist: bionic
+# language: node_js
+# node_js:
+#   - '12'
 
-cache:
-  # cache both npm modules and Cypress binary
-  directories:
-    - ~/.npm
-    - ~/.cache
-  override:
-    - npm ci
-    - npm run cy:verify
+# cache:
+#   # cache both npm modules and Cypress binary
+#   directories:
+#     - ~/.npm
+#     - ~/.cache
+#   override:
+#     - npm ci
+#     - npm run cy:verify
 
-install:
-  - npm install
-  - npm install cypress --only=dev
+# install:
+#   - npm install
+#   - npm install cypress --only=dev
 
-script:
-  - NX_BRANCH=$TRAVIS_BRANCH yarn format:check --base=$TRAVIS_BRANCH --head=HEAD
-  - NX_BRANCH=$TRAVIS_BRANCH yarn lint:ci
-  - NX_BRANCH=$TRAVIS_BRANCH yarn build:ci
-  - NX_BRANCH=$TRAVIS_BRANCH yarn test:ci
-  - NX_BRANCH=$TRAVIS_BRANCH yarn api:ci &
-  - travis_wait 30
-  - NX_BRANCH=$TRAVIS_BRANCH yarn e2e:ci
+# script:
+#   - NX_BRANCH=$TRAVIS_BRANCH yarn format:check --base=$TRAVIS_BRANCH --head=HEAD
+#   - NX_BRANCH=$TRAVIS_BRANCH yarn lint:ci
+#   - NX_BRANCH=$TRAVIS_BRANCH yarn build:ci
+#   - NX_BRANCH=$TRAVIS_BRANCH yarn test:ci
+#   - NX_BRANCH=$TRAVIS_BRANCH yarn api:ci &
+#   - travis_wait 30
+#   - NX_BRANCH=$TRAVIS_BRANCH yarn e2e:ci
 
-after_script:
-  - NX_BRANCH=$TRAVIS_BRANCH yarn coverage:merge
-  - cat ./coverage/lcov.combo.info | ./node_modules/coveralls/bin/coveralls.js
+# after_script:
+#   - NX_BRANCH=$TRAVIS_BRANCH yarn coverage:merge
+#   - cat ./coverage/lcov.combo.info | ./node_modules/coveralls/bin/coveralls.js
