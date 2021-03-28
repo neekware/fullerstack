@@ -60,11 +60,11 @@ jobs:
         id: branch
         run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
-      - name: Install packages
-      - run: npm ci
+      # - name: Install packages
+      # - run: npm ci
 
-      # - name: Run linter
-      # - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
+      - name: Run linter
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
 
       # - uses: borales/actions-yarn@v2.0.0
       #   with:
