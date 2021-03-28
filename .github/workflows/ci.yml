@@ -66,6 +66,11 @@ jobs:
       - name: Run linter
         run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
 
+      - name: Push coverage
+        run: |
+          NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn coverage:merge
+          cat ./coverage/lcov.combo.info | ./node_modules/coveralls/bin/coveralls.js
+
       # - uses: borales/actions-yarn@v2.0.0
       #   with:
       #     cmd: install # will run `yarn install` command
