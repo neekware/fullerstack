@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Injectable } from '@angular/core';
 import { merge } from 'lodash';
 import { CfgService, ApplicationCfg } from '@fullerstack/ngx-cfg';
