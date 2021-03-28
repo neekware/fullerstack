@@ -135,6 +135,10 @@ X.Y.Z Version
 
 [ [Neekware Inc.](http://neekware.com) ] [ [Nx](https://nx.dev) ]
 
+## Commercial License
+
+Contact us: info@neekware.com
+
 [status-image]: https://secure.travis-ci.org/neekware/fullerstack.png?branch=main
 [status-link]: http://travis-ci.org/neekware/fullerstack?branch=main
 [version-image]: https://img.shields.io/npm/v/@fullerstack.svg
