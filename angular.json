@@ -1,7 +1,8 @@
 {
   "version": 1,
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nrwl/angular",
+    "packageManager": "yarn"
   },
   "defaultProject": "fullerstack",
   "schematics": {
