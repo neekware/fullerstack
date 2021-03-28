@@ -24,8 +24,6 @@ on:
       - 'LICENSE'
       - 'tools/**'
       - 'graphs/**'
-
-  # Manual trigger OK
   workflow_dispatch:
 
 env:
