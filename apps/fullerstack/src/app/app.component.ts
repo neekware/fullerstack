@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { HealthCheck } from '@fullerstack/api-dto';
 import { CfgService } from '@fullerstack/ngx-cfg';
 import { LoggerService } from '@fullerstack/ngx-logger';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'fullerstack-root',
@@ -22,20 +21,12 @@ export class AppComponent implements OnInit {
     public loggerService: LoggerService
   ) {
     if (!this.cfgService.options.production) {
+      /* istanbul ignore next */
       this.loggerService.info('AppComponent starting ... ');
     }
-    this.healthCheck$ = this.http.get<HealthCheck>('/api/ping');
   }
 
   ngOnInit(): void {
-    this.healthCheck$.pipe(
-      map((msg) => {
-        if (msg.ping) {
-          return 'Server is online';
-        } else {
-          return 'Server is offline';
-        }
-      })
-    );
+    this.healthCheck$ = this.http.get<HealthCheck>('/api/ping');
   }
 }
