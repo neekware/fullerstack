@@ -35,6 +35,7 @@
     "test:ci": "nx run-many --target=test --codeCoverage --all --configuration=ci --parallel",
     "e2e:ci": "nx e2e fullerstack-e2e --configuration=ci --headless",
     "api:ci": "nx serve api --configuration=ci",
+    "dep-graph:main": " nx dep-graph --file=graph/index.html --focus=fullerstack-e2e",
     "coverage:merge": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/coverageMerge.ts"
   },
   "dependencies": {
