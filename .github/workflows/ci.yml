@@ -24,7 +24,7 @@ on:
       - 'LICENSE'
       - 'tools/**'
       - 'graphs/**'
-  workflow_dispatch:
+  # workflow_dispatch:
 
 env:
   PRISMA_TELEMETRY_INFORMATION: 'fullerstack ci.yml'
@@ -78,8 +78,8 @@ jobs:
       - name: Install Yarn
         run: npm install -g yarn
 
-      - name: Yarn Install
-      - run: yarn install
+      # - name: Yarn Install
+      # - run: yarn install
 
       # - name: Run Linter
       # - run: yarn lint:ci
