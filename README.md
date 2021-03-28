@@ -121,7 +121,8 @@ yarn format
 
 ## License
 
-Released under a ([MIT](LICENSE)) license.
+- Released under a ([MIT](LICENSE)) license.
+- Commercial Support Available - info@neekware.com
 
 ## Version
 
@@ -134,10 +135,6 @@ X.Y.Z Version
 ## Sponsors
 
 [ [Neekware Inc.](http://neekware.com) ] [ [Nx](https://nx.dev) ]
-
-## Commercial License
-
-Contact us: info@neekware.com
 
 [status-image]: https://secure.travis-ci.org/neekware/fullerstack.png?branch=main
 [status-link]: http://travis-ci.org/neekware/fullerstack?branch=main
