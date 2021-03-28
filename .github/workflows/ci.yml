@@ -68,9 +68,9 @@ jobs:
       - name: Install Yarn
         run: npm install -g yarn
 
-      - name: Yarn Install
-      - run: bash yarn install
+      # - name: Yarn Install
+      # - run: yarn install
 
-      - name: Run Linter
-      - run: bash yarn lint:ci
-        working-directory: ./
+      # - name: Run Linter
+      # - run: yarn lint:ci
+      #   working-directory: ./
