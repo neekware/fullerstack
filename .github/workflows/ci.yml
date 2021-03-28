@@ -65,5 +65,7 @@ jobs:
         with:
           node-version: '12'
 
-      - run: yarn lint:ci
+      - run: bash yarn install
+
+      - run: bash yarn lint:ci
         working-directory: ./
