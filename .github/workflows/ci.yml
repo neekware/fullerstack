@@ -55,10 +55,11 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
-        run: |
-          git --version
-          node --version
-          yarn --version
+
+      run: |
+        git --version
+        node --version
+        yarn --version
 
       # - name: Get branch name
       #   id: branch
