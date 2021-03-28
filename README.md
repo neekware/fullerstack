@@ -1,6 +1,7 @@
 # Fullerstack <img style="margin-bottom: -6px" width="30" src="apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
-![CI](https://github.com/neekware/fullerstack/actions/workflows/main.yml/badge.svg)
+[![status-image]][status-link]
+[![coverage-image]][coverage-link]
 
 ## Description
 
@@ -133,3 +134,12 @@ X.Y.Z Version
 ## Sponsors
 
 [ [Neekware Inc.](http://neekware.com) ] [ [Nx](https://nx.dev) ]
+
+[status-image]: https://secure.travis-ci.org/neekware/fullerstack.png?branch=main
+[status-link]: http://travis-ci.org/neekware/fullerstack?branch=main
+[version-image]: https://img.shields.io/npm/v/@fullerstack.svg
+[version-link]: https://www.npmjs.com/package/@fullerstack
+[coverage-image]: https://coveralls.io/repos/neekware/fullerstack/badge.svg
+[coverage-link]: https://coveralls.io/r/neekware/fullerstack
+[download-image]: https://img.shields.io/npm/dm/@fullerstack/ngx-logger.svg
+[download-link]: https://www.npmjs.com/package/@fullerstack/ngx-loger

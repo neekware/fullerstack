@@ -155,18 +155,14 @@ X.Y.Z Version
     `MINOR` version -- adding functionality in a backwards-compatible manner
     `PATCH` version -- making backwards-compatible bug fixes
 
-[status-image]: https://secure.travis-ci.org/un33k/ngx-cfg.png?branch=master
-[status-link]: http://travis-ci.org/un33k/ngx-cfg?branch=master
+[status-image]: https://secure.travis-ci.org/neekware/fullerstack.png?branch=main
+[status-link]: http://travis-ci.org/neekware/fullerstack?branch=main
 [version-image]: https://img.shields.io/npm/v/@fullerstack/ngx-cfg.svg
 [version-link]: https://www.npmjs.com/package/@fullerstack/ngx-cfg
-[coverage-image]: https://coveralls.io/repos/un33k/ngx-cfg/badge.svg
-[coverage-link]: https://coveralls.io/r/un33k/ngx-cfg
+[coverage-image]: https://coveralls.io/repos/neekware/fullerstack/badge.svg
+[coverage-link]: https://coveralls.io/r/neekware/fullerstack
 [download-image]: https://img.shields.io/npm/dm/@fullerstack/ngx-cfg.svg
 [download-link]: https://www.npmjs.com/package/@fullerstack/ngx-cfg
-[angular-image]: https://raw.githubusercontent.com/neekware/neekware-assets/master/images/angular-x30.png
-[angular-link]: https://angular.io
-[fullerstack-image]: https://raw.githubusercontent.com/neekware/neekware-assets/master/images/fullerstack-x32.png
-[fullerstack-link]: https://github.com/neekware/fullerstack
 
 # Sponsors
 
