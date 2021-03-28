@@ -1700,7 +1700,7 @@
     jasmine-marbles "~0.6.0"
     tslib "^2.0.0"
 
-"@nrwl/cli@11.5.2":
+"@nrwl/cli@11.5.2", "@nrwl/cli@^11.5.2":
   version "11.5.2"
   resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-11.5.2.tgz#63ffb5596269ba89af188f7bfc0814113ab05716"
   integrity sha512-apImu6BPWcB1k9SvzCUPLSh3bT628tW6f1xUXJ8H078VUUb4uykiamTVpTP3+l/99hjgPT45QJqKcnzyPeCa4Q==
