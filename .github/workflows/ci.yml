@@ -26,26 +26,16 @@ on:
       - 'graphs/**'
   # workflow_dispatch:
 
-env:
-  PRISMA_TELEMETRY_INFORMATION: 'fullerstack ci.yml'
-  GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
 jobs:
-  # Last identical jobs wins: https://github.com/marketplace/actions/skip-duplicate-actions
-  # Stop and clean up any currently running similar jobs in workflow
-  cleanup-runs:
-    continue-on-error: true
-    runs-on: ubuntu-20.04
-    if: "!startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/heads/main'"
-    steps:
-      - uses: fkirc/skip-duplicate-actions@v3.4.0
-
   #
   # Linting
   #
   lint:
     timeout-minutes: 7
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -66,16 +56,25 @@ jobs:
         with:
           node-version: '12'
 
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: install # will run `yarn install` command
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: build:ci # will run `yarn build` command
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: test:ci # will run `yarn test` command
+      - name: Get branch name
+        id: branch
+        run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
+      - name: Install packages
+      - run: npm ci
+
+      - name: Run linter
+      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
+
+      # - uses: borales/actions-yarn@v2.0.0
+      #   with:
+      #     cmd: install # will run `yarn install` command
+      # - uses: borales/actions-yarn@v2.0.0
+      #   with:
+      #     cmd: build:ci # will run `yarn build` command
+      # - uses: borales/actions-yarn@v2.0.0
+      #   with:
+      #     cmd: test:ci # will run `yarn test` command
 
       # - name: Yarn Install
       # - run: yarn install
