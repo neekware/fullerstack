@@ -55,16 +55,20 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
+        run: |
+          git --version
+          node --version
+          yarn --version
 
-      - name: Get branch name
-        id: branch
-        run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
+      # - name: Get branch name
+      #   id: branch
+      #   run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
-      - name: Install packages
-      - run: npm ci
+      # - name: Install packages
+      # - run: npm ci
 
-      - name: Run linter
-      - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
+      # - name: Run linter
+      # - run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
 
       # - uses: borales/actions-yarn@v2.0.0
       #   with:
