@@ -65,7 +65,12 @@ jobs:
         with:
           node-version: '12'
 
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Yarn Install
       - run: bash yarn install
 
+      - name: Run Linter
       - run: bash yarn lint:ci
         working-directory: ./
