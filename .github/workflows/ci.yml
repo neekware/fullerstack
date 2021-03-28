@@ -30,6 +30,12 @@ env:
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
 jobs:
+  os-deps:
+    - name: Install system dependencies
+    run: |
+      sudo apt update
+      sudo apt install git
+
   # Last identical jobs wins: https://github.com/marketplace/actions/skip-duplicate-actions
   # Stop and clean up any currently running similar jobs in workflow
   cleanup-runs:
