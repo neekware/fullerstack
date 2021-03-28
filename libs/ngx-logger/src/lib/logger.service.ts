@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
-import { merge } from 'lodash';
+import { merge as ldNestedMerge } from 'lodash-es';
 import { CfgService, ApplicationCfg } from '@fullerstack/ngx-cfg';
 import { LogLevels, LogNames, LogColors } from './logger.models';
 import { DefaultLoggerCfg } from './logger.defaults';
@@ -17,8 +17,10 @@ export class LoggerService {
   private _options: Readonly<ApplicationCfg>;
 
   constructor(public cfg: CfgService) {
-    this._options = merge(DefaultLoggerCfg, cfg.options);
-    this.debug('LogService ready ...');
+    this._options = ldNestedMerge(DefaultLoggerCfg, cfg.options);
+    if (!this.options.production) {
+      this.info('LogService ready ...');
+    }
   }
 
   get options(): Readonly<ApplicationCfg> {

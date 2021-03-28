@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { HealthCheck } from '@fullerstack/api-dto';
 import { CfgService } from '@fullerstack/ngx-cfg';
+import { LoggerService } from '@fullerstack/ngx-logger';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -15,7 +16,14 @@ import { map } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   healthCheck$: Observable<HealthCheck>;
 
-  constructor(private http: HttpClient, public cfgService: CfgService) {
+  constructor(
+    private http: HttpClient,
+    public cfgService: CfgService,
+    public loggerService: LoggerService
+  ) {
+    if (!this.cfgService.options.production) {
+      this.loggerService.info('AppComponent starting ... ');
+    }
     this.healthCheck$ = this.http.get<HealthCheck>('/api/ping');
   }
 
