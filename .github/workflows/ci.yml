@@ -31,15 +31,6 @@ env:
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
 jobs:
-  # os-deps:
-  #   runs-on: ubuntu-20.04
-
-  #   steps:
-  #     - name: Install system dependencies
-  #     run: |
-  #       sudo apt update
-  #       sudo apt install git
-
   # Last identical jobs wins: https://github.com/marketplace/actions/skip-duplicate-actions
   # Stop and clean up any currently running similar jobs in workflow
   cleanup-runs:
@@ -75,8 +66,16 @@ jobs:
         with:
           node-version: '12'
 
-      - name: Install Yarn
-        run: npm install -g yarn
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build:ci # will run `yarn build` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: test:ci # will run `yarn test` command
+
 
       # - name: Yarn Install
       # - run: yarn install
