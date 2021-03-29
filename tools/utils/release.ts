@@ -5,52 +5,59 @@ import * as program from 'commander';
 import * as semver from 'semver';
 import { distDir, execute, projPkgJson } from './utils';
 
-const moduleBuildPath = path.join(distDir, 'libs', program.lib);
-const modulePkgPath = require(path.join(moduleBuildPath, 'package.json'));
-const publishOptions = `--access public --non-interactive --no-git-tag-version `;
-
 /**
  * Hydrate lib's package.json with that of the workspace
  */
-async function syncPackageData() {
+async function syncPackageData(moduleBuildPath: string) {
+  const modulePkgPath = path.join(moduleBuildPath, 'package.json');
   let modulePkg = require(modulePkgPath);
 
-  // update common attributes
-  const parentInfo = ld.pick(projPkgJson, [
+  // get in the following info from workspace package.json if library doesn't provide them
+  const precedenceInfo = [
     'author',
-    'version',
     'license',
     'homepage',
     'repository',
     'contributors',
-    'keywords',
     'bugs',
-  ]);
+    'keywords',
+    'contributors',
+  ];
+
+  // overwrite the following props from the workspace package.json
+  const overwriteInfo = precedenceInfo.filter((prop) => !modulePkg[prop]);
+
+  // update common attributes
+  const parentInfo = ld.pick(projPkgJson, overwriteInfo);
 
   modulePkg = { ...modulePkg, ...parentInfo };
+
   // flush new files to build dir of each package
   await fs.writeFile(modulePkgPath, JSON.stringify(modulePkg, null, 2), () => {
-    console.error(`Flushed package.json  ...`);
+    console.error(`Prepared library's package.json  ...`);
   });
-
-  await fs.writeFileSync(
-    path.join(moduleBuildPath, './README.md'),
-    fs.readFileSync('./README.md')
-  );
 }
 
+/**
+ * Builds a production build of a given library with its deps, from the current branch
+ * @returns build status
+ */
 async function buildPackage() {
   if (program.build) {
-    const cmd = `yarn build`;
+    const cmd = `yarn build ${program.library} --with-deps --skip-nx-cache --prod`;
     console.log(cmd);
     await execute(cmd).catch((error) => {
-      console.log(`Failed to build ${program.lib} ... ${error}`);
+      console.log(`Failed to build ${program.library} ... ${error}`);
       return false;
     });
   }
   return true;
 }
 
+/**
+ * Returns semVer version of a given library
+ * @returns semVer string version of development branch
+ */
 async function getDevVersion() {
   const lastCommit = await execute('git rev-parse HEAD');
   const commitHash = lastCommit.toString().trim().slice(0, 10);
@@ -62,14 +69,26 @@ async function getDevVersion() {
   return devVersion;
 }
 
+/**
+ * Releases a given branch by building, pushing it to npmjs.org
+ * @returns process status code
+ */
 async function main() {
+  if (!program.library) {
+    console.log('Error: Library name is required.');
+    console.log(program.helpInformation());
+    return 1;
+  }
+
   const built = await buildPackage();
   if (!built) {
     return 1;
   }
 
-  await syncPackageData();
+  const moduleBuildPath = path.join(distDir, 'libs', program.library);
+  await syncPackageData(moduleBuildPath);
 
+  const publishOptions = `--access public --non-interactive --no-git-tag-version `;
   let newVersion = projPkgJson.version;
   let publishCmd = `yarn publish ${publishOptions} --new-version ${newVersion} --tag latest`;
   if (program.dev) {
@@ -95,10 +114,10 @@ async function main() {
 
 program
   .version('0.0.1', '-v, --version')
-  .option('-n', '--lib <lib>', 'Library name to push to npmjs.org')
-  .option('-b, --build', 'Build the lib')
-  .option('-p, --publish', 'Publish @<lib-name>@latest')
-  .option('-d, --dev', 'Publish @<lib-name>@next')
+  .option('-l, --library <library>', 'Library name to push to npmjs.org')
+  .option('-b, --build', 'Build the library')
+  .option('-p, --publish', 'Publish @<lib>@latest')
+  .option('-d, --dev', 'Publish @<lib>@next')
   .parse(process.argv);
 
 main();

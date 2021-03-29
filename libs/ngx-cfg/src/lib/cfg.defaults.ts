@@ -24,7 +24,7 @@ export const DefaultRemoteCfg: RemoteCfg = {
 /** Default application-wide config */
 export const DefaultApplicationCfg: ApplicationCfg = {
   production: false,
-  version: '0.0.1',
+  version: '1.0.0',
   appName: '@fullerstack/ngx-cfg',
   localCfg: DefaultCfg,
   remoteCfg: DefaultRemoteCfg,
