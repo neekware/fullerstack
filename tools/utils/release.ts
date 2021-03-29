@@ -6,11 +6,31 @@ import * as semver from 'semver';
 import { distDir, execute, projPkgJson } from './utils';
 
 /**
+ * Returns the path to library's package.json
+ * @param moduleBuildPath build path for a given library
+ * @returns
+ */
+function getModulePackagePath(moduleBuildPath: string): string {
+  const modulePkgPath = path.join(moduleBuildPath, 'package.json');
+  return modulePkgPath;
+}
+
+/**
+ * Given a lib it returns its packages.json data
+ * @param moduleBuildPath path to build directory of a given lib
+ * @returns
+ */
+function getModulePackage(moduleBuildPath: string): any {
+  const modulePkgPath = getModulePackagePath(moduleBuildPath);
+  const modulePkg = require(modulePkgPath);
+  return modulePkg;
+}
+
+/**
  * Hydrate lib's package.json with that of the workspace
  */
-async function syncPackageData(moduleBuildPath: string) {
-  const modulePkgPath = path.join(moduleBuildPath, 'package.json');
-  let modulePkg = require(modulePkgPath);
+async function syncPackageData(moduleBuildPath: string): Promise<void> {
+  let modulePkg = await getModulePackage(moduleBuildPath);
 
   // get in the following info from workspace package.json if library doesn't provide them
   const precedenceInfo = [
@@ -33,6 +53,7 @@ async function syncPackageData(moduleBuildPath: string) {
   modulePkg = { ...modulePkg, ...parentInfo };
 
   // flush new files to build dir of each package
+  const modulePkgPath = getModulePackagePath(moduleBuildPath);
   await fs.writeFile(modulePkgPath, JSON.stringify(modulePkg, null, 2), () => {
     console.error(`Prepared library's package.json  ...`);
   });
@@ -58,12 +79,14 @@ async function buildPackage() {
  * Returns semVer version of a given library
  * @returns semVer string version of development branch
  */
-async function getDevVersion() {
+async function getDevVersion(moduleBuildPath: string) {
+  const modulePkg = getModulePackage(moduleBuildPath);
+
   const lastCommit = await execute('git rev-parse HEAD');
   const commitHash = lastCommit.toString().trim().slice(0, 10);
 
   // 1.0.0 to become 1.0.0+dev.commitHash
-  const version: semver.SemVer = semver.parse(projPkgJson.version);
+  const version: semver.SemVer = semver.parse(modulePkg.version);
   const semVer = `${version.major}.${version.minor}.${version.patch}`;
   const devVersion = `${semVer}-dev-${commitHash}`;
   return devVersion;
@@ -92,7 +115,7 @@ async function main() {
   let newVersion = projPkgJson.version;
   let publishCmd = `yarn publish ${publishOptions} --new-version ${newVersion} --tag latest`;
   if (program.dev) {
-    newVersion = await getDevVersion();
+    newVersion = await getDevVersion(moduleBuildPath);
     publishCmd = `yarn publish ${publishOptions} --new-version ${newVersion} --tag dev`;
   }
 
