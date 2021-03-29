@@ -113,8 +113,9 @@ async function main() {
   const moduleBuildPath = path.join(distDir, 'libs', program.library);
   await syncPackageData(moduleBuildPath);
 
+  const modulePkg = getModulePackage(moduleBuildPath);
   const publishOptions = `--access public --non-interactive --no-git-tag-version `;
-  let newVersion = projPkgJson.version;
+  let newVersion = modulePkg.version;
   let publishCmd = `yarn publish ${publishOptions} --new-version ${newVersion} --tag latest`;
   if (program.dev) {
     newVersion = await getDevVersion(moduleBuildPath);
