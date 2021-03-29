@@ -136,11 +136,9 @@ X.Y.Z Version
 
 [ [Neekware Inc.](http://neekware.com) ] [ [Nx](https://nx.dev) ]
 
-[status-image]: https://secure.travis-ci.org/neekware/fullerstack.png?branch=main
-[status-link]: http://travis-ci.org/neekware/fullerstack?branch=main
+[status-image]: https://secure.travis-ci.com/neekware/fullerstack.png?branch=main
+[status-link]: http://travis-ci.com/neekware/fullerstack?branch=main
 [version-image]: https://img.shields.io/npm/v/@fullerstack.svg
-[version-link]: https://www.npmjs.com/package/@fullerstack
+[version-link]: https://www.npmjs.com/settings/fullerstack/packages
 [coverage-image]: https://coveralls.io/repos/neekware/fullerstack/badge.svg
 [coverage-link]: https://coveralls.io/r/neekware/fullerstack
-[download-image]: https://img.shields.io/npm/dm/@fullerstack/ngx-logger.svg
-[download-link]: https://www.npmjs.com/package/@fullerstack/ngx-loger

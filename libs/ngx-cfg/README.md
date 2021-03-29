@@ -1,4 +1,4 @@
-# @fullerstack/ngx-cfg [![fullerstack-image]][fullerstack-link]
+# @fullerstack/ngx-cfg <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
 **An Angular Configuration Library - Handles local and remote configurations**
 
@@ -31,17 +31,10 @@ Alternatively, you can have a simple lib such as `@fullerstack/ngx-cfg` to recei
 import { ApplicationCfg, HttpMethod } from '@fullerstack/ngx-cfg';
 
 export const environment: Readonly<ApplicationCfg> = {
-  // app name
-  appName: 'FullerStack',
-  // target (browser, mobile, desktop)
-  target: TargetPlatform.web,
   // production, staging or development
   production: false,
   // one or more app specific field(s)
-  logger: {
-    // Log level, (default = none)
-    level: LogLevels.info,
-  },
+  version: '1.0.0',
 };
 ```
 
@@ -93,8 +86,6 @@ export const environment: ApplicationCfg = {
   production: true,
   // release version
   version: '1.0.0',
-  // app name
-  appName: 'WebApp',
   // remote configuration (from the server prior to ng bootstrap)
   remoteCfg: {
     // server url to get remote config from (default = null)

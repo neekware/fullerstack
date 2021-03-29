@@ -1,4 +1,4 @@
-# @fullerstack/ngx-logger
+# @fullerstack/ngx-logger <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
 **A simple logger module for Angular applications**
 
@@ -33,11 +33,6 @@ import {
 import { LogLevels } from '@fullerstack/ngx-logger';
 
 export const environment: Readonly<ApplicationCfg> = {
-  // app name
-  appName: 'FullerStack',
-  // target (browser, mobile, desktop)
-  target: TargetPlatform.web,
-  // production, staging or development
   production: false,
   // one or more app specific field(s)
   logger: {

@@ -81,19 +81,22 @@ async function buildPackage() {
  * Returns semVer version of a given library
  * @returns semVer string version of development branch
  */
-async function getDevVersion(moduleBuildPath: string) {
-  const modulePkg = getModulePackage(moduleBuildPath);
+async function getVersion(moduleBuildPath: string, isDev = false) {
+  const modulePkg = await getModulePackage(moduleBuildPath);
+
+  const version: semver.SemVer = semver.parse(modulePkg.version);
+  const semVer = `${version.major}.${version.minor}.${version.patch}`;
+  if (!isDev) {
+    return semVer;
+  }
 
   const lastCommit = await execute('git rev-parse HEAD');
   const commitHash = lastCommit.toString().trim().slice(0, 10);
 
   // 1.0.0 to become 1.0.0+dev.commitHash
-  const version: semver.SemVer = semver.parse(modulePkg.version);
-  const semVer = `${version.major}.${version.minor}.${version.patch}`;
   const devVersion = `${semVer}-dev-${commitHash}`;
   return devVersion;
 }
-
 /**
  * Releases a given branch by building, pushing it to npmjs.org
  * @returns process status code
@@ -113,13 +116,11 @@ async function main() {
   const moduleBuildPath = path.join(distDir, 'libs', program.library);
   await syncPackageData(moduleBuildPath);
 
+  const modulePkg = getModulePackage(moduleBuildPath);
   const publishOptions = `--access public --non-interactive --no-git-tag-version `;
-  let newVersion = projPkgJson.version;
-  let publishCmd = `yarn publish ${publishOptions} --new-version ${newVersion} --tag latest`;
-  if (program.dev) {
-    newVersion = await getDevVersion(moduleBuildPath);
-    publishCmd = `yarn publish ${publishOptions} --new-version ${newVersion} --tag dev`;
-  }
+  const newVersion = await getVersion(moduleBuildPath, program.dev);
+  const releaseTag = `--tag ${program.dev ? 'dev' : 'latest'}`;
+  let publishCmd = `yarn publish ${publishOptions} --new-version ${newVersion} ${releaseTag}`;
 
   if (program.publish) {
     console.log('Publishing new version', newVersion);
