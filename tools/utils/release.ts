@@ -45,7 +45,9 @@ async function syncPackageData(moduleBuildPath: string): Promise<void> {
   ];
 
   // overwrite the following props from the workspace package.json
-  const overwriteInfo = precedenceInfo.filter((prop) => !modulePkg[prop]);
+  const overwriteInfo = precedenceInfo.filter(
+    (prop) => !modulePkg.hasOwnProperty(prop)
+  );
 
   // update common attributes
   const parentInfo = ld.pick(projPkgJson, overwriteInfo);

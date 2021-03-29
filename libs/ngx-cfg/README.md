@@ -149,12 +149,6 @@ export class AppComponent {
 }
 ```
 
-# Running the tests
-
-To run the tests against the current environment:
-
-    yarn ci:all
-
 # License
 
 Released under a ([MIT](https://github.com/un33k/ngx-cfg/blob/master/LICENSE)) license.
