@@ -1,19 +1,22 @@
-import { writeFile, writeFileSync, readFileSync } from 'fs';
-import { pick } from 'lodash';
+import * as fs from 'fs';
+import * as ld from 'lodash';
 import * as path from 'path';
 import * as program from 'commander';
-import { parse, SemVer } from 'semver';
+import * as semver from 'semver';
 import { distDir, execute, projPkgJson } from './utils';
 
 const moduleBuildPath = path.join(distDir, 'libs', program.lib);
 const modulePkgPath = require(path.join(moduleBuildPath, 'package.json'));
 const publishOptions = `--access public --non-interactive --no-git-tag-version `;
 
+/**
+ * Hydrate lib's package.json with that of the workspace
+ */
 async function syncPackageData() {
   let modulePkg = require(modulePkgPath);
 
   // update common attributes
-  const parentInfo = pick(projPkgJson, [
+  const parentInfo = ld.pick(projPkgJson, [
     'author',
     'version',
     'license',
@@ -26,19 +29,19 @@ async function syncPackageData() {
 
   modulePkg = { ...modulePkg, ...parentInfo };
   // flush new files to build dir of each package
-  await writeFile(modulePkgPath, JSON.stringify(modulePkg, null, 2), () => {
+  await fs.writeFile(modulePkgPath, JSON.stringify(modulePkg, null, 2), () => {
     console.error(`Flushed package.json  ...`);
   });
 
-  await writeFileSync(
+  await fs.writeFileSync(
     path.join(moduleBuildPath, './README.md'),
-    readFileSync('./README.md')
+    fs.readFileSync('./README.md')
   );
 }
 
 async function buildPackage() {
   if (program.build) {
-    const cmd = `ng build --prod`;
+    const cmd = `yarn build`;
     console.log(cmd);
     await execute(cmd).catch((error) => {
       console.log(`Failed to build ${program.lib} ... ${error}`);
@@ -53,7 +56,7 @@ async function getDevVersion() {
   const commitHash = lastCommit.toString().trim().slice(0, 10);
 
   // 1.0.0 to become 1.0.0+dev.commitHash
-  const version: SemVer = parse(projPkgJson.version);
+  const version: semver.SemVer = semver.parse(projPkgJson.version);
   const semVer = `${version.major}.${version.minor}.${version.patch}`;
   const devVersion = `${semVer}-dev-${commitHash}`;
   return devVersion;
