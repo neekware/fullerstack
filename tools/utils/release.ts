@@ -118,7 +118,7 @@ async function main() {
 
   const modulePkg = getModulePackage(moduleBuildPath);
   const publishOptions = `--access public --non-interactive --no-git-tag-version `;
-  const newVersion = await getVersion(moduleBuildPath);
+  const newVersion = await getVersion(moduleBuildPath, program.dev);
   const releaseTag = `--tag ${program.dev ? 'dev' : 'latest'}`;
   let publishCmd = `yarn publish ${publishOptions} --new-version ${newVersion} ${releaseTag}`;
 
