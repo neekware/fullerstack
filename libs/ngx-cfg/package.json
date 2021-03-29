@@ -2,7 +2,7 @@
   "version": "0.0.",
   "name": "@fullerstack/ngx-cfg",
   "description": "A Configuration Utility Library for Angular",
-  "homepage": "https://github.com/neekware/fullerstack/tree/main/libs/ngx-cfg",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-cfg/README.md",
   "keywords": [
     "ng",
     "angular",
