@@ -3,7 +3,14 @@
   "version": "0.0.1",
   "license": "MIT",
   "author": "Val Neekman",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neekware/fullerstack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neekware/fullerstack.git/issues"
+  },
+  "homepage": "https://github.com/neekware/fullerstack.git",
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
@@ -36,7 +43,8 @@
     "e2e:ci": "yarn nx:ci  e2e fullerstack-e2e --configuration=ci --headless",
     "api:ci": "yarn nx:ci  serve api --configuration=ci",
     "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=fullerstack-e2e",
-    "coverage:merge": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/coverageMerge.ts"
+    "coverage:merge": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/coverageMerge.ts",
+    "release": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/release.ts"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",
