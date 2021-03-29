@@ -1,4 +1,4 @@
-# @fullerstack/ngx-logger
+# @fullerstack/ngx-logger <img style="margin-bottom: -6px" width="30" src="apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
 **A simple logger module for Angular applications**
 
