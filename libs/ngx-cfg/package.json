@@ -1,9 +1,11 @@
 {
   "name": "@fullerstack/ngx-cfg",
+  "description": "A Configuration Utility Library for Angular",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^11.2.6",
-    "@angular/core": "^11.2.6"
+    "@angular/core": "^11.2.6",
+    "lodash-es": "^4.17.21"
   },
   "dependencies": {
     "tslib": "^2.0.0"

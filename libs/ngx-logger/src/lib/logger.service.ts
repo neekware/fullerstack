@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { merge as ldNestedMerge } from 'lodash-es';
-import { CfgService, ApplicationCfg } from '@fullerstack/ngx-cfg';
+import { ApplicationCfg, CfgService } from '@fullerstack/ngx-cfg';
 import { LogLevels, LogNames, LogColors } from './logger.models';
 import { DefaultLoggerCfg } from './logger.defaults';
 
