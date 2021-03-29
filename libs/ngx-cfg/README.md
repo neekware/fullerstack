@@ -9,7 +9,15 @@
 
 # Overview
 
-**@fullerstack/ngx-cfg** attempts to streamline the app configuration while keeping it **DRY**.
+## Description
+
+In general, passing the `environment.ts` into your publishable libraries may not be possible unless a relative path is used. However, relative paths will break the dependency graph of your mono-repo stack. This is due to the fact that the libs should not have any knowledge of the applications using them. If so, that will constitute a circular dependency.
+
+Till `Angular` natively supports something like, `import { environment } from '@angular/core/environment'`, your publishable libs must implement an `InjectionToken` to receive the `environment` object and provide it with an `APP_INITIALIZER` directly during the app's bootstrapping.
+
+Alternatively, you can have a simple lib such as `@fullerstack/ngx-cfg` to receive the `environment` object and provide it to all other publishable libs via an injectable service such as `CfgService`.
+
+**@fullerstack/ngx-cfg** attempts to streamline the sharing of the content of the `environment.ts` while promoting DRY **DRY**.
 
 # How to install
 
@@ -22,14 +30,18 @@
 
 import { ApplicationCfg, HttpMethod } from '@fullerstack/ngx-cfg';
 
-export const environment: ApplicationCfg = {
-  // production, staging or development
-  production: true,
-  // release version
-  version: '1.0.0',
+export const environment: Readonly<ApplicationCfg> = {
   // app name
-  appName: 'WebApp',
+  appName: 'FullerStack',
+  // target (browser, mobile, desktop)
+  target: TargetPlatform.web,
+  // production, staging or development
+  production: false,
   // one or more app specific field(s)
+  logger: {
+    // Log level, (default = none)
+    level: LogLevels.info,
+  },
 };
 ```
 
