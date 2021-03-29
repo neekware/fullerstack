@@ -1,5 +1,5 @@
 {
-  "version": "0.0.7",
+  "version": "0.0.8",
   "name": "@fullerstack/ngx-cfg",
   "description": "A Configuration Utility Library for Angular",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-cfg/README.md",

@@ -33,11 +33,6 @@ import {
 import { LogLevels } from '@fullerstack/ngx-logger';
 
 export const environment: Readonly<ApplicationCfg> = {
-  // app name
-  appName: 'FullerStack',
-  // target (browser, mobile, desktop)
-  target: TargetPlatform.web,
-  // production, staging or development
   production: false,
   // one or more app specific field(s)
   logger: {
