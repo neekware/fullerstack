@@ -3,7 +3,6 @@
   "dest": "../../dist/libs/ngx-cfg",
   "lib": {
     "entryFile": "src/index.ts",
-    "flatModuleFile": "ngx-cfg",
     "umdModuleIds": {
       "lodash-es": "lodash-es"
     }

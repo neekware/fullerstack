@@ -3,7 +3,6 @@
   "dest": "../../dist/libs/ngx-logger",
   "lib": {
     "entryFile": "src/index.ts",
-    "flatModuleFile": "ngx-logger",
     "umdModuleIds": {
       "lodash-es": "lodash-es",
       "@fullerstack/ngx-cfg": "@fullerstack/ngx-cfg"
