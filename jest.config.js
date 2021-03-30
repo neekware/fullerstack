@@ -4,5 +4,6 @@ module.exports = {
     '<rootDir>/apps/fullerstack',
     '<rootDir>/libs/ngx-cfg',
     '<rootDir>/libs/ngx-logger',
+    '<rootDir>/libs/nsx-database',
   ],
 };

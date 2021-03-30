@@ -368,6 +368,27 @@
           "watch": false
         }
       }
+    },
+    "nsx-database": {
+      "root": "libs/nsx-database",
+      "sourceRoot": "libs/nsx-database/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-database/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-database"],
+          "options": {
+            "jestConfig": "libs/nsx-database/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

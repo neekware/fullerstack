@@ -26,6 +26,7 @@
     "api": { "tags": [] },
     "api-dto": { "tags": [] },
     "ngx-cfg": { "tags": ["name:ngx-cfg", "scope:ngx-utils"] },
-    "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-utils"] }
+    "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-utils"] },
+    "nsx-database": { "tags": ["name:nsx-database", "scope:nsx-data"] }
   }
 }

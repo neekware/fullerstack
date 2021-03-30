@@ -4,8 +4,6 @@ import {
   Query,
   Mutation,
   Args,
-  ResolveField,
-  Root,
   Context,
   Int,
   InputType,
@@ -13,8 +11,7 @@ import {
 } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 import { Post } from './post.model';
-import { User } from '../user/user.model';
-import { PrismaService } from '../database/database.service';
+import { DatabaseService } from '@fullerstack/nsx-database';
 
 @InputType()
 class PostIDInput {
@@ -24,29 +21,21 @@ class PostIDInput {
 
 @Resolver(Post)
 export class PostResolver {
-  constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
-
-  // @ResolveField()
-  // author(@Root() post: Post): Promise<User | null> {
-  //   return this.prismaService.post
-  //     .findUnique({
-  //       where: {
-  //         id: post.id,
-  //       },
-  //     })
-  //     .author();
-  // }
+  constructor(
+    @Inject(DatabaseService)
+    private dataService: DatabaseService
+  ) {}
 
   @Query((returns) => Post, { nullable: true })
   post(@Args('where') where: PostIDInput) {
-    return this.prismaService.post.findUnique({
+    return this.dataService.post.findUnique({
       where: { id: where.id },
     });
   }
 
   @Query((returns) => [Post])
   filterPosts(@Args('searchString') searchString: string) {
-    return this.prismaService.post.findMany({
+    return this.dataService.post.findMany({
       where: {
         OR: [
           { title: { contains: searchString } },
@@ -58,7 +47,7 @@ export class PostResolver {
 
   @Query((returns) => [Post])
   feed(@Context() ctx) {
-    return this.prismaService.post.findMany({
+    return this.dataService.post.findMany({
       where: {
         published: true,
       },
@@ -73,7 +62,7 @@ export class PostResolver {
 
     @Context() ctx
   ): Promise<Post> {
-    return this.prismaService.post.create({
+    return this.dataService.post.create({
       data: {
         title: title,
         content: content,
@@ -86,7 +75,7 @@ export class PostResolver {
 
   @Mutation((returns) => Post, { nullable: true })
   publish(@Args('id') id: number): Promise<Post | null> {
-    return this.prismaService.post.update({
+    return this.dataService.post.update({
       where: {
         id: id,
       },
@@ -101,7 +90,7 @@ export class PostResolver {
     @Args('where') where: PostIDInput,
     @Context() ctx
   ): Promise<Post | null> {
-    return this.prismaService.post.delete({
+    return this.dataService.post.delete({
       where: {
         id: where.id,
       },

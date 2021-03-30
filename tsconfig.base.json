@@ -17,7 +17,8 @@
     "paths": {
       "@fullerstack/api-dto": ["libs/api-dto/src/index.ts"],
       "@fullerstack/ngx-cfg": ["libs/ngx-cfg/src/index.ts"],
-      "@fullerstack/ngx-logger": ["libs/ngx-logger/src/index.ts"]
+      "@fullerstack/ngx-logger": ["libs/ngx-logger/src/index.ts"],
+      "@fullerstack/nsx-database": ["libs/nsx-database/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

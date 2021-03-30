@@ -11,9 +11,9 @@ import {
   Field,
 } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
+import { DatabaseService } from '@fullerstack/nsx-database';
 import { Post } from '../post/post.model';
 import { User } from './user.model';
-import { PrismaService } from '../database/database.service';
 
 @InputType()
 class SignupUserInput {
@@ -26,7 +26,9 @@ class SignupUserInput {
 
 @Resolver(User)
 export class UserResolver {
-  constructor(@Inject(PrismaService) private prismaService: PrismaService) {}
+  constructor(
+    @Inject(DatabaseService) private prismaService: DatabaseService
+  ) {}
 
   @ResolveField()
   async posts(@Root() user: User, @Context() ctx): Promise<Post[]> {
