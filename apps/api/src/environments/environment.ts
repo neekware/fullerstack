@@ -1,3 +1,5 @@
+import { join } from 'path';
+
 export const environment = {
   production: false,
   port: 4201,
@@ -6,7 +8,6 @@ export const environment = {
   graphqlOptions: {
     debug: true,
     playground: true,
-    installSubscriptionHandlers: true,
-    autoSchemaFile: 'schema.gql',
+    autoSchemaFile: 'apps/api/src/prisma/schema.gql',
   },
 };
