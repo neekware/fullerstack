@@ -45,7 +45,9 @@
     "api:ci": "yarn nx:ci  serve api --configuration=ci",
     "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=fullerstack-e2e",
     "coverage:merge": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/coverageMerge.ts",
-    "release": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/release.ts"
+    "release": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/release.ts",
+    "prisma:migrate": "node ./node_modules/.bin/prisma migrate dev --schema=apps/api/src/prisma/schema.prisma",
+    "prisma:deploy": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",
