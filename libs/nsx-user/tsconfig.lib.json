@@ -1,9 +1,8 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
     "module": "commonjs",
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../../dist/out-tsc",
     "declaration": true,
     "types": ["node"],
     "target": "es6"

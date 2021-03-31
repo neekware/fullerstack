@@ -5,5 +5,6 @@ module.exports = {
     '<rootDir>/libs/ngx-cfg',
     '<rootDir>/libs/ngx-logger',
     '<rootDir>/libs/nsx-database',
+    '<rootDir>/libs/nsx-user/user',
   ],
 };

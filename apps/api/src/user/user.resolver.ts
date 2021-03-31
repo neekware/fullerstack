@@ -7,32 +7,20 @@ import {
   Context,
   ResolveField,
   Root,
-  InputType,
-  Field,
 } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { DatabaseService } from '@fullerstack/nsx-database';
 import { Post } from '../post/post.model';
-import { User } from './user.model';
-
-@InputType()
-class SignupUserInput {
-  @Field({ nullable: true })
-  name: string;
-
-  @Field()
-  email: string;
-}
-
+import { RegisterUserInput, User } from './user.model';
 @Resolver(User)
 export class UserResolver {
   constructor(
-    @Inject(DatabaseService) private prismaService: DatabaseService
+    @Inject(DatabaseService) private databaseService: DatabaseService
   ) {}
 
   @ResolveField()
   async posts(@Root() user: User, @Context() ctx): Promise<Post[]> {
-    return this.prismaService.user
+    return this.databaseService.user
       .findUnique({
         where: {
           id: user.id,
@@ -42,21 +30,34 @@ export class UserResolver {
   }
 
   @Mutation((returns) => User)
-  async signupUser(
-    @Args('data') data: SignupUserInput,
+  async registerUser(
+    @Args('data') data: RegisterUserInput,
     @Context() ctx
   ): Promise<User> {
-    return this.prismaService.user.create({
+    const user = await this.databaseService.user.findUnique({
+      where: {
+        username: data.username,
+        email: data.email,
+      },
+    });
+
+    if (user) {
+      throw new HttpException('User exists', HttpStatus.BAD_REQUEST);
+    }
+
+    return this.databaseService.user.create({
       data: {
         email: data.email,
         name: data.name,
+        password: data.password,
+        username: data.username,
       },
     });
   }
 
   @Query((returns) => User, { nullable: true })
   async user(@Args('id') id: number, @Context() ctx) {
-    return this.prismaService.user.findUnique({
+    return this.databaseService.user.findUnique({
       where: { id: id },
     });
   }

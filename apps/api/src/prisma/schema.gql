@@ -12,8 +12,15 @@ type User {
   id: ID!
   email: String!
   name: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
   posts: [Post!]
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Query {
   user(id: Float!): User
@@ -27,13 +34,15 @@ input PostIDInput {
 }
 
 type Mutation {
-  signupUser(data: SignupUserInput!): User!
+  registerUser(data: RegisterUserInput!): User!
   createDraft(authorEmail: String!, content: String, title: String!): Post!
   publish(id: Float!): Post
   deleteOnePost(where: PostIDInput!): Post
 }
 
-input SignupUserInput {
-  name: String
+input RegisterUserInput {
   email: String!
+  username: String!
+  name: String
+  password: String!
 }

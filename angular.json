@@ -231,7 +231,9 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "api:build"
+            "buildTarget": "api:build",
+            "inspect": true,
+            "port": 9229
           },
           "configurations": {
             "production": {
@@ -385,6 +387,27 @@
           "outputs": ["coverage/libs/nsx-database"],
           "options": {
             "jestConfig": "libs/nsx-database/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "nsx-user": {
+      "root": "libs/nsx-user/user",
+      "sourceRoot": "libs/nsx-user/user/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-user/user/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-user/user"],
+          "options": {
+            "jestConfig": "libs/nsx-user/user/jest.config.js",
             "passWithNoTests": true
           }
         }
