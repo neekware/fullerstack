@@ -1,16 +1,24 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
-import { DatabaseModule } from '@fullerstack/nsx-database';
+import { PrismaModule } from '@fullerstack/nsx-prisma';
+import { UserModule } from '@fullerstack/nsx-user';
 
+import { appConfiguration } from './app.config';
 import { environment } from '../environments/environment';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserResolver } from '../user/user.resolver';
-import { PostResolver } from '../post/post.resolver';
-
 @Module({
-  imports: [GraphQLModule.forRoot(environment.graphqlOptions), DatabaseModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [appConfiguration],
+    }),
+    PrismaModule,
+    UserModule,
+    GraphQLModule.forRoot(environment.graphqlOptions),
+  ],
   controllers: [AppController],
-  providers: [AppService, UserResolver, PostResolver],
+  providers: [AppService, ConfigService],
 })
 export class AppModule {}

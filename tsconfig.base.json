@@ -18,8 +18,9 @@
       "@fullerstack/api-dto": ["libs/api-dto/src/index.ts"],
       "@fullerstack/ngx-cfg": ["libs/ngx-cfg/src/index.ts"],
       "@fullerstack/ngx-logger": ["libs/ngx-logger/src/index.ts"],
-      "@fullerstack/nsx-database": ["libs/nsx-database/src/index.ts"],
-      "@fullerstack/nsx-user": ["libs/nsx-user/user/src/index.ts"]
+      "@fullerstack/nsx-prisma": ["libs/nsx-prisma/src/index.ts"],
+      "@fullerstack/nsx-user": ["libs/nsx-user/src/index.ts"],
+      "@fullerstack/nsx-common": ["libs/nsx-common/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

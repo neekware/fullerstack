@@ -2,19 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Post {
-  id: Int!
-  title: String!
-  votes: Int
-}
-
 type User {
   id: ID!
-  email: String!
-  name: String
+
+  """Object's creation time"""
   createdAt: DateTime!
+
+  """Object's update time"""
   updatedAt: DateTime!
-  posts: [Post!]
+  email: String!
 }
 
 """
@@ -23,26 +19,5 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  user(id: Float!): User
-  post(where: PostIDInput!): Post
-  filterPosts(searchString: String!): [Post!]!
-  feed: [Post!]!
-}
-
-input PostIDInput {
-  id: Int!
-}
-
-type Mutation {
-  registerUser(data: RegisterUserInput!): User!
-  createDraft(authorEmail: String!, content: String, title: String!): Post!
-  publish(id: Float!): Post
-  deleteOnePost(where: PostIDInput!): Post
-}
-
-input RegisterUserInput {
-  email: String!
-  username: String!
-  name: String
-  password: String!
+  me: User!
 }

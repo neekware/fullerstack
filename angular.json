@@ -371,22 +371,22 @@
         }
       }
     },
-    "nsx-database": {
-      "root": "libs/nsx-database",
-      "sourceRoot": "libs/nsx-database/src",
+    "nsx-prisma": {
+      "root": "libs/nsx-prisma",
+      "sourceRoot": "libs/nsx-prisma/src",
       "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/nsx-database/**/*.ts"]
+            "lintFilePatterns": ["libs/nsx-prisma/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/nsx-database"],
+          "outputs": ["coverage/libs/nsx-prisma"],
           "options": {
-            "jestConfig": "libs/nsx-database/jest.config.js",
+            "jestConfig": "libs/nsx-prisma/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -408,6 +408,27 @@
           "outputs": ["coverage/libs/nsx-user/user"],
           "options": {
             "jestConfig": "libs/nsx-user/user/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "nsx-common": {
+      "root": "libs/nsx-common",
+      "sourceRoot": "libs/nsx-common/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-common/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-common"],
+          "options": {
+            "jestConfig": "libs/nsx-common/jest.config.js",
             "passWithNoTests": true
           }
         }

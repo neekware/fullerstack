@@ -27,7 +27,8 @@
     "api-dto": { "tags": [] },
     "ngx-cfg": { "tags": ["name:ngx-cfg", "scope:ngx-utils"] },
     "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-utils"] },
-    "nsx-database": { "tags": ["name:nsx-database", "scope:nsx-data"] },
-    "nsx-user": { "tags": ["name:nsx-user", "scope:nsx-data-layer"] }
+    "nsx-prisma": { "tags": ["name:nsx-prisma", "scope:nsx-data"] },
+    "nsx-user": { "tags": ["name:nsx-user", "scope:nsx-data-layer"] },
+    "nsx-common": { "tags": ["name:nsx-common", "sope:nsx-data"] }
   }
 }

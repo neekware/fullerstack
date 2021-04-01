@@ -1,9 +1,8 @@
-import { join } from 'path';
-
 export const environment = {
   production: false,
   port: 4201,
   prefix: 'api',
+  bcryptSaltOrRound: 2,
   serverOptions: { logger: true },
   graphqlOptions: {
     debug: true,
