@@ -7,6 +7,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model Group {
   id   Int     @id @default(autoincrement())
   name String?
@@ -14,36 +19,33 @@ model Group {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
+  id            Int              @id @default(autoincrement())
   name          String?
-  email         String?   @unique
-  username      String    @unique
+  email         String?          @unique
+  username      String           @unique
   firstName     String?
   lastName      String?
   password      String?
-  emailVerified DateTime? @map("email_verified")
+  emailVerified DateTime?
   image         String?
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @default(now()) @map("updated_at")
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @default(now())
   groupId       Int?
-  group         Group?    @relation(fields: [groupId], references: [id])
+  group         Group?           @relation(fields: [groupId], references: [id])
   posts         Post[]
-
-  @@map("users")
+  profileViews  Int              @default(0)
+  role          Role             @default(USER)
+  city          String
+  country       String
+  profile       ExtendedProfile?
 }
 
-// model User {
-//   id        Int      @id @default(autoincrement())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @default(now())
-//   email     String   @unique
-//   username  String   @unique
-//   firstName String?
-//   lastName  String?
-//   password  String?
-//   name      String?
-//   posts     Post[]
-// }
+model ExtendedProfile {
+  id     Int     @id @default(autoincrement())
+  userId Int?    @unique
+  bio    String?
+  User   User?   @relation(fields: [userId], references: [id])
+}
 
 model Post {
   id        Int      @id @default(autoincrement())
@@ -54,4 +56,7 @@ model Post {
   published Boolean? @default(false)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
+  comments  Json
+  views     Int      @default(0)
+  likes     Int      @default(0)
 }

@@ -4,7 +4,7 @@ import { IsEmail } from 'class-validator';
 import { Post } from '../post/post.model';
 
 @ObjectType()
-export class User {
+export class Member {
   @Field((type) => ID)
   id: number;
 

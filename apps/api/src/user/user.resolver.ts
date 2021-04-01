@@ -11,53 +11,53 @@ import {
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { DatabaseService } from '@fullerstack/nsx-database';
 import { Post } from '../post/post.model';
-import { RegisterUserInput, User } from './user.model';
-@Resolver(User)
-export class UserResolver {
+import { RegisterUserInput, Member } from './member.model';
+@Resolver(Member)
+export class MemberResolver {
   constructor(
     @Inject(DatabaseService) private databaseService: DatabaseService
   ) {}
 
   @ResolveField()
-  async posts(@Root() user: User, @Context() ctx): Promise<Post[]> {
-    return this.databaseService.user
+  async posts(@Root() member: Member, @Context() ctx): Promise<Post[]> {
+    return this.databaseService.member
       .findUnique({
         where: {
-          id: user.id,
+          id: member.id,
         },
       })
       .posts();
   }
 
-  @Mutation((returns) => User)
+  @Mutation((returns) => Member)
   async registerUser(
     @Args('data') data: RegisterUserInput,
     @Context() ctx
-  ): Promise<User> {
-    const user = await this.databaseService.user.findUnique({
+  ): Promise<Member> {
+    const member = await this.databaseService.member.findUnique({
       where: {
-        username: data.username,
+        membername: data.membername,
         email: data.email,
       },
     });
 
-    if (user) {
-      throw new HttpException('User exists', HttpStatus.BAD_REQUEST);
+    if (member) {
+      throw new HttpException('Member exists', HttpStatus.BAD_REQUEST);
     }
 
-    return this.databaseService.user.create({
+    return this.databaseService.member.create({
       data: {
         email: data.email,
         name: data.name,
         password: data.password,
-        username: data.username,
+        membername: data.membername,
       },
     });
   }
 
-  @Query((returns) => User, { nullable: true })
-  async user(@Args('id') id: number, @Context() ctx) {
-    return this.databaseService.user.findUnique({
+  @Query((returns) => Member, { nullable: true })
+  async member(@Args('id') id: number, @Context() ctx) {
+    return this.databaseService.member.findUnique({
       where: { id: id },
     });
   }
