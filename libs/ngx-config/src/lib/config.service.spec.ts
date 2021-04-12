@@ -1,28 +1,28 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-
+import { TestBed, getTestBed } from '@angular/core/testing';
+import { DeepReadonly } from 'ts-essentials';
 import { DEFAULT_HTTP_TIMEOUT } from './config.constants';
 import { ApplicationConfig, HttpMethod } from './config.models';
 import { ConfigModule } from './config.module';
 import { ConfigService } from './config.service';
 
 /** Application Environment with no remote config endpoint */
-const appEnvLocal: ApplicationConfig = {
+const appEnvLocal: DeepReadonly<ApplicationConfig> = {
   version: '1.0.1',
   production: true,
-} as const;
+};
 
 /** Application Environment with remote config endpoint */
-const appEnvRemote: ApplicationConfig = {
+const appEnvRemote: DeepReadonly<ApplicationConfig> = {
   version: '1.0.1',
   production: true,
   remoteConfig: {
     endpoint: 'http://foo.com/remote/config',
   },
-} as const;
+};
 
 /** Mocked config config from remote endpoint */
 const mockRemoteData = {

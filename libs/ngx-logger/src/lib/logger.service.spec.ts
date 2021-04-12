@@ -1,11 +1,12 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
+import { DeepReadonly } from 'ts-essentials';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { LogLevels } from './logger.models';
 import { LoggerModule } from './logger.module';
 import { LoggerService } from './logger.service';
 import { HttpClientModule } from '@angular/common/http';
 
-const applicationConfig: ApplicationConfig = {
+const applicationConfig: DeepReadonly<ApplicationConfig> = {
   version: '1.0.0',
   appName: '@fullerstack/ngx-logger',
   production: false,
@@ -42,7 +43,7 @@ describe('LoggerService: Loads default values, disabled', () => {
   });
 
   it('should have the app config options', () => {
-    expect(service.options.appName).toBe(applicationConfig.appName);
+    expect(service.config.options.appName).toBe(applicationConfig.appName);
   });
 
   it('should have the module default config options', () => {
@@ -122,7 +123,6 @@ describe('LoggerService: LogLevel debug enabled', () => {
   });
 
   it('should log everything above, and including debug', () => {
-    console.log(service.options);
     const consoleLog = spyOn(console, 'log');
     service.critical('Logging a critical');
     service.error('Logging a error');

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "ts-essentials/*": ["node_modules/ts-essentials/*"],
       "@fullerstack/api-dto": ["libs/api-dto/src/index.ts"],
       "@fullerstack/ngx-config": ["libs/ngx-config/src/index.ts"],
       "@fullerstack/ngx-logger": ["libs/ngx-logger/src/index.ts"],

@@ -393,23 +393,29 @@
       }
     },
     "nsx-user": {
-      "root": "libs/nsx-user/user",
-      "sourceRoot": "libs/nsx-user/user/src",
+      "root": "libs/nsx-user/lib",
+      "sourceRoot": "libs/nsx-user/lib/src",
       "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/nsx-user/user/**/*.ts"]
+            "lintFilePatterns": ["libs/nsx-user/**/*.ts"]
           }
         },
-        "test": {
+        "test-disabled": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/nsx-user/user"],
+          "outputs": ["coverage/libs/nsx-user"],
           "options": {
-            "jestConfig": "libs/nsx-user/user/jest.config.js",
+            "jestConfig": "libs/nsx-user/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
         }
       }
     },

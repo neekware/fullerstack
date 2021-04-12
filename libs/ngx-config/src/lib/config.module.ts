@@ -1,5 +1,6 @@
 import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DeepReadonly } from 'ts-essentials';
 import { ApplicationConfig } from './config.models';
 import { ConfigService } from './config.service';
 import { CONFIG_TOKEN } from './config.defaults';
@@ -22,7 +23,7 @@ export class ConfigModule {
     }
   }
 
-  static forRoot(options?: ApplicationConfig) {
+  static forRoot(options?: DeepReadonly<ApplicationConfig>) {
     return {
       ngModule: ConfigModule,
       providers: [

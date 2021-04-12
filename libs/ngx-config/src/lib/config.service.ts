@@ -1,10 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { of } from 'rxjs';
 import { timeout, catchError } from 'rxjs/operators';
 import { merge as ldNestedMerge } from 'lodash-es';
-
+import { DeepReadonly } from 'ts-essentials';
 import { DEFAULT_HTTP_TIMEOUT } from './config.constants';
 import { ApplicationConfig, HttpMethod, RemoteType } from './config.models';
 import { CONFIG_TOKEN, DefaultApplicationConfig } from './config.defaults';
@@ -13,13 +12,13 @@ import { CONFIG_TOKEN, DefaultApplicationConfig } from './config.defaults';
   providedIn: 'root',
 })
 export class ConfigService {
-  options: ApplicationConfig = { ...DefaultApplicationConfig } as const;
+  options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(
     private http: HttpClient,
     @Inject(CONFIG_TOKEN) private readonly config: ApplicationConfig
   ) {
-    this.options = { ...ldNestedMerge(this.options, config) } as const;
+    this.options = { ...ldNestedMerge(this.options, config) };
     if (!this.options.production) {
       /* istanbul ignore next */
       console.log(`ConfigService ready ...`);
