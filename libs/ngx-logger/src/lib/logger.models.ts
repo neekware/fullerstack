@@ -1,7 +1,7 @@
 /**
  * Log config declaration
  */
-export interface LoggerCfg {
+export interface LoggerConfig {
   logger: {
     level?: number;
   };

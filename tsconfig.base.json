@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@fullerstack/api-dto": ["libs/api-dto/src/index.ts"],
-      "@fullerstack/ngx-cfg": ["libs/ngx-cfg/src/index.ts"],
+      "@fullerstack/ngx-config": ["libs/ngx-config/src/index.ts"],
       "@fullerstack/ngx-logger": ["libs/ngx-logger/src/index.ts"],
       "@fullerstack/nsx-prisma": ["libs/nsx-prisma/src/index.ts"],
       "@fullerstack/nsx-user": ["libs/nsx-user/src/index.ts"],

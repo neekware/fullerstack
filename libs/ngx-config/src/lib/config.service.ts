@@ -5,61 +5,54 @@ import { of } from 'rxjs';
 import { timeout, catchError } from 'rxjs/operators';
 import { merge as ldNestedMerge } from 'lodash-es';
 
-import { DEFAULT_HTTP_TIMEOUT } from './cfg.constants';
-import { ApplicationCfg, HttpMethod, RemoteType } from './cfg.models';
-import { CFG_TOKEN, DefaultApplicationCfg } from './cfg.defaults';
+import { DEFAULT_HTTP_TIMEOUT } from './config.constants';
+import { ApplicationConfig, HttpMethod, RemoteType } from './config.models';
+import { CONFIG_TOKEN, DefaultApplicationConfig } from './config.defaults';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CfgService {
-  private _options: Readonly<ApplicationCfg> = DefaultApplicationCfg;
+export class ConfigService {
+  options: ApplicationConfig = { ...DefaultApplicationConfig } as const;
 
   constructor(
     private http: HttpClient,
-    @Inject(CFG_TOKEN) private readonly config: ApplicationCfg
+    @Inject(CONFIG_TOKEN) private readonly config: ApplicationConfig
   ) {
-    this._options = ldNestedMerge(this._options, config);
-    if (!this._options.production) {
+    this.options = { ...ldNestedMerge(this.options, config) } as const;
+    if (!this.options.production) {
       /* istanbul ignore next */
-      console.log(`CfgService ready ...`);
+      console.log(`ConfigService ready ...`);
     }
-  }
-
-  /**
-   * Make the internal options publicly accessible.
-   */
-  get options(): Readonly<ApplicationCfg> {
-    return this._options;
   }
 
   /**
    * Fetches remote configuration options via get or post
    */
-  fetchRemoteCfg(): RemoteType {
-    const remoteCfg = this._options.remoteCfg;
-    if (remoteCfg) {
-      const url = remoteCfg.endpoint;
+  fetchRemoteConfig(): RemoteType {
+    const remoteConfig = this.options.remoteConfig;
+    if (remoteConfig) {
+      const url = remoteConfig.endpoint;
       if (url) {
         return new Promise((resolve) => {
-          let headers = remoteCfg.headers || {};
+          let headers = remoteConfig.headers || {};
           if (!Object.keys(headers).length) {
             headers = new HttpHeaders(headers);
           }
-          const httpMethod = remoteCfg.method || HttpMethod.GET;
+          const httpMethod = remoteConfig.method || HttpMethod.GET;
           let httpRequest = this.http.get(url, { headers });
           if (httpMethod === HttpMethod.POST) {
-            const postBody = remoteCfg.body || {};
+            const postBody = remoteConfig.body || {};
             httpRequest = this.http.post(url, postBody, { headers });
           }
           const httpTimeout =
-            (remoteCfg.timeout || DEFAULT_HTTP_TIMEOUT) * 1000;
+            (remoteConfig.timeout || DEFAULT_HTTP_TIMEOUT) * 1000;
           httpRequest
             .pipe(
               timeout(httpTimeout),
               catchError((err: Response) => {
                 console.warn(
-                  `CfgService failed. (${err.statusText || 'unknown'})`
+                  `ConfigService failed. (${err.statusText || 'unknown'})`
                 );
                 return of({});
               })
@@ -67,11 +60,11 @@ export class CfgService {
             .toPromise()
             .then((resp) => {
               if (Object.keys(resp || {}).length) {
-                if (!this._options.production) {
+                if (!this.options.production) {
                   /* istanbul ignore next */
-                  console.log(`CfgService remote cfg fetched ...`);
+                  console.log(`ConfigService remote config fetched ...`);
                 }
-                this._options = { ...this._options, remoteData: resp };
+                this.options = { ...this.options, remoteData: resp };
               }
               resolve(resp);
             });

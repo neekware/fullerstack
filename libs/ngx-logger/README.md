@@ -25,14 +25,14 @@ Proper logging of events is one of the most important aspect of any proper softw
 // In your environment{prod,staging}.ts
 
 import {
-  ApplicationCfg,
+  ApplicationConfig,
   TargetPlatform,
   HttpMethod,
-} from '@fullerstack/ngx-cfg';
+} from '@fullerstack/ngx-config';
 
 import { LogLevels } from '@fullerstack/ngx-logger';
 
-export const environment: Readonly<ApplicationCfg> = {
+export const environment: ApplicationConfig = {
   production: false,
   // one or more app specific field(s)
   logger: {
@@ -40,13 +40,13 @@ export const environment: Readonly<ApplicationCfg> = {
     // Anything above `info` will be logged, anything below will be skipped
     level: LogLevels.info,
   },
-};
+} as const;
 ```
 
 ```typescript
 // In your app.module.ts
 
-import { CfgModule } from '@fullerstack/ngx-cfg';
+import { ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
 import { environment } from '../environments/environment';
 
@@ -54,7 +54,7 @@ import { environment } from '../environments/environment';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    CfgModule.forRoot(environment),
+    ConfigModule.forRoot(environment),
     LoggerModule.forRoot(),
   ],
   bootstrap: [AppComponent],
@@ -66,7 +66,7 @@ export class AppModule {}
 // In your app.component.ts or (some.service.ts)
 
 import { Component } from '@angular/core';
-import { CfgService } from '@fullerstack/ngx-cfg';
+import { ConfigService } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 
 @Component({
@@ -74,10 +74,10 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 })
 export class AppComponent {
   title = 'FullerStack';
-  private _options: Readonly<ApplicationCfg>;
+  options: ApplicationConfig;
 
-  constructor(public cfg: CfgService, public log: LogService) {
-    this.title = this.cfg.options.appName;
+  constructor(public config: ConfigService, public log: LogService) {
+    this.title = this.config.options.appName;
 
     this.log.critical('Logging critical');
     this.log.error('Logging error and above');
@@ -86,17 +86,13 @@ export class AppComponent {
     this.log.debug('Logging debug and above');
     this.log.trace('Logging trace and above');
   }
-
-  get options(): Readonly<ApplicationCfg> {
-    return this._options;
-  }
 }
 ```
 
 # Sample logs
 
 ```
-CfgService ready ...
+ConfigService ready ...
 2018-05-17T02:47:54.184Z [DEBUG] LogService ready ...
 2018-05-17T02:47:54.188Z [DEBUG] GqlService ready ...
 2018-05-17T02:47:54.375Z [DEBUG] I18nService ready ... (en)
@@ -111,14 +107,14 @@ CfgService ready ...
 
 # Note:
 
-1. `@fullerstack/ngx-logger` depends on `@fullerstack/ngx-cfg` for accessing the log level.
+1. `@fullerstack/ngx-logger` depends on `@fullerstack/ngx-config` for accessing the log level.
 2. You may want to set the log level to `LogLevels.debug` for development and `LogLevels.warn` for production.
 3. `@fullerstack/ngx-logger` should be imported at the root level of your application.
 4. To disable the logger, set the level to `LogLevels.none`, (default).
 
 # License
 
-Released under a ([MIT](../../LICENSE)) license.
+Released under a ([MIT](https://raw.githubusercontent.com/neekware/fullerstack/main/LICENSE)) license.
 
 # Version
 

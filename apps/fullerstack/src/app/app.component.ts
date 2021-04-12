@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { HealthCheck } from '@fullerstack/api-dto';
-import { CfgService } from '@fullerstack/ngx-cfg';
+import { ConfigService } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 
 @Component({
@@ -17,10 +17,10 @@ export class AppComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    public cfgService: CfgService,
+    public configService: ConfigService,
     public loggerService: LoggerService
   ) {
-    if (!this.cfgService.options.production) {
+    if (!this.configService.options.production) {
       /* istanbul ignore next */
       this.loggerService.info('AppComponent starting ... ');
     }

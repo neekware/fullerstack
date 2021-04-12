@@ -1,4 +1,4 @@
-# @fullerstack/ngx-cfg <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
+# @fullerstack/ngx-config <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
 **An Angular Configuration Library - Handles local and remote configurations**
 
@@ -15,22 +15,22 @@ In general, passing the `environment.ts` into your publishable libraries may not
 
 Till `Angular` natively supports something like, `import { environment } from '@angular/core/environment'`, your publishable libs must implement an `InjectionToken` to receive the `environment` object and provide it with an `APP_INITIALIZER` directly during the app's bootstrapping.
 
-Alternatively, you can have a simple lib such as `@fullerstack/ngx-cfg` to receive the `environment` object and provide it to all other publishable libs via an injectable service such as `CfgService`.
+Alternatively, you can have a simple lib such as `@fullerstack/ngx-config` to receive the `environment` object and provide it to all other publishable libs via an injectable service such as `ConfigService`.
 
-**@fullerstack/ngx-cfg** attempts to streamline the sharing of the content of the `environment.ts` while promoting DRY **DRY**.
+**@fullerstack/ngx-config** attempts to streamline the sharing of the content of the `environment.ts` while promoting DRY **DRY**.
 
 # How to install
 
-    npm i @fullerstack/ngx-cfg |OR| yarn add @fullerstack/ngx-cfg
+    npm i @fullerstack/ngx-config |OR| yarn add @fullerstack/ngx-config
 
 # How to use
 
 ```typescript
 // In your environment{prod,staging}.ts
 
-import { ApplicationCfg, HttpMethod } from '@fullerstack/ngx-cfg';
+import { ApplicationConfig, HttpMethod } from '@fullerstack/ngx-config';
 
-export const environment: Readonly<ApplicationCfg> = {
+export const environment: Readonly<ApplicationConfig> = {
   // production, staging or development
   production: false,
   // one or more app specific field(s)
@@ -41,12 +41,12 @@ export const environment: Readonly<ApplicationCfg> = {
 ```typescript
 // In your app.module.ts
 
-import { CfgModule } from '@fullerstack/ngx-cfg';
+import { ConfigModule } from '@fullerstack/ngx-config';
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, CfgModule.forRoot(environment)],
+  imports: [BrowserModule, ConfigModule.forRoot(environment)],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
@@ -56,7 +56,7 @@ export class AppModule {}
 // In your app.component.ts or (some.service.ts)
 
 import { Component } from '@angular/core';
-import { CfgService } from '@fullerstack/ngx-cfg';
+import { ConfigService } from '@fullerstack/ngx-config';
 
 @Component({
   selector: 'app-root',
@@ -64,8 +64,8 @@ import { CfgService } from '@fullerstack/ngx-cfg';
 export class AppComponent {
   title: string;
 
-  constructor(public cfgService: CfgService) {
-    this.title = this.cfgService.options.appName;
+  constructor(public configService: ConfigService) {
+    this.title = this.configService.options.appName;
   }
 }
 ```
@@ -74,22 +74,22 @@ export class AppComponent {
 
 - Remote configuration
 
-`@fullerstack/ngx-cfg` can also be used to fetch remote configuration prior to start of an Angular app.
+`@fullerstack/ngx-config` can also be used to fetch remote configuration prior to start of an Angular app.
 
 ```typescript
 // In your environment{prod,staging}.ts
 
-import { ApplicationCfg, HttpMethod } from '@fullerstack/ngx-cfg';
+import { ApplicationConfig, HttpMethod } from '@fullerstack/ngx-config';
 
-export const environment: ApplicationCfg = {
+export const environment: ApplicationConfig = {
   // production, staging or development
   production: true,
   // release version
   version: '1.0.0',
   // remote configuration (from the server prior to ng bootstrap)
-  remoteCfg: {
+  remoteConfig: {
     // server url to get remote config from (default = null)
-    endpoint: '/api/cfg',
+    endpoint: '/api/config',
     // GET or POST http method to connect to remote server (default = get)
     method: HttpMethod.GET,
     // Max timeout of http connection to remote server (default = 2 seconds)
@@ -108,12 +108,12 @@ export const environment: ApplicationCfg = {
 ```typescript
 // In your app.module.ts
 
-import { CfgModule } from '@fullerstack/ngx-cfg';
+import { ConfigModule } from '@fullerstack/ngx-config';
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, CfgModule.forRoot(environment)],
+  imports: [BrowserModule, ConfigModule.forRoot(environment)],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
@@ -123,7 +123,7 @@ export class AppModule {}
 // In your app.component.ts or (some.service.ts)
 
 import { Component } from '@angular/core';
-import { CfgService } from '@fullerstack/ngx-cfg';
+import { ConfigService } from '@fullerstack/ngx-config';
 import { merge } from 'lodash';
 
 @Component({
@@ -133,16 +133,16 @@ export class AppComponent {
   title: string;
   options = {};
 
-  constructor(public cfgService: CfgService) {
-    this.options = merge({ name: 'AppComponent' }, this.cfgService.options};
-    const remoteCfgData = this.options.remoteData;
+  constructor(public configService: ConfigService) {
+    this.options = merge({ name: 'AppComponent' }, this.configService.options};
+    const remoteConfigData = this.options.remoteData;
   }
 }
 ```
 
 # License
 
-Released under a ([MIT](https://github.com/un33k/ngx-cfg/blob/master/LICENSE)) license.
+Released under a ([MIT](https://github.com/un33k/ngx-config/blob/master/LICENSE)) license.
 
 # Version
 
@@ -154,12 +154,12 @@ X.Y.Z Version
 
 [status-image]: https://secure.travis-ci.org/neekware/fullerstack.png?branch=main
 [status-link]: http://travis-ci.org/neekware/fullerstack?branch=main
-[version-image]: https://img.shields.io/npm/v/@fullerstack/ngx-cfg.svg
-[version-link]: https://www.npmjs.com/package/@fullerstack/ngx-cfg
+[version-image]: https://img.shields.io/npm/v/@fullerstack/ngx-config.svg
+[version-link]: https://www.npmjs.com/package/@fullerstack/ngx-config
 [coverage-image]: https://coveralls.io/repos/neekware/fullerstack/badge.svg
 [coverage-link]: https://coveralls.io/r/neekware/fullerstack
-[download-image]: https://img.shields.io/npm/dm/@fullerstack/ngx-cfg.svg
-[download-link]: https://www.npmjs.com/package/@fullerstack/ngx-cfg
+[download-image]: https://img.shields.io/npm/dm/@fullerstack/ngx-config.svg
+[download-link]: https://www.npmjs.com/package/@fullerstack/ngx-config
 
 # Sponsors
 

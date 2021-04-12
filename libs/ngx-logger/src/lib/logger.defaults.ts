@@ -1,9 +1,9 @@
-import { LoggerCfg, LogLevels } from './logger.models';
+import { LoggerConfig, LogLevels } from './logger.models';
 
 /**
  * Default configuration - logger module
  */
-export const DefaultLoggerCfg: LoggerCfg = {
+export const DefaultLoggerConfig: LoggerConfig = {
   logger: {
     level: LogLevels.none,
   },

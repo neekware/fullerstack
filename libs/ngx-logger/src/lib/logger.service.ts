@@ -2,9 +2,9 @@
 
 import { Injectable } from '@angular/core';
 import { merge as ldNestedMerge } from 'lodash-es';
-import { ApplicationCfg, CfgService } from '@fullerstack/ngx-cfg';
+import { ApplicationConfig, ConfigService } from '@fullerstack/ngx-config';
 import { LogLevels, LogNames, LogColors } from './logger.models';
-import { DefaultLoggerCfg } from './logger.defaults';
+import { DefaultLoggerConfig } from './logger.defaults';
 
 /**
  * An injectable class that handles logging service
@@ -13,18 +13,16 @@ import { DefaultLoggerCfg } from './logger.defaults';
   providedIn: 'root',
 })
 export class LoggerService {
-  public isPlatformIE = false;
-  private _options: Readonly<ApplicationCfg>;
+  options: ApplicationConfig;
 
-  constructor(public cfg: CfgService) {
-    this._options = ldNestedMerge(DefaultLoggerCfg, cfg.options);
+  constructor(public config: ConfigService) {
+    this.options = {
+      ...ldNestedMerge(DefaultLoggerConfig, config.options),
+    } as const;
+
     if (!this.options.production) {
       this.info('LogService ready ...');
     }
-  }
-
-  get options(): Readonly<ApplicationCfg> {
-    return this._options;
   }
 
   /**
@@ -98,8 +96,8 @@ export class LoggerService {
     if (
       !message ||
       level === LogLevels.none ||
-      level > this._options.logger.level ||
-      this._options.logger.level === LogLevels.none
+      level > this.options.logger.level ||
+      this.options.logger.level === LogLevels.none
     ) {
       return;
     }

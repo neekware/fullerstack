@@ -121,7 +121,7 @@ yarn format
 
 ## License
 
-- Released under a ([MIT](LICENSE)) license.
+- Released under a ([MIT](https://raw.githubusercontent.com/neekware/fullerstack/main/LICENSE)) license.
 - Commercial Support Available - info@neekware.com
 
 ## Version

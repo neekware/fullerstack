@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { ApplicationCfg } from '@fullerstack/ngx-cfg';
+import { ApplicationConfig } from '@fullerstack/ngx-config';
 import { LogLevels } from '@fullerstack/ngx-logger';
 
 /*
@@ -14,7 +14,7 @@ import { LogLevels } from '@fullerstack/ngx-logger';
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
-export const environment: Readonly<ApplicationCfg> = {
+export const environment: Readonly<ApplicationConfig> = {
   version: '0.0.1',
   production: false,
   appName: 'FullerStack',

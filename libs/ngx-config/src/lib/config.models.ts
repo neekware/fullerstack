@@ -8,7 +8,7 @@ export enum HttpMethod {
   POST = 'POST',
 }
 
-export interface EnvironmentCfg {
+export interface EnvironmentConfig {
   // true for production build
   production: boolean;
   // application release version
@@ -19,7 +19,7 @@ export interface EnvironmentCfg {
   [id: string]: any;
 }
 
-export interface LocalCfg {
+export interface LocalConfig {
   // if target supports multi-tab apps (browsers)
   multiTab?: boolean;
   // url to login page for user authentication (for anonymous users only)
@@ -34,7 +34,7 @@ export interface LocalCfg {
   [id: string]: any;
 }
 
-export interface RemoteCfg {
+export interface RemoteConfig {
   // url to fetch config file from
   endpoint: string;
   // http headers to be sent with request
@@ -49,11 +49,11 @@ export interface RemoteCfg {
   [id: string]: any;
 }
 
-export interface ApplicationCfg extends EnvironmentCfg {
-  // cfg config
-  localCfg?: LocalCfg;
+export interface ApplicationConfig extends EnvironmentConfig {
+  // local config
+  localConfig?: LocalConfig;
   // remote config (json object)
-  remoteCfg?: RemoteCfg;
+  remoteConfig?: RemoteConfig;
   // received data from remote
   remoteData?: { [id: string]: any };
   // extra modules (ext.auth, ext.log)

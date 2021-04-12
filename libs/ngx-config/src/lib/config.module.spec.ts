@@ -1,16 +1,16 @@
 import { waitForAsync, TestBed } from '@angular/core/testing';
-import { CfgModule } from './cfg.module';
+import { ConfigModule } from './config.module';
 
-describe('CfgModule', () => {
+describe('ConfigModule', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [CfgModule],
+        imports: [ConfigModule],
       }).compileComponents();
     })
   );
 
   it('should have a module definition', () => {
-    expect(CfgModule).toBeDefined();
+    expect(ConfigModule).toBeDefined();
   });
 });

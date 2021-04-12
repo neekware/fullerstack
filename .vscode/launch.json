@@ -26,14 +26,19 @@
       "sourceMaps": true,
       "restart": true,
       "protocol": "auto",
-      "port": 9229,
+      "port": 9229
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Debug Jest Tests",
       "program": "${workspaceFolder}/node_modules/@angular/cli/bin/ng",
-      "args": ["test", "${input:libName}", "--runInBand=true", "--codeCoverage=false"],
+      "args": [
+        "test",
+        "${input:libName}",
+        "--runInBand=true",
+        "--codeCoverage=false"
+      ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
@@ -49,7 +54,7 @@
         "fullerstack-e2e",
         "fullerstack",
         "api",
-        "ngx-cfg",
+        "ngx-config",
         "ngx-logger",
         "api-dto",
         "nxs-database"
@@ -68,4 +73,3 @@
     }
   ]
 }
-

@@ -279,24 +279,24 @@
         }
       }
     },
-    "ngx-cfg": {
+    "ngx-config": {
       "projectType": "library",
-      "root": "libs/ngx-cfg",
-      "sourceRoot": "libs/ngx-cfg/src",
-      "prefix": "fullerstack-ngx-cfg",
+      "root": "libs/ngx-config",
+      "sourceRoot": "libs/ngx-config/src",
+      "prefix": "fullerstack-ngx-config",
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
           "options": {
-            "tsConfig": "libs/ngx-cfg/tsconfig.lib.json",
-            "project": "libs/ngx-cfg/ng-package.json"
+            "tsConfig": "libs/ngx-config/tsconfig.lib.json",
+            "project": "libs/ngx-config/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/ngx-cfg/tsconfig.lib.prod.json"
+              "tsConfig": "libs/ngx-config/tsconfig.lib.prod.json"
             },
             "ci": {
-              "tsConfig": "libs/ngx-cfg/tsconfig.lib.prod.json"
+              "tsConfig": "libs/ngx-config/tsconfig.lib.prod.json"
             }
           }
         },
@@ -304,16 +304,16 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/ngx-cfg/src/**/*.ts",
-              "libs/ngx-cfg/src/**/*.html"
+              "libs/ngx-config/src/**/*.ts",
+              "libs/ngx-config/src/**/*.html"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ngx-cfg"],
+          "outputs": ["coverage/libs/ngx-config"],
           "options": {
-            "jestConfig": "libs/ngx-cfg/jest.config.js",
+            "jestConfig": "libs/ngx-config/jest.config.js",
             "passWithNoTests": true
           },
           "ci": {

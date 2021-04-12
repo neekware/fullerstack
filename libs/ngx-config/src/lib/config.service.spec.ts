@@ -4,49 +4,49 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 
-import { DEFAULT_HTTP_TIMEOUT } from './cfg.constants';
-import { ApplicationCfg, HttpMethod } from './cfg.models';
-import { CfgModule } from './cfg.module';
-import { CfgService } from './cfg.service';
+import { DEFAULT_HTTP_TIMEOUT } from './config.constants';
+import { ApplicationConfig, HttpMethod } from './config.models';
+import { ConfigModule } from './config.module';
+import { ConfigService } from './config.service';
 
 /** Application Environment with no remote config endpoint */
-const appEnvLocal: Readonly<ApplicationCfg> = {
+const appEnvLocal: ApplicationConfig = {
   version: '1.0.1',
   production: true,
-};
+} as const;
 
 /** Application Environment with remote config endpoint */
-const appEnvRemote: Readonly<ApplicationCfg> = {
+const appEnvRemote: ApplicationConfig = {
   version: '1.0.1',
   production: true,
-  remoteCfg: {
-    endpoint: 'http://foo.com/remote/cfg',
+  remoteConfig: {
+    endpoint: 'http://foo.com/remote/config',
   },
-};
+} as const;
 
 /** Mocked config config from remote endpoint */
 const mockRemoteData = {
   country: 'US',
   state: 'California',
   splash: 'https://foo.com/authenticated.gif',
-};
+} as const;
 
 // disable console log/warn during test
 // jest.spyOn(console, 'log').mockImplementation(() => undefined);
 jest.spyOn(console, 'warn').mockImplementation(() => undefined);
 
-describe('CfgService: loading and defaults', () => {
-  let service: CfgService;
+describe('ConfigService: loading and defaults', () => {
+  let service: ConfigService;
   let testbed: TestBed;
 
   beforeAll(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, CfgModule.forRoot(appEnvLocal)],
-      providers: [CfgService],
+      imports: [HttpClientTestingModule, ConfigModule.forRoot(appEnvLocal)],
+      providers: [ConfigService],
     });
 
     testbed = getTestBed();
-    service = testbed.inject(CfgService);
+    service = testbed.inject(ConfigService);
   });
 
   afterAll(() => {
@@ -63,35 +63,35 @@ describe('CfgService: loading and defaults', () => {
   });
 
   it('should have merged the default config options', () => {
-    expect(service.options.localCfg.loginPageUrl).toBe('/auth/login');
+    expect(service.options.localConfig.loginPageUrl).toBe('/auth/login');
   });
 
   it('should have merged the default options with the remote options', () => {
-    expect(service.options.remoteCfg.timeout).toEqual(DEFAULT_HTTP_TIMEOUT);
+    expect(service.options.remoteConfig.timeout).toEqual(DEFAULT_HTTP_TIMEOUT);
   });
 
-  it('should handle null remoteCfg endpoints', () => {
-    expect(service.options.remoteCfg.endpoint).toEqual(null);
+  it('should handle null remoteConfig endpoints', () => {
+    expect(service.options.remoteConfig.endpoint).toEqual(null);
 
-    service.fetchRemoteCfg().then(() => {
+    service.fetchRemoteConfig().then(() => {
       expect(service.options.remoteData).toEqual({});
     });
   });
 });
 
-describe('CfgService: remoteCfg via GET', () => {
-  let service: CfgService;
+describe('ConfigService: remoteConfig via GET', () => {
+  let service: ConfigService;
   let testbed: TestBed;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, CfgModule.forRoot(appEnvRemote)],
-      providers: [CfgService],
+      imports: [HttpClientTestingModule, ConfigModule.forRoot(appEnvRemote)],
+      providers: [ConfigService],
     });
 
     testbed = getTestBed();
-    service = testbed.inject(CfgService);
+    service = testbed.inject(ConfigService);
     httpMock = testbed.inject(HttpTestingController);
   });
 
@@ -103,8 +103,8 @@ describe('CfgService: remoteCfg via GET', () => {
   });
 
   it('should get remote config via GET', () => {
-    expect(service.options.remoteCfg.method).toBe(HttpMethod.GET);
-    const mockReq = httpMock.expectOne(service.options.remoteCfg.endpoint);
+    expect(service.options.remoteConfig.method).toBe(HttpMethod.GET);
+    const mockReq = httpMock.expectOne(service.options.remoteConfig.endpoint);
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.method).toEqual('GET');
     expect(mockReq.request.responseType).toEqual('json');
@@ -112,15 +112,15 @@ describe('CfgService: remoteCfg via GET', () => {
   });
 
   it('should get remote config handle Error on GET calls', () => {
-    const mockReq = httpMock.expectOne(service.options.remoteCfg.endpoint);
+    const mockReq = httpMock.expectOne(service.options.remoteConfig.endpoint);
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.responseType).toEqual('json');
     mockReq.flush(null, { status: 400, statusText: 'Bad Request' });
   });
 });
 
-describe('CfgService: remoteCfg via POST', () => {
-  let service: CfgService;
+describe('ConfigService: remoteConfig via POST', () => {
+  let service: ConfigService;
   let testbed: TestBed;
   let httpMock: HttpTestingController;
 
@@ -128,16 +128,19 @@ describe('CfgService: remoteCfg via POST', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        CfgModule.forRoot({
+        ConfigModule.forRoot({
           ...appEnvRemote,
-          remoteCfg: { ...appEnvRemote.remoteCfg, method: HttpMethod.POST },
+          remoteConfig: {
+            ...appEnvRemote.remoteConfig,
+            method: HttpMethod.POST,
+          },
         }),
       ],
-      providers: [CfgService],
+      providers: [ConfigService],
     });
 
     testbed = getTestBed();
-    service = testbed.inject(CfgService);
+    service = testbed.inject(ConfigService);
     httpMock = testbed.inject(HttpTestingController);
   });
 
@@ -149,8 +152,8 @@ describe('CfgService: remoteCfg via POST', () => {
   });
 
   it('should get remote config via POST', () => {
-    expect(service.options.remoteCfg.method).toBe(HttpMethod.POST);
-    const mockReq = httpMock.expectOne(service.options.remoteCfg.endpoint);
+    expect(service.options.remoteConfig.method).toBe(HttpMethod.POST);
+    const mockReq = httpMock.expectOne(service.options.remoteConfig.endpoint);
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.method).toEqual('POST');
     expect(mockReq.request.responseType).toEqual('json');
@@ -158,15 +161,15 @@ describe('CfgService: remoteCfg via POST', () => {
   });
 
   it('should get remote config handle Error on POST calls', () => {
-    const mockReq = httpMock.expectOne(service.options.remoteCfg.endpoint);
+    const mockReq = httpMock.expectOne(service.options.remoteConfig.endpoint);
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.responseType).toEqual('json');
     mockReq.flush(null, { status: 400, statusText: 'Bad Request' });
   });
 });
 
-describe('CfgService: remoteCfg w/o headers', () => {
-  let service: CfgService;
+describe('ConfigService: remoteConfig w/o headers', () => {
+  let service: ConfigService;
   let testbed: TestBed;
   let httpMock: HttpTestingController;
 
@@ -174,16 +177,16 @@ describe('CfgService: remoteCfg w/o headers', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        CfgModule.forRoot({
+        ConfigModule.forRoot({
           ...appEnvRemote,
-          remoteCfg: { ...appEnvRemote.remoteCfg, headers: {} },
+          remoteConfig: { ...appEnvRemote.remoteConfig, headers: {} },
         }),
       ],
-      providers: [CfgService],
+      providers: [ConfigService],
     });
 
     testbed = getTestBed();
-    service = testbed.inject(CfgService);
+    service = testbed.inject(ConfigService);
     httpMock = testbed.inject(HttpTestingController);
   });
 
@@ -195,7 +198,7 @@ describe('CfgService: remoteCfg w/o headers', () => {
   });
 
   it('should get remote config in dev mode w/o headers', () => {
-    const mockReq = httpMock.expectOne(service.options.remoteCfg.endpoint);
+    const mockReq = httpMock.expectOne(service.options.remoteConfig.endpoint);
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.responseType).toEqual('json');
     mockReq.flush(mockRemoteData);
