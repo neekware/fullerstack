@@ -7,7 +7,11 @@ import {
   Mutation,
   Args,
   ResolveField,
+  Info,
+  Int,
 } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { GraphQLResolveInfo } from 'graphql';
 import { User } from './user.models';
 import { UserService } from './user.service';
 
@@ -23,6 +27,12 @@ export class UserResolver {
   async me(@UserEntity() user: User): Promise<User> {
     return user;
   }
+
+  // @UseGuards(GqlAuthGuard)
+  // @Query((returns) => User)
+  // async users(@Args('data') where: Prisma.UserWhereInput) {
+  //   return this.userService.users({ where });
+  // }
 
   // @UseGuards(GqlAuthGuard)
   // @Mutation((returns) => User)

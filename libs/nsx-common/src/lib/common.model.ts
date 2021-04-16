@@ -1,9 +1,5 @@
+import { Role } from '@prisma/client';
 import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
-
-export enum Role {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-}
 
 registerEnumType(Role, {
   name: 'Role',
@@ -13,7 +9,7 @@ registerEnumType(Role, {
 @ObjectType({ isAbstract: true })
 export abstract class BaseModel {
   @Field((type) => ID)
-  id: string;
+  id: number;
 
   @Field({ description: "Object's creation time" })
   createdAt: Date;

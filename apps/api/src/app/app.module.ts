@@ -19,6 +19,6 @@ import { AppService } from './app.service';
     GraphQLModule.forRoot(environment.graphqlOptions),
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigService],
+  providers: [ConfigService, AppService, UserModule],
 })
 export class AppModule {}
