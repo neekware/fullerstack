@@ -31,16 +31,18 @@ enum Role {
 // }
 
 model User {
-  id            Int              @id @default(autoincrement())
-  email         String           @unique
-  username      String           @unique
-  password      String
-  verified      Boolean?
+  id            String           @id @default(cuid())
   createdAt     DateTime         @default(now())
   updatedAt     DateTime         @default(now())
+  email         String           @unique
+  username      String           @unique
+  password      String           @default(cuid())
+  token         String           @default("dilavni")
+  tokenCount    Int              @default(1)
+  isVerified    Boolean          @default(false)
+  isActive      Boolean          @default(false)
   firstName     String
   lastName      String
-  name          String?
   role          Role             @default(USER)
 }
   // groupId       Int?

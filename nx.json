@@ -29,6 +29,8 @@
     "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-utils"] },
     "nsx-prisma": { "tags": ["name:nsx-prisma", "scope:nsx-data"] },
     "nsx-user": { "tags": ["name:nsx-user", "scope:nsx-data-layer"] },
-    "nsx-common": { "tags": ["name:nsx-common", "sope:nsx-data"] }
+    "nsx-common": { "tags": ["name:nsx-common", "sope:nsx-data"] },
+    "nsx-auth": { "tags": ["name:nsx-auth", "scope:nsx-data"] },
+    "agx-utils": { "tags": ["name:agx-utils", "scope:agx-utils"] }
   }
 }

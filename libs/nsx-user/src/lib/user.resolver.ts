@@ -1,21 +1,9 @@
-import { UserEntity } from '@fullerstack/nsx-common';
+import { Resolver, Query } from '@nestjs/graphql';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import {
-  Resolver,
-  Query,
-  Parent,
-  Mutation,
-  Args,
-  ResolveField,
-  Info,
-  Int,
-} from '@nestjs/graphql';
-import { Prisma } from '@prisma/client';
-import { GraphQLResolveInfo } from 'graphql';
-import { User } from './user.models';
+import { UserDto, UserEntity } from '@fullerstack/nsx-common';
 import { UserService } from './user.service';
 
-@Resolver((of) => User)
+@Resolver((of) => UserDto)
 // @UseGuards(GqlAuthGuard)
 export class UserResolver {
   constructor(
@@ -23,8 +11,8 @@ export class UserResolver {
     private prisma: PrismaService
   ) {}
 
-  @Query((returns) => User)
-  async me(@UserEntity() user: User): Promise<User> {
+  @Query((returns) => UserDto)
+  async me(@UserEntity() user: UserDto): Promise<UserDto> {
     return user;
   }
 

@@ -21,7 +21,9 @@
       "@fullerstack/ngx-logger": ["libs/ngx-logger/src/index.ts"],
       "@fullerstack/nsx-prisma": ["libs/nsx-prisma/src/index.ts"],
       "@fullerstack/nsx-user": ["libs/nsx-user/src/index.ts"],
-      "@fullerstack/nsx-common": ["libs/nsx-common/src/index.ts"]
+      "@fullerstack/nsx-common": ["libs/nsx-common/src/index.ts"],
+      "@fullerstack/nsx-auth": ["libs/nsx-auth/src/index.ts"],
+      "@fullerstack/agx-utils": ["libs/agx-utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

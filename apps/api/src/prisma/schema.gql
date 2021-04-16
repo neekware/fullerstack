@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type UserDto {
   id: ID!
 
   """Object's creation time"""
@@ -11,6 +11,15 @@ type User {
   """Object's update time"""
   updatedAt: DateTime!
   email: String!
+
+  """User is active"""
+  isActive: Boolean!
+
+  """User is verified"""
+  isVerified: Boolean!
+  username: String!
+  firstName: String!
+  lastName: String!
 }
 
 """
@@ -19,5 +28,23 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  me: User!
+  me: UserDto!
+}
+
+type Mutation {
+  signup(data: UserCreateInput!): UserDto!
+  login(data: UserCredentialsInput!): UserDto!
+}
+
+input UserCreateInput {
+  email: String!
+  password: String!
+  username: String!
+  firstName: String!
+  lastName: String!
+}
+
+input UserCredentialsInput {
+  email: String!
+  password: String!
 }

@@ -16,5 +16,11 @@
     "**/node_modules": true,
     "**/coverage": true,
     "**/graph": true
-  }
+  },
+  "cSpell.words": [
+    "fullerstack",
+    "nestjs",
+    "signup",
+    "tryget"
+  ]
 }

@@ -3,16 +3,18 @@
 //// ------------------------------------------------------
 
 Table User {
-  id Int [pk, increment]
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
   email String [unique, not null]
   username String [unique, not null]
   password String [not null]
-  verified Boolean
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [default: `now()`, not null]
+  token String [not null, default: 'dilavni']
+  tokenCount Int [not null, default: 1]
+  isVerified Boolean [not null, default: false]
+  isActive Boolean [not null, default: false]
   firstName String [not null]
   lastName String [not null]
-  name String
   role Role [not null, default: 'USER']
 }
 

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { PrismaModule } from '@fullerstack/nsx-prisma';
+import { AuthModule } from '@fullerstack/nsx-auth';
 import { UserModule } from '@fullerstack/nsx-user';
 
 import { appConfiguration } from './app.config';
@@ -15,6 +16,7 @@ import { AppService } from './app.service';
       load: [appConfiguration],
     }),
     PrismaModule,
+    AuthModule,
     UserModule,
     GraphQLModule.forRoot(environment.graphqlOptions),
   ],

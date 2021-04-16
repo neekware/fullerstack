@@ -439,6 +439,48 @@
           }
         }
       }
+    },
+    "nsx-auth": {
+      "root": "libs/nsx-auth",
+      "sourceRoot": "libs/nsx-auth/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-auth/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-auth"],
+          "options": {
+            "jestConfig": "libs/nsx-auth/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "agx-utils": {
+      "root": "libs/agx-utils",
+      "sourceRoot": "libs/agx-utils/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/agx-utils/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/agx-utils"],
+          "options": {
+            "jestConfig": "libs/agx-utils/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
