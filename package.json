@@ -46,10 +46,7 @@
     "api:ci": "yarn nx:ci  serve api --configuration=ci",
     "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=fullerstack-e2e",
     "coverage:merge": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/coverageMerge.ts",
-    "release": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/release.ts",
-    "prisma:migration:create": "node ./node_modules/.bin/prisma migrate dev --create-only --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:migration:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma"
+    "release": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/release.ts"
   },
   "dependencies": {
     "@angular/animations": "^11.2.0",
@@ -65,8 +62,8 @@
     "@nestjs/core": "^7.0.0",
     "@nestjs/graphql": "^7.10.3",
     "@nestjs/platform-express": "^7.6.15",
+    "@nestjs/typeorm": "^7.1.5",
     "@nrwl/angular": "12.0.6",
-    "@prisma/client": "^2.21.2",
     "apollo-server-express": "^2.22.2",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
@@ -76,11 +73,13 @@
     "graphql-tools": "^7.0.4",
     "jsonwebtoken": "^8.5.1",
     "lodash-es": "^4.17.21",
+    "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.3",
     "ts-essentials": "^7.0.1",
     "tslib": "^2.0.0",
     "typegraphql-nestjs": "^0.3.1",
+    "typeorm": "^0.2.32",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
@@ -122,8 +121,6 @@
     "lodash": "^4.17.21",
     "ng-packagr": "^11.0.0",
     "prettier": "2.2.1",
-    "prisma": "^2.21.2",
-    "prisma-dbml-generator": "^0.5.0",
     "ts-jest": "26.4.0",
     "ts-node": "^9.1.1",
     "typescript": "4.1.4",
