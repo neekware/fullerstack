@@ -43,3 +43,6 @@ Thumbs.db
 # Prsima
 .env
 dev.db*
+
+# Nestjs / typeOrm
+ormconfig.json
