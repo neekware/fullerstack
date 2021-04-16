@@ -1,21 +1,20 @@
-import { User, Role } from '@prisma/client';
-import { Field, ObjectType, HideField } from '@nestjs/graphql';
-import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
+// import { Field, ObjectType, HideField } from '@nestjs/graphql';
+// import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 
-export class UserCreateDto {
-  @IsEmail()
-  email: string;
+// export class UserCreateDto {
+//   @IsEmail()
+//   email: string;
 
-  @IsString()
-  password: string;
+//   @IsString()
+//   password: string;
 
-  @IsString()
-  firstName: string;
+//   @IsString()
+//   firstName: string;
 
-  @IsOptional()
-  @IsString()
-  lastName: string;
+//   @IsOptional()
+//   @IsString()
+//   lastName: string;
 
-  @IsString()
-  username?: string;
-}
+//   @IsString()
+//   username?: string;
+// }

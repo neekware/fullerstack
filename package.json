@@ -80,6 +80,7 @@
     "tslib": "^2.0.0",
     "typegraphql-nestjs": "^0.3.1",
     "typeorm": "^0.2.32",
+    "uuid": "^8.3.2",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {

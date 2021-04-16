@@ -16,5 +16,6 @@
     "**/node_modules": true,
     "**/coverage": true,
     "**/graph": true
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

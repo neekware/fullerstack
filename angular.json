@@ -371,27 +371,6 @@
         }
       }
     },
-    "nsx-prisma": {
-      "root": "libs/nsx-prisma",
-      "sourceRoot": "libs/nsx-prisma/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/nsx-prisma/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/nsx-prisma"],
-          "options": {
-            "jestConfig": "libs/nsx-prisma/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "nsx-user": {
       "root": "libs/nsx-user/lib",
       "sourceRoot": "libs/nsx-user/lib/src",

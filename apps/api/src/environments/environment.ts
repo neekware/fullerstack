@@ -7,6 +7,6 @@ export const environment = {
   graphqlOptions: {
     debug: true,
     playground: true,
-    autoSchemaFile: 'apps/api/src/prisma/schema.gql',
+    autoSchemaFile: 'apps/api/src/app/schema.gql',
   },
 };
