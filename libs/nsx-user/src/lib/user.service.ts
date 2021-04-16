@@ -1,55 +1,59 @@
-import { Injectable } from '@nestjs/common';
-// import { User } from './user.models';
+import { Repository } from 'typeorm';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './user.entity';
+import { USER_PER_PAGE } from './user.constants';
 
 @Injectable()
 export class UserService {
-  constructor() {}
+  constructor(
+    @InjectRepository(User)
+    readonly userRepository: Repository<User>
+  ) {}
 
-  // async user(
-  //   userWhereUniqueInput: Prisma.UserWhereUniqueInput
-  // ): Promise<User | null> {
-  //   return this.prisma.user.findUnique({
-  //     where: userWhereUniqueInput,
-  //   });
-  // }
+  async showAll(page = 1) {
+    const users = await this.userRepository.find({
+      take: USER_PER_PAGE,
+      skip: USER_PER_PAGE * (page - 1),
+    });
+    return users;
+  }
 
-  // async users(params: {
-  //   skip?: number;
-  //   take?: number;
-  //   cursor?: Prisma.UserWhereUniqueInput;
-  //   where?: Prisma.UserWhereInput;
-  //   orderBy?: Prisma.UserOrderByInput;
-  // }): Promise<User[]> {
-  //   const { skip, take, cursor, where, orderBy } = params;
-  //   return this.prisma.user.findMany({
-  //     skip,
-  //     take,
-  //     cursor,
-  //     where,
-  //     orderBy,
-  //   });
-  // }
+  async read(username: string) {
+    const user = await this.userRepository.findOne({ where: { username } });
+    if (!user) {
+      throw new HttpException('Unknown user', HttpStatus.NOT_FOUND);
+    }
+    return user;
+  }
 
-  // async createUser(data: Prisma.UserCreateInput): Promise<User> {
-  //   return this.prisma.user.create({
-  //     data,
-  //   });
-  // }
+  async update(id: string, data: Partial<User>): Promise<User> {
+    let user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new HttpException('Unknown user', HttpStatus.NOT_FOUND);
+    }
+    this.userRepository.merge(user, data);
+    user = await this.userRepository.save(user);
+    return user;
+  }
 
-  // async updateUser(params: {
-  //   where: Prisma.UserWhereUniqueInput;
-  //   data: Prisma.UserUpdateInput;
-  // }): Promise<User> {
-  //   const { where, data } = params;
-  //   return this.prisma.user.update({
-  //     data,
-  //     where,
-  //   });
-  // }
+  async delete(id: string) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new HttpException('Unknown user', HttpStatus.NOT_FOUND);
+    }
+    await this.userRepository.remove(user);
+    return { statusCode: 200, message: `User deleted (${id})` };
+  }
 
-  // async deleteUser(where: Prisma.UserWhereUniqueInput): Promise<User> {
-  //   return this.prisma.user.delete({
-  //     where,
-  //   });
-  // }
+  async create(data: User) {
+    const { username } = data;
+    let user = await this.userRepository.findOne({ where: { username } });
+    if (user) {
+      throw new HttpException('User exists', HttpStatus.BAD_REQUEST);
+    }
+    user = await this.userRepository.create(data);
+    await this.userRepository.save(user);
+    return user;
+  }
 }

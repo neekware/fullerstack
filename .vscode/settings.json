@@ -17,5 +17,12 @@
     "**/coverage": true,
     "**/graph": true
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": [
+    "fullerstack",
+    "nestjs",
+    "ormconfig",
+    "postgres",
+    "typeorm"
+  ]
 }
