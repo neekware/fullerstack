@@ -14,15 +14,11 @@ import { Prisma, User } from '@prisma/client';
 // import { Token } from '../models/token.model';
 // import { SecurityConfig } from 'src/configs/config.interface';
 import { tryGet } from '@fullerstack/agx-utils';
-import {
-  isConstraintError,
-  PrismaService,
-  PRISMA_UNIQUE_CONSTRAIN_ERROR_CODE,
-} from '@fullerstack/nsx-prisma';
+import { isConstraintError, PrismaService } from '@fullerstack/nsx-prisma';
+import { UserDto } from '@fullerstack/nsx-common';
 
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
 import { PasswordService } from './auth.password.service';
-import { UserDto } from '@fullerstack/nsx-common';
 
 @Injectable()
 export class AuthService {
@@ -43,6 +39,7 @@ export class AuthService {
       user = await this.prisma.user.create({
         data: {
           ...payload,
+          email: payload.email.toLowerCase(),
           password: hashedPassword,
           role: 'USER',
         } as Prisma.UserCreateInput,

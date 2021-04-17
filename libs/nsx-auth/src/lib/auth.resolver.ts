@@ -1,4 +1,10 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Mutation,
+  Args,
+  Context,
+  GraphQLExecutionContext,
+} from '@nestjs/graphql';
 import { UserDto } from '@fullerstack/nsx-common';
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
 import { AuthService } from './auth.service';
@@ -9,13 +15,15 @@ export class AuthResolver {
 
   @Mutation((returns) => UserDto)
   async signup(@Args('data') data: UserCreateInput) {
-    data.email = data.email.toLowerCase();
     const user = await this.auth.createUser(data);
     return user;
   }
 
   @Mutation((returns) => UserDto)
-  async login(@Args('data') data: UserCredentialsInput) {
+  async login(
+    @Args('data') data: UserCredentialsInput,
+    @Context() ctx: GraphQLExecutionContext
+  ) {
     const user = await this.auth.loginUser(data);
     return user;
   }

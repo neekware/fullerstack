@@ -18,7 +18,18 @@ import { AppService } from './app.service';
     PrismaModule,
     AuthModule,
     UserModule,
-    GraphQLModule.forRoot(environment.graphqlOptions),
+    GraphQLModule.forRoot({
+      ...environment.graphqlOptions,
+      cors: {
+        credentials: true,
+        origin: 'http://localhost:4201',
+      },
+      context: ({ origReq, res }) => origReq,
+      // context: ({ req, res }) => ({
+      //   origReq: req,
+      //   origRes: res,
+      // }),
+    }),
   ],
   controllers: [AppController],
   providers: [ConfigService, AppService, UserModule],

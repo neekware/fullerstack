@@ -7,7 +7,7 @@ import { PasswordService } from './auth.password.service';
 import { AuthResolver } from './auth.resolver';
 
 @Module({
-  imports: [JwtModule.register({ secret: 'hard!to-guess_secret' })],
+  imports: [JwtModule.register({ secret: 'seekret-we-only-know' })],
   controllers: [AuthController],
   providers: [PrismaService, PasswordService, AuthService, AuthResolver],
   exports: [AuthService],
