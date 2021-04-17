@@ -24,11 +24,7 @@ import { AppService } from './app.service';
         credentials: true,
         origin: 'http://localhost:4201',
       },
-      context: ({ origReq, res }) => origReq,
-      // context: ({ req, res }) => ({
-      //   origReq: req,
-      //   origRes: res,
-      // }),
+      context: ({ req, res }) => ({ request: req, response: res }),
     }),
   ],
   controllers: [AppController],

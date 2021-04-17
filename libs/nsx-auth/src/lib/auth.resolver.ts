@@ -8,13 +8,18 @@ import {
 import { UserDto } from '@fullerstack/nsx-common';
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
 import { AuthService } from './auth.service';
+import { ResponseDecorator } from './auth.decorator';
 
 @Resolver((of) => UserDto)
 export class AuthResolver {
   constructor(private readonly auth: AuthService) {}
 
   @Mutation((returns) => UserDto)
-  async signup(@Args('data') data: UserCreateInput) {
+  async signup(
+    @ResponseDecorator() response,
+    @Args('data') data: UserCreateInput
+  ) {
+    response.cookie('asdfood', 'asfasfd', { httpOnly: true });
     const user = await this.auth.createUser(data);
     return user;
   }
