@@ -1,30 +1,19 @@
-import {
-  Injectable,
-  ExecutionContext,
-  HttpException,
-  HttpStatus,
-  Inject,
-} from '@nestjs/common';
+import { Injectable, ExecutionContext, Inject } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { tryGet } from '@fullerstack/agx-utils';
 import { SecurityService } from './auth.security.service';
+import { HttpRequest } from '@fullerstack/nsx-common';
 
 @Injectable()
 export class GqlAuthGuard extends AuthGuard('jwt') {
-  constructor(
-    @Inject('securityService') private readonly securityService: SecurityService
-  ) {
+  constructor(private readonly securityService: SecurityService) {
     super();
   }
 
-  getRequest(context: ExecutionContext) {
-    const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req;
-  }
-
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
+    const ctx = GqlExecutionContext.create(context);
+    const request = ctx.getContext().req as HttpRequest;
     const authorization = tryGet(() => request.headers.authorization);
     if (!authorization) {
       return false;
@@ -34,9 +23,8 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
     if (token) {
       const payload = this.securityService.verifyToken(token);
       if (payload) {
-        const user = this.securityService.validateUser(payload.userId);
+        const user = await this.securityService.validateUser(payload.userId);
         if (user) {
-          request.token = token;
           request.user = user;
           return true;
         }

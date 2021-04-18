@@ -16,11 +16,12 @@ scalar DateTime
 type Mutation {
   refreshToken: AuthToken!
   userLogin(data: UserCredentialsInput!): AuthToken!
-  userSignup(data: UserCreateInput!): UserDto!
+  userSignup(data: UserCreateInput!): AuthToken!
 }
 
 type Query {
   me: UserDto!
+  user: UserDto!
 }
 
 input UserCreateInput {

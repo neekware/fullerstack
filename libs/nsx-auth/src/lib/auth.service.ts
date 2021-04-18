@@ -31,6 +31,7 @@ export class AuthService {
           email: payload.email.toLowerCase(),
           password: hashedPassword,
           role: 'USER',
+          isActive: true,
         } as Prisma.UserCreateInput,
       });
     } catch (err) {

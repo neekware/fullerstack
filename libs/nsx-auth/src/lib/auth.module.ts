@@ -10,6 +10,6 @@ import { AuthResolver } from './auth.resolver';
 @Module({
   controllers: [AuthController],
   providers: [PrismaService, SecurityService, AuthService, AuthResolver],
-  exports: [AuthService],
+  exports: [AuthService, SecurityService],
 })
 export class AuthModule {}

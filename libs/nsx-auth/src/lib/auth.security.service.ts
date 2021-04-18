@@ -85,6 +85,6 @@ export class SecurityService {
 
   async validateUser(userId: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    return user; //?.isActive ? user : undefined;
+    return user?.isActive ? user : undefined;
   }
 }

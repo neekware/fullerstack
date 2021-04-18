@@ -1,6 +1,8 @@
 import { Role } from '@prisma/client';
 import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
 
+export { Request as HttpRequest, Response as HttpResponse } from 'express';
+
 registerEnumType(Role, {
   name: 'Role',
   description: 'User role',

@@ -1,11 +1,4 @@
-import {
-  Resolver,
-  Mutation,
-  Args,
-  Context,
-  GraphQLExecutionContext,
-  Query,
-} from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 import { JwtDto } from '@fullerstack/api-dto';
 
@@ -22,28 +15,42 @@ import {
   ResponseDecorator,
 } from './auth.decorator';
 import { SecurityService } from './auth.security.service';
-import { UnauthorizedException } from '@nestjs/common';
+import { UnauthorizedException, UseGuards } from '@nestjs/common';
+import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
+import { GqlAuthGuard } from './auth.guard';
 
-@Resolver((of) => UserDto)
+@Resolver((of) => AuthToken)
 export class AuthResolver {
   constructor(
     private readonly authService: AuthService,
     private readonly securityService: SecurityService
   ) {}
 
-  @Mutation((returns) => UserDto)
-  async userSignup(@Args('data') data: UserCreateInput) {
+  @Mutation((returns) => AuthToken)
+  async userSignup(
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse,
+    @Args('data') data: UserCreateInput
+  ) {
     const user = await this.authService.createUser(data);
-    return user;
+    return this.issueToken(user, request, response);
   }
 
   @Mutation((returns) => AuthToken)
   async userLogin(
-    @RequestDecorator() request,
-    @ResponseDecorator() response,
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse,
     @Args('data') data: UserCredentialsInput
   ) {
     const user = await this.authService.authenticateUser(data);
+    return this.issueToken(user, request, response);
+  }
+
+  private issueToken(
+    user: User,
+    request: HttpRequest,
+    response: HttpResponse
+  ): AuthToken {
     const payload: JwtDto = {
       userId: user.id,
       tokenVersion: user.tokenVersion,
@@ -51,23 +58,25 @@ export class AuthResolver {
 
     request.user = user;
     this.securityService.setHttpCookie(payload, response);
-    request.token = this.securityService.generateAccessToken(payload);
+    const token = this.securityService.generateAccessToken(payload);
 
-    return { ok: true, token: request.token };
+    return { ok: true, token };
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query((returns) => UserDto)
-  async me(@RequestDecorator() request) {
-    return request.user;
+  async user(@RequestDecorator() request: HttpRequest) {
+    const user = request.user;
+    return user;
   }
 
   @Mutation((returns) => AuthToken)
   async refreshToken(
-    @CookiesDecorator() cookies,
-    @RequestDecorator() request,
-    @ResponseDecorator() response
+    @CookiesDecorator() cookies: string[],
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse
   ) {
-    const payload: JwtDto = this.securityService.verifyToken(cookies.jit);
+    const payload: JwtDto = this.securityService.verifyToken(cookies['jit']);
     if (!payload) {
       throw new UnauthorizedException('Error - Invalid session');
     }
@@ -79,11 +88,7 @@ export class AuthResolver {
       );
     }
 
-    request.user = user;
-    this.securityService.setHttpCookie(payload, response);
-    request.token = this.securityService.generateAccessToken(payload);
-
-    return { ok: true, token: request.token };
+    return this.issueToken(user, request, response);
   }
 
   // @ResolveField('user')
