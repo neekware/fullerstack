@@ -37,19 +37,6 @@ export class UserResolver {
   //   return this.userService.updateUser(user.id, newUserData);
   // }
 
-  // @UseGuards(GqlAuthGuard)
-  // @Mutation((returns) => User)
-  // async changePassword(
-  //   @UserDecorator() user: User,
-  //   @Args('data') changePassword: ChangePasswordInput
-  // ) {
-  //   return this.userService.changePassword(
-  //     user.id,
-  //     user.password,
-  //     changePassword
-  //   );
-  // }
-
   // @ResolveField('posts')
   // posts(@Parent() author: User) {
   //   return this.prisma.user.findUnique({ where: { id: author.id } }).posts();

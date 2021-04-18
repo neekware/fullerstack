@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constants';
 
 export interface SecurityConfig {
   accessTokenExpiry: string | number;
@@ -32,7 +33,7 @@ export class UserCreateInput {
   email: string;
 
   @Field()
-  @MinLength(8)
+  @MinLength(AUTH_PASSWORD_MIN_LENGTH)
   password: string;
 
   @Field()
@@ -57,6 +58,28 @@ export class UserCredentialsInput {
 
   @Field()
   @IsNotEmpty()
-  @MinLength(8)
+  @MinLength(AUTH_PASSWORD_MIN_LENGTH)
   password: string;
+}
+
+/**
+ * Password change input type (client -> server)
+ */
+@InputType()
+export class ChangePasswordInput {
+  @Field()
+  @IsNotEmpty()
+  @MinLength(AUTH_PASSWORD_MIN_LENGTH)
+  oldPassword: string;
+
+  @Field()
+  @IsNotEmpty()
+  @MinLength(AUTH_PASSWORD_MIN_LENGTH)
+  newPassword: string;
+
+  @Field({
+    defaultValue: false,
+    description: 'Force authentication on all other active sessions',
+  })
+  resetOtherSessions: boolean;
 }

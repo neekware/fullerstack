@@ -2,7 +2,12 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 import { JwtDto } from '@fullerstack/api-dto';
 
-import { AuthToken, UserCreateInput, UserCredentialsInput } from './auth.model';
+import {
+  AuthToken,
+  ChangePasswordInput,
+  UserCreateInput,
+  UserCredentialsInput,
+} from './auth.model';
 import { AuthService } from './auth.service';
 import {
   CookiesDecorator,
@@ -13,6 +18,7 @@ import { SecurityService } from './auth.security.service';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { GqlAuthGuard } from './auth.guard';
+import { AUTH_SESSION_COOKIE_NAME } from './auth.constants';
 
 @Resolver((of) => AuthToken)
 export class AuthResolver {
@@ -64,17 +70,41 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
   ) {
-    const payload: JwtDto = this.securityService.verifyToken(cookies['jit']);
+    const payload: JwtDto = this.securityService.verifyToken(
+      cookies[AUTH_SESSION_COOKIE_NAME]
+    );
     if (!payload) {
-      throw new UnauthorizedException('Error - Invalid session');
+      throw new UnauthorizedException('Error - Invalid or expired session');
     }
 
     const user = await this.securityService.validateUser(payload.userId);
+    if (!user) {
+      throw new UnauthorizedException('Error - Invalid or inactive user');
+    }
+
     if (user?.tokenVersion !== payload.tokenVersion) {
       throw new UnauthorizedException(
-        'Error - Invalid user or session terminated remotely'
+        'Error - Invalid session or remotely terminated'
       );
     }
+
+    return this.issueToken(user, request, response);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation((returns) => AuthToken)
+  async changePassword(
+    @CookiesDecorator() cookies: string[],
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse,
+    @Args('data') payload: ChangePasswordInput
+  ) {
+    const user = await this.securityService.changePassword(
+      request.user as User,
+      payload.oldPassword,
+      payload.newPassword,
+      payload.resetOtherSessions
+    );
 
     return this.issueToken(user, request, response);
   }

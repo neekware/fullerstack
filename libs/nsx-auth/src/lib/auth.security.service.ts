@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge, omit as ldOmit } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
@@ -13,6 +17,7 @@ import { PrismaService } from '@fullerstack/nsx-prisma';
 
 import { DefaultSecurityConfig } from './auth.defaults';
 import { SecurityConfig } from './auth.model';
+import { AUTH_SESSION_COOKIE_NAME } from './auth.constants';
 
 @Injectable()
 export class SecurityService {
@@ -42,6 +47,40 @@ export class SecurityService {
   }
 
   /**
+   * Change password
+   * @param user Current user
+   * @param oldPassword old password
+   * @param newPassword new password
+   */
+  async changePassword(
+    user: User,
+    oldPassword: string,
+    newPassword: string,
+    resetOtherSessions: boolean
+  ): Promise<User> {
+    const validPassword = await this.validatePassword(
+      oldPassword,
+      user.password
+    );
+
+    if (!validPassword) {
+      throw new BadRequestException('Error - Invalid password');
+    }
+
+    const hashedPassword = await this.hashPassword(newPassword);
+
+    return this.prisma.user.update({
+      data: {
+        password: hashedPassword,
+        tokenVersion: resetOtherSessions
+          ? user.tokenVersion + 1
+          : user.tokenVersion,
+      },
+      where: { id: user.id },
+    });
+  }
+
+  /**
    * Returns an a one-way hashed password
    * @param password string
    * @note to prevent null-password attacks, no user shall be created with a null-password
@@ -65,7 +104,7 @@ export class SecurityService {
 
   setHttpCookie(payload: JwtDto, response: any) {
     const sessionToken = this.generateSessionToken(payload);
-    response.cookie('jit', sessionToken, { httpOnly: true });
+    response.cookie(AUTH_SESSION_COOKIE_NAME, sessionToken, { httpOnly: true });
   }
 
   verifyToken(token: string): JwtDto {

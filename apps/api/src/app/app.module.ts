@@ -9,6 +9,7 @@ import { appConfiguration } from './app.config';
 import { environment } from '../environments/environment';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,7 +21,10 @@ import { AppService } from './app.service';
     UserModule,
     GraphQLModule.forRoot({
       ...environment.graphqlConfig,
-      context: ({ req, res }) => ({ req, res }),
+      context: ({ req, res }) => ({
+        request: req as HttpRequest,
+        response: res as HttpResponse,
+      }),
     }),
   ],
   controllers: [AppController],

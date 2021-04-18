@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  BadRequestException,
 } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 
@@ -47,14 +48,12 @@ export class AuthService {
   }
 
   async authenticateUser(credentials: UserCredentialsInput): Promise<User> {
-    const ambiguousErrorMessage = `Login failed - Invalid email or password`;
-
     const user = await this.prisma.user.findUnique({
       where: { email: credentials.email },
     });
 
     if (!user) {
-      throw new NotFoundException(ambiguousErrorMessage);
+      throw new NotFoundException('Error - Invalid or inactive user');
     }
 
     const passwordValid = await this.securityService.validatePassword(
@@ -63,7 +62,7 @@ export class AuthService {
     );
 
     if (!passwordValid) {
-      throw new NotFoundException(ambiguousErrorMessage);
+      throw new BadRequestException('Error - Invalid or bad password');
     }
 
     return user;
