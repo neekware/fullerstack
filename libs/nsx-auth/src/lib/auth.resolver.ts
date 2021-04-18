@@ -2,12 +2,7 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 import { JwtDto } from '@fullerstack/api-dto';
 
-import {
-  AuthToken,
-  UserCreateInput,
-  UserCredentialsInput,
-  UserDto,
-} from './auth.model';
+import { AuthToken, UserCreateInput, UserCredentialsInput } from './auth.model';
 import { AuthService } from './auth.service';
 import {
   CookiesDecorator,
@@ -63,13 +58,6 @@ export class AuthResolver {
     return { ok: true, token };
   }
 
-  @UseGuards(GqlAuthGuard)
-  @Query((returns) => UserDto)
-  async user(@RequestDecorator() request: HttpRequest) {
-    const user = request.user;
-    return user;
-  }
-
   @Mutation((returns) => AuthToken)
   async refreshToken(
     @CookiesDecorator() cookies: string[],
@@ -90,9 +78,4 @@ export class AuthResolver {
 
     return this.issueToken(user, request, response);
   }
-
-  // @ResolveField('user')
-  // async user(@Parent() auth: Auth) {
-  //   return await this.auth.getUserFromToken(auth.accessToken);
-  // }
 }

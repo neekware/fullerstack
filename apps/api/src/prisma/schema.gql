@@ -20,7 +20,6 @@ type Mutation {
 }
 
 type Query {
-  me: UserDto!
   user: UserDto!
 }
 
@@ -43,9 +42,6 @@ type UserDto {
   email: String!
   firstName: String!
   id: ID!
-
-  """User is active"""
-  isActive: Boolean!
 
   """User is verified"""
   isVerified: Boolean!

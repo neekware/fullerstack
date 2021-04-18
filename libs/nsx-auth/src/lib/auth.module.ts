@@ -1,15 +1,13 @@
-import { Module } from '@nestjs/common';
-
-import { PrismaService } from '@fullerstack/nsx-prisma';
+import { Global, Module } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
 import { SecurityService } from './auth.security.service';
 import { AuthResolver } from './auth.resolver';
+import { GqlAuthGuard } from './auth.guard';
 
+@Global()
 @Module({
-  controllers: [AuthController],
-  providers: [PrismaService, SecurityService, AuthService, AuthResolver],
-  exports: [AuthService, SecurityService],
+  providers: [SecurityService, AuthService, GqlAuthGuard, AuthResolver],
+  exports: [SecurityService, AuthService, GqlAuthGuard],
 })
 export class AuthModule {}

@@ -7,13 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Enable this for debugging, otherwise, all the generated
-// files will be located at and imported from @prisma/client
-// generator typegraphql {
-//   provider = "prisma-client-js"
-//   output   = "./generated/type-graphql"
-// }
-
 generator dbml {
   provider = "prisma-dbml-generator"
 }
@@ -37,7 +30,6 @@ model User {
   email         String           @unique
   username      String           @unique
   password      String           @default(cuid())
-  token         String           @default("dilavni")
   tokenVersion  Int              @default(1)
   isVerified    Boolean          @default(false)
   isActive      Boolean          @default(false)

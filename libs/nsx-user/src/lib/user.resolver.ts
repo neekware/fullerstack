@@ -1,8 +1,11 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { UserDto } from '@fullerstack/nsx-auth';
+import { GqlAuthGuard } from '@fullerstack/nsx-auth';
 import { RequestDecorator } from '@fullerstack/nsx-auth';
 import { UserService } from './user.service';
+import { UseGuards } from '@nestjs/common';
+import { HttpRequest } from '@fullerstack/nsx-common';
+import { UserDto } from './user.model';
 
 @Resolver((of) => UserDto)
 // @UseGuards(GqlAuthGuard)
@@ -12,9 +15,11 @@ export class UserResolver {
     private prisma: PrismaService
   ) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query((returns) => UserDto)
-  async me(@RequestDecorator() request): Promise<UserDto> {
-    return request.user;
+  async user(@RequestDecorator() request: HttpRequest) {
+    const user = request.user;
+    return user;
   }
 
   // @UseGuards(GqlAuthGuard)

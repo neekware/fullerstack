@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { PrismaModule } from '@fullerstack/nsx-prisma';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { UserResolver } from './user.resolver';
 
+@Global()
 @Module({
-  imports: [PrismaModule],
   controllers: [UserController],
   providers: [UserService, UserResolver],
   exports: [UserService, UserResolver],
