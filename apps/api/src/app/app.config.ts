@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
-import { environment } from '../environments/environment'
+import { environment } from '../environments/environment';
 
-export const appConfiguration = registerAs('appConfiguration', () => ({
+export const appConfiguration = registerAs('appConfig', () => ({
   ...environment,
   // add anything you want here, to make it available to all nestjs libs
   // via ConfigService

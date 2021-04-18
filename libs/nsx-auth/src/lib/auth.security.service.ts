@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge, omit as ldOmit } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
@@ -30,7 +25,7 @@ export class SecurityService {
   ) {
     this.config = ldNestMerge(
       { ...this.config },
-      this.configService.get<SecurityConfig>('security')
+      this.configService.get<SecurityConfig>('appConfig.securityConfig')
     );
     this.jwtSecret = this.configService.get<string>('JWT_SECRET');
   }

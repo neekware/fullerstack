@@ -12,22 +12,19 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true,
+      ...environment.appConfig,
       load: [appConfiguration],
     }),
     PrismaModule,
     AuthModule,
     UserModule,
     GraphQLModule.forRoot({
-      ...environment.graphqlOptions,
-      cors: {
-        credentials: true,
-        origin: 'http://localhost:4201',
-      },
-      context: ({ req, res }) => ({ request: req, response: res }),
+      ...environment.graphqlConfig,
+      context: ({ req, res }) => ({ req, res }),
     }),
   ],
   controllers: [AppController],
   providers: [ConfigService, AppService, UserModule],
+  exports: [ConfigService],
 })
 export class AppModule {}
