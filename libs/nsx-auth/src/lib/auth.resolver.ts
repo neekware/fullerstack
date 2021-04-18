@@ -9,9 +9,18 @@ import {
 import { User } from '@prisma/client';
 import { JwtDto } from '@fullerstack/api-dto';
 
-import { UserCreateInput, UserCredentialsInput, UserDto } from './auth.model';
+import {
+  AuthToken,
+  UserCreateInput,
+  UserCredentialsInput,
+  UserDto,
+} from './auth.model';
 import { AuthService } from './auth.service';
-import { RequestDecorator, ResponseDecorator } from './auth.decorator';
+import {
+  CookiesDecorator,
+  RequestDecorator,
+  ResponseDecorator,
+} from './auth.decorator';
 import { SecurityService } from './auth.security.service';
 import { UnauthorizedException } from '@nestjs/common';
 
@@ -28,10 +37,23 @@ export class AuthResolver {
     return user;
   }
 
-  @Mutation((returns) => UserDto)
-  async userLogin(@Args('payload') data: UserCredentialsInput) {
+  @Mutation((returns) => AuthToken)
+  async userLogin(
+    @RequestDecorator() request,
+    @ResponseDecorator() response,
+    @Args('data') data: UserCredentialsInput
+  ) {
     const user = await this.authService.authenticateUser(data);
-    return user;
+    const payload: JwtDto = {
+      userId: user.id,
+      tokenVersion: user.tokenVersion,
+    };
+
+    request.user = user;
+    this.securityService.setHttpCookie(payload, response);
+    request.token = this.securityService.generateAccessToken(payload);
+
+    return { ok: true, token: request.token };
   }
 
   @Query((returns) => UserDto)
@@ -39,27 +61,29 @@ export class AuthResolver {
     return request.user;
   }
 
-  @Mutation((returns) => String)
+  @Mutation((returns) => AuthToken)
   async refreshToken(
+    @CookiesDecorator() cookies,
     @RequestDecorator() request,
-    @ResponseDecorator() response,
-    @Args('token') token: string
+    @ResponseDecorator() response
   ) {
-    const payload: JwtDto = this.securityService.verifyToken(token);
+    const payload: JwtDto = this.securityService.verifyToken(cookies.jit);
     if (!payload) {
-      throw new UnauthorizedException('Error - Invalid token');
+      throw new UnauthorizedException('Error - Invalid session');
     }
 
     const user = await this.securityService.validateUser(payload.userId);
-    if (!user && payload.tokenVersion !== user.tokenVersion) {
-      throw new UnauthorizedException('Error - Invalid user or token flushed');
+    if (user?.tokenVersion !== payload.tokenVersion) {
+      throw new UnauthorizedException(
+        'Error - Invalid user or session terminated remotely'
+      );
     }
 
     request.user = user;
-    this.securityService.setHttpCookie(payload, request.cookie);
+    this.securityService.setHttpCookie(payload, response);
     request.token = this.securityService.generateAccessToken(payload);
 
-    return request.token;
+    return { ok: true, token: request.token };
   }
 
   // @ResolveField('user')

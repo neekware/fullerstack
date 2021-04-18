@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
@@ -7,8 +8,11 @@ import { environment } from './environments/environment';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
+
   app.setGlobalPrefix(environment.prefix || globalPrefix);
   app.useGlobalPipes(new ValidationPipe());
+  app.use(cookieParser());
+
   const port = process.env.PORT || environment.port || 3333;
   await app.listen(port);
 

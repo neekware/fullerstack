@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { merge as ldNestMerge } from 'lodash';
+import { merge as ldNestMerge, omit as ldOmit } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 import { hash, compare } from 'bcrypt';
 import { v4 as uuid_v4 } from 'uuid';
@@ -68,14 +68,18 @@ export class SecurityService {
     });
   }
 
-  setHttpCookie(payload: JwtDto, setCookie: Function) {
+  setHttpCookie(payload: JwtDto, response: any) {
     const sessionToken = this.generateSessionToken(payload);
-    setCookie('jit', sessionToken, { httpOnly: true });
+    response.cookie('jit', sessionToken, { httpOnly: true });
   }
 
   verifyToken(token: string): JwtDto {
     try {
-      return jwt.verify(token, this.jwtSecret) as JwtDto;
+      const { userId, tokenVersion } = jwt.verify(
+        token,
+        this.jwtSecret
+      ) as JwtDto;
+      return { userId, tokenVersion };
     } catch (err) {
       const message = `Token error: ${
         tryGet(() => err.message) || tryGet(() => err.name, '')
@@ -86,6 +90,6 @@ export class SecurityService {
 
   async validateUser(userId: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    return user?.isActive ? user : undefined;
+    return user; //?.isActive ? user : undefined;
   }
 }

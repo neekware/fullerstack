@@ -93,3 +93,18 @@ export class UserDto extends BaseModelDto implements User {
   @IsEnum(Role)
   role: Role;
 }
+
+/**
+ * Auth token (server -> client)
+ */
+@ObjectType()
+export class AuthToken {
+  @Field()
+  token: string;
+
+  @Field()
+  message?: string;
+
+  @Field()
+  ok?: boolean;
+}
