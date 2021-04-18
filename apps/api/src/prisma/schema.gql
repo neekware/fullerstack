@@ -33,7 +33,8 @@ type Query {
 
 type Mutation {
   userSignup(data: UserCreateInput!): UserDto!
-  userLogin(data: UserCredentialsInput!): UserDto!
+  userLogin(payload: UserCredentialsInput!): UserDto!
+  refreshToken(token: String!): String!
 }
 
 input UserCreateInput {

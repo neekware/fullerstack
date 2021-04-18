@@ -1,34 +1,26 @@
 import {
   Injectable,
   NotFoundException,
-  BadRequestException,
   ConflictException,
-  UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 import { Prisma, User } from '@prisma/client';
 
 import { tryGet } from '@fullerstack/agx-utils';
 import { isConstraintError, PrismaService } from '@fullerstack/nsx-prisma';
-import { SecurityConfig, UserDto } from '@fullerstack/nsx-common';
 
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
-import { PasswordService } from './auth.password.service';
-import { JwtDto } from '@fullerstack/api-dto';
+import { SecurityService } from './auth.security.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService,
-    private readonly passwordService: PasswordService,
-    private readonly configService: ConfigService
+    private readonly securityService: SecurityService
   ) {}
 
   async createUser(payload: UserCreateInput): Promise<User> {
     let user: User;
-    const hashedPassword = await this.passwordService.hashPassword(
+    const hashedPassword = await this.securityService.hashPassword(
       payload.password
     );
 
@@ -64,7 +56,7 @@ export class AuthService {
       throw new NotFoundException(ambiguousErrorMessage);
     }
 
-    const passwordValid = await this.passwordService.validatePassword(
+    const passwordValid = await this.securityService.validatePassword(
       credentials.password,
       user.password
     );
@@ -76,42 +68,9 @@ export class AuthService {
     return user;
   }
 
-  async validateUser(userId: string): Promise<User> {
-    return await this.prisma.user.findUnique({ where: { id: userId } });
-  }
-
   async isUserVerified(userId: string): Promise<boolean> {
-    const user = await this.validateUser(userId);
+    const user = await this.securityService.validateUser(userId);
     const isValidated = user ? user.isVerified : false;
     return false;
-  }
-
-  // getUserFromToken(token: string): Promise<User> {
-  //   const id = this.jwtService.decode(token)['userId'];
-  //   return this.prisma.user.findUnique({ where: { id } });
-  // }
-
-  generateToken(payload: JwtDto): string {
-    const accessToken = this.jwtService.sign(payload);
-
-    const securityConfig = this.configService.get<SecurityConfig>('security');
-    const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: securityConfig.refreshIn,
-    });
-
-    return refreshToken;
-  }
-
-  refreshToken(token: string) {
-    try {
-      const { userId, tokenVersion } = this.jwtService.verify(token);
-
-      return this.generateToken({
-        userId,
-        tokenVersion,
-      });
-    } catch (e) {
-      throw new UnauthorizedException();
-    }
   }
 }

@@ -2,14 +2,14 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { USER_PER_PAGE } from './user.constants';
-import { PasswordService } from './user.password.service';
+import { SecurityService } from './user.password.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private configService: ConfigService,
     private prisma: PrismaService,
-    private passwordService: PasswordService
+    private securityService: SecurityService
   ) {}
 
   async showAll(page = 1) {

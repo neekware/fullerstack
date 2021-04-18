@@ -1,6 +1,6 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { UserDto } from '@fullerstack/nsx-common';
+import { UserDto } from '@fullerstack/nsx-auth';
 import { RequestDecorator } from '@fullerstack/nsx-auth';
 import { UserService } from './user.service';
 
