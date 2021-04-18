@@ -9,28 +9,25 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Prisma, User } from '@prisma/client';
 
-// import { PasswordService } from './password.service';
-// import { PrismaService } from './prisma.service';
-// import { Token } from '../models/token.model';
-// import { SecurityConfig } from 'src/configs/config.interface';
 import { tryGet } from '@fullerstack/agx-utils';
 import { isConstraintError, PrismaService } from '@fullerstack/nsx-prisma';
-import { UserDto } from '@fullerstack/nsx-common';
+import { SecurityConfig, UserDto } from '@fullerstack/nsx-common';
 
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
 import { PasswordService } from './auth.password.service';
+import { JwtDto } from '@fullerstack/api-dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
     private readonly passwordService: PasswordService,
     private readonly configService: ConfigService
   ) {}
 
   async createUser(payload: UserCreateInput): Promise<User> {
-    let user: UserDto;
+    let user: User;
     const hashedPassword = await this.passwordService.hashPassword(
       payload.password
     );
@@ -56,7 +53,7 @@ export class AuthService {
     return user;
   }
 
-  async loginUser(credentials: UserCredentialsInput): Promise<User> {
+  async authenticateUser(credentials: UserCredentialsInput): Promise<User> {
     const ambiguousErrorMessage = `Login failed - Invalid email or password`;
 
     const user = await this.prisma.user.findUnique({
@@ -79,8 +76,14 @@ export class AuthService {
     return user;
   }
 
-  validateUser(userId: string): Promise<User> {
-    return this.prisma.user.findUnique({ where: { id: userId } });
+  async validateUser(userId: string): Promise<User> {
+    return await this.prisma.user.findUnique({ where: { id: userId } });
+  }
+
+  async isUserVerified(userId: string): Promise<boolean> {
+    const user = await this.validateUser(userId);
+    const isValidated = user ? user.isVerified : false;
+    return false;
   }
 
   // getUserFromToken(token: string): Promise<User> {
@@ -88,29 +91,27 @@ export class AuthService {
   //   return this.prisma.user.findUnique({ where: { id } });
   // }
 
-  // generateToken(payload: { userId: string }): Token {
-  //   const accessToken = this.jwtService.sign(payload);
+  generateToken(payload: JwtDto): string {
+    const accessToken = this.jwtService.sign(payload);
 
-  //   const securityConfig = this.configService.get<SecurityConfig>('security');
-  //   const refreshToken = this.jwtService.sign(payload, {
-  //     expiresIn: securityConfig.refreshIn,
-  //   });
+    const securityConfig = this.configService.get<SecurityConfig>('security');
+    const refreshToken = this.jwtService.sign(payload, {
+      expiresIn: securityConfig.refreshIn,
+    });
 
-  //   return {
-  //     accessToken,
-  //     refreshToken,
-  //   };
-  // }
+    return refreshToken;
+  }
 
-  // refreshToken(token: string) {
-  //   try {
-  //     const { userId } = this.jwtService.verify(token);
+  refreshToken(token: string) {
+    try {
+      const { userId, tokenVersion } = this.jwtService.verify(token);
 
-  //     return this.generateToken({
-  //       userId,
-  //     });
-  //   } catch (e) {
-  //     throw new UnauthorizedException();
-  //   }
-  // }
+      return this.generateToken({
+        userId,
+        tokenVersion,
+      });
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
+  }
 }

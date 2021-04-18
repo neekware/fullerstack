@@ -38,7 +38,7 @@ model User {
   username      String           @unique
   password      String           @default(cuid())
   token         String           @default("dilavni")
-  tokenCount    Int              @default(1)
+  tokenVersion  Int              @default(1)
   isVerified    Boolean          @default(false)
   isActive      Boolean          @default(false)
   firstName     String

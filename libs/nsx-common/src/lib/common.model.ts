@@ -40,8 +40,10 @@ export class UserDto extends BaseModelDto implements User {
   @Field({ description: 'User is verified' })
   isVerified: boolean;
 
+  @HideField()
   token: string;
-  tokenCount: number;
+  @HideField()
+  tokenVersion: number;
 
   @Field()
   username: string;
@@ -53,4 +55,10 @@ export class UserDto extends BaseModelDto implements User {
 
   @IsEnum(Role)
   role: Role;
+}
+
+export interface SecurityConfig {
+  expiresIn: string | number;
+  refreshIn: string | number;
+  bcryptSaltOrRound: string | number;
 }

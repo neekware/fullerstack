@@ -1,6 +1,7 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { UserDto, UserEntity } from '@fullerstack/nsx-common';
+import { UserDto } from '@fullerstack/nsx-common';
+import { RequestDecorator } from '@fullerstack/nsx-auth';
 import { UserService } from './user.service';
 
 @Resolver((of) => UserDto)
@@ -12,8 +13,8 @@ export class UserResolver {
   ) {}
 
   @Query((returns) => UserDto)
-  async me(@UserEntity() user: UserDto): Promise<UserDto> {
-    return user;
+  async me(@RequestDecorator() request): Promise<UserDto> {
+    return request.user;
   }
 
   // @UseGuards(GqlAuthGuard)
@@ -25,7 +26,7 @@ export class UserResolver {
   // @UseGuards(GqlAuthGuard)
   // @Mutation((returns) => User)
   // async updateUser(
-  //   @UserEntity() user: User,
+  //   @UserDecorator() user: User,
   //   @Args('data') newUserData: UpdateUserInput
   // ) {
   //   return this.userService.updateUser(user.id, newUserData);
@@ -34,7 +35,7 @@ export class UserResolver {
   // @UseGuards(GqlAuthGuard)
   // @Mutation((returns) => User)
   // async changePassword(
-  //   @UserEntity() user: User,
+  //   @UserDecorator() user: User,
   //   @Args('data') changePassword: ChangePasswordInput
   // ) {
   //   return this.userService.changePassword(

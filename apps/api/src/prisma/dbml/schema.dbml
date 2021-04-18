@@ -10,7 +10,7 @@ Table User {
   username String [unique, not null]
   password String [not null]
   token String [not null, default: 'dilavni']
-  tokenCount Int [not null, default: 1]
+  tokenVersion Int [not null, default: 1]
   isVerified Boolean [not null, default: false]
   isActive Boolean [not null, default: false]
   firstName String [not null]

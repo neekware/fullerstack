@@ -8,19 +8,16 @@ export const GetCookiesDecorator = createParamDecorator(
   }
 );
 
-export const UserDecorator = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) =>
-    GqlExecutionContext.create(ctx).getContext().req.user
+export const RequestDecorator = createParamDecorator(
+  (data: unknown, context: ExecutionContext) => {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().request;
+  }
 );
 
 export const ResponseDecorator = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
-    let ctx;
-    try {
-      ctx = GqlExecutionContext.create(context);
-    } catch (err) {
-      console.log(err);
-    }
+    const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().response;
   }
 );

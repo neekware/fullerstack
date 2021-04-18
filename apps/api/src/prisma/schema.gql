@@ -32,8 +32,8 @@ type Query {
 }
 
 type Mutation {
-  signup(data: UserCreateInput!): UserDto!
-  login(data: UserCredentialsInput!): UserDto!
+  userSignup(data: UserCreateInput!): UserDto!
+  userLogin(data: UserCredentialsInput!): UserDto!
 }
 
 input UserCreateInput {

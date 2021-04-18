@@ -1,3 +1,5 @@
+import { tryGet } from '@fullerstack/agx-utils';
+import { SecurityConfig } from '@fullerstack/nsx-common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { hash, compare } from 'bcrypt';
@@ -25,9 +27,11 @@ export class PasswordService {
    * @note to prevent null-password attacks, no user shall be created with a null-password
    */
   async hashPassword(password: string): Promise<string> {
-    const bcryptSaltOrRound =
-      this.configService.get<string>('bcryptSaltOrRound') ||
-      AUTH_PASSWORD_SALT_ROUND_DEFAULT;
+    const securityConfig = this.configService.get<SecurityConfig>('security');
+    const bcryptSaltOrRound = tryGet(
+      () => securityConfig.bcryptSaltOrRound,
+      AUTH_PASSWORD_SALT_ROUND_DEFAULT
+    );
     password = password || uuid_v4();
     return await hash(password, bcryptSaltOrRound);
   }

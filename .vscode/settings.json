@@ -21,6 +21,7 @@
     "fullerstack",
     "nestjs",
     "signup",
-    "tryget"
+    "tryget",
+    "typegraphql"
   ]
 }
