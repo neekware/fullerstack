@@ -3,6 +3,10 @@ import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
 
 export { Request as HttpRequest, Response as HttpResponse } from 'express';
 
+export type PartialPick<T, K extends keyof T> = {
+  [P in K]?: T[P];
+};
+
 registerEnumType(Role, {
   name: 'Role',
   description: 'User role',

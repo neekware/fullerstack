@@ -22,14 +22,24 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  changePassword(data: ChangePasswordInput!): AuthTokenDto!
-  refreshToken: AuthTokenDto!
-  userLogin(data: UserCredentialsInput!): AuthTokenDto!
-  userSignup(data: UserCreateInput!): AuthTokenDto!
+  authPasswordChange(data: ChangePasswordInput!): AuthTokenDto!
+  authTokenRefresh: AuthTokenDto!
+  authUserLogin(data: UserCredentialsInput!): AuthTokenDto!
+  authUserSignup(data: UserCreateInput!): AuthTokenDto!
+  updateUser(data: UserUpdateInput!): UserDto!
 }
 
 type Query {
-  user: UserDto!
+  self: UserDto!
+  user(id: String!): UserDto!
+}
+
+"""User role"""
+enum Role {
+  ADMIN
+  STAFF
+  SUPERUSER
+  USER
 }
 
 input UserCreateInput {
@@ -48,15 +58,29 @@ input UserCredentialsInput {
 type UserDto {
   """Object's creation time"""
   createdAt: DateTime!
-  email: String!
-  firstName: String!
+  email: String
+  firstName: String
   id: ID!
 
+  """User is active"""
+  isActive: Boolean
+
   """User is verified"""
-  isVerified: Boolean!
-  lastName: String!
+  isVerified: Boolean
+  lastName: String
+  role: Role
+
+  """Session Version"""
+  sessionVersion: Int
 
   """Object's update time"""
   updatedAt: DateTime!
-  username: String!
+  username: String
+}
+
+input UserUpdateInput {
+  firstName: String
+  id: ID!
+  lastName: String
+  role: Role!
 }

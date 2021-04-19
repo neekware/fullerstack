@@ -30,7 +30,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation((returns) => AuthTokenDto)
-  async userSignup(
+  async authUserSignup(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('data') data: UserCreateInput
@@ -40,7 +40,7 @@ export class AuthResolver {
   }
 
   @Mutation((returns) => AuthTokenDto)
-  async userLogin(
+  async authUserLogin(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('data') data: UserCredentialsInput
@@ -67,7 +67,7 @@ export class AuthResolver {
   }
 
   @Mutation((returns) => AuthTokenDto)
-  async refreshToken(
+  async authTokenRefresh(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
@@ -95,7 +95,7 @@ export class AuthResolver {
 
   @UseGuards(GqlAuthGuard)
   @Mutation((returns) => AuthTokenDto)
-  async changePassword(
+  async authPasswordChange(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,

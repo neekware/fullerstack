@@ -15,6 +15,7 @@ enum Role {
   USER
   STAFF
   ADMIN
+  SUPERUSER
 }
 
 // model Group {

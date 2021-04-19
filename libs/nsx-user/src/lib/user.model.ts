@@ -1,46 +1,59 @@
-import { IsEmail, IsEnum } from 'class-validator';
+import { IsEmail } from 'class-validator';
 import { Role, User } from '@prisma/client';
-import {
-  Field,
-  ObjectType,
-  registerEnumType,
-  HideField,
-} from '@nestjs/graphql';
-import { BaseModelDto } from '@fullerstack/nsx-common';
+import { Field, ObjectType, InputType, ID } from '@nestjs/graphql';
+import { BaseModelDto, PartialPick } from '@fullerstack/nsx-common';
 
-registerEnumType(Role, {
-  name: 'Role',
-  description: 'User role',
-});
+/**
+ * User type (restricted for self, admin, staff)
+ */
+type UserEnforcedSecurity = Omit<User, 'password'>;
 
 /**
  * User profile (server -> client)
  */
 @ObjectType()
-export class UserDto extends BaseModelDto implements User {
-  @Field()
+export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
+  @Field({ nullable: true })
   @IsEmail()
   email: string;
 
-  @HideField()
-  password: string;
-
-  @Field({ description: 'User is verified' })
+  @Field({ nullable: true, description: 'User is verified' })
   isVerified: boolean;
 
-  @HideField()
+  @Field({ nullable: true, description: 'User is active' })
   isActive: boolean;
-  @HideField()
+
+  @Field({ nullable: true, description: 'Session Version' })
   sessionVersion: number;
 
-  @Field()
+  @Field({ nullable: true })
   username: string;
 
-  @Field()
+  @Field({ nullable: true })
   firstName: string;
-  @Field()
+  @Field({ nullable: true })
   lastName: string;
 
-  @IsEnum(Role)
+  @Field((type) => Role, { nullable: true })
   role: Role;
+}
+
+type UserUpdatableFields = PartialPick<
+  User,
+  'id' | 'firstName' | 'lastName' | 'role'
+>;
+
+@InputType()
+export class UserUpdateInput implements UserUpdatableFields {
+  @Field((type) => ID)
+  id: string;
+
+  @Field({ nullable: true })
+  firstName?: string;
+
+  @Field({ nullable: true })
+  lastName?: string;
+
+  @Field((type) => Role)
+  role?: Role;
 }

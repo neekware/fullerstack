@@ -1,14 +1,18 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import {
+  NotFoundException,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Role, User } from '@prisma/client';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { GqlAuthGuard } from '@fullerstack/nsx-auth';
-import { RequestDecorator } from '@fullerstack/nsx-auth';
+import { GqlAuthGuard, UserDecorator } from '@fullerstack/nsx-auth';
+
+import { UserDataAccess } from './user.permission';
 import { UserService } from './user.service';
-import { UseGuards } from '@nestjs/common';
-import { HttpRequest } from '@fullerstack/nsx-common';
-import { UserDto } from './user.model';
+import { UserDto, UserUpdateInput } from './user.model';
 
 @Resolver((of) => UserDto)
-// @UseGuards(GqlAuthGuard)
 export class UserResolver {
   constructor(
     private userService: UserService,
@@ -17,9 +21,32 @@ export class UserResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query((returns) => UserDto)
-  async user(@RequestDecorator() request: HttpRequest) {
-    const user = request.user;
-    return user;
+  async self(@UserDecorator() currentUser: User) {
+    return UserDataAccess.self(currentUser);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query((returns) => UserDto)
+  async user(@UserDecorator() currentUser: User, @Args('id') userId: string) {
+    // if (currentUser.role === Role.USER) {
+    //   throw new UnauthorizedException('Error - Unauthorized Request');
+    // }
+
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new NotFoundException('Error - User not found');
+    }
+
+    return UserDataAccess.staff(user);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation((returns) => UserDto)
+  async updateUser(
+    @UserDecorator() user: User,
+    @Args('data') userData: UserUpdateInput
+  ) {
+    return this.userService.updateUser(user.id, userData);
   }
 
   // @UseGuards(GqlAuthGuard)

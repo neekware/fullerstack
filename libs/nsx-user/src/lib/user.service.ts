@@ -1,10 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { Prisma } from '@prisma/client';
+import { UserUpdateInput } from './user.model';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
+
+  updateUser(userId: string, newUserData: UserUpdateInput) {
+    return this.prisma.user.update({
+      data: newUserData,
+      where: {
+        id: userId,
+      },
+    });
+  }
 
   // async user(
   //   userWhereUniqueInput: Prisma.UserWhereUniqueInput

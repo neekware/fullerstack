@@ -21,4 +21,5 @@ Enum Role {
   USER
   STAFF
   ADMIN
+  SUPERUSER
 }

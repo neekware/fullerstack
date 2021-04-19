@@ -1,4 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { User } from '@prisma/client';
 import {
   getCookiesFromContext,
   getRequestFromContext,
@@ -20,5 +21,11 @@ export const RequestDecorator = createParamDecorator(
 export const ResponseDecorator = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
     return getResponseFromContext(context);
+  }
+);
+
+export const UserDecorator = createParamDecorator(
+  (data: unknown, context: ExecutionContext) => {
+    return getRequestFromContext(context).user as User;
   }
 );
