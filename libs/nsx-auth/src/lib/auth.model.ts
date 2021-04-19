@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constants';
+import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constant';
 
 export interface SecurityConfig {
   accessTokenExpiry: string | number;

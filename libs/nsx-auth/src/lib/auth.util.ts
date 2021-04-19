@@ -1,4 +1,4 @@
-import { tryGet } from '@fullerstack/agx-utils';
+import { tryGet } from '@fullerstack/agx-util';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';

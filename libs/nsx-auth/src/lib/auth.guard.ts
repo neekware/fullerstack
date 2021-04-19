@@ -7,15 +7,15 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { tryGet } from '@fullerstack/agx-utils';
+import { tryGet } from '@fullerstack/agx-util';
 import { SecurityService } from './auth.security.service';
 import { HttpRequest } from '@fullerstack/nsx-common';
 import {
   getCookiesFromContext,
   getJwtTokenFromAuthorizationHeader,
   getRequestFromContext,
-} from './auth.utils';
-import { AUTH_SESSION_COOKIE_NAME } from './auth.constants';
+} from './auth.util';
+import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 
 @Injectable()
 export class GqlAuthGuard extends AuthGuard('jwt') {

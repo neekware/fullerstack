@@ -3,7 +3,7 @@ import * as ld from 'lodash';
 import * as path from 'path';
 import * as program from 'commander';
 import * as semver from 'semver';
-import { distDir, execute, projPkgJson } from './utils';
+import { distDir, execute, projPkgJson } from './util';
 
 /**
  * Returns the path to library's package.json

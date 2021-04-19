@@ -1,12 +1,12 @@
 import { InjectionToken } from '@angular/core';
 import { DeepReadonly } from 'ts-essentials';
-import { DEFAULT_HTTP_TIMEOUT } from './config.constants';
+import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
 import {
   HttpMethod,
   ApplicationConfig,
   LocalConfig,
   RemoteConfig,
-} from './config.models';
+} from './config.model';
 
 /** Default local config */
 export const DefaultConfig: DeepReadonly<LocalConfig> = {

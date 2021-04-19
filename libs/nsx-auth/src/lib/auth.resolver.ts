@@ -1,5 +1,8 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
+
+import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { JwtDto } from '@fullerstack/api-dto';
 
 import {
@@ -15,10 +18,9 @@ import {
   ResponseDecorator,
 } from './auth.decorator';
 import { SecurityService } from './auth.security.service';
-import { UnauthorizedException, UseGuards } from '@nestjs/common';
-import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
+
 import { GqlAuthGuard } from './auth.guard';
-import { AUTH_SESSION_COOKIE_NAME } from './auth.constants';
+import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 
 @Resolver((of) => AuthTokenDto)
 export class AuthResolver {

@@ -12,12 +12,12 @@ import * as jwt from 'jsonwebtoken';
 import { User } from '@prisma/client';
 
 import { JwtDto } from '@fullerstack/api-dto';
-import { tryGet } from '@fullerstack/agx-utils';
+import { tryGet } from '@fullerstack/agx-util';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 
-import { DefaultSecurityConfig } from './auth.defaults';
+import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
-import { AUTH_SESSION_COOKIE_NAME } from './auth.constants';
+import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 
 @Injectable()
 export class SecurityService {

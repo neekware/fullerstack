@@ -8,6 +8,6 @@ module.exports = {
     '<rootDir>/libs/nsx-user',
     '<rootDir>/libs/nsx-common',
     '<rootDir>/libs/nsx-auth',
-    '<rootDir>/libs/agx-utils',
+    '<rootDir>/libs/agx-util',
   ],
 };

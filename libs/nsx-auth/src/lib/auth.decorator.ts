@@ -3,7 +3,7 @@ import {
   getCookiesFromContext,
   getRequestFromContext,
   getResponseFromContext,
-} from './auth.utils';
+} from './auth.util';
 
 export const CookiesDecorator = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {

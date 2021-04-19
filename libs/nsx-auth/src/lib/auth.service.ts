@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 
-import { tryGet } from '@fullerstack/agx-utils';
+import { tryGet } from '@fullerstack/agx-util';
 import { isConstraintError, PrismaService } from '@fullerstack/nsx-prisma';
 
 import { UserCreateInput, UserCredentialsInput } from './auth.model';

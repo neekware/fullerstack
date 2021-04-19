@@ -1,10 +1,10 @@
 import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DeepReadonly } from 'ts-essentials';
-import { ApplicationConfig } from './config.models';
+import { ApplicationConfig } from './config.model';
 import { ConfigService } from './config.service';
-import { CONFIG_TOKEN } from './config.defaults';
-import { remoteConfigFactory } from './config.utils';
+import { CONFIG_TOKEN } from './config.default';
+import { remoteConfigFactory } from './config.util';
 
 @NgModule({
   imports: [CommonModule],
