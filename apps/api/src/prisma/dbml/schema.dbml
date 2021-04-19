@@ -2,6 +2,12 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
+Table Group {
+  id Int [pk, increment]
+  name String
+  User User [not null]
+}
+
 Table User {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
@@ -15,6 +21,14 @@ Table User {
   firstName String [not null]
   lastName String [not null]
   role Role [not null, default: 'USER']
+  permission UserPermission [not null]
+  groupId Int
+  groups Group [not null]
+}
+
+Table GroupToUser {
+  userId String [ref: > User.id]
+  groupsId Int [ref: > Group.id]
 }
 
 Enum Role {
@@ -22,4 +36,17 @@ Enum Role {
   STAFF
   ADMIN
   SUPERUSER
+}
+
+Enum UserPermission {
+  groupCREATE
+  groupREAD
+  groupUPDATE
+  groupDELETE
+  groupALL
+  userCREATE
+  userREAD
+  userUPDATE
+  userDELETE
+  userALL
 }

@@ -47,8 +47,9 @@
     "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=fullerstack-e2e",
     "coverage:merge": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/coverageMerge.ts",
     "release": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/release.ts",
-    "prisma:migration:create": "node ./node_modules/.bin/prisma migrate dev --create-only --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:migration:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
+    "prisma:migrate:create": "node ./node_modules/.bin/prisma migrate dev --create-only --schema=apps/api/src/prisma/schema.prisma",
+    "prisma:migrate:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
+    "prisma:migrate:dev": "node ./node_modules/.bin/prisma migrate dev --schema=apps/api/src/prisma/schema.prisma",
     "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma"
   },
   "dependencies": {

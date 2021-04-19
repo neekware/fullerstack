@@ -37,7 +37,6 @@ export class UserCreateInput {
   @MinLength(AUTH_PASSWORD_MIN_LENGTH)
   password: string;
 
-  @Directive('@lowercase')
   @Field()
   @MinLength(4)
   username: string;
