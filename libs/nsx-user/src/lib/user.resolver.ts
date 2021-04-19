@@ -28,9 +28,9 @@ export class UserResolver {
   @UseGuards(GqlAuthGuard)
   @Query((returns) => UserDto)
   async user(@UserDecorator() currentUser: User, @Args('id') userId: string) {
-    // if (currentUser.role === Role.USER) {
-    //   throw new UnauthorizedException('Error - Unauthorized Request');
-    // }
+    if (currentUser.role === Role.USER) {
+      throw new UnauthorizedException('Error - Unauthorized Request');
+    }
 
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {

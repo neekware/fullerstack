@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, InputType, ObjectType } from '@nestjs/graphql';
 import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constant';
 
 export interface SecurityConfig {
@@ -28,6 +28,7 @@ export class AuthTokenDto {
  */
 @InputType()
 export class UserCreateInput {
+  @Directive('@lowercase')
   @Field()
   @IsEmail()
   email: string;
@@ -36,6 +37,7 @@ export class UserCreateInput {
   @MinLength(AUTH_PASSWORD_MIN_LENGTH)
   password: string;
 
+  @Directive('@lowercase')
   @Field()
   @MinLength(4)
   username: string;
@@ -52,6 +54,7 @@ export class UserCreateInput {
  */
 @InputType()
 export class UserCredentialsInput {
+  @Directive('@lowercase')
   @Field()
   @IsEmail()
   email: string;

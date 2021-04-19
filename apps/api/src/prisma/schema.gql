@@ -82,5 +82,4 @@ input UserUpdateInput {
   firstName: String
   id: ID!
   lastName: String
-  role: Role!
 }
