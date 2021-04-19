@@ -31,7 +31,7 @@ export class UserDto extends BaseModelDto implements User {
   @HideField()
   isActive: boolean;
   @HideField()
-  tokenVersion: number;
+  sessionVersion: number;
 
   @Field()
   username: string;

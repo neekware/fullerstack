@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AuthToken {
+type AuthTokenDto {
   message: String!
   ok: Boolean!
   token: String!
@@ -22,10 +22,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  changePassword(data: ChangePasswordInput!): AuthToken!
-  refreshToken: AuthToken!
-  userLogin(data: UserCredentialsInput!): AuthToken!
-  userSignup(data: UserCreateInput!): AuthToken!
+  changePassword(data: ChangePasswordInput!): AuthTokenDto!
+  refreshToken: AuthTokenDto!
+  userLogin(data: UserCredentialsInput!): AuthTokenDto!
+  userSignup(data: UserCreateInput!): AuthTokenDto!
 }
 
 type Query {

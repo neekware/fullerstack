@@ -24,18 +24,18 @@ enum Role {
 // }
 
 model User {
-  id            String           @id @default(cuid())
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @default(now())
-  email         String           @unique
-  username      String           @unique
-  password      String           @default(cuid())
-  tokenVersion  Int              @default(1)
-  isVerified    Boolean          @default(false)
-  isActive      Boolean          @default(false)
-  firstName     String
-  lastName      String
-  role          Role             @default(USER)
+  id              String           @id @default(cuid())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now())
+  email           String           @unique
+  username        String           @unique
+  password        String           @default(cuid())
+  sessionVersion  Int              @default(1)
+  isVerified      Boolean          @default(false)
+  isActive        Boolean          @default(false)
+  firstName       String
+  lastName        String
+  role            Role             @default(USER)
 }
   // groupId       Int?
   // group         Group?           @relation(fields: [groupId], references: [id])

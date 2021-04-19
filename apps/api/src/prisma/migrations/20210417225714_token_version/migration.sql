@@ -6,4 +6,4 @@
 */
 -- AlterTable
 ALTER TABLE "User" DROP COLUMN "tokenCount",
-ADD COLUMN     "tokenVersion" INTEGER NOT NULL DEFAULT 1;
+ADD COLUMN     "sessionVersion" INTEGER NOT NULL DEFAULT 1;

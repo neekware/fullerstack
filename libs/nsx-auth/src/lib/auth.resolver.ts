@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import { JwtDto } from '@fullerstack/api-dto';
 
 import {
-  AuthToken,
+  AuthTokenDto,
   ChangePasswordInput,
   UserCreateInput,
   UserCredentialsInput,
@@ -20,14 +20,14 @@ import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { GqlAuthGuard } from './auth.guard';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constants';
 
-@Resolver((of) => AuthToken)
+@Resolver((of) => AuthTokenDto)
 export class AuthResolver {
   constructor(
     private readonly authService: AuthService,
     private readonly securityService: SecurityService
   ) {}
 
-  @Mutation((returns) => AuthToken)
+  @Mutation((returns) => AuthTokenDto)
   async userSignup(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
@@ -37,7 +37,7 @@ export class AuthResolver {
     return this.issueToken(user, request, response);
   }
 
-  @Mutation((returns) => AuthToken)
+  @Mutation((returns) => AuthTokenDto)
   async userLogin(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
@@ -51,10 +51,10 @@ export class AuthResolver {
     user: User,
     request: HttpRequest,
     response: HttpResponse
-  ): AuthToken {
+  ): AuthTokenDto {
     const payload: JwtDto = {
       userId: user.id,
-      tokenVersion: user.tokenVersion,
+      sessionVersion: user.sessionVersion,
     };
 
     request.user = user;
@@ -64,7 +64,7 @@ export class AuthResolver {
     return { ok: true, token };
   }
 
-  @Mutation((returns) => AuthToken)
+  @Mutation((returns) => AuthTokenDto)
   async refreshToken(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
@@ -82,7 +82,7 @@ export class AuthResolver {
       throw new UnauthorizedException('Error - Invalid or inactive user');
     }
 
-    if (user?.tokenVersion !== payload.tokenVersion) {
+    if (user?.sessionVersion !== payload.sessionVersion) {
       throw new UnauthorizedException(
         'Error - Invalid session or remotely terminated'
       );
@@ -92,7 +92,7 @@ export class AuthResolver {
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation((returns) => AuthToken)
+  @Mutation((returns) => AuthTokenDto)
   async changePassword(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,

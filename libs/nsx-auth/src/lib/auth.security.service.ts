@@ -72,9 +72,9 @@ export class SecurityService {
     return this.prisma.user.update({
       data: {
         password: hashedPassword,
-        tokenVersion: resetOtherSessions
-          ? user.tokenVersion + 1
-          : user.tokenVersion,
+        sessionVersion: resetOtherSessions
+          ? user.sessionVersion + 1
+          : user.sessionVersion,
       },
       where: { id: user.id },
     });
@@ -109,11 +109,11 @@ export class SecurityService {
 
   verifyToken(token: string): JwtDto {
     try {
-      const { userId, tokenVersion } = jwt.verify(
+      const { userId, sessionVersion } = jwt.verify(
         token,
         this.jwtSecret
       ) as JwtDto;
-      return { userId, tokenVersion };
+      return { userId, sessionVersion };
     } catch (err) {
       const message = `Token error: ${
         tryGet(() => err.message) || tryGet(() => err.name, '')

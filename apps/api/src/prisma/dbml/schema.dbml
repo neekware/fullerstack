@@ -9,7 +9,7 @@ Table User {
   email String [unique, not null]
   username String [unique, not null]
   password String [not null]
-  tokenVersion Int [not null, default: 1]
+  sessionVersion Int [not null, default: 1]
   isVerified Boolean [not null, default: false]
   isActive Boolean [not null, default: false]
   firstName String [not null]

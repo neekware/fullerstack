@@ -46,7 +46,7 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
       throw new NotFoundException('Error - Invalid or inactive user');
     }
 
-    if (user?.tokenVersion !== payload.tokenVersion) {
+    if (user?.sessionVersion !== payload.sessionVersion) {
       throw new UnauthorizedException(
         'Error - Invalid session or remotely terminated'
       );

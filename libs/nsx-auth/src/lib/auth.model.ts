@@ -12,7 +12,7 @@ export interface SecurityConfig {
  * Auth token (server -> client)
  */
 @ObjectType()
-export class AuthToken {
+export class AuthTokenDto {
   @Field()
   token: string;
 
