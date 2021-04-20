@@ -16,15 +16,16 @@ cache:
 install:
   - npm install
   - npm install cypress --only=dev
+  - yarn prisma:generate
 
 script:
   - NX_BRANCH=$TRAVIS_BRANCH yarn format:check --base=$TRAVIS_BRANCH --head=HEAD
   - NX_BRANCH=$TRAVIS_BRANCH yarn lint:ci
   - NX_BRANCH=$TRAVIS_BRANCH yarn build:ci
   - NX_BRANCH=$TRAVIS_BRANCH yarn test:ci
-  - NX_BRANCH=$TRAVIS_BRANCH yarn api:ci &
-  - travis_wait 30
-  - NX_BRANCH=$TRAVIS_BRANCH yarn e2e:ci
+  # - NX_BRANCH=$TRAVIS_BRANCH yarn api:ci &
+  # - travis_wait 30
+  # - NX_BRANCH=$TRAVIS_BRANCH yarn e2e:ci
 
 after_script:
   - NX_BRANCH=$TRAVIS_BRANCH yarn coverage:merge
