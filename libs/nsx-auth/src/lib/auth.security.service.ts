@@ -4,7 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { merge as ldNestMerge, omit as ldOmit } from 'lodash';
+import { merge as ldNestMerge } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 import { hash, compare } from 'bcrypt';
 import { v4 as uuid_v4 } from 'uuid';
