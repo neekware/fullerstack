@@ -3,16 +3,27 @@ import {
   ExecutionContext,
   UnauthorizedException,
   NotFoundException,
+  Global,
+  CanActivate,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
+import { Permission, Role, User } from '@prisma/client';
+
+import { AuthFilterType } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import {
   getCookiesFromContext,
   getJwtTokenFromAuthorizationHeader,
   getRequestFromContext,
 } from './auth.util';
-import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
+import {
+  AUTH_PERMISSION_KEY,
+  AUTH_ROLE_KEY,
+  AUTH_SESSION_COOKIE_NAME,
+} from './auth.constant';
 
+@Global()
 @Injectable()
 export class AuthGuardGql extends AuthGuard('jwt') {
   constructor(private readonly securityService: SecurityService) {
@@ -50,5 +61,64 @@ export class AuthGuardGql extends AuthGuard('jwt') {
 
     request.user = user;
     return true;
+  }
+}
+
+@Injectable()
+export class AuthGuardRoles extends AuthGuard('jwt') implements CanActivate {
+  constructor(private reflector: Reflector) {
+    super();
+  }
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    let canActivate = false;
+
+    const roles = this.reflector.getAllAndOverride<AuthFilterType<Role>>(
+      AUTH_ROLE_KEY,
+      [context.getHandler(), context.getClass()]
+    );
+
+    if (!roles) {
+      return false;
+    }
+
+    const user = getRequestFromContext(context).user as User;
+    canActivate =
+      roles?.include?.some((role) => user.role === role) &&
+      !roles?.exclude?.some((role) => user.role === role);
+
+    return canActivate;
+  }
+}
+
+@Injectable()
+export class AuthGuardPermissions
+  extends AuthGuard('jwt')
+  implements CanActivate {
+  constructor(private reflector: Reflector) {
+    super();
+  }
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    let canActivate = false;
+
+    const permissions = this.reflector.getAllAndOverride<
+      AuthFilterType<Permission>
+    >(AUTH_ROLE_KEY, [context.getHandler(), context.getClass()]);
+
+    if (!permissions) {
+      return false;
+    }
+
+    const user = getRequestFromContext(context).user as User;
+    canActivate =
+      permissions?.include?.some((permission) =>
+        user.permissions?.includes(permission)
+      ) &&
+      !permissions?.exclude?.some((permission) =>
+        user.permissions?.includes(permission)
+      );
+
+    return canActivate;
   }
 }

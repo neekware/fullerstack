@@ -1,5 +1,5 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Global, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
@@ -34,7 +34,7 @@ export class AuthResolver {
   async authUserSignup(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('data') data: UserCreateInput
+    @Args('input') data: UserCreateInput
   ) {
     const user = await this.authService.createUser(data);
     return this.issueToken(user, request, response);
@@ -44,7 +44,7 @@ export class AuthResolver {
   async authUserLogin(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('data') data: UserCredentialsInput
+    @Args('input') data: UserCredentialsInput
   ) {
     const user = await this.authService.authenticateUser(data);
     return this.issueToken(user, request, response);
@@ -100,7 +100,7 @@ export class AuthResolver {
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('data') payload: ChangePasswordInput
+    @Args('input') payload: ChangePasswordInput
   ) {
     const user = await this.securityService.changePassword(
       request.user as User,

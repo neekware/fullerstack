@@ -22,16 +22,31 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  authPasswordChange(data: ChangePasswordInput!): AuthTokenDto!
+  authPasswordChange(input: ChangePasswordInput!): AuthTokenDto!
   authTokenRefresh: AuthTokenDto!
-  authUserLogin(data: UserCredentialsInput!): AuthTokenDto!
-  authUserSignup(data: UserCreateInput!): AuthTokenDto!
-  updateUser(data: UserUpdateInput!): UserDto!
+  authUserLogin(input: UserCredentialsInput!): AuthTokenDto!
+  authUserSignup(input: UserCreateInput!): AuthTokenDto!
+  updateUser(input: UserUpdateInput!): UserDto!
+  userUpdateSelf(input: UserUpdateInput!): UserDto!
+}
+
+"""User permission"""
+enum Permission {
+  groupALL
+  groupCREATE
+  groupDELETE
+  groupREAD
+  groupUPDATE
+  userALL
+  userCREATE
+  userDELETE
+  userREAD
+  userUPDATE
 }
 
 type Query {
-  self: UserDto!
   user(id: String!): UserDto!
+  userGetSelf: UserDto!
 }
 
 """User role"""
@@ -60,6 +75,7 @@ type UserDto {
   createdAt: DateTime!
   email: String
   firstName: String
+  groupId: ID
   id: ID!
 
   """User is active"""
@@ -68,9 +84,10 @@ type UserDto {
   """User is verified"""
   isVerified: Boolean
   lastName: String
+  permissions: [Permission!]!
   role: Role
 
-  """Session Version"""
+  """Session version"""
   sessionVersion: Int
 
   """Object's update time"""

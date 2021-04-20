@@ -1,13 +1,12 @@
 import { IsEmail, IsOptional } from 'class-validator';
-import { Role, User } from '@prisma/client';
+import { Permission, Role, User } from '@prisma/client';
 import { Field, ObjectType, InputType, ID, Directive } from '@nestjs/graphql';
 import { BaseModelDto, PartialPick } from '@fullerstack/nsx-common';
 
 /**
  * User type (restricted for self, admin, staff, superuser)
- * Change permission type to list of string (pending prism's support of union in enums)
  */
-type UserEnforcedSecurity = Omit<User, 'password' | 'permissions'>;
+type UserEnforcedSecurity = Omit<User, 'password'>;
 
 /**
  * User profile (server -> client)
@@ -40,11 +39,11 @@ export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
   @Field((type) => Role, { nullable: true })
   role: Role;
 
-  @Field((type) => ID)
+  @Field((type) => ID, { nullable: true })
   groupId: string;
 
-  @Field((type) => [String])
-  permissions: string[];
+  @Field((type) => [Permission])
+  permissions: Permission[];
 }
 
 type UserUpdatableFields = PartialPick<

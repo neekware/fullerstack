@@ -8,6 +8,11 @@ export interface SecurityConfig {
   bcryptSaltOrRound: string | number;
 }
 
+export interface AuthFilterType<T> {
+  include?: T[];
+  exclude?: T[];
+}
+
 /**
  * Auth token (server -> client)
  */

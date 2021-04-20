@@ -1,4 +1,4 @@
-import { Role } from '@prisma/client';
+import { Role, Permission } from '@prisma/client';
 import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
 
 export { Request as HttpRequest, Response as HttpResponse } from 'express';
@@ -12,9 +12,9 @@ registerEnumType(Role, {
   description: 'User role',
 });
 
-registerEnumType(Permissions, {
-  name: 'Permissions',
-  description: 'User permissions',
+registerEnumType(Permission, {
+  name: 'Permission',
+  description: 'User permission',
 });
 
 @ObjectType({ isAbstract: true })

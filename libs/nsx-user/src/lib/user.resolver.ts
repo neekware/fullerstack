@@ -8,6 +8,8 @@ import { Role, User } from '@prisma/client';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import {
   AuthGuardGql,
+  AuthGuardPermissions,
+  AuthGuardRoles,
   UsePermissions,
   UserDecorator,
   UseRoles,
@@ -26,15 +28,15 @@ export class UserResolver {
 
   @UseGuards(AuthGuardGql)
   @Query((returns) => UserDto)
-  async viewSelfUser(@UserDecorator() currentUser: User) {
+  async userGetSelf(@UserDecorator() currentUser: User) {
     return UserDataAccess.self(currentUser);
   }
 
   @UseGuards(AuthGuardGql)
   @Mutation((returns) => UserDto)
-  async updateSelfUser(
+  async userUpdateSelf(
     @UserDecorator() user: User,
-    @Args('data') payload: UserUpdateInput
+    @Args('input') payload: UserUpdateInput
   ) {
     if (user.id !== payload.id) {
       throw new UnauthorizedException('Error - Insufficient access');
@@ -42,8 +44,8 @@ export class UserResolver {
     return this.userService.updateUser(user.id, payload);
   }
 
-  @UseRoles(Role.ADMIN, Role.STAFF, Role.SUPERUSER)
-  @UseGuards(AuthGuardGql)
+  @UseRoles({ exclude: [Role.USER] })
+  @UseGuards(AuthGuardGql, AuthGuardRoles)
   @Query((returns) => UserDto)
   async user(@UserDecorator() currentUser: User, @Args('id') userId: string) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
@@ -58,7 +60,7 @@ export class UserResolver {
   @Mutation((returns) => UserDto)
   async updateUser(
     @UserDecorator() user: User,
-    @Args('data') userData: UserUpdateInput
+    @Args('input') userData: UserUpdateInput
   ) {
     return this.userService.updateUser(user.id, userData);
   }
