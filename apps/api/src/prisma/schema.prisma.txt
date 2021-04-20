@@ -1,0 +1,87 @@
+datasource db {
+  provider = "groupgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+enum Role {
+  USER
+  STAFF
+  ADMIN
+  SUPERUSER
+}
+
+enum UserPermission {
+  groupCREATE
+  groupREAD
+  groupUPDATE
+  groupDELETE
+  groupALL
+  userCREATE
+  userREAD
+  userUPDATE
+  userDELETE
+  userALL
+
+}
+
+model Group {
+  id   Int     @id @default(autoincrement())
+  name String?
+  User User[]
+}
+
+model User {
+  id              String           @id @default(cuid())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now())
+  email           String           @unique
+  username        String           @unique
+  password        String           @default(cuid())
+  sessionVersion  Int              @default(1)
+  isVerified      Boolean          @default(false)
+  isActive        Boolean          @default(false)
+  firstName       String
+  lastName        String
+  permission      UserPermission[]
+  role            Role             @default(USER)
+}
+  // groupId       Int?
+  // group         Group?           @relation(fields: [groupId], references: [id])
+  // groups         group[]
+  // profile       ExtendedProfile?
+// }
+
+// model ExtendedProfile {
+//   id            Int     @id @default(autoincrement())
+//   userId        Int?    @unique
+//   firstName     String?
+//   lastName      String?
+//   bio           String?
+//   profilelImage String?
+//   city          String
+//   country       String
+//   profileViews  Int     @default(0)
+//   User          User?   @relation(fields: [userId], references: [id])
+// }
+
+// model group {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+//   title     String
+//   content   String?
+//   published Boolean? @default(false)
+//   author    User?    @relation(fields: [authorId], references: [id])
+//   authorId  Int?
+//   comments  Json
+//   views     Int      @default(0)
+//   likes     Int      @default(0)
+// }

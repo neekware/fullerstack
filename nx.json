@@ -25,7 +25,12 @@
     "fullerstack-e2e": { "tags": [], "implicitDependencies": ["fullerstack"] },
     "api": { "tags": [] },
     "api-dto": { "tags": [] },
-    "ngx-cfg": { "tags": ["name:ngx-cfg", "scope:ngx-utils"] },
-    "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-utils"] }
+    "ngx-config": { "tags": ["name:ngx-config", "scope:ngx-utils"] },
+    "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-utils"] },
+    "nsx-prisma": { "tags": ["name:nsx-prisma", "scope:nsx-data"] },
+    "nsx-user": { "tags": ["name:nsx-user", "scope:nsx-data-layer"] },
+    "nsx-common": { "tags": ["name:nsx-common", "sope:nsx-data"] },
+    "nsx-auth": { "tags": ["name:nsx-auth", "scope:nsx-data"] },
+    "agx-util": { "tags": ["name:agx-util", "scope:agx-util"] }
   }
 }

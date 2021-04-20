@@ -1,0 +1,22 @@
+{
+  "version": "0.0.8",
+  "name": "@fullerstack/ngx-config",
+  "description": "A Configuration Utility Library for Angular",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-config/README.md",
+  "keywords": [
+    "ng",
+    "angular",
+    "config",
+    "configuration",
+    "remote configuration",
+    "application level configuration",
+    "configuration driven application"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^11.2.6",
+    "@angular/core": "^11.2.6"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

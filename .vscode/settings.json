@@ -16,5 +16,17 @@
     "**/node_modules": true,
     "**/coverage": true,
     "**/graph": true
-  }
+  },
+  "cSpell.words": [
+    "Singup",
+    "fullerstack",
+    "nestjs",
+    "signup",
+    "tryget",
+    "typegraphql"
+  ],
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }

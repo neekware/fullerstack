@@ -231,7 +231,9 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "api:build"
+            "buildTarget": "api:build",
+            "inspect": true,
+            "port": 9229
           },
           "configurations": {
             "production": {
@@ -277,24 +279,24 @@
         }
       }
     },
-    "ngx-cfg": {
+    "ngx-config": {
       "projectType": "library",
-      "root": "libs/ngx-cfg",
-      "sourceRoot": "libs/ngx-cfg/src",
-      "prefix": "fullerstack-ngx-cfg",
+      "root": "libs/ngx-config",
+      "sourceRoot": "libs/ngx-config/src",
+      "prefix": "fullerstack-ngx-config",
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
           "options": {
-            "tsConfig": "libs/ngx-cfg/tsconfig.lib.json",
-            "project": "libs/ngx-cfg/ng-package.json"
+            "tsConfig": "libs/ngx-config/tsconfig.lib.json",
+            "project": "libs/ngx-config/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/ngx-cfg/tsconfig.lib.prod.json"
+              "tsConfig": "libs/ngx-config/tsconfig.lib.prod.json"
             },
             "ci": {
-              "tsConfig": "libs/ngx-cfg/tsconfig.lib.prod.json"
+              "tsConfig": "libs/ngx-config/tsconfig.lib.prod.json"
             }
           }
         },
@@ -302,16 +304,16 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/ngx-cfg/src/**/*.ts",
-              "libs/ngx-cfg/src/**/*.html"
+              "libs/ngx-config/src/**/*.ts",
+              "libs/ngx-config/src/**/*.html"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ngx-cfg"],
+          "outputs": ["coverage/libs/ngx-config"],
           "options": {
-            "jestConfig": "libs/ngx-cfg/jest.config.js",
+            "jestConfig": "libs/ngx-config/jest.config.js",
             "passWithNoTests": true
           },
           "ci": {
@@ -366,6 +368,117 @@
           "codeCoverage": true,
           "progress": false,
           "watch": false
+        }
+      }
+    },
+    "nsx-prisma": {
+      "root": "libs/nsx-prisma",
+      "sourceRoot": "libs/nsx-prisma/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-prisma/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-prisma"],
+          "options": {
+            "jestConfig": "libs/nsx-prisma/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "nsx-user": {
+      "root": "libs/nsx-user/lib",
+      "sourceRoot": "libs/nsx-user/lib/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-user/**/*.ts"]
+          }
+        },
+        "test-disabled": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-user"],
+          "options": {
+            "jestConfig": "libs/nsx-user/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
+        }
+      }
+    },
+    "nsx-common": {
+      "root": "libs/nsx-common",
+      "sourceRoot": "libs/nsx-common/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-common/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-common"],
+          "options": {
+            "jestConfig": "libs/nsx-common/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "nsx-auth": {
+      "root": "libs/nsx-auth",
+      "sourceRoot": "libs/nsx-auth/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-auth/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-auth"],
+          "options": {
+            "jestConfig": "libs/nsx-auth/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "agx-util": {
+      "root": "libs/agx-util",
+      "sourceRoot": "libs/agx-util/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/agx-util/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/agx-util"],
+          "options": {
+            "jestConfig": "libs/agx-util/jest.config.js",
+            "passWithNoTests": true
+          }
         }
       }
     }
