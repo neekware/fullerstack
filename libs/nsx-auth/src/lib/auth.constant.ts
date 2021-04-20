@@ -23,3 +23,13 @@ export const AUTH_PASSWORD_MIN_LENGTH = 6;
  * Jwt session HttpOnly cookie name
  */
 export const AUTH_SESSION_COOKIE_NAME = 'jwt';
+
+/**
+ * Decorator key for roles
+ */
+export const AUTH_ROLE_KEY = 'roles';
+
+/**
+ * Decorator key for permissions
+ */
+export const AUTH_PERMISSION_KEY = 'permissions';

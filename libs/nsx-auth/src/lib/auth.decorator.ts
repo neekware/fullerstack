@@ -1,5 +1,10 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { User } from '@prisma/client';
+import {
+  createParamDecorator,
+  ExecutionContext,
+  SetMetadata,
+} from '@nestjs/common';
+import { Permission, Role, User } from '@prisma/client';
+import { AUTH_ROLE_KEY } from './auth.constant';
 import {
   getCookiesFromContext,
   getRequestFromContext,
@@ -29,3 +34,16 @@ export const UserDecorator = createParamDecorator(
     return getRequestFromContext(context).user as User;
   }
 );
+
+/**
+ * Decorator for enforcing role-based access
+ * @param roles list of roles
+ */
+export const UseRoles = (...roles: Role[]) => SetMetadata(AUTH_ROLE_KEY, roles);
+
+/**
+ * Decorator for enforcing permission-based access
+ * @param permissions list of permissions
+ */
+export const UsePermissions = (...permissions: Permission[]) =>
+  SetMetadata(AUTH_ROLE_KEY, permissions);

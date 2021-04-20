@@ -21,8 +21,8 @@ Table User {
   firstName String [not null]
   lastName String [not null]
   role Role [not null, default: 'USER']
-  permission UserPermission [not null]
-  groupId Int
+  permissions Permission [not null]
+  groupId String
   groups Group [not null]
 }
 
@@ -38,7 +38,7 @@ Enum Role {
   SUPERUSER
 }
 
-Enum UserPermission {
+Enum Permission {
   groupCREATE
   groupREAD
   groupUPDATE

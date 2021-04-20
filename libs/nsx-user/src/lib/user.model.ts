@@ -4,9 +4,10 @@ import { Field, ObjectType, InputType, ID, Directive } from '@nestjs/graphql';
 import { BaseModelDto, PartialPick } from '@fullerstack/nsx-common';
 
 /**
- * User type (restricted for self, admin, staff)
+ * User type (restricted for self, admin, staff, superuser)
+ * Change permission type to list of string (pending prism's support of union in enums)
  */
-type UserEnforcedSecurity = Omit<User, 'password'>;
+type UserEnforcedSecurity = Omit<User, 'password' | 'permissions'>;
 
 /**
  * User profile (server -> client)
@@ -24,7 +25,7 @@ export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
   @Field({ nullable: true, description: 'User is active' })
   isActive: boolean;
 
-  @Field({ nullable: true, description: 'Session Version' })
+  @Field({ nullable: true, description: 'Session version' })
   sessionVersion: number;
 
   @Directive('@lowercase')
@@ -38,6 +39,12 @@ export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
 
   @Field((type) => Role, { nullable: true })
   role: Role;
+
+  @Field((type) => ID)
+  groupId: string;
+
+  @Field((type) => [String])
+  permissions: string[];
 }
 
 type UserUpdatableFields = PartialPick<

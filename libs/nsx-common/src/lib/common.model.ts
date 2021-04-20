@@ -12,6 +12,11 @@ registerEnumType(Role, {
   description: 'User role',
 });
 
+registerEnumType(Permissions, {
+  name: 'Permissions',
+  description: 'User permissions',
+});
+
 @ObjectType({ isAbstract: true })
 export abstract class BaseModelDto {
   @Field((type) => ID)

@@ -14,12 +14,13 @@ import {
 import { AuthService } from './auth.service';
 import {
   CookiesDecorator,
+  UsePermissions,
   RequestDecorator,
   ResponseDecorator,
 } from './auth.decorator';
 import { SecurityService } from './auth.security.service';
 
-import { GqlAuthGuard } from './auth.guard';
+import { AuthGuardGql } from './auth.guard';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 
 @Resolver((of) => AuthTokenDto)
@@ -93,7 +94,7 @@ export class AuthResolver {
     return this.issueToken(user, request, response);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(AuthGuardGql)
   @Mutation((returns) => AuthTokenDto)
   async authPasswordChange(
     @CookiesDecorator() cookies: string[],
