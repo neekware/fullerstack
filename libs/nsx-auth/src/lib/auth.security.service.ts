@@ -81,11 +81,29 @@ export class SecurityService {
   }
 
   /**
+   * Reset password
+   * @param user Current user
+   */
+  async resetPassword(user: User, resetOtherSessions?: boolean): Promise<User> {
+    const hashedPassword = await this.hashPassword();
+
+    return this.prisma.user.update({
+      data: {
+        password: hashedPassword,
+        sessionVersion: resetOtherSessions
+          ? user.sessionVersion + 1
+          : user.sessionVersion,
+      },
+      where: { id: user.id },
+    });
+  }
+
+  /**
    * Returns an a one-way hashed password
    * @param password string
    * @note to prevent null-password attacks, no user shall be created with a null-password
    */
-  async hashPassword(password: string): Promise<string> {
+  async hashPassword(password?: string): Promise<string> {
     password = password || uuid_v4();
     return await hash(password, this.config.bcryptSaltOrRound);
   }
@@ -124,6 +142,11 @@ export class SecurityService {
 
   async validateUser(userId: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    return user?.isActive ? user : undefined;
+  }
+
+  async validateUserByEmail(email: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({ where: { email } });
     return user?.isActive ? user : undefined;
   }
 }

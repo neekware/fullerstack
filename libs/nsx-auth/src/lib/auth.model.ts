@@ -13,6 +13,15 @@ export interface AuthFilterType<T> {
   exclude?: T[];
 }
 
+@ObjectType()
+export class AuthStatusDto {
+  @Field()
+  message?: string;
+
+  @Field()
+  ok?: boolean;
+}
+
 /**
  * Auth token (server -> client)
  */
@@ -89,4 +98,12 @@ export class ChangePasswordInput {
     description: 'Force authentication on all other active sessions',
   })
   resetOtherSessions: boolean;
+}
+
+@InputType()
+export class ChangePasswordRequestInput {
+  @Directive('@lowercase')
+  @Field()
+  @IsEmail()
+  email: string;
 }

@@ -17,7 +17,14 @@
     "**/coverage": true,
     "**/graph": true
   },
-  "cSpell.words": ["fullerstack", "nestjs", "signup", "tryget", "typegraphql"],
+  "cSpell.words": [
+    "Singup",
+    "fullerstack",
+    "nestjs",
+    "signup",
+    "tryget",
+    "typegraphql"
+  ],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
   },

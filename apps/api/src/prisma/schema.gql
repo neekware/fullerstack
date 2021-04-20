@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthStatusDto {
+  message: String!
+  ok: Boolean!
+}
+
 type AuthTokenDto {
   message: String!
   ok: Boolean!
@@ -16,16 +21,22 @@ input ChangePasswordInput {
   resetOtherSessions: Boolean = false
 }
 
+input ChangePasswordRequestInput {
+  email: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
 type Mutation {
-  authPasswordChange(input: ChangePasswordInput!): AuthTokenDto!
-  authTokenRefresh: AuthTokenDto!
-  authUserLogin(input: UserCredentialsInput!): AuthTokenDto!
-  authUserSignup(input: UserCreateInput!): AuthTokenDto!
+  authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
+  authLogin(input: UserCredentialsInput!): AuthTokenDto!
+  authRefreshToken: AuthTokenDto!
+  authResetPassword(id: String!): AuthTokenDto!
+  authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
+  authSignup(input: UserCreateInput!): AuthTokenDto!
   updateUser(input: UserUpdateInput!): UserDto!
   userUpdateSelf(input: UserUpdateInput!): UserDto!
 }

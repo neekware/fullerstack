@@ -1,13 +1,15 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { Global, UnauthorizedException, UseGuards } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { JwtDto } from '@fullerstack/api-dto';
 
 import {
+  AuthStatusDto,
   AuthTokenDto,
   ChangePasswordInput,
+  ChangePasswordRequestInput,
   UserCreateInput,
   UserCredentialsInput,
 } from './auth.model';
@@ -17,10 +19,11 @@ import {
   UsePermissions,
   RequestDecorator,
   ResponseDecorator,
+  UseRoles,
 } from './auth.decorator';
 import { SecurityService } from './auth.security.service';
 
-import { AuthGuardGql } from './auth.guard';
+import { AuthGuardGql, AuthGuardRoles } from './auth.guard';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 
 @Resolver((of) => AuthTokenDto)
@@ -31,7 +34,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation((returns) => AuthTokenDto)
-  async authUserSignup(
+  async authSignup(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: UserCreateInput
@@ -41,7 +44,7 @@ export class AuthResolver {
   }
 
   @Mutation((returns) => AuthTokenDto)
-  async authUserLogin(
+  async authLogin(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: UserCredentialsInput
@@ -68,7 +71,7 @@ export class AuthResolver {
   }
 
   @Mutation((returns) => AuthTokenDto)
-  async authTokenRefresh(
+  async authRefreshToken(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
@@ -96,7 +99,7 @@ export class AuthResolver {
 
   @UseGuards(AuthGuardGql)
   @Mutation((returns) => AuthTokenDto)
-  async authPasswordChange(
+  async authChangePassword(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
@@ -110,5 +113,31 @@ export class AuthResolver {
     );
 
     return this.issueToken(user, request, response);
+  }
+
+  @Mutation((returns) => AuthStatusDto)
+  async authResetPasswordRequest(
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse,
+    @Args('input') payload?: ChangePasswordRequestInput
+  ) {
+    const user = await this.securityService.validateUserByEmail(payload.email);
+
+    // send email out
+
+    return { ok: true };
+  }
+
+  @UseGuards(AuthGuardGql)
+  @Mutation((returns) => AuthTokenDto)
+  async authResetPassword(
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse,
+    @Args('id') payload?: string
+  ) {
+    // verify one-time hash key
+    const user = await this.securityService.resetPassword(request.user as User);
+
+    return { ok: true };
   }
 }
