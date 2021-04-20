@@ -34,7 +34,7 @@ type Mutation {
   authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
   authLogin(input: UserCredentialsInput!): AuthTokenDto!
   authRefreshToken: AuthTokenDto!
-  authResetPassword(id: String!): AuthTokenDto!
+  authResetPassword: AuthTokenDto!
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   authSignup(input: UserCreateInput!): AuthTokenDto!
   updateUser(input: UserUpdateInput!): UserDto!
