@@ -1,4 +1,4 @@
-import { RemoteType } from './config.models';
+import { RemoteType } from './config.model';
 import { ConfigService } from './config.service';
 
 /**

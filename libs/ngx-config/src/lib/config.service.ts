@@ -4,9 +4,9 @@ import { of } from 'rxjs';
 import { timeout, catchError } from 'rxjs/operators';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
-import { DEFAULT_HTTP_TIMEOUT } from './config.constants';
-import { ApplicationConfig, HttpMethod, RemoteType } from './config.models';
-import { CONFIG_TOKEN, DefaultApplicationConfig } from './config.defaults';
+import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
+import { ApplicationConfig, HttpMethod, RemoteType } from './config.model';
+import { CONFIG_TOKEN, DefaultApplicationConfig } from './config.default';
 
 @Injectable({
   providedIn: 'root',

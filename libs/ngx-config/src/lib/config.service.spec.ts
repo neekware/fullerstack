@@ -4,8 +4,8 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { DeepReadonly } from 'ts-essentials';
-import { DEFAULT_HTTP_TIMEOUT } from './config.constants';
-import { ApplicationConfig, HttpMethod } from './config.models';
+import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
+import { ApplicationConfig, HttpMethod } from './config.model';
 import { ConfigModule } from './config.module';
 import { ConfigService } from './config.service';
 
