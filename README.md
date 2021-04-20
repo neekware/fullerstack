@@ -60,11 +60,9 @@ npx create-nx-workspace fullerstack
 
 - AG = Agnostic (not target specific)
 - NG = [Angular](angular.io)
-  - NGAG = Platform Agnostic Angular
-  - NGAGX = Platform Agnostic Angular Extension (library)
-- NT = [Nest](nestjs.com)
-  - NTAG = Platform Agnostic Nest
-  - NTAGX = Platform Agnostic Nest Extension (library)
+  - NGX = Angular Library
+- NS = [Nest](nestjs.com)
+  - NSX = NestJs Library
 - WB = Web (Chrome, Firefox, Safari, Edge, etc)
 - EL = [Electron](electronjs.org)
 - NS = [NativeScript](nativescript.org)
@@ -74,16 +72,16 @@ npx create-nx-workspace fullerstack
 ## Applications
 
 - wb-appname = Web (Chrome, Firefox, Safari, Edge, etc)
-- el-appname = Desktop (Electorn Application - Linux, MacOS, Windows)
-- ns-appname = NativeScript (Andriod, iOS)
-- ic-appname = Ionic (Andriod, iOS)
+- el-appname = Desktop (Electron Application - Linux, MacOS, Windows)
+- ns-appname = NativeScript (Android, iOS)
+- ic-appname = Ionic (Android, iOS)
 
 ## Applications (End2End)
 
 - wb-appname-e2e = Web (Chrome, Firefox, Safari, Edge, etc)
-- el-appname-e2e = Desktop (Electorn Application - Linux, MacOS, Windows)
-- ns-appname-e2e = NativeScript (Andriod, iOS)
-- ic-appname-e2e = Ionic (Andriod, iOS)
+- el-appname-e2e = Desktop (Electron Application - Linux, MacOS, Windows)
+- ns-appname-e2e = NativeScript (Android, iOS)
+- ic-appname-e2e = Ionic (Android, iOS)
 
 ## Instruction (for developers)
 
@@ -121,7 +119,7 @@ yarn format
 
 ## License
 
-- Released under a ([MIT](LICENSE)) license.
+- Released under a ([MIT](https://raw.githubusercontent.com/neekware/fullerstack/main/LICENSE)) license.
 - Commercial Support Available - info@neekware.com
 
 ## Version

@@ -1,0 +1,52 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Group {
+  id Int [pk, increment]
+  name String
+  User User [not null]
+}
+
+Table User {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  email String [unique, not null]
+  username String [unique, not null]
+  password String [not null]
+  sessionVersion Int [not null, default: 1]
+  isVerified Boolean [not null, default: false]
+  isActive Boolean [not null, default: false]
+  firstName String [not null]
+  lastName String [not null]
+  role Role [not null, default: 'USER']
+  permissions Permission [not null]
+  groupId String
+  groups Group [not null]
+}
+
+Table GroupToUser {
+  userId String [ref: > User.id]
+  groupsId Int [ref: > Group.id]
+}
+
+Enum Role {
+  USER
+  STAFF
+  ADMIN
+  SUPERUSER
+}
+
+Enum Permission {
+  groupCREATE
+  groupREAD
+  groupUPDATE
+  groupDELETE
+  groupALL
+  userCREATE
+  userREAD
+  userUPDATE
+  userDELETE
+  userALL
+}

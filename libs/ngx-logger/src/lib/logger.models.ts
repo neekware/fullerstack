@@ -1,9 +1,11 @@
+import { DeepReadonly } from 'ts-essentials';
+
 /**
  * Log config declaration
  */
-export interface LoggerCfg {
+export interface LoggerConfig {
   logger: {
-    level?: number;
+    level: number;
   };
 }
 
@@ -24,12 +26,19 @@ export enum LogLevels {
 /**
  * Log level name - order is important
  */
-export const LogNames = ['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'];
+export const LogNames: DeepReadonly<string[]> = [
+  'CRITICAL',
+  'ERROR',
+  'WARN',
+  'INFO',
+  'DEBUG',
+  'TRACE',
+];
 
 /**
  * Log level colors - order is important
  */
-export const LogColors = [
+export const LogColors: DeepReadonly<string[]> = [
   'red',
   'OrangeRed ',
   'orange',

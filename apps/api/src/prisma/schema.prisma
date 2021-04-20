@@ -1,0 +1,56 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+enum Role {
+  USER
+  STAFF
+  ADMIN
+  SUPERUSER
+}
+
+enum Permission {
+  groupCREATE
+  groupREAD
+  groupUPDATE
+  groupDELETE
+  groupALL
+  userCREATE
+  userREAD
+  userUPDATE
+  userDELETE
+  userALL
+}
+
+model Group {
+  id   Int     @id @default(autoincrement())
+  name String?
+  User User[]
+}
+
+model User {
+  id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @default(now())
+  email          String       @unique
+  username       String       @unique
+  password       String       @default(cuid())
+  sessionVersion Int          @default(1)
+  isVerified     Boolean      @default(false)
+  isActive       Boolean      @default(false)
+  firstName      String
+  lastName       String
+  role           Role         @default(USER)
+  permissions    Permission[]
+  groupId        String?
+  groups         Group[]
+}

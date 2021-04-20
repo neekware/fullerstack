@@ -1,14 +1,14 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { ApplicationCfg, CfgModule } from '@fullerstack/ngx-cfg';
+import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 
 /** Application Environment with remote config endpoint */
-const appEnv: Readonly<ApplicationCfg> = {
+const appEnv: Readonly<ApplicationConfig> = {
   version: '1.0.1',
   production: true,
-  remoteCfg: {
-    endpoint: 'http://foo.com/remote/cfg',
+  remoteConfig: {
+    endpoint: 'http://foo.com/remote/config',
   },
 };
 
@@ -17,7 +17,7 @@ describe('AppComponent', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [AppComponent],
-        imports: [HttpClientModule, CfgModule.forRoot(appEnv)],
+        imports: [HttpClientModule, ConfigModule.forRoot(appEnv)],
       }).compileComponents();
     })
   );
