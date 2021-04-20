@@ -7,19 +7,17 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import {
-  AuthGuardGql,
-  AuthGuardPermissions,
-  AuthGuardRoles,
-  UsePermissions,
   UserDecorator,
   UseRoles,
+  AuthGuardGql,
+  AuthGuardRole,
 } from '@fullerstack/nsx-auth';
 
 import { UserDataAccess } from './user.permission';
 import { UserService } from './user.service';
 import { UserDto, UserUpdateInput } from './user.model';
 
-@Resolver((of) => UserDto)
+@Resolver(() => UserDto)
 export class UserResolver {
   constructor(
     private userService: UserService,
@@ -27,13 +25,13 @@ export class UserResolver {
   ) {}
 
   @UseGuards(AuthGuardGql)
-  @Query((returns) => UserDto)
+  @Query(() => UserDto)
   async userGetSelf(@UserDecorator() currentUser: User) {
     return UserDataAccess.self(currentUser);
   }
 
   @UseGuards(AuthGuardGql)
-  @Mutation((returns) => UserDto)
+  @Mutation(() => UserDto)
   async userUpdateSelf(
     @UserDecorator() user: User,
     @Args('input') payload: UserUpdateInput
@@ -45,8 +43,8 @@ export class UserResolver {
   }
 
   @UseRoles({ exclude: [Role.USER] })
-  @UseGuards(AuthGuardGql, AuthGuardRoles)
-  @Query((returns) => UserDto)
+  @UseGuards(AuthGuardGql, AuthGuardRole)
+  @Query(() => UserDto)
   async user(@UserDecorator() currentUser: User, @Args('id') userId: string) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
@@ -57,7 +55,7 @@ export class UserResolver {
   }
 
   @UseGuards(AuthGuardGql)
-  @Mutation((returns) => UserDto)
+  @Mutation(() => UserDto)
   async updateUser(
     @UserDecorator() user: User,
     @Args('input') userData: UserUpdateInput
@@ -66,13 +64,13 @@ export class UserResolver {
   }
 
   // @UseGuards(AuthGuardGql)
-  // @Query((returns) => User)
+  // @Query(() => User)
   // async users(@Args('data') where: Prisma.UserWhereInput) {
   //   return this.userService.users({ where });
   // }
 
   // @UseGuards(AuthGuardGql)
-  // @Mutation((returns) => User)
+  // @Mutation(() => User)
   // async updateUser(
   //   @UserDecorator() user: User,
   //   @Args('data') newUserData: UpdateUserInput

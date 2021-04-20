@@ -19,7 +19,7 @@ registerEnumType(Permission, {
 
 @ObjectType({ isAbstract: true })
 export abstract class BaseModelDto {
-  @Field((type) => ID)
+  @Field(() => ID)
   id: string;
 
   @Field({ description: "Object's creation time" })

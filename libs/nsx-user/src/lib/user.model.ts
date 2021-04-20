@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional } from 'class-validator';
+import { IsEmail } from 'class-validator';
 import { Permission, Role, User } from '@prisma/client';
 import { Field, ObjectType, InputType, ID, Directive } from '@nestjs/graphql';
 import { BaseModelDto, PartialPick } from '@fullerstack/nsx-common';
@@ -36,13 +36,13 @@ export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
   @Field({ nullable: true })
   lastName: string;
 
-  @Field((type) => Role, { nullable: true })
+  @Field(() => Role, { nullable: true })
   role: Role;
 
-  @Field((type) => ID, { nullable: true })
+  @Field(() => ID, { nullable: true })
   groupId: string;
 
-  @Field((type) => [Permission])
+  @Field(() => [Permission])
   permissions: Permission[];
 }
 
@@ -53,7 +53,7 @@ type UserUpdatableFields = PartialPick<
 
 @InputType()
 export class UserUpdateInput implements UserUpdatableFields {
-  @Field((type) => ID)
+  @Field(() => ID)
   id: string;
 
   @Field({ nullable: true })
@@ -65,7 +65,7 @@ export class UserUpdateInput implements UserUpdatableFields {
 
 @InputType()
 export class UserChangeEmailInput {
-  @Field((type) => ID)
+  @Field(() => ID)
   id: string;
 
   @Directive('@lowercase')
