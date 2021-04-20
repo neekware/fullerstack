@@ -3,7 +3,6 @@ import {
   NotFoundException,
   ConflictException,
   BadRequestException,
-  Global,
 } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 
@@ -71,7 +70,6 @@ export class AuthService {
 
   async isUserVerified(userId: string): Promise<boolean> {
     const user = await this.securityService.validateUser(userId);
-    const isValidated = user ? user.isVerified : false;
-    return false;
+    return user ? user.isVerified : false;
   }
 }

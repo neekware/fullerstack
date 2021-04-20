@@ -3,22 +3,26 @@ import { Global, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SecurityService } from './auth.security.service';
 import { AuthResolver } from './auth.resolver';
-import { AuthGuardPermissions, AuthGuardRoles } from './auth.guard';
+import { AuthGuardGql } from './auth.guard.gql';
+import { AuthGuardRole } from './auth.guard.role';
+import { AuthGuardPermission } from './auth.guard.permission';
 
 @Global()
 @Module({
   providers: [
     SecurityService,
     AuthService,
-    AuthGuardRoles,
-    AuthGuardPermissions,
+    AuthGuardRole,
+    AuthGuardPermission,
     AuthResolver,
+    AuthGuardGql,
   ],
   exports: [
     SecurityService,
     AuthService,
-    AuthGuardRoles,
-    AuthGuardPermissions,
+    AuthGuardRole,
+    AuthGuardPermission,
+    AuthGuardGql,
     AuthResolver,
   ],
 })

@@ -18,6 +18,7 @@ import { PrismaService } from '@fullerstack/nsx-prisma';
 import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
+import { HttpResponse } from '@fullerstack/nsx-common';
 
 @Injectable()
 export class SecurityService {
@@ -120,7 +121,7 @@ export class SecurityService {
     });
   }
 
-  setHttpCookie(payload: JwtDto, response: any) {
+  setHttpCookie(payload: JwtDto, response: HttpResponse) {
     const sessionToken = this.generateSessionToken(payload);
     response.cookie(AUTH_SESSION_COOKIE_NAME, sessionToken, { httpOnly: true });
   }
