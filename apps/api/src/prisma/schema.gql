@@ -37,7 +37,11 @@ type Mutation {
   authResetPassword: AuthTokenDto!
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   authSignup(input: UserCreateInput!): AuthTokenDto!
-  updateUser(input: UserUpdateInput!): UserDto!
+
+  """Privileged user update"""
+  userUpdate(input: UserUpdateAdvancedInput!): UserDto!
+
+  """Update user's own info"""
   userUpdateSelf(input: UserUpdateInput!): UserDto!
 }
 
@@ -56,8 +60,11 @@ enum Permission {
 }
 
 type Query {
-  user(id: String!): UserDto!
-  userGetSelf: UserDto!
+  """Get other user info"""
+  user(input: UserUpdateAdvancedInput!): UserDto!
+
+  """Get user's own info"""
+  userSelf: UserDto!
 }
 
 """User role"""
@@ -104,6 +111,21 @@ type UserDto {
   """Object's update time"""
   updatedAt: DateTime!
   username: String
+}
+
+input UserUpdateAdvancedInput {
+  firstName: String
+  groupId: ID
+  id: ID!
+
+  """User is active"""
+  isActive: Boolean
+
+  """User is verified"""
+  isVerified: Boolean
+  lastName: String
+  permissions: [Permission!]!
+  role: Role
 }
 
 input UserUpdateInput {

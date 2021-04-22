@@ -1,3 +1,4 @@
+export * from './lib/auth.constant';
 export * from './lib/auth.model';
 export * from './lib/auth.module';
 export * from './lib/auth.guard.gql';
