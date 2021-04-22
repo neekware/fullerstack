@@ -83,6 +83,7 @@ export class UserResolver {
 
   @Query(() => PaginatedUser)
   async users(
+    @UserDecorator() currentUser: User,
     @Args() { after, before, first, last }: PaginationArgs,
     @Args({ name: 'query', type: () => String, nullable: true })
     query: string,
@@ -111,7 +112,7 @@ export class UserResolver {
           ...args,
         });
         return users.map(
-          (user) => UserDataAccess.getSecuredUser(user) as UserDto
+          (user) => UserDataAccess.getSecuredUser(user, currentUser) as UserDto
         );
       },
       () =>

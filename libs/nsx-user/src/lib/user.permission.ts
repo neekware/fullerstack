@@ -11,8 +11,21 @@ export class UserDataAccess {
   static getSecuredUser(user: User, currentUser?: User): Partial<User> {
     return tryGet(
       () => UserDataAccess[currentUser.role.toUpperCase()](user),
-      UserDataAccess.user(user)
+      UserDataAccess.anonymous(user)
     );
+  }
+
+  static anonymous(user: User): Partial<User> {
+    const securedUser = UserDataAccess.secureUser(user);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const {
+      isActive,
+      isVerified,
+      email,
+      sessionVersion,
+      ...prunedUser
+    } = securedUser;
+    return prunedUser;
   }
 
   static user(user: User): Partial<User> {
