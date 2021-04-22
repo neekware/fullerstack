@@ -12,9 +12,10 @@ import {
   UseRoles,
   AuthGuardGql,
   AuthGuardRole,
+  AuthGuardAnonymousGql,
 } from '@fullerstack/nsx-auth';
 
-import { UserDataAccess } from './user.permission';
+import { UserDataAccessScope } from './user.scope';
 import { UserService } from './user.service';
 import {
   UserDto,
@@ -35,7 +36,7 @@ export class UserResolver {
   @UseGuards(AuthGuardGql)
   @Query(() => UserDto, { description: "Get user's own info" })
   async userSelf(@UserDecorator() currentUser: User) {
-    return UserDataAccess.getSecuredUser(currentUser);
+    return UserDataAccessScope.getSecuredUser(currentUser);
   }
 
   @UseGuards(AuthGuardGql)
@@ -48,7 +49,7 @@ export class UserResolver {
       throw new UnauthorizedException('Error - Insufficient access');
     }
     const user = await this.userService.updateUser(currentUser.id, payload);
-    return UserDataAccess.getSecuredUser(user, currentUser);
+    return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 
   @UseRoles({ exclude: [Role.USER] })
@@ -66,7 +67,7 @@ export class UserResolver {
       throw new NotFoundException('Error - User not found');
     }
 
-    return UserDataAccess.getSecuredUser(user, currentUser);
+    return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 
   @UseRoles({ exclude: [Role.USER] })
@@ -78,9 +79,10 @@ export class UserResolver {
   ) {
     await this.userService.canUpdateUser(currentUser, userData.id);
     const user = await this.userService.updateUser(userData.id, userData);
-    return UserDataAccess.getSecuredUser(user, currentUser);
+    return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 
+  @UseGuards(AuthGuardAnonymousGql)
   @Query(() => PaginatedUser)
   async users(
     @UserDecorator() currentUser: User,
@@ -112,7 +114,8 @@ export class UserResolver {
           ...args,
         });
         return users.map(
-          (user) => UserDataAccess.getSecuredUser(user, currentUser) as UserDto
+          (user) =>
+            UserDataAccessScope.getSecuredUser(user, currentUser) as UserDto
         );
       },
       () =>

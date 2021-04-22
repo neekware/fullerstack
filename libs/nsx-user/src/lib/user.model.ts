@@ -35,7 +35,7 @@ export class UserDto extends BaseModelDto implements Partial<User> {
   @Field(() => Role, { nullable: true })
   role: Role;
 
-  @Field(() => [Permission])
+  @Field(() => [Permission], { nullable: true })
   permissions: Permission[];
 
   @Field(() => ID, { nullable: true })
