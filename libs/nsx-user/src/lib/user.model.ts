@@ -1,18 +1,13 @@
 import { IsEmail } from 'class-validator';
 import { Permission, Prisma, Role, User } from '@prisma/client';
 import { Field, ObjectType, InputType, ID, Directive } from '@nestjs/graphql';
-import { BaseModelDto, PartialPick } from '@fullerstack/nsx-common';
-
-/**
- * User type (restricted for self, admin, staff, superuser)
- */
-type UserEnforcedSecurity = Omit<User, 'password'>;
+import { BaseModelDto, Paginated, PartialPick } from '@fullerstack/nsx-common';
 
 /**
  * User profile (server -> client)
  */
 @ObjectType()
-export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
+export class UserDto extends BaseModelDto implements Partial<User> {
   @Directive('@lowercase')
   @Field({ nullable: true })
   @IsEmail()
@@ -47,13 +42,8 @@ export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
   groupId: string;
 }
 
-type UserUpdatableFields = PartialPick<
-  User,
-  'id' | 'firstName' | 'lastName' | 'role'
->;
-
 @InputType()
-export class UserUpdateInput implements UserUpdatableFields {
+export class UserUpdateInput implements Partial<User> {
   @Field(() => ID)
   id: string;
 
@@ -63,22 +53,8 @@ export class UserUpdateInput implements UserUpdatableFields {
   @Field({ nullable: true })
   lastName?: string;
 }
-
-type UserUpdatableAdvancedFields = PartialPick<
-  User,
-  | 'id'
-  | 'email'
-  | 'username'
-  | 'isVerified'
-  | 'isActive'
-  | 'groupId'
-  | 'firstName'
-  | 'lastName'
-  | 'role'
-  | 'permissions'
->;
 @InputType()
-export class UserUpdateAdvancedInput implements UserUpdatableAdvancedFields {
+export class UserUpdateAdvancedInput implements Partial<User> {
   @Field(() => ID)
   id: string;
 
@@ -124,30 +100,56 @@ export class UserChangeUsernameInput {
   username: string;
 }
 
-export type UserWhereInput = Omit<
-  Prisma.UserWhereInput,
-  'password' | 'sessionVersion'
->;
+@InputType()
+export class UserWhereInput implements Partial<User> {
+  @Field(() => ID)
+  id: string;
 
-export type UserWhereUniqueInput = Prisma.UserWhereUniqueInput;
+  @Directive('@lowercase')
+  @Field()
+  @IsEmail()
+  email?: string;
 
-export type UserOrderByInput = Omit<
-  Prisma.UserOrderByInput,
-  'password' | 'sessionVersion'
->;
+  @Directive('@lowercase')
+  @Field()
+  username?: string;
 
-// @InputType()
-// export class UsersSearchInput {
-//   @Field()
-//   where: UserWhereInput;
+  @Field()
+  isVerified?: boolean;
 
-//   @Field({ nullable: true })
-//   cursor?: UserWhereUniqueInput;
+  @Field()
+  isActive?: boolean;
 
-//   @Field({ nullable: true })
-//   @Field()
-//   skip?: number;
+  @Field()
+  firstName?: string;
 
-//   @Field()
-//   take?: number;
-// }
+  @Field()
+  lastName?: string;
+
+  @Field(() => Role)
+  role?: Role;
+
+  @Field(() => [Permission])
+  permissions?: Permission[];
+
+  @Field(() => ID, { nullable: true })
+  groupId: string;
+}
+
+@InputType()
+export class UserWhereUniqueInput implements Partial<User> {
+  @Field(() => ID)
+  id?: string;
+
+  @Directive('@lowercase')
+  @Field()
+  @IsEmail()
+  email?: string;
+
+  @Directive('@lowercase')
+  @Field()
+  username?: string;
+}
+
+@ObjectType()
+export class PaginatedUser extends Paginated(UserDto) {}

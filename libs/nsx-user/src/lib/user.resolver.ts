@@ -3,8 +3,9 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args, ResolveField } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
+import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import {
   UserDecorator,
@@ -17,9 +18,12 @@ import { UserDataAccess } from './user.permission';
 import { UserService } from './user.service';
 import {
   UserDto,
+  PaginatedUser,
   UserUpdateAdvancedInput,
   UserUpdateInput,
 } from './user.model';
+import { PaginationArgs } from '@fullerstack/nsx-common';
+import { UserOrder } from './user.order';
 
 @Resolver(() => UserDto)
 export class UserResolver {
@@ -77,10 +81,53 @@ export class UserResolver {
     return UserDataAccess.getSecuredUser(user, currentUser);
   }
 
-  // @Query(() => UserDto, { description: 'Get other users info' })
-  // async users(@Args('input') searchData: UsersSearchInput) {
-  //   return ([] as unknown) as UserDto;
-  //   // const users = await this.userService.users(searchData);
-  //   // return users.map((user) => UserDataAccess.getSecuredUser(user) as UserDto);
-  // }
+  @Query((returns) => PaginatedUser)
+  async users(
+    @Args() { skip, after, before, first, last }: PaginationArgs,
+    @Args({ name: 'query', type: () => String, nullable: true })
+    query: string,
+    @Args({
+      name: 'orderBy',
+      type: () => UserOrder,
+      nullable: true,
+    })
+    orderBy: UserOrder
+  ) {
+    query = query || '';
+    const users = await findManyCursorConnection(
+      async (args) => {
+        const users = await this.prisma.user.findMany({
+          // include: { group: true },
+          where: {
+            AND: [{ isActive: true }],
+            OR: [
+              { username: { contains: query } },
+              { email: { contains: query } },
+              { firstName: { contains: query } },
+              { lastName: { contains: query } },
+            ],
+          },
+          orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : undefined,
+          ...args,
+        });
+        return users.map(
+          (user) => UserDataAccess.getSecuredUser(user) as UserDto
+        );
+      },
+      () =>
+        this.prisma.user.count({
+          where: {
+            AND: [{ isActive: true }],
+            OR: [
+              { username: { contains: query } },
+              { email: { contains: query } },
+              { firstName: { contains: query } },
+              { lastName: { contains: query } },
+            ],
+          },
+        }),
+      { first, last, before, after }
+    );
+    return users;
+  }
 }

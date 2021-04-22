@@ -32,10 +32,6 @@ export class UserService {
     return this.prisma.user.findUnique({ where: userWhereUniqueInput });
   }
 
-  // async users(params: UsersSearchInput): Promise<User[]> {
-  //   return await this.prisma.user.findMany(params);
-  // }
-
   // async createUser(data: Prisma.UserCreateInput): Promise<User> {
   //   return this.prisma.user.create({
   //     data,
