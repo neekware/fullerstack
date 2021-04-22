@@ -25,6 +25,6 @@ export function getCookiesFromContext(context: ExecutionContext): string[] {
 export function getJwtTokenFromAuthorizationHeader(
   request: HttpRequest
 ): string {
-  const authorization = tryGet(() => request.headers.authorization);
+  const authorization = tryGet(() => request.headers.authorization, '');
   return authorization.replace('Bearer ', '');
 }
