@@ -81,9 +81,9 @@ export class UserResolver {
     return UserDataAccess.getSecuredUser(user, currentUser);
   }
 
-  @Query((returns) => PaginatedUser)
+  @Query(() => PaginatedUser)
   async users(
-    @Args() { skip, after, before, first, last }: PaginationArgs,
+    @Args() { after, before, first, last }: PaginationArgs,
     @Args({ name: 'query', type: () => String, nullable: true })
     query: string,
     @Args({

@@ -2,7 +2,7 @@ import { tryGet } from '@fullerstack/agx-util';
 import { User } from '@prisma/client';
 
 export class UserDataAccess {
-  private static secureUser(user: User, currentUser?: User): Partial<User> {
+  private static secureUser(user: User): Partial<User> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...securedUser } = user;
     return securedUser;
@@ -15,24 +15,24 @@ export class UserDataAccess {
     );
   }
 
-  static user(user: User, currentUser?: User): Partial<User> {
+  static user(user: User): Partial<User> {
     const securedUser = UserDataAccess.secureUser(user);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { sessionVersion, ...prunedUser } = securedUser;
     return prunedUser;
   }
 
-  static staff(user: User, currentUser?: User): Partial<User> {
+  static staff(user: User): Partial<User> {
     const securedUser = UserDataAccess.secureUser(user);
     return securedUser;
   }
 
-  static admin(user: User, currentUser?: User): Partial<User> {
+  static admin(user: User): Partial<User> {
     const securedUser = UserDataAccess.secureUser(user);
     return securedUser;
   }
 
-  static superuser(user: User, currentUser?: User): Partial<User> {
+  static superuser(user: User): Partial<User> {
     const securedUser = UserDataAccess.secureUser(user);
     return securedUser;
   }

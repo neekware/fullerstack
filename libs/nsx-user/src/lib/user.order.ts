@@ -1,4 +1,4 @@
-import { Order, OrderDirection } from '@fullerstack/nsx-common';
+import { Order } from '@fullerstack/nsx-common';
 import { Field, InputType, registerEnumType } from '@nestjs/graphql';
 
 export enum UserOrderField {
@@ -17,6 +17,6 @@ registerEnumType(UserOrderField, {
 
 @InputType()
 export class UserOrder extends Order {
-  @Field((type) => UserOrderField)
+  @Field(() => UserOrderField)
   field: UserOrderField;
 }
