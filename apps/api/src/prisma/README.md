@@ -32,6 +32,15 @@ to reflect the latest of the main `schema.prisma` file
 
 - to create/update: `yarn serve api`
 
+### `seed.ts`
+
+Description: A `seed.ts` is manually created to insert initial fixture into the database.
+This is a great tool for creating things like groups, superuser, etc. It also can be a great
+tool for manually overwriting a superuser account in case of a security breach.
+
+- to create/update: `yarn serve api`
+
 ## Note
 
-All files/folders under this prisma directory are under version control
+- All files/folders under this prisma directory are under version control
+- The seed command seems to be working ONLY under specific node version. The last working version is `nvm install v12.18.4`.

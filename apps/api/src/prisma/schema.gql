@@ -60,6 +60,7 @@ type PaginatedUser {
 
 """User permission"""
 enum Permission {
+  appALL
   groupALL
   groupCREATE
   groupDELETE

@@ -19,6 +19,7 @@ enum Role {
 }
 
 enum Permission {
+  appALL
   groupCREATE
   groupREAD
   groupUPDATE
@@ -32,9 +33,12 @@ enum Permission {
 }
 
 model Group {
-  id   Int     @id @default(autoincrement())
-  name String?
-  User User[]
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  name      String   @unique
+  isActive  Boolean  @default(false)
+  User      User[]
 }
 
 model User {
