@@ -4,7 +4,10 @@
 
 Table Group {
   id String [pk]
-  name String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  name String [unique, not null]
+  isActive Boolean [not null, default: false]
   User User [not null]
 }
 
