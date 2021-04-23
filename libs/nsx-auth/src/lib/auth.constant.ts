@@ -1,6 +1,11 @@
 import { Role } from '@prisma/client';
 
 /**
+ * Name of this module
+ */
+export const AUTH_MODULE_NAME = 'AuthModule';
+
+/**
  * Auth session expiry in days
  */
 export const AUTH_SESSION_EXPIRY_DEFAULT = 7;

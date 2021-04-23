@@ -1,11 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 import { hash, compare } from 'bcrypt';
 import { v4 as uuid_v4 } from 'uuid';
 import * as jwt from 'jsonwebtoken';
-import { User } from '@prisma/client';
+import { Permission, Role, User } from '@prisma/client';
 
 import { JwtDto } from '@fullerstack/api-dto';
 import { PrismaService } from '@fullerstack/nsx-prisma';
@@ -13,10 +13,11 @@ import { HttpResponse } from '@fullerstack/nsx-common';
 
 import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
-import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
+import { AUTH_SESSION_COOKIE_NAME, AUTH_MODULE_NAME } from './auth.constant';
 
 @Injectable()
 export class SecurityService {
+  private readonly logger = new Logger(AUTH_MODULE_NAME);
   readonly config: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
   readonly jwtSecret: string;
 
@@ -28,7 +29,31 @@ export class SecurityService {
       { ...this.config },
       this.configService.get<SecurityConfig>('appConfig.securityConfig')
     );
-    this.jwtSecret = this.configService.get<string>('JWT_SECRET');
+    this.jwtSecret = this.configService.get<string>('SEEKRET_JWT');
+    this.rehydrateSuperuser();
+  }
+
+  private async rehydrateSuperuser() {
+    const email = this.configService.get<string>('SUPERUSER_EMAIL');
+    const password = this.configService.get<string>('SUPERUSER_PASSWORD');
+    const hashedPassword = await this.hashPassword(password);
+    await this.prisma.user.upsert({
+      where: { email },
+      update: { password: hashedPassword },
+      create: {
+        email,
+        username: 'superuser',
+        firstName: 'Super',
+        lastName: 'User',
+        password: hashedPassword,
+        isActive: true,
+        isVerified: true,
+        role: Role.SUPERUSER,
+        permissions: [Permission.appALL],
+      },
+    });
+
+    this.logger.debug(`Superuser rehydrated - ${email}`);
   }
 
   /**
