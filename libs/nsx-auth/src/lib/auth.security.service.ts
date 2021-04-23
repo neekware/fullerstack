@@ -65,7 +65,7 @@ export class SecurityService {
       },
     });
 
-    this.logger.debug(`Superuser rehydrated - ${email}`);
+    this.logger.log(`Superuser rehydrated - ${email}`);
   }
 
   /**
