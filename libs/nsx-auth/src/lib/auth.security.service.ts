@@ -34,18 +34,30 @@ export class SecurityService {
   }
 
   private async rehydrateSuperuser() {
+    let sessionVersion = 1;
     const email = this.configService.get<string>('AUTH_SUPERUSER_EMAIL');
     const password = this.configService.get<string>('AUTH_SUPERUSER_PASSWORD');
+
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (user) {
+      if (await this.validatePassword(password, user.password)) {
+        // no password change requested, no further action required, all safe!
+        return;
+      }
+      sessionVersion = user.sessionVersion + 1;
+    }
+
     const hashedPassword = await this.hashPassword(password);
     await this.prisma.user.upsert({
       where: { email },
-      update: { password: hashedPassword },
+      update: { password: hashedPassword, sessionVersion },
       create: {
         email,
         username: 'superuser',
         firstName: 'Super',
         lastName: 'User',
         password: hashedPassword,
+        sessionVersion,
         isActive: true,
         isVerified: true,
         role: Role.SUPERUSER,
@@ -64,7 +76,8 @@ export class SecurityService {
     password: string,
     hashedPassword: string
   ): Promise<boolean> {
-    return await compare(password, hashedPassword);
+    const validPassword = await compare(password, hashedPassword);
+    return validPassword;
   }
 
   /**
