@@ -1,18 +1,13 @@
 import { IsEmail } from 'class-validator';
 import { Permission, Role, User } from '@prisma/client';
 import { Field, ObjectType, InputType, ID, Directive } from '@nestjs/graphql';
-import { BaseModelDto, PartialPick } from '@fullerstack/nsx-common';
-
-/**
- * User type (restricted for self, admin, staff, superuser)
- */
-type UserEnforcedSecurity = Omit<User, 'password'>;
+import { BaseModelDto, Paginated } from '@fullerstack/nsx-common';
 
 /**
  * User profile (server -> client)
  */
 @ObjectType()
-export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
+export class UserDto extends BaseModelDto implements Partial<User> {
   @Directive('@lowercase')
   @Field({ nullable: true })
   @IsEmail()
@@ -33,26 +28,22 @@ export class UserDto extends BaseModelDto implements UserEnforcedSecurity {
 
   @Field({ nullable: true })
   firstName: string;
+
   @Field({ nullable: true })
   lastName: string;
 
   @Field(() => Role, { nullable: true })
   role: Role;
 
+  @Field(() => [Permission], { nullable: true })
+  permissions: Permission[];
+
   @Field(() => ID, { nullable: true })
   groupId: string;
-
-  @Field(() => [Permission])
-  permissions: Permission[];
 }
 
-type UserUpdatableFields = PartialPick<
-  User,
-  'id' | 'firstName' | 'lastName' | 'role'
->;
-
 @InputType()
-export class UserUpdateInput implements UserUpdatableFields {
+export class UserUpdateInput implements Partial<User> {
   @Field(() => ID)
   id: string;
 
@@ -62,6 +53,32 @@ export class UserUpdateInput implements UserUpdatableFields {
   @Field({ nullable: true })
   lastName?: string;
 }
+@InputType()
+export class UserUpdateAdvancedInput implements Partial<User> {
+  @Field(() => ID)
+  id: string;
+
+  @Field({ nullable: true, description: 'User is verified' })
+  isVerified?: boolean;
+
+  @Field({ nullable: true, description: 'User is active' })
+  isActive?: boolean;
+
+  @Field({ nullable: true })
+  firstName?: string;
+
+  @Field({ nullable: true })
+  lastName?: string;
+
+  @Field(() => Role, { nullable: true })
+  role?: Role;
+
+  @Field(() => [Permission])
+  permissions?: Permission[];
+
+  @Field(() => ID, { nullable: true })
+  groupId?: string;
+}
 
 @InputType()
 export class UserChangeEmailInput {
@@ -70,5 +87,69 @@ export class UserChangeEmailInput {
 
   @Directive('@lowercase')
   @Field()
-  email?: string;
+  email: string;
 }
+
+@InputType()
+export class UserChangeUsernameInput {
+  @Field(() => ID)
+  id: string;
+
+  @Directive('@lowercase')
+  @Field()
+  username: string;
+}
+
+@InputType()
+export class UserWhereInput implements Partial<User> {
+  @Field(() => ID)
+  id: string;
+
+  @Directive('@lowercase')
+  @Field()
+  @IsEmail()
+  email?: string;
+
+  @Directive('@lowercase')
+  @Field()
+  username?: string;
+
+  @Field()
+  isVerified?: boolean;
+
+  @Field()
+  isActive?: boolean;
+
+  @Field()
+  firstName?: string;
+
+  @Field()
+  lastName?: string;
+
+  @Field(() => Role)
+  role?: Role;
+
+  @Field(() => [Permission])
+  permissions?: Permission[];
+
+  @Field(() => ID, { nullable: true })
+  groupId: string;
+}
+
+@InputType()
+export class UserWhereUniqueInput implements Partial<User> {
+  @Field(() => ID)
+  id?: string;
+
+  @Directive('@lowercase')
+  @Field()
+  @IsEmail()
+  email?: string;
+
+  @Directive('@lowercase')
+  @Field()
+  username?: string;
+}
+
+@ObjectType()
+export class PaginatedUser extends Paginated(UserDto) {}

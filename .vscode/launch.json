@@ -5,9 +5,9 @@
       "type": "chrome",
       "request": "launch",
       "name": "Launch Angular",
-      "preLaunchTask": "npm: start:wb-avidtrader",
+      "preLaunchTask": "npm: start:fullerstack",
       "url": "http://localhost:4200/",
-      "webRoot": "${workspaceFolder}/apps/wb-avidtrader"
+      "webRoot": "${workspaceFolder}/apps/fullerstack"
     },
     {
       "type": "node",

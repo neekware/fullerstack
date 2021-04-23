@@ -1,12 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { UserUpdateInput } from './user.model';
+import { UserUpdateInput, UserWhereUniqueInput } from './user.model';
+import { User } from '@prisma/client';
+import { AUTH_ROLE_RESTRICTION_MATRIX } from '@fullerstack/nsx-auth';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  updateUser(userId: string, newUserData: UserUpdateInput) {
+  updateUser(userId: string, newUserData: UserUpdateInput): Promise<User> {
     return this.prisma.user.update({
       data: newUserData,
       where: {
@@ -15,30 +17,20 @@ export class UserService {
     });
   }
 
-  // async user(
-  //   userWhereUniqueInput: Prisma.UserWhereUniqueInput
-  // ): Promise<User | null> {
-  //   return this.prisma.user.findUnique({
-  //     where: { email: userWhereUniqueInput.email },
-  //   });
-  // }
+  async canUpdateUser(currentUser: User, userId: string): Promise<boolean> {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    const forbidden = AUTH_ROLE_RESTRICTION_MATRIX[currentUser.role];
+    if (forbidden.some((some) => some === user.role)) {
+      throw new ForbiddenException(
+        'Error - Operation on privileged entity not permitted'
+      );
+    }
+    return true;
+  }
 
-  // async users(params: {
-  //   skip?: number;
-  //   take?: number;
-  //   cursor?: Prisma.UserWhereUniqueInput;
-  //   where?: Prisma.UserWhereInput;
-  //   orderBy?: Prisma.UserOrderByInput;
-  // }): Promise<User[]> {
-  //   const { skip, take, cursor, where, orderBy } = params;
-  //   return this.prisma.user.findMany({
-  //     skip,
-  //     take,
-  //     cursor,
-  //     where,
-  //     orderBy,
-  //   });
-  // }
+  async user(userWhereUniqueInput: UserWhereUniqueInput): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: userWhereUniqueInput });
+  }
 
   // async createUser(data: Prisma.UserCreateInput): Promise<User> {
   //   return this.prisma.user.create({

@@ -1638,6 +1638,11 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
+"@devoxa/prisma-relay-cursor-connection@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@devoxa/prisma-relay-cursor-connection/-/prisma-relay-cursor-connection-1.1.1.tgz#9f2703d977bfe6a8f869bb841cdf62b571dce10f"
+  integrity sha512-03cJcDCfAPfTMOE2bVnd9rDKcCAHjfUnKC6byoimN1j1m4R4IWWs+lj86m8g7VzYGJOdCRA6rZvi9zSp9qCbeA==
+
 "@discoveryjs/json-ext@0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"

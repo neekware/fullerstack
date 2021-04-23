@@ -37,8 +37,25 @@ type Mutation {
   authResetPassword: AuthTokenDto!
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   authSignup(input: UserCreateInput!): AuthTokenDto!
-  updateUser(input: UserUpdateInput!): UserDto!
+
+  """Privileged user update"""
+  userUpdate(input: UserUpdateAdvancedInput!): UserDto!
+
+  """Update user's own info"""
   userUpdateSelf(input: UserUpdateInput!): UserDto!
+}
+
+"""Ascending or Descending direction for a given `orderBy` argument."""
+enum OrderDirection {
+  asc
+  desc
+}
+
+type PaginatedUser {
+  edges: [UserDtoEdge!]
+  hasNextPage: Boolean!
+  nodes: [UserDto!]
+  totalCount: Int!
 }
 
 """User permission"""
@@ -56,8 +73,12 @@ enum Permission {
 }
 
 type Query {
-  user(id: String!): UserDto!
-  userGetSelf: UserDto!
+  """Get other user info"""
+  user(input: UserUpdateAdvancedInput!): UserDto!
+
+  """Get user's own info"""
+  userSelf: UserDto!
+  users(after: String, before: String, first: Int, last: Int, limit: Int = 20, offset: Int = 0, orderBy: UserOrder, query: String, skip: Int): PaginatedUser!
 }
 
 """User role"""
@@ -95,7 +116,7 @@ type UserDto {
   """User is verified"""
   isVerified: Boolean
   lastName: String
-  permissions: [Permission!]!
+  permissions: [Permission!]
   role: Role
 
   """Session version"""
@@ -104,6 +125,41 @@ type UserDto {
   """Object's update time"""
   updatedAt: DateTime!
   username: String
+}
+
+type UserDtoEdge {
+  cursor: String!
+  node: UserDto!
+}
+
+input UserOrder {
+  direction: OrderDirection!
+  field: UserOrderField!
+}
+
+"""User connection order list."""
+enum UserOrderField {
+  createdAt
+  firstName
+  id
+  lastName
+  updatedAt
+  username
+}
+
+input UserUpdateAdvancedInput {
+  firstName: String
+  groupId: ID
+  id: ID!
+
+  """User is active"""
+  isActive: Boolean
+
+  """User is verified"""
+  isVerified: Boolean
+  lastName: String
+  permissions: [Permission!]!
+  role: Role
 }
 
 input UserUpdateInput {

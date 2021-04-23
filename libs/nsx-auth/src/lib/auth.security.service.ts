@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
@@ -12,13 +8,12 @@ import * as jwt from 'jsonwebtoken';
 import { User } from '@prisma/client';
 
 import { JwtDto } from '@fullerstack/api-dto';
-import { tryGet } from '@fullerstack/agx-util';
 import { PrismaService } from '@fullerstack/nsx-prisma';
+import { HttpResponse } from '@fullerstack/nsx-common';
 
 import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
-import { HttpResponse } from '@fullerstack/nsx-common';
 
 @Injectable()
 export class SecurityService {
@@ -134,10 +129,7 @@ export class SecurityService {
       ) as JwtDto;
       return { userId, sessionVersion };
     } catch (err) {
-      const message = `Token error: ${
-        tryGet(() => err.message) || tryGet(() => err.name, '')
-      }`;
-      throw new UnauthorizedException(message);
+      return undefined;
     }
   }
 

@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   UnauthorizedException,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -16,7 +17,7 @@ import {
 
 @Injectable()
 export class AuthGuardGql extends AuthGuard('jwt') {
-  constructor(private readonly securityService: SecurityService) {
+  constructor(readonly securityService: SecurityService) {
     super();
   }
 
@@ -44,7 +45,7 @@ export class AuthGuardGql extends AuthGuard('jwt') {
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
-      throw new UnauthorizedException(
+      throw new BadRequestException(
         'Error - Invalid session or remotely terminated'
       );
     }

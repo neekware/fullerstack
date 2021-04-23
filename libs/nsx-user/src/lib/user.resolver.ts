@@ -5,17 +5,26 @@ import {
 } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
+import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import {
   UserDecorator,
   UseRoles,
   AuthGuardGql,
   AuthGuardRole,
+  AuthGuardAnonymousGql,
 } from '@fullerstack/nsx-auth';
 
-import { UserDataAccess } from './user.permission';
+import { UserDataAccessScope } from './user.scope';
 import { UserService } from './user.service';
-import { UserDto, UserUpdateInput } from './user.model';
+import {
+  UserDto,
+  PaginatedUser,
+  UserUpdateAdvancedInput,
+  UserUpdateInput,
+} from './user.model';
+import { PaginationArgs } from '@fullerstack/nsx-common';
+import { UserOrder } from './user.order';
 
 @Resolver(() => UserDto)
 export class UserResolver {
@@ -25,61 +34,104 @@ export class UserResolver {
   ) {}
 
   @UseGuards(AuthGuardGql)
-  @Query(() => UserDto)
-  async userGetSelf(@UserDecorator() currentUser: User) {
-    return UserDataAccess.self(currentUser);
+  @Query(() => UserDto, { description: "Get user's own info" })
+  async userSelf(@UserDecorator() currentUser: User) {
+    return UserDataAccessScope.getSecuredUser(currentUser);
   }
 
   @UseGuards(AuthGuardGql)
-  @Mutation(() => UserDto)
+  @Mutation(() => UserDto, { description: "Update user's own info" })
   async userUpdateSelf(
-    @UserDecorator() user: User,
+    @UserDecorator() currentUser: User,
     @Args('input') payload: UserUpdateInput
   ) {
-    if (user.id !== payload.id) {
+    if (currentUser.id !== payload.id) {
       throw new UnauthorizedException('Error - Insufficient access');
     }
-    return this.userService.updateUser(user.id, payload);
+    const user = await this.userService.updateUser(currentUser.id, payload);
+    return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 
   @UseRoles({ exclude: [Role.USER] })
   @UseGuards(AuthGuardGql, AuthGuardRole)
-  @Query(() => UserDto)
-  async user(@UserDecorator() currentUser: User, @Args('id') userId: string) {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+  @Query(() => UserDto, { description: 'Get other user info' })
+  async user(
+    @UserDecorator() currentUser: User,
+    @Args('input') userData: UserUpdateAdvancedInput
+  ) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userData.id },
+    });
+
     if (!user) {
       throw new NotFoundException('Error - User not found');
     }
 
-    return UserDataAccess.staff(user);
+    return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 
-  @UseGuards(AuthGuardGql)
-  @Mutation(() => UserDto)
-  async updateUser(
-    @UserDecorator() user: User,
-    @Args('input') userData: UserUpdateInput
+  @UseRoles({ exclude: [Role.USER] })
+  @UseGuards(AuthGuardGql, AuthGuardRole)
+  @Mutation(() => UserDto, { description: 'Privileged user update' })
+  async userUpdate(
+    @UserDecorator() currentUser: User,
+    @Args('input') userData: UserUpdateAdvancedInput
   ) {
-    return this.userService.updateUser(user.id, userData);
+    await this.userService.canUpdateUser(currentUser, userData.id);
+    const user = await this.userService.updateUser(userData.id, userData);
+    return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 
-  // @UseGuards(AuthGuardGql)
-  // @Query(() => User)
-  // async users(@Args('data') where: Prisma.UserWhereInput) {
-  //   return this.userService.users({ where });
-  // }
-
-  // @UseGuards(AuthGuardGql)
-  // @Mutation(() => User)
-  // async updateUser(
-  //   @UserDecorator() user: User,
-  //   @Args('data') newUserData: UpdateUserInput
-  // ) {
-  //   return this.userService.updateUser(user.id, newUserData);
-  // }
-
-  // @ResolveField('posts')
-  // posts(@Parent() author: User) {
-  //   return this.prisma.user.findUnique({ where: { id: author.id } }).posts();
-  // }
+  @UseGuards(AuthGuardAnonymousGql)
+  @Query(() => PaginatedUser)
+  async users(
+    @UserDecorator() currentUser: User,
+    @Args() { after, before, first, last }: PaginationArgs,
+    @Args({ name: 'query', type: () => String, nullable: true })
+    query: string,
+    @Args({
+      name: 'orderBy',
+      type: () => UserOrder,
+      nullable: true,
+    })
+    orderBy: UserOrder
+  ) {
+    query = query || '';
+    const users = await findManyCursorConnection(
+      async (args) => {
+        const users = await this.prisma.user.findMany({
+          // include: { group: true },
+          where: {
+            AND: [{ isActive: true }],
+            OR: [
+              { username: { contains: query } },
+              { email: { contains: query } },
+              { firstName: { contains: query } },
+              { lastName: { contains: query } },
+            ],
+          },
+          orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : undefined,
+          ...args,
+        });
+        return users.map(
+          (user) =>
+            UserDataAccessScope.getSecuredUser(user, currentUser) as UserDto
+        );
+      },
+      () =>
+        this.prisma.user.count({
+          where: {
+            AND: [{ isActive: true }],
+            OR: [
+              { username: { contains: query } },
+              { email: { contains: query } },
+              { firstName: { contains: query } },
+              { lastName: { contains: query } },
+            ],
+          },
+        }),
+      { first, last, before, after }
+    );
+    return users;
+  }
 }
