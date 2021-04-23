@@ -29,13 +29,13 @@ export class SecurityService {
       { ...this.config },
       this.configService.get<SecurityConfig>('appConfig.securityConfig')
     );
-    this.jwtSecret = this.configService.get<string>('SEEKRET_JWT');
+    this.jwtSecret = this.configService.get<string>('AUTH_SEEKRET_KEY');
     this.rehydrateSuperuser();
   }
 
   private async rehydrateSuperuser() {
-    const email = this.configService.get<string>('SUPERUSER_EMAIL');
-    const password = this.configService.get<string>('SUPERUSER_PASSWORD');
+    const email = this.configService.get<string>('AUTH_SUPERUSER_EMAIL');
+    const password = this.configService.get<string>('AUTH_SUPERUSER_PASSWORD');
     const hashedPassword = await this.hashPassword(password);
     await this.prisma.user.upsert({
       where: { email },
