@@ -3,7 +3,7 @@
 //// ------------------------------------------------------
 
 Table Group {
-  id Int [pk, increment]
+  id String [pk]
   name String
   User User [not null]
 }
@@ -28,7 +28,7 @@ Table User {
 
 Table GroupToUser {
   userId String [ref: > User.id]
-  groupsId Int [ref: > Group.id]
+  groupsId String [ref: > Group.id]
 }
 
 Enum Role {
@@ -39,6 +39,7 @@ Enum Role {
 }
 
 Enum Permission {
+  appALL
   groupCREATE
   groupREAD
   groupUPDATE

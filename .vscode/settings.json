@@ -18,13 +18,17 @@
     "**/graph": true
   },
   "cSpell.words": [
+    "Buffay",
+    "Neekman",
     "Postgres",
     "Singup",
+    "Tribbiani",
     "fullerstack",
     "nestjs",
     "signup",
     "tryget",
-    "typegraphql"
+    "typegraphql",
+    "upsert"
   ],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
