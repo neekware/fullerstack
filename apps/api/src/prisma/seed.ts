@@ -1,6 +1,9 @@
 import { Permission, PrismaClient, Role } from '@prisma/client';
 const prisma = new PrismaClient();
 
+/**
+ * WARNING - For use during development ONLY
+ */
 async function main() {
   // Create Superuser Group
   const superuserGroupData = {
