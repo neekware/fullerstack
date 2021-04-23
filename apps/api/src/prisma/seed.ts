@@ -10,6 +10,7 @@ async function main() {
       username: 'RachelGreen',
       firstName: 'Rachel',
       lastName: 'Green',
+      password: 'pass4rachel',
       role: Role.SUPERUSER,
       permissions: [Permission.appALL],
     },
@@ -23,6 +24,7 @@ async function main() {
       username: 'MonicaGeller',
       firstName: 'Monica',
       lastName: 'Geller',
+      password: 'pass4monica',
       role: Role.ADMIN,
       permissions: [Permission.appALL],
     },
@@ -36,6 +38,7 @@ async function main() {
       username: 'JoeyTribbiani',
       firstName: 'Joey',
       lastName: 'Tribbiani',
+      password: 'pass4joey',
       role: Role.STAFF,
       permissions: [
         Permission.groupALL,
@@ -55,6 +58,7 @@ async function main() {
       username: 'RossGeller',
       firstName: 'Ross',
       lastName: 'Geller',
+      password: 'pass4ross',
       role: Role.USER,
       permissions: [
         Permission.userCREATE,
@@ -73,6 +77,7 @@ async function main() {
       username: 'ChandlerBing',
       firstName: 'Chandler',
       lastName: 'Bing',
+      password: 'pass4chandler',
       role: Role.USER,
       permissions: [
         Permission.userCREATE,
@@ -91,6 +96,7 @@ async function main() {
       username: 'PhoebeBuffay',
       firstName: 'Phoebe',
       lastName: 'Buffay',
+      password: 'pass4phoebe',
       role: Role.USER,
       permissions: [
         Permission.userCREATE,
@@ -111,11 +117,14 @@ async function main() {
   });
 }
 
+let status = 0;
+
 main()
-  .catch((e) => {
+  .catch(async (e) => {
     console.error(e);
-    process.exit(1);
+    status = 1;
   })
   .finally(async () => {
     await prisma.$disconnect();
+    process.exit(status);
   });
