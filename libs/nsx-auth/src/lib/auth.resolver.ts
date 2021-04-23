@@ -37,7 +37,8 @@ export class AuthResolver {
     @Args('input') data: UserCreateInput
   ) {
     const user = await this.authService.createUser(data);
-    return this.issueToken(user, request, response);
+    const token = this.securityService.issueToken(user, request, response);
+    return { ok: true, token };
   }
 
   @Mutation(() => AuthTokenDto)
@@ -47,23 +48,7 @@ export class AuthResolver {
     @Args('input') data: UserCredentialsInput
   ) {
     const user = await this.authService.authenticateUser(data);
-    return this.issueToken(user, request, response);
-  }
-
-  private issueToken(
-    user: User,
-    request: HttpRequest,
-    response: HttpResponse
-  ): AuthTokenDto {
-    const payload: JwtDto = {
-      userId: user.id,
-      sessionVersion: user.sessionVersion,
-    };
-
-    request.user = user;
-    this.securityService.setHttpCookie(payload, response);
-    const token = this.securityService.generateAccessToken(payload);
-
+    const token = this.securityService.issueToken(user, request, response);
     return { ok: true, token };
   }
 
@@ -91,7 +76,8 @@ export class AuthResolver {
       );
     }
 
-    return this.issueToken(user, request, response);
+    const token = this.securityService.issueToken(user, request, response);
+    return { ok: true, token };
   }
 
   @UseGuards(AuthGuardGql)
@@ -109,7 +95,8 @@ export class AuthResolver {
       payload.resetOtherSessions
     );
 
-    return this.issueToken(user, request, response);
+    const token = this.securityService.issueToken(user, request, response);
+    return { ok: true, token };
   }
 
   @Mutation(() => AuthStatusDto)

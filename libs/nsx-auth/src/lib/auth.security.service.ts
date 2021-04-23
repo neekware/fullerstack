@@ -9,7 +9,7 @@ import { Permission, Role, User } from '@prisma/client';
 
 import { JwtDto } from '@fullerstack/api-dto';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { HttpResponse } from '@fullerstack/nsx-common';
+import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 
 import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
@@ -33,6 +33,10 @@ export class SecurityService {
     this.rehydrateSuperuser();
   }
 
+  /**
+   * Creates or updates the primary superuser account based on .env data
+   * @returns void
+   */
   private async rehydrateSuperuser() {
     let sessionVersion = 1;
     const email = this.configService.get<string>('AUTH_SUPERUSER_EMAIL');
@@ -69,8 +73,29 @@ export class SecurityService {
   }
 
   /**
+   * Issue a token for a given user
+   * @param user user object for which a token is issued
+   * @param request original http request object
+   * @param response original http response object
+   * @returns string
+   */
+  issueToken(user: User, request: HttpRequest, response: HttpResponse): string {
+    const payload: JwtDto = {
+      userId: user.id,
+      sessionVersion: user.sessionVersion,
+    };
+
+    request.user = user;
+    this.setHttpCookie(payload, response);
+    const token = this.generateAccessToken(payload);
+
+    return token;
+  }
+
+  /**
    * Returns true if text password is the same as the saved password
    * @param password text password
+   * @returns promise of a boolean
    */
   async validatePassword(
     password: string,
@@ -85,6 +110,7 @@ export class SecurityService {
    * @param user Current user
    * @param oldPassword old password
    * @param newPassword new password
+   * @returns promise of a User
    */
   async changePassword(
     user: User,
@@ -117,6 +143,7 @@ export class SecurityService {
   /**
    * Reset password
    * @param user Current user
+   * @returns promise of a User
    */
   async resetPassword(user: User, resetOtherSessions?: boolean): Promise<User> {
     const hashedPassword = await this.hashPassword();
@@ -136,29 +163,50 @@ export class SecurityService {
    * Returns an a one-way hashed password
    * @param password string
    * @note to prevent null-password attacks, no user shall be created with a null-password
+   * @returns promise of a string
    */
   async hashPassword(password?: string): Promise<string> {
     password = password || uuid_v4();
     return await hash(password, this.config.bcryptSaltOrRound);
   }
 
+  /**
+   * Generates a session token to be used directly or embed in a httpCookie
+   * @param payload data to be encoded into a jwt token
+   * @returns string value of a jwt token
+   */
   generateSessionToken(payload: JwtDto): string {
     return jwt.sign(payload, this.jwtSecret, {
       expiresIn: this.config.sessionTokenExpiry,
     });
   }
 
+  /**
+   * Generates an access token to be sent to the end user (client)
+   * @param payload data to be encoded into a jwt token
+   * @returns string value of a jwt token
+   */
   generateAccessToken(payload: JwtDto): string {
     return jwt.sign(payload, this.jwtSecret, {
       expiresIn: this.config.accessTokenExpiry,
     });
   }
 
+  /**
+   * Sets a httpCookie on the response object containing the session token
+   * @param payload data to be encoded into a token
+   * @param response original http response object
+   */
   setHttpCookie(payload: JwtDto, response: HttpResponse) {
     const sessionToken = this.generateSessionToken(payload);
     response.cookie(AUTH_SESSION_COOKIE_NAME, sessionToken, { httpOnly: true });
   }
 
+  /**
+   * Verifies the validity of a jwt token
+   * @param token jwt token
+   * @returns data returned from decoded token
+   */
   verifyToken(token: string): JwtDto {
     try {
       const { userId, sessionVersion } = jwt.verify(
@@ -171,11 +219,21 @@ export class SecurityService {
     }
   }
 
+  /**
+   * Validates a user from an id and returns the user object on success
+   * @param userId string representation of an id
+   * @returns promise of a User or `undefined`
+   */
   async validateUser(userId: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     return user?.isActive ? user : undefined;
   }
 
+  /**
+   * Validates a user from an email and returns the user object on success
+   * @param email string representation of an email address
+   * @returns promise of a User or `undefined`
+   */
   async validateUserByEmail(email: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { email } });
     return user?.isActive ? user : undefined;
