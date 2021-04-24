@@ -1,4 +1,5 @@
 import { PrismaService } from '@fullerstack/nsx-prisma';
+import { PrismaServiceMock } from '@fullerstack/nsx-prisma-mock';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { SecurityService } from './auth.security.service';
@@ -9,7 +10,12 @@ describe('AuthGuardGql', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [PrismaService, ConfigService, SecurityService, AuthGuardGql],
+      providers: [
+        { provide: PrismaService, useValue: PrismaServiceMock },
+        ConfigService,
+        SecurityService,
+        AuthGuardGql,
+      ],
     }).compile();
 
     service = module.get(AuthGuardGql);

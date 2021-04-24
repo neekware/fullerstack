@@ -1,6 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@fullerstack/nsx-prisma';
+import { PrismaServiceMock } from '@fullerstack/nsx-prisma-mock';
 
 import { SecurityService } from './auth.security.service';
 
@@ -9,7 +10,11 @@ describe('SecurityService', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [ConfigService, PrismaService, SecurityService],
+      providers: [
+        ConfigService,
+        { provide: PrismaService, useValue: PrismaServiceMock },
+        SecurityService,
+      ],
     }).compile();
 
     service = module.get(SecurityService);
