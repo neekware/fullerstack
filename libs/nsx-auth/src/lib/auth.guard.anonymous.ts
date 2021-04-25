@@ -6,11 +6,7 @@ import {
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { AuthGuardGql } from './auth.guard.gql';
 import { SecurityService } from './auth.security.service';
-import {
-  getCookieFromContext,
-  getCookiesFromContext,
-  getResponseFromContext,
-} from './auth.util';
+import { getCookieFromContext, getResponseFromContext } from './auth.util';
 
 @Injectable()
 export class AuthGuardAnonymousGql extends AuthGuardGql {
