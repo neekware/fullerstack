@@ -45,7 +45,8 @@ export class SecurityService {
     const user = await this.prisma.user.findUnique({ where: { email } });
     if (user) {
       if (await this.validatePassword(password, user.password)) {
-        // no password change requested, no further action required, all safe!
+        // no password rescue requested for primary superuser
+        // no further action is required, so all is safe!
         return;
       }
       sessionVersion = user.sessionVersion + 1;

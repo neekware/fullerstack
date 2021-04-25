@@ -12,7 +12,7 @@ describe('AuthGuardPermission', () => {
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [
-        { provide: PrismaService, useValue: getMockPrismaService },
+        { provide: PrismaService, useValue: getMockPrismaService() },
         ConfigService,
         SecurityService,
         AuthGuardPermission,
