@@ -204,6 +204,17 @@ export class SecurityService {
   }
 
   /**
+   * Sets a httpCookie on the response object containing an expiry of `now`
+   * @param response original http response object
+   */
+  invalidateHttpCookie(response: HttpResponse) {
+    response.cookie(AUTH_SESSION_COOKIE_NAME, 'expired', {
+      maxAge: 0,
+      httpOnly: true,
+    });
+  }
+
+  /**
    * Verifies the validity of a jwt token
    * @param token jwt token
    * @returns data returned from decoded token
