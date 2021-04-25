@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { PrismaServiceMock } from '@fullerstack/nsx-prisma-mock';
+import { getMockPrismaService } from '@fullerstack/nsx-prisma-mock';
 
 import { SecurityService } from './auth.security.service';
 import { AuthResolver } from './auth.resolver';
@@ -14,7 +14,7 @@ describe('AuthResolver', () => {
     const module = await Test.createTestingModule({
       providers: [
         ConfigService,
-        { provide: PrismaService, useValue: PrismaServiceMock },
+        { provide: PrismaService, useValue: getMockPrismaService() },
         AuthService,
         SecurityService,
         AuthResolver,
