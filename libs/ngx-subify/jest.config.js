@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'ngx-submgr',
+  displayName: 'ngx-subify',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../coverage/libs/ngx-submgr',
+  coverageDirectory: '../../coverage/libs/ngx-subify',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

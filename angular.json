@@ -482,21 +482,21 @@
         }
       }
     },
-    "ngx-submgr": {
+    "ngx-subify": {
       "projectType": "library",
-      "root": "libs/ngx-submgr",
-      "sourceRoot": "libs/ngx-submgr/src",
+      "root": "libs/ngx-subify",
+      "sourceRoot": "libs/ngx-subify/src",
       "prefix": "fullerstack",
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
           "options": {
-            "tsConfig": "libs/ngx-submgr/tsconfig.lib.json",
-            "project": "libs/ngx-submgr/ng-package.json"
+            "tsConfig": "libs/ngx-subify/tsconfig.lib.json",
+            "project": "libs/ngx-subify/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/ngx-submgr/tsconfig.lib.prod.json"
+              "tsConfig": "libs/ngx-subify/tsconfig.lib.prod.json"
             }
           }
         },
@@ -504,16 +504,16 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/ngx-submgr/src/**/*.ts",
-              "libs/ngx-submgr/src/**/*.html"
+              "libs/ngx-subify/src/**/*.ts",
+              "libs/ngx-subify/src/**/*.html"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ngx-submgr"],
+          "outputs": ["coverage/libs/ngx-subify"],
           "options": {
-            "jestConfig": "libs/ngx-submgr/jest.config.js",
+            "jestConfig": "libs/ngx-subify/jest.config.js",
             "passWithNoTests": true
           }
         },

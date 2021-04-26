@@ -1,16 +1,16 @@
 import { waitForAsync, TestBed } from '@angular/core/testing';
-import { SubMgrModule } from './submgr.module';
+import { SubifyModule } from './subify.module';
 
-describe('SubMgrModule', () => {
+describe('SubifyModule', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [SubMgrModule],
+        imports: [SubifyModule],
       }).compileComponents();
     })
   );
 
   it('should have a module definition', () => {
-    expect(SubMgrModule).toBeDefined();
+    expect(SubifyModule).toBeDefined();
   });
 });
