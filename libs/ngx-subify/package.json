@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "@fullerstack/ngx-subify",
   "description": "A Subscription Management Library for Angular",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-subify/README.md",
