@@ -1,8 +1,8 @@
 {
   "version": "0.0.1",
   "name": "@fullerstack/ngx-subify",
-  "description": "A Logger Utility Library for Angular",
-  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-logger/README.md",
+  "description": "A Subscription Management Library for Angular",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-subify/README.md",
   "keywords": [
     "ng",
     "angular",
