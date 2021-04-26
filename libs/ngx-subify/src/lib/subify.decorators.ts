@@ -7,6 +7,7 @@ import { DefaultSubifyDecoratorOptions } from './subify.defaults';
  * SubifyDecorator decorator - streamline canceling of subscriptions
  */
 export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function _subify<T extends new (...args: any[]) => any>(target: T) {
     options = {
       ...DefaultSubifyDecoratorOptions,
@@ -27,7 +28,10 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
       _validateOptions(): void {
         if (
           this._options.takeUntilInputName &&
-          !this.hasOwnProperty(this._options.takeUntilInputName)
+          !Object.prototype.hasOwnProperty.call(
+            this,
+            this._options.takeUntilInputName
+          )
         ) {
           console.error(
             `${this._options.className} must have "${this._options.takeUntilInputName}: Subject<boolean> = new Subject<boolean>();" when decorated with @SubifyDecorator`
@@ -55,7 +59,12 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
        * @returns void
        */
       _processTakeUtil(): void {
-        if (this.hasOwnProperty(this._options.takeUntilInputName)) {
+        if (
+          Object.prototype.hasOwnProperty.call(
+            this,
+            this._options.takeUntilInputName
+          )
+        ) {
           this[this._options.takeUntilInputName].next(true);
           this[this._options.takeUntilInputName].complete();
         }
@@ -67,7 +76,7 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
        */
       _processIncludes(): void {
         this._options.includes.forEach((prop) => {
-          if (this.hasOwnProperty(prop)) {
+          if (Object.prototype.hasOwnProperty.call(this, prop)) {
             const subscription = this[prop];
             if (
               subscription &&
@@ -91,7 +100,7 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
       _processExcludes(): void {
         for (const prop in this) {
           if (
-            this.hasOwnProperty(prop) &&
+            Object.prototype.hasOwnProperty.call(this, prop) &&
             prop !== this._options.takeUntilInputName &&
             this._options.excludes.indexOf(prop) <= -1
           ) {
