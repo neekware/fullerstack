@@ -33,6 +33,7 @@
     "nsx-common": { "tags": ["name:nsx-common", "scope:nsx-data"] },
     "nsx-auth": { "tags": ["name:nsx-auth", "scope:nsx-data"] },
     "agx-util": { "tags": ["name:agx-util", "scope:agx-util"] },
-    "ngx-jwt": { "tags": ["name:ngx-jwt", "scope:ngx-util"] }
+    "ngx-jwt": { "tags": ["name:ngx-jwt", "scope:ngx-util"] },
+    "ngx-menu": { "tags": ["name:ngx-menu", "scope:ngx-util"] }
   }
 }

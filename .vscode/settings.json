@@ -27,12 +27,15 @@
     "Tribbiani",
     "Unprocessable",
     "fullerstack",
+    "fullspan",
     "nestjs",
     "rehydrated",
     "signup",
+    "submenu",
     "tryget",
     "typegraphql",
-    "upsert"
+    "upsert",
+    "youtube"
   ],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"

@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "name": "@fullerstack/ngx-menu",
+  "description": "A Menu Library for Angular",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-menu/README.md",
+  "keywords": [
+    "ng",
+    "angular",
+    "menu",
+    "navigation"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^11.2.6",
+    "@angular/core": "^11.2.6"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

@@ -26,7 +26,8 @@
       "@fullerstack/nsx-user": ["libs/nsx-user/src/index.ts"],
       "@fullerstack/nsx-common": ["libs/nsx-common/src/index.ts"],
       "@fullerstack/nsx-auth": ["libs/nsx-auth/src/index.ts"],
-      "@fullerstack/ngx-jwt": ["libs/ngx-jwt/src/index.ts"]
+      "@fullerstack/ngx-jwt": ["libs/ngx-jwt/src/index.ts"],
+      "@fullerstack/ngx-menu": ["libs/ngx-menu/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

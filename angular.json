@@ -573,6 +573,52 @@
           "watch": false
         }
       }
+    },
+    "ngx-menu": {
+      "projectType": "library",
+      "root": "libs/ngx-menu",
+      "sourceRoot": "libs/ngx-menu/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ngx-menu/tsconfig.lib.json",
+            "project": "libs/ngx-menu/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-menu/tsconfig.lib.prod.json"
+            },
+            "ci": {
+              "tsConfig": "libs/ngx-menu/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ngx-menu/src/**/*.ts",
+              "libs/ngx-menu/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-menu"],
+          "options": {
+            "jestConfig": "libs/ngx-menu/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
+        }
+      }
     }
   }
 }

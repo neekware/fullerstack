@@ -11,5 +11,6 @@ module.exports = {
     '<rootDir>/libs/nsx-auth',
     '<rootDir>/libs/agx-util',
     '<rootDir>/libs/ngx-jwt',
+    '<rootDir>/libs/ngx-menu',
   ],
 };
