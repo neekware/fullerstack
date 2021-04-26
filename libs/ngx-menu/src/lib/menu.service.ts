@@ -11,7 +11,7 @@ export class MenuService {
   @Output() menuChange$ = new EventEmitter<MenuNode>();
   private rootNode: MenuNode = new MenuNode({ name: 'root' });
   private isAllowedFunc: PermissionVerificationFuncType = (node: MenuItem) =>
-    node?.allowed;
+    node?.allowed || true;
 
   buildMenuTree(menuItems: MenuItem[], force = false) {
     if (this.rootNode?.children?.length === 0 || force) {

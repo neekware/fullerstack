@@ -120,7 +120,7 @@ describe('MenuService', () => {
   it('should create menu', () => {
     const menuTree = service.buildMenuTree(DefaultMenuTree);
     expect(menuTree.level).toEqual(0);
-    // expect(menuTree.children[0].level).toEqual(1); // TODO
+    expect(menuTree.children[0].level).toEqual(1);
   });
 
   it('should create menu - (isAllowed === true)', () => {
