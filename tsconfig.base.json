@@ -20,7 +20,9 @@
       "@fullerstack/api-dto": ["libs/api-dto/src/index.ts"],
       "@fullerstack/ngx-config": ["libs/ngx-config/src/index.ts"],
       "@fullerstack/ngx-logger": ["libs/ngx-logger/src/index.ts"],
+      "@fullerstack/ngx-subify": ["libs/ngx-subify/src/index.ts"],
       "@fullerstack/nsx-prisma": ["libs/nsx-prisma/src/index.ts"],
+      "@fullerstack/nsx-prisma-mock": ["libs/nsx-prisma/src/mock.ts"],
       "@fullerstack/nsx-user": ["libs/nsx-user/src/index.ts"],
       "@fullerstack/nsx-common": ["libs/nsx-common/src/index.ts"],
       "@fullerstack/nsx-auth": ["libs/nsx-auth/src/index.ts"]

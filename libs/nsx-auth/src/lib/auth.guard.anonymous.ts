@@ -2,17 +2,11 @@ import {
   Injectable,
   ExecutionContext,
   UnauthorizedException,
-  NotFoundException,
-  BadRequestException,
 } from '@nestjs/common';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { AuthGuardGql } from './auth.guard.gql';
 import { SecurityService } from './auth.security.service';
-import {
-  getCookiesFromContext,
-  getJwtTokenFromAuthorizationHeader,
-  getRequestFromContext,
-} from './auth.util';
+import { getCookieFromContext, getResponseFromContext } from './auth.util';
 
 @Injectable()
 export class AuthGuardAnonymousGql extends AuthGuardGql {
@@ -20,38 +14,29 @@ export class AuthGuardAnonymousGql extends AuthGuardGql {
     super(securityService);
   }
 
+  /**
+   * Examines the request state to allow anonymous users to public endpoints
+   * @param context context of graphql request
+   * @returns true for endpoint activation, false to disallow endpoint
+   * Note: If valid cookie is found without a valid user, expire the cookie immediately and reject
+   *       If valid cookie is found with valid user, reject to force the client request access token
+   *       If no valid cookie, user is anonymous
+   */
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = getRequestFromContext(context);
-    const cookies = getCookiesFromContext(context);
-    if (this.securityService.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME])) {
-      const token = getJwtTokenFromAuthorizationHeader(request);
-      if (token) {
-        const payload = this.securityService.verifyToken(token);
-        if (payload) {
-          const user = await this.securityService.validateUser(payload.userId);
-          if (!user) {
-            throw new NotFoundException('Error - Invalid or inactive user');
-          }
-          if (user?.sessionVersion !== payload.sessionVersion) {
-            throw new BadRequestException(
-              'Error - Invalid session or remotely terminated'
-            );
-          }
-          request.user = user;
+    const response = getResponseFromContext(context);
+    const cookie = getCookieFromContext(context, AUTH_SESSION_COOKIE_NAME);
+    if (cookie) {
+      const payload = this.securityService.verifyToken(cookie);
+      if (payload) {
+        const user = await this.securityService.validateUser(payload.userId);
+        if (!user) {
+          this.securityService.invalidateHttpCookie(response);
+          throw new UnauthorizedException('Error - Invalid or inactive user');
         }
+        throw new UnauthorizedException('Error - Invalid or expired token');
       }
     }
-    return true;
-  }
 
-  async canActisvate(context: ExecutionContext): Promise<boolean> {
-    try {
-      return super.canActivate(context);
-    } catch (err) {
-      if (!(err instanceof UnauthorizedException)) {
-        throw err;
-      }
-      return true;
-    }
+    return true;
   }
 }

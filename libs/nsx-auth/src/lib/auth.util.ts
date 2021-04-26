@@ -22,6 +22,14 @@ export function getCookiesFromContext(context: ExecutionContext): string[] {
   return tryGet<string[]>(() => request?.cookies, []);
 }
 
+export function getCookieFromContext(
+  context: ExecutionContext,
+  name: string
+): string {
+  const cookies = getCookiesFromContext(context);
+  return tryGet<string>(() => cookies[name], undefined);
+}
+
 export function getJwtTokenFromAuthorizationHeader(
   request: HttpRequest
 ): string {
