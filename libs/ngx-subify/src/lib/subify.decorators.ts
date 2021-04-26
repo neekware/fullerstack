@@ -9,18 +9,21 @@ import { DefaultSubifyDecoratorOptions } from './subify.defaults';
 export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function _subify<T extends new (...args: any[]) => any>(target: T) {
-    options = {
-      ...DefaultSubifyDecoratorOptions,
-      ...options,
-      className: target.name.length > 2 ? target.name : options.className,
-    };
+    const className = target.name.length > 2 ? target.name : options.className;
+
     if (!isFunction(target.prototype['ngOnDestroy'])) {
       throw new Error(
-        `${options.className} must implement OnDestroy when decorated with @SubifyDecorator`
+        `${className} must implement OnDestroy when decorated with @SubifyDecorator`
       );
     }
+
     return class extends target implements OnDestroy {
-      _options = options;
+      _options = {
+        ...DefaultSubifyDecoratorOptions,
+        ...options,
+        className,
+      } as const;
+
       /**
        * Validates options
        * @returns void
