@@ -1,6 +1,6 @@
-# @fullerstack/ngx-logger <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
+# @fullerstack/ngx-subify <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
-**A simple logger module for Angular applications**
+**A simple subscription manager library for Angular applications**
 
 [![status-image]][status-link]
 [![version-image]][version-link]
@@ -11,106 +11,245 @@
 
 ## Description
 
-Proper logging of events is one of the most important aspect of any proper software design and architecture. This is to `toggle` a flag and have a desired portion of the logic log their activities. This is a `MUST` during debugging sessions, or simply to report an error and send the log on `production` deployments.
+Angular applications may rely heavily on RxJS in order to implement reactive components and services. Maintaining and tracking of all active subscriptions may be overwhelming at times. As such, Subify attempts to streamline subscription and make the cleanup easier.
 
-**@fullerstack/ngx-logger** attempts to streamline the logging of your application, while promoting DRY **DRY**.
+**@fullerstack/ngx-subify** attempts to streamline the subscription manager of your application, while promoting DRY **DRY**.
 
 # How to install
 
-    npm i @fullerstack/ngx-logger |OR| yarn add @fullerstack/ngx-logger
+    npm i @fullerstack/ngx-subify |OR| yarn add @fullerstack/ngx-subify
 
 # How to use
 
-```typescript
-// In your environment{prod,staging}.ts
+There are three ways to track and cancel your subscriptions.
 
-import {
-  ApplicationConfig,
-  TargetPlatform,
-  HttpMethod,
-} from '@fullerstack/ngx-config';
+1 - **Subscription Cleanup Manager**
 
-import { LogLevels } from '@fullerstack/ngx-logger';
+2 - **Subscription Cleanup Service**
 
-export const environment: ApplicationConfig = {
-  production: false,
-  // one or more app specific field(s)
-  logger: {
-    // Log level, (default = none)
-    // Anything above `info` will be logged, anything below will be skipped
-    level: LogLevels.info,
-  },
-} as const;
-```
+3 - **Subscription Cleanup Decorator**
+
+## SubifyManager
+
+1 - **Auto Canceling Subscription via SubifyManager Class**
 
 ```typescript
-// In your app.module.ts
 
-import { ConfigModule } from '@fullerstack/ngx-config';
-import { LoggerModule } from '@fullerstack/ngx-logger';
-import { environment } from '../environments/environment';
-
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    ConfigModule.forRoot(environment),
-    LoggerModule.forRoot(),
-  ],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-```
-
-```typescript
-// In your app.component.ts or (some.service.ts)
-
+// in your component - Using SubManager
 import { Component } from '@angular/core';
-import { ConfigService } from '@fullerstack/ngx-config';
-import { LoggerService } from '@fullerstack/ngx-logger';
+import { interval } from 'rxjs';
+import { SubManager } from '@fullerstack/subify';
 
 @Component({
-  selector: 'app-root',
+  selector: 'home',
+  templateUrl: './home.component.html'
 })
-export class AppComponent {
-  title = 'FullerStack';
-  options: ApplicationConfig;
+export class HomeComponent implements OnDestroy {
+  // instantiate  a new subscribe manager
+  subMgr: SubManager = new SubManager();
 
-  constructor(public config: ConfigService, public log: LogService) {
-    this.title = this.config.options.appName;
+  constructor() {
+    // track a single subscription
+    this.subMgr.track = interval(1000).subscribe(num => console.log(`customSub1$ - ${num}`));
 
-    this.log.critical('Logging critical');
-    this.log.error('Logging error and above');
-    this.log.warn('Logging warn and above');
-    this.log.info('Logging info and above');
-    this.log.debug('Logging debug and above');
-    this.log.trace('Logging trace and above');
+    // track a list of subscriptions
+    this.subMgr.track = [
+      interval(1000).subscribe(num => console.log(`customSub2$ - ${num}`)),
+      interval(1000).subscribe(num => console.log(`customSub3$ - ${num}`));
+    ]
+  }
+
+  ngOnDestroy() {
+    // unsubscribe all subscriptions
+    this.subMgr.unsubscribe();
   }
 }
 ```
 
-# Sample logs
+2- **Auto Canceling Subscription via SubService**
 
+**SubService** is a great way to let another `ephemeral` service to handle the canceling of subscriptions. It works with classes of type `Component`, `Directive` & `Pipe`.
+
+```typescript
+
+// in your component - Using SubService
+import { Component } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { SubService } from '@fullerstack/subify';
+
+@Component({
+  selector: 'home',
+  // an ephemeral service instance per component instance
+  providers: [SubService],
+  templateUrl: './home.component.html'
+})
+export class HomeComponent {
+  customSub$: Subscription;
+
+  constructor(private subService: SubService) {
+    // track a single subscription
+    this.subService.track = interval(1000).subscribe(num => console.log(`customSub1$ - ${num}`));
+
+    // track a list of subscriptions
+    this.subService.track = [
+      interval(1000).subscribe(num => console.log(`customSub2$ - ${num}`)),
+      interval(1000).subscribe(num => console.log(`customSub3$ - ${num}`));
+    ]
+
+    // automatically gets cleaned up by SubService's OnDestroy
+    interval(3000)
+      .pipe(takeUntil(this.subService.destroy$))
+      .subscribe(num => console.log(`takeUntil - ${num}`));
+  }
+}
 ```
-ConfigService ready ...
-2018-05-17T02:47:54.184Z [DEBUG] LogService ready ...
-2018-05-17T02:47:54.188Z [DEBUG] GqlService ready ...
-2018-05-17T02:47:54.375Z [DEBUG] I18nService ready ... (en)
-2018-05-17T02:47:54.378Z [DEBUG] UixService ready ...
-2018-05-17T02:47:54.379Z [DEBUG] JwtService ready ...
-2018-05-17T02:47:54.384Z [DEBUG] Token expiry ... (21 seconds)
-2018-05-17T02:47:54.388Z [DEBUG] AuthService ready ... (loggedIn)
-2018-05-17T02:47:54.390Z [DEBUG] UsrService ready ...
-2018-05-17T02:47:54.392Z [DEBUG] Web app starting now ...
-2018-05-17T02:47:54.406Z [DEBUG] LayoutService ready ...
+
+3 - **Auto Canceling Subscription Decorator**
+
+**@SubifyDecorator()** is a great way to enhance a class to better handle the canceling of subscriptions. It works with classes of type `Component`, `Directive`, `Pipe` & `Injectable`. The decorated class must also implement `OnDestroy` even if unused.
+
+```typescript
+// in your component - Using Subscribable
+import { Component, OnDestroy } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
+import { SubifyDecorator } from '@fullerstack/subify';
+
+@Component({
+  selector: 'home',
+  templateUrl: './home.component.html',
+})
+@SubifyDecorator()
+export class HomeComponent implements OnDestroy {
+  customSub$: Subscription;
+
+  constructor() {
+    // must keep a reference to our subscription for automatic cleanup
+    this.customSub$ = interval(1000).subscribe((num) =>
+      console.log(`customSub$ - ${num}`)
+    );
+  }
+
+  // required even if unused. This is to prevent AOT tree shake ngOnDestroy of the decorated class
+  ngOnDestroy() {}
+}
+```
+
+# Advanced Usage
+
+**Auto Canceling Subscription Decorator (w/ takeUntil)**
+
+```typescript
+// in your component - Using SubifyDecorator
+import { Component, OnDestroy } from '@angular/core';
+import { interval } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { SubifyDecorator } from '@fullerstack/subify';
+
+@Component({
+  selector: 'home',
+  templateUrl: './home.component.html',
+})
+@SubifyDecorator({
+  // property used by takeUntil() - use destroy$ or any custom name
+  takeUntilInputName: 'destroy$',
+})
+export class HomeComponent implements OnDestroy {
+  // This is used in takeUntil() - @SubifyDecorator will manage it internally
+  destroy$ = new Subject<boolean>();
+
+  constructor() {
+    // decorated class will trigger an auto clean up
+    interval(3000)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((num) => console.log(`takeUntil - ${num}`));
+  }
+
+  // required even if unused. This is to prevent AOT tree shake ngOnDestroy of the decorated class
+  ngOnDestroy() {}
+}
+```
+
+**Auto Canceling Subscription Decorator (w/ Includes)**
+
+```typescript
+// in your component - Using SubifyDecorator
+import { Component, Input, OnDestroy } from '@angular/core';
+import { interval, Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { SubifyDecorator } from '@fullerstack/subify';
+
+@Component({
+  selector: 'home',
+  templateUrl: './home.component.html',
+})
+@SubifyDecorator({
+  // specific subscription names to be auto canceled, everything else is ignored
+  includes: ['customSub$'],
+})
+export class HomeComponent implements OnDestroy {
+  // this is not our subscription, so we don't include it for auto clean up
+  @Input() notOurSub$: Subscription;
+
+  // this is our subscription and we include it for auto clean up
+  customSub$: Subscription;
+
+  constructor() {
+    // decorated class auto clean this up
+    this.customSub$ = interval(1000).subscribe((num) =>
+      console.log(`customSub$ - ${num}`)
+    );
+  }
+
+  // required even if unused. This is to prevent AOT tree shake ngOnDestroy of the decorated class
+  ngOnDestroy() {}
+}
+```
+
+**Auto Cancelling Subscription Decorator (w/ Excludes)**
+
+```typescript
+// in your component - Using SubifyDecorator
+import { Component, Input, OnDestroy } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
+import { SubifyDecorator } from '@fullerstack/subify';
+
+@Component({
+  selector: 'home',
+  templateUrl: './home.component.html',
+})
+@SubifyDecorator({
+  // subscription names not to be auto canceled, every other subscription will be clean up
+  excludes: ['notOurSub$'],
+})
+export class HomeComponent implements OnDestroy {
+  // this is not our subscription, so we exclude it from auto clean up
+  @Input() notOurSub$: Subscription;
+
+  // this is our subscription and it will be automatically cleaned up
+  customSub$: Subscription;
+
+  constructor() {
+    this.customSub$ = interval(1000).subscribe((num) =>
+      console.log(`customSub$ - ${num}`)
+    );
+  }
+
+  // required even if unused. This is to prevent AOT tree shake ngOnDestroy of the decorated class
+  ngOnDestroy() {}
+}
 ```
 
 # Note:
 
-1. `@fullerstack/ngx-logger` depends on `@fullerstack/ngx-config` for accessing the log level.
-2. You may want to set the log level to `LogLevels.debug` for development and `LogLevels.warn` for production.
-3. `@fullerstack/ngx-logger` should be imported at the root level of your application.
-4. To disable the logger, set the level to `LogLevels.none`, (default).
+It is highly recommended that all subscriptions be unsubscribed unless they are explicitly piped through the `async` template pipe. The cost of double unsubscribing
+negligible while the cost of out of scope subscription is very high as it may contribute
+to memory leak and out of context execution and state corruption.
+
+It is recommended to turn `unsubscribe()` into muscle memory, simply do it all the times,
+without asking the question of what about `http.get()`?, it will automatically completes, no?.
+Well it dose not if the invoking component is destroyed before the http response arrives. If so, the http response will invoke the callback function of a `destroyed` component. A `dead` component won't know the `current` state of the application, however
+it might still point to it directly or via `actions`. If so, it may corrupt the state.
 
 # License
 
@@ -126,9 +265,9 @@ X.Y.Z Version
 
 [status-image]: https://secure.travis-ci.org/neekware/fullerstack.png?branch=main
 [status-link]: http://travis-ci.org/neekware/fullerstack?branch=main
-[version-image]: https://img.shields.io/npm/v/@fullerstack/ngx-logger.svg
-[version-link]: https://www.npmjs.com/package/@fullerstack/ngx-logger
+[version-image]: https://img.shields.io/npm/v/@fullerstack/ngx-subify.svg
+[version-link]: https://www.npmjs.com/package/@fullerstack/ngx-subify
 [coverage-image]: https://coveralls.io/repos/neekware/fullerstack/badge.svg
 [coverage-link]: https://coveralls.io/r/neekware/fullerstack
-[download-image]: https://img.shields.io/npm/dm/@fullerstack/ngx-logger.svg
-[download-link]: https://www.npmjs.com/package/@fullerstack/ngx-logger
+[download-image]: https://img.shields.io/npm/dm/@fullerstack/ngx-subify.svg
+[download-link]: https://www.npmjs.com/package/@fullerstack/ngx-subify
