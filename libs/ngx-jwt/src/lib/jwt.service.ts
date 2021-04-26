@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { merge as ldNestedMerge, get as ldGet } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
@@ -25,7 +26,7 @@ export class JwtService {
    * @param options an optional configuration object
    */
   constructor(private config: ConfigService, private logger: LoggerService) {
-    this.options = ldNestedMerge(DefaultJwtConfig, this.options?.jwt);
+    this.options = ldNestedMerge({ jwt: DefaultJwtConfig }, this.options?.jwt);
 
     if (!this.config.options.production) {
       this.logger.info('JwtService ready ...');
@@ -47,7 +48,7 @@ export class JwtService {
       }
     } catch (e) {
       this.logger.error(e.message);
-      return null;
+      return undefined;
     }
 
     try {

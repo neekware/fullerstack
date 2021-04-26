@@ -497,6 +497,9 @@
           "configurations": {
             "production": {
               "tsConfig": "libs/ngx-subify/tsconfig.lib.prod.json"
+            },
+            "ci": {
+              "tsConfig": "libs/ngx-subify/tsconfig.lib.prod.json"
             }
           }
         },
@@ -539,6 +542,9 @@
           },
           "configurations": {
             "production": {
+              "tsConfig": "libs/ngx-jwt/tsconfig.lib.prod.json"
+            },
+            "ci": {
               "tsConfig": "libs/ngx-jwt/tsconfig.lib.prod.json"
             }
           }

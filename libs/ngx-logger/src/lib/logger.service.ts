@@ -8,8 +8,8 @@ import {
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
-import { LogLevels, LogNames, LogColors } from './logger.models';
-import { DefaultLoggerConfig } from './logger.defaults';
+import { LogLevels, LogNames, LogColors } from './logger.model';
+import { DefaultLoggerConfig } from './logger.default';
 
 /**
  * An injectable class that handles logging service
@@ -21,7 +21,7 @@ export class LoggerService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(public config: ConfigService) {
-    this.options = ldNestedMerge(DefaultLoggerConfig, this.options);
+    this.options = ldNestedMerge({ logger: DefaultLoggerConfig }, this.options);
 
     if (!this.config.options.production) {
       this.info('LogService ready ...');

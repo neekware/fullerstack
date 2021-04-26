@@ -24,7 +24,11 @@ describe('SubifyService', () => {
       providers: [SubifyService],
     });
 
-    service = TestBed.get(SubifyService);
+    service = TestBed.inject(SubifyService);
+  });
+
+  afterAll(() => {
+    service = null;
   });
 
   it('should be created', () => {
