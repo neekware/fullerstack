@@ -4,9 +4,7 @@ import { DeepReadonly } from 'ts-essentials';
  * Log config declaration
  */
 export interface LoggerConfig {
-  logger: {
-    level: number;
-  };
+  level: number;
 }
 
 /**

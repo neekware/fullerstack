@@ -1,10 +1,11 @@
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { DeepReadonly } from 'ts-essentials';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
-import { LogLevels } from './logger.models';
+
+import { LogLevels } from './logger.model';
 import { LoggerModule } from './logger.module';
 import { LoggerService } from './logger.service';
-import { HttpClientModule } from '@angular/common/http';
 
 const applicationConfig: DeepReadonly<ApplicationConfig> = {
   version: '1.0.0',

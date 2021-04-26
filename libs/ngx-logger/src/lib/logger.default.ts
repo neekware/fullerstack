@@ -1,11 +1,9 @@
 import { DeepReadonly } from 'ts-essentials';
-import { LoggerConfig, LogLevels } from './logger.models';
+import { LoggerConfig, LogLevels } from './logger.model';
 
 /**
  * Default configuration - logger module
  */
 export const DefaultLoggerConfig: DeepReadonly<LoggerConfig> = {
-  logger: {
-    level: LogLevels.none,
-  },
+  level: LogLevels.none,
 };

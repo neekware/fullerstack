@@ -22,6 +22,10 @@ describe('AuthGuardRole', () => {
     service = module.get(AuthGuardRole);
   });
 
+  afterAll(() => {
+    service = null;
+  });
+
   it('should be defined', () => {
     expect(service).toBeTruthy();
   });
