@@ -21,6 +21,10 @@ describe('AuthGuardGql', () => {
     service = module.get(AuthGuardGql);
   });
 
+  afterAll(() => {
+    service = null;
+  });
+
   it('should be defined', () => {
     expect(service).toBeTruthy();
   });

@@ -20,6 +20,10 @@ describe('SecurityService', () => {
     service = module.get(SecurityService);
   });
 
+  afterAll(() => {
+    service = null;
+  });
+
   it('should be defined', () => {
     expect(service).toBeTruthy();
   });

@@ -24,6 +24,10 @@ describe('AuthResolver', () => {
     service = module.get(AuthResolver);
   });
 
+  afterAll(() => {
+    service = null;
+  });
+
   it('should be defined', () => {
     expect(service).toBeTruthy();
   });
