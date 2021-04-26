@@ -242,14 +242,16 @@ export class HomeComponent implements OnDestroy {
 
 # Note:
 
-It is highly recommended that all subscriptions be unsubscribed unless they are explicitly piped through the `async` template pipe. The cost of double unsubscribing
-negligible while the cost of out of scope subscription is very high as it may contribute
-to memory leak and out of context execution and state corruption.
+It is highly recommended that all subscriptions be unsubscribed unless they are explicitly piped through the `async` template pipe.
+The cost of double unsubscribing is negligible while the cost of out of scope subscription is very high as it may contribute
+to memory-leak and out-of-context execution and possible state corruptions.
 
-It is recommended to turn `unsubscribe()` into muscle memory, simply do it all the times,
-without asking the question of what about `http.get()`?, it will automatically completes, no?.
-Well it dose not if the invoking component is destroyed before the http response arrives. If so, the http response will invoke the callback function of a `destroyed` component. A `dead` component won't know the `current` state of the application, however
-it might still point to it directly or via `actions`. If so, it may corrupt the state.
+It is recommended to turn `unsubscribe()` into muscle memory, by simply using it all the times.
+But you may ask: what about `http.get()`?, won't it automatically completes?
+Well, it does not complete in-time, if the invoking component is destroyed before the http response arrives.
+If so, the http response will invoke the callback function of a `destroyed` component.
+A `dead` component won't know the `current` state of the application, however
+it might still point to it directly or via some `actions`. If so, it may corrupt the state.
 
 # License
 
