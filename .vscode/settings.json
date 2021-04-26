@@ -29,6 +29,7 @@
     "nestjs",
     "rehydrated",
     "signup",
+    "submgr",
     "tryget",
     "typegraphql",
     "upsert"

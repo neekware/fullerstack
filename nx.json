@@ -31,6 +31,7 @@
     "nsx-user": { "tags": ["name:nsx-user", "scope:nsx-data-layer"] },
     "nsx-common": { "tags": ["name:nsx-common", "sope:nsx-data"] },
     "nsx-auth": { "tags": ["name:nsx-auth", "scope:nsx-data"] },
-    "agx-util": { "tags": ["name:agx-util", "scope:agx-util"] }
+    "agx-util": { "tags": ["name:agx-util", "scope:agx-util"] },
+    "ngx-submgr": { "tags": ["name:ngx-submgr", "scope:ngx-util"] }
   }
 }

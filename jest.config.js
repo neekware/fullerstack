@@ -9,5 +9,6 @@ module.exports = {
     '<rootDir>/libs/nsx-common',
     '<rootDir>/libs/nsx-auth',
     '<rootDir>/libs/agx-util',
+    '<rootDir>/libs/ngx-submgr',
   ],
 };

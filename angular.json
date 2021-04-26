@@ -481,6 +481,49 @@
           }
         }
       }
+    },
+    "ngx-submgr": {
+      "projectType": "library",
+      "root": "libs/ngx-submgr",
+      "sourceRoot": "libs/ngx-submgr/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ngx-submgr/tsconfig.lib.json",
+            "project": "libs/ngx-submgr/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-submgr/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ngx-submgr/src/**/*.ts",
+              "libs/ngx-submgr/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-submgr"],
+          "options": {
+            "jestConfig": "libs/ngx-submgr/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
+        }
+      }
     }
   }
 }
