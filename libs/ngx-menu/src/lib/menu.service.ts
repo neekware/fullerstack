@@ -14,7 +14,7 @@ export class MenuService {
     node?.allowed;
 
   buildMenuTree(menuItems: MenuItem[], force = false) {
-    if (this.rootNode.children.length === 0 || force) {
+    if (this.rootNode?.children?.length === 0 || force) {
       this.rootNode.children = this.makeMenuTree(menuItems);
       this.menuChange$.emit(this.rootNode);
     }
