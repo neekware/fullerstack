@@ -25,7 +25,8 @@
       "@fullerstack/nsx-prisma-mock": ["libs/nsx-prisma/src/mock.ts"],
       "@fullerstack/nsx-user": ["libs/nsx-user/src/index.ts"],
       "@fullerstack/nsx-common": ["libs/nsx-common/src/index.ts"],
-      "@fullerstack/nsx-auth": ["libs/nsx-auth/src/index.ts"]
+      "@fullerstack/nsx-auth": ["libs/nsx-auth/src/index.ts"],
+      "@fullerstack/ngx-jwt": ["libs/ngx-jwt/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

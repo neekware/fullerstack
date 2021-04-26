@@ -25,13 +25,14 @@
     "fullerstack-e2e": { "tags": [], "implicitDependencies": ["fullerstack"] },
     "api": { "tags": [] },
     "api-dto": { "tags": [] },
-    "ngx-config": { "tags": ["name:ngx-config", "scope:ngx-utils"] },
-    "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-utils"] },
+    "ngx-config": { "tags": ["name:ngx-config", "scope:ngx-util"] },
+    "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-util"] },
     "ngx-subify": { "tags": ["name:ngx-subify", "scope:ngx-util"] },
     "nsx-prisma": { "tags": ["name:nsx-prisma", "scope:nsx-data"] },
-    "nsx-user": { "tags": ["name:nsx-user", "scope:nsx-data-layer"] },
+    "nsx-user": { "tags": ["name:nsx-user", "scope:nsx-data"] },
     "nsx-common": { "tags": ["name:nsx-common", "scope:nsx-data"] },
     "nsx-auth": { "tags": ["name:nsx-auth", "scope:nsx-data"] },
-    "agx-util": { "tags": ["name:agx-util", "scope:agx-util"] }
+    "agx-util": { "tags": ["name:agx-util", "scope:agx-util"] },
+    "ngx-jwt": { "tags": ["name:ngx-jwt", "scope:ngx-util"] }
   }
 }

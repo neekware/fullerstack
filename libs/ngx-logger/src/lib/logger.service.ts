@@ -3,8 +3,12 @@
 import { Injectable } from '@angular/core';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
-import { ConfigService } from '@fullerstack/ngx-config';
-import { LogLevels, LogNames, LogColors, LoggerConfig } from './logger.models';
+import {
+  ApplicationConfig,
+  ConfigService,
+  DefaultApplicationConfig,
+} from '@fullerstack/ngx-config';
+import { LogLevels, LogNames, LogColors } from './logger.models';
 import { DefaultLoggerConfig } from './logger.defaults';
 
 /**
@@ -14,12 +18,10 @@ import { DefaultLoggerConfig } from './logger.defaults';
   providedIn: 'root',
 })
 export class LoggerService {
-  options: DeepReadonly<LoggerConfig> = DefaultLoggerConfig;
+  options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(public config: ConfigService) {
-    this.options = ldNestedMerge(this.options, {
-      logger: config.options?.logger || {},
-    });
+    this.options = ldNestedMerge(DefaultLoggerConfig, this.options);
 
     if (!this.config.options.production) {
       this.info('LogService ready ...');

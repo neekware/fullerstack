@@ -403,7 +403,7 @@
             "lintFilePatterns": ["libs/nsx-user/**/*.ts"]
           }
         },
-        "test-disabled": {
+        "test": {
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nsx-user"],
           "options": {
@@ -514,6 +514,49 @@
           "outputs": ["coverage/libs/ngx-subify"],
           "options": {
             "jestConfig": "libs/ngx-subify/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
+        }
+      }
+    },
+    "ngx-jwt": {
+      "projectType": "library",
+      "root": "libs/ngx-jwt",
+      "sourceRoot": "libs/ngx-jwt/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ngx-jwt/tsconfig.lib.json",
+            "project": "libs/ngx-jwt/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-jwt/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ngx-jwt/src/**/*.ts",
+              "libs/ngx-jwt/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-jwt"],
+          "options": {
+            "jestConfig": "libs/ngx-jwt/jest.config.js",
             "passWithNoTests": true
           }
         },

@@ -80,6 +80,7 @@
     "cookie-parser": "^1.4.5",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.4",
+    "js-base64": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "lodash-es": "^4.17.21",
     "passport": "^0.4.1",
