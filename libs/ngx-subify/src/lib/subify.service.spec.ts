@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { Subscription } from 'rxjs';
 
 import { SubifyService } from './subify.service';

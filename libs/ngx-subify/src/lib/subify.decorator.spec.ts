@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SubifyDecorator } from './subify.decorators';
+
+import { SubifyDecorator } from './subify.decorator';
 
 const mockSub1 = {
   unsubscribe: () => {

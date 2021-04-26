@@ -1,4 +1,5 @@
 import { Subscription } from 'rxjs';
+
 import { isFunction } from './subify.util';
 
 export class SubifyManager {

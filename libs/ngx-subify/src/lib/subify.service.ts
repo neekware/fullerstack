@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
+
 import { SubifyManager } from './subify.manager';
 
 /** An injectable service class that handles auto cancellation of subscriptions */
