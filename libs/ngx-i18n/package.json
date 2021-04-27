@@ -1,0 +1,20 @@
+{
+  "version": "0.0.1",
+  "name": "@fullerstack/ngx-i18n",
+  "description": "A Translation Library for Angular",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-i18n/README.md",
+  "keywords": [
+    "ng",
+    "angular",
+    "translation",
+    "i18n",
+    "i10n"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^11.2.6",
+    "@angular/core": "^11.2.6"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

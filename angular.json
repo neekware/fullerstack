@@ -619,6 +619,52 @@
           "watch": false
         }
       }
+    },
+    "ngx-i18n": {
+      "projectType": "library",
+      "root": "libs/ngx-i18n",
+      "sourceRoot": "libs/ngx-i18n/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ngx-i18n/tsconfig.lib.json",
+            "project": "libs/ngx-i18n/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-i18n/tsconfig.lib.prod.json"
+            },
+            "ci": {
+              "tsConfig": "libs/ngx-i18n/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ngx-i18n/src/**/*.ts",
+              "libs/ngx-i18n/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-i18n"],
+          "options": {
+            "jestConfig": "libs/ngx-i18n/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
+        }
+      }
     }
   }
 }

@@ -18,7 +18,13 @@
     "**/graph": true
   },
   "cSpell.words": [
+    "Acerca",
+    "Bienvenido",
+    "Bienvenue",
     "Buffay",
+    "Deutsch",
+    "Fran",
+    "Français",
     "Neekman",
     "Postgres",
     "SEEKRET",
@@ -26,8 +32,10 @@
     "Subify",
     "Tribbiani",
     "Unprocessable",
+    "ais",
     "fullerstack",
     "fullspan",
+    "herzlich",
     "nestjs",
     "rehydrated",
     "signup",
@@ -35,7 +43,13 @@
     "tryget",
     "typegraphql",
     "upsert",
-    "youtube"
+    "willkommen",
+    "xlate",
+    "youtube",
+    "אודות",
+    "ברוך",
+    "آمدی",
+    "باره"
   ],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"

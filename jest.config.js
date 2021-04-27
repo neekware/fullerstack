@@ -12,5 +12,6 @@ module.exports = {
     '<rootDir>/libs/agx-util',
     '<rootDir>/libs/ngx-jwt',
     '<rootDir>/libs/ngx-menu',
+    '<rootDir>/libs/ngx-i18n',
   ],
 };

@@ -71,7 +71,7 @@ export class AppModule {}
 // In your app.module.ts
 
 import { Component } from '@angular/core';
-import { ConfigService, DefaultConfig } from '@fullerstack/ngx-config';
+import { ConfigService } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { JwtService } from '@fullerstack/ngx-jwt';
 
@@ -83,9 +83,9 @@ export class AppComponent {
   title = 'Fullerstack';
   options = {};
   constructor(
-    public config: ConfigService,
-    public logger: LoggerService,
-    public jwt: JwtService
+    readonly config: ConfigService,
+    readonly logger: LoggerService,
+    readonly jwt: JwtService
   ) {
     this.title = this.config.options.appName;
 

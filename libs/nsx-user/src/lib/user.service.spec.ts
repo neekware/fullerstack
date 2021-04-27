@@ -1,9 +1,7 @@
-import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { getMockPrismaService } from '@fullerstack/nsx-prisma-mock';
-import { AuthModule } from '@fullerstack/nsx-auth';
 
 import { UserService } from './user.service';
 

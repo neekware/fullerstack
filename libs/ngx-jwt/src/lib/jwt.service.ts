@@ -25,10 +25,13 @@ export class JwtService {
    * Class constructor
    * @param options an optional configuration object
    */
-  constructor(private config: ConfigService, private logger: LoggerService) {
-    this.options = ldNestedMerge({ jwt: DefaultJwtConfig }, this.options?.jwt);
+  constructor(readonly config: ConfigService, readonly logger: LoggerService) {
+    this.options = ldNestedMerge(
+      { jwt: DefaultJwtConfig },
+      this.config.options
+    );
 
-    if (!this.config.options.production) {
+    if (!this.options.production) {
       this.logger.info('JwtService ready ...');
     }
   }
