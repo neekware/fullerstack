@@ -13,5 +13,6 @@ module.exports = {
     '<rootDir>/libs/ngx-jwt',
     '<rootDir>/libs/ngx-menu',
     '<rootDir>/libs/ngx-i18n',
+    '<rootDir>/libs/ngx-gtag',
   ],
 };
