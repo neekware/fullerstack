@@ -111,10 +111,12 @@ export class I18nService {
 
     this.xlate.addLangs(Object.keys(this.options.i18n.enabledLanguages));
     this.xlate.setDefaultLang(this.defaultLanguage);
+
     let iso = this.xlate.getBrowserCultureLang().toLowerCase();
     if (!this.isLanguageEnabled(iso)) {
       iso = this.defaultLanguage;
     }
+
     this.setCurrentLanguage(iso);
   }
 }

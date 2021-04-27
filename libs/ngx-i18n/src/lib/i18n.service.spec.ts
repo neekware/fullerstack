@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { Observable, of as observableOf } from 'rxjs';
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { ConfigModule, ApplicationConfig } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
@@ -61,6 +57,8 @@ class CustomLoader implements TranslateLoader {
 jest.spyOn(console, 'log').mockImplementation(() => undefined);
 
 describe('I18nService', () => {
+  let service: I18nService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -72,29 +70,25 @@ describe('I18nService', () => {
         }),
       ],
     });
+    service = TestBed.inject(I18nService);
   });
 
-  it('should be created', inject(
-    [I18nService, TranslateService],
-    (service: I18nService) => {
-      expect(service).toBeTruthy();
-    }
-  ));
+  afterAll(() => {
+    service = null;
+  });
 
-  it('should be created with default options', inject(
-    [I18nService, TranslateService],
-    (service: I18nService) => {
-      expect(service.options.i18n.defaultLanguage).toEqual(DefaultLanguage);
-    }
-  ));
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 
-  it('should translate to English', inject(
-    [I18nService, TranslateService],
-    (service: I18nService) => {
-      service.xlate.get('COMMON.WELCOME').subscribe((res: string) => {
-        expect(res).toEqual('Welcome');
-      });
-    }
-  ));
-  // TODO: add async language change test
+  it('should be created with default options', () => {
+    expect(service.options.i18n.defaultLanguage).toEqual(DefaultLanguage);
+  });
+
+  it('should translate to English', (done) => {
+    service.xlate.get('COMMON.WELCOME').subscribe((res: string) => {
+      expect(res).toEqual('Welcome');
+      done();
+    });
+  });
 });
