@@ -665,6 +665,43 @@
           "watch": false
         }
       }
+    },
+    "ngx-gtag": {
+      "projectType": "library",
+      "root": "libs/ngx-gtag",
+      "sourceRoot": "libs/ngx-gtag/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ngx-gtag/tsconfig.lib.json",
+            "project": "libs/ngx-gtag/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-gtag/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ngx-gtag/src/**/*.ts",
+              "libs/ngx-gtag/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-gtag"],
+          "options": {
+            "jestConfig": "libs/ngx-gtag/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
