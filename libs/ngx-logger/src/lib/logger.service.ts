@@ -20,8 +20,11 @@ import { DefaultLoggerConfig } from './logger.default';
 export class LoggerService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
-  constructor(public config: ConfigService) {
-    this.options = ldNestedMerge({ logger: DefaultLoggerConfig }, this.options);
+  constructor(readonly config: ConfigService) {
+    this.options = ldNestedMerge(
+      { logger: DefaultLoggerConfig },
+      this.config.options
+    );
 
     if (!this.config.options.production) {
       this.info('LogService ready ...');

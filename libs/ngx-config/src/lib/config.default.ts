@@ -9,7 +9,7 @@ import {
 } from './config.model';
 
 /** Default local config */
-export const DefaultConfig: DeepReadonly<LocalConfig> = {
+export const DefaultBaseConfig: DeepReadonly<LocalConfig> = {
   multiTab: true,
   loginPageUrl: '/auth/login',
   registerPageUrl: '/auth/register',
@@ -31,7 +31,7 @@ export const DefaultApplicationConfig: DeepReadonly<ApplicationConfig> = {
   production: false,
   version: '1.0.0',
   appName: '@fullerstack/ngx-config',
-  localConfig: DefaultConfig,
+  localConfig: DefaultBaseConfig,
   remoteConfig: DefaultRemoteConfig,
   remoteData: {},
 };

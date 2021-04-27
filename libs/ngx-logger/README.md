@@ -76,7 +76,7 @@ export class AppComponent {
   title = 'FullerStack';
   options: ApplicationConfig;
 
-  constructor(public config: ConfigService, public log: LogService) {
+  constructor(readonly config: ConfigService, readonly log: LogService) {
     this.title = this.config.options.appName;
 
     this.log.critical('Logging critical');

@@ -34,6 +34,7 @@
     "nsx-auth": { "tags": ["name:nsx-auth", "scope:nsx-data"] },
     "agx-util": { "tags": ["name:agx-util", "scope:agx-util"] },
     "ngx-jwt": { "tags": ["name:ngx-jwt", "scope:ngx-util"] },
-    "ngx-menu": { "tags": ["name:ngx-menu", "scope:ngx-util"] }
+    "ngx-menu": { "tags": ["name:ngx-menu", "scope:ngx-util"] },
+    "ngx-i18n": { "tags": ["name:ngx-i18n", "scope:ngx-ui"] }
   }
 }
