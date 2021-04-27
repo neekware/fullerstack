@@ -67,7 +67,7 @@ async function syncPackageData(moduleBuildPath: string): Promise<void> {
  */
 async function buildPackage() {
   if (program.build) {
-    const cmd = `yarn build ${program.library} --with-deps --skip-nx-cache --prod`;
+    const cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache --prod`;
     console.log(cmd);
     await execute(cmd).catch((error) => {
       console.log(`Failed to build ${program.library} ... ${error}`);

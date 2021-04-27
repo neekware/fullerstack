@@ -90,7 +90,7 @@ export class AppComponent {
   constructor(
     readonly config: ConfigService,
     readonly logger: LogService,
-    readonly gtag: GTagService
+    readonly tagger: GTagService
   ) {
     this.title = this.config.options.appName;
     this.logger.info('AppComponent loaded ...');
@@ -101,7 +101,7 @@ export class AppComponent {
 
   trackDetailedEvent() {
     // example of event with params
-    gtag.trackEvent('home-page', {
+    tagger.trackEvent('home-page', {
       event_category: 'SEO',
       event_label: 'Page loaded, anonymous user',
     });
@@ -109,7 +109,7 @@ export class AppComponent {
 
   trackEvent() {
     // example of event without params
-    gtag.trackEvent('home-page-visit');
+    tagger.trackEvent('home-page-visit');
   }
 }
 ```
@@ -138,14 +138,14 @@ export const environment: ApplicationConfig = {
 
 ```typescript
 // track page view manually with specific options
-gtag.trackPageView({
+tagger.trackPageView({
   page_path: '/',
   page_title: 'Home Page',
   page_location: 'http://fullerstack.net'
 });
 
 // or with default options
-gtag.trackPageView();
+tagger.trackPageView();
 
 // where defaults are:
 // page_path = router.url

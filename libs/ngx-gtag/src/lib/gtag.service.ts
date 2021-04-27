@@ -19,6 +19,7 @@ import { DefaultGTagConfig } from './gtag.default';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare let gtag: (...args: any) => void;
 
+// @dynamic - Tells aot that type `Document` will be eventually resolved
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +27,7 @@ export class GTagService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(
-    @Inject(DOCUMENT) readonly document: Document,
+    @Inject(DOCUMENT) private document: Document,
     readonly router: Router,
     readonly route: ActivatedRoute,
     readonly config: ConfigService,
