@@ -6,26 +6,27 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ConfigService } from '@fullerstack/ngx-config';
 
-export function HttpLoaderFactory(http: HttpClient, cfg: ConfigService) {
+export function HttpLoaderFactory(
+  http: HttpClient,
+  configService: ConfigService
+) {
   return new TranslateHttpLoader(
     http,
     '/assets/i18n/',
-    `.json?hash=${cfg?.options?.i18n?.cacheBustingHash}`
+    `.json?hash=${configService.options?.i18n?.cacheBustingHash}`
   );
 }
 
+export const TranslateModuleInitialized = TranslateModule.forRoot({
+  loader: {
+    provide: TranslateLoader,
+    useFactory: HttpLoaderFactory,
+    deps: [HttpClient, ConfigService],
+  },
+});
+
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient, ConfigService],
-      },
-    }),
-  ],
+  imports: [CommonModule, HttpClientModule, TranslateModuleInitialized],
   exports: [TranslateModule],
 })
 export class I18nModule {

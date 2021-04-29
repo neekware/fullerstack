@@ -14,5 +14,6 @@ module.exports = {
     '<rootDir>/libs/ngx-menu',
     '<rootDir>/libs/ngx-i18n',
     '<rootDir>/libs/ngx-gtag',
+    '<rootDir>/libs/ngx-msg',
   ],
 };

@@ -36,6 +36,7 @@
     "ngx-jwt": { "tags": ["name:ngx-jwt", "scope:ngx-util"] },
     "ngx-menu": { "tags": ["name:ngx-menu", "scope:ngx-util"] },
     "ngx-i18n": { "tags": ["name:ngx-i18n", "scope:ngx-ui"] },
-    "ngx-gtag": { "tags": ["name:ngx-gtag", "scope:ngx-util"] }
+    "ngx-gtag": { "tags": ["name:ngx-gtag", "scope:ngx-util"] },
+    "ngx-msg": { "tags": ["name:ngx-msg", "scope:ngx-ui-util"] }
   }
 }

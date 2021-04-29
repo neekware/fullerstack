@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
+import { MsgModule } from '@fullerstack/ngx-msg';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
@@ -14,6 +15,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     ConfigModule.forRoot(environment),
     LoggerModule.forRoot(),
+    MsgModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
