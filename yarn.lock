@@ -211,12 +211,26 @@
   dependencies:
     eslint-scope "^5.1.0"
 
+"@angular/animation@^4.0.0-beta.8":
+  version "4.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/@angular/animation/-/animation-4.0.0-beta.8.tgz#9f61b4ee84ff4e8f48abb0eb49fff02bdedccc2e"
+  integrity sha1-n2G07oT/To9Iq7DrSf/wK97czC4=
+
 "@angular/animations@^11.2.0":
   version "11.2.7"
   resolved "https://registry.npmjs.org/@angular/animations/-/animations-11.2.7.tgz"
   integrity sha512-i+H5vC2/NUqZwGeoDHpLDn81R3prQGwT1AajMqFw9D3U6VX6G5EfYmn1zLvu8nL2r4cYMsSQ/LKnKl2jnQX0sQ==
   dependencies:
     tslib "^2.0.0"
+
+"@angular/cdk@^11.2.11":
+  version "11.2.11"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-11.2.11.tgz#ce4906173f040dbc6bde74b9806c3730230bbe4b"
+  integrity sha512-INDyO6Vh4WjsWkYAeZN39B4wTs+VqoAcTGdVBA39uij6wdu00ufr7pPRHtjAoNgrOWjEd/SCgDaUMcFEZ2+lcg==
+  dependencies:
+    tslib "^2.0.0"
+  optionalDependencies:
+    parse5 "^5.0.0"
 
 "@angular/cli@~11.2.0":
   version "11.2.10"
@@ -299,6 +313,13 @@
   version "11.2.7"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-11.2.7.tgz#bacc1940168ed0b1154192215524bed2246dac97"
   integrity sha512-ew8ebVZy7m7XFjn93llEaxQYmwKEXdT2eFBuC7PuHea1mTfl18njOVwIuzeAdbqPL6z7oYgjpE4u/3vH5nuXoQ==
+
+"@angular/material@^11.2.11":
+  version "11.2.11"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-11.2.11.tgz#29515cc5f0324fd34b97cb539e59679b67a9f7d8"
+  integrity sha512-B9uehF/TCaH6+nCY3+S8GxSHzFbk1OD4djzyBcSNsLnwtY3UYSCT9j/J05cAahpCSUPxCWkj4MfgnhtduLmMgA==
+  dependencies:
+    tslib "^2.0.0"
 
 "@angular/platform-browser-dynamic@^11.2.0":
   version "11.2.7"
@@ -11373,6 +11394,11 @@ parse5@6.0.1, parse5@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
   integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
+
+parse5@^5.0.0:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.1.tgz#f68e4e5ba1852ac2cadc00f4555fff6c2abb6178"
+  integrity sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==
 
 parseurl@^1.3.2, parseurl@~1.3.2, parseurl@~1.3.3:
   version "1.3.3"

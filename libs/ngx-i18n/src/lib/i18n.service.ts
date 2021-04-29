@@ -18,7 +18,7 @@ import {
   DefaultI18nConfig,
   DefaultLanguage,
 } from './i18n.default';
-import { registerActiveLocales } from './i18n.locales';
+import { registerActiveLocales } from './i18n.locale';
 import { Subject } from 'rxjs';
 
 @Injectable({

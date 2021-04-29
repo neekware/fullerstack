@@ -702,6 +702,31 @@
           }
         }
       }
+    },
+    "ngx-msg": {
+      "projectType": "library",
+      "root": "libs/ngx-msg",
+      "sourceRoot": "libs/ngx-msg/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ngx-msg/src/**/*.ts",
+              "libs/ngx-msg/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-msg"],
+          "options": {
+            "jestConfig": "libs/ngx-msg/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
