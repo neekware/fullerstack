@@ -1,12 +1,12 @@
-name: Dev
+name: CI
 
 # Run on push only for main
 # Otherwise it may trigger concurrently `push & pull_request` on PRs.
 on:
   push:
     branches:
-      - dev
-      - sandbox
+      - main
+      - ci
     paths-ignore:
       - '*.md'
       - '.vscode/**'
@@ -78,8 +78,8 @@ jobs:
         run: |
           NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn coverage:merge
 
-      # - name: Push coverage to coveralls
-      #   uses: coverallsapp/github-action@master
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     path-to-lcov: './coverage/lcov.combo.info'
+      - name: Push coverage to coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: './coverage/lcov.combo.info'
