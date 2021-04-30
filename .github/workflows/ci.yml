@@ -83,20 +83,3 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: './coverage/lcov.combo.info'
-
-      # - uses: borales/actions-yarn@v2.0.0
-      #   with:
-      #     cmd: install # will run `yarn install` command
-      # - uses: borales/actions-yarn@v2.0.0
-      #   with:
-      #     cmd: build:ci # will run `yarn build` command
-      # - uses: borales/actions-yarn@v2.0.0
-      #   with:
-      #     cmd: test:ci # will run `yarn test` command
-
-      # - name: Yarn Install
-      # - run: yarn install
-
-      # - name: Run Linter
-      # - run: yarn lint:ci
-      #   working-directory: ./
