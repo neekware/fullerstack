@@ -134,8 +134,8 @@ X.Y.Z Version
 
 [ [Neekware Inc.](http://neekware.com) ] [ [Nx](https://nx.dev) ]
 
-[status-image]: https://travis-ci.com/neekware/fullerstack.svg?branch=main
-[status-link]: https://travis-ci.com/github/neekware/fullerstack
+[status-image]: https://github.com/neekware/fullerstack/workflows/ci/badge.svg??branch=ci
+[status-link]: https://github.com/neekware/fullerstack
 [version-image]: https://img.shields.io/npm/v/@fullerstack.svg
 [version-link]: https://www.npmjs.com/settings/fullerstack/packages
 [coverage-image]: https://coveralls.io/repos/neekware/fullerstack/badge.svg

@@ -74,10 +74,15 @@ jobs:
       - name: Run tester
         run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn test:ci
 
-      - name: Push coverage
+      - name: Combine coverage
         run: |
           NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn coverage:merge
-          cat ./coverage/lcov.combo.info | ./node_modules/coveralls/bin/coveralls.js
+
+      - name: Push coverage to coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: './coverage/lcov.combo.info'
 
       # - uses: borales/actions-yarn@v2.0.0
       #   with:
