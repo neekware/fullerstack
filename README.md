@@ -134,8 +134,8 @@ X.Y.Z Version
 
 [ [Neekware Inc.](http://neekware.com) ] [ [Nx](https://nx.dev) ]
 
-[status-image]: https://github.com/neekware/fullerstack/actions/workflows/main.yml/badge.svg
-[status-link]: https://github.com/neekware/fullerstack/actions/workflows/main.yml
+[status-image]: https://github.com/neekware/fullerstack/actions/workflows/ci.yml/badge.svg
+[status-link]: https://github.com/neekware/fullerstack/actions/workflows/ci.yml
 [version-image]: https://img.shields.io/npm/v/@fullerstack.svg
 [version-link]: https://www.npmjs.com/settings/fullerstack/packages
 [coverage-image]: https://coveralls.io/repos/neekware/fullerstack/badge.svg
