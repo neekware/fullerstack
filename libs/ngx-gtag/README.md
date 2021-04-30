@@ -168,8 +168,8 @@ X.Y.Z Version
     `MINOR` version -- adding functionality in a backwards-compatible manner
     `PATCH` version -- making backwards-compatible bug fixes
 
-[status-image]: https://secure.travis-ci.org/neekware/fullerstack.png?branch=main
-[status-link]: http://travis-ci.org/neekware/fullerstack?branch=main
+[status-image]: https://github.com/neekware/fullerstack/actions/workflows/ci.yml/badge.svg
+[status-link]: https://github.com/neekware/fullerstack/actions/workflows/ci.yml
 [version-image]: https://img.shields.io/npm/v/@fullerstack/ngx-gtag.svg
 [version-link]: https://www.npmjs.com/package/@fullerstack/ngx-gtag
 [coverage-image]: https://coveralls.io/repos/neekware/fullerstack/badge.svg

@@ -71,17 +71,17 @@ npx create-nx-workspace fullerstack
 
 ## Applications
 
-- wb-appname = Web (Chrome, Firefox, Safari, Edge, etc)
-- el-appname = Desktop (Electron Application - Linux, MacOS, Windows)
-- ns-appname = NativeScript (Android, iOS)
-- ic-appname = Ionic (Android, iOS)
+- appname = Web (Chrome, Firefox, Safari, Edge, etc)
+- appname-el = Desktop (Electron Application - Linux, MacOS, Windows)
+- appname-ns = NativeScript (Android, iOS)
+- appname-ic = Ionic (Android, iOS)
 
 ## Applications (End2End)
 
-- wb-appname-e2e = Web (Chrome, Firefox, Safari, Edge, etc)
-- el-appname-e2e = Desktop (Electron Application - Linux, MacOS, Windows)
-- ns-appname-e2e = NativeScript (Android, iOS)
-- ic-appname-e2e = Ionic (Android, iOS)
+- appname-e2e = Web (Chrome, Firefox, Safari, Edge, etc)
+- appname-el-e2e = Desktop (Electron Application - Linux, MacOS, Windows)
+- appname-ns-e2e = NativeScript (Android, iOS)
+- appname-ic-e2e = Ionic (Android, iOS)
 
 ## Instruction (for developers)
 
