@@ -63,10 +63,13 @@ jobs:
       - name: Install packages
         run: yarn install --frozen-lockfile
 
-      # - name: Run linter
-      #   run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
-
       - name: Run linter
+        run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
+
+      - name: Run builder
+        run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn build:ci
+
+      - name: Run tester
         run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn test:ci
 
       - name: Push coverage
