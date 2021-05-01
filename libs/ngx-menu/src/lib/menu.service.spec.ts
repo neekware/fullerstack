@@ -137,7 +137,7 @@ describe('MenuService', () => {
     expect(subscriptions[0].fullspan).toEqual(true);
   });
 
-  it('should create menu - isActive, isLink, isNode, isFullspan', () => {
+  it('should create menu - isActive, isLink, isNode, isFullSpan', () => {
     service.setPermissionVerificationFunction(hasPermission);
     const menuTree = service.buildMenuTree(DefaultMenuTree);
     const admin = menuTree.children.filter((node) => node.name === 'Admin');
@@ -154,7 +154,7 @@ describe('MenuService', () => {
       true
     );
     expect(subscriptions[0].isActive('/invalid/link')).toEqual(false);
-    expect(admin[0].isFullspan).toEqual(false);
+    expect(admin[0].isFullSpan).toEqual(false);
     expect(subscriptions[0].isInternalLink).toEqual(true);
   });
 

@@ -1,0 +1,52 @@
+<mat-toolbar class="main-navbar" color="primary">
+
+  <button (click)="layout.toggleMenu()" mat-icon-button aria-label="Toggle sidenav">
+    <mat-icon [svgIcon]="layout.state.menuOpen? 'close': 'menu'"></mat-icon>
+  </button>
+
+  <!-- <div *ngIf="!auth.state.isLoggedIn" fxFlex></div>
+
+  <div class="branding" (click)="layout.goTo('/')">
+    <img src="/assets/images/logos/brand.png" alt="{{ layout.siteName | translate }}">
+  </div>
+
+  <div fxFlex></div>
+
+  <button *ngIf="uix.isFullscreenCapable" fxShow="false" fxShow.gt-xs="true" (click)="layout.toggleFullscreen()"
+    mat-icon-button aria-label="Fullscreen">
+    <mat-icon svgIcon="fullscreen"></mat-icon>
+  </button>
+
+  <button *ngIf="auth.state.isLoggedIn" (click)="layout.toggleNotification()" mat-icon-button
+    aria-label="Toggle notifications" class="ml-xs overflow-visible">
+    <mat-icon aria-label="notification icon" svgIcon="bell-ring"></mat-icon>
+    <span class="bell-label">5</span>
+  </button>
+
+  <button [matMenuTriggerFor]="accountMenu" mat-icon-button>
+    <mat-icon svgIcon="account" *ngIf="auth.state.isLoggedIn"></mat-icon>
+    <mat-icon svgIcon="dots-vertical" *ngIf="!auth.state.isLoggedIn"></mat-icon>
+  </button>
+  <mat-menu #accountMenu="matMenu" x-position="before">
+    <div *ngIf="auth.state.isLoggedIn">
+      <button mat-menu-item aria-label="Settings">
+        <mat-icon svgIcon="settings"></mat-icon>
+        {{ 'MENU.SETTINGS' | translate }}
+      </button>
+      <button mat-menu-item aria-label="Logout" (click)="auth.logoutDispatch()">
+        <mat-icon svgIcon="logout"></mat-icon>
+        {{ 'AUTH.LOGOUT' | translate }}
+      </button>
+    </div>
+    <div *ngIf="!auth.state.isLoggedIn">
+      <button mat-menu-item aria-label="Login" (click)="layout.goTo(layout.sessionLinks.login.path)">
+        <mat-icon svgIcon="login"></mat-icon>
+        {{ 'AUTH.LOGIN' | translate }}
+      </button>
+      <button mat-menu-item aria-label="Register" (click)="layout.goTo(layout.sessionLinks.register.path)">
+        <mat-icon svgIcon="account-plus"></mat-icon>
+        {{ 'AUTH.REGISTER' | translate }}
+      </button>
+    </div>
+  </mat-menu> -->
+</mat-toolbar>
