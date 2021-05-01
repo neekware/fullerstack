@@ -16,5 +16,6 @@ module.exports = {
     '<rootDir>/libs/ngx-gtag',
     '<rootDir>/libs/ngx-msg',
     '<rootDir>/libs/ngx-material',
+    '<rootDir>/libs/agx-assets',
   ],
 };

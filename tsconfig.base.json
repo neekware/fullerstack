@@ -31,7 +31,8 @@
       "@fullerstack/ngx-i18n": ["libs/ngx-i18n/src/index.ts"],
       "@fullerstack/ngx-gtag": ["libs/ngx-gtag/src/index.ts"],
       "@fullerstack/ngx-msg": ["libs/ngx-msg/src/index.ts"],
-      "@fullerstack/ngx-material": ["libs/ngx-material/src/index.ts"]
+      "@fullerstack/ngx-material": ["libs/ngx-material/src/index.ts"],
+      "@fullerstack/assets": ["libs/agx-assets/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

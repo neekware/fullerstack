@@ -55,8 +55,10 @@
     "ngxs",
     "pageview",
     "rehydrated",
+    "sidenav",
     "signup",
     "submenu",
+    "tailwindcss",
     "tryget",
     "typegraphql",
     "upsert",
@@ -66,9 +68,7 @@
     "אודות",
     "ברוך",
     "آمدی",
-    "باره",
-    "Datepicker",
-    "sidenav"
+    "باره"
   ],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"

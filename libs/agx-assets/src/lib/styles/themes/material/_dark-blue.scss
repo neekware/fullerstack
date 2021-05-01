@@ -1,5 +1,5 @@
 // https://github.com/angular/material2/blob/master/src/lib/core/theming/_palette.scss
-@import '../../../../../node_modules/@angular/material/theming';
+@import '../../../../../../../node_modules/@angular/material/theming';
 
 $mat-dark-blue: (
   50: #bbdefb,
@@ -41,6 +41,7 @@ $warn: mat-palette($mat-red);
 $theme: mat-light-theme($primary, $accent, $warn);
 $background: map-get($theme, background);
 $foreground: map-get($theme, foreground);
+
 @include mat-core();
 // Secondary color (dark)
 $dark-primary: mat-palette($mat-blue-grey);
@@ -76,4 +77,13 @@ $gradient-color: mat-contrast($mat-dark-blue, 800) !important;
 
 .bg-color-warn {
   background-color: mat-color($warn);
+}
+
+// Primary Theme (Default)
+@include angular-material-theme($theme);
+
+// Secondary Theme
+.dark-theme {
+  // This mixin only generates the color styles now.
+  @include angular-material-color($dark-theme);
 }

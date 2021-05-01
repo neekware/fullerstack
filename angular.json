@@ -51,10 +51,15 @@
             "aot": true,
             "assets": [
               "apps/fullerstack/src/favicon.ico",
-              "apps/fullerstack/src/assets"
+              "apps/fullerstack/src/assets",
+              {
+                "glob": "**/*",
+                "input": "libs/agx-assets/src/lib/images",
+                "output": "assets/images"
+              }
             ],
             "styles": [
-              "apps/fullerstack/src/styles/styles.scss"
+              "apps/fullerstack/src/styles.scss"
             ],
             "scripts": []
           },
@@ -802,6 +807,31 @@
           ],
           "options": {
             "jestConfig": "libs/ngx-material/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "agx-assets": {
+      "root": "libs/agx-assets",
+      "sourceRoot": "libs/agx-assets/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/agx-assets/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/agx-assets"
+          ],
+          "options": {
+            "jestConfig": "libs/agx-assets/jest.config.js",
             "passWithNoTests": true
           }
         }
