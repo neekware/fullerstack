@@ -40,6 +40,7 @@
     "ngx-msg": { "tags": ["name:ngx-msg", "scope:ngx-ui-util"] },
     "ngx-material": { "tags": ["name:ngx-material", "scope:ngx-ui"] },
     "agx-assets": { "tags": ["name:agx-assets", "scope:agx-ui"] },
-    "ngx-layout": { "tags": ["name:ngx-layout", "scope:ngx-ui"] }
+    "ngx-layout": { "tags": ["name:ngx-layout", "scope:ngx-ui"] },
+    "ngx-auth": { "tags": ["name:ngx-auth", "scope:ngx-auth"] }
   }
 }
