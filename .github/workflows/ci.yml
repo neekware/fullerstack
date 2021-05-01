@@ -1,11 +1,10 @@
 name: CI
 
-# Run on push only for main
+# Run on push only on ci
 # Otherwise it may trigger concurrently `push & pull_request` on PRs.
 on:
   push:
     branches:
-      - main
       - ci
     paths-ignore:
       - '*.md'
@@ -28,9 +27,9 @@ on:
 
 jobs:
   #
-  # Linting
+  # Continuos Integration
   #
-  lint:
+  integration:
     timeout-minutes: 7
     runs-on: ${{ matrix.os }}
     strategy:
