@@ -55,7 +55,6 @@
     "prisma:seed": "node ./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature"
   },
   "dependencies": {
-    "@fullerstack/agx-assets": "file:libs/agx-assets",
     "@angular/animation": "^4.0.0-beta.8",
     "@angular/animations": "^11.2.0",
     "@angular/cdk": "^11.2.11",
