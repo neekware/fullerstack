@@ -2,6 +2,7 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
+import { MaterialModule } from '@fullerstack/ngx-material';
 
 /** Application Environment with remote config endpoint */
 const appEnv: Readonly<ApplicationConfig> = {
@@ -16,8 +17,12 @@ describe('AppComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
+        imports: [
+          HttpClientModule,
+          MaterialModule,
+          ConfigModule.forRoot(appEnv),
+        ],
         declarations: [AppComponent],
-        imports: [HttpClientModule, ConfigModule.forRoot(appEnv)],
       }).compileComponents();
     })
   );

@@ -1,0 +1,6 @@
+// Primary Theme (Default)
+@include angular-material-theme($theme);
+// Secondary Theme
+.app-theme-dark {
+  @include angular-material-theme($dark-theme);
+}

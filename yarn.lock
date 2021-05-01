@@ -2318,6 +2318,34 @@
   dependencies:
     tslib "^2.0.0"
 
+"@ngxs/devtools-plugin@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@ngxs/devtools-plugin/-/devtools-plugin-3.7.1.tgz#e0abb97f0fb239236b135f15b82704289c96774b"
+  integrity sha512-tZ5dVrgHDaOK0NMuSy3eesqwCXncF7Tm2bO/5cSvgSUXCKuU8UfWKxvP/N/Wcz5V5uaUIdOY1bnF6ZdeAMVzGQ==
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngxs/logger-plugin@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@ngxs/logger-plugin/-/logger-plugin-3.7.1.tgz#045b1b7efbef82d47488f925be8af77cf66ee906"
+  integrity sha512-+iUwPnKFa0SPvT5duzPKaRZvql49lWPh5/kxE7U6BLnEZd87MrVUmVRDWalyvyiw7/ZiYeEk1aM8OgkmMKgwnQ==
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngxs/storage-plugin@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@ngxs/storage-plugin/-/storage-plugin-3.7.1.tgz#39fbce9cf6585cc094d74e5efd54daae3fcd334d"
+  integrity sha512-2e/iHu2Ax/Z7hEfGZPCuUIPNiTb33e9kIM7xIho5BG18liKy1MTeZ7BS5PQKmMc7oY9Ji90ZjhU9uXnex/Em2w==
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngxs/store@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@ngxs/store/-/store-3.7.1.tgz#3333379eb36cfe475d019b6c894b263ea515b8a5"
+  integrity sha512-Qg4rkF8XoIg/E2SGUfBbr4JmR8ZbRfeg1X++fF0HJymK1PtbIxtEXQXm7VTH0+GSmYDCwPJb8Im9dZHGZWF5ww==
+  dependencies:
+    tslib "^1.9.0"
+
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz"

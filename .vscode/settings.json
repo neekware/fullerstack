@@ -2,6 +2,7 @@
   "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
   "editor.formatOnSave": true,
+  "editor.acceptSuggestionOnEnter": "on",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
@@ -32,12 +33,14 @@
     "Bienvenido",
     "Bienvenue",
     "Buffay",
+    "Datepicker",
     "Deutsch",
     "Fran",
     "Français",
     "Neekman",
     "Postgres",
     "SEEKRET",
+    "Sidenav",
     "Singup",
     "Subify",
     "Tribbiani",
@@ -49,6 +52,7 @@
     "gtag",
     "herzlich",
     "nestjs",
+    "ngxs",
     "pageview",
     "rehydrated",
     "signup",
@@ -62,7 +66,9 @@
     "אודות",
     "ברוך",
     "آمدی",
-    "باره"
+    "باره",
+    "Datepicker",
+    "sidenav"
   ],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"

@@ -15,5 +15,6 @@ module.exports = {
     '<rootDir>/libs/ngx-i18n',
     '<rootDir>/libs/ngx-gtag',
     '<rootDir>/libs/ngx-msg',
+    '<rootDir>/libs/ngx-material',
   ],
 };
