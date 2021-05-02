@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { LayoutService } from '@fullerstack/ngx-layout';
 import { AuthService } from '@fullerstack/ngx-auth';
@@ -10,16 +10,8 @@ import { _ } from '@fullerstack/ngx-i18n';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    public auth: AuthService,
-    public layout: LayoutService
-  ) {}
-
-  ngOnInit() {
-    console.log(this.route.snapshot.data['title']);
-  }
+export class HomeComponent {
+  constructor(public auth: AuthService, public layout: LayoutService) {}
 
   get pitchList() {
     return [

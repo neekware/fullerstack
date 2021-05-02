@@ -1,1 +1,16 @@
-<p>menu works!</p>
+<div class="app-menu">
+
+  <div *ngFor="let node of rootNode.children;">
+    <mat-accordion>
+      <fullerstack-menu-node *ngIf="node.isNode" [node]="node">
+      </fullerstack-menu-node>
+    </mat-accordion>
+  </div>
+
+  <div class="menu-links" *ngFor="let node of rootNode.children;">
+    <fullerstack-menu-link *ngIf="node.isLink" [link]="node"></fullerstack-menu-link>
+  </div>
+
+  <fullerstack-options></fullerstack-options>
+
+</div>

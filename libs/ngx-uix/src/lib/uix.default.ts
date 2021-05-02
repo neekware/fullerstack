@@ -1,6 +1,6 @@
 import { UixConfig } from './uix.model';
 
-export const UIX_MDI_ICONS = '/assets/font/mdi.svg';
+export const UIX_MDI_ICONS = '/assets/fonts/mdi.svg';
 
 export const AvailableThemes = [
   'deeppurple-amber',

@@ -15,9 +15,22 @@ import { NotificationComponent } from './notification/notification.component';
 import { LayoutComponent } from './layout.component';
 import { UixModule } from '@fullerstack/ngx-uix';
 import { OptionsComponent } from './options/options.component';
+import { LayoutService } from './layout.service';
+import { MenuService } from '@fullerstack/ngx-menu';
+import { NgxsModule } from '@ngxs/store';
+import { LayoutStoreState } from './store/layout-state.store';
+import { AuthModule } from '@fullerstack/ngx-auth';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MaterialModule, I18nModule, UixModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MaterialModule,
+    I18nModule,
+    UixModule,
+    NgxsModule.forFeature([LayoutStoreState]),
+    AuthModule,
+  ],
   declarations: [
     MenuComponent,
     MenuLinkComponent,
@@ -36,6 +49,6 @@ import { OptionsComponent } from './options/options.component';
     OptionsComponent,
     LayoutComponent,
   ],
-  providers: [MatIcon],
+  providers: [MatIcon, LayoutService, MenuService],
 })
 export class LayoutModule {}

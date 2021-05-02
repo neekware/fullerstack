@@ -11,15 +11,6 @@ import * as actions from './auth-state.action';
 import { signState } from './auth-state.util';
 import { Injectable } from '@angular/core';
 
-// import { MsgService } from '@nwpkg/msg';
-// import { _ } from '@nwpkg/i18n';
-
-// import { AuthState, AUTH_STATE_KEY } from './auth-types.state';
-// import { DefaultAuthState } from './auth-defaults.state';
-// import { signState } from './auth-utils.state';
-// import { AuthRemoteService } from './auth-remote-service.state';
-// import * as actions from './auth-actions.state';
-
 @State<AuthState>({
   name: AUTH_STATE_KEY,
   defaults: DefaultAuthState,

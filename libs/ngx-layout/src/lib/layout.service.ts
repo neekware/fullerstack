@@ -6,9 +6,10 @@ import {
   Breakpoints,
 } from '@angular/cdk/layout';
 
-import { Observable } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, takeWhile } from 'rxjs/operators';
 import { Store, Select } from '@ngxs/store';
+import { DeepReadonly } from 'ts-essentials';
 
 import { tryGet } from '@fullerstack/agx-util';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -19,15 +20,16 @@ import { UixService } from '@fullerstack/ngx-uix';
 
 import * as actions from './store/layout-state.action';
 import { LayoutState, NavMode } from './store/layout-state.model';
-import { LayoutDefaultState } from './store/layout-state.default';
+import { DefaultLayoutState } from './store/layout-state.default';
 import { LayoutStoreState } from './store/layout-state.store';
 
 @Injectable()
 export class LayoutService implements OnDestroy {
-  private _state = LayoutDefaultState;
-  @Select(LayoutStoreState) private _stateSub$: Observable<LayoutState>;
-  private _isDestroyed = false;
-  private _breakpointSub$: Observable<BreakpointState>;
+  state: DeepReadonly<LayoutState> = DefaultLayoutState;
+  @Select(LayoutStoreState) state$: Observable<LayoutState>;
+  private breakpointSub$: Observable<BreakpointState>;
+  private destroy$ = new Subject<boolean>();
+
   siteName = null;
   isDarkTheme = false;
 
@@ -39,52 +41,45 @@ export class LayoutService implements OnDestroy {
     readonly logger: LoggerService,
     readonly i18n: I18nService,
     readonly uix: UixService,
-    readonly msg: MenuService,
-    readonly menu: MenuService
+    readonly msg: MenuService
   ) {
-    this._breakpointSub$ = this.bp$.observe([
+    this.breakpointSub$ = this.bp$.observe([
       Breakpoints.Handset,
       Breakpoints.XSmall,
       Breakpoints.Small,
     ]);
+
     this.siteName = config.options.appName;
-    this.logger.debug('LayoutService ready ...');
     this.init();
+
+    this.logger.debug('LayoutService ready ...');
   }
   s;
 
   ngOnDestroy() {
-    this._isDestroyed = true;
+    this.destroy$.next(true);
+    this.destroy$.complete();
+
     this.logger.debug('LayoutService destroyed ...');
   }
 
   private init() {
-    this._stateSub$
-      .pipe(takeWhile(() => !this._isDestroyed))
-      .subscribe((state) => {
-        this._state = state;
-      });
+    this.state$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
+      this.state = state;
+    });
+
+    this.breakpointSub$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
+      if (!state.matches) {
+        this.setMenuMode(NavMode.side);
+        // if (!this._state.menuOpen) {
+        //   this.toggleMenu();
+        // }
+      } else {
+        this.setMenuMode(NavMode.over);
+      }
+    });
+
     this.store.dispatch(new actions.Initialize());
-    this._breakpointSub$
-      .pipe(takeWhile(() => !this._isDestroyed))
-      .subscribe((state) => {
-        if (!state.matches) {
-          this.setMenuMode(NavMode.side);
-          // if (!this._state.menuOpen) {
-          //   this.toggleMenu();
-          // }
-        } else {
-          this.setMenuMode(NavMode.over);
-        }
-      });
-  }
-
-  get state() {
-    return this._state;
-  }
-
-  get stateSub$() {
-    return this._stateSub$;
   }
 
   toggleMenu() {
@@ -130,7 +125,7 @@ export class LayoutService implements OnDestroy {
   }
 
   get handsetSub$() {
-    return this._breakpointSub$;
+    return this.breakpointSub$;
   }
 
   setDarkTheme(isDark: boolean) {

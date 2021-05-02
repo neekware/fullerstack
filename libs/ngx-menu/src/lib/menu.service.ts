@@ -11,7 +11,7 @@ export class MenuService {
   @Output() menuChange$ = new EventEmitter<MenuNode>();
   private rootNode: MenuNode = new MenuNode({ name: 'root' });
   private isAllowedFunc: PermissionVerificationFuncType = (node: MenuItem) =>
-    node?.allowed || true;
+    !!(node?.allowed ?? true);
 
   buildMenuTree(menuItems: MenuItem[], force = false) {
     if (this.rootNode?.children?.length === 0 || force) {
@@ -34,8 +34,8 @@ export class MenuService {
       ) {
         throw Error(`Menu item missing 'name'`);
       }
-      const allowed = item?.allowed || true;
-      if (allowed && this.isAllowedFunc(item)) {
+
+      if (this.isAllowedFunc(item)) {
         const newItem = new MenuNode(item);
         newItem.level = level;
         newItem.parent = parent;

@@ -1,13 +1,13 @@
 import { State, Action, StateContext } from '@ngxs/store';
 
 import { LayoutState, LAYOUT_STATE_KEY } from './layout-state.model';
-import { LayoutDefaultState } from './layout-state.default';
+import { DefaultLayoutState } from './layout-state.default';
 import * as actions from './layout-state.action';
 import { Injectable } from '@angular/core';
 
 @State<LayoutState>({
   name: LAYOUT_STATE_KEY,
-  defaults: LayoutDefaultState,
+  defaults: DefaultLayoutState,
 })
 @Injectable()
 export class LayoutStoreState {
@@ -15,7 +15,7 @@ export class LayoutStoreState {
 
   @Action([actions.Initialize])
   initializeRequest({ setState }: StateContext<LayoutState>) {
-    setState(LayoutDefaultState);
+    setState(DefaultLayoutState);
   }
 
   @Action(actions.SetMenuStatus)

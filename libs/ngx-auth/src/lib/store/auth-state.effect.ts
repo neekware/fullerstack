@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { LoggerService, LogLevels } from '@fullerstack/ngx-logger';
@@ -45,45 +45,41 @@ export class AuthEffect {
   loginRequest(credentials: AuthLoginCredentials): Observable<any> {
     this.logger.info('Login request sent ...');
 
-    return this.gql.client
-      .mutate<schema.JwtLoginMutation>({
+    return from(
+      this.gql.client.mutate<schema.JwtLoginMutation>({
         mutation: JwtLoginMutationNode,
         variables: credentials,
       })
-      .pipe(
-        map(({ data }) => data.jwtLogin),
-        map(
-          (resp) => {
-            if (resp.ok) {
-              this.msg.setMsg({
-                text: _('AUTH.SUCCESS.LOGIN'),
-                level: LogLevels.debug,
-              });
-              return this.store.dispatch(new actions.LoginSuccess(resp.token));
-            } else {
-              return this.loginHandleError(
-                resp.msg,
-                LogLevels.warn,
-                credentials
-              );
-            }
-          },
-          (error) => {
-            return this.loginHandleError(
-              error.message,
-              LogLevels.warn,
-              credentials
-            );
+    ).pipe(
+      map(({ data }) => data.jwtLogin),
+      map(
+        (resp) => {
+          if (resp.ok) {
+            this.msg.setMsg({
+              text: _('AUTH.SUCCESS.LOGIN'),
+              level: LogLevels.debug,
+            });
+            return this.store.dispatch(new actions.LoginSuccess(resp.token));
+          } else {
+            return this.loginHandleError(resp.msg, LogLevels.warn, credentials);
           }
-        ),
-        catchError((error, caught) => {
+        },
+        (error) => {
           return this.loginHandleError(
             error.message,
             LogLevels.warn,
             credentials
           );
-        })
-      );
+        }
+      ),
+      catchError((error, caught) => {
+        return this.loginHandleError(
+          error.message,
+          LogLevels.warn,
+          credentials
+        );
+      })
+    );
   }
 
   private registerHandleError(
@@ -102,47 +98,45 @@ export class AuthEffect {
 
   registerRequest(credentials: AuthRegisterCredentials): Observable<any> {
     this.logger.debug('Register request sent ...');
-    return this.gql.client
-      .mutate<schema.JwtRegisterMutation>({
+    return from(
+      this.gql.client.mutate<schema.JwtRegisterMutation>({
         mutation: JwtRegisterMutationNode,
         variables: credentials,
       })
-      .pipe(
-        map(({ data }) => data.jwtRegister),
-        map(
-          (resp) => {
-            if (resp.ok) {
-              this.msg.setMsg({
-                text: _('AUTH.SUCCESS.REGISTER'),
-                level: LogLevels.debug,
-              });
-              return this.store.dispatch(
-                new actions.RegisterSuccess(resp.token)
-              );
-            } else {
-              return this.registerHandleError(
-                resp.msg,
-                LogLevels.warn,
-                credentials
-              );
-            }
-          },
-          (error) => {
+    ).pipe(
+      map(({ data }) => data.jwtRegister),
+      map(
+        (resp) => {
+          if (resp.ok) {
+            this.msg.setMsg({
+              text: _('AUTH.SUCCESS.REGISTER'),
+              level: LogLevels.debug,
+            });
+            return this.store.dispatch(new actions.RegisterSuccess(resp.token));
+          } else {
             return this.registerHandleError(
-              error.message,
+              resp.msg,
               LogLevels.warn,
               credentials
             );
           }
-        ),
-        catchError((error, caught) => {
+        },
+        (error) => {
           return this.registerHandleError(
             error.message,
             LogLevels.warn,
             credentials
           );
-        })
-      );
+        }
+      ),
+      catchError((error, caught) => {
+        return this.registerHandleError(
+          error.message,
+          LogLevels.warn,
+          credentials
+        );
+      })
+    );
   }
 
   private refreshHandleError(
@@ -161,38 +155,34 @@ export class AuthEffect {
 
   refreshRequest(token: string): Observable<any> {
     this.logger.debug('Token refresh request sent ...');
-    return this.gql.client
-      .mutate<schema.JwtRefreshMutation>({
+    return from(
+      this.gql.client.mutate<schema.JwtRefreshMutation>({
         mutation: JwtRefreshMutationNode,
         variables: { token: token },
       })
-      .pipe(
-        map(({ data }) => data.jwtRefresh),
-        map(
-          (resp) => {
-            if (resp.ok) {
-              this.msg.setMsg({
-                text: _('AUTH.SUCCESS.REFRESH'),
-                level: LogLevels.debug,
-              });
-              return this.store.dispatch(
-                new actions.TokenRefreshSuccess(resp.token)
-              );
-            } else {
-              return this.refreshHandleError(resp.msg, LogLevels.warn, token);
-            }
-          },
-          (error) => {
-            return this.refreshHandleError(
-              error.message,
-              LogLevels.warn,
-              token
+    ).pipe(
+      map(({ data }) => data.jwtRefresh),
+      map(
+        (resp) => {
+          if (resp.ok) {
+            this.msg.setMsg({
+              text: _('AUTH.SUCCESS.REFRESH'),
+              level: LogLevels.debug,
+            });
+            return this.store.dispatch(
+              new actions.TokenRefreshSuccess(resp.token)
             );
+          } else {
+            return this.refreshHandleError(resp.msg, LogLevels.warn, token);
           }
-        ),
-        catchError((error, caught) => {
+        },
+        (error) => {
           return this.refreshHandleError(error.message, LogLevels.warn, token);
-        })
-      );
+        }
+      ),
+      catchError((error, caught) => {
+        return this.refreshHandleError(error.message, LogLevels.warn, token);
+      })
+    );
   }
 }

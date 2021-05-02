@@ -26,16 +26,16 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.layout.stateSub$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
+    this.layout.state$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
       if (state.menuOpen) {
-        this.sideMenu.open();
+        this.sideMenu?.open();
       } else {
-        this.sideMenu.close();
+        this.sideMenu?.close();
       }
       if (state.notifyOpen) {
-        this.notifyMenu.open();
+        this.notifyMenu?.open();
       } else {
-        this.notifyMenu.close();
+        this.notifyMenu?.close();
       }
     });
   }

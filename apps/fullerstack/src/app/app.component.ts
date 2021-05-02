@@ -9,6 +9,7 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { UixService } from '@fullerstack/ngx-uix';
 import { AuthService } from '@fullerstack/ngx-auth';
+import { LayoutService } from '@fullerstack/ngx-layout';
 
 @Component({
   selector: 'fullerstack-root',
@@ -22,9 +23,10 @@ export class AppComponent implements OnInit {
     readonly http: HttpClient,
     readonly config: ConfigService,
     readonly logger: LoggerService,
+    readonly auth: AuthService,
     readonly i18n: I18nService,
     readonly uix: UixService,
-    readonly auth: AuthService
+    readonly layout: LayoutService
   ) {
     if (!this.config.options.production) {
       /* istanbul ignore next */

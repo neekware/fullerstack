@@ -1,9 +1,10 @@
 import crypto from 'crypto-es';
+import { DefaultAuthState } from './auth-state.default';
 
 import { AuthState } from './auth-state.model';
 
 export function signState(state: AuthState): AuthState {
-  const { signature, ...newState } = state;
+  const { signature, ...newState } = state || {};
   return {
     ...state,
     ...{
@@ -26,5 +27,5 @@ export function sanitizeState(state: AuthState | string): AuthState | boolean {
   }
 
   const testState = signState(origState);
-  return origState.signature === testState.signature ? origState : false;
+  return origState?.signature === testState?.signature ? origState : false;
 }

@@ -1,8 +1,11 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { DeepReadonly } from 'ts-essentials';
 import { MenuNode } from '@fullerstack/ngx-menu';
-import { LayoutService } from '../layout.service';
+
+import { DefaultLayoutState } from '../store/layout-state.default';
+import { LayoutState } from '../store/layout-state.model';
 
 @Component({
   selector: 'fullerstack-menu-link',
@@ -11,13 +14,15 @@ import { LayoutService } from '../layout.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuLinkComponent {
-  @Input() link: MenuNode = null;
+  @Input() state: DeepReadonly<LayoutState> = DefaultLayoutState;
+  @Input() toggleMenu: () => void;
+  @Input() link: MenuNode;
 
-  constructor(readonly router: Router, readonly layout: LayoutService) {}
+  constructor(readonly router: Router) {}
 
   redirectUrl(node: MenuNode) {
-    if (node.isFullSpan && this.layout.state.menuOpen) {
-      this.layout.toggleMenu();
+    if (node.isFullSpan && this.state.menuOpen) {
+      this.toggleMenu();
     }
     this.router.navigate([node.link]);
   }

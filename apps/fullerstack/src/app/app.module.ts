@@ -26,6 +26,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AboutComponent } from './pages/about/about.component';
 import { LoginComponent } from './pages/login/login.component';
+import { AUTH_STATE_KEY } from 'libs/ngx-auth/src/lib/store/auth-state.constant';
+import { LAYOUT_STATE_KEY } from 'libs/ngx-layout/src/lib/store/layout-state.model';
 
 @NgModule({
   imports: [
@@ -38,7 +40,7 @@ import { LoginComponent } from './pages/login/login.component';
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     NgxsLoggerPluginModule.forRoot({ logger: console, collapsed: true }),
     NgxsStoragePluginModule.forRoot({
-      key: [],
+      key: [AUTH_STATE_KEY, LAYOUT_STATE_KEY],
     }),
     ConfigModule.forRoot(environment),
     LoggerModule,

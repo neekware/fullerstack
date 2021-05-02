@@ -26,7 +26,7 @@ export class GqlService {
     readonly httpLink: HttpLink
   ) {
     this.options = ldNestedMerge(
-      { gtag: DefaultGqlConfig },
+      { gql: DefaultGqlConfig },
       this.config.options
     );
 
@@ -57,27 +57,9 @@ export class GqlService {
         },
       },
     });
-
-    // this.apollo.client = client;
   }
 
   get client() {
-    return this.apollo;
+    return this.apollo.client;
   }
-
-  // insertLinks(link: ApolloLink) {
-  // const link = setContext(async (operation, prevContext) => {
-  //   const token = 'foobar-token';
-  //   return {
-  //     ...prevContext,
-  //     headers: {
-  //       ...prevContext.headers,
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   };
-  // });
-
-  //   const newLinks = [this.apollo.client.link, [link]];
-  //   this.apollo.client.setLink(newLinks);
-  // }
 }
