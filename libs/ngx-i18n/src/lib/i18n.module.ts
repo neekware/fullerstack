@@ -6,14 +6,11 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ConfigService } from '@fullerstack/ngx-config';
 
-export function HttpLoaderFactory(
-  http: HttpClient,
-  configService: ConfigService
-) {
+export function HttpLoaderFactory(http: HttpClient, config: ConfigService) {
   return new TranslateHttpLoader(
     http,
     '/assets/i18n/',
-    `.json?hash=${configService.options?.i18n?.cacheBustingHash}`
+    `.json?hash=${config.options?.i18n?.cacheBustingHash}`
   );
 }
 

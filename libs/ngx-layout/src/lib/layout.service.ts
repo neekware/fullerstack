@@ -32,16 +32,17 @@ export class LayoutService implements OnDestroy {
   isDarkTheme = false;
 
   constructor(
-    readonly breakPointObserver: BreakpointObserver,
+    readonly bp$: BreakpointObserver,
     readonly router: Router,
     readonly store: Store,
     readonly config: ConfigService,
     readonly logger: LoggerService,
     readonly i18n: I18nService,
     readonly uix: UixService,
+    readonly msg: MenuService,
     readonly menu: MenuService
   ) {
-    this._breakpointSub$ = this.breakPointObserver.observe([
+    this._breakpointSub$ = this.bp$.observe([
       Breakpoints.Handset,
       Breakpoints.XSmall,
       Breakpoints.Small,

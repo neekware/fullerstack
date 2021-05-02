@@ -3,10 +3,8 @@ import { ConfigService } from './config.service';
 
 /**
  * Remote Config Fetch Factory
- * @param configService ConfigService Injectable
+ * @param config ConfigService Injectable
  */
-export function remoteConfigFactory(
-  configService: ConfigService
-): () => RemoteType {
-  return () => configService.fetchRemoteConfig();
+export function remoteConfigFactory(config: ConfigService): () => RemoteType {
+  return () => config.fetchRemoteConfig();
 }

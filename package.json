@@ -52,7 +52,8 @@
     "prisma:migrate:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
     "prisma:migrate:dev": "node ./node_modules/.bin/prisma migrate dev --schema=apps/api/src/prisma/schema.prisma",
     "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:seed": "node ./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature"
+    "prisma:seed": "node ./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature",
+    "xlate:extract": "ngx-translate-extract -i ./apps ./libs -o ./libs/agx-assets/src/lib/i18n/{en,fr,es,he,fa}.json -m _ --sort"
   },
   "dependencies": {
     "@angular/animation": "^4.0.0-beta.8",
@@ -116,6 +117,7 @@
     "@angular/cli": "~11.2.0",
     "@angular/compiler-cli": "^11.2.0",
     "@angular/language-service": "^11.2.0",
+    "@biesbjerg/ngx-translate-extract": "^7.0.4",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
     "@ngneat/tailwind": "^7.0.3",

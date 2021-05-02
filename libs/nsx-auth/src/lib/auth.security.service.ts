@@ -18,18 +18,18 @@ import { AUTH_SESSION_COOKIE_NAME, AUTH_MODULE_NAME } from './auth.constant';
 @Injectable()
 export class SecurityService {
   private readonly logger = new Logger(AUTH_MODULE_NAME);
-  readonly config: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
+  readonly options: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
   readonly jwtSecret: string;
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly configService: ConfigService
+    private readonly config: ConfigService
   ) {
-    this.config = ldNestMerge(
-      { ...this.config },
-      this.configService.get<SecurityConfig>('appConfig.securityConfig')
+    this.options = ldNestMerge(
+      { ...this.options },
+      this.config.get<SecurityConfig>('appConfig.securityConfig')
     );
-    this.jwtSecret = this.configService.get<string>('AUTH_SEEKRET_KEY');
+    this.jwtSecret = this.config.get<string>('AUTH_SEEKRET_KEY');
     this.rehydrateSuperuser();
   }
 
@@ -39,8 +39,8 @@ export class SecurityService {
    */
   private async rehydrateSuperuser() {
     let sessionVersion = 1;
-    const email = this.configService.get<string>('AUTH_SUPERUSER_EMAIL');
-    const password = this.configService.get<string>('AUTH_SUPERUSER_PASSWORD');
+    const email = this.config.get<string>('AUTH_SUPERUSER_EMAIL');
+    const password = this.config.get<string>('AUTH_SUPERUSER_PASSWORD');
 
     const user = await this.prisma.user.findUnique({ where: { email } });
     if (user) {
@@ -168,7 +168,7 @@ export class SecurityService {
    */
   async hashPassword(password?: string): Promise<string> {
     password = password || uuid_v4();
-    return await hash(password, this.config.bcryptSaltOrRound);
+    return await hash(password, this.options.bcryptSaltOrRound);
   }
 
   /**
@@ -178,7 +178,7 @@ export class SecurityService {
    */
   generateSessionToken(payload: JwtDto): string {
     return jwt.sign(payload, this.jwtSecret, {
-      expiresIn: this.config.sessionTokenExpiry,
+      expiresIn: this.options.sessionTokenExpiry,
     });
   }
 
@@ -189,7 +189,7 @@ export class SecurityService {
    */
   generateAccessToken(payload: JwtDto): string {
     return jwt.sign(payload, this.jwtSecret, {
-      expiresIn: this.config.accessTokenExpiry,
+      expiresIn: this.options.accessTokenExpiry,
     });
   }
 

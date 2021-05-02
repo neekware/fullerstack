@@ -9,6 +9,7 @@ import { I18nModule } from '@fullerstack/ngx-i18n';
 import { AlertComponent } from './alert/alert.component';
 import { HintComponent } from './hint/hint.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
+import { MsgService } from './msg.service';
 
 @NgModule({
   imports: [
@@ -22,4 +23,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
   exports: [SnackbarComponent, AlertComponent, HintComponent],
   providers: [MatIcon, MatChip, MatChipList, MatSnackBar],
 })
-export class MsgModule {}
+export class MsgModule {
+  imports: [CommonModule];
+  provides: [MsgService];
+}

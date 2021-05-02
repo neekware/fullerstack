@@ -20,15 +20,15 @@ export class AppComponent implements OnInit {
 
   constructor(
     readonly http: HttpClient,
-    readonly configService: ConfigService,
-    readonly loggerService: LoggerService,
+    readonly config: ConfigService,
+    readonly logger: LoggerService,
     readonly i18n: I18nService,
     readonly uix: UixService,
     readonly auth: AuthService
   ) {
-    if (!this.configService.options.production) {
+    if (!this.config.options.production) {
       /* istanbul ignore next */
-      this.loggerService.info('AppComponent starting ... ');
+      this.logger.info('AppComponent starting ... ');
     }
   }
 
