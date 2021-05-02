@@ -1,0 +1,98 @@
+.bulletin-board {
+  padding: 0 15px;
+}
+
+.auto-size {
+  position: relative;
+  padding: 2px 15px 2px 15px;
+  height: 70px;
+  height: 400px;
+  padding-top: 16px;
+  text-align: center;
+}
+
+.app-logo {
+  background: url("/assets/images/logos/logo.png") top center no-repeat;
+  position: relative;
+  padding-top: 230px;
+  opacity: 1;
+  width: 560px;
+  margin: 0px auto 50px auto;
+  font-weight: 400;
+}
+
+.app-logo:after {
+  content: '';
+  background-size: contain;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 224px;
+}
+
+@media (max-width: 591px) {
+  .app-logo {
+    width: auto;
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.app-headline {
+  width: auto;
+  font-size: 1.2rem;
+  font-weight: 420 !important;
+  letter-spacing: 1px;
+  margin: -30px auto 16px auto;
+  line-height: 37px;
+  font-family: "Roboto", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+.app-headline .secondary {
+  color: inherit;
+  font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+  .auto-size {
+    height: 356px;
+  }
+}
+
+.app-promo {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 20px 15px 50px 15px;
+}
+
+.app-promo .row {
+  margin: 32px auto;
+}
+
+.image img {
+  width: 95%;
+  height: 95%;
+}
+
+.app-promo .text {
+  padding: 0 15px;
+}
+
+.title {
+  font-size: 22px;
+  margin-top: 10px;
+  color: #37474F;
+  margin: 10px 0 16px 0;
+  opacity: .87;
+  line-height: 32px;
+}
+
+.description {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 400;
+  opacity: .87;
+  line-height: 28px;
+  padding: 0;
+}

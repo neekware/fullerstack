@@ -1,5 +1,5 @@
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { getMockPrismaService } from '@fullerstack/nsx-prisma-mock';
+import { getMockPrismaService } from '@fullerstack/nsx-prisma/mock';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { SecurityService } from './auth.security.service';

@@ -1,4 +1,4 @@
-import { MD5 } from 'crypto-js';
+import crypto from 'crypto-es';
 
 import { AuthState } from './auth-state.model';
 
@@ -7,7 +7,7 @@ export function signState(state: AuthState): AuthState {
   return {
     ...state,
     ...{
-      signature: MD5(JSON.stringify(newState)).toString(),
+      signature: crypto.MD5(JSON.stringify(newState)).toString(),
     },
   };
 }

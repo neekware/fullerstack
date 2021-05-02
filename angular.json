@@ -43,6 +43,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "zen-observable"
+            ],
             "outputPath": "dist/apps/fullerstack",
             "index": "apps/fullerstack/src/index.html",
             "main": "apps/fullerstack/src/main.ts",

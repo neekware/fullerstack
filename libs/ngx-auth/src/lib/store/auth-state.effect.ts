@@ -6,34 +6,25 @@ import { Store } from '@ngxs/store';
 import { LoggerService, LogLevels } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { _ } from '@fullerstack/ngx-i18n';
+import { GqlService, gqlMgr } from '@fullerstack/ngx-gql';
+import * as schema from '@fullerstack/ngx-gql/schema';
+
 import {
   AuthLoginCredentials,
   AuthRegisterCredentials,
 } from './auth-state.model';
 import * as actions from './auth-state.action';
 
-// import { _ } from '@nwpkg/i18n';
-// import { MsgService } from '@nwpkg/msg';
-// import { LogService, LogLevels } from '@nwpkg/log';
-// import { GqlService, gqlMgr } from '@nwpkg/gql';
-// import * as schema from '@nwpkg/gql/schema';
-
-// import {
-//   AuthLoginCredentials,
-//   AuthRegisterCredentials,
-// } from './auth-models.state';
-// import * as actions from './auth-actions.state';
-
-// const JwtLoginMutationNode = gqlMgr.getOperation('JwtLogin');
-// const JwtRegisterMutationNode = gqlMgr.getOperation('JwtRegister');
-// const JwtRefreshMutationNode = gqlMgr.getOperation('JwtRefresh');
+const JwtLoginMutationNode = gqlMgr.getOperation('JwtLogin');
+const JwtRegisterMutationNode = gqlMgr.getOperation('JwtRegister');
+const JwtRefreshMutationNode = gqlMgr.getOperation('JwtRefresh');
 
 @Injectable()
 export class AuthEffect {
   constructor(
     private msg: MsgService,
     private logger: LoggerService,
-    // private gql: GqlService,
+    private gql: GqlService,
     private store: Store
   ) {}
 
