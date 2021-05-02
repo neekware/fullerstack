@@ -1,35 +1,46 @@
-import { I18nConfig } from './i18n.model';
+import { I18nConfig, LanguageInfo } from './i18n.model';
 
-// https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
-export const RtlLanguages: string[] = [
-  'ar',
-  'fa',
-  'he',
-  'arc',
-  'dv',
-  'ha',
-  'khw',
-  'ks',
-  'ku',
-  'ps',
-  'ur',
-  'yi',
-];
+export const DefaultTranslations = {};
 
 export const DefaultLanguage = 'en';
+export const DefaultLanguageName = 'English';
+export const RtlLanguages: string[] = ['ar', 'fa', 'he'];
+export const EnabledLanguages = ['en', 'fr', 'es', 'he', 'fa'];
+
+export const AvailableLanguages: LanguageInfo = {
+  en: {
+    name: 'English',
+    locale: '@angular/common/locales/en',
+    localeExtra: '@angular/common/locales/extra/en',
+  },
+  fr: {
+    name: 'Français',
+    locale: '@angular/common/locales/fr',
+    localeExtra: '@angular/common/locales/extra/fr',
+  },
+  es: {
+    name: 'Español',
+    locale: '@angular/common/locales/es',
+    localeExtra: '@angular/common/locales/extra/es',
+  },
+  he: {
+    name: 'עִברִית',
+    locale: '@angular/common/locales/he',
+    localeExtra: '@angular/common/locales/extra/he',
+  },
+  fa: {
+    name: 'فارسی',
+    locale: '@angular/common/locales/fa',
+    localeExtra: '@angular/common/locales/extra/fa',
+  },
+};
 
 /**
  * Default configuration - i18n module
  */
 export const DefaultI18nConfig: I18nConfig = {
   defaultLanguage: DefaultLanguage,
-  availableLanguages: {
-    en: {
-      name: 'English',
-      locale: '@angular/common/locales/en',
-      localeExtra: '@angular/common/locales/extra/en',
-    },
-  },
-  enabledLanguages: ['en'],
-  cacheBustingHash: '',
+  availableLanguages: AvailableLanguages,
+  enabledLanguages: EnabledLanguages,
+  cacheBustingHash: 'v1.0.0',
 };

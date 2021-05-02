@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-// import { AuthService } from '@nwpkg/auth';
-// import { UixService } from '@nwpkg/uix';
+import { AuthService } from '@fullerstack/ngx-auth';
+import { UixService } from '@fullerstack/ngx-uix';
 
 import { LayoutService } from '../layout.service';
 
@@ -15,8 +15,8 @@ import { LayoutService } from '../layout.service';
 export class NavbarComponent {
   constructor(
     readonly router: Router,
-    // public auth: AuthService,
-    // public uix: UixService,
+    public auth: AuthService,
+    public uix: UixService,
     readonly layout: LayoutService
   ) {}
 }

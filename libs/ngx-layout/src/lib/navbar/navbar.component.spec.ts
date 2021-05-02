@@ -1,8 +1,9 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { UixModule } from '@fullerstack/ngx-uix';
+
 import { NavbarComponent } from './navbar.component';
 import { LayoutService } from '../layout.service';
-// import { UixModule } from '@nwpkg/uix';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -11,7 +12,7 @@ describe('NavbarComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        // imports: [UixModule],
+        imports: [UixModule],
         declarations: [NavbarComponent],
         providers: [LayoutService],
       }).compileComponents();

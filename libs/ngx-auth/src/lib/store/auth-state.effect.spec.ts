@@ -12,7 +12,7 @@ import { AuthModule } from '@fullerstack';
 import { AuthEffect } from './auth-state.effect';
 
 export const environment: ApplicationConfig = {
-  appName: '@fullerstack/auth',
+  appName: 'Fullerstack',
   production: false,
   log: {
     enabled: true,

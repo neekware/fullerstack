@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-
+import { Direction } from '@angular/cdk/bidi/directionality';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 import { takeUntil } from 'rxjs/operators';
@@ -30,7 +30,7 @@ export class I18nService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   currentLanguage = DefaultLanguage;
   defaultLanguage = DefaultLanguage;
-  direction: string = LanguageDirection.ltr;
+  direction: Direction = LanguageDirection.ltr;
   availableLanguages: AvailableLanguage = {};
   enabledLanguages: string[] = [];
 
@@ -55,7 +55,7 @@ export class I18nService {
     return this.enabledLanguages.indexOf(iso) > -1;
   }
 
-  getLanguageDirection(iso: string): string {
+  getLanguageDirection(iso: string): Direction {
     if (this.isLanguageRTL(iso)) {
       return LanguageDirection.rtl;
     }

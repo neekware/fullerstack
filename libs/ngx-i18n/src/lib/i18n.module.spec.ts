@@ -1,5 +1,5 @@
 import { waitForAsync, TestBed } from '@angular/core/testing';
-import { I18nModule } from './ngx-i18n.module';
+import { I18nModule } from './i18n.module';
 
 describe('I18nModule', () => {
   beforeEach(

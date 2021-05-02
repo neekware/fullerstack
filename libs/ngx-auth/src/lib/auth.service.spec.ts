@@ -14,7 +14,7 @@ import { AuthModule } from './auth.module';
 import { AuthService } from './auth.service';
 
 export const environment: ApplicationConfig = {
-  appName: '@fullerstack/auth',
+  appName: 'Fullerstack',
   production: false,
   log: {
     enabled: true,

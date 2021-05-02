@@ -7,7 +7,7 @@ import { LoggerModule } from '@fullerstack/ngx-logger';
 import { LayoutService } from './layout.service';
 
 export const applicationConfig: ApplicationConfig = {
-  appName: '@fullerstack/layout',
+  appName: 'Fullerstack',
   production: false,
   log: {
     enabled: true,

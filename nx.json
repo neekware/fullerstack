@@ -43,6 +43,7 @@
     "ngx-layout": { "tags": ["name:ngx-layout", "scope:ngx-ui"] },
     "ngx-auth": { "tags": ["name:ngx-auth", "scope:ngx-auth"] },
     "ngx-gql": { "tags": ["name:ngx-gql", "scope:ngx-data"] },
-    "ngx-uix": { "tags": ["name:ngx-uix", "scope:ngx-ui"] }
+    "ngx-uix": { "tags": ["name:ngx-uix", "scope:ngx-ui"] },
+    "ngx-util": { "tags": ["name:ngx-util", "scope:ngx-util"] }
   }
 }

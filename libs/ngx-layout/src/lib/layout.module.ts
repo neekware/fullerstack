@@ -14,6 +14,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NotificationComponent } from './notification/notification.component';
 import { LayoutComponent } from './layout.component';
 import { UixModule } from '@fullerstack/ngx-uix';
+import { OptionsComponent } from './options/options.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule, I18nModule, UixModule],
@@ -23,6 +24,7 @@ import { UixModule } from '@fullerstack/ngx-uix';
     MenuNodeComponent,
     NavbarComponent,
     NotificationComponent,
+    OptionsComponent,
     LayoutComponent,
   ],
   exports: [
@@ -31,6 +33,7 @@ import { UixModule } from '@fullerstack/ngx-uix';
     MenuNodeComponent,
     NavbarComponent,
     NotificationComponent,
+    OptionsComponent,
     LayoutComponent,
   ],
   providers: [MatIcon],

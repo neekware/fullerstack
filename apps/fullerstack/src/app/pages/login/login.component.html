@@ -16,14 +16,14 @@
               <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
               <input matInput formControlName="email" placeholder="{{'AUTH.FIELDS.EMAIL'|translate}}"
                 [class.progress-wheel]="auth.isLoading">
-              <fullerstack-hint [control]="form.controls.email"></fullerstack-hint>
+              <fullerstack-hint [control]="emailControl"></fullerstack-hint>
             </mat-form-field>
 
             <mat-form-field>
               <mat-icon matSuffix color="primary" svgIcon="key-variant"></mat-icon>
               <input matInput type="password" formControlName="password"
                 placeholder="{{'AUTH.FIELDS.PASSWORD'|translate}}">
-              <fullerstack-hint [control]="form.controls.password"></fullerstack-hint>
+              <fullerstack-hint [control]="passwordControl"></fullerstack-hint>
             </mat-form-field>
 
             <button mat-raised-button color="primary" type="submit" class="mt1"

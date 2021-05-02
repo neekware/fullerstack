@@ -1,1 +1,26 @@
-<p>layout works!</p>
+<div [dir]="i18n.direction" class="app-main" [class.app-theme-dark]="layout.isDarkTheme">
+
+  <fullerstack-navbar></fullerstack-navbar>
+
+  <mat-sidenav-container>
+
+    <mat-sidenav #sideMenu class="sidenav" fixedInViewport="true" [attr.role]="layout.state.menuRole"
+      [mode]="layout.state.menuMode" [opened]="layout.state.menuOpen">
+      <fullerstack-menu></fullerstack-menu>
+    </mat-sidenav>
+
+    <mat-sidenav #notifyMenu class="sidenav" position="end" fixedInViewport="true" [attr.role]="layout.state.notifyRole"
+      [mode]="layout.state.notifyMode" [opened]="layout.state.notifyOpen">
+      <fullerstack-notification></fullerstack-notification>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+    <fullerstack-options>
+    </fullerstack-options>
+
+  </mat-sidenav-container>
+
+</div>

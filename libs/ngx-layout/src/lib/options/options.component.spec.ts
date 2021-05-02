@@ -1,10 +1,11 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotificationComponent } from './notification.component';
+import { LoggerModule } from '@fullerstack/ngx-logger';
+import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
+
+import { OptionsComponent } from './options.component';
 import { LayoutService } from '../layout.service';
 import { NgxsModule } from '@ngxs/store';
-import { ConfigModule, ApplicationConfig } from '@fullerstack/ngx-config';
-import { LoggerModule } from '@fullerstack/ngx-logger';
 
 export const environment: ApplicationConfig = {
   appName: 'Fullerstack',
@@ -15,9 +16,9 @@ export const environment: ApplicationConfig = {
   gql: { endpoint: '/api/gql' },
 };
 
-describe('NotificationComponent', () => {
-  let component: NotificationComponent;
-  let fixture: ComponentFixture<NotificationComponent>;
+describe('OptionsComponent', () => {
+  let component: OptionsComponent;
+  let fixture: ComponentFixture<OptionsComponent>;
 
   beforeEach(
     waitForAsync(() => {
@@ -25,17 +26,17 @@ describe('NotificationComponent', () => {
         imports: [
           NgxsModule.forRoot([]),
           NgxsModule.forFeature([]),
-          ConfigModule.forRoot(environment),
-          LoggerModule,
+          CfgModule.forRoot(environment),
+          LogModule,
         ],
-        declarations: [NotificationComponent],
+        declarations: [OptionsComponent],
         providers: [LayoutService],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotificationComponent);
+    fixture = TestBed.createComponent(OptionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
