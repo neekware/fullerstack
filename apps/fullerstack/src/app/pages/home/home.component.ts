@@ -13,7 +13,6 @@ import { _ } from '@fullerstack/ngx-i18n';
 export class HomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     public auth: AuthService,
     public layout: LayoutService
   ) {}

@@ -22,9 +22,12 @@ import { AppRoutes } from './app.routing';
 import { JwtModule } from '@fullerstack/ngx-jwt';
 import { UixModule } from '@fullerstack/ngx-uix';
 import { I18nModule } from '@fullerstack/ngx-i18n';
+import { HomeComponent } from './pages/home/home.component';
+import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { AboutComponent } from './pages/about/about.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -39,15 +42,21 @@ import { I18nModule } from '@fullerstack/ngx-i18n';
     }),
     ConfigModule.forRoot(environment),
     LoggerModule,
-    MaterialModule,
     JwtModule,
     MsgModule,
     GqlModule,
-    I18nModule,
+    I18nModule.forRoot(),
     AuthModule,
     // UsrModule,
     UixModule,
     LayoutModule,
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NotfoundComponent,
+    AboutComponent,
+    LoginComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

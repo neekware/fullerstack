@@ -1,8 +1,5 @@
 {
   "extends": "../../tsconfig.base.json",
-  "angularCompilerOptions": {
-    "strictTemplates": true
-  },
   "files": [],
   "include": [],
   "references": [
@@ -15,5 +12,9 @@
     {
       "path": "./tsconfig.editor.json"
     }
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictTemplates": true
+  }
 }
