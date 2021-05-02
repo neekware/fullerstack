@@ -2209,6 +2209,16 @@
     semver "^7.3.4"
     tar "^6.1.0"
 
+"@mdi/angular-material@^5.9.55":
+  version "5.9.55"
+  resolved "https://registry.yarnpkg.com/@mdi/angular-material/-/angular-material-5.9.55.tgz#e4fad2ae73d630f0853dc67e509ca50ea0cbef03"
+  integrity sha512-RAQlvSI90eJHW9o6uSN5KKH8SJ61ZQuXVCjLDpQWtKQX8aTRPTJkruZ1M2U0YT6AtxKY4hPW7qyHH7VTJdTXRA==
+
+"@mdi/font@^5.9.55":
+  version "5.9.55"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-5.9.55.tgz#41acd50b88073ded7095fc3029d8712b6e12f38e"
+  integrity sha512-jswRF6q3eq8NWpWiqct6q+6Fg/I7nUhrxYJfiEM8JJpap0wVJLQdbKtyS65GdlK7S7Ytnx3TTi/bmw+tBhkGmg==
+
 "@nestjs/common@^7.0.0":
   version "7.6.15"
   resolved "https://registry.npmjs.org/@nestjs/common/-/common-7.6.15.tgz"

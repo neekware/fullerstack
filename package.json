@@ -118,6 +118,8 @@
     "@angular/compiler-cli": "^11.2.0",
     "@angular/language-service": "^11.2.0",
     "@biesbjerg/ngx-translate-extract": "^7.0.4",
+    "@mdi/angular-material": "^5.9.55",
+    "@mdi/font": "^5.9.55",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
     "@ngneat/tailwind": "^7.0.3",

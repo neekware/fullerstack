@@ -64,6 +64,11 @@
                 "glob": "**/*",
                 "input": "libs/agx-assets/src/lib/i18n",
                 "output": "assets/i18n"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/@mdi/angular-material",
+                "output": "assets/fonts"
               }
             ],
             "styles": [
