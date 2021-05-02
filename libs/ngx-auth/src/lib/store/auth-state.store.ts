@@ -6,7 +6,7 @@ import { _ } from '@fullerstack/ngx-i18n';
 import { DefaultAuthState } from './auth-state.default';
 import { AuthEffect } from './auth-state.effect';
 import { AuthState } from './auth-state.model';
-import { AUTH_STATE_KEY } from './auth.constant';
+import { AUTH_STATE_KEY } from './auth-state.constant';
 import * as actions from './auth-state.action';
 import { signState } from './auth-state.util';
 import { Injectable } from '@angular/core';
