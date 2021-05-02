@@ -20,7 +20,7 @@ import { JwtService } from '@fullerstack/ngx-jwt';
 import { GqlService } from '@fullerstack/ngx-gql';
 import { tryGet } from '@fullerstack/agx-util';
 
-import { AuthStoreState } from './store/auth-store.state';
+import { AuthStoreState } from './store/auth-state.store';
 import { DeepReadonly } from 'ts-essentials';
 import { DefaultAuthConfig } from './auth.default';
 import {
@@ -30,7 +30,7 @@ import {
 } from './store/auth-state.model';
 import { DefaultAuthState } from './store/auth-state.default';
 import { sanitizeState } from './store/auth-state.util';
-import { AUTH_STATE_KEY } from './store/auth.constant';
+import { AUTH_STATE_KEY } from './store/auth-state.constant';
 import * as actions from './store/auth-state.action';
 
 @Injectable()
