@@ -1,0 +1,18 @@
+fragment User on UserNode {
+  id
+  email
+  firstName
+  lastName
+  isStaff
+  isSuperuser
+  isActive
+  isVerified
+  language
+  status
+}
+
+query User($id: ID, $email: String) {
+  user(id: $id, email: $email) {
+    ...User
+  }
+}

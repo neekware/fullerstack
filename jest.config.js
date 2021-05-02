@@ -19,5 +19,7 @@ module.exports = {
     '<rootDir>/libs/agx-assets',
     '<rootDir>/libs/ngx-layout',
     '<rootDir>/libs/ngx-auth',
+    '<rootDir>/libs/ngx-gql',
+    '<rootDir>/libs/ngx-uix',
   ],
 };

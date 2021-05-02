@@ -1,0 +1,3 @@
+query EmailFound($email: String!) {
+    emailFound(email: $email)
+}

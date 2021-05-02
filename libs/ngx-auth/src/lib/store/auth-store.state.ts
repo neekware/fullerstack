@@ -3,7 +3,7 @@ import { MsgService } from '@fullerstack/ngx-msg';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { _ } from '@fullerstack/ngx-i18n';
 
-import { AuthDefaultState } from './auth-state.default';
+import { DefaultAuthState } from './auth-state.default';
 import { AuthEffect } from './auth-state.effect';
 import { AuthState } from './auth-state.model';
 import { AUTH_STATE_KEY } from './auth.constant';
@@ -15,14 +15,14 @@ import { Injectable } from '@angular/core';
 // import { _ } from '@nwpkg/i18n';
 
 // import { AuthState, AUTH_STATE_KEY } from './auth-types.state';
-// import { AuthDefaultState } from './auth-defaults.state';
+// import { DefaultAuthState } from './auth-defaults.state';
 // import { signState } from './auth-utils.state';
 // import { AuthRemoteService } from './auth-remote-service.state';
 // import * as actions from './auth-actions.state';
 
 @State<AuthState>({
   name: AUTH_STATE_KEY,
-  defaults: AuthDefaultState,
+  defaults: DefaultAuthState,
 })
 @Injectable()
 export class AuthStoreState {
@@ -30,7 +30,7 @@ export class AuthStoreState {
 
   @Action(actions.Initialize)
   initializeRequest({ setState }: StateContext<AuthState>) {
-    setState(signState(AuthDefaultState));
+    setState(signState(DefaultAuthState));
   }
 
   @Action(actions.LoginRequest)
@@ -40,7 +40,7 @@ export class AuthStoreState {
   ) {
     setState(
       signState({
-        ...AuthDefaultState,
+        ...DefaultAuthState,
         ...{
           isAuthenticating: true,
         },
@@ -56,7 +56,7 @@ export class AuthStoreState {
   ) {
     setState(
       signState({
-        ...AuthDefaultState,
+        ...DefaultAuthState,
         ...{
           isLoggedIn: true,
           token: payload,
@@ -85,7 +85,7 @@ export class AuthStoreState {
   ) {
     setState(
       signState({
-        ...AuthDefaultState,
+        ...DefaultAuthState,
         ...{
           isRegistering: true,
         },
@@ -101,7 +101,7 @@ export class AuthStoreState {
   ) {
     setState(
       signState({
-        ...AuthDefaultState,
+        ...DefaultAuthState,
         ...{
           isLoggedIn: true,
           token: payload,
@@ -125,7 +125,7 @@ export class AuthStoreState {
 
   @Action(actions.LogoutRequest)
   logoutRequest({ setState }: StateContext<AuthState>) {
-    setState(signState(AuthDefaultState));
+    setState(signState(DefaultAuthState));
     this.msg.successSnackBar(_('AUTH.SUCCESS.LOGOUT'));
   }
 
@@ -152,7 +152,7 @@ export class AuthStoreState {
   ) {
     setState(
       signState({
-        ...AuthDefaultState,
+        ...DefaultAuthState,
         ...{
           isLoggedIn: true,
           token: payload,
@@ -165,7 +165,7 @@ export class AuthStoreState {
   tokenRefreshFailure({ setState }: StateContext<AuthState>) {
     setState(
       signState({
-        ...AuthDefaultState,
+        ...DefaultAuthState,
         ...{
           hasError: true,
         },

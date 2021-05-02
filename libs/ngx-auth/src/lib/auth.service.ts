@@ -17,7 +17,7 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { _ } from '@fullerstack/ngx-i18n';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { JwtService } from '@fullerstack/ngx-jwt';
-// import { GqlService } from '@nwpkg/gql';
+import { GqlService } from '@fullerstack/ngx-gql';
 import { tryGet } from '@fullerstack/agx-util';
 
 import { AuthStoreState } from './store/auth-store.state';
@@ -28,7 +28,7 @@ import {
   AuthRegisterCredentials,
   AuthState,
 } from './store/auth-state.model';
-import { AuthDefaultState } from './store/auth-state.default';
+import { DefaultAuthState } from './store/auth-state.default';
 import { sanitizeState } from './store/auth-state.util';
 import { AUTH_STATE_KEY } from './store/auth.constant';
 import * as actions from './store/auth-state.action';
@@ -39,7 +39,7 @@ export class AuthService implements OnDestroy {
   @Select(AuthStoreState) private stateSub$: Observable<AuthState>;
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
-  state: DeepReadonly<AuthState> = AuthDefaultState;
+  state: DeepReadonly<AuthState> = DefaultAuthState;
   private _refreshTimer = null;
 
   constructor(
@@ -48,7 +48,8 @@ export class AuthService implements OnDestroy {
     readonly config: ConfigService,
     readonly logger: LoggerService,
     readonly msg: MsgService,
-    readonly jwt: JwtService // private gql: GqlService
+    readonly jwt: JwtService,
+    readonly gql: GqlService
   ) {
     this.options = ldNestedMerge(
       { gtag: DefaultAuthConfig },
@@ -146,7 +147,7 @@ export class AuthService implements OnDestroy {
         (event) => {
           if (event.key === AUTH_STATE_KEY) {
             let newState = <AuthState>(
-              (sanitizeState(event.newValue) || AuthDefaultState)
+              (sanitizeState(event.newValue) || DefaultAuthState)
             );
             this.store.dispatch(new actions.MultiTabSyncRequest(newState));
           }

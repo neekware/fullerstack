@@ -13,9 +13,10 @@ import { MenuNodeComponent } from './menu/menu-node.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotificationComponent } from './notification/notification.component';
 import { LayoutComponent } from './layout.component';
+import { UixModule } from '@fullerstack/ngx-uix';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MaterialModule, I18nModule],
+  imports: [CommonModule, RouterModule, MaterialModule, I18nModule, UixModule],
   declarations: [
     MenuComponent,
     MenuLinkComponent,

@@ -31,9 +31,7 @@ export class JwtService {
       this.config.options
     );
 
-    if (!this.options.production) {
-      this.logger.info('JwtService ready ...');
-    }
+    this.logger.info('JwtService ready ...');
   }
 
   /**

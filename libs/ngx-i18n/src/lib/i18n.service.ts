@@ -46,11 +46,9 @@ export class I18nService {
 
     this.initLanguage();
 
-    if (!this.config.options.production) {
-      this.logger.info(
-        `I18nService ready ... (${this.currentLanguage} - ${this.direction})`
-      );
-    }
+    this.logger.info(
+      `I18nService ready ... (${this.currentLanguage} - ${this.direction})`
+    );
   }
 
   isLanguageEnabled(iso: string): boolean {

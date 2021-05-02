@@ -34,7 +34,9 @@
       "@fullerstack/ngx-msg": ["libs/ngx-msg/src/index.ts"],
       "@fullerstack/ngx-material": ["libs/ngx-material/src/index.ts"],
       "@fullerstack/ngx-layout": ["libs/ngx-layout/src/index.ts"],
-      "@fullerstack": ["libs/ngx-auth/src/index.ts"]
+      "@fullerstack": ["libs/ngx-auth/src/index.ts"],
+      "@fullerstack/ngx-gql": ["libs/ngx-gql/src/index.ts"],
+      "@fullerstack/ngx-uix": ["libs/ngx-uix/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

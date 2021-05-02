@@ -41,6 +41,8 @@
     "ngx-material": { "tags": ["name:ngx-material", "scope:ngx-ui"] },
     "agx-assets": { "tags": ["name:agx-assets", "scope:agx-ui"] },
     "ngx-layout": { "tags": ["name:ngx-layout", "scope:ngx-ui"] },
-    "ngx-auth": { "tags": ["name:ngx-auth", "scope:ngx-auth"] }
+    "ngx-auth": { "tags": ["name:ngx-auth", "scope:ngx-auth"] },
+    "ngx-gql": { "tags": ["name:ngx-gql", "scope:ngx-data"] },
+    "ngx-uix": { "tags": ["name:ngx-uix", "scope:ngx-ui"] }
   }
 }

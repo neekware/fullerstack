@@ -3,7 +3,7 @@ import { DeepReadonly } from 'ts-essentials';
 import { AuthState } from './auth-state.model';
 import { signState } from './auth-state.util';
 
-export const AuthDefaultState: DeepReadonly<AuthState> = signState({
+export const DefaultAuthState: DeepReadonly<AuthState> = signState({
   signature: null,
   isLoggedIn: false,
   isRegistering: false,

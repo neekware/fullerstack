@@ -15,6 +15,7 @@ import { ConfigService } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MenuService } from '@fullerstack/ngx-menu';
 import { I18nService, _ } from '@fullerstack/ngx-i18n';
+import { UixService } from '@fullerstack/ngx-uix';
 
 import * as actions from './store/layout-state.action';
 import { LayoutState, NavMode } from './store/layout-state.model';
@@ -33,12 +34,12 @@ export class LayoutService implements OnDestroy {
   constructor(
     readonly breakPointObserver: BreakpointObserver,
     readonly router: Router,
+    readonly store: Store,
     readonly config: ConfigService,
     readonly logger: LoggerService,
     readonly i18n: I18nService,
-    // readonly uix: UixService,
-    readonly menu: MenuService,
-    readonly store: Store
+    readonly uix: UixService,
+    readonly menu: MenuService
   ) {
     this._breakpointSub$ = this.breakPointObserver.observe([
       Breakpoints.Handset,
@@ -99,7 +100,7 @@ export class LayoutService implements OnDestroy {
 
   toggleFullscreen() {
     this.store.dispatch(new actions.ToggleFullscreen()).subscribe((state) => {
-      // this.uix.toggleFullscreen();
+      this.uix.toggleFullscreen();
     });
   }
 
