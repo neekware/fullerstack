@@ -1,11 +1,11 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
-
 import { NgxsModule, Store } from '@ngxs/store';
+
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthModule } from '@fullerstack/ngx-auth';
 
 import { HomeComponent } from './home.component';
+import { AuthModule } from '@fullerstack/ngx-auth';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
