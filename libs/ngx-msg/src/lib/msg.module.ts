@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatChip, MatChipList, MatChipsModule } from '@angular/material/chips';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { MaterialModule } from '@fullerstack/ngx-material';
 import { I18nModule } from '@fullerstack/ngx-i18n';
 
 import { AlertComponent } from './alert/alert.component';
@@ -12,16 +9,9 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MsgService } from './msg.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatSnackBarModule,
-    I18nModule,
-  ],
+  imports: [CommonModule, MaterialModule, I18nModule],
   declarations: [SnackbarComponent, AlertComponent, HintComponent],
   exports: [SnackbarComponent, AlertComponent, HintComponent],
-  providers: [MatIcon, MatChip, MatChipList, MatSnackBar],
 })
 export class MsgModule {
   imports: [CommonModule];
