@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { I18nService } from '@fullerstack/ngx-i18n';
-import { DefaultMenuTree, MenuNode, MenuService } from '@fullerstack/ngx-menu';
+import { MenuNode, MenuService } from '@fullerstack/ngx-menu';
 
 import { LayoutService } from '../layout.service';
+import { LayoutMenuTree } from './menu.default';
 
 @Component({
   selector: 'fullerstack-menu',
@@ -30,7 +31,7 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.rootNode = this.menu.buildMenuTree(DefaultMenuTree);
+    this.rootNode = this.menu.buildMenuTree(LayoutMenuTree);
     this.expandIcon =
       this.i18n.direction === 'rtl' ? 'chevron-left' : 'chevron-right';
   }
