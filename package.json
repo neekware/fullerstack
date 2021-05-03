@@ -16,6 +16,7 @@
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "start": "ng serve",
+    "start:fullerstack": "ng serve fullerstack",
     "start:api": "ng serve api",
     "build": "ng build",
     "test": "ng test",
