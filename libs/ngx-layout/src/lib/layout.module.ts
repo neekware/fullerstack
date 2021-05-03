@@ -19,6 +19,7 @@ import { LayoutComponent } from './layout.component';
 import { OptionsComponent } from './options/options.component';
 import { LayoutService } from './layout.service';
 import { LayoutStoreState } from './store/layout-state.store';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { LayoutStoreState } from './store/layout-state.store';
     NavbarComponent,
     NotificationComponent,
     OptionsComponent,
+    FooterComponent,
     LayoutComponent,
   ],
   exports: [
@@ -46,6 +48,7 @@ import { LayoutStoreState } from './store/layout-state.store';
     NavbarComponent,
     NotificationComponent,
     OptionsComponent,
+    FooterComponent,
     LayoutComponent,
   ],
   providers: [MatIcon, LayoutService, MenuService],

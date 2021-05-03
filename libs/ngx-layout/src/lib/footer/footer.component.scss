@@ -1,0 +1,45 @@
+.mat-list .mat-list-item.mat-list-item-with-avatar {
+  height: 35px;
+  vertical-align: middle;
+}
+
+.mat-list .mat-list-item .mat-list-item-content {
+  padding: 0;
+}
+
+.mat-list .mat-subheader {
+  font-size: 1.5rem;
+}
+
+.mat-list .mat-subheader,
+.mat-list p,
+.mat-list .mat-icon {
+  color: #fafafa;
+}
+
+.mat-list .mat-list-item {
+  opacity: 0.85;
+}
+
+@media (max-width: 599px) {
+  .mat-list .mat-list-item {
+    display: block;
+    text-decoration: none;
+    padding: 0 5px;
+    margin-bottom: 8px;
+    border-radius: 3px;
+    line-height: 40px;
+    width: 300px;
+    padding: 0;
+  }
+  .mat-list .mat-subheader {
+    font-size: 1.5rem;
+    padding: 0px;
+  }
+  .mat-icon {
+    margin-top: -7px;
+  }
+  .mat-list .mat-list-item .mat-list-item-content {
+    padding: 0px;
+  }
+}

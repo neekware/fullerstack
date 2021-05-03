@@ -36,7 +36,7 @@ import * as actions from './store/auth-state.action';
 
 @Injectable()
 export class AuthService implements OnDestroy {
-  @Output() authStateChanged = new EventEmitter<AuthState>();
+  @Output() authChanged$ = new EventEmitter<AuthState>();
   @Select(AuthStoreState) private stateSub$: Observable<AuthState>;
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
@@ -76,7 +76,7 @@ export class AuthService implements OnDestroy {
           this.state = newState;
           this.stateChangeTokenRefreshHandler();
           this.stateChangeRedirectHandler(prevState);
-          this.authStateChanged.emit(this.state);
+          this.authChanged$.emit(this.state);
         }
       } else {
         this.logoutDispatch();

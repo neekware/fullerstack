@@ -14,12 +14,17 @@ import { LayoutService } from '../layout.service';
 export class MenuLinkComponent {
   @Input() link: MenuNode;
 
-  constructor(readonly router: Router, readonly layout: LayoutService) {}
+  constructor(public router: Router, public layout: LayoutService) {}
+
+  ngOnInit() {}
 
   redirectUrl(node: MenuNode) {
-    if (node.isFullSpan && this.layout.state.menuOpen) {
+    if (
+      (node.isFullSpan || this.layout.state.isHandset) &&
+      this.layout.state.menuOpen
+    ) {
       this.layout.toggleMenu();
     }
-    this.router.navigate([node.link]);
+    this.layout.goTo(node.link);
   }
 }

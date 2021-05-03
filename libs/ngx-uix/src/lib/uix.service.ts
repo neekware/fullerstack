@@ -1,7 +1,5 @@
 /* eslint-disable */
-import { Injectable, OnDestroy } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material/icon';
+import { EventEmitter, Injectable, OnDestroy, Output } from '@angular/core';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 import { Subject } from 'rxjs';
@@ -12,6 +10,7 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { MaterialService } from '@fullerstack/ngx-material';
 
 import { DefaultUixConfig, UIX_MDI_ICONS } from './uix.default';
 import { SvgIcons } from './uix.icon';
@@ -26,6 +25,7 @@ export const screenfull = {
 
 @Injectable()
 export class UixService implements OnDestroy {
+  @Output() fullscreen$ = new EventEmitter<boolean>();
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private iconsLoaded = false;
@@ -33,38 +33,41 @@ export class UixService implements OnDestroy {
   constructor(
     readonly config: ConfigService,
     readonly logger: LoggerService,
-    readonly sanitizer: DomSanitizer,
-    readonly mdIconRegistry: MatIconRegistry
+    readonly mat: MaterialService
   ) {
     this.options = ldNestedMerge(
-      { i18n: DefaultUixConfig },
+      { uix: DefaultUixConfig },
       this.config.options
     );
 
+    this.initFullscreen();
     this.loadSvgIcons();
-    logger.debug('UixService ready ...');
+    this.logger.info('UixService ready ...');
   }
 
   private loadSvgIcons() {
     if (!this.iconsLoaded) {
-      SvgIcons.forEach((icon) => {
-        const iconSecurePath = this.sanitizer.bypassSecurityTrustResourceUrl(
-          icon.path
+      for (const group in SvgIcons) {
+        this.mat.registerSvgIconsInNamespace(
+          SvgIcons[group],
+          this.options.uix.cacheBustingHash
         );
-        icon.names.forEach((name) => {
-          this.mdIconRegistry.addSvgIconInNamespace(
-            icon.namespace,
-            name,
-            iconSecurePath
-          );
-        });
-      });
+      }
       this.iconsLoaded = true;
     }
-    const mdiSecurePath = this.sanitizer.bypassSecurityTrustResourceUrl(
-      UIX_MDI_ICONS
+    this.mat.registerSvgIconSet(
+      UIX_MDI_ICONS,
+      this.options.uix.cacheBustingHash
     );
-    this.mdIconRegistry.addSvgIconSet(mdiSecurePath);
+  }
+
+  initFullscreen() {
+    // if (screenfull.enabled()) {
+    //   screenfull.on('change', () => {
+    //     this.fullscreen$.emit(screenfull.isFullscreen);
+    //     this.logger.debug(`Fullscreen: (${screenfull.isFullscreen})`);
+    //   });
+    // }
   }
 
   get isFullscreenCapable() {

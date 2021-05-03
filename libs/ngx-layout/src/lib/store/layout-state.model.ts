@@ -1,21 +1,34 @@
 export const LAYOUT_STATE_KEY = 'layout';
 
-export enum NavMode {
+export enum NavbarMode {
+  'hideOnScroll' = 'hideOnScroll',
+  'moveWithScroll' = 'moveWithScroll',
+  'showAlways' = 'showAlways',
+}
+
+export enum SidenavMode {
   'over' = 'over',
   'side' = 'side',
+  'push' = 'push',
 }
 
-export enum NavRole {
+export enum SidenavRole {
+  'main' = 'main',
+  'region' = 'region',
   'dialog' = 'dialog',
   'navigation' = 'navigation',
+  'directory' = 'directory',
 }
-
 export interface LayoutState {
-  menuRole: NavRole;
-  menuMode: NavMode;
+  isHandset: boolean;
+  isPortrait: boolean;
+  isDarkTheme: boolean;
+  navbarMode: NavbarMode;
+  menuRole: SidenavRole;
+  menuMode: SidenavMode;
   menuOpen: boolean;
-  notifyRole: NavRole;
-  notifyMode: NavMode;
+  notifyRole: SidenavRole;
+  notifyMode: SidenavMode;
   notifyOpen: boolean;
-  fullScreenOpen: boolean;
+  fullscreenOpen: boolean;
 }

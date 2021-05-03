@@ -1,11 +1,20 @@
-import { LayoutState, NavMode, NavRole } from './layout-state.model';
+import {
+  LayoutState,
+  SidenavMode,
+  SidenavRole,
+  NavbarMode,
+} from './layout-state.model';
 
 export const DefaultLayoutState: LayoutState = {
-  menuMode: NavMode.side,
-  menuRole: NavRole.dialog,
-  menuOpen: true,
-  notifyMode: NavMode.over,
-  notifyRole: NavRole.dialog,
+  isHandset: false,
+  isPortrait: false,
+  isDarkTheme: false,
+  navbarMode: NavbarMode.moveWithScroll,
+  menuOpen: false,
+  menuMode: SidenavMode.side,
+  menuRole: SidenavRole.navigation,
   notifyOpen: false,
-  fullScreenOpen: false,
+  notifyMode: SidenavMode.over,
+  notifyRole: SidenavRole.dialog,
+  fullscreenOpen: false,
 };

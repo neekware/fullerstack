@@ -1,9 +1,9 @@
+import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 
 import { LayoutState, LAYOUT_STATE_KEY } from './layout-state.model';
 import { DefaultLayoutState } from './layout-state.default';
 import * as actions from './layout-state.action';
-import { Injectable } from '@angular/core';
 
 @State<LayoutState>({
   name: LAYOUT_STATE_KEY,
@@ -11,6 +11,8 @@ import { Injectable } from '@angular/core';
 })
 @Injectable()
 export class LayoutStoreState {
+  constructor() {}
+
   @Action([actions.Initialize])
   initializeRequest({ setState }: StateContext<LayoutState>) {
     setState(DefaultLayoutState);
@@ -26,7 +28,12 @@ export class LayoutStoreState {
 
   @Action(actions.ToggleMenu)
   toggleMenu({ getState, patchState }: StateContext<LayoutState>) {
-    patchState({ menuOpen: !getState().menuOpen });
+    const prevState = getState();
+    const nextState = { menuOpen: !prevState.menuOpen };
+    if (nextState.menuOpen && prevState.notifyOpen && prevState.isHandset) {
+      nextState['notifyOpen'] = false;
+    }
+    patchState(nextState);
   }
 
   @Action(actions.SetMenuMode)
@@ -55,7 +62,12 @@ export class LayoutStoreState {
 
   @Action(actions.ToggleNotification)
   toggleNotification({ getState, patchState }: StateContext<LayoutState>) {
-    patchState({ notifyOpen: !getState().notifyOpen });
+    const prevState = getState();
+    const nextState = { notifyOpen: !prevState.notifyOpen };
+    if (nextState.notifyOpen && prevState.menuOpen && prevState.isHandset) {
+      nextState['menuOpen'] = false;
+    }
+    patchState(nextState);
   }
 
   @Action(actions.SetNotifyMode)
@@ -79,11 +91,43 @@ export class LayoutStoreState {
     { patchState }: StateContext<LayoutState>,
     { payload }: actions.SetFullscreenStatus
   ) {
-    patchState({ fullScreenOpen: payload });
+    patchState({ fullscreenOpen: payload });
   }
 
   @Action(actions.ToggleFullscreen)
   toggleFullscreen({ getState, patchState }: StateContext<LayoutState>) {
-    patchState({ fullScreenOpen: !getState().fullScreenOpen });
+    patchState({ fullscreenOpen: !getState().fullscreenOpen });
+  }
+
+  @Action(actions.SetIsHandset)
+  setIsHandset(
+    { patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetIsHandset
+  ) {
+    patchState({ isHandset: payload });
+  }
+
+  @Action(actions.SetIsPortrait)
+  setIsPortrait(
+    { patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetIsPortrait
+  ) {
+    patchState({ isPortrait: payload });
+  }
+
+  @Action(actions.SetIsDarkTheme)
+  setIsDarkTheme(
+    { patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetIsDarkTheme
+  ) {
+    patchState({ isDarkTheme: payload });
+  }
+
+  @Action(actions.SetNavbarMode)
+  setNavbarMode(
+    { patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetNavbarMode
+  ) {
+    patchState({ navbarMode: payload });
   }
 }

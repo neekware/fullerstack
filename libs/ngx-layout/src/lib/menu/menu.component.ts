@@ -1,7 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { tryGet } from '@fullerstack/agx-util';
+import { AuthService } from '@fullerstack/ngx-auth';
 import { I18nService } from '@fullerstack/ngx-i18n';
-import { MenuNode, MenuService } from '@fullerstack/ngx-menu';
+import {
+  DefaultMenuTree,
+  MenuItem,
+  MenuNode,
+  MenuService,
+} from '@fullerstack/ngx-menu';
 
 import { LayoutService } from '../layout.service';
 import { LayoutMenuTree } from './menu.default';
@@ -13,47 +20,51 @@ import { LayoutMenuTree } from './menu.default';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent implements OnInit {
-  rootNode: MenuNode;
-  expandIcon = 'chevron-right';
-  private currentUrl: string = null;
+  rootNode: MenuNode = null;
 
   constructor(
     readonly router: Router,
-    readonly i18n: I18nService,
-    readonly menu: MenuService,
-    readonly layout: LayoutService
-  ) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.currentUrl = event.url;
-      }
-    });
-  }
+    readonly layout: LayoutService,
+    readonly auth: AuthService
+  ) {}
 
   ngOnInit() {
-    this.rootNode = this.menu.buildMenuTree(LayoutMenuTree);
-    this.expandIcon =
-      this.i18n.direction === 'rtl' ? 'chevron-left' : 'chevron-right';
+    this.layout.menu.setPermissionVerificationFunction(
+      this.hasPermission.bind(this)
+    );
+
+    this.rootNode = this.layout.menu.buildMenuTree(DefaultMenuTree);
+
+    this.auth.authChanged$.subscribe((state) => {
+      const forceMenuRebuild = true;
+      this.rootNode = this.layout.menu.buildMenuTree(
+        DefaultMenuTree,
+        forceMenuRebuild
+      );
+    });
   }
 
   redirectUrl(node: MenuNode) {
     if (node.isLink) {
-      if (node.isFullSpan && this.layout.state?.menuOpen) {
+      if (node.isFullSpan && this.layout.state.menuOpen) {
         this.layout.toggleMenu();
       }
-      this.router.navigate([node.link]);
+      // this.auth.goTo(node.link);
     }
   }
 
-  isActive(node: MenuNode): boolean {
-    if (node.link === this.currentUrl) {
+  hasPermission(node: MenuItem) {
+    const menuPerms = node.permissions || [];
+    if (menuPerms.length === 0) {
       return true;
     }
-    for (const child of node.children) {
-      if (this.isActive(child)) {
-        return true;
-      }
+
+    const userPerms = []; // tryGet<string>(() => this.auth.state.userProfile.permissions, []);
+    if (menuPerms.length === 0) {
+      return false;
     }
-    return false;
+
+    const hasPerm = menuPerms.some((value) => userPerms.indexOf(value) >= 0);
+    return hasPerm;
   }
 }

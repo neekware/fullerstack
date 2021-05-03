@@ -41,17 +41,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(public auth: AuthService, public layout: LayoutService) {}
 
   ngOnInit() {
-    this.layout.handsetSub$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((state) => {
-        if (state.matches) {
-          this.handSet = true;
-          this.logoSize = 'small';
-        } else {
-          this.handSet = false;
-          this.logoSize = 'large';
-        }
-      });
+    this.layout.handset$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
+      if (state.matches) {
+        this.handSet = true;
+        this.logoSize = 'small';
+      } else {
+        this.handSet = false;
+        this.logoSize = 'large';
+      }
+    });
   }
 
   get logo(): string {

@@ -1,4 +1,4 @@
-import { NavRole, NavMode } from './layout-state.model';
+import { SidenavRole, SidenavMode, NavbarMode } from './layout-state.model';
 
 export class Initialize {
   static type = '[LAYOUT] Initialize';
@@ -12,11 +12,11 @@ export class ToggleMenu {
 }
 export class SetMenuRole {
   static type = '[LAYOUT] SetMenuRole';
-  constructor(readonly payload: NavRole) {}
+  constructor(readonly payload: SidenavRole) {}
 }
 export class SetMenuMode {
   static type = '[LAYOUT] SetMenuMode';
-  constructor(readonly payload: NavMode) {}
+  constructor(readonly payload: SidenavMode) {}
 }
 export class SetNotifyStatus {
   static type = '[LAYOUT] SetNotifyStatus';
@@ -27,11 +27,11 @@ export class ToggleNotification {
 }
 export class SetNotifyRole {
   static type = '[LAYOUT] SetNotifyRole';
-  constructor(readonly payload: NavRole) {}
+  constructor(readonly payload: SidenavRole) {}
 }
 export class SetNotifyMode {
   static type = '[LAYOUT] SetNotifyMode';
-  constructor(readonly payload: NavMode) {}
+  constructor(readonly payload: SidenavMode) {}
 }
 export class SetFullscreenStatus {
   static type = '[LAYOUT] SetFullscreenStatus';
@@ -39,4 +39,20 @@ export class SetFullscreenStatus {
 }
 export class ToggleFullscreen {
   static type = '[LAYOUT] ToggleFullscreen';
+}
+export class SetIsHandset {
+  static type = '[LAYOUT] SetIsHandset';
+  constructor(readonly payload: boolean) {}
+}
+export class SetIsPortrait {
+  static type = '[LAYOUT] SetIsPortrait';
+  constructor(readonly payload: boolean) {}
+}
+export class SetNavbarMode {
+  static type = '[LAYOUT] SetNavbarMode';
+  constructor(readonly payload: NavbarMode) {}
+}
+export class SetIsDarkTheme {
+  static type = '[LAYOUT] SetIsDarkTheme';
+  constructor(readonly payload: boolean) {}
 }

@@ -1,12 +1,9 @@
-<div class="app-menu">
+<div class="app-menu pb4">
 
   <div *ngFor="let node of rootNode.children;">
-    <mat-accordion>
-      <fullerstack-menu-node *ngIf="node.isNode" [node]="node"></fullerstack-menu-node>
+    <mat-accordion *ngIf="node.isNode">
+      <fullerstack-menu-node [node]="node"></fullerstack-menu-node>
     </mat-accordion>
-  </div>
-
-  <div class="menu-links" *ngFor="let node of rootNode.children;">
     <fullerstack-menu-link *ngIf="node.isLink" [link]="node"></fullerstack-menu-link>
   </div>
 
