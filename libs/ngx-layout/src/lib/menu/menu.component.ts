@@ -1,15 +1,9 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { DefaultMenuTree, MenuNode, MenuService } from '@fullerstack/ngx-menu';
-import { DeepReadonly } from 'ts-essentials';
-import { DefaultLayoutState } from '../store/layout-state.default';
-import { LayoutState } from '../store/layout-state.model';
+
+import { LayoutService } from '../layout.service';
 
 @Component({
   selector: 'fullerstack-menu',
@@ -18,9 +12,6 @@ import { LayoutState } from '../store/layout-state.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent implements OnInit {
-  @Input() state: DeepReadonly<LayoutState> = DefaultLayoutState;
-  @Input() toggleMenu: () => void;
-
   rootNode: MenuNode;
   expandIcon = 'chevron-right';
   private currentUrl: string = null;
@@ -28,7 +19,8 @@ export class MenuComponent implements OnInit {
   constructor(
     readonly router: Router,
     readonly i18n: I18nService,
-    readonly menu: MenuService
+    readonly menu: MenuService,
+    readonly layout: LayoutService
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -45,8 +37,8 @@ export class MenuComponent implements OnInit {
 
   redirectUrl(node: MenuNode) {
     if (node.isLink) {
-      if (node.isFullSpan && this.state?.menuOpen) {
-        this.toggleMenu();
+      if (node.isFullSpan && this.layout.state?.menuOpen) {
+        this.layout.toggleMenu();
       }
       this.router.navigate([node.link]);
     }

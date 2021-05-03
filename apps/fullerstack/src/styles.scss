@@ -1,1 +1,132 @@
 @import 'libs/agx-assets/src/lib/styles/themes/material/dark-blue';
+
+body {
+  margin: 0px;
+}
+
+app-home {
+  .bulletin-board {
+    background-color: mat-color($primary);
+    background: -webkit-linear-gradient($gradient-start, $gradient-end);
+    background: linear-gradient($gradient-start, $gradient-end);
+    color: $gradient-color;
+  }
+  .bulletin-background {
+    background: url('/assets/images/misc/metropolis.png') no-repeat bottom
+        center,
+      -webkit-linear-gradient(270deg, $gradient-start, $gradient-end),
+      linear-gradient($gradient-start, $gradient-end);
+    background-size: 100%;
+  }
+  .app-header-background {
+    background: mat-color($primary);
+  }
+  .app-header-headline {
+    color: mat-color($primary, default-contrast);
+  }
+  .app-header-start {
+    color: mat-color($primary);
+  }
+  .app-homepage-row {
+    color: mat-color($foreground, secondary-text);
+  }
+}
+
+.app-menu {
+  margin-top: 56px;
+  padding: 15px 0px;
+  height: 48px;
+  a {
+    display: block;
+    cursor: pointer;
+    color: unset;
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    line-height: 40px;
+  }
+  a:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  a.active {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.04);
+  }
+  a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: inherit;
+  }
+  mat-icon svg {
+    vertical-align: middle;
+  }
+  mat-expansion-panel-header {
+    padding: 0 16px;
+  }
+  mat-expansion-panel-header:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  mat-expansion-panel-header.active {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+  }
+}
+
+.bell-label {
+  position: absolute;
+  top: 0;
+  left: 45%;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 12px;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: mat-color($warn);
+  border: 4px solid mat-color($warn);
+  color: white;
+  text-align: center;
+}
+
+.app-options {
+  .divider {
+    margin-top: 40px;
+  }
+  .trigger {
+    position: relative;
+    top: -32px;
+    left: 37%;
+  }
+  .mat-accordion {
+    padding: 0 15px;
+  }
+}
+
+[dir='rtl'] {
+  .app-options {
+    .trigger {
+      right: 37%;
+    }
+  }
+}
+
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+}
+
+// no highlights
+* {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}

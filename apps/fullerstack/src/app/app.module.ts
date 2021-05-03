@@ -34,6 +34,14 @@ import {
 } from '@fullerstack/ngx-util';
 
 @NgModule({
+  declarations: [
+    HomeComponent,
+    AboutComponent,
+    LoginComponent,
+    RegisterComponent,
+    NotfoundComponent,
+    AppComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -56,14 +64,6 @@ import {
     // UsrModule,
     UixModule,
     LayoutModule,
-  ],
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    NotfoundComponent,
-    AboutComponent,
-    LoginComponent,
-    RegisterComponent,
   ],
   providers: [ValidationService, AsyncValidationService],
   bootstrap: [AppComponent],

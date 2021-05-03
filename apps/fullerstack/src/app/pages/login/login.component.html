@@ -8,7 +8,7 @@
           <strong>{{layout.sessionLinks.login.label| translate}}</strong>
         </ng-template>
 
-        <div class="mt1 pb2" fxFlex="100" fxLayoutAlign="center start">
+        <div class="mt-4 pb-8" fxFlex="100" fxLayoutAlign="center start">
 
           <form [formGroup]="form" (submit)="login()" fxLayout="column" fxFlex="95%">
 
@@ -26,10 +26,10 @@
               <fullerstack-hint [control]="getControl('password')"></fullerstack-hint>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit" class="mt1"
+            <button mat-raised-button color="primary" type="submit" class="mt-4"
               [disabled]="!form.valid">{{'AUTH.LOGIN'|translate}}</button>
 
-            <fullerstack-alert class="mt1" *ngIf="auth.msg.status.text" [color]="auth.msg.status.color"
+            <fullerstack-alert class="mt-4" *ngIf="auth.msg.status.text" [color]="auth.msg.status.color"
               [text]="auth.msg.status.text">
             </fullerstack-alert>
           </form>
