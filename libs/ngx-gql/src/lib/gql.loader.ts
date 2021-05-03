@@ -1,3 +1,4 @@
+/* eslint-disable */
 declare var require: any;
 import { DocumentNode, SelectionSetNode, DefinitionNode } from 'graphql';
 
@@ -78,7 +79,9 @@ class GqlDocumentManager {
   ): Array<DefinitionNode> {
     definitions.push(item.definition);
     for (const fragment of item.fragments) {
-      if (this.gqlFragmentsCache.hasOwnProperty(fragment)) {
+      if (
+        Object.prototype.hasOwnProperty.call(this.gqlFragmentsCache, fragment)
+      ) {
         const cache = this.gqlFragmentsCache[fragment];
         this.processFragmentDefinitions(cache, definitions);
       }
@@ -110,7 +113,12 @@ class GqlDocumentManager {
     for (const definition of doc.definitions) {
       switch (definition.kind) {
         case 'OperationDefinition':
-          if (this.gqlOperationsCache.hasOwnProperty(definition.name.value)) {
+          if (
+            Object.prototype.hasOwnProperty.call(
+              this.gqlOperationsCache,
+              definition.name.value
+            )
+          ) {
             throw new Error(
               `Multiple copies of ${definition.name.value} operation was found.`
             );
@@ -121,7 +129,12 @@ class GqlDocumentManager {
           };
           break;
         case 'FragmentDefinition':
-          if (this.gqlFragmentsCache.hasOwnProperty(definition.name.value)) {
+          if (
+            Object.prototype.hasOwnProperty.call(
+              this.gqlFragmentsCache,
+              definition.name.value
+            )
+          ) {
             throw new Error(
               `Multiple copies of ${definition.name.value} fragment was found.`
             );
@@ -137,7 +150,7 @@ class GqlDocumentManager {
 
   private loadDocuments() {
     for (const name in this.gqlOperationsCache) {
-      if (this.gqlOperationsCache.hasOwnProperty(name)) {
+      if (Object.prototype.hasOwnProperty.call(this.gqlOperationsCache, name)) {
         const cache = this.gqlOperationsCache[name];
         const definitions = this.processFragmentDefinitions(cache);
         this.gqlDocumentsCache[name] = <DocumentNode>{
@@ -162,7 +175,7 @@ class GqlDocumentManager {
   }
 
   getOperation(name: string): DocumentNode {
-    if (this.gqlDocumentsCache.hasOwnProperty(name)) {
+    if (Object.prototype.hasOwnProperty.call(this.gqlDocumentsCache, name)) {
       return this.gqlDocumentsCache[name];
     }
     throw new Error(`GQL operation document not found (${name}).`);

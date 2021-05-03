@@ -43,7 +43,7 @@ export class GqlService {
   }
 
   private setupApolloClient() {
-    const client = this.apollo.create({
+    this.apollo.create({
       link: this.getMainLink(),
       cache: new InMemoryCache(),
       defaultOptions: {

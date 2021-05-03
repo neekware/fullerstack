@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 import { LayoutService } from '@fullerstack/ngx-layout';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { _ } from '@fullerstack/ngx-i18n';
 
 @Component({
-  selector: 'app-home',
+  selector: 'fullerstack-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

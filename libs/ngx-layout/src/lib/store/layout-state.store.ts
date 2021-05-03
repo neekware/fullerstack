@@ -11,8 +11,6 @@ import { Injectable } from '@angular/core';
 })
 @Injectable()
 export class LayoutStoreState {
-  constructor() {}
-
   @Action([actions.Initialize])
   initializeRequest({ setState }: StateContext<LayoutState>) {
     setState(DefaultLayoutState);
@@ -86,7 +84,6 @@ export class LayoutStoreState {
 
   @Action(actions.ToggleFullscreen)
   toggleFullscreen({ getState, patchState }: StateContext<LayoutState>) {
-    const state: LayoutState = getState();
     patchState({ fullScreenOpen: !getState().fullScreenOpen });
   }
 }

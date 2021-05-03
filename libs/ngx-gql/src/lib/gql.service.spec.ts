@@ -1,10 +1,10 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { Apollo } from 'apollo-angular';
 
-import { ConfigModule, ConfigService } from '@fullerstack/ngx-config';
-import { LoggerModule, LoggerService } from '@fullerstack/ngx-logger';
+import { ConfigModule } from '@fullerstack/ngx-config';
+import { LoggerModule } from '@fullerstack/ngx-logger';
 
 import { GqlService } from './gql.service';
 

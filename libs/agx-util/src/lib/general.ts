@@ -19,7 +19,7 @@ export const tokenizeFullName = (fullName: string) => {
   return tokenizedName;
 };
 
-export const isExpired = (date: any) => {
+export const isExpired = (date: Date) => {
   const now = Date.now();
   const expiry = new Date(date).getTime();
   return expiry < now;

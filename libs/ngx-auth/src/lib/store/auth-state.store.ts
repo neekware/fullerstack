@@ -1,6 +1,6 @@
 import { MsgService } from '@fullerstack/ngx-msg';
 
-import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext } from '@ngxs/store';
 import { _ } from '@fullerstack/ngx-i18n';
 
 import { DefaultAuthState } from './auth-state.default';

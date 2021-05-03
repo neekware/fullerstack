@@ -7,7 +7,7 @@ import {
 } from '@angular/cdk/layout';
 
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, takeWhile } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Store, Select } from '@ngxs/store';
 import { DeepReadonly } from 'ts-essentials';
 
@@ -95,7 +95,7 @@ export class LayoutService implements OnDestroy {
   }
 
   toggleFullscreen() {
-    this.store.dispatch(new actions.ToggleFullscreen()).subscribe((state) => {
+    this.store.dispatch(new actions.ToggleFullscreen()).subscribe(() => {
       this.uix.toggleFullscreen();
     });
   }

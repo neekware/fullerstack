@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { Subject } from 'rxjs';
@@ -14,7 +20,7 @@ import { LayoutService } from './layout.service';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })
-export class LayoutComponent implements OnInit, OnDestroy {
+export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('sideMenu') private sideMenu: MatSidenav;
   @ViewChild('notifyMenu') private notifyMenu: MatSidenav;
   private destroy$ = new Subject<boolean>();

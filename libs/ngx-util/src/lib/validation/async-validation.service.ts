@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 
 import { Observable, timer, of as observableOf, from } from 'rxjs';
-import { map, catchError, switchMapTo, take, first } from 'rxjs/operators';
+import { map, catchError, switchMapTo, take } from 'rxjs/operators';
 
 import { GqlService, gqlMgr } from '@fullerstack/ngx-gql';
 import * as schema from '@fullerstack/ngx-gql/schema';
@@ -33,7 +33,7 @@ export class AsyncValidationService {
           ).pipe(map(({ data }) => data.emailFound))
         ),
         map((exists) => (exists ? { emailInUse: true } : null)),
-        catchError((error, caught) => {
+        catchError((error) => {
           console.error(error);
           return observableOf({ serverError: true });
         }),

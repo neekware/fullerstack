@@ -12,24 +12,22 @@ import { ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { MaterialModule } from '@fullerstack/ngx-material';
-import { LayoutModule } from '@fullerstack/ngx-layout';
+import { LayoutModule, LAYOUT_STATE_KEY } from '@fullerstack/ngx-layout';
 import { GqlModule } from '@fullerstack/ngx-gql';
-import { AuthModule } from '@fullerstack/ngx-auth';
+import { AuthModule, AUTH_STATE_KEY } from '@fullerstack/ngx-auth';
 
-import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { JwtModule } from '@fullerstack/ngx-jwt';
 import { UixModule } from '@fullerstack/ngx-uix';
 import { I18nModule } from '@fullerstack/ngx-i18n';
+
+import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AboutComponent } from './pages/about/about.component';
 import { LoginComponent } from './pages/login/login.component';
-import { AUTH_STATE_KEY } from 'libs/ngx-auth/src/lib/store/auth-state.constant';
-import { LAYOUT_STATE_KEY } from 'libs/ngx-layout/src/lib/store/layout-state.model';
 import { RegisterComponent } from './pages/register/register.component';
-import { MatTab } from '@angular/material/tabs';
 import {
   AsyncValidationService,
   ValidationService,

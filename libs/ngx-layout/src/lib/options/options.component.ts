@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   style,
   animate,
@@ -24,13 +24,11 @@ import { LayoutService } from '../layout.service';
     ]),
   ],
 })
-export class OptionsComponent implements OnInit {
-  state: string = 'default';
+export class OptionsComponent {
+  state = 'default';
   isExpanded = false;
   currentLanguage = this.i18n.defaultLanguage;
   constructor(public i18n: I18nService, public layout: LayoutService) {}
-
-  ngOnInit() {}
 
   private rotate() {
     this.state = this.state === 'default' ? 'rotated' : 'default';

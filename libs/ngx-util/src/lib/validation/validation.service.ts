@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 
@@ -7,8 +8,6 @@ import { tokenizeFullName } from '@fullerstack/agx-util';
 export class ValidationService {
   readonly NAME_MIN_LEN = 5;
   readonly PASSWORD_MIN_LEN = 6;
-
-  constructor() {}
 
   // Visa, MasterCard, American Express, Diners Club, Discover, JCB
   validateCreditCard(control: FormControl): null | ValidationErrors {

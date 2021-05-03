@@ -1,9 +1,8 @@
 import crypto from 'crypto-es';
-import { DefaultAuthState } from './auth-state.default';
-
 import { AuthState } from './auth-state.model';
 
 export function signState(state: AuthState): AuthState {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { signature, ...newState } = state || {};
   return {
     ...state,

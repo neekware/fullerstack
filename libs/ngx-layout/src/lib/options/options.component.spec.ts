@@ -1,11 +1,10 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LoggerModule } from '@fullerstack/ngx-logger';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 
 import { OptionsComponent } from './options.component';
 import { LayoutService } from '../layout.service';
 import { NgxsModule } from '@ngxs/store';
+import { LoggerModule } from '@fullerstack/ngx-logger';
 
 export const environment: ApplicationConfig = {
   appName: 'Fullerstack',
@@ -26,8 +25,8 @@ describe('OptionsComponent', () => {
         imports: [
           NgxsModule.forRoot([]),
           NgxsModule.forFeature([]),
-          CfgModule.forRoot(environment),
-          LogModule,
+          ConfigModule.forRoot(environment),
+          LoggerModule,
         ],
         declarations: [OptionsComponent],
         providers: [LayoutService],

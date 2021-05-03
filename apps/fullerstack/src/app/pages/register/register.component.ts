@@ -6,8 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { get, pick } from 'lodash';
-
 import { LayoutService } from '@fullerstack/ngx-layout';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { AuthService } from '@fullerstack/ngx-auth';
@@ -16,11 +14,10 @@ import {
   AsyncValidationService,
 } from '@fullerstack/ngx-util';
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
-import { AuthRegisterCredentials } from '@fullerstack/ngx-auth';
 import { I18nService } from '@fullerstack/ngx-i18n';
 
 @Component({
-  selector: 'app-register',
+  selector: 'fullerstack-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
@@ -86,12 +83,17 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    const registerData: AuthRegisterCredentials = {
-      ...tokenizeFullName(this.form.value.name),
-      ...pick(this.form.value, ['email', 'password']),
-      ...{ language: this.i18n.currentLanguage },
-    };
-    this.auth.registerDispatch(registerData);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { email, password, ...rest } = this.form.value;
+    const { firstName, lastName } = tokenizeFullName(this.form.value.name);
+    const language = this.i18n.currentLanguage;
+    this.auth.registerDispatch({
+      firstName,
+      lastName,
+      email,
+      password,
+      language,
+    });
   }
 
   getControl(name: string): FormControl {
