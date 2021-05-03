@@ -1,5 +1,6 @@
 <mat-expansion-panel [expanded]="node.isActive(router.url)" [class.active]="node.isActive(router.url)"
   [disabled]="node.disabled">
+
   <mat-expansion-panel-header>
     <mat-panel-title fxFlex fxLayout="row" fxLayoutGap="16px">
       <mat-icon [class.text-color-muted]="node.disabled" svgIcon="{{node.icon}}"></mat-icon>

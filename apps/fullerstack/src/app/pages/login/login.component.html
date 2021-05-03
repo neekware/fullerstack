@@ -1,6 +1,6 @@
 <mat-toolbar color="primary"></mat-toolbar>
 
-<mat-card class="mt-2">
+<mat-card fxLayout="row" fxFlex="500px" fxFlex.sm="70" fxFlex.xs="95" fxLayoutAlign="center start" class="mt-2">
   <mat-card-content fxFlex="100">
     <mat-tab-group [selectedIndex]="0" (selectedTabChange)=layout.goTo(layout.sessionLinks.register.path)>
       <mat-tab>
@@ -16,14 +16,14 @@
               <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
               <input matInput formControlName="email" placeholder="{{'AUTH.FIELDS.EMAIL'|translate}}"
                 [class.progress-wheel]="auth.isLoading">
-              <fullerstack-hint [control]="emailControl"></fullerstack-hint>
+              <fullerstack-hint [control]="getControl('email')"></fullerstack-hint>
             </mat-form-field>
 
             <mat-form-field>
               <mat-icon matSuffix color="primary" svgIcon="key-variant"></mat-icon>
               <input matInput type="password" formControlName="password"
                 placeholder="{{'AUTH.FIELDS.PASSWORD'|translate}}">
-              <fullerstack-hint [control]="passwordControl"></fullerstack-hint>
+              <fullerstack-hint [control]="getControl('password')"></fullerstack-hint>
             </mat-form-field>
 
             <button mat-raised-button color="primary" type="submit" class="mt1"
@@ -36,6 +36,7 @@
         </div>
 
       </mat-tab>
+
       <mat-tab>
         <ng-template matTabLabel>{{layout.sessionLinks.register.label| translate}}</ng-template>
       </mat-tab>

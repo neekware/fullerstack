@@ -52,13 +52,7 @@ export class LoginComponent implements OnInit {
     this.auth.loginDispatch(this.form.value);
   }
 
-  get emailControl(): FormControl {
-    return tryGet<FormControl>(() => this.form.controls.email as FormControl);
-  }
-
-  get passwordControl(): FormControl {
-    return tryGet<FormControl>(
-      () => this.form.controls.password as FormControl
-    );
+  getControl(name: string): FormControl {
+    return tryGet<FormControl>(() => this.form.controls[name] as FormControl);
   }
 }

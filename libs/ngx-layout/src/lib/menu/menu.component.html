@@ -2,8 +2,7 @@
 
   <div *ngFor="let node of rootNode.children;">
     <mat-accordion>
-      <fullerstack-menu-node *ngIf="node.isNode" [node]="node">
-      </fullerstack-menu-node>
+      <fullerstack-menu-node *ngIf="node.isNode" [node]="node"></fullerstack-menu-node>
     </mat-accordion>
   </div>
 

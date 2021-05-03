@@ -12,7 +12,7 @@
 }
 
 .app-logo {
-  background: url("/assets/images/logos/logo.png") top center no-repeat;
+  background: url('/assets/images/logos/logo.png') top center no-repeat;
   position: relative;
   padding-top: 230px;
   opacity: 1;
@@ -46,7 +46,8 @@
   letter-spacing: 1px;
   margin: -30px auto 16px auto;
   line-height: 37px;
-  font-family: "Roboto", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: 'Roboto', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica,
+    Arial, 'Lucida Grande', sans-serif;
 }
 
 .app-headline .secondary {
@@ -82,9 +83,9 @@
 .title {
   font-size: 22px;
   margin-top: 10px;
-  color: #37474F;
+  color: #37474f;
   margin: 10px 0 16px 0;
-  opacity: .87;
+  opacity: 0.87;
   line-height: 32px;
 }
 
@@ -92,7 +93,7 @@
   margin: 0 0 16px 0;
   font-size: 18px;
   font-weight: 400;
-  opacity: .87;
+  opacity: 0.87;
   line-height: 28px;
   padding: 0;
 }

@@ -28,6 +28,12 @@ import { AboutComponent } from './pages/about/about.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AUTH_STATE_KEY } from 'libs/ngx-auth/src/lib/store/auth-state.constant';
 import { LAYOUT_STATE_KEY } from 'libs/ngx-layout/src/lib/store/layout-state.model';
+import { RegisterComponent } from './pages/register/register.component';
+import { MatTab } from '@angular/material/tabs';
+import {
+  AsyncValidationService,
+  ValidationService,
+} from '@fullerstack/ngx-util';
 
 @NgModule({
   imports: [
@@ -59,8 +65,9 @@ import { LAYOUT_STATE_KEY } from 'libs/ngx-layout/src/lib/store/layout-state.mod
     NotfoundComponent,
     AboutComponent,
     LoginComponent,
+    RegisterComponent,
   ],
-  providers: [],
+  providers: [ValidationService, AsyncValidationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

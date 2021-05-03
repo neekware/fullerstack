@@ -5,8 +5,8 @@ import {
   AbstractControl,
 } from '@angular/forms';
 
-import { Observable, timer, of as observableOf } from 'rxjs';
-import { map, catchError, switchMapTo, take } from 'rxjs/operators';
+import { Observable, timer, of as observableOf, from } from 'rxjs';
+import { map, catchError, switchMapTo, take, first } from 'rxjs/operators';
 
 import { GqlService, gqlMgr } from '@fullerstack/ngx-gql';
 import * as schema from '@fullerstack/ngx-gql/schema';
@@ -25,12 +25,12 @@ export class AsyncValidationService {
       | Observable<ValidationErrors | null> => {
       return timer(debounce).pipe(
         switchMapTo(
-          this.gql.client
-            .query<schema.EmailFoundQuery>({
+          from(
+            this.gql.client.query<schema.EmailFoundQuery>({
               query: EmailFoundQueryNode,
               variables: { email: control.value },
             })
-            .pipe(map(({ data }) => data.emailFound))
+          ).pipe(map(({ data }) => data.emailFound))
         ),
         map((exists) => (exists ? { emailInUse: true } : null)),
         catchError((error, caught) => {

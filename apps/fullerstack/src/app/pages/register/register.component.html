@@ -1,0 +1,56 @@
+<mat-toolbar color="primary"></mat-toolbar>
+
+<mat-card fxLayout="row" fxFlex="500px" fxFlex.sm="70" fxFlex.xs="95" fxLayoutAlign="center start" class="mt-2">
+  <mat-card-content fxFlex="100%">
+    <mat-tab-group [selectedIndex]="1" (selectedTabChange)=layout.goTo(layout.sessionLinks.login.path)>
+      <mat-tab>
+        <ng-template matTabLabel>
+          {{layout.sessionLinks.login.label| translate}}
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template matTabLabel>
+          <strong>{{layout.sessionLinks.register.label| translate}}</strong>
+        </ng-template>
+        <div class="mt1 pb2" fxFlex="100" fxLayoutAlign="center start">
+
+          <form [formGroup]="form" (submit)="register()" fxLayout="column" fxFlex="95%">
+
+            <mat-form-field>
+              <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
+              <input matInput formControlName="name" placeholder="{{'AUTH.FIELDS.NAME'|translate}}"
+                [class.progress-wheel]="auth.isLoading">
+              <fullerstack-hint [control]="form.controls.name"></fullerstack-hint>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
+              <input matInput formControlName="email" placeholder="{{'AUTH.FIELDS.EMAIL'|translate}}">
+              <fullerstack-hint [control]="getControl('email')"></fullerstack-hint>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-icon matSuffix color="primary" svgIcon="key"></mat-icon>
+              <input matInput type="password" formControlName="password"
+                placeholder="{{'AUTH.FIELDS.PASSWORD'|translate}}">
+              <fullerstack-hint [control]="getControl('password')"></fullerstack-hint>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-icon matSuffix color="primary" svgIcon="key-change"></mat-icon>
+              <input matInput type="password" formControlName="passwordConfirmation"
+                placeholder="{{'AUTH.FIELDS.PASSWORD_CONFIRMATION'|translate}}">
+              <fullerstack-hint [control]="getControl('passwordConfirmation')"></fullerstack-hint>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" class="mt1"
+              [disabled]="!form.valid">{{'AUTH.REGISTER'|translate}}</button>
+
+            <fullerstack-alert class="mt1" *ngIf="auth.msg.status.text" [color]="auth.msg.status.color"
+              [text]="auth.msg.status.text"></fullerstack-alert>
+          </form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

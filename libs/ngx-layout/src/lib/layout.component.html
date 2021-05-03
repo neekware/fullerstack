@@ -6,7 +6,7 @@
 
     <mat-sidenav #sideMenu class="sidenav" fixedInViewport="true" [attr.role]="layout.state.menuRole"
       [mode]="layout.state.menuMode" [opened]="layout.state.menuOpen">
-      <fullerstack-menu [state]="layout.state" [toggleMenu]="layout.toggleMenu"></fullerstack-menu>
+      <fullerstack-menu></fullerstack-menu>
     </mat-sidenav>
 
     <mat-sidenav #notifyMenu class="sidenav" position="end" fixedInViewport="true" [attr.role]="layout.state.notifyRole"
@@ -18,8 +18,7 @@
       <router-outlet></router-outlet>
     </mat-sidenav-content>
 
-    <fullerstack-options>
-    </fullerstack-options>
+    <fullerstack-options></fullerstack-options>
 
   </mat-sidenav-container>
 

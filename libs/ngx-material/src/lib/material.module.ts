@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { BidiModule } from '@angular/cdk/bidi';
@@ -41,13 +43,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTreeModule } from '@angular/material/tree';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    FlexLayoutModule,
     A11yModule,
     CdkAccordionModule,
     MatAutocompleteModule,
@@ -95,6 +97,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    FlexLayoutModule,
     A11yModule,
     CdkAccordionModule,
     MatAutocompleteModule,

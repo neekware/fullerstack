@@ -23,11 +23,14 @@
     <div *ngFor="let pitch of pitchList; let even=even;" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px"
       fxLayoutAlign="space-evenly center" class="row">
 
-      <div fxFlex="33" fxFlex.gt-xs="calc(50% - 8px)" class="pitch" ngClass.xm="small">
+      <div fxFlex="33" fxFlex.gt-xs="calc(50% - 8px)" class="pitch" [fxFlexOrder.gt-xs]="even ? '1' : '2'"
+        ngClass.xm="small">
         <h3 class="title">{{pitch.title|translate}}</h3>
         <p class="description" [class.]>{{pitch.description|translate}}</p>
       </div>
-      <div fxFlex="calc(50% - 8px)" fxFlex.xs="calc(33% - 8px)" fxLayoutAlign="center" class="image">
+      <div fxFlex="calc(50% - 8px)" fxFlex.xs="calc(33% - 8px)" fxLayoutAlign="center"
+        [fxLayoutAlign.gt-xs]="even ? 'end center' : 'start center'" class="image"
+        [fxFlexOrder.gt-xs]="even ? '2' : '1'">
         <img src="{{pitch.image}}" alt="{{pitch.title|translate}}">
       </div>
 
