@@ -1,5 +1,11 @@
 /* eslint-disable */
-import { Injectable, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+  Injectable,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  NgZone,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { merge as ldNestedMerge } from 'lodash-es';
@@ -44,6 +50,7 @@ export class AuthService implements OnDestroy {
   private _refreshTimer = null;
 
   constructor(
+    readonly zone: NgZone,
     readonly router: Router,
     readonly store: Store,
     readonly config: ConfigService,
@@ -254,6 +261,10 @@ export class AuthService implements OnDestroy {
     if (this.state.isLoggedIn) {
       this.store.dispatch(new actions.TokenRefreshRequest(this.state.token));
     }
+  }
+
+  goTo(url: string) {
+    this.router.navigate([url]);
   }
 
   ngOnDestroy() {

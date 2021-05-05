@@ -215,10 +215,6 @@ export class LayoutService implements OnDestroy {
     });
   }
 
-  goTo(url: string) {
-    // this.auth.goTo(url);
-  }
-
   setOverlayThemeClass() {
     const el = this.overlay.getContainerElement().classList;
     if (this.state.isDarkTheme) {

@@ -3,7 +3,7 @@
     <img [src]="logo">
     <h1 class="headline">{{'APP.HEADLINE'|translate}}</h1>
     <h3 class="message">{{'APP.SUB_HEADLINE'|translate}}</h3>
-    <button mat-raised-button *ngIf="!auth.state.isLoggedIn" (click)="layout.goTo(layout.sessionLinks.login.path)">
+    <button mat-raised-button *ngIf="!auth.state.isLoggedIn" (click)="auth.goTo(layout.sessionLinks.login.path)">
       {{'COMMON.GET_STARTED'|translate}}
     </button>
   </div>

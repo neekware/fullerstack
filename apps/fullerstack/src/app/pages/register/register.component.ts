@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
         () => this.config.options.localConfig.registerInLandingPageUrl,
         '/'
       );
-      this.layout.goTo(redirectUrl);
+      this.auth.goTo(redirectUrl);
     } else {
       this.auth.initiateRegisterState();
     }

@@ -2,7 +2,7 @@
 
 <mat-card>
   <mat-card-content>
-    <mat-tab-group [selectedIndex]="0" (selectedTabChange)=layout.goTo(layout.sessionLinks.register.path)>
+    <mat-tab-group [selectedIndex]="0" (selectedTabChange)="auth.goTo(layout.sessionLinks.register.path)">
       <mat-tab>
         <ng-template matTabLabel>
           <strong>{{layout.sessionLinks.login.label| translate}}</strong>

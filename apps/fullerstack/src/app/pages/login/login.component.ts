@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         () => this.config.options.localConfig.loggedInLandingPageUrl,
         '/'
       );
-      this.layout.goTo(redirectUrl);
+      this.auth.goTo(redirectUrl);
     } else {
       this.auth.initiateLoginState();
     }

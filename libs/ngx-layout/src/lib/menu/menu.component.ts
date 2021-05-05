@@ -41,7 +41,7 @@ export class MenuComponent implements OnInit {
       if (node.isFullSpan && this.layout.state.menuOpen) {
         this.layout.toggleMenu();
       }
-      // this.auth.goTo(node.link);
+      this.auth.goTo(node.link);
     }
   }
 

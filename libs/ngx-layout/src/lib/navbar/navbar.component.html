@@ -6,7 +6,7 @@
 
   <div *ngIf="!auth.state.isLoggedIn"></div>
 
-  <div (click)="layout.goTo('/')">
+  <div (click)="auth.goTo('/')">
     <img src="/assets/images/logos/brand.png" alt="{{ layout.siteName | translate }}">
   </div>
 
@@ -39,12 +39,12 @@
     </div>
 
     <div *ngIf="!auth.state.isLoggedIn">
-      <button mat-menu-item aria-label="Login" (click)="layout.goTo(layout.sessionLinks.login.path)">
+      <button mat-menu-item aria-label="Login" (click)="auth.goTo(layout.sessionLinks.login.path)">
         <mat-icon svgIcon="login"></mat-icon>
         {{ 'AUTH.LOGIN' | translate }}
       </button>
 
-      <button mat-menu-item aria-label="Register" (click)="layout.goTo(layout.sessionLinks.register.path)">
+      <button mat-menu-item aria-label="Register" (click)="auth.goTo(layout.sessionLinks.register.path)">
         <mat-icon svgIcon="account-plus"></mat-icon>
         {{ 'AUTH.REGISTER' | translate }}
       </button>
