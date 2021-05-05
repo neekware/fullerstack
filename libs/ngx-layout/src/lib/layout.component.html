@@ -2,30 +2,26 @@
   [class.is-handset]="layout.state.isHandset" [class.is-portrait]="layout.state.isPortrait"
   [class.app-theme-light]="!layout.state.isDarkTheme" [class.app-theme-dark]="layout.state.isDarkTheme">
 
-  <fullerstack-navbar>
-  </fullerstack-navbar>
+  <fullerstack-navbar></fullerstack-navbar>
 
   <mat-sidenav-container>
 
     <mat-sidenav #sideMenu position="start" [fixedTopGap]="layout.state.isHandset? 56: 64"
       [fixedInViewport]="layout.state.isHandset" [mode]="layout.state.menuMode" [opened]="layout.state.menuOpen"
       [attr.role]="layout.state.menuRole" class="menu-panel">
-      <fullerstack-menu>
-      </fullerstack-menu>
+      <fullerstack-menu></fullerstack-menu>
     </mat-sidenav>
 
     <mat-sidenav #notifyMenu position="end" [fixedTopGap]="layout.state.isHandset? 56: 64"
       [fixedInViewport]="layout.state.isHandset" [mode]="layout.state.notifyMode" [opened]="layout.state.notifyOpen"
       [attr.role]="layout.state.notifyRole" class="notification-panel">
-      <fullerstack-notification>
-      </fullerstack-notification>
+      <fullerstack-notification></fullerstack-notification>
     </mat-sidenav>
 
     <mat-sidenav-content>
       <div>
         <router-outlet #outlet="outlet"></router-outlet>
-        <fullerstack-footer>
-        </fullerstack-footer>
+        <fullerstack-footer></fullerstack-footer>
       </div>
     </mat-sidenav-content>
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   style,
   animate,
@@ -23,6 +23,7 @@ import { LayoutService } from '../layout.service';
       transition('default => rotated', animate('400ms ease-in')),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OptionsComponent {
   state = 'default';
