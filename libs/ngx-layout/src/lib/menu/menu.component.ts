@@ -4,6 +4,7 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { DefaultMenuTree, MenuItem, MenuNode } from '@fullerstack/ngx-menu';
 
 import { LayoutService } from '../layout.service';
+import { LayoutMenuTree } from './menu.default';
 
 @Component({
   selector: 'fullerstack-menu',
@@ -25,12 +26,12 @@ export class MenuComponent implements OnInit {
       this.hasPermission.bind(this)
     );
 
-    this.rootNode = this.layout.menu.buildMenuTree(DefaultMenuTree);
+    this.rootNode = this.layout.menu.buildMenuTree(LayoutMenuTree);
 
     this.auth.authChanged$.subscribe((state) => {
       const forceMenuRebuild = true;
       this.rootNode = this.layout.menu.buildMenuTree(
-        DefaultMenuTree,
+        LayoutMenuTree,
         forceMenuRebuild
       );
     });
