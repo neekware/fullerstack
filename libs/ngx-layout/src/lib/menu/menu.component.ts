@@ -1,17 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { tryGet } from '@fullerstack/agx-util';
+import { Router } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { I18nService } from '@fullerstack/ngx-i18n';
-import {
-  DefaultMenuTree,
-  MenuItem,
-  MenuNode,
-  MenuService,
-} from '@fullerstack/ngx-menu';
+import { DefaultMenuTree, MenuItem, MenuNode } from '@fullerstack/ngx-menu';
 
 import { LayoutService } from '../layout.service';
-import { LayoutMenuTree } from './menu.default';
 
 @Component({
   selector: 'fullerstack-menu',

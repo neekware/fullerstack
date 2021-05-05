@@ -1,6 +1,5 @@
-<div class="bulletin-board bulletin-background" [class.small]="handSet" [class.large]="!handSet"
-  [class.auth]="auth.state.isLoggedIn">
-  <div fxFlex fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+<div>
+  <div>
     <img [src]="logo">
     <h1 class="headline">{{'APP.HEADLINE'|translate}}</h1>
     <h3 class="message">{{'APP.SUB_HEADLINE'|translate}}</h3>
@@ -12,19 +11,15 @@
 
 <div class="app-promo">
 
-  <div fxLayoutGap="24px" fxLayout="column" fxLayoutAlign="center">
+  <div>
 
-    <div *ngFor="let pitch of pitchList; let even=even;" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px"
-      fxLayoutAlign="space-evenly center" class="row">
+    <div *ngFor="let pitch of pitchList; let even=even;">
 
-      <div fxFlex="calc(50% - 8px)" fxFlex.xs="calc(33% - 8px)" class="pitch" [fxFlexOrder.gt-xs]="even ? '1' : '2'"
-        ngClass.xm="small">
+      <div>
         <h3 class="title">{{pitch.title|translate}}</h3>
         <p class="description">{{pitch.description|translate}}</p>
       </div>
-      <div fxFlex="calc(50% - 8px)" fxFlex.xs="calc(33% - 8px)" fxLayoutAlign="center"
-        [fxLayoutAlign.gt-xs]="even ? 'end center' : 'start center'" class="image"
-        [fxFlexOrder.gt-xs]="even ? '2' : '1'">
+      <div>
         <img src="{{pitch.image}}" alt="{{pitch.title|translate}}">
       </div>
 

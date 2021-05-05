@@ -13,8 +13,7 @@ import { LayoutService } from '@fullerstack/ngx-layout';
 
 @Component({
   selector: 'fullerstack-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: '<fullerstack-layout></fullerstack-layout>',
 })
 export class AppComponent implements OnInit {
   healthCheck$: Observable<HealthCheck>;

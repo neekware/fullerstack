@@ -16,8 +16,6 @@ export class MenuLinkComponent {
 
   constructor(public router: Router, public layout: LayoutService) {}
 
-  ngOnInit() {}
-
   redirectUrl(node: MenuNode) {
     if (
       (node.isFullSpan || this.layout.state.isHandset) &&

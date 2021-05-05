@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { BidiModule } from '@angular/cdk/bidi';
@@ -50,7 +50,7 @@ import { MaterialService } from './material.service';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
     A11yModule,
     CdkAccordionModule,
     MatAutocompleteModule,
@@ -98,7 +98,7 @@ import { MaterialService } from './material.service';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
     A11yModule,
     CdkAccordionModule,
     MatAutocompleteModule,

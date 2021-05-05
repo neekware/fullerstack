@@ -9,8 +9,8 @@
   <mat-accordion>
 
     <mat-expansion-panel [expanded]="isExpanded">
-      <div fxFlex fxLayout fxLayoutAlign="start center">
-        <mat-form-field fxFlex="100">
+      <div>
+        <mat-form-field>
           <mat-select placeholder="{{ 'MENU.OPTIONS.LANGUAGE' | translate}}" #ctrl="ngModel"
             [(ngModel)]="currentLanguage" (ngModelChange)="i18n.setCurrentLanguage(currentLanguage)">
             <mat-option *ngFor="let iso of i18n.enabledLanguages" [value]="iso">
@@ -21,7 +21,7 @@
       </div>
 
       <div fxLayout fxLayoutAlign="start center" click-no-propagation>
-        <span fxFlex>{{ 'MENU.OPTIONS.DARK' | translate }}</span>
+        <span>{{ 'MENU.OPTIONS.DARK' | translate }}</span>
         <mat-slide-toggle (change)="layout.setDarkTheme($event.checked)"></mat-slide-toggle>
       </div>
 

@@ -38,7 +38,6 @@ export class LayoutService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<LayoutState> = DefaultLayoutState;
   @Select(LayoutStoreState) state$: Observable<LayoutState>;
-  private breakpointSub$: Observable<BreakpointState>;
   private destroy$ = new Subject<boolean>();
   handset$: Observable<BreakpointState>;
   portrait$: Observable<BreakpointState>;

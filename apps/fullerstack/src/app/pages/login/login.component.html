@@ -1,16 +1,16 @@
 <mat-toolbar color="primary"></mat-toolbar>
 
-<mat-card fxLayout="row" fxFlex="500px" fxFlex.sm="70" fxFlex.xs="95" fxLayoutAlign="center start" class="mt-2">
-  <mat-card-content fxFlex="100">
+<mat-card>
+  <mat-card-content>
     <mat-tab-group [selectedIndex]="0" (selectedTabChange)=layout.goTo(layout.sessionLinks.register.path)>
       <mat-tab>
         <ng-template matTabLabel>
           <strong>{{layout.sessionLinks.login.label| translate}}</strong>
         </ng-template>
 
-        <div class="mt-4 pb-8" fxFlex="100" fxLayoutAlign="center start">
+        <div class="mt-4 pb-8">
 
-          <form [formGroup]="form" (submit)="login()" fxLayout="column" fxFlex="95%">
+          <form [formGroup]="form" (submit)="login()">
 
             <mat-form-field>
               <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
