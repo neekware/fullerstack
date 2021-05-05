@@ -1,5 +1,5 @@
-// :host /deep/ {
-//   .mat-expansion-panel-body {
-//     padding: 0 15px;
-//   }
-// }
+::ng-deep {
+  .mat-expansion-panel-body {
+    padding: 0 15px;
+  }
+}

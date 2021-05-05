@@ -19,14 +19,23 @@ export const AppRoutes: Routes = [
     path: 'about',
     component: AboutComponent,
     // canActivate: [AuthGuardService]
+    data: {
+      title: _('APP.ABOUT'),
+    },
   },
   {
     path: 'auth/login',
     component: LoginComponent,
+    data: {
+      title: _('APP.LOGIN'),
+    },
   },
   {
     path: 'auth/register',
     component: RegisterComponent,
+    data: {
+      title: _('APP.REGISTER'),
+    },
   },
   {
     path: '**',
