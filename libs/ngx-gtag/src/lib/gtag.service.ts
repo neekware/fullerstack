@@ -1,11 +1,12 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-
+import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 import { DeepReadonly } from 'ts-essentials';
-import { get, merge as ldNestedMerge } from 'lodash-es';
-import { tap, filter, map, switchMap } from 'rxjs/operators';
+import { merge as ldNestedMerge } from 'lodash-es';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import {
   ConfigService,
   ApplicationConfig,
@@ -23,12 +24,14 @@ declare let gtag: (...args: any) => void;
 @Injectable({
   providedIn: 'root',
 })
-export class GTagService {
+export class GTagService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
+  destroy$ = new Subject<boolean>();
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
+    @Inject(DOCUMENT) readonly document: Document,
     readonly router: Router,
+    readonly title: Title,
     readonly route: ActivatedRoute,
     readonly config: ConfigService,
     readonly logger: LoggerService
@@ -37,6 +40,7 @@ export class GTagService {
       { gtag: DefaultGTagConfig },
       this.config.options
     );
+
     if (this.options.gtag.isEnabled) {
       if (!this.options.gtag.trackingId) {
         throw new Error('Error - GTag enabled without a valid tracking ID');
@@ -88,15 +92,14 @@ export class GTagService {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        map(() => this.route),
-        map((route) => route.firstChild),
-        switchMap((route) => route.data),
-        map((data) => get(data, 'title', this.options.appName)),
-        tap((title) => {
-          this.trackPageView({ page_title: title });
-        })
+        map(() => this.title.getTitle() || this.options.appName),
+        takeUntil(this.destroy$)
       )
-      .subscribe();
+      .subscribe({
+        next: (title) => {
+          this.trackPageView({ page_title: title });
+        },
+      });
   }
 
   trackPageView(params?: GTagPageViewParams) {
@@ -137,5 +140,10 @@ export class GTagService {
         );
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
