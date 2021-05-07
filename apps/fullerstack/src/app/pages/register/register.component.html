@@ -2,7 +2,7 @@
 
 <mat-card>
   <mat-card-content>
-    <mat-tab-group [selectedIndex]="1" (selectedTabChange)=layout.goTo(layout.sessionLinks.login.path)>
+    <mat-tab-group [selectedIndex]="1" (selectedTabChange)="auth.goTo(layout.sessionLinks.login.path)">
       <mat-tab>
         <ng-template matTabLabel>
           {{layout.sessionLinks.login.label| translate}}
@@ -12,7 +12,7 @@
         <ng-template matTabLabel>
           <strong>{{layout.sessionLinks.register.label| translate}}</strong>
         </ng-template>
-        <div class="mt-4 pb-8">
+        <div class=" mt-4 pb-8">
 
           <form [formGroup]="form" (submit)="register()">
 
