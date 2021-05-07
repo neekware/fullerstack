@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { HealthCheck } from '@fullerstack/api-dto';
+import { HealthCheck } from '@fullerstack/agx-dto';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { I18nService } from '@fullerstack/ngx-i18n';

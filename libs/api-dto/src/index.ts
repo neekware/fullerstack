@@ -1,2 +1,2 @@
-export * from './lib/api-dto';
+export * from './lib/agx-dto';
 export * from './lib/jwt.dto';

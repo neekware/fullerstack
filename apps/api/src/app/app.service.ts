@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { HealthCheck } from '@fullerstack/api-dto';
+import { HealthCheck } from '@fullerstack/agx-dto';
 
 @Injectable()
 export class AppService {

@@ -18,7 +18,7 @@
       "ts-essentials/*": ["node_modules/ts-essentials/*"],
       "@fullerstack/assets": ["libs/agx-assets/src/index.ts"],
       "@fullerstack/agx-util": ["libs/agx-util/src/index.ts"],
-      "@fullerstack/api-dto": ["libs/api-dto/src/index.ts"],
+      "@fullerstack/agx-dto": ["libs/agx-dto/src/index.ts"],
       "@fullerstack/ngx-config": ["libs/ngx-config/src/index.ts"],
       "@fullerstack/ngx-logger": ["libs/ngx-logger/src/index.ts"],
       "@fullerstack/ngx-subify": ["libs/ngx-subify/src/index.ts"],

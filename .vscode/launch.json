@@ -56,7 +56,7 @@
         "api",
         "ngx-config",
         "ngx-logger",
-        "api-dto",
+        "agx-dto",
         "nxs-database"
       ],
       "default": "frameshare"

@@ -3,7 +3,7 @@ import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
-import { JwtDto } from '@fullerstack/api-dto';
+import { JwtDto } from '@fullerstack/agx-dto';
 
 import {
   AuthStatusDto,

@@ -7,7 +7,7 @@ import { v4 as uuid_v4 } from 'uuid';
 import * as jwt from 'jsonwebtoken';
 import { Permission, Role, User } from '@prisma/client';
 
-import { JwtDto } from '@fullerstack/api-dto';
+import { JwtDto } from '@fullerstack/agx-dto';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 

@@ -24,7 +24,7 @@
     "fullerstack": { "tags": [], "implicitDependencies": ["agx-assets"] },
     "fullerstack-e2e": { "tags": [], "implicitDependencies": ["fullerstack"] },
     "api": { "tags": [] },
-    "api-dto": { "tags": [] },
+    "agx-dto": { "tags": [] },
     "ngx-config": { "tags": ["name:ngx-config", "scope:ngx-util"] },
     "ngx-logger": { "tags": ["name:ngx-logger", "scope:ngx-util"] },
     "ngx-subify": { "tags": ["name:ngx-subify", "scope:ngx-util"] },

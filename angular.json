@@ -298,16 +298,16 @@
         }
       }
     },
-    "api-dto": {
-      "root": "libs/api-dto",
-      "sourceRoot": "libs/api-dto/src",
+    "agx-dto": {
+      "root": "libs/agx-dto",
+      "sourceRoot": "libs/agx-dto/src",
       "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/api-dto/**/*.ts"
+              "libs/agx-dto/**/*.ts"
             ]
           }
         }

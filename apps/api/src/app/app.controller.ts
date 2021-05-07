@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 
-import type { HealthCheck } from '@fullerstack/api-dto';
+import type { HealthCheck } from '@fullerstack/agx-dto';
 
 import { AppService } from './app.service';
 

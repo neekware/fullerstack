@@ -5,7 +5,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parserOptions": {
-        "project": ["libs/api-dto/tsconfig.*?.json"]
+        "project": ["libs/agx-dto/tsconfig.*?.json"]
       },
       "rules": {}
     },
