@@ -1,9 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import {
-  MAT_SNACK_BAR_DATA,
-  MatSnackBarRef,
-} from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { I18nModule } from '@fullerstack/ngx-i18n';
 

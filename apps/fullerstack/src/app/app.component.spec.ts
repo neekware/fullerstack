@@ -18,11 +18,7 @@ describe('AppComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          HttpClientModule,
-          MaterialModule,
-          ConfigModule.forRoot(appEnv),
-        ],
+        imports: [HttpClientModule, MaterialModule, ConfigModule.forRoot(appEnv)],
         declarations: [AppComponent],
       }).compileComponents();
     })

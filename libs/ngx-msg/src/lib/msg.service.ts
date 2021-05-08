@@ -64,34 +64,28 @@ export class MsgService {
   }
 
   private logToConsole() {
-    this.translate
-      .get(this._status.text)
-      .subscribe((translatedText: string) => {
-        switch (this._status.level) {
-          case LogLevels.critical:
-            this.logger.critical(translatedText);
-            break;
-          case LogLevels.error:
-            this.logger.error(translatedText);
-            break;
-          case LogLevels.warn:
-            this.logger.warn(translatedText);
-            break;
-          case LogLevels.info:
-            this.logger.info(translatedText);
-            break;
-          case LogLevels.debug:
-            this.logger.debug(translatedText);
-            break;
-        }
-      });
+    this.translate.get(this._status.text).subscribe((translatedText: string) => {
+      switch (this._status.level) {
+        case LogLevels.critical:
+          this.logger.critical(translatedText);
+          break;
+        case LogLevels.error:
+          this.logger.error(translatedText);
+          break;
+        case LogLevels.warn:
+          this.logger.warn(translatedText);
+          break;
+        case LogLevels.info:
+          this.logger.info(translatedText);
+          break;
+        case LogLevels.debug:
+          this.logger.debug(translatedText);
+          break;
+      }
+    });
   }
 
-  private openSnackBar(
-    msg: string,
-    msgType: SnackbarType,
-    config?: MatSnackBarConfig
-  ) {
+  private openSnackBar(msg: string, msgType: SnackbarType, config?: MatSnackBarConfig) {
     msg = msg || this._status.text;
     config = {
       ...{

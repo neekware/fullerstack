@@ -23,10 +23,7 @@ export class GqlService {
     readonly apollo: Apollo,
     readonly httpLink: HttpLink
   ) {
-    this.options = ldNestedMerge(
-      { gql: DefaultGqlConfig },
-      this.config.options
-    );
+    this.options = ldNestedMerge({ gql: DefaultGqlConfig }, this.config.options);
 
     this.setupApolloClient();
     logger.info('GqlService ready ...');

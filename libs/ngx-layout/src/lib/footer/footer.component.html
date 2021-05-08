@@ -5,18 +5,8 @@
       <mat-list-item *ngFor="let link of footer.links">
         <mat-icon matListIcon svgIcon="{{ link.icon }}"></mat-icon>
         <p matLine>
-          <a
-            *ngIf="link?.external"
-            class="no-underline"
-            href="{{ link.link }}"
-            >{{ link.name | translate }}</a
-          >
-          <a
-            *ngIf="!link.external"
-            class="no-underline"
-            routerLink="{{ link.link }}"
-            >{{ link.name | translate }}</a
-          >
+          <a *ngIf="link?.external" class="no-underline" href="{{ link.link }}">{{ link.name | translate }}</a>
+          <a *ngIf="!link.external" class="no-underline" routerLink="{{ link.link }}">{{ link.name | translate }}</a>
         </p>
       </mat-list-item>
     </mat-list>

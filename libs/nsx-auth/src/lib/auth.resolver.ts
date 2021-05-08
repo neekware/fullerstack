@@ -5,11 +5,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
-import {
-  CookiesDecorator,
-  RequestDecorator,
-  ResponseDecorator,
-} from './auth.decorator';
+import { CookiesDecorator, RequestDecorator, ResponseDecorator } from './auth.decorator';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
   AuthStatusDto,
@@ -57,9 +53,7 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
   ) {
-    const payload: JwtDto = this.securityService.verifyToken(
-      cookies[AUTH_SESSION_COOKIE_NAME]
-    );
+    const payload: JwtDto = this.securityService.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME]);
     if (!payload) {
       throw new UnauthorizedException('Error - Invalid or expired session');
     }
@@ -70,9 +64,7 @@ export class AuthResolver {
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
-      throw new UnauthorizedException(
-        'Error - Invalid session or remotely terminated'
-      );
+      throw new UnauthorizedException('Error - Invalid session or remotely terminated');
     }
 
     const token = this.securityService.issueToken(user, request, response);

@@ -9,8 +9,7 @@ export enum OrderDirection {
 
 registerEnumType(OrderDirection, {
   name: 'OrderDirection',
-  description:
-    'Ascending or Descending direction for a given `orderBy` argument.',
+  description: 'Ascending or Descending direction for a given `orderBy` argument.',
 });
 
 @InputType({ isAbstract: true })

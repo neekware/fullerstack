@@ -22,10 +22,7 @@ export class LoggerService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(readonly config: ConfigService) {
-    this.options = ldNestedMerge(
-      { logger: DefaultLoggerConfig },
-      this.config.options
-    );
+    this.options = ldNestedMerge({ logger: DefaultLoggerConfig }, this.config.options);
 
     if (!this.config.options.production) {
       this.info('LogService ready ...');
@@ -110,11 +107,6 @@ export class LoggerService {
     }
 
     const color = LogColors[level];
-    console.log(
-      `%c${this.time} [${LogNames[level]}]`,
-      `color:${color}`,
-      message,
-      ...extras
-    );
+    console.log(`%c${this.time} [${LogNames[level]}]`, `color:${color}`, message, ...extras);
   }
 }

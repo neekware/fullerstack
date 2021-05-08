@@ -1,8 +1,4 @@
-import {
-  BreakpointObserver,
-  BreakpointState,
-  Breakpoints,
-} from '@angular/cdk/layout';
+import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
@@ -24,11 +20,7 @@ import { DeepReadonly } from 'ts-essentials';
 
 import * as actions from './store/layout-state.action';
 import { DefaultLayoutState } from './store/layout-state.default';
-import {
-  LayoutState,
-  NavbarMode,
-  SidenavMode,
-} from './store/layout-state.model';
+import { LayoutState, NavbarMode, SidenavMode } from './store/layout-state.model';
 import { LayoutStoreState } from './store/layout-state.store';
 
 @Injectable()
@@ -49,10 +41,7 @@ export class LayoutService implements OnDestroy {
     },
     register: {
       label: _('COMMON.REGISTER'),
-      path: tryGet(
-        () => this.options.localConfig.registerPageUrl,
-        '/auth/register'
-      ),
+      path: tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register'),
     },
     logout: {
       label: _('COMMON.LOGOUT'),
@@ -151,14 +140,12 @@ export class LayoutService implements OnDestroy {
   }
 
   private fullscreenInit() {
-    this.uix.fullscreen$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isFullscreen) => {
-        if (this.state.fullscreenOpen && !isFullscreen) {
-          this.store.dispatch(new actions.SetFullscreenStatus(isFullscreen));
-          this.uix.fullscreenOff();
-        }
-      });
+    this.uix.fullscreen$.pipe(takeUntil(this.destroy$)).subscribe((isFullscreen) => {
+      if (this.state.fullscreenOpen && !isFullscreen) {
+        this.store.dispatch(new actions.SetFullscreenStatus(isFullscreen));
+        this.uix.fullscreenOff();
+      }
+    });
   }
 
   toggleMenu() {

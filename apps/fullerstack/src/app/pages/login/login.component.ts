@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 // import { ValidationService } from '@fullerstack/shared/services';
 import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
@@ -26,10 +21,7 @@ export class LoginComponent implements OnInit {
     public ngFormBuilder: FormBuilder // public validation: ValidationService
   ) {
     if (this.auth.state.isLoggedIn) {
-      const redirectUrl = tryGet(
-        () => this.config.options.localConfig.loggedInLandingPageUrl,
-        '/'
-      );
+      const redirectUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
       this.auth.goTo(redirectUrl);
     } else {
       this.auth.initiateLoginState();

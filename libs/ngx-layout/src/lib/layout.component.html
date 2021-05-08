@@ -2,21 +2,11 @@
   <fullerstack-navbar></fullerstack-navbar>
 
   <mat-sidenav-container>
-    <mat-sidenav
-      #sideMenu
-      position="start"
-      [mode]="layout.state.menuMode"
-      [opened]="layout.state.menuOpen"
-    >
+    <mat-sidenav #sideMenu position="start" [mode]="layout.state.menuMode" [opened]="layout.state.menuOpen">
       <fullerstack-menu></fullerstack-menu>
     </mat-sidenav>
 
-    <mat-sidenav
-      #notifyMenu
-      position="end"
-      [mode]="layout.state.notifyMode"
-      [opened]="layout.state.notifyOpen"
-    >
+    <mat-sidenav #notifyMenu position="end" [mode]="layout.state.notifyMode" [opened]="layout.state.notifyOpen">
       <fullerstack-notification></fullerstack-notification>
     </mat-sidenav>
 

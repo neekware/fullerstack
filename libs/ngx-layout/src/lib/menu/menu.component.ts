@@ -22,18 +22,13 @@ export class MenuComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.layout.menu.setPermissionVerificationFunction(
-      this.hasPermission.bind(this)
-    );
+    this.layout.menu.setPermissionVerificationFunction(this.hasPermission.bind(this));
 
     this.rootNode = this.layout.menu.buildMenuTree(LayoutMenuTree);
 
     this.auth.authChanged$.subscribe((state) => {
       const forceMenuRebuild = true;
-      this.rootNode = this.layout.menu.buildMenuTree(
-        LayoutMenuTree,
-        forceMenuRebuild
-      );
+      this.rootNode = this.layout.menu.buildMenuTree(LayoutMenuTree, forceMenuRebuild);
     });
   }
 

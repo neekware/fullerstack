@@ -11,8 +11,7 @@ export class UserDataAccessScope {
 
   static getSecuredUser(user: User, currentUser?: User): Partial<User> {
     return tryGet(
-      () =>
-        UserDataAccessScope[currentUser.role.toLowerCase()](user, currentUser),
+      () => UserDataAccessScope[currentUser.role.toLowerCase()](user, currentUser),
       UserDataAccessScope.anonymous(user)
     );
   }

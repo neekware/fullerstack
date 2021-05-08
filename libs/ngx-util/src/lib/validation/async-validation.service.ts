@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  AbstractControl,
-  AsyncValidatorFn,
-  ValidationErrors,
-} from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { GqlService, gqlMgr } from '@fullerstack/ngx-gql';
 import * as schema from '@fullerstack/ngx-gql/schema';
 import { Observable, from, of as observableOf, timer } from 'rxjs';
@@ -18,9 +14,7 @@ export class AsyncValidationService {
   validateEmailAvailability(debounce = 600): AsyncValidatorFn {
     return (
       control: AbstractControl
-    ):
-      | Promise<ValidationErrors | null>
-      | Observable<ValidationErrors | null> => {
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       return timer(debounce).pipe(
         switchMapTo(
           from(

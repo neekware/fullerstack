@@ -13,10 +13,7 @@ import { LoggerModule } from '@fullerstack/ngx-logger';
 import { MaterialModule } from '@fullerstack/ngx-material';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { UixModule } from '@fullerstack/ngx-uix';
-import {
-  AsyncValidationService,
-  ValidationService,
-} from '@fullerstack/ngx-util';
+import { AsyncValidationService, ValidationService } from '@fullerstack/ngx-util';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';

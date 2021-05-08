@@ -35,10 +35,7 @@ export class GTagService implements OnDestroy {
     readonly config: ConfigService,
     readonly logger: LoggerService
   ) {
-    this.options = ldNestedMerge(
-      { gtag: DefaultGTagConfig },
-      this.config.options
-    );
+    this.options = ldNestedMerge({ gtag: DefaultGTagConfig }, this.config.options);
 
     if (this.options.gtag.isEnabled) {
       if (!this.options.gtag.trackingId) {
@@ -48,9 +45,7 @@ export class GTagService implements OnDestroy {
       this.loadScript();
       this.initScript();
 
-      this.logger.info(
-        `GTagService ready ... (${this.options.gtag.trackingId})`
-      );
+      this.logger.info(`GTagService ready ... (${this.options.gtag.trackingId})`);
 
       if (this.options.gtag?.routeChangeTracking) {
         this.enablePageView();
@@ -118,9 +113,7 @@ export class GTagService implements OnDestroy {
           this.logger.error('Error - Failed to track page view', err);
         }
       } else {
-        this.logger.warn(
-          'Error - Skipping page track. Gtag may not be ready yet ...'
-        );
+        this.logger.warn('Error - Skipping page track. Gtag may not be ready yet ...');
       }
     }
   }
@@ -134,9 +127,7 @@ export class GTagService implements OnDestroy {
           this.logger.error('Error - Failed to track event', err);
         }
       } else {
-        this.logger.warn(
-          'Error - Skipping event track. Gtag may not be ready yet ...'
-        );
+        this.logger.warn('Error - Skipping event track. Gtag may not be ready yet ...');
       }
     }
   }

@@ -15,9 +15,7 @@ export class GTagModule {
     parentModule: GTagModule
   ) {
     if (parentModule) {
-      throw new Error(
-        'GTagModule is already loaded. Import it in the AppModule only'
-      );
+      throw new Error('GTagModule is already loaded. Import it in the AppModule only');
     }
   }
 }

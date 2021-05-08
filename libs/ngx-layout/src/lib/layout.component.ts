@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';

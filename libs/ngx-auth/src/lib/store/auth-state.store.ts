@@ -24,10 +24,7 @@ export class AuthStoreState {
   }
 
   @Action(actions.LoginRequest)
-  loginRequest(
-    { setState }: StateContext<AuthState>,
-    { payload }: actions.LoginRequest
-  ) {
+  loginRequest({ setState }: StateContext<AuthState>, { payload }: actions.LoginRequest) {
     setState(
       signState({
         ...DefaultAuthState,
@@ -40,10 +37,7 @@ export class AuthStoreState {
   }
 
   @Action(actions.LoginSuccess)
-  loginSuccess(
-    { setState }: StateContext<AuthState>,
-    { payload }: actions.LoginSuccess
-  ) {
+  loginSuccess({ setState }: StateContext<AuthState>, { payload }: actions.LoginSuccess) {
     setState(
       signState({
         ...DefaultAuthState,
@@ -69,10 +63,7 @@ export class AuthStoreState {
   }
 
   @Action(actions.RegisterRequest)
-  registerRequest(
-    { setState }: StateContext<AuthState>,
-    { payload }: actions.RegisterRequest
-  ) {
+  registerRequest({ setState }: StateContext<AuthState>, { payload }: actions.RegisterRequest) {
     setState(
       signState({
         ...DefaultAuthState,
@@ -85,10 +76,7 @@ export class AuthStoreState {
   }
 
   @Action(actions.RegisterSuccess)
-  registerSuccess(
-    { setState }: StateContext<AuthState>,
-    { payload }: actions.RegisterSuccess
-  ) {
+  registerSuccess({ setState }: StateContext<AuthState>, { payload }: actions.RegisterSuccess) {
     setState(
       signState({
         ...DefaultAuthState,

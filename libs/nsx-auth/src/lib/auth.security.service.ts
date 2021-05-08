@@ -20,10 +20,7 @@ export class SecurityService {
   readonly options: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
   readonly jwtSecret: string;
 
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly config: ConfigService
-  ) {
+  constructor(private readonly prisma: PrismaService, private readonly config: ConfigService) {
     this.options = ldNestMerge(
       { ...this.options },
       this.config.get<SecurityConfig>('appConfig.securityConfig')
@@ -97,10 +94,7 @@ export class SecurityService {
    * @param password text password
    * @returns promise of a boolean
    */
-  async validatePassword(
-    password: string,
-    hashedPassword: string
-  ): Promise<boolean> {
+  async validatePassword(password: string, hashedPassword: string): Promise<boolean> {
     const validPassword = await compare(password, hashedPassword);
     return validPassword;
   }
@@ -118,10 +112,7 @@ export class SecurityService {
     newPassword: string,
     resetOtherSessions: boolean
   ): Promise<User> {
-    const validPassword = await this.validatePassword(
-      oldPassword,
-      user.password
-    );
+    const validPassword = await this.validatePassword(oldPassword, user.password);
 
     if (!validPassword) {
       throw new BadRequestException('Error - Invalid password');
@@ -132,9 +123,7 @@ export class SecurityService {
     return this.prisma.user.update({
       data: {
         password: hashedPassword,
-        sessionVersion: resetOtherSessions
-          ? user.sessionVersion + 1
-          : user.sessionVersion,
+        sessionVersion: resetOtherSessions ? user.sessionVersion + 1 : user.sessionVersion,
       },
       where: { id: user.id },
     });
@@ -151,9 +140,7 @@ export class SecurityService {
     return this.prisma.user.update({
       data: {
         password: hashedPassword,
-        sessionVersion: resetOtherSessions
-          ? user.sessionVersion + 1
-          : user.sessionVersion,
+        sessionVersion: resetOtherSessions ? user.sessionVersion + 1 : user.sessionVersion,
       },
       where: { id: user.id },
     });
@@ -220,10 +207,7 @@ export class SecurityService {
    */
   verifyToken(token: string): JwtDto {
     try {
-      const { userId, sessionVersion } = jwt.verify(
-        token,
-        this.jwtSecret
-      ) as JwtDto;
+      const { userId, sessionVersion } = jwt.verify(token, this.jwtSecret) as JwtDto;
       return { userId, sessionVersion };
     } catch (err) {
       return undefined;

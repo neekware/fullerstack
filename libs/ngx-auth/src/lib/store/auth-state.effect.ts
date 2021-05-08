@@ -10,10 +10,7 @@ import { Observable, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import * as actions from './auth-state.action';
-import {
-  AuthLoginCredentials,
-  AuthRegisterCredentials,
-} from './auth-state.model';
+import { AuthLoginCredentials, AuthRegisterCredentials } from './auth-state.model';
 
 const JwtLoginMutationNode = gqlMgr.getOperation('JwtLogin');
 const JwtRegisterMutationNode = gqlMgr.getOperation('JwtRegister');
@@ -65,19 +62,11 @@ export class AuthEffect {
           }
         },
         (error) => {
-          return this.loginHandleError(
-            error.message,
-            LogLevels.warn,
-            credentials
-          );
+          return this.loginHandleError(error.message, LogLevels.warn, credentials);
         }
       ),
       catchError((error, caught) => {
-        return this.loginHandleError(
-          error.message,
-          LogLevels.warn,
-          credentials
-        );
+        return this.loginHandleError(error.message, LogLevels.warn, credentials);
       })
     );
   }
@@ -114,36 +103,20 @@ export class AuthEffect {
             });
             return this.store.dispatch(new actions.RegisterSuccess(resp.token));
           } else {
-            return this.registerHandleError(
-              resp.msg,
-              LogLevels.warn,
-              credentials
-            );
+            return this.registerHandleError(resp.msg, LogLevels.warn, credentials);
           }
         },
         (error) => {
-          return this.registerHandleError(
-            error.message,
-            LogLevels.warn,
-            credentials
-          );
+          return this.registerHandleError(error.message, LogLevels.warn, credentials);
         }
       ),
       catchError((error, caught) => {
-        return this.registerHandleError(
-          error.message,
-          LogLevels.warn,
-          credentials
-        );
+        return this.registerHandleError(error.message, LogLevels.warn, credentials);
       })
     );
   }
 
-  private refreshHandleError(
-    msg: string,
-    level: LogLevels,
-    token?: string
-  ): Observable<any> {
+  private refreshHandleError(msg: string, level: LogLevels, token?: string): Observable<any> {
     this.msg.setMsg({
       text: msg || _('AUTH.ERROR.REFRESH'),
       detail: `Registration Failed ${token}, (${msg})`,
@@ -169,9 +142,7 @@ export class AuthEffect {
               text: _('AUTH.SUCCESS.REFRESH'),
               level: LogLevels.debug,
             });
-            return this.store.dispatch(
-              new actions.TokenRefreshSuccess(resp.token)
-            );
+            return this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
           } else {
             return this.refreshHandleError(resp.msg, LogLevels.warn, token);
           }

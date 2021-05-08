@@ -20,9 +20,7 @@ export class AuthService {
 
   async createUser(payload: UserCreateInput): Promise<User> {
     let user: User;
-    const hashedPassword = await this.securityService.hashPassword(
-      payload.password
-    );
+    const hashedPassword = await this.securityService.hashPassword(payload.password);
 
     try {
       user = await this.prisma.user.create({

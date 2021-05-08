@@ -1,19 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
-import {
-  AsyncValidationService,
-  ValidationService,
-} from '@fullerstack/ngx-util';
+import { AsyncValidationService, ValidationService } from '@fullerstack/ngx-util';
 
 @Component({
   selector: 'fullerstack-register',
@@ -65,18 +57,12 @@ export class RegisterComponent implements OnInit {
         ],
         password: [
           '',
-          [
-            Validators.required,
-            Validators.minLength(this.validation.PASSWORD_MIN_LEN),
-          ],
+          [Validators.required, Validators.minLength(this.validation.PASSWORD_MIN_LEN)],
         ],
         passwordConfirmation: ['', [Validators.required]],
       },
       {
-        validator: this.validation.matchingPasswords(
-          'password',
-          'passwordConfirmation'
-        ),
+        validator: this.validation.matchingPasswords('password', 'passwordConfirmation'),
       }
     );
   }

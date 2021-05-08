@@ -38,10 +38,7 @@ export class HintComponent implements OnDestroy {
     this.reset();
     if (this.control) {
       for (const error in this.control.errors) {
-        const hasError = Object.prototype.hasOwnProperty.call(
-          this.control.errors,
-          error
-        );
+        const hasError = Object.prototype.hasOwnProperty.call(this.control.errors, error);
 
         if (hasError && this.control.touched) {
           this.processFeedback(error, this.control.errors[error]);
@@ -55,8 +52,7 @@ export class HintComponent implements OnDestroy {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   processFeedback(validatorName: string, validatorValue?: any) {
-    validatorName =
-      validatorName === 'pattern' ? 'invalidFormat' : validatorName;
+    validatorName = validatorName === 'pattern' ? 'invalidFormat' : validatorName;
 
     if (validatorName === 'minlength') {
       return this.handleMinimumLength(validatorValue.requiredLength);

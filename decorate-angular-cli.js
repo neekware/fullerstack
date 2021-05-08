@@ -58,9 +58,7 @@ function symlinkNgCLItoNxCLI() {
     }
   } catch (e) {
     output.error({
-      title:
-        'Unable to create a symlink from the Angular CLI to the Nx CLI:' +
-        e.message,
+      title: 'Unable to create a symlink from the Angular CLI to the Nx CLI:' + e.message,
     });
     throw e;
   }

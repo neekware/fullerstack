@@ -14,9 +14,7 @@ export class LoggerModule {
   ) {
     if (parentModule) {
       /* istanbul ignore next */
-      throw new Error(
-        'LoggerModule is already loaded. Import it in the AppModule only'
-      );
+      throw new Error('LoggerModule is already loaded. Import it in the AppModule only');
     }
   }
 

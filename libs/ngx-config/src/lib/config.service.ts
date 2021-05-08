@@ -45,15 +45,12 @@ export class ConfigService {
             const postBody = remoteConfig.body || {};
             httpRequest = this.http.post(url, postBody, { headers });
           }
-          const httpTimeout =
-            (remoteConfig.timeout || DEFAULT_HTTP_TIMEOUT) * 1000;
+          const httpTimeout = (remoteConfig.timeout || DEFAULT_HTTP_TIMEOUT) * 1000;
           httpRequest
             .pipe(
               timeout(httpTimeout),
               catchError((err: Response) => {
-                console.warn(
-                  `ConfigService failed. (${err.statusText || 'unknown'})`
-                );
+                console.warn(`ConfigService failed. (${err.statusText || 'unknown'})`);
                 return of({});
               })
             )

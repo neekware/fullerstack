@@ -1,20 +1,11 @@
-<a
-  *ngIf="link.isInternalLink"
-  routerLink="{{ link.link }}"
-  (click)="redirectUrl(link)"
-  [class.active]="link.isActive(router.url)"
->
+<a *ngIf="link.isInternalLink" routerLink="{{ link.link }}" (click)="redirectUrl(link)" [class.active]="link.isActive(router.url)">
   <div>
     <mat-icon *ngIf="link?.icon" svgIcon="{{ link.icon }}"></mat-icon>
     <span>{{ link.name | translate }}</span>
   </div>
 </a>
 
-<a
-  *ngIf="link.isExternalLink"
-  href="{{ link.link }}"
-  target="{{ link.target }}"
->
+<a *ngIf="link.isExternalLink" href="{{ link.link }}" target="{{ link.target }}">
   <div>
     <mat-icon svgIcon="{{ link.icon }}"></mat-icon>
     <span>{{ link.name | translate }}</span>

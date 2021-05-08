@@ -18,9 +18,7 @@ export class ConfigModule {
   ) {
     if (parentModule) {
       /* istanbul ignore next */
-      throw new Error(
-        'ConfigModule is already loaded. Import it in the AppModule only'
-      );
+      throw new Error('ConfigModule is already loaded. Import it in the AppModule only');
     }
   }
 

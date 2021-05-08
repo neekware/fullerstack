@@ -10,20 +10,17 @@ import { getRequestFromContext } from './auth.util';
 
 @Injectable()
 export class AuthGuardRole extends AuthGuardGql {
-  constructor(
-    readonly reflector: Reflector,
-    readonly securityService: SecurityService
-  ) {
+  constructor(readonly reflector: Reflector, readonly securityService: SecurityService) {
     super(securityService);
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const canActivate = await super.canActivate(context);
     if (canActivate) {
-      const roles = this.reflector.getAllAndOverride<AuthFilterType<Role>>(
-        AUTH_ROLE_KEY,
-        [context.getHandler(), context.getClass()]
-      );
+      const roles = this.reflector.getAllAndOverride<AuthFilterType<Role>>(AUTH_ROLE_KEY, [
+        context.getHandler(),
+        context.getClass(),
+      ]);
 
       const user = getRequestFromContext(context).user as User;
 

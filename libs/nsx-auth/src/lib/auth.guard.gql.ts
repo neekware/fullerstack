@@ -45,9 +45,7 @@ export class AuthGuardGql extends AuthGuard('jwt') {
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
-      throw new BadRequestException(
-        'Error - Invalid session or remotely terminated'
-      );
+      throw new BadRequestException('Error - Invalid session or remotely terminated');
     }
 
     request.user = user;

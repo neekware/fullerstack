@@ -23,11 +23,7 @@ describe('LoggerService: Loads default values, disabled', () => {
 
   beforeAll(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        ConfigModule.forRoot(applicationConfig),
-        LoggerModule.forRoot(),
-      ],
+      imports: [HttpClientModule, ConfigModule.forRoot(applicationConfig), LoggerModule.forRoot()],
     });
 
     testbed = getTestBed();

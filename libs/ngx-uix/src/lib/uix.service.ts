@@ -34,10 +34,7 @@ export class UixService implements OnDestroy {
     readonly logger: LoggerService,
     readonly mat: MaterialService
   ) {
-    this.options = ldNestedMerge(
-      { uix: DefaultUixConfig },
-      this.config.options
-    );
+    this.options = ldNestedMerge({ uix: DefaultUixConfig }, this.config.options);
 
     this.initFullscreen();
     this.loadSvgIcons();
@@ -47,17 +44,11 @@ export class UixService implements OnDestroy {
   private loadSvgIcons() {
     if (!this.iconsLoaded) {
       for (const group in SvgIcons) {
-        this.mat.registerSvgIconsInNamespace(
-          SvgIcons[group],
-          this.options.uix.cacheBustingHash
-        );
+        this.mat.registerSvgIconsInNamespace(SvgIcons[group], this.options.uix.cacheBustingHash);
       }
       this.iconsLoaded = true;
     }
-    this.mat.registerSvgIconSet(
-      UIX_MDI_ICONS,
-      this.options.uix.cacheBustingHash
-    );
+    this.mat.registerSvgIconSet(UIX_MDI_ICONS, this.options.uix.cacheBustingHash);
   }
 
   initFullscreen() {

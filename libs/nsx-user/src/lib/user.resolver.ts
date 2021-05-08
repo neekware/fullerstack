@@ -8,30 +8,18 @@ import {
 } from '@fullerstack/nsx-auth';
 import { PaginationArgs } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import {
-  NotFoundException,
-  UnauthorizedException,
-  UseGuards,
-} from '@nestjs/common';
+import { NotFoundException, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
 
-import {
-  PaginatedUser,
-  UserDto,
-  UserUpdateAdvancedInput,
-  UserUpdateInput,
-} from './user.model';
+import { PaginatedUser, UserDto, UserUpdateAdvancedInput, UserUpdateInput } from './user.model';
 import { UserOrder } from './user.order';
 import { UserDataAccessScope } from './user.scope';
 import { UserService } from './user.service';
 
 @Resolver(() => UserDto)
 export class UserResolver {
-  constructor(
-    private userService: UserService,
-    private prisma: PrismaService
-  ) {}
+  constructor(private userService: UserService, private prisma: PrismaService) {}
 
   @UseGuards(AuthGuardGql)
   @Query(() => UserDto, { description: "Get user's own info" })
@@ -55,10 +43,7 @@ export class UserResolver {
   @UseRoles({ exclude: [Role.USER] })
   @UseGuards(AuthGuardGql, AuthGuardRole)
   @Query(() => UserDto, { description: 'Get other user info' })
-  async user(
-    @UserDecorator() currentUser: User,
-    @Args('input') userData: UserUpdateAdvancedInput
-  ) {
+  async user(@UserDecorator() currentUser: User, @Args('input') userData: UserUpdateAdvancedInput) {
     const user = await this.prisma.user.findUnique({
       where: { id: userData.id },
     });
@@ -114,8 +99,7 @@ export class UserResolver {
           ...args,
         });
         return users.map(
-          (user) =>
-            UserDataAccessScope.getSecuredUser(user, currentUser) as UserDto
+          (user) => UserDataAccessScope.getSecuredUser(user, currentUser) as UserDto
         );
       },
       () =>

@@ -1,17 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { DeepReadonly } from 'ts-essentials';
 
-import {
-  SnackbarData,
-  SnackbarDataDefault,
-  SnackbarType,
-} from './snackbar.model';
+import { SnackbarData, SnackbarDataDefault, SnackbarType } from './snackbar.model';
 
 @Component({
   selector: 'fullerstack-snackbar',

@@ -24,11 +24,7 @@ import { DefaultAuthConfig } from './auth.default';
 import * as actions from './store/auth-state.action';
 import { AUTH_STATE_KEY } from './store/auth-state.constant';
 import { DefaultAuthState } from './store/auth-state.default';
-import {
-  AuthLoginCredentials,
-  AuthRegisterCredentials,
-  AuthState,
-} from './store/auth-state.model';
+import { AuthLoginCredentials, AuthRegisterCredentials, AuthState } from './store/auth-state.model';
 import { AuthStoreState } from './store/auth-state.store';
 import { sanitizeState } from './store/auth-state.util';
 
@@ -50,19 +46,12 @@ export class AuthService implements OnDestroy {
     readonly jwt: JwtService,
     readonly gql: GqlService
   ) {
-    this.options = ldNestedMerge(
-      { gtag: DefaultAuthConfig },
-      this.config.options
-    );
+    this.options = ldNestedMerge({ gtag: DefaultAuthConfig }, this.config.options);
 
     this.doInit();
     this.authenticationErrorMiddleware();
     this.initAuthorizationHeaderInsertionMiddleware();
-    logger.debug(
-      `AuthService ready ... (${
-        this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'
-      })`
-    );
+    logger.debug(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
   }
 
   private doInit() {
@@ -112,20 +101,14 @@ export class AuthService implements OnDestroy {
   }
 
   private stateChangeRedirectHandler(prevState: AuthState) {
-    const loginUrl = tryGet(
-      () => this.options.localConfig.loginPageUrl,
-      '/auth/login'
-    );
+    const loginUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
 
     const registrationUrl = tryGet(
       () => this.options.localConfig.registerPageUrl,
       '/auth/register'
     );
 
-    const loggedInUrl = tryGet(
-      () => this.options.localConfig.loggedInLandingPageUrl,
-      '/'
-    );
+    const loggedInUrl = tryGet(() => this.options.localConfig.loggedInLandingPageUrl, '/');
 
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
       this.initDispatch();
@@ -145,9 +128,7 @@ export class AuthService implements OnDestroy {
         'storage',
         (event) => {
           if (event.key === AUTH_STATE_KEY) {
-            let newState = <AuthState>(
-              (sanitizeState(event.newValue) || DefaultAuthState)
-            );
+            let newState = <AuthState>(sanitizeState(event.newValue) || DefaultAuthState);
             this.store.dispatch(new actions.MultiTabSyncRequest(newState));
           }
         },
@@ -175,30 +156,22 @@ export class AuthService implements OnDestroy {
   }
 
   private authenticationErrorMiddleware() {
-    const afterware = onError(
-      ({ response, operation, graphQLErrors, networkError }) => {
-        if (networkError && (networkError as any).statusCode === 401) {
-          this.logoutDispatch();
-        }
+    const afterware = onError(({ response, operation, graphQLErrors, networkError }) => {
+      if (networkError && (networkError as any).statusCode === 401) {
+        this.logoutDispatch();
       }
-    );
+    });
     // this.gql.insertLinks([afterware]);
   }
 
   get isLoading() {
-    return (
-      !this.state.hasError &&
-      (this.state.isAuthenticating || this.state.isRegistering)
-    );
+    return !this.state.hasError && (this.state.isAuthenticating || this.state.isRegistering);
   }
 
   initiateLoginState() {
     if (!this.state.isLoggedIn) {
       this.msg.reset();
-      const redirectUrl = tryGet(
-        () => this.options.localConfig.loginPageUrl,
-        '/auth/login'
-      );
+      const redirectUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
       this.router.navigate([redirectUrl]);
     }
   }
@@ -206,10 +179,7 @@ export class AuthService implements OnDestroy {
   initiateRegisterState() {
     if (!this.state.isLoggedIn) {
       this.msg.reset();
-      const redirectUrl = tryGet(
-        () => this.options.localConfig.registerPageUrl,
-        '/auth/register'
-      );
+      const redirectUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
       this.router.navigate([redirectUrl]);
     }
   }
@@ -218,10 +188,7 @@ export class AuthService implements OnDestroy {
     if (this.state.isLoggedIn) {
       this.msg.reset();
       this.logoutDispatch();
-      const redirectUrl = tryGet(
-        () => this.options.localConfig.loggedOutRedirectUrl,
-        '/'
-      );
+      const redirectUrl = tryGet(() => this.options.localConfig.loggedOutRedirectUrl, '/');
       this.router.navigate([redirectUrl]);
     }
   }

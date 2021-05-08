@@ -22,9 +22,7 @@ export class UserService {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     const forbidden = AUTH_ROLE_RESTRICTION_MATRIX[currentUser.role];
     if (forbidden.some((some) => some === user.role)) {
-      throw new ForbiddenException(
-        'Error - Operation on privileged entity not permitted'
-      );
+      throw new ForbiddenException('Error - Operation on privileged entity not permitted');
     }
     return true;
   }

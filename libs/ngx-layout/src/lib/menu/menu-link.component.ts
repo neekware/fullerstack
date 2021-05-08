@@ -21,10 +21,7 @@ export class MenuLinkComponent {
   ) {}
 
   redirectUrl(node: MenuNode) {
-    if (
-      (node.isFullSpan || this.layout.state.isHandset) &&
-      this.layout.state.menuOpen
-    ) {
+    if ((node.isFullSpan || this.layout.state.isHandset) && this.layout.state.menuOpen) {
       this.layout.toggleMenu();
     }
     this.auth.goTo(node.link);

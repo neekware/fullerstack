@@ -3,10 +3,7 @@
     <mat-accordion *ngIf="node.isNode">
       <fullerstack-menu-node [node]="node"></fullerstack-menu-node>
     </mat-accordion>
-    <fullerstack-menu-link
-      *ngIf="node.isLink"
-      [link]="node"
-    ></fullerstack-menu-link>
+    <fullerstack-menu-link *ngIf="node.isLink" [link]="node"></fullerstack-menu-link>
   </div>
 
   <fullerstack-options></fullerstack-options>

@@ -49,9 +49,7 @@ class GqlDocumentManager {
    * Prunes duplicate Definitions. First seen wins.
    * @param definitions Array of DefinitionNode
    */
-  private processDuplicateDefinitions(
-    definitions: Array<DefinitionNode>
-  ): Array<DefinitionNode> {
+  private processDuplicateDefinitions(definitions: Array<DefinitionNode>): Array<DefinitionNode> {
     const processedFragments: { [index: string]: boolean } = {};
     definitions = definitions.filter((def) => {
       let keep = false;
@@ -80,9 +78,7 @@ class GqlDocumentManager {
   ): Array<DefinitionNode> {
     definitions.push(item.definition);
     for (const fragment of item.fragments) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.gqlFragmentsCache, fragment)
-      ) {
+      if (Object.prototype.hasOwnProperty.call(this.gqlFragmentsCache, fragment)) {
         const cache = this.gqlFragmentsCache[fragment];
         this.processFragmentDefinitions(cache, definitions);
       }
@@ -90,10 +86,7 @@ class GqlDocumentManager {
     return definitions;
   }
 
-  private getFragmentNames(
-    docSet: SelectionSetNode,
-    fragments: Array<string> = []
-  ): Array<string> {
+  private getFragmentNames(docSet: SelectionSetNode, fragments: Array<string> = []): Array<string> {
     if (docSet && docSet.selections) {
       for (const selection of docSet.selections) {
         if (selection.kind === 'FragmentSpread') {
@@ -101,9 +94,7 @@ class GqlDocumentManager {
             fragments.push(selection.name.value);
           }
         } else if (selection && selection.selectionSet) {
-          fragments.concat(
-            this.getFragmentNames(selection.selectionSet, fragments)
-          );
+          fragments.concat(this.getFragmentNames(selection.selectionSet, fragments));
         }
       }
     }
@@ -115,14 +106,9 @@ class GqlDocumentManager {
       switch (definition.kind) {
         case 'OperationDefinition':
           if (
-            Object.prototype.hasOwnProperty.call(
-              this.gqlOperationsCache,
-              definition.name.value
-            )
+            Object.prototype.hasOwnProperty.call(this.gqlOperationsCache, definition.name.value)
           ) {
-            throw new Error(
-              `Multiple copies of ${definition.name.value} operation was found.`
-            );
+            throw new Error(`Multiple copies of ${definition.name.value} operation was found.`);
           }
           this.gqlOperationsCache[definition.name.value] = {
             definition: definition,
@@ -130,15 +116,8 @@ class GqlDocumentManager {
           };
           break;
         case 'FragmentDefinition':
-          if (
-            Object.prototype.hasOwnProperty.call(
-              this.gqlFragmentsCache,
-              definition.name.value
-            )
-          ) {
-            throw new Error(
-              `Multiple copies of ${definition.name.value} fragment was found.`
-            );
+          if (Object.prototype.hasOwnProperty.call(this.gqlFragmentsCache, definition.name.value)) {
+            throw new Error(`Multiple copies of ${definition.name.value} fragment was found.`);
           }
           this.gqlFragmentsCache[definition.name.value] = {
             definition: definition,
@@ -163,11 +142,7 @@ class GqlDocumentManager {
   }
 
   private loadScripts(): void {
-    const gqlScriptLoader = require.context(
-      'graphql-tag/loader!',
-      true,
-      /\.gql$/
-    );
+    const gqlScriptLoader = require.context('graphql-tag/loader!', true, /\.gql$/);
     for (const script of GqlScriptsList) {
       const doc = gqlScriptLoader(script);
       this.loadDefinitions(doc);

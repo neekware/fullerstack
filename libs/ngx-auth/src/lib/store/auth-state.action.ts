@@ -1,8 +1,4 @@
-import {
-  AuthLoginCredentials,
-  AuthRegisterCredentials,
-  AuthState,
-} from './auth-state.model';
+import { AuthLoginCredentials, AuthRegisterCredentials, AuthState } from './auth-state.model';
 
 export class Initialize {
   static type = '[AUTH] Initialize';

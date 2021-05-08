@@ -1,7 +1,4 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { DeepReadonly } from 'ts-essentials';
 

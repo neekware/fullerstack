@@ -15,9 +15,7 @@ export class GqlModule {
     parentModule: GqlModule
   ) {
     if (parentModule) {
-      throw new Error(
-        'GqlModule is already loaded. Import it in the AppModule only'
-      );
+      throw new Error('GqlModule is already loaded. Import it in the AppModule only');
     }
   }
 }

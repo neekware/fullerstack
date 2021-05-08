@@ -4,10 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable()
 export class MaterialService {
-  constructor(
-    readonly registry: MatIconRegistry,
-    readonly sanitizer: DomSanitizer
-  ) {}
+  constructor(readonly registry: MatIconRegistry, readonly sanitizer: DomSanitizer) {}
 
   /**
    * Loads icons with namespace
@@ -24,9 +21,7 @@ export class MaterialService {
     // ]
 
     iconList.forEach((icon) => {
-      const path = cacheBustingHash
-        ? `${icon.path}?${cacheBustingHash}`
-        : icon.path;
+      const path = cacheBustingHash ? `${icon.path}?${cacheBustingHash}` : icon.path;
       const securePath = this.sanitizer.bypassSecurityTrustResourceUrl(path);
       icon.names.forEach((name) => {
         this.registry.addSvgIconInNamespace(icon.namespace, name, securePath);
@@ -39,9 +34,7 @@ export class MaterialService {
    * @param iconPath path to icon set (ex: '/assets/fonts/mdi.svg')
    */
   registerSvgIconSet(iconPath: string, cacheBustingHash = null) {
-    const path = cacheBustingHash
-      ? `${iconPath}?${cacheBustingHash}`
-      : iconPath;
+    const path = cacheBustingHash ? `${iconPath}?${cacheBustingHash}` : iconPath;
     const securePath = this.sanitizer.bypassSecurityTrustResourceUrl(iconPath);
     this.registry.addSvgIconSet(securePath);
   }

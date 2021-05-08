@@ -23,9 +23,7 @@
 
       <div fxLayout fxLayoutAlign="start center" click-no-propagation>
         <span>{{ 'MENU.OPTIONS.DARK' | translate }}</span>
-        <mat-slide-toggle
-          (change)="layout.setDarkTheme($event.checked)"
-        ></mat-slide-toggle>
+        <mat-slide-toggle (change)="layout.setDarkTheme($event.checked)"></mat-slide-toggle>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

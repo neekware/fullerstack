@@ -19,10 +19,7 @@ export class LayoutStoreState {
   }
 
   @Action(actions.SetMenuStatus)
-  setMenuStatus(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetMenuStatus
-  ) {
+  setMenuStatus({ patchState }: StateContext<LayoutState>, { payload }: actions.SetMenuStatus) {
     patchState({ menuOpen: payload });
   }
 
@@ -37,26 +34,17 @@ export class LayoutStoreState {
   }
 
   @Action(actions.SetMenuMode)
-  setMenuMode(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetMenuMode
-  ) {
+  setMenuMode({ patchState }: StateContext<LayoutState>, { payload }: actions.SetMenuMode) {
     patchState({ menuMode: payload });
   }
 
   @Action(actions.SetMenuRole)
-  setMenuRole(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetMenuRole
-  ) {
+  setMenuRole({ patchState }: StateContext<LayoutState>, { payload }: actions.SetMenuRole) {
     patchState({ menuRole: payload });
   }
 
   @Action(actions.SetNotifyStatus)
-  setNotifyStatus(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetNotifyStatus
-  ) {
+  setNotifyStatus({ patchState }: StateContext<LayoutState>, { payload }: actions.SetNotifyStatus) {
     patchState({ notifyOpen: payload });
   }
 
@@ -71,18 +59,12 @@ export class LayoutStoreState {
   }
 
   @Action(actions.SetNotifyMode)
-  setNotifyMode(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetNotifyMode
-  ) {
+  setNotifyMode({ patchState }: StateContext<LayoutState>, { payload }: actions.SetNotifyMode) {
     patchState({ notifyMode: payload });
   }
 
   @Action(actions.SetNotifyRole)
-  setNotifyRole(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetNotifyRole
-  ) {
+  setNotifyRole({ patchState }: StateContext<LayoutState>, { payload }: actions.SetNotifyRole) {
     patchState({ notifyRole: payload });
   }
 
@@ -100,34 +82,22 @@ export class LayoutStoreState {
   }
 
   @Action(actions.SetIsHandset)
-  setIsHandset(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetIsHandset
-  ) {
+  setIsHandset({ patchState }: StateContext<LayoutState>, { payload }: actions.SetIsHandset) {
     patchState({ isHandset: payload });
   }
 
   @Action(actions.SetIsPortrait)
-  setIsPortrait(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetIsPortrait
-  ) {
+  setIsPortrait({ patchState }: StateContext<LayoutState>, { payload }: actions.SetIsPortrait) {
     patchState({ isPortrait: payload });
   }
 
   @Action(actions.SetIsDarkTheme)
-  setIsDarkTheme(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetIsDarkTheme
-  ) {
+  setIsDarkTheme({ patchState }: StateContext<LayoutState>, { payload }: actions.SetIsDarkTheme) {
     patchState({ isDarkTheme: payload });
   }
 
   @Action(actions.SetNavbarMode)
-  setNavbarMode(
-    { patchState }: StateContext<LayoutState>,
-    { payload }: actions.SetNavbarMode
-  ) {
+  setNavbarMode({ patchState }: StateContext<LayoutState>, { payload }: actions.SetNavbarMode) {
     patchState({ navbarMode: payload });
   }
 }

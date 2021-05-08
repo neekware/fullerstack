@@ -12,9 +12,7 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
     const className = target.name.length > 2 ? target.name : options.className;
 
     if (!isFunction(target.prototype['ngOnDestroy'])) {
-      throw new Error(
-        `${className} must implement OnDestroy when decorated with @SubifyDecorator`
-      );
+      throw new Error(`${className} must implement OnDestroy when decorated with @SubifyDecorator`);
     }
 
     return class extends target implements OnDestroy {
@@ -31,10 +29,7 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
       _validateOptions(): void {
         if (
           this._options.takeUntilInputName &&
-          !Object.prototype.hasOwnProperty.call(
-            this,
-            this._options.takeUntilInputName
-          )
+          !Object.prototype.hasOwnProperty.call(this, this._options.takeUntilInputName)
         ) {
           console.error(
             `${this._options.className} must have "${this._options.takeUntilInputName}: Subject<boolean> = new Subject<boolean>();" when decorated with @SubifyDecorator`
@@ -62,12 +57,7 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
        * @returns void
        */
       _processTakeUtil(): void {
-        if (
-          Object.prototype.hasOwnProperty.call(
-            this,
-            this._options.takeUntilInputName
-          )
-        ) {
+        if (Object.prototype.hasOwnProperty.call(this, this._options.takeUntilInputName)) {
           this[this._options.takeUntilInputName].next(true);
           this[this._options.takeUntilInputName].complete();
         }
@@ -81,17 +71,11 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
         this._options.includes.forEach((prop) => {
           if (Object.prototype.hasOwnProperty.call(this, prop)) {
             const subscription = this[prop];
-            if (
-              subscription &&
-              subscription.unsubscribe &&
-              isFunction(subscription.unsubscribe)
-            ) {
+            if (subscription && subscription.unsubscribe && isFunction(subscription.unsubscribe)) {
               subscription.unsubscribe();
             }
           } else {
-            console.warn(
-              `${target.name} has no subscription property called ${prop}`
-            );
+            console.warn(`${target.name} has no subscription property called ${prop}`);
           }
         });
       }
@@ -108,11 +92,7 @@ export function SubifyDecorator(options = DefaultSubifyDecoratorOptions) {
             this._options.excludes.indexOf(prop) <= -1
           ) {
             const subscription = this[prop];
-            if (
-              subscription &&
-              subscription.unsubscribe &&
-              isFunction(subscription.unsubscribe)
-            ) {
+            if (subscription && subscription.unsubscribe && isFunction(subscription.unsubscribe)) {
               subscription.unsubscribe();
             }
           }

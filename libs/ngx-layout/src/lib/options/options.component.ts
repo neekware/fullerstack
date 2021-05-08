@@ -1,10 +1,4 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { I18nService } from '@fullerstack/ngx-i18n';
 

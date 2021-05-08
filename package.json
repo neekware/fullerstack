@@ -33,7 +33,7 @@
     "format": "nx format:write",
     "format:write": "nx format:write",
     "format:check": "nx format:check",
-    "format:all": "./node_modules/.bin/prettier --write \"**/*.ts\"",
+    "format:all": "./node_modules/.bin/prettier --write \"**/*{.ts,.html,.js,.json}\"",
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",

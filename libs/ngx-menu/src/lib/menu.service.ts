@@ -21,17 +21,10 @@ export class MenuService {
     return this.rootNode;
   }
 
-  private makeMenuTree(
-    itemList: MenuItem[],
-    parent?: MenuNode,
-    level = 1
-  ): MenuNode[] {
+  private makeMenuTree(itemList: MenuItem[], parent?: MenuNode, level = 1): MenuNode[] {
     const tree: MenuNode[] = [];
     for (const item of itemList) {
-      if (
-        !Object.prototype.hasOwnProperty.call(item, 'name') ||
-        item.name.length < 1
-      ) {
+      if (!Object.prototype.hasOwnProperty.call(item, 'name') || item.name.length < 1) {
         throw Error(`Menu item missing 'name'`);
       }
 
@@ -41,11 +34,7 @@ export class MenuService {
         newItem.parent = parent;
         if (Object.prototype.hasOwnProperty.call(item, 'children')) {
           if (item.children.length > 0) {
-            newItem.children = this.makeMenuTree(
-              item.children,
-              newItem,
-              level + 1
-            );
+            newItem.children = this.makeMenuTree(item.children, newItem, level + 1);
           }
         }
         tree.push(newItem);

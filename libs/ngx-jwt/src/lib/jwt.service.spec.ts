@@ -56,12 +56,7 @@ describe('JwtService', () => {
 
   beforeAll(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        ConfigModule.forRoot(applicationConfig),
-        LoggerModule,
-        JwtModule,
-      ],
+      imports: [HttpClientModule, ConfigModule.forRoot(applicationConfig), LoggerModule, JwtModule],
       providers: [JwtModule],
     });
 

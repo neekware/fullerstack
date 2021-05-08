@@ -1,9 +1,4 @@
-import {
-  LayoutState,
-  NavbarMode,
-  SidenavMode,
-  SidenavRole,
-} from './layout-state.model';
+import { LayoutState, NavbarMode, SidenavMode, SidenavRole } from './layout-state.model';
 
 export const DefaultLayoutState: LayoutState = {
   isHandset: false,
