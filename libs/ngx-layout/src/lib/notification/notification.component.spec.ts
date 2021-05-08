@@ -1,10 +1,10 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NotificationComponent } from './notification.component';
-import { LayoutService } from '../layout.service';
-import { NgxsModule } from '@ngxs/store';
-import { ConfigModule, ApplicationConfig } from '@fullerstack/ngx-config';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
+import { NgxsModule } from '@ngxs/store';
+
+import { LayoutService } from '../layout.service';
+import { NotificationComponent } from './notification.component';
 
 export const environment: ApplicationConfig = {
   appName: 'Fullerstack',

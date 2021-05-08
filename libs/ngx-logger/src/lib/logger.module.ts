@@ -1,5 +1,6 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+
 import { LoggerService } from './logger.service';
 
 @NgModule({

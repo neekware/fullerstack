@@ -1,8 +1,9 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { AppComponent } from './app.component';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { MaterialModule } from '@fullerstack/ngx-material';
+
+import { AppComponent } from './app.component';
 
 /** Application Environment with remote config endpoint */
 const appEnv: Readonly<ApplicationConfig> = {

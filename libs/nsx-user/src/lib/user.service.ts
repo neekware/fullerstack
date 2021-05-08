@@ -1,8 +1,9 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
-import { PrismaService } from '@fullerstack/nsx-prisma';
-import { UserUpdateInput, UserWhereUniqueInput } from './user.model';
-import { User } from '@prisma/client';
 import { AUTH_ROLE_RESTRICTION_MATRIX } from '@fullerstack/nsx-auth';
+import { PrismaService } from '@fullerstack/nsx-prisma';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
+
+import { UserUpdateInput, UserWhereUniqueInput } from './user.model';
 
 @Injectable()
 export class UserService {

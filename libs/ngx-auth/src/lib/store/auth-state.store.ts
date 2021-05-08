@@ -1,15 +1,14 @@
-import { MsgService } from '@fullerstack/ngx-msg';
-
-import { State, Action, StateContext } from '@ngxs/store';
+import { Injectable } from '@angular/core';
 import { _ } from '@fullerstack/ngx-i18n';
+import { MsgService } from '@fullerstack/ngx-msg';
+import { Action, State, StateContext } from '@ngxs/store';
 
+import * as actions from './auth-state.action';
+import { AUTH_STATE_KEY } from './auth-state.constant';
 import { DefaultAuthState } from './auth-state.default';
 import { AuthEffect } from './auth-state.effect';
 import { AuthState } from './auth-state.model';
-import { AUTH_STATE_KEY } from './auth-state.constant';
-import * as actions from './auth-state.action';
 import { signState } from './auth-state.util';
-import { Injectable } from '@angular/core';
 
 @State<AuthState>({
   name: AUTH_STATE_KEY,

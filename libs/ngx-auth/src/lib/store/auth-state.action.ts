@@ -1,7 +1,7 @@
 import {
-  AuthState,
   AuthLoginCredentials,
   AuthRegisterCredentials,
+  AuthState,
 } from './auth-state.model';
 
 export class Initialize {

@@ -1,8 +1,8 @@
 import {
   LayoutState,
+  NavbarMode,
   SidenavMode,
   SidenavRole,
-  NavbarMode,
 } from './layout-state.model';
 
 export const DefaultLayoutState: LayoutState = {

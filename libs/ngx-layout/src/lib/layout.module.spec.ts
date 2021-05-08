@@ -1,4 +1,5 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { LayoutModule } from './layout.module';
 
 describe('LayoutModule', () => {

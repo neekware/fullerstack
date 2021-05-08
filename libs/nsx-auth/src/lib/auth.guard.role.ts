@@ -1,12 +1,12 @@
-import { Injectable, ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Role, User } from '@prisma/client';
 
-import { AuthFilterType } from './auth.model';
-import { getRequestFromContext } from './auth.util';
 import { AUTH_ROLE_KEY } from './auth.constant';
 import { AuthGuardGql } from './auth.guard.gql';
+import { AuthFilterType } from './auth.model';
 import { SecurityService } from './auth.security.service';
+import { getRequestFromContext } from './auth.util';
 
 @Injectable()
 export class AuthGuardRole extends AuthGuardGql {

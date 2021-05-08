@@ -1,4 +1,5 @@
 import { LogLevels } from '@fullerstack/ngx-logger';
+
 import { SnackbarStatus } from './msg.model';
 
 export const SnackbarStatusDefault: SnackbarStatus = {

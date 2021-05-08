@@ -1,25 +1,24 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Direction } from '@angular/cdk/bidi/directionality';
-import { merge as ldNestedMerge } from 'lodash-es';
-import { DeepReadonly } from 'ts-essentials';
-import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
-
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { TranslateService } from '@ngx-translate/core';
+import { merge as ldNestedMerge } from 'lodash-es';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { DeepReadonly } from 'ts-essentials';
 
-import { AvailableLanguage, LanguageDirection } from './i18n.model';
 import {
-  RtlLanguages,
   DefaultI18nConfig,
   DefaultLanguage,
+  RtlLanguages,
 } from './i18n.default';
 import { registerActiveLocales } from './i18n.locale';
-import { Subject } from 'rxjs';
+import { AvailableLanguage, LanguageDirection } from './i18n.model';
 
 @Injectable({
   providedIn: 'root',

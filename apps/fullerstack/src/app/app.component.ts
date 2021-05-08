@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { Observable } from 'rxjs';
-
+import { Component, OnInit } from '@angular/core';
 import { HealthCheck } from '@fullerstack/agx-dto';
-import { ConfigService } from '@fullerstack/ngx-config';
-import { LoggerService } from '@fullerstack/ngx-logger';
-import { I18nService } from '@fullerstack/ngx-i18n';
-import { UixService } from '@fullerstack/ngx-uix';
 import { AuthService } from '@fullerstack/ngx-auth';
+import { ConfigService } from '@fullerstack/ngx-config';
+import { I18nService } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
+import { LoggerService } from '@fullerstack/ngx-logger';
+import { UixService } from '@fullerstack/ngx-uix';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-root',

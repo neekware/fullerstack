@@ -1,5 +1,6 @@
 import { DeepReadonly } from 'ts-essentials';
-import { LoggerConfig, LogLevels } from './logger.model';
+
+import { LogLevels, LoggerConfig } from './logger.model';
 
 /**
  * Default configuration - logger module

@@ -1,8 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
-
-import { NgxsModule } from '@ngxs/store';
-import { ConfigModule, ApplicationConfig } from '@fullerstack/ngx-config';
+import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
+import { NgxsModule } from '@ngxs/store';
 
 import { LayoutService } from './layout.service';
 

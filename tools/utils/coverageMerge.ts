@@ -1,7 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
+
 import * as program from 'commander';
-import { getGlobFiles, coverageDir } from './util';
+
+import { coverageDir, getGlobFiles } from './util';
 
 /**
  * Runs a command, capture and return the output

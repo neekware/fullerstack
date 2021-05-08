@@ -1,13 +1,12 @@
+import { tryGet } from '@fullerstack/agx-util';
+import { PrismaService, isConstraintError } from '@fullerstack/nsx-prisma';
 import {
+  BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
-  ConflictException,
-  BadRequestException,
 } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
-
-import { tryGet } from '@fullerstack/agx-util';
-import { isConstraintError, PrismaService } from '@fullerstack/nsx-prisma';
 
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
 import { SecurityService } from './auth.security.service';

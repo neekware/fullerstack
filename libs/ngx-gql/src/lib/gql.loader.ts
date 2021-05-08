@@ -1,6 +1,7 @@
 /* eslint-disable */
 declare var require: any;
-import { DocumentNode, SelectionSetNode, DefinitionNode } from 'graphql';
+
+import { DefinitionNode, DocumentNode, SelectionSetNode } from 'graphql';
 
 import { GqlScriptsList } from './gql.config';
 

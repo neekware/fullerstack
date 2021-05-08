@@ -1,37 +1,35 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
 import {
-  BreakpointState,
   BreakpointObserver,
+  BreakpointState,
   Breakpoints,
 } from '@angular/cdk/layout';
-
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { Store, Select } from '@ngxs/store';
-import { DeepReadonly } from 'ts-essentials';
-
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Injectable, OnDestroy } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { tryGet } from '@fullerstack/agx-util';
+import { AuthService } from '@fullerstack/ngx-auth';
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
+import { I18nService, _ } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MenuService } from '@fullerstack/ngx-menu';
-import { I18nService, _ } from '@fullerstack/ngx-i18n';
 import { UixService } from '@fullerstack/ngx-uix';
+import { Select, Store } from '@ngxs/store';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { DeepReadonly } from 'ts-essentials';
 
 import * as actions from './store/layout-state.action';
+import { DefaultLayoutState } from './store/layout-state.default';
 import {
   LayoutState,
   NavbarMode,
   SidenavMode,
 } from './store/layout-state.model';
-import { DefaultLayoutState } from './store/layout-state.default';
 import { LayoutStoreState } from './store/layout-state.store';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { AuthService } from '@fullerstack/ngx-auth';
 
 @Injectable()
 export class LayoutService implements OnDestroy {

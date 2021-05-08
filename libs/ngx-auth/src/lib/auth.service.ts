@@ -1,38 +1,36 @@
 /* eslint-disable */
-import { Injectable, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { EventEmitter, Injectable, OnDestroy, Output } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { tryGet } from '@fullerstack/agx-util';
+import {
+  ApplicationConfig,
+  ConfigService,
+  DefaultApplicationConfig,
+} from '@fullerstack/ngx-config';
+import { GqlService } from '@fullerstack/ngx-gql';
+import { _ } from '@fullerstack/ngx-i18n';
+import { JwtService } from '@fullerstack/ngx-jwt';
+import { LoggerService } from '@fullerstack/ngx-logger';
+import { MsgService } from '@fullerstack/ngx-msg';
+import { Select, Store } from '@ngxs/store';
+import { ApolloLink } from 'apollo-link';
+import { onError } from 'apollo-link-error';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Store, Select } from '@ngxs/store';
-import { ApolloLink } from 'apollo-link';
-import { onError } from 'apollo-link-error';
-
-import {
-  DefaultApplicationConfig,
-  ConfigService,
-  ApplicationConfig,
-} from '@fullerstack/ngx-config';
-import { LoggerService } from '@fullerstack/ngx-logger';
-import { _ } from '@fullerstack/ngx-i18n';
-import { MsgService } from '@fullerstack/ngx-msg';
-import { JwtService } from '@fullerstack/ngx-jwt';
-import { GqlService } from '@fullerstack/ngx-gql';
-import { tryGet } from '@fullerstack/agx-util';
-
-import { AuthStoreState } from './store/auth-state.store';
 import { DeepReadonly } from 'ts-essentials';
+
 import { DefaultAuthConfig } from './auth.default';
+import * as actions from './store/auth-state.action';
+import { AUTH_STATE_KEY } from './store/auth-state.constant';
+import { DefaultAuthState } from './store/auth-state.default';
 import {
   AuthLoginCredentials,
   AuthRegisterCredentials,
   AuthState,
 } from './store/auth-state.model';
-import { DefaultAuthState } from './store/auth-state.default';
+import { AuthStoreState } from './store/auth-state.store';
 import { sanitizeState } from './store/auth-state.util';
-import { AUTH_STATE_KEY } from './store/auth-state.constant';
-import * as actions from './store/auth-state.action';
 
 @Injectable()
 export class AuthService implements OnDestroy {

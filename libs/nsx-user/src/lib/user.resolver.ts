@@ -1,30 +1,30 @@
+import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
+import {
+  AuthGuardAnonymousGql,
+  AuthGuardGql,
+  AuthGuardRole,
+  UseRoles,
+  UserDecorator,
+} from '@fullerstack/nsx-auth';
+import { PaginationArgs } from '@fullerstack/nsx-common';
+import { PrismaService } from '@fullerstack/nsx-prisma';
 import {
   NotFoundException,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
-import { PrismaService } from '@fullerstack/nsx-prisma';
-import {
-  UserDecorator,
-  UseRoles,
-  AuthGuardGql,
-  AuthGuardRole,
-  AuthGuardAnonymousGql,
-} from '@fullerstack/nsx-auth';
 
-import { UserDataAccessScope } from './user.scope';
-import { UserService } from './user.service';
 import {
-  UserDto,
   PaginatedUser,
+  UserDto,
   UserUpdateAdvancedInput,
   UserUpdateInput,
 } from './user.model';
-import { PaginationArgs } from '@fullerstack/nsx-common';
 import { UserOrder } from './user.order';
+import { UserDataAccessScope } from './user.scope';
+import { UserService } from './user.service';
 
 @Resolver(() => UserDto)
 export class UserResolver {

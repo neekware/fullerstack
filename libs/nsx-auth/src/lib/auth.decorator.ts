@@ -1,11 +1,12 @@
 import {
-  createParamDecorator,
   ExecutionContext,
   SetMetadata,
+  createParamDecorator,
 } from '@nestjs/common';
 import { Permission, Role, User } from '@prisma/client';
-import { AuthFilterType } from './auth.model';
+
 import { AUTH_ROLE_KEY } from './auth.constant';
+import { AuthFilterType } from './auth.model';
 import {
   getCookiesFromContext,
   getRequestFromContext,

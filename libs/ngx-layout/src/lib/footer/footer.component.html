@@ -1,25 +1,31 @@
 <div class="footer" fxLayout="column">
-
   <div>
-
     <mat-list *ngFor="let footer of footers">
-      <h1 mat-subheader>{{footer.type | translate}}</h1>
+      <h1 mat-subheader>{{ footer.type | translate }}</h1>
       <mat-list-item *ngFor="let link of footer.links">
-        <mat-icon matListIcon svgIcon="{{link.icon}}"></mat-icon>
+        <mat-icon matListIcon svgIcon="{{ link.icon }}"></mat-icon>
         <p matLine>
-          <a *ngIf="link?.external" class="no-underline" href="{{link.link}}">{{link.name|translate}}</a>
-          <a *ngIf="!link.external" class="no-underline" routerLink="{{link.link}}">{{link.name|translate}}</a>
+          <a
+            *ngIf="link?.external"
+            class="no-underline"
+            href="{{ link.link }}"
+            >{{ link.name | translate }}</a
+          >
+          <a
+            *ngIf="!link.external"
+            class="no-underline"
+            routerLink="{{ link.link }}"
+            >{{ link.name | translate }}</a
+          >
         </p>
       </mat-list-item>
     </mat-list>
-
   </div>
 
   <div class="footer-credit" fxLayoutAlign="center center">
     <a routerLink="/" class="no-underline">
-      <strong>{{appName}} &nbsp;</strong>
-      © {{today | date:'y'}}
+      <strong>{{ appName }} &nbsp;</strong>
+      © {{ today | date: 'y' }}
     </a>
   </div>
-
 </div>

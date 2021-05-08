@@ -1,4 +1,5 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { AuthModule } from './auth.module';
 
 describe('AuthModule', () => {

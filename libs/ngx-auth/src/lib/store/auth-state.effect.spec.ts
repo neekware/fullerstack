@@ -1,14 +1,13 @@
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
-
-import { NgxsModule } from '@ngxs/store';
-
-import { LoggerModule } from '@fullerstack/ngx-logger';
+import { AuthModule } from '@fullerstack';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { JwtModule } from '@fullerstack/ngx-jwt';
+import { LoggerModule } from '@fullerstack/ngx-logger';
 import { MsgModule } from '@fullerstack/ngx-msg';
-import { AuthModule } from '@fullerstack';
+import { NgxsModule } from '@ngxs/store';
+
 import { AuthEffect } from './auth-state.effect';
 
 export const environment: ApplicationConfig = {

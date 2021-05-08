@@ -1,10 +1,10 @@
-import { Test } from '@nestjs/testing';
-import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { getMockPrismaService } from '@fullerstack/nsx-prisma/mock';
+import { ConfigService } from '@nestjs/config';
+import { Test } from '@nestjs/testing';
 
-import { SecurityService } from './auth.security.service';
 import { AuthResolver } from './auth.resolver';
+import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
 
 describe('AuthResolver', () => {

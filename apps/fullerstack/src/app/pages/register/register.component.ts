@@ -5,16 +5,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-
-import { LayoutService } from '@fullerstack/ngx-layout';
-import { ConfigService } from '@fullerstack/ngx-config';
-import { AuthService } from '@fullerstack/ngx-auth';
-import {
-  ValidationService,
-  AsyncValidationService,
-} from '@fullerstack/ngx-util';
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
+import { AuthService } from '@fullerstack/ngx-auth';
+import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService } from '@fullerstack/ngx-i18n';
+import { LayoutService } from '@fullerstack/ngx-layout';
+import {
+  AsyncValidationService,
+  ValidationService,
+} from '@fullerstack/ngx-util';
 
 @Component({
   selector: 'fullerstack-register',

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { State, Action, StateContext } from '@ngxs/store';
+import { Action, State, StateContext } from '@ngxs/store';
 
-import { LayoutState, LAYOUT_STATE_KEY } from './layout-state.model';
-import { DefaultLayoutState } from './layout-state.default';
 import * as actions from './layout-state.action';
+import { DefaultLayoutState } from './layout-state.default';
+import { LAYOUT_STATE_KEY, LayoutState } from './layout-state.model';
 
 @State<LayoutState>({
   name: LAYOUT_STATE_KEY,

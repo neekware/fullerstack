@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { DeepReadonly } from 'ts-essentials';
-
-import { merge as ldNestedMerge } from 'lodash-es';
-import { Apollo } from 'apollo-angular';
-import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
-
 import {
-  ConfigService,
   ApplicationConfig,
+  ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { Apollo } from 'apollo-angular';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
+import { merge as ldNestedMerge } from 'lodash-es';
+import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultGqlConfig } from './gql.default';
 

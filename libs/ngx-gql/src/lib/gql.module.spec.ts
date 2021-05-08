@@ -1,4 +1,5 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { GqlModule } from './gql.module';
 
 describe('GqlModule', () => {

@@ -1,7 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
-
 import { MenuNode } from '@fullerstack/ngx-menu';
 
 import { LayoutService } from '../layout.service';

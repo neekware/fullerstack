@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
-
-import { Observable, of as observableOf } from 'rxjs';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
-import { ConfigModule, ApplicationConfig } from '@fullerstack/ngx-config';
+import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable, of as observableOf } from 'rxjs';
 
+import { DefaultLanguage } from './i18n.default';
 import { I18nModule } from './i18n.module';
 import { I18nService } from './i18n.service';
-import { DefaultLanguage } from './i18n.default';
 
 const applicationEnv: ApplicationConfig = {
   appName: '@fullerstack/ngx-i18n',

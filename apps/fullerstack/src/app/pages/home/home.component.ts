@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-
-import { LayoutService } from '@fullerstack/ngx-layout';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { _ } from '@fullerstack/ngx-i18n';
+import { LayoutService } from '@fullerstack/ngx-layout';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

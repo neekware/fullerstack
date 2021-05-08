@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
 
-import { isFunction } from './subify.util';
 import { DefaultSubifyDecoratorOptions } from './subify.default';
+import { isFunction } from './subify.util';
 
 /**
  * SubifyDecorator decorator - streamline canceling of subscriptions

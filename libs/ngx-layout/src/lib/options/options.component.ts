@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
-  style,
   animate,
-  transition,
   state,
+  style,
+  transition,
   trigger,
 } from '@angular/animations';
-
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { I18nService } from '@fullerstack/ngx-i18n';
 
 import { LayoutService } from '../layout.service';

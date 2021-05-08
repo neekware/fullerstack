@@ -1,20 +1,21 @@
 <div class="app-options">
-
   <mat-divider class="divider"></mat-divider>
   <button mat-fab color="warn" class="trigger" (click)="toggleMenu()">
-    <mat-icon [@rotatedState]='state' svgIcon="tune"></mat-icon>
+    <mat-icon [@rotatedState]="state" svgIcon="tune"></mat-icon>
   </button>
 
-
   <mat-accordion>
-
     <mat-expansion-panel [expanded]="isExpanded">
       <div>
         <mat-form-field>
-          <mat-select placeholder="{{ 'MENU.OPTIONS.LANGUAGE' | translate}}" #ctrl="ngModel"
-            [(ngModel)]="currentLanguage" (ngModelChange)="i18n.setCurrentLanguage(currentLanguage)">
+          <mat-select
+            placeholder="{{ 'MENU.OPTIONS.LANGUAGE' | translate }}"
+            #ctrl="ngModel"
+            [(ngModel)]="currentLanguage"
+            (ngModelChange)="i18n.setCurrentLanguage(currentLanguage)"
+          >
             <mat-option *ngFor="let iso of i18n.enabledLanguages" [value]="iso">
-              {{i18n.getLanguageName(iso)}}
+              {{ i18n.getLanguageName(iso) }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -22,10 +23,10 @@
 
       <div fxLayout fxLayoutAlign="start center" click-no-propagation>
         <span>{{ 'MENU.OPTIONS.DARK' | translate }}</span>
-        <mat-slide-toggle (change)="layout.setDarkTheme($event.checked)"></mat-slide-toggle>
+        <mat-slide-toggle
+          (change)="layout.setDarkTheme($event.checked)"
+        ></mat-slide-toggle>
       </div>
-
     </mat-expansion-panel>
   </mat-accordion>
-
 </div>

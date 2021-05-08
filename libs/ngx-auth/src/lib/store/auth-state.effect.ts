@@ -1,20 +1,19 @@
 /* eslint-disable */
 import { Injectable } from '@angular/core';
-
-import { from, Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { Store } from '@ngxs/store';
-import { LoggerService, LogLevels } from '@fullerstack/ngx-logger';
-import { MsgService } from '@fullerstack/ngx-msg';
-import { _ } from '@fullerstack/ngx-i18n';
 import { GqlService, gqlMgr } from '@fullerstack/ngx-gql';
 import * as schema from '@fullerstack/ngx-gql/schema';
+import { _ } from '@fullerstack/ngx-i18n';
+import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
+import { MsgService } from '@fullerstack/ngx-msg';
+import { Store } from '@ngxs/store';
+import { Observable, from } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
+import * as actions from './auth-state.action';
 import {
   AuthLoginCredentials,
   AuthRegisterCredentials,
 } from './auth-state.model';
-import * as actions from './auth-state.action';
 
 const JwtLoginMutationNode = gqlMgr.getOperation('JwtLogin');
 const JwtRegisterMutationNode = gqlMgr.getOperation('JwtRegister');

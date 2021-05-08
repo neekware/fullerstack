@@ -2,43 +2,72 @@
 
 <mat-card>
   <mat-card-content>
-    <mat-tab-group [selectedIndex]="0" (selectedTabChange)="auth.goTo(layout.sessionLinks.register.path)">
+    <mat-tab-group
+      [selectedIndex]="0"
+      (selectedTabChange)="auth.goTo(layout.sessionLinks.register.path)"
+    >
       <mat-tab>
         <ng-template matTabLabel>
-          <strong>{{layout.sessionLinks.login.label| translate}}</strong>
+          <strong>{{ layout.sessionLinks.login.label | translate }}</strong>
         </ng-template>
 
         <div class="mt-4 pb-8">
-
           <form [formGroup]="form" (submit)="login()">
-
             <mat-form-field>
               <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
-              <input matInput formControlName="email" placeholder="{{'AUTH.FIELDS.EMAIL'|translate}}"
-                [class.progress-wheel]="auth.isLoading">
-              <fullerstack-hint [control]="getControl('email')"></fullerstack-hint>
+              <input
+                matInput
+                formControlName="email"
+                placeholder="{{ 'AUTH.FIELDS.EMAIL' | translate }}"
+                [class.progress-wheel]="auth.isLoading"
+              />
+              <fullerstack-hint
+                [control]="getControl('email')"
+              ></fullerstack-hint>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-icon matSuffix color="primary" svgIcon="key-variant"></mat-icon>
-              <input matInput type="password" formControlName="password"
-                placeholder="{{'AUTH.FIELDS.PASSWORD'|translate}}">
-              <fullerstack-hint [control]="getControl('password')"></fullerstack-hint>
+              <mat-icon
+                matSuffix
+                color="primary"
+                svgIcon="key-variant"
+              ></mat-icon>
+              <input
+                matInput
+                type="password"
+                formControlName="password"
+                placeholder="{{ 'AUTH.FIELDS.PASSWORD' | translate }}"
+              />
+              <fullerstack-hint
+                [control]="getControl('password')"
+              ></fullerstack-hint>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit" class="mt-4"
-              [disabled]="!form.valid">{{'AUTH.LOGIN'|translate}}</button>
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              class="mt-4"
+              [disabled]="!form.valid"
+            >
+              {{ 'AUTH.LOGIN' | translate }}
+            </button>
 
-            <fullerstack-alert class="mt-4" *ngIf="auth.msg.status.text" [color]="auth.msg.status.color"
-              [text]="auth.msg.status.text">
+            <fullerstack-alert
+              class="mt-4"
+              *ngIf="auth.msg.status.text"
+              [color]="auth.msg.status.color"
+              [text]="auth.msg.status.text"
+            >
             </fullerstack-alert>
           </form>
         </div>
-
       </mat-tab>
 
       <mat-tab>
-        <ng-template matTabLabel>{{layout.sessionLinks.register.label| translate}}</ng-template>
+        <ng-template matTabLabel>{{
+          layout.sessionLinks.register.label | translate
+        }}</ng-template>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>

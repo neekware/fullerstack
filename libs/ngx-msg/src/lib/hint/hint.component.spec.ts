@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { I18nModule } from '@fullerstack/ngx-i18n';
 import { TranslateService } from '@ngx-translate/core';
-import { MsgModule } from '../msg.module';
 
+import { MsgModule } from '../msg.module';
 import { HintComponent } from './hint.component';
 
 // disable console log/warn during test

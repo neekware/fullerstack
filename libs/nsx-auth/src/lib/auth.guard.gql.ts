@@ -1,14 +1,14 @@
 import {
-  Injectable,
-  ExecutionContext,
-  UnauthorizedException,
-  NotFoundException,
   BadRequestException,
+  ExecutionContext,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { SecurityService } from './auth.security.service';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
+import { SecurityService } from './auth.security.service';
 import {
   getCookiesFromContext,
   getJwtTokenFromAuthorizationHeader,

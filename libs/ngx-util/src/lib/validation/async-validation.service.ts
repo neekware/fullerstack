@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
-  ValidationErrors,
-  AsyncValidatorFn,
   AbstractControl,
+  AsyncValidatorFn,
+  ValidationErrors,
 } from '@angular/forms';
-
-import { Observable, timer, of as observableOf, from } from 'rxjs';
-import { map, catchError, switchMapTo, take } from 'rxjs/operators';
-
 import { GqlService, gqlMgr } from '@fullerstack/ngx-gql';
 import * as schema from '@fullerstack/ngx-gql/schema';
+import { Observable, from, of as observableOf, timer } from 'rxjs';
+import { catchError, map, switchMapTo, take } from 'rxjs/operators';
 
 const EmailFoundQueryNode = gqlMgr.getOperation('EmailFound');
 

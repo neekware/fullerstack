@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-
 import { _ } from '@fullerstack/ngx-i18n';
+
 import { AboutComponent } from './pages/about/about.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';

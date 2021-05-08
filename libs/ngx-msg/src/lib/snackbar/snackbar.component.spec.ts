@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import {
-  MatSnackBarRef,
   MAT_SNACK_BAR_DATA,
+  MatSnackBarRef,
 } from '@angular/material/snack-bar';
 
 import { MsgModule } from '../msg.module';
-import { MockMatIconComponent } from './snackbar.mock';
 import { SnackbarComponent } from './snackbar.component';
+import { MockMatIconComponent } from './snackbar.mock';
 
 describe('SnackbarComponent', () => {
   let component: SnackbarComponent;

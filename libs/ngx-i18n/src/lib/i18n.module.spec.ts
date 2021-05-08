@@ -1,4 +1,5 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { I18nModule } from './i18n.module';
 
 describe('I18nModule', () => {

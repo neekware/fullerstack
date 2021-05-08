@@ -1,7 +1,7 @@
-import { IsEmail } from 'class-validator';
-import { Permission, Role, User } from '@prisma/client';
-import { Field, ObjectType, InputType, ID, Directive } from '@nestjs/graphql';
 import { BaseModelDto, Paginated } from '@fullerstack/nsx-common';
+import { Directive, Field, ID, InputType, ObjectType } from '@nestjs/graphql';
+import { Permission, Role, User } from '@prisma/client';
+import { IsEmail } from 'class-validator';
 
 /**
  * User profile (server -> client)

@@ -33,13 +33,14 @@
     "format": "nx format:write",
     "format:write": "nx format:write",
     "format:check": "nx format:check",
+    "format:all": "./node_modules/.bin/prettier --write \"**/*.ts\"",
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "stats:build": "yarn build fullerstack --prod --stats-json",
     "stats:show": "webpack-bundle-analyzer dist/apps/fullerstack/stats.json",
-    "nx:ci": "node node_modules/@nrwl/cli/bin/nx.js",
+    "nx:ci": "node ./node_modules/@nrwl/cli/bin/nx.js",
     "format:ci": "yarn nx:ci format:check",
     "lint:ci": "yarn nx:ci  run-many --target=lint --all --configuration=ci --parallel",
     "build:ci": "yarn nx:ci  run-many --target=build --all --configuration=ci --parallel",
@@ -55,6 +56,12 @@
     "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma",
     "prisma:seed": "node ./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature",
     "xlate:extract": "ngx-translate-extract -i ./apps ./libs -o ./libs/agx-assets/src/lib/i18n/{en,fr,es,he,fa}.json -m _ --sort"
+  },
+  "importSort": {
+    ".js, .ts": {
+      "style": "module",
+      "parser": "typescript"
+    }
   },
   "dependencies": {
     "@angular/animation": "^4.0.0-beta.8",
@@ -155,6 +162,7 @@
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
     "glob": "^7.1.4",
+    "import-sort-style-module": "^6.0.0",
     "jest": "26.2.2",
     "jest-mock-extended": "^1.0.13",
     "jest-preset-angular": "8.3.2",
@@ -162,6 +170,7 @@
     "ng-packagr": "^11.0.0",
     "postcss": "^8.2.13",
     "prettier": "2.2.1",
+    "prettier-plugin-import-sort": "^0.0.6",
     "prisma": "^2.21.2",
     "prisma-dbml-generator": "^0.5.0",
     "tailwindcss": "^2.1.2",

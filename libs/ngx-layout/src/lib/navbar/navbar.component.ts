@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { AuthService } from '@fullerstack/ngx-auth';
 import { UixService } from '@fullerstack/ngx-uix';
 

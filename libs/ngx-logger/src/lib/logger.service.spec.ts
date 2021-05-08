@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed, getTestBed } from '@angular/core/testing';
-import { DeepReadonly } from 'ts-essentials';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
+import { DeepReadonly } from 'ts-essentials';
 
 import { LogLevels } from './logger.model';
 import { LoggerModule } from './logger.module';

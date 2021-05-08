@@ -1,21 +1,20 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-
-import { DeepReadonly } from 'ts-essentials';
-import { merge as ldNestedMerge } from 'lodash-es';
-import { filter, map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {
-  ConfigService,
   ApplicationConfig,
+  ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { merge as ldNestedMerge } from 'lodash-es';
+import { Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { DeepReadonly } from 'ts-essentials';
 
-import { GTagEventParams, GTagPageViewParams } from './gtag.model';
 import { DefaultGTagConfig } from './gtag.default';
+import { GTagEventParams, GTagPageViewParams } from './gtag.model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare let gtag: (...args: any) => void;

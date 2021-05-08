@@ -1,29 +1,28 @@
 <div>
   <div>
-    <img [src]="logo">
-    <h1 class="headline">{{'APP.HEADLINE'|translate}}</h1>
-    <h3 class="message">{{'APP.SUB_HEADLINE'|translate}}</h3>
-    <button mat-raised-button *ngIf="!auth.state.isLoggedIn" (click)="auth.goTo(layout.sessionLinks.login.path)">
-      {{'COMMON.GET_STARTED'|translate}}
+    <img [src]="logo" />
+    <h1 class="headline">{{ 'APP.HEADLINE' | translate }}</h1>
+    <h3 class="message">{{ 'APP.SUB_HEADLINE' | translate }}</h3>
+    <button
+      mat-raised-button
+      *ngIf="!auth.state.isLoggedIn"
+      (click)="auth.goTo(layout.sessionLinks.login.path)"
+    >
+      {{ 'COMMON.GET_STARTED' | translate }}
     </button>
   </div>
 </div>
 
 <div class="app-promo">
-
   <div>
-
-    <div *ngFor="let pitch of pitchList; let even=even;">
-
+    <div *ngFor="let pitch of pitchList; let even = even">
       <div>
-        <h3 class="title">{{pitch.title|translate}}</h3>
-        <p class="description">{{pitch.description|translate}}</p>
+        <h3 class="title">{{ pitch.title | translate }}</h3>
+        <p class="description">{{ pitch.description | translate }}</p>
       </div>
       <div>
-        <img src="{{pitch.image}}" alt="{{pitch.title|translate}}">
+        <img src="{{ pitch.image }}" alt="{{ pitch.title | translate }}" />
       </div>
-
     </div>
   </div>
-
 </div>

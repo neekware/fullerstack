@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
-
 import { tokenizeFullName } from '@fullerstack/agx-util';
 
 @Injectable()

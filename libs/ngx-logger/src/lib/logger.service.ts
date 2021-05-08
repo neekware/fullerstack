@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
-import { merge as ldNestedMerge } from 'lodash-es';
-import { DeepReadonly } from 'ts-essentials';
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
-import { LogLevels, LogNames, LogColors } from './logger.model';
+import { merge as ldNestedMerge } from 'lodash-es';
+import { DeepReadonly } from 'ts-essentials';
+
 import { DefaultLoggerConfig } from './logger.default';
+import { LogColors, LogLevels, LogNames } from './logger.model';
 
 /**
  * An injectable class that handles logging service

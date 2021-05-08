@@ -1,4 +1,5 @@
 import crypto from 'crypto-es';
+
 import { AuthState } from './auth-state.model';
 
 export function signState(state: AuthState): AuthState {

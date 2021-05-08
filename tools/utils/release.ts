@@ -1,8 +1,10 @@
 import * as fs from 'fs';
-import * as ld from 'lodash';
 import * as path from 'path';
+
 import * as program from 'commander';
+import * as ld from 'lodash';
 import * as semver from 'semver';
+
 import { distDir, execute, projPkgJson } from './util';
 
 /**

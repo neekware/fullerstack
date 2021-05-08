@@ -1,14 +1,13 @@
+import { HttpClientModule } from '@angular/common/http';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed, getTestBed } from '@angular/core/testing';
-import { isMatch as ldIsMatch } from 'lodash-es';
-
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
+import { isMatch as ldIsMatch } from 'lodash-es';
+import { DeepReadonly } from 'ts-essentials';
 
 import { JwtModule } from './jwt.module';
 import { JwtService } from './jwt.service';
-import { HttpClientModule } from '@angular/common/http';
-import { DeepReadonly } from 'ts-essentials';
 
 const validToken = () => {
   // eslint:disable-next-line

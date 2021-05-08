@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { DefaultMenuTree, MenuItem, MenuNode } from '@fullerstack/ngx-menu';

@@ -1,15 +1,14 @@
+import { Directionality } from '@angular/cdk/bidi';
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { Directionality } from '@angular/cdk/bidi';
+import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
 import { TranslateService } from '@ngx-translate/core';
 import { DeepReadonly } from 'ts-essentials';
 
-import { LoggerService, LogLevels } from '@fullerstack/ngx-logger';
-
-import { SnackbarType } from './snackbar/snackbar.model';
-import { SnackbarComponent } from './snackbar';
 import { SnackbarStatusDefault } from './msg.default';
 import { SnackbarStatus } from './msg.model';
+import { SnackbarComponent } from './snackbar';
+import { SnackbarType } from './snackbar/snackbar.model';
 
 @Injectable()
 export class MsgService {

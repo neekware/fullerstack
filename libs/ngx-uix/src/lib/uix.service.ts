@@ -1,16 +1,15 @@
 /* eslint-disable */
 import { EventEmitter, Injectable, OnDestroy, Output } from '@angular/core';
-import { merge as ldNestedMerge } from 'lodash-es';
-import { DeepReadonly } from 'ts-essentials';
-import { Subject } from 'rxjs';
-
 import {
-  ConfigService,
   ApplicationConfig,
+  ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MaterialService } from '@fullerstack/ngx-material';
+import { merge as ldNestedMerge } from 'lodash-es';
+import { Subject } from 'rxjs';
+import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultUixConfig, UIX_MDI_ICONS } from './uix.default';
 import { SvgIcons } from './uix.icon';

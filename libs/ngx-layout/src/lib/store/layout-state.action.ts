@@ -1,4 +1,4 @@
-import { SidenavRole, SidenavMode, NavbarMode } from './layout-state.model';
+import { NavbarMode, SidenavMode, SidenavRole } from './layout-state.model';
 
 export class Initialize {
   static type = '[LAYOUT] Initialize';

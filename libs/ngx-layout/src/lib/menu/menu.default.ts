@@ -1,5 +1,5 @@
-import { MenuItem } from '@fullerstack/ngx-menu';
 import { _ } from '@fullerstack/ngx-i18n';
+import { MenuItem } from '@fullerstack/ngx-menu';
 
 export const LayoutMenuTree: MenuItem[] = [
   {

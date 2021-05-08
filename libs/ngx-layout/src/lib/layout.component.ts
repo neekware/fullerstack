@@ -6,12 +6,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-
+import { I18nService } from '@fullerstack/ngx-i18n';
+import { LoggerService } from '@fullerstack/ngx-logger';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import { LoggerService } from '@fullerstack/ngx-logger';
-import { I18nService } from '@fullerstack/ngx-i18n';
 
 import { LayoutService } from './layout.service';
 

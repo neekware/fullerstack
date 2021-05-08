@@ -1,6 +1,7 @@
-import { Test } from '@nestjs/testing';
-import { PrismaService } from './prisma.service';
 import { getMockPrismaService } from '@fullerstack/nsx-prisma/mock';
+import { Test } from '@nestjs/testing';
+
+import { PrismaService } from './prisma.service';
 
 describe('PrismaService', () => {
   let service: PrismaService;

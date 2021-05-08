@@ -36,17 +36,13 @@
   "MENU.WISHLIST": "Wishlist",
   "MENU.YAHOO_FINANCE": "Yahoo Finance",
   "MENU.YOUTUBE": "Youtube",
-  "PITCH.CURRENCY.DESCRIPTION":
-    "Track exchange rates on many foreign currencies. Calculate the conversion rate of your currency against any foreign currency using a free calculator. Stay up-to-date with currency fluctuation and make sound decisions on when to convert",
+  "PITCH.CURRENCY.DESCRIPTION": "Track exchange rates on many foreign currencies. Calculate the conversion rate of your currency against any foreign currency using a free calculator. Stay up-to-date with currency fluctuation and make sound decisions on when to convert",
   "PITCH.CURRENCY.TITLE": "Currency Exchange Rates",
-  "PITCH.HISTORICAL.DESCRIPTION":
-    "Build one or more portfolios and get immediate access to historical data, analyze trends moving average, yields and more.  Include your important positions in a common dashboard for easy access",
+  "PITCH.HISTORICAL.DESCRIPTION": "Build one or more portfolios and get immediate access to historical data, analyze trends moving average, yields and more.  Include your important positions in a common dashboard for easy access",
   "PITCH.HISTORICAL.TITLE": "Current and Historical Data",
-  "PITCH.MONITOR.DESCRIPTION":
-    "Stay informed and in control by make speedy decisions based on near real-time analysis of relative data and news.  Make informative decisions by having relative data made available to you when it matters",
+  "PITCH.MONITOR.DESCRIPTION": "Stay informed and in control by make speedy decisions based on near real-time analysis of relative data and news.  Make informative decisions by having relative data made available to you when it matters",
   "PITCH.MONITOR.TITLE": "Monitor and Analyze",
-  "PITCH.PLATFORMS.DESCRIPTION":
-    "Access your portfolios anywhere, anytime and on any device. Access on mobile, tablet, laptop or desktop is easy. Just use your favorite browser and you are set",
+  "PITCH.PLATFORMS.DESCRIPTION": "Access your portfolios anywhere, anytime and on any device. Access on mobile, tablet, laptop or desktop is easy. Just use your favorite browser and you are set",
   "PITCH.PLATFORMS.TITLE": "Portal Access Across All Platforms",
   "USER.ERROR.FETCH": "Failed to fetch user profile",
   "USER.SUCCESS.FETCH": "User profile fetched",
@@ -57,8 +53,7 @@
   "VALIDATION.INVALID_FULL_NAME": "Full name must include name and surname",
   "VALIDATION.INVALID_INPUT": "Invalid input",
   "VALIDATION.INVALID_NUMBER": "Invalid number",
-  "VALIDATION.INVALID_PASSWORD":
-    "Invalid password. Minimum of 6 characters and must contain a number",
+  "VALIDATION.INVALID_PASSWORD": "Invalid password. Minimum of 6 characters and must contain a number",
   "VALIDATION.INVALID_PASSWORD_CONFIRMATION": "Both passwords must be the same",
   "VALIDATION.MINIMUN_LENGTH": "Minimum length is {{value}}",
   "VALIDATION.NEGATIVE_NUMBER": "Value must be non-negative",

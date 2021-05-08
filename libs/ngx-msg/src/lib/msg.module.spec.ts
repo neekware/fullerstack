@@ -1,4 +1,5 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { MsgModule } from './msg.module';
 
 describe('MsgModule', () => {
