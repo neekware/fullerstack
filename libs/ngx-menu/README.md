@@ -121,7 +121,7 @@ export const AppMenuTree: MenuItem[] = [
 ];
 
 @Component({
-  selector: 'app-root',
+  selector: 'fullerstack-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

@@ -76,7 +76,7 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { JwtService } from '@fullerstack/ngx-jwt';
 
 @Component({
-  selector: 'app-root',
+  selector: 'fullerstack-root',
   template: `<h1>Welcome to {{ title }}!</h1>`,
 })
 export class AppComponent {

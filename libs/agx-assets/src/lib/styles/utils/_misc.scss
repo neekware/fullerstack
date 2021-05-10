@@ -1,0 +1,65 @@
+.no-underline {
+  text-decoration: none;
+}
+
+.unfloat {
+  float: none;
+}
+
+.relative {
+  position: relative;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.shadow-none {
+  box-shadow: none !important;
+}
+
+.border-none {
+  border: 0 !important;
+}
+
+.button-block {
+  display: block;
+  width: 100%;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.center-block {
+  display: block;
+  margin: 0 auto;
+}
+
+.radius-circle {
+  border-radius: 50%;
+}
+
+.overflow-visible {
+  overflow: visible;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.block {
+  display: block;
+}
+
+.radius-none {
+  border-radius: 0;
+}

@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-home',
+  selector: 'fullerstack-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

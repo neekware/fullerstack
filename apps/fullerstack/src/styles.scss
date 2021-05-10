@@ -1,11 +1,32 @@
 @import 'libs/agx-assets/src/lib/styles/tailwind/variables';
-@import 'libs/agx-assets/src/lib/styles/themes/material/dark-blue';
+@import 'libs/agx-assets/src/lib/styles/material/dark-blue/themes';
+@import 'libs/agx-assets/src/lib/styles/site/site';
+@import 'libs/agx-assets/src/lib/styles/site/options';
+@import 'libs/agx-assets/src/lib/styles/site/menu';
+@import 'libs/agx-assets/src/lib/styles/site/notify';
+@import 'libs/agx-assets/src/lib/styles/site/navbar';
+@import 'libs/agx-assets/src/lib/styles/site/toast';
+@import 'libs/agx-assets/src/lib/styles/site/layout';
+@import 'libs/agx-assets/src/lib/styles/site/home';
+@import 'libs/agx-assets/src/lib/styles/site/footer';
+@import 'libs/agx-assets/src/lib/styles/site/card';
+@import 'libs/agx-assets/src/lib/styles/site/pages';
+@import 'libs/agx-assets/src/lib/styles/utils/hints';
+@import 'libs/agx-assets/src/lib/styles/utils/spacing';
+@import 'libs/agx-assets/src/lib/styles/utils/icons';
+@import 'libs/agx-assets/src/lib/styles/utils/links';
+@import 'libs/agx-assets/src/lib/styles/utils/forms';
+@import 'libs/agx-assets/src/lib/styles/utils/text';
+@import 'libs/agx-assets/src/lib/styles/utils/scroll';
+@import 'libs/agx-assets/src/lib/styles/utils/misc';
+@import 'libs/agx-assets/src/lib/styles/utils/lists';
+@import 'libs/agx-assets/src/lib/styles/utils/debug';
 
 body {
   margin: 0px;
 }
 
-app-home {
+fullerstack-home {
   .bulletin-board {
     background-color: mat-color($primary);
     background: -webkit-linear-gradient($gradient-start, $gradient-end);
@@ -19,21 +40,21 @@ app-home {
       linear-gradient($gradient-start, $gradient-end);
     background-size: 100%;
   }
-  .app-header-background {
+  .fullerstack-header-background {
     background: mat-color($primary);
   }
-  .app-header-headline {
+  .fullerstack-header-headline {
     color: mat-color($primary, default-contrast);
   }
-  .app-header-start {
+  .fullerstack-header-start {
     color: mat-color($primary);
   }
-  .app-homepage-row {
+  .fullerstack-homepage-row {
     color: mat-color($foreground, secondary-text);
   }
 }
 
-.app-menu {
+.fullerstack-menu {
   margin-top: 56px;
   padding: 15px 0px;
   height: 48px;
@@ -93,7 +114,7 @@ app-home {
   text-align: center;
 }
 
-.app-options {
+.fullerstack-options {
   .divider {
     margin-top: 40px;
   }
@@ -108,7 +129,7 @@ app-home {
 }
 
 [dir='rtl'] {
-  .app-options {
+  .fullerstack-options {
     .trigger {
       right: 37%;
     }

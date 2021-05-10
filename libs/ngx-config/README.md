@@ -59,7 +59,7 @@ import { Component } from '@angular/core';
 import { ConfigService } from '@fullerstack/ngx-config';
 
 @Component({
-  selector: 'app-root',
+  selector: 'fullerstack-root',
 })
 export class AppComponent {
   title: string;
@@ -127,7 +127,7 @@ import { ConfigService } from '@fullerstack/ngx-config';
 import { merge } from 'lodash';
 
 @Component({
-  selector: 'app-root'
+  selector: 'fullerstack-root'
 })
 export class AppComponent {
   title: string;

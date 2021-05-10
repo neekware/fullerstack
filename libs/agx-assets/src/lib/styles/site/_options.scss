@@ -1,0 +1,60 @@
+.fullerstack-options {
+  .options-box {
+    padding: 0 15px;
+  }
+  .divider {
+    margin-top: 40px;
+  }
+  .option-trigger {
+    top: -32px;
+  }
+  .option-title {
+    top: -27px;
+    position: relative;
+  }
+  .option-item {
+    line-height: 40px;
+  }
+  .option-item.language {
+    padding-bottom: 45px;
+  }
+  .option-item.navbar {
+    padding-bottom: 15px;
+  }
+  @-moz-document url-prefix() {
+    /* Firfox CSS styles go here */
+    .options-box {
+      margin-top: -27px;
+    }
+    .option-item.language {
+      padding-bottom: 0;
+    }
+    .option-item.navbar {
+      padding-bottom: 0;
+    }
+  }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    .options-box {
+      margin-top: -27px;
+    }
+    .option-item.language {
+      padding-bottom: 0;
+    }
+    .option-item.navbar {
+      padding-bottom: 0;
+    }
+  }
+  @supports (-ms-accelerator: true) {
+    /* IE Edge 12+ CSS styles go here */
+    .options-box {
+      margin-top: -27px;
+    }
+    .option-item.language {
+      padding-bottom: 0;
+    }
+    .option-item.navbar {
+      padding-bottom: 0;
+    }
+  }
+}

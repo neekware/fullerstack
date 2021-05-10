@@ -1,0 +1,14 @@
+.fullerstack-hint {
+  font-size: 86%;
+  position: absolute;
+  top: 33px;
+  text-align: unset;
+  right: -21px;
+}
+
+[dir='rtl'] {
+  .fullerstack-hint {
+    right: unset;
+    left: -21px;
+  }
+}

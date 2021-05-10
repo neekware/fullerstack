@@ -1,0 +1,20 @@
+.zibra-list {
+  padding: 5px 0;
+  margin-bottom: 2px;
+}
+
+.zibra-list:nth-child(even) {
+  background-color: rgba(148, 135, 118, 0.15);
+}
+
+.zibra-list:nth-child(odd) {
+  background-color: rgba(169, 178, 197, 0.15);
+}
+
+.zibra-list .mat-list-item-content {
+  height: auto;
+}
+
+.mat-list .mat-list-item .mat-list-item-content {
+  height: 30px;
+}

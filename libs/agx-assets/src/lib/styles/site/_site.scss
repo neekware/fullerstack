@@ -1,0 +1,32 @@
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+  box-sizing: content-box;
+}
+
+// no highlights
+* {
+  outline-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+a:visited {
+  color: unset;
+}
+
+fullerstack-root {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
