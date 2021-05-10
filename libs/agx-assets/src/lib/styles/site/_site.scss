@@ -9,7 +9,7 @@ body {
 
 // no highlights
 * {
-  outline-style: none;
+  outline-style: none !important;
 }
 
 a {
