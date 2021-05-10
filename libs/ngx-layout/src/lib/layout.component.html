@@ -1,18 +1,47 @@
-<div [dir]="i18n.direction">
+<div
+  [dir]="i18n.direction"
+  class="fullerstack-wrapper"
+  [ngClass]="layout.navbarModeClass"
+  [class.is-handset]="layout.state.isHandset"
+  [class.is-portrait]="layout.state.isPortrait"
+  [class.fullerstack-theme-light]="!layout.state.isDarkTheme"
+  [class.fullerstack-theme-dark]="layout.state.isDarkTheme"
+  [@fadeOutInSlow]="layout.state.isDarkTheme ? 'out' : 'in'"
+>
   <fullerstack-navbar></fullerstack-navbar>
 
   <mat-sidenav-container>
-    <!-- <mat-sidenav #sideMenu position="start" [mode]="layout.state.menuMode" [opened]="layout.state.menuOpen">
+    <mat-sidenav
+      #sideMenu
+      position="start"
+      [fixedTopGap]="layout.state.isHandset ? 56 : 64"
+      [fixedInViewport]="layout.state.isHandset"
+      [mode]="layout.state.menuMode"
+      [opened]="layout.state.menuOpen"
+      [attr.role]="layout.state.menuRole"
+      class="menu-panel"
+    >
       <fullerstack-menu></fullerstack-menu>
     </mat-sidenav>
 
-    <mat-sidenav #notifyMenu position="end" [mode]="layout.state.notifyMode" [opened]="layout.state.notifyOpen">
+    <mat-sidenav
+      #notifyMenu
+      position="end"
+      [fixedTopGap]="layout.state.isHandset ? 56 : 64"
+      [fixedInViewport]="layout.state.isHandset"
+      [mode]="layout.state.notifyMode"
+      [opened]="layout.state.notifyOpen"
+      [attr.role]="layout.state.notifyRole"
+      class="notification-panel"
+    >
       <fullerstack-notification></fullerstack-notification>
-    </mat-sidenav> -->
+    </mat-sidenav>
 
-    <mat-sidenav-content>
-      <router-outlet #outlet="outlet"></router-outlet>
-      <fullerstack-footer></fullerstack-footer>
+    <mat-sidenav-content [@slideIn]="routeState(outlet)">
+      <div>
+        <router-outlet #outlet="outlet"></router-outlet>
+        <fullerstack-footer></fullerstack-footer>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

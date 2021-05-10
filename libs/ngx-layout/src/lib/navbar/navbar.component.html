@@ -1,29 +1,59 @@
-<mat-toolbar color="primary" class="fullerstack-navbar my-0 mx-2 px-2 py-0 z-10 flex flex-row box-border justify-between shadow-lg">
+<mat-toolbar class="main-navbar" color="primary">
   <button (click)="layout.toggleMenu()" mat-icon-button aria-label="Toggle sidenav">
-    <mat-icon [svgIcon]="layout.state.menuOpen ? 'close' : 'menu'"></mat-icon>
+    <mat-icon [@rotate90]="menuIconState" [svgIcon]="layout.state.menuOpen ? 'close' : 'menu'"></mat-icon>
   </button>
 
-  <div (click)="auth.goTo('/')" class="p-0 mt-1 ml-1 align-middle cursor-pointer">
-    <img src="/assets/images/logos/brand.png" alt="{{ layout.siteName | translate }}" />
+  <div *ngIf="!auth.state.isLoggedIn" fxFlex></div>
+
+  <div class="branding" (click)="auth.goTo('/')">
+    <img [src]="brandImage" alt="{{ layout.siteName | translate }}" />
   </div>
 
-  <div class="flex-row justify-between">
-    <button *ngIf="uix.isFullscreenCapable" (click)="layout.toggleFullscreen()" mat-icon-button aria-label="Fullscreen">
-      <mat-icon svgIcon="fullscreen"></mat-icon>
-    </button>
+  <div fxFlex></div>
 
-    <button *ngIf="auth.state.isLoggedIn" (click)="layout.toggleNotification()" mat-icon-button aria-label="Toggle notifications">
-      <mat-icon aria-label="notification icon" svgIcon="bell-ring"></mat-icon>
-      <span class="bell-label">5</span>
-    </button>
+  <button
+    *ngIf="auth.state.isLoggedIn"
+    (click)="layout.toggleNotification()"
+    mat-icon-button
+    aria-label="Toggle notifications"
+    class="ml-xs overflow-visible"
+  >
+    <mat-icon
+      [@wiggleIt]="notifyIconState"
+      aria-label="notification icon"
+      [svgIcon]="layout.state.notifyOpen ? 'bell' : 'bell-ring'"
+    ></mat-icon>
+    <span [class.bell-label]="true"></span>
+  </button>
 
-    <button [matMenuTriggerFor]="accountMenu" mat-icon-button>
-      <mat-icon svgIcon="account" *ngIf="auth.state.isLoggedIn"></mat-icon>
-      <mat-icon svgIcon="dots-vertical" *ngIf="!auth.state.isLoggedIn"></mat-icon>
-    </button>
-  </div>
-
-  <mat-menu #accountMenu="matMenu">
-    <fullerstack-account></fullerstack-account>
+  <button [matMenuTriggerFor]="accountMenu" mat-icon-button>
+    <mat-icon svgIcon="account" *ngIf="auth.state.isLoggedIn"></mat-icon>
+    <mat-icon svgIcon="dots-vertical" *ngIf="!auth.state.isLoggedIn"></mat-icon>
+  </button>
+  <mat-menu #accountMenu="matMenu" x-position="before">
+    <div *ngIf="auth.state.isLoggedIn">
+      <a [routerLink]="navbarLinks.profile.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.profile.icon }}"></mat-icon>
+        {{ navbarLinks.profile.title | translate }}
+      </a>
+      <a [routerLink]="navbarLinks.settings.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.settings.icon }}"></mat-icon>
+        {{ navbarLinks.settings.title | translate }}
+      </a>
+      <button mat-menu-item (click)="auth.logoutDispatch()">
+        <mat-icon svgIcon="{{ navbarLinks.logout.icon }}"></mat-icon>
+        {{ navbarLinks.logout.title | translate }}
+      </button>
+    </div>
+    <div *ngIf="!auth.state.isLoggedIn">
+      <a [routerLink]="navbarLinks.login.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.login.icon }}"></mat-icon>
+        {{ navbarLinks.login.title | translate }}
+      </a>
+      <a [routerLink]="navbarLinks.register.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.register.icon }}"></mat-icon>
+        {{ navbarLinks.register.title | translate }}
+      </a>
+    </div>
   </mat-menu>
 </mat-toolbar>

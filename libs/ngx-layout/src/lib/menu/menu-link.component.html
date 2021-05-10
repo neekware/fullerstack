@@ -1,13 +1,19 @@
-<a *ngIf="link.isInternalLink" routerLink="{{ link.link }}" (click)="redirectUrl(link)" [class.active]="link.isActive(router.url)">
-  <div>
-    <mat-icon *ngIf="link?.icon" svgIcon="{{ link.icon }}"></mat-icon>
-    <span>{{ link.name | translate }}</span>
+<a
+  *ngIf="link.isInternalLink"
+  routerLink="{{ link.link }}"
+  (click)="redirectUrl(link)"
+  [class.active]="link.isActive(router.url)"
+  [class.disabled]="link.disabled"
+>
+  <div fxLayoutGap="14px" [fxFlexOffset]="link.offset(16)">
+    <mat-icon [class.text-color-muted]="link.disabled" *ngIf="link?.icon" svgIcon="{{ link.icon }}"></mat-icon>
+    <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
   </div>
 </a>
 
-<a *ngIf="link.isExternalLink" href="{{ link.link }}" target="{{ link.target }}">
-  <div>
-    <mat-icon svgIcon="{{ link.icon }}"></mat-icon>
-    <span>{{ link.name | translate }}</span>
+<a *ngIf="link.isExternalLink" href="{{ link.link }}" target="{{ link.target }}" [class.disabled]="link.disabled">
+  <div fxLayoutGap="14px" [fxFlexOffset]="link.offset(16)">
+    <mat-icon [class.text-color-muted]="link.disabled" svgIcon="{{ link.icon }}"></mat-icon>
+    <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
   </div>
 </a>
