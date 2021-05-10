@@ -1,0 +1,23 @@
+<div *ngIf="auth.state.isLoggedIn">
+  <button mat-menu-item aria-label="Settings">
+    <mat-icon svgIcon="settings"></mat-icon>
+    {{ 'MENU.SETTINGS' | translate }}
+  </button>
+
+  <button mat-menu-item aria-label="Logout" (click)="auth.logoutDispatch()">
+    <mat-icon svgIcon="logout"></mat-icon>
+    {{ 'AUTH.LOGOUT' | translate }}
+  </button>
+</div>
+
+<div *ngIf="!auth.state.isLoggedIn">
+  <button mat-menu-item aria-label="Login" (click)="auth.goTo(layout.sessionLinks.login.path)">
+    <mat-icon svgIcon="login"></mat-icon>
+    {{ 'AUTH.LOGIN' | translate }}
+  </button>
+
+  <button mat-menu-item aria-label="Register" (click)="auth.goTo(layout.sessionLinks.register.path)">
+    <mat-icon svgIcon="account-plus"></mat-icon>
+    {{ 'AUTH.REGISTER' | translate }}
+  </button>
+</div>

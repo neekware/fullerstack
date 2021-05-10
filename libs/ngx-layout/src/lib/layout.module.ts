@@ -9,6 +9,7 @@ import { MenuService } from '@fullerstack/ngx-menu';
 import { UixModule } from '@fullerstack/ngx-uix';
 import { NgxsModule } from '@ngxs/store';
 
+import { AccountComponent } from './account/account.component';
 import { FooterComponent } from './footer/footer.component';
 import { LayoutComponent } from './layout.component';
 import { LayoutService } from './layout.service';
@@ -34,6 +35,7 @@ import { LayoutStoreState } from './store/layout-state.store';
     MenuComponent,
     MenuLinkComponent,
     MenuNodeComponent,
+    AccountComponent,
     NavbarComponent,
     NotificationComponent,
     OptionsComponent,
@@ -44,6 +46,7 @@ import { LayoutStoreState } from './store/layout-state.store';
     MenuComponent,
     MenuLinkComponent,
     MenuNodeComponent,
+    AccountComponent,
     NavbarComponent,
     NotificationComponent,
     OptionsComponent,
