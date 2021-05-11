@@ -13,7 +13,7 @@ import { DeepReadonly } from 'ts-essentials';
 
 @Injectable()
 export class MsgService {
-  private status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
+  status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
 
   constructor(
     readonly dir: Directionality,
