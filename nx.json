@@ -45,6 +45,6 @@
     "ngx-gql": { "tags": ["name:ngx-gql", "scope:ngx-data"] },
     "ngx-uix": { "tags": ["name:ngx-uix", "scope:ngx-ui"] },
     "ngx-util": { "tags": ["name:ngx-util", "scope:ngx-util"] },
-    "ngx-animation": { "tags": ["name:ngx-animation", "scope:ngx-ui"] }
+    "ngx-shared": { "tags": ["name:ngx-shared", "scope:ngx-util"] }
   }
 }

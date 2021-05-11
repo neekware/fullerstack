@@ -2,17 +2,18 @@ import { Directionality } from '@angular/cdk/bidi';
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
+import {
+  SnackbarComponent,
+  SnackbarStatus,
+  SnackbarStatusDefault,
+  SnackbarType,
+} from '@fullerstack/ngx-shared';
 import { TranslateService } from '@ngx-translate/core';
 import { DeepReadonly } from 'ts-essentials';
 
-import { SnackbarStatusDefault } from './msg.default';
-import { SnackbarStatus } from './msg.model';
-import { SnackbarComponent } from './snackbar';
-import { SnackbarType } from './snackbar/snackbar.model';
-
 @Injectable()
 export class MsgService {
-  private _status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
+  private status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
 
   constructor(
     readonly dir: Directionality,
@@ -24,7 +25,7 @@ export class MsgService {
   }
 
   reset() {
-    this._status = {
+    this.status = {
       ...SnackbarStatusDefault,
       level: this.logger.options.logger.level,
       color: this.getColor(this.logger.options.logger.level),
@@ -32,15 +33,15 @@ export class MsgService {
   }
 
   setMsg(msg: SnackbarStatus) {
-    this._status = {
-      ...this._status,
+    this.status = {
+      ...this.status,
       ...{
         msg,
         color: this.getColor(msg.level),
         console: msg?.console,
       },
     };
-    if (this._status.console) {
+    if (this.status.console) {
       this.logToConsole();
     }
   }
@@ -64,8 +65,8 @@ export class MsgService {
   }
 
   private logToConsole() {
-    this.translate.get(this._status.text).subscribe((translatedText: string) => {
-      switch (this._status.level) {
+    this.translate.get(this.status.text).subscribe((translatedText: string) => {
+      switch (this.status.level) {
         case LogLevels.critical:
           this.logger.critical(translatedText);
           break;
@@ -86,7 +87,7 @@ export class MsgService {
   }
 
   private openSnackBar(msg: string, msgType: SnackbarType, config?: MatSnackBarConfig) {
-    msg = msg || this._status.text;
+    msg = msg || this.status.text;
     config = {
       ...{
         duration: 2000,
@@ -114,9 +115,5 @@ export class MsgService {
 
   errorSnackBar(msg: string, config?: MatSnackBarConfig) {
     this.openSnackBar(msg, SnackbarType.error, config);
-  }
-
-  get status() {
-    return this._status;
   }
 }

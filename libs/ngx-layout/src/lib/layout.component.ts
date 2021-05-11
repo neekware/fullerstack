@@ -2,9 +2,9 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
-import { fadeAnimations, routeAnimations } from '@fullerstack/ngx-animation';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { fadeAnimations, routeAnimations } from '@fullerstack/ngx-shared';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

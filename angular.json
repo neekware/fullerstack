@@ -870,26 +870,23 @@
         }
       }
     },
-    "ngx-animation": {
+    "ngx-shared": {
       "projectType": "library",
-      "root": "libs/ngx-animation",
-      "sourceRoot": "libs/ngx-animation/src",
+      "root": "libs/ngx-shared",
+      "sourceRoot": "libs/ngx-shared/src",
       "prefix": "fullerstack",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/ngx-animation/src/**/*.ts",
-              "libs/ngx-animation/src/**/*.html"
-            ]
+            "lintFilePatterns": ["libs/ngx-shared/src/**/*.ts", "libs/ngx-shared/src/**/*.html"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ngx-animation"],
+          "outputs": ["coverage/libs/ngx-shared"],
           "options": {
-            "jestConfig": "libs/ngx-animation/jest.config.js",
+            "jestConfig": "libs/ngx-shared/jest.config.js",
             "passWithNoTests": true
           }
         }

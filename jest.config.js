@@ -22,6 +22,6 @@ module.exports = {
     '<rootDir>/libs/ngx-gql',
     '<rootDir>/libs/ngx-uix',
     '<rootDir>/libs/ngx-util',
-    '<rootDir>/libs/ngx-animation',
+    '<rootDir>/libs/ngx-shared',
   ],
 };

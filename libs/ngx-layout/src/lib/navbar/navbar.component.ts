@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { rotationAnimations, shakeAnimations } from '@fullerstack/ngx-animation';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { _ } from '@fullerstack/ngx-i18n';
+import { rotationAnimations, shakeAnimations } from '@fullerstack/ngx-shared';
 import { UixService } from '@fullerstack/ngx-uix';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
