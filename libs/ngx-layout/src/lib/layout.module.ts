@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { AuthModule } from '@fullerstack/ngx-auth';
 import { I18nModule } from '@fullerstack/ngx-i18n';
@@ -53,6 +52,6 @@ import { LayoutStoreState } from './store/layout-state.store';
     FooterComponent,
     LayoutComponent,
   ],
-  providers: [MatIcon, LayoutService, MenuService],
+  providers: [LayoutService, MenuService],
 })
 export class LayoutModule {}

@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-// import { ValidationService } from '@fullerstack/shared/services';
 import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
+import { _ } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
+import { ValidationService } from '@fullerstack/ngx-util';
 
 @Component({
-  selector: 'fullerstack-login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  title = _('COMMON.LOGIN');
+  subtitle = _('COMMON.ACCOUNT_ACCESS');
+  icon = 'lock-open-outline';
 
   constructor(
     public config: ConfigService,
     public auth: AuthService,
     public layout: LayoutService,
-    public ngFormBuilder: FormBuilder // public validation: ValidationService
+    public formBuilder: FormBuilder,
+    public validation: ValidationService
   ) {
+    this.auth.msg.reset();
     if (this.auth.state.isLoggedIn) {
       const redirectUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
       this.auth.goTo(redirectUrl);
@@ -33,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   private buildForm() {
-    this.form = this.ngFormBuilder.group({
+    this.form = this.formBuilder.group({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
@@ -45,5 +51,9 @@ export class LoginComponent implements OnInit {
 
   getControl(name: string): FormControl {
     return tryGet<FormControl>(() => this.form.controls[name] as FormControl);
+  }
+
+  submit() {
+    this.auth.loginDispatch(this.form.value);
   }
 }

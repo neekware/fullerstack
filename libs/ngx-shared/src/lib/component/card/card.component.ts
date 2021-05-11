@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TooltipPosition } from '@angular/material/tooltip';
 import { I18nService } from '@fullerstack/ngx-i18n';
 
 import { shakeAnimations } from '../../animation/animation.shake';
 
 @Component({
-  selector: 'app-card',
+  selector: 'fullerstack-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   animations: [shakeAnimations.wiggleIt],
@@ -25,8 +26,8 @@ export class CardComponent implements OnInit {
 
   wiggleState = 'back';
   hasMenu = false;
-  optionMenuTooltipPosition = 'ltr';
   isMainColor = true;
+  optionMenuTooltipPosition: TooltipPosition;
 
   constructor(readonly i18n: I18nService) {}
 
@@ -38,8 +39,13 @@ export class CardComponent implements OnInit {
       throw Error('Multiple inputs. Use icon or menu or neither');
     }
     this.hasMenu = this.menu && this.menu.length > 0;
-    this.optionMenuTooltipPosition = this.i18n.direction === 'ltr' ? 'left' : 'right';
-
     this.isMainColor = ['primary', 'accent', 'warn'].some((value) => value === this.iconColor);
+
+    this.setPosition();
+  }
+
+  setPosition() {
+    const position = this.i18n.direction === 'ltr' ? 'left' : 'right';
+    this.optionMenuTooltipPosition = position as TooltipPosition;
   }
 }

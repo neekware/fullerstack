@@ -18,7 +18,7 @@
         mat-icon-button
         class="menu-button"
         matTooltip="{{ 'COMMON.ACTIONS' | translate }}"
-        matTooltipPosition="{{ optionMenuTooltipPosition }}"
+        [matTooltipPosition]="optionMenuTooltipPosition"
       >
         <mat-icon [@wiggleIt]="wiggleState" svgIcon="dots-vertical" class="option-icon"></mat-icon>
       </button>

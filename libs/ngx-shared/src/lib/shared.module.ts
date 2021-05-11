@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatError } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { I18nModule } from '@fullerstack/ngx-i18n';
@@ -30,6 +31,6 @@ import { SnackbarComponent } from './component/snackbar/snackbar.component';
     ConfirmationDialogComponent,
     SnackbarComponent,
   ],
-  providers: [MatIcon],
+  providers: [],
 })
 export class SharedModule {}
