@@ -5,7 +5,7 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
-import { AsyncValidationService, ValidationService } from '@fullerstack/ngx-util';
+import { AsyncValidationService, ValidationService, getControl } from '@fullerstack/ngx-util';
 
 @Component({
   selector: 'fullerstack-register',
@@ -14,6 +14,7 @@ import { AsyncValidationService, ValidationService } from '@fullerstack/ngx-util
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
+  getControl = getControl;
 
   constructor(
     public config: ConfigService,
@@ -79,9 +80,5 @@ export class RegisterComponent implements OnInit {
       password,
       language,
     });
-  }
-
-  getControl(name: string): FormControl {
-    return tryGet<FormControl>(() => this.form.controls[name] as FormControl);
   }
 }
