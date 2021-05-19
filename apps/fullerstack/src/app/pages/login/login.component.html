@@ -1,57 +1,50 @@
 <mat-toolbar class="page-header-toolbar" color="primary"> </mat-toolbar>
 
-<div class="page-content">
-  <fullerstack-card
-    class="page-card"
-    fxLayout="column"
-    fxFlex="600px"
-    fxFlex.sm="70"
-    fxFlex.xs="100"
-    [title]="title"
-    [subtitle]="subtitle"
-    [icon]="icon"
-    [progress]="auth.isLoading"
-  >
-    <form [formGroup]="form" (submit)="submit()" fxLayout="column">
-      <mat-form-field>
-        <mat-icon matSuffix svgIcon="email"></mat-icon>
-        <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
-        <fullerstack-hint [control]="getControl('email')"></fullerstack-hint>
-      </mat-form-field>
+<fullerstack-card
+  class="flex flex-col w-4/5 lt-sm:w-full my-0 mx-auto -mt-14"
+  [title]="title"
+  [subtitle]="subtitle"
+  [icon]="icon"
+  [progress]="auth.isLoading"
+>
+  <form [formGroup]="form" (submit)="submit()" class="flex flex-col pb-4">
+    <mat-form-field>
+      <mat-icon matSuffix svgIcon="email"></mat-icon>
+      <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
+      <fullerstack-hint [control]="getControl('email')"></fullerstack-hint>
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-icon matSuffix svgIcon="key-variant"></mat-icon>
-        <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
-        <fullerstack-hint [control]="getControl('password')"></fullerstack-hint>
-      </mat-form-field>
+    <mat-form-field>
+      <mat-icon matSuffix svgIcon="key-variant"></mat-icon>
+      <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
+      <fullerstack-hint [control]="getControl('password')"></fullerstack-hint>
+    </mat-form-field>
 
-      <div fxLayout fxLayoutGap="10px" class="pt0_5">
-        <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
-          {{ 'COMMON.LOGIN' | translate }}
-        </button>
-      </div>
+    <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine" class="w-1/4">
+      {{ 'COMMON.LOGIN' | translate }}
+    </button>
 
-      <fullerstack-alert
-        class="mt1"
-        *ngIf="auth.msg.status.text"
-        [color]="auth.msg.status.color"
-        [text]="auth.msg.status.text"
-      ></fullerstack-alert>
-    </form>
+    <fullerstack-alert
+      class="mt1"
+      *ngIf="auth.msg.status.text"
+      [color]="auth.msg.status.color"
+      [text]="auth.msg.status.text"
+    ></fullerstack-alert>
+  </form>
 
-    <mat-divider class="mt1"></mat-divider>
-    <div class="mt2" fxLayout="row">
-      <span>
-        [
-        <a routerLink="/auth/register" class="no-underline"> {{ 'COMMON.REGISTER' | translate }} </a>
-        ]
-      </span>
-      <div fxFlex></div>
-      <span>
-        [
-        <a routerLink="/recovery/password/reset" class="no-underline"> {{ 'COMMON.FORGOT_PASSWORD' | translate }} </a>
-        ]
-      </span>
-    </div>
-  </fullerstack-card>
-</div>
+  <mat-divider></mat-divider>
+
+  <div class="flex flex-row mt-5 justify-between align-middle">
+    <span>
+      [
+      <a routerLink="/auth/register" class="no-underline"> {{ 'COMMON.REGISTER' | translate }} </a>
+      ]
+    </span>
+    <div fxFlex></div>
+    <span>
+      [
+      <a routerLink="/recovery/password/reset" class="no-underline"> {{ 'COMMON.FORGOT_PASSWORD' | translate }} </a>
+      ]
+    </span>
+  </div>
+</fullerstack-card>
