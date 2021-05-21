@@ -15,3 +15,7 @@ textarea:focus,
 select:focus {
   box-shadow: unset;
 }
+
+button:focus {
+  outline: none;
+}
