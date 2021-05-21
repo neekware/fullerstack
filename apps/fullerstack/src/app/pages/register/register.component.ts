@@ -6,7 +6,7 @@ import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { _ } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
-import { AsyncValidationService, ValidationService } from '@fullerstack/ngx-util';
+import { ValidationAsyncService, ValidationService } from '@fullerstack/ngx-util';
 
 @Component({
   selector: 'fullerstack-register',
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     public layout: LayoutService,
     public ngFormBuilder: FormBuilder,
     public validation: ValidationService,
-    public asyncValidation: AsyncValidationService
+    public asyncValidation: ValidationAsyncService
   ) {
     if (this.auth.state.isLoggedIn) {
       const redirectUrl = tryGet(
