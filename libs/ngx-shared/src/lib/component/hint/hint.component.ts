@@ -1,6 +1,16 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
+import { Direction } from '@angular/cdk/bidi';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { tryGet } from '@fullerstack/agx-util';
+import { I18nService } from '@fullerstack/ngx-i18n';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, first, takeUntil } from 'rxjs/operators';
@@ -14,19 +24,39 @@ import { validatorHintMessage } from './hint.util';
   styleUrls: ['./hint.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HintComponent implements OnDestroy, AfterViewInit {
+export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() control: AbstractControl;
-  @Input() below = true;
-  @Input() right = true;
+  @Input() direction: Direction;
 
   private destroy$ = new Subject<boolean>();
   show$ = new BehaviorSubject<boolean>(false);
   hint: string = undefined;
+  ltrDirection = true;
 
-  constructor(readonly translateService: TranslateService) {}
+  constructor(readonly translateService: TranslateService, readonly i18n: I18nService) {}
 
   reset(): void {
     this.hint = undefined;
+  }
+
+  ngOnInit() {
+    if (this.direction) {
+      this.ltrDirection = this.direction === 'ltr';
+    } else {
+      this.i18n.languageChanges$.pipe(takeUntil(this.destroy$)).subscribe({
+        next: (value) => {
+          this.ltrDirection = this.i18n.direction === 'ltr';
+        },
+      });
+    }
+  }
+
+  ngOnChanges() {
+    if (this.direction) {
+      this.ltrDirection = this.direction === 'ltr';
+    } else {
+      this.ltrDirection = this.i18n.direction === 'ltr';
+    }
   }
 
   ngAfterViewInit() {

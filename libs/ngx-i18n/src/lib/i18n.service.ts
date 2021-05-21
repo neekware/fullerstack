@@ -20,7 +20,7 @@ import { AvailableLanguage, LanguageDirection } from './i18n.model';
   providedIn: 'root',
 })
 export class I18nService {
-  @Output() languageChange$ = new EventEmitter<string>();
+  @Output() languageChanges$ = new EventEmitter<string>();
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   currentLanguage = DefaultLanguage;
@@ -80,7 +80,7 @@ export class I18nService {
     this.xlate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       this.currentLanguage = event.lang;
       this.direction = this.getLanguageDirection(event.lang);
-      this.languageChange$.emit(event.lang);
+      this.languageChanges$.emit(event.lang);
       this.logger.info(`I18nService - language changed ... (${this.currentLanguage})`);
     });
 

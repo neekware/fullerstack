@@ -1,18 +1,11 @@
-.font {
-  font-size: 86%;
-}
-.below {
-  position: absolute;
-  top: 33px;
-  text-align: unset;
-}
-.right {
+.ltr-direction {
   right: -21px;
 }
 
-[dir='rtl'] {
-  .app-hint {
-    right: unset;
-    left: -21px;
-  }
+.rtl-direction {
+  left: -20px;
+}
+
+.mat-icon {
+  height: 0.75rem;
 }
