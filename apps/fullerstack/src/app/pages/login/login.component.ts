@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -11,15 +11,16 @@ import { ValidationService, getControl } from '@fullerstack/ngx-util';
   selector: 'fullerstack-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
   title = _('COMMON.LOGIN');
   subtitle = _('COMMON.ACCOUNT_ACCESS');
   icon = 'lock-open-outline';
-  getControl = getControl;
 
   constructor(
+    readonly formBuilder: FormBuilder,
     readonly config: ConfigService,
     readonly auth: AuthService,
     readonly layout: LayoutService,
@@ -36,12 +37,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.form.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
   }
 
   private buildForm() {
-    this.form = new FormGroup({
-      email: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.required, this.validation.validateEmail]],
+      password: ['', [Validators.required]],
     });
   }
 

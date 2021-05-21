@@ -13,7 +13,7 @@ export const LayoutMenuTree: MenuItem[] = [
       },
       {
         name: _('MENU.CONTACT'),
-        icon: 'account-card-details',
+        icon: 'account-cog',
         link: '/auth/contact',
         fullspan: true,
       },

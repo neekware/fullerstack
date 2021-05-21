@@ -1,5 +1,10 @@
 import { _ } from '@fullerstack/ngx-i18n';
 
+/**
+ * Debounce time for verification and showing the hint
+ */
+export const HINT_DEBOUNCE_TIME = 300;
+
 export const ValidatorHintMessages = {
   required: _('VALIDATION.REQUIRED'),
   minlength: _('VALIDATION.MINIMUM_LENGTH'),

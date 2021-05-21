@@ -9,3 +9,10 @@
 .right {
   right: -21px;
 }
+
+[dir='rtl'] {
+  .app-hint {
+    right: unset;
+    left: -21px;
+  }
+}

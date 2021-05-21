@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { I18nService } from '@fullerstack/ngx-i18n';
@@ -16,7 +16,7 @@ import { LayoutService } from './layout.service';
   styleUrls: ['./layout.component.scss'],
   animations: [routeAnimations.slideIn, fadeAnimations.fadeOutInSlow],
 })
-export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
+export class LayoutComponent implements OnDestroy, AfterViewInit {
   @ViewChild('sideMenu')
   private sideMenu: MatSidenav;
   @ViewChild('notifyMenu')
@@ -30,7 +30,7 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
     public layout: LayoutService
   ) {}
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.layout.state$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
       if (state.menuOpen) {
         this.sideMenu.open();
@@ -43,14 +43,13 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
         this.notifyMenu.close();
       }
     });
-  }
 
-  ngAfterViewInit(): void {
     this.sideMenu.closedStart.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (this.layout.state.menuOpen) {
         this.layout.toggleMenu();
       }
     });
+
     this.notifyMenu.closedStart.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (this.layout.state.notifyOpen) {
         this.layout.toggleNotification();

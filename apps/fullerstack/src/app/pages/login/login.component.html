@@ -7,17 +7,17 @@
   [icon]="icon"
   [progress]="auth.isLoading"
 >
-  <form [formGroup]="form" (submit)="submit()" class="flex flex-col pb-4">
+  <form [formGroup]="form" (submit)="submit()" autocomplete="off" class="flex flex-col pb-4">
     <mat-form-field>
       <mat-icon matSuffix svgIcon="email"></mat-icon>
       <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
-      <fullerstack-hint [control]="getControl('email')"></fullerstack-hint>
+      <fullerstack-hint [control]="form?.controls?.email"></fullerstack-hint>
     </mat-form-field>
 
     <mat-form-field>
       <mat-icon matSuffix svgIcon="key-variant"></mat-icon>
       <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
-      <fullerstack-hint [control]="getControl('password')"></fullerstack-hint>
+      <fullerstack-hint [control]="form?.controls?.password"></fullerstack-hint>
     </mat-form-field>
 
     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine" class="w-1/4">
@@ -32,6 +32,7 @@
     ></fullerstack-alert>
   </form>
 
+  {{ form.value | json }}
   <mat-divider></mat-divider>
 
   <div class="flex flex-row mt-5 justify-between align-middle">

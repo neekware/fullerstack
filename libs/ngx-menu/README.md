@@ -62,7 +62,7 @@ export const AppMenuTree: MenuItem[] = [
       },
       {
         name: 'Settings',
-        icon: 'account-card-details',
+        icon: 'account-cog',
         link: '/admin/accounts/settings',
         fullspan: true,
         permissions: ['admin_root', 'admin_staff', 'admin_hr'],
