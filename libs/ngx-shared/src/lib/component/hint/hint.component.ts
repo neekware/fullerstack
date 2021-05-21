@@ -13,7 +13,7 @@ import { tryGet } from '@fullerstack/agx-util';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, first, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, first, takeUntil } from 'rxjs/operators';
 
 import { HINT_DEBOUNCE_TIME } from './hint.model';
 import { validatorHintMessage } from './hint.util';
@@ -27,6 +27,13 @@ import { validatorHintMessage } from './hint.util';
 export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() control: AbstractControl;
   @Input() direction: Direction;
+
+  private _touched = false;
+  @Input('touched')
+  set touched(value: boolean) {
+    this._touched = value;
+    this.process();
+  }
 
   private destroy$ = new Subject<boolean>();
   show$ = new BehaviorSubject<boolean>(false);
@@ -43,7 +50,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
     if (this.direction) {
       this.ltrDirection = this.direction === 'ltr';
     } else {
-      this.i18n.languageChanges$.pipe(takeUntil(this.destroy$)).subscribe({
+      this.i18n.languageChanges$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe({
         next: (value) => {
           this.ltrDirection = this.i18n.direction === 'ltr';
         },
@@ -61,22 +68,26 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
 
   ngAfterViewInit() {
     if (this.control) {
-      this.control.valueChanges
+      this.control.statusChanges
         .pipe(debounceTime(HINT_DEBOUNCE_TIME), takeUntil(this.destroy$))
         .subscribe({
           next: (state) => {
-            for (const error in this.control.errors) {
-              const hasError = Object.prototype.hasOwnProperty.call(this.control.errors, error);
-              if (hasError && !this.control.pristine) {
-                this.processFeedback(error, this.control.errors[error]);
-                this.show$.next(!!this.hint);
-                return;
-              }
-            }
-            this.show$.next(false);
+            this.process();
           },
         });
     }
+  }
+
+  process() {
+    for (const error in this.control.errors) {
+      const hasError = Object.prototype.hasOwnProperty.call(this.control.errors, error);
+      if ((hasError && this._touched) || !this.control.pristine) {
+        this.processFeedback(error, this.control.errors[error]);
+        this.show$.next(!!this.hint);
+        return;
+      }
+    }
+    this.show$.next(false);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
