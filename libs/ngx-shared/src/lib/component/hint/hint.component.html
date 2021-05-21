@@ -3,7 +3,7 @@
 </mat-error>
 
 <mat-hint
-  *ngIf="!(show$ | async)"
+  *ngIf="!(show$ | async) && !!hint"
   [class.ltr-direction]="ltrDirection"
   [class.rtl-direction]="!ltrDirection"
   class="top-7 absolute text-xs"
