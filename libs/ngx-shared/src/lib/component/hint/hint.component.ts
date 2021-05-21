@@ -27,6 +27,7 @@ import { validatorHintMessage } from './hint.util';
 export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() control: AbstractControl;
   @Input() direction: Direction;
+  @Input() hint: string;
 
   private _touched = false;
   @Input('touched')
@@ -37,13 +38,13 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
 
   private destroy$ = new Subject<boolean>();
   show$ = new BehaviorSubject<boolean>(false);
-  hint: string = undefined;
+  error: string = undefined;
   ltrDirection = true;
 
   constructor(readonly translateService: TranslateService, readonly i18n: I18nService) {}
 
   reset(): void {
-    this.hint = undefined;
+    this.error = undefined;
   }
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       const hasError = Object.prototype.hasOwnProperty.call(this.control.errors, error);
       if ((hasError && this._touched) || !this.control.pristine) {
         this.processFeedback(error, this.control.errors[error]);
-        this.show$.next(!!this.hint);
+        this.show$.next(!!this.error);
         return;
       }
     }
@@ -98,7 +99,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       return this.handleMinimumLength(validatorValue.requiredLength);
     }
 
-    this.hint = tryGet(
+    this.error = tryGet(
       () => validatorHintMessage(validatorName),
       validatorHintMessage('invalidInput')
     );
@@ -110,7 +111,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       .get(message, { value: requiredLength })
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe((translatedHint: string) => {
-        this.hint = translatedHint;
+        this.error = translatedHint;
       });
   }
 
