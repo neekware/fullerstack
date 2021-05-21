@@ -200,7 +200,7 @@
   "VALIDATION.INVALID_NUMBER": "无效号码",
   "VALIDATION.INVALID_PASSWORD": "无效的密码。最少6个字符并且必须包含一个数字",
   "VALIDATION.INVALID_PASSWORD_CONFIRMATION": "两个密码必须相同",
-  "VALIDATION.MINIMUN_LENGTH": "最小长度是{{__value__}}",
+  "VALIDATION.MINIMUM_LENGTH": "最小长度是{{__value__}}",
   "VALIDATION.NEGATIVE_NUMBER": "价值必须是非负的",
   "VALIDATION.NON_ZERO": "值必须为非零",
   "VALIDATION.NOT_ACCOUNT_EMAIL": "请输入您的帐户电子邮件",

@@ -5,7 +5,7 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { _ } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
-import { ValidationService, getControl } from '@fullerstack/ngx-util';
+import { ValidationService } from '@fullerstack/ngx-util';
 
 @Component({
   selector: 'fullerstack-login',

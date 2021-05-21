@@ -200,7 +200,7 @@
   "VALIDATION.INVALID_NUMBER": "عدد نامعتبر",
   "VALIDATION.INVALID_PASSWORD": "رمز عبور نامعتبر. حداقل 6 حرف و باید حاوی عدد باشد",
   "VALIDATION.INVALID_PASSWORD_CONFIRMATION": "هر دو کلمه عبور باید یکسان باشند",
-  "VALIDATION.MINIMUN_LENGTH": "حداقل طول {{__value__}} است",
+  "VALIDATION.MINIMUM_LENGTH": "حداقل طول {{__value__}} است",
   "VALIDATION.NEGATIVE_NUMBER": "ارزش باید غیر منفی باشد",
   "VALIDATION.NON_ZERO": "مقدار باید صفر باشد",
   "VALIDATION.NOT_ACCOUNT_EMAIL": "لطفا ایمیل حساب خود را وارد کنید",

@@ -1,66 +1,70 @@
-<mat-toolbar color="primary"></mat-toolbar>
+<mat-toolbar class="page-header-toolbar" color="primary"> </mat-toolbar>
 
-<mat-card>
-  <mat-card-content>
-    <mat-tab-group [selectedIndex]="1" (selectedTabChange)="auth.goTo(layout.sessionLinks.login.path)">
-      <mat-tab>
-        <ng-template matTabLabel>
-          {{ layout.sessionLinks.login.label | translate }}
-        </ng-template>
-      </mat-tab>
-      <mat-tab>
-        <ng-template matTabLabel>
-          <strong>{{ layout.sessionLinks.register.label | translate }}</strong>
-        </ng-template>
-        <div class="mt-4 pb-8">
-          <form [formGroup]="form" (submit)="register()">
-            <mat-form-field>
-              <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
-              <input
-                matInput
-                formControlName="name"
-                placeholder="{{ 'AUTH.FIELDS.NAME' | translate }}"
-                [class.progress-wheel]="auth.isLoading"
-              />
-              <fullerstack-hint [control]="getControl('name')"></fullerstack-hint>
-            </mat-form-field>
+<fullerstack-card
+  class="flex flex-col w-4/5 lt-sm:w-11/12 gt-md:w-3/4 my-0 mx-auto -mt-14"
+  [title]="title"
+  [subtitle]="subtitle"
+  [icon]="icon"
+  [progress]="auth.isLoading"
+>
+  <form [formGroup]="form" (submit)="submit()" autocomplete="off" class="flex flex-col pb-4">
+    <mat-form-field>
+      <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
+      <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" />
+      <fullerstack-hint [control]="form?.controls?.name" [touched]="form?.controls?.name?.touched"></fullerstack-hint>
+    </mat-form-field>
 
-            <mat-form-field>
-              <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
-              <input matInput formControlName="email" placeholder="{{ 'AUTH.FIELDS.EMAIL' | translate }}" />
-              <fullerstack-hint [control]="getControl('email')"></fullerstack-hint>
-            </mat-form-field>
+    <mat-form-field>
+      <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
+      <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
+      <fullerstack-hint [control]="form?.controls?.email" [touched]="form?.controls?.email?.touched"></fullerstack-hint>
+    </mat-form-field>
 
-            <mat-form-field>
-              <mat-icon matSuffix color="primary" svgIcon="key"></mat-icon>
-              <input matInput type="password" formControlName="password" placeholder="{{ 'AUTH.FIELDS.PASSWORD' | translate }}" />
-              <fullerstack-hint [control]="getControl('password')"></fullerstack-hint>
-            </mat-form-field>
+    <mat-form-field>
+      <mat-icon matSuffix color="primary" svgIcon="key"></mat-icon>
+      <input matInput formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
+      <fullerstack-hint [control]="form?.controls?.password" [touched]="form?.controls?.password?.touched"></fullerstack-hint>
+    </mat-form-field>
 
-            <mat-form-field>
-              <mat-icon matSuffix color="primary" svgIcon="key-change"></mat-icon>
-              <input
-                matInput
-                type="password"
-                formControlName="passwordConfirmation"
-                placeholder="{{ 'AUTH.FIELDS.PASSWORD_CONFIRMATION' | translate }}"
-              />
-              <fullerstack-hint [control]="getControl('passwordConfirmation')"></fullerstack-hint>
-            </mat-form-field>
+    <mat-form-field>
+      <mat-icon matSuffix color="primary" svgIcon="key-change"></mat-icon>
+      <input
+        matInput
+        type="password"
+        formControlName="passwordConfirmation"
+        placeholder="{{ 'COMMON.PASSWORD_CONFIRMATION' | translate }}"
+      />
+      <fullerstack-hint
+        [control]="form?.controls?.passwordConfirmation"
+        [touched]="form?.controls?.passwordConfirmation?.touched"
+      ></fullerstack-hint>
+    </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit" class="mt-4" [disabled]="!form.valid">
-              {{ 'AUTH.REGISTER' | translate }}
-            </button>
+    <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine" class="w-1/4">
+      {{ 'COMMON.LOGIN' | translate }}
+    </button>
 
-            <fullerstack-alert
-              class="mt-4"
-              *ngIf="auth.msg.status.text"
-              [color]="auth.msg.status.color"
-              [text]="auth.msg.status.text"
-            ></fullerstack-alert>
-          </form>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+    <fullerstack-alert
+      class="mt1"
+      *ngIf="auth.msg.status.text"
+      [color]="auth.msg.status.color"
+      [text]="auth.msg.status.text"
+    ></fullerstack-alert>
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <div class="flex flex-row mt-5 justify-between align-middle">
+    <span>
+      [
+      <a routerLink="/auth/login" class="no-underline"> {{ 'COMMON.LOGIN' | translate }} </a>
+      ]
+    </span>
+    <div fxFlex></div>
+    <span>
+      [
+      <a routerLink="/recovery/password/reset" class="no-underline"> {{ 'COMMON.FORGOT_PASSWORD' | translate }} </a>
+      ]
+    </span>
+  </div>
+</fullerstack-card>

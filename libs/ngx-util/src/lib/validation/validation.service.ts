@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
 
 @Injectable()
@@ -46,22 +46,22 @@ export class ValidationService {
   }
 
   // Matching two passwords
-  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
-    return (group: FormGroup): ValidationErrors | null => {
-      const password = group.controls[passwordKey];
-      const confirmPassword = group.controls[confirmPasswordKey];
+  matchingPasswords(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('passwordConfirmation');
 
-      if (password.pristine || confirmPassword.pristine) {
-        return null;
-      }
+    if (password.pristine || confirmPassword.pristine) {
+      return null;
+    }
 
-      if (password.value !== confirmPassword.value) {
-        confirmPassword.setErrors({ mismatchPassword: true });
-        return {
-          mismatchedPasswords: true,
-        };
-      }
-    };
+    if (password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ mismatchPassword: true });
+      return {
+        mismatchedPasswords: true,
+      };
+    }
+
+    return null;
   }
 
   // Full name should not have numbers, must have at least one space and each part must be at least 2 char long

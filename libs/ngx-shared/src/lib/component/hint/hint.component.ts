@@ -108,10 +108,10 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
   handleMinimumLength(requiredLength: number) {
     const message = validatorHintMessage('minlength');
     this.translateService
-      .get(message, { value: requiredLength })
+      .get(message, { __value__: requiredLength })
       .pipe(first(), takeUntil(this.destroy$))
-      .subscribe((translatedHint: string) => {
-        this.error = translatedHint;
+      .subscribe((error: string) => {
+        this.error = error;
       });
   }
 

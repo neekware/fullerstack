@@ -200,7 +200,7 @@
   "VALIDATION.INVALID_NUMBER": "Ungültige Nummer",
   "VALIDATION.INVALID_PASSWORD": "Ungültiges Passwort. Mindestens 6 Zeichen und muss eine Nummer enthalten",
   "VALIDATION.INVALID_PASSWORD_CONFIRMATION": "Beide Passwörter müssen identisch sein",
-  "VALIDATION.MINIMUN_LENGTH": "Mindestlänge ist {{__value__}}",
+  "VALIDATION.MINIMUM_LENGTH": "Mindestlänge ist {{__value__}}",
   "VALIDATION.NEGATIVE_NUMBER": "Der Wert muss nicht negativ sein",
   "VALIDATION.NON_ZERO": "Der Wert muss ungleich Null sein",
   "VALIDATION.NOT_ACCOUNT_EMAIL": "Bitte geben Sie Ihre Kontomail ein",

@@ -4,8 +4,9 @@ import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService } from '@fullerstack/ngx-i18n';
+import { _ } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
-import { AsyncValidationService, ValidationService, getControl } from '@fullerstack/ngx-util';
+import { AsyncValidationService, ValidationService } from '@fullerstack/ngx-util';
 
 @Component({
   selector: 'fullerstack-register',
@@ -14,7 +15,9 @@ import { AsyncValidationService, ValidationService, getControl } from '@fullerst
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
-  getControl = getControl;
+  title = _('COMMON.REGISTER');
+  subtitle = _('COMMON.ACCOUNT_CREATE');
+  icon = 'account-plus-outline';
 
   constructor(
     public config: ConfigService,
@@ -62,13 +65,11 @@ export class RegisterComponent implements OnInit {
         ],
         passwordConfirmation: ['', [Validators.required]],
       },
-      {
-        validator: this.validation.matchingPasswords('password', 'passwordConfirmation'),
-      }
+      { validator: this.validation.matchingPasswords }
     );
   }
 
-  register() {
+  submit() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { email, password, ...rest } = this.form.value;
     const { firstName, lastName } = tokenizeFullName(this.form.value.name);

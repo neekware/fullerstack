@@ -200,7 +200,7 @@
   "VALIDATION.INVALID_NUMBER": "Número invalido",
   "VALIDATION.INVALID_PASSWORD": "Contraseña invalida. Mínimo de 6 caracteres y debe contener un número",
   "VALIDATION.INVALID_PASSWORD_CONFIRMATION": "Ambas contraseñas deben ser las mismas",
-  "VALIDATION.MINIMUN_LENGTH": "La duración mínima es {{__value__}}",
+  "VALIDATION.MINIMUM_LENGTH": "La duración mínima es {{__value__}}",
   "VALIDATION.NEGATIVE_NUMBER": "El valor debe ser no negativo",
   "VALIDATION.NON_ZERO": "El valor debe ser distinto de cero",
   "VALIDATION.NOT_ACCOUNT_EMAIL": "Por favor ingrese el correo electrónico de su cuenta",

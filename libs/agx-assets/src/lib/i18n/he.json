@@ -200,7 +200,7 @@
   "VALIDATION.INVALID_NUMBER": "מספר לא תקין",
   "VALIDATION.INVALID_PASSWORD": "סיסמה שגויה. מינימום של 6 תווים וחייב להכיל מספר",
   "VALIDATION.INVALID_PASSWORD_CONFIRMATION": "שתי הסיסמאות חייבות להיות זהות",
-  "VALIDATION.MINIMUN_LENGTH": "אורך מינימלי הוא {{__value__}}",
+  "VALIDATION.MINIMUM_LENGTH": "אורך מינימלי הוא {{__value__}}",
   "VALIDATION.NEGATIVE_NUMBER": "הערך חייב להיות לא שלילי",
   "VALIDATION.NON_ZERO": "הערך חייב להיות לא אפס",
   "VALIDATION.NOT_ACCOUNT_EMAIL": "הזן את כתובת הדוא\"ל של החשבון שלך",
