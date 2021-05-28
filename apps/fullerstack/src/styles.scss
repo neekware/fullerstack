@@ -1,5 +1,6 @@
 @import 'libs/agx-assets/src/lib/styles/tailwind/variables';
 @import 'libs/agx-assets/src/lib/styles/material/dark-blue/themes';
+@import 'libs/agx-assets/src/lib/styles/reset';
 // @import 'libs/agx-assets/src/lib/styles/site/site';
 // @import 'libs/agx-assets/src/lib/styles/site/options';
 // @import 'libs/agx-assets/src/lib/styles/site/menu';
@@ -134,21 +135,4 @@ fullerstack-home {
       right: 37%;
     }
   }
-}
-
-html,
-body {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  height: 100%;
-}
-
-// no highlights
-* {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: -moz-none;
-  -o-user-select: none;
-  user-select: none;
 }

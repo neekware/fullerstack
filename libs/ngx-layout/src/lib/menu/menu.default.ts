@@ -3,22 +3,27 @@ import { MenuItem } from '@fullerstack/ngx-menu';
 
 export const LayoutMenuTree: MenuItem[] = [
   {
-    name: _('MENU.ADMIN'),
+    name: _('COMMON.ADMIN'),
     icon: 'wrench',
+    permissions: [
+      'sitewide.admin_sitewide',
+      'sitewide.staff_sitewide',
+      'sitewide.finance_sitewide',
+    ],
     children: [
       {
-        name: _('MENU.PROFILE'),
+        name: _('COMMON.PROFILE'),
         icon: 'account',
         link: '/auth/login',
       },
       {
-        name: _('MENU.CONTACT'),
-        icon: 'account-cog',
+        name: _('COMMON.CONTACT'),
+        icon: 'account-card-details',
         link: '/auth/contact',
         fullspan: true,
       },
       {
-        name: _('MENU.ABOUT'),
+        name: _('COMMON.ABOUT'),
         icon: 'account',
         link: '/about/us',
         disabled: true,
@@ -26,66 +31,77 @@ export const LayoutMenuTree: MenuItem[] = [
     ],
   },
   {
-    name: _('MENU.STOCKS'),
+    name: _('COMMON.CURRENCY_EXCHANGE'),
+    icon: 'cash-multiple',
+    link: '/forex',
+  },
+  {
+    name: _('COMMON.STOCKS'),
     icon: 'trending-up',
     disabled: true,
     children: [
       {
-        name: _('MENU.OWN'),
+        name: _('COMMON.PORTFLIO'),
         icon: 'account-check',
         link: '/finance/stocks/own',
       },
       {
-        name: _('MENU.WISHLIST'),
+        name: _('COMMON.WISHLIST'),
         icon: 'playlist-check',
         link: '/finance/stocks/wishlist',
       },
     ],
   },
   {
-    name: _('MENU.BONDS'),
+    name: _('COMMON.BONDS'),
     icon: 'trending-up',
     children: [
       {
-        name: _('MENU.OWN'),
+        name: _('COMMON.PORTFLIO'),
         icon: 'account-check',
         link: '/finance/bonds/own',
       },
       {
-        name: _('MENU.WISHLIST'),
+        name: _('COMMON.WISHLIST'),
         icon: 'playlist-check',
-        link: '/finance/bonds/wishlist',
+        link: '/finance/bonds/whishlist',
       },
     ],
   },
   {
-    name: _('MENU.ETFS'),
+    name: _('COMMON.ETFS'),
     icon: 'trending-up',
     children: [
       {
-        name: _('MENU.OWN'),
+        name: _('COMMON.PORTFLIO'),
         icon: 'account-check',
-        link: '/finance/etf/own',
+        link: '/finance/etfs/own',
+        fullspan: true,
       },
       {
-        name: _('MENU.WISHLIST'),
+        name: _('COMMON.WISHLIST'),
         icon: 'playlist-check',
-        link: '/finance/etf/wishlist',
+        link: '/finance/etfs/whishlist',
       },
     ],
   },
   {
-    name: _('MENU.YAHOO_FINANCE'),
+    name: _('COMMON.YAHOO_FINANCE'),
     icon: 'google-analytics',
     link: 'https://yahoo.com',
     external: true,
     disabled: true,
   },
   {
-    name: _('MENU.YOUTUBE'),
+    name: _('COMMON.YOUTUBE'),
     icon: 'youtube',
     link: 'https://youtube.com',
     external: true,
     target: '_blank',
+  },
+  {
+    name: _('COMMON.CONTACT_US'),
+    icon: 'at',
+    link: '/contact/us',
   },
 ];
