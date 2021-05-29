@@ -22,6 +22,13 @@ export class OptionsComponent {
   state = 'default';
   isExpanded = false;
   currentLanguage = this.i18n.defaultLanguage;
+  optionState = 'collapsed';
+  optionTitleState = 'expanded';
+  currentNavbarMode = null;
+  rotateState = 'back';
+  hideOptionTitle = false;
+  isDarkTheme = false;
+
   constructor(public i18n: I18nService, public layout: LayoutService) {}
 
   private rotate() {

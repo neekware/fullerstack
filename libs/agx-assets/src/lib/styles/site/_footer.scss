@@ -1,4 +1,4 @@
-fullerstack-footer {
+app-footer {
   .footer {
     position: relative;
     bottom: 0;
@@ -6,27 +6,27 @@ fullerstack-footer {
   }
   .footer-top {
     background-color: mat-color($primary);
-    color: #fff;
+    color: #FFF;
     padding: 15px 15px 20px 15px;
   }
   .footer-credit {
     background-color: mat-color($mat-light-blue, 700);
     height: 56px;
-    color: #fff;
+    color: #FFF;
     margin-top: -1px;
   }
 }
 
 @media (max-width: 599px) {
-  fullerstack-footer {
+  app-footer {
     .mat-list-item {
       background: mat-color($mat-light-blue, 800);
     }
   }
 }
 
-.fullerstack-theme-dark {
-  fullerstack-footer {
+.app-theme-dark {
+  app-footer {
     .footer-top {
       background-color: mat-color($mat-dark-brown, A700);
     }
@@ -37,8 +37,8 @@ fullerstack-footer {
 }
 
 @media (max-width: 599px) {
-  .fullerstack-theme-dark {
-    fullerstack-footer {
+  .app-theme-dark {
+    app-footer {
       .mat-list-item {
         background: mat-color($mat-dark-brown, 700);
       }

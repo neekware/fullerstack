@@ -5,10 +5,12 @@ import { RouterOutlet } from '@angular/router';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { fadeAnimations, routeAnimations } from '@fullerstack/ngx-shared';
+import debounce from 'lodash-es/debounce';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { LayoutService } from './layout.service';
+import { NavbarMode } from './store/layout-state.model';
 
 @Component({
   selector: 'fullerstack-layout',
@@ -22,6 +24,8 @@ export class LayoutComponent implements OnDestroy, AfterViewInit {
   @ViewChild('notifyMenu')
   private notifyMenu: MatSidenav;
   private destroy$ = new Subject<boolean>();
+  allowScroll = true;
+  hideNavbar = false;
 
   constructor(
     @Inject(DOCUMENT) readonly document: Document,
@@ -63,6 +67,14 @@ export class LayoutComponent implements OnDestroy, AfterViewInit {
       return outlet.activatedRouteData.title || 'unknown';
     }
   }
+
+  onScrollHandler = debounce((event: any) => {
+    if (this.layout.state.navbarMode === NavbarMode.hideOnScroll) {
+      this.hideNavbar = event.scrollingUp;
+    } else {
+      this.hideNavbar = false;
+    }
+  }, 20);
 
   ngOnDestroy() {
     this.destroy$.next(true);

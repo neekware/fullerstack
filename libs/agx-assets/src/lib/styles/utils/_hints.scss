@@ -1,4 +1,4 @@
-.fullerstack-hint {
+.app-hint {
   font-size: 86%;
   position: absolute;
   top: 33px;
@@ -6,8 +6,8 @@
   right: -21px;
 }
 
-[dir='rtl'] {
-  .fullerstack-hint {
+[dir=rtl] {
+  .app-hint {
     right: unset;
     left: -21px;
   }

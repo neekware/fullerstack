@@ -1,3 +1,18 @@
-.fullerstack-notification {
-  padding: 15px;
+.update-box {
+  padding: 0 16px 5px 16px;
+}
+
+.weather-icon {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+::ng-deep .mat-tab-label {
+  padding: 0 5px 0 10px !important;
+  overflow-x: hidden;
+}
+
+.mat-list.update-list .mat-list-item.mat-2-line {
+  height: auto;
+  padding: 7px 0;
 }

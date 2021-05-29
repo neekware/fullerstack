@@ -1,4 +1,4 @@
-.fullerstack-options {
+.app-options {
   .options-box {
     padding: 0 15px;
   }
@@ -33,7 +33,8 @@
       padding-bottom: 0;
     }
   }
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  @media all and (-ms-high-contrast: none),
+  (-ms-high-contrast: active) {
     /* IE10+ CSS styles go here */
     .options-box {
       margin-top: -27px;
@@ -45,7 +46,7 @@
       padding-bottom: 0;
     }
   }
-  @supports (-ms-accelerator: true) {
+  @supports (-ms-accelerator:true) {
     /* IE Edge 12+ CSS styles go here */
     .options-box {
       margin-top: -27px;
