@@ -1,4 +1,4 @@
-# Fullerstack <img style="margin-bottom: -6px" width="30" src="libs/agx-assets/src/lib/img/tech/fullerstack-x250.png">
+# Fullerstack <img style="margin-bottom: -6px" width="30" src="libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
 [![status-image]][status-link]
 [![coverage-image]][coverage-link]
@@ -37,18 +37,18 @@ npx create-nx-workspace fullerstack
 
 ### Powered By
 
-[<img style="margin-bottom: 1px" width="60" src="libs/agx-assets/src/lib/img/tech/nx-x250.png">](https://nx.dev/)
-[<img style="margin-bottom: -6px" width="30" src="libs/agx-assets/src/lib/img/tech/angular-x250.png">](https://angular.io)
-[<img style="margin-bottom: -5px" width="27" src="libs/agx-assets/src/lib/img/tech/nestjs-x250.png">](https://nestjs.com/)
-[<img style="margin-bottom: -7px" width="30" src="libs/agx-assets/src/lib/img/tech/prisma-x250.png">](https://www.prisma.io/)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/img/tech/graphql-x250.png">](https://graphql.org/)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/img/tech/apollo-x250.png">](https://www.apollographql.com/)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/img/tech/html5-x250.png">](https://en.wikipedia.org/wiki/HTML5)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/img/tech/css3-x250.png">](https://www.w3.org/)
-[<img style="margin-bottom: -4px" width="22" src="libs/agx-assets/src/lib/img/tech/scss-x250.png">](https://sass-lang.com/)
-[<img style="margin-bottom: -4px" width="22" src="libs/agx-assets/src/lib/img/tech/psql-x250.png">](https://www.postgresql.org/)
-[<img style="margin-bottom: -4px" width="18" src="libs/agx-assets/src/lib/img/tech/jest-x250.png">](https://jestjs.io/docs/getting-started)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/img/tech/cypress-x250.png">](https://www.cypress.io/)
+[<img style="margin-bottom: 1px" width="60" src="libs/agx-assets/src/lib/images/tech/nx-x250.png">](https://nx.dev/)
+[<img style="margin-bottom: -6px" width="30" src="libs/agx-assets/src/lib/images/tech/angular-x250.png">](https://angular.io)
+[<img style="margin-bottom: -5px" width="27" src="libs/agx-assets/src/lib/images/tech/nestjs-x250.png">](https://nestjs.com/)
+[<img style="margin-bottom: -7px" width="30" src="libs/agx-assets/src/lib/images/tech/prisma-x250.png">](https://www.prisma.io/)
+[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/graphql-x250.png">](https://graphql.org/)
+[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/apollo-x250.png">](https://www.apollographql.com/)
+[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/html5-x250.png">](https://en.wikipedia.org/wiki/HTML5)
+[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/css3-x250.png">](https://www.w3.org/)
+[<img style="margin-bottom: -4px" width="22" src="libs/agx-assets/src/lib/images/tech/scss-x250.png">](https://sass-lang.com/)
+[<img style="margin-bottom: -4px" width="22" src="libs/agx-assets/src/lib/images/tech/psql-x250.png">](https://www.postgresql.org/)
+[<img style="margin-bottom: -4px" width="18" src="libs/agx-assets/src/lib/images/tech/jest-x250.png">](https://jestjs.io/docs/getting-started)
+[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/cypress-x250.png">](https://www.cypress.io/)
 
 ## Supported Platforms
 
