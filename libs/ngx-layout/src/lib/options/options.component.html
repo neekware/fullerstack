@@ -9,7 +9,7 @@
       <div>
         <mat-form-field>
           <mat-select
-            placeholder="{{ 'MENU.OPTIONS.LANGUAGE' | translate }}"
+            placeholder="{{ 'COMMON.LANGUAGE' | translate }}"
             #ctrl="ngModel"
             [(ngModel)]="currentLanguage"
             (ngModelChange)="i18n.setCurrentLanguage(currentLanguage)"
@@ -22,7 +22,7 @@
       </div>
 
       <div fxLayout fxLayoutAlign="start center" click-no-propagation>
-        <span>{{ 'MENU.OPTIONS.DARK' | translate }}</span>
+        <span>{{ 'COMMON.DARK' | translate }}</span>
         <mat-slide-toggle (change)="layout.setDarkTheme($event.checked)"></mat-slide-toggle>
       </div>
     </mat-expansion-panel>

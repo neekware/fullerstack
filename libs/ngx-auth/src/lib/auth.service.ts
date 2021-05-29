@@ -51,7 +51,7 @@ export class AuthService implements OnDestroy {
     this.doInit();
     this.authenticationErrorMiddleware();
     this.initAuthorizationHeaderInsertionMiddleware();
-    logger.debug(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
+    logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
   }
 
   private doInit() {

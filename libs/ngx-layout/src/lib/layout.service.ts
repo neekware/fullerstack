@@ -112,7 +112,7 @@ export class LayoutService implements OnDestroy {
   private stateInit() {
     this.state$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
       this.state = state;
-      this.setOverlayThemeClass();
+      this.toggleOverlayThemeClass();
       this.navbarModeClass = this.getNavbarModeClass();
     });
 
@@ -200,7 +200,7 @@ export class LayoutService implements OnDestroy {
     });
   }
 
-  setOverlayThemeClass() {
+  toggleOverlayThemeClass() {
     const el = this.overlay.getContainerElement().classList;
     if (this.state.isDarkTheme) {
       el.add('fullerstack-theme-dark');
@@ -211,7 +211,7 @@ export class LayoutService implements OnDestroy {
     }
   }
 
-  getNavbarModeClass() {
+  private getNavbarModeClass() {
     switch (this.state.navbarMode) {
       case NavbarMode.hideOnScroll:
         return 'navbar-hide-on-scroll';

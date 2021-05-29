@@ -25,9 +25,9 @@
   [class.active]="link.isActive(router.url)"
   [class.disabled]="link.disabled"
 >
-  <div>
-    <mat-icon [class.text-color-muted]="link.disabled" *ngIf="link?.icon" svgIcon="{{ link.icon }}"></mat-icon>
-    <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
+  <div class="flex flex-row ml-2 align-middle">
+    <mat-icon [class.text-color-muted]="link.disabled" *ngIf="link?.icon" svgIcon="{{ link.icon }}" class=""></mat-icon>
+    <div [class.text-color-muted]="link.disabled" class="mx-1.5">{{ link.name | translate }}</div>
   </div>
 </a>
 

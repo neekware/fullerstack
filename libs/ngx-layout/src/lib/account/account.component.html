@@ -1,7 +1,7 @@
 <div *ngIf="auth.state.isLoggedIn">
   <button mat-menu-item aria-label="Settings">
     <mat-icon svgIcon="settings"></mat-icon>
-    {{ 'MENU.SETTINGS' | translate }}
+    {{ 'COMMON.SETTINGS' | translate }}
   </button>
 
   <button mat-menu-item aria-label="Logout" (click)="auth.logoutDispatch()">
