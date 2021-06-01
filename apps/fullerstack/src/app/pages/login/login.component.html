@@ -7,7 +7,7 @@
   [icon]="icon"
   [progress]="auth.isLoading"
 >
-  <fullerstack-login-form></fullerstack-login-form>
+  <fullerstack-login-form (submit$)="login($event)"></fullerstack-login-form>
 
   <mat-divider></mat-divider>
 

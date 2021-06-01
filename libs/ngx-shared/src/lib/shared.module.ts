@@ -9,6 +9,7 @@ import { CardComponent } from './component/card/card.component';
 import { ConfirmationDialogComponent } from './component/confirm/confirm.component';
 import { HintComponent } from './component/hint/hint.component';
 import { LoginFormComponent } from './component/login/login-form.component';
+import { RegisterFormComponent } from './component/register/register-form.component';
 import { RippleComponent } from './component/ripple/ripple.component';
 import { SnackbarComponent } from './component/snackbar/snackbar.component';
 
@@ -22,6 +23,7 @@ import { SnackbarComponent } from './component/snackbar/snackbar.component';
     ConfirmationDialogComponent,
     SnackbarComponent,
     LoginFormComponent,
+    RegisterFormComponent,
   ],
   exports: [
     HintComponent,
@@ -31,6 +33,7 @@ import { SnackbarComponent } from './component/snackbar/snackbar.component';
     ConfirmationDialogComponent,
     SnackbarComponent,
     LoginFormComponent,
+    RegisterFormComponent,
   ],
   providers: [],
 })
