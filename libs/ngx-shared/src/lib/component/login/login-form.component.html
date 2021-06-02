@@ -1,4 +1,4 @@
-<form [formGroup]="form" (submit)="submit()" [autocomplete]="autocomplete" class="flex flex-col pb-4">
+<form [formGroup]="form" (submit)="submit()" [autocomplete]="autocomplete" fxLayout="column">
   <mat-form-field>
     <mat-icon matSuffix svgIcon="email"></mat-icon>
     <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
@@ -15,7 +15,9 @@
     ></fullerstack-hint>
   </mat-form-field>
 
-  <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine" class="w-1/4">
-    {{ 'COMMON.LOGIN' | translate }}
-  </button>
+  <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
+    <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
+      {{ 'COMMON.LOGIN' | translate }}
+    </button>
+  </div>
 </form>

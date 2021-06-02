@@ -1,12 +1,19 @@
-<mat-error *ngIf="show$ | async" [class.ltr-direction]="ltrDirection" [class.rtl-direction]="!ltrDirection" class="top-7 absolute text-xs">
+<mat-error
+  *ngIf="show$ | async"
+  align="end"
+  [class.ltr-direction]="ltrDirection"
+  [class.rtl-direction]="!ltrDirection"
+  class="fs-error-hint"
+>
   {{ error | translate }}
 </mat-error>
 
 <mat-hint
   *ngIf="!(show$ | async) && !!hint"
+  align="end"
   [class.ltr-direction]="ltrDirection"
   [class.rtl-direction]="!ltrDirection"
-  class="top-7 absolute text-xs"
+  class="fs-error-hint"
 >
   {{ hint | translate }}
 </mat-hint>

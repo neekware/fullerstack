@@ -1,27 +1,32 @@
 <mat-toolbar class="page-header-toolbar" color="primary"> </mat-toolbar>
+<div class="page-content">
+  <fullerstack-card
+    class="page-card"
+    fxLayout="column"
+    fxFlex="600px"
+    fxFlex.sm="70"
+    fxFlex.xs="100"
+    [title]="title"
+    [subtitle]="subtitle"
+    [icon]="icon"
+    [progress]="auth.isLoading"
+  >
+    <fullerstack-register-form (submit$)="register($event)"></fullerstack-register-form>
 
-<fullerstack-card
-  class="flex flex-col w-4/5 lt-sm:w-11/12 gt-md:w-3/4 my-0 mx-auto -mt-14"
-  [title]="title"
-  [subtitle]="subtitle"
-  [icon]="icon"
-  [progress]="auth.isLoading"
->
-  <fullerstack-register-form (submit$)="register($event)"></fullerstack-register-form>
+    <mat-divider class="mt1"></mat-divider>
 
-  <mat-divider></mat-divider>
-
-  <div class="flex flex-row mt-5 justify-between align-middle">
-    <span>
-      [
-      <a routerLink="/auth/login" class="no-underline"> {{ 'COMMON.LOGIN' | translate }} </a>
-      ]
-    </span>
-    <div fxFlex></div>
-    <span>
-      [
-      <a routerLink="/recovery/password/reset" class="no-underline"> {{ 'COMMON.FORGOT_PASSWORD' | translate }} </a>
-      ]
-    </span>
-  </div>
-</fullerstack-card>
+    <div class="mt2" fxLayout="row">
+      <span>
+        [
+        <a routerLink="/auth/login" class="no-underline"> {{ 'COMMON.LOGIN' | translate }} </a>
+        ]
+      </span>
+      <div fxFlex></div>
+      <span>
+        [
+        <a routerLink="/recovery/password/reset" class="no-underline"> {{ 'COMMON.FORGOT_PASSWORD' | translate }} </a>
+        ]
+      </span>
+    </div>
+  </fullerstack-card>
+</div>

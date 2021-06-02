@@ -11,18 +11,12 @@ import { shakeAnimations } from '../../animation/animation.shake';
   animations: [shakeAnimations.wiggleIt],
 })
 export class CardComponent implements OnInit {
-  @Input()
-  title: string;
-  @Input()
-  subtitle: string = null;
-  @Input()
-  icon: string = null;
-  @Input()
-  iconColor: string = null;
-  @Input()
-  menu: any = [];
-  @Input()
-  progress = false;
+  @Input() title: string;
+  @Input() subtitle: string;
+  @Input() icon: string;
+  @Input() iconColor: string;
+  @Input() menu: any = [];
+  @Input() progress = false;
 
   wiggleState = 'back';
   hasMenu = false;
