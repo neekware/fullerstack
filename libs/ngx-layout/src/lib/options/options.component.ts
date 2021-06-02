@@ -1,6 +1,8 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { I18nService } from '@fullerstack/ngx-i18n';
+import { expansionAnimations, fadeAnimations, rotationAnimations } from '@fullerstack/ngx-shared';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { LayoutService } from '../layout.service';
 
@@ -9,27 +11,53 @@ import { LayoutService } from '../layout.service';
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.scss'],
   animations: [
-    trigger('rotatedState', [
-      state('default', style({ transform: 'rotate(0)' })),
-      state('rotated', style({ transform: 'rotate(-180deg)' })),
-      transition('rotated => default', animate('400ms ease-out')),
-      transition('default => rotated', animate('400ms ease-in')),
-    ]),
+    rotationAnimations.rotate180,
+    expansionAnimations.expandFade,
+    fadeAnimations.fadeOutInSlow,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OptionsComponent {
-  state = 'default';
+export class OptionsComponent implements OnInit, OnDestroy {
+  rotateState = 'default';
+  optionState = 'collapsed';
+  optionTitleState = 'expanded';
+  currentLanguage: string;
   isExpanded = false;
-  currentLanguage = this.i18n.defaultLanguage;
-  constructor(public i18n: I18nService, public layout: LayoutService) {}
+  hideOptionTitle = false;
+  isDarkTheme = false;
+  private destroy$ = new Subject<boolean>();
 
-  private rotate() {
-    this.state = this.state === 'default' ? 'rotated' : 'default';
+  constructor(public i18n: I18nService, public layout: LayoutService) {
+    this.currentLanguage = this.i18n.defaultLanguage;
+    this.isDarkTheme = this.layout.isDarkTheme;
+  }
+
+  ngOnInit() {
+    this.i18n.languageChanges$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (iso) => {
+        this.currentLanguage = iso;
+      },
+    });
+  }
+
+  private rotateButton() {
+    this.rotateState = this.rotateState === 'back' ? 'forth' : 'back';
+    this.hideOptionTitle = this.rotateState === 'back' ? false : true;
+  }
+
+  private expandOptions() {
+    this.optionState = this.optionState === 'collapsed' ? 'expanded' : 'collapsed';
+    this.optionTitleState = this.optionTitleState === 'collapsed' ? 'expanded' : 'collapsed';
   }
 
   toggleMenu() {
     this.isExpanded = !this.isExpanded;
-    this.rotate();
+    this.rotateButton();
+    this.expandOptions();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

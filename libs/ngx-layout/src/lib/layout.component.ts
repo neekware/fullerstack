@@ -22,6 +22,8 @@ export class LayoutComponent implements OnDestroy, AfterViewInit {
   @ViewChild('notifyMenu')
   private notifyMenu: MatSidenav;
   private destroy$ = new Subject<boolean>();
+  hideNavbar = false;
+  allowScroll = true;
 
   constructor(
     @Inject(DOCUMENT) readonly document: Document,

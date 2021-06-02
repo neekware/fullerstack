@@ -1,75 +1,75 @@
-// .fullerstack-wrapper {
-//   top: 0;
-//   transition: all 0.6s;
-// }
+.app-wrapper {
+  top: 0;
+  transition: all 0.6s;
+}
 
-// fullerstack-navbar {
-//   position: fixed;
-//   top: 0;
-//   width: 100%;
-//   display: block;
-//   transition: all 0.6s;
-//   z-index: 10;
-// }
+app-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: block;
+  transition: all 0.6s;
+  z-index: 10;
+}
 
-// mat-sidenav-container {
-//   margin-top: 64px;
-//   height: 100vh;
-// }
+mat-sidenav-container {
+  margin-top: 0px;
+  height: 100vh;
+}
 
-// .hidden-navbar {
-//   margin-top: -64px;
-//   fullerstack-navbar {
-//     top: -64px;
-//   }
-// }
+.hidden-navbar {
+  margin-top: -64px;
+  app-navbar {
+    top: -64px;
+  }
+}
 
-// .is-handset {
-//   mat-sidenav-container {
-//     margin-top: 56px;
-//     height: 100vh;
-//   }
-// }
+.is-handset {
+  mat-sidenav-container {
+    margin-top: 0px;
+    height: 100vh;
+  }
+}
 
-// .is-portrait {
-//   mat-sidenav-container {
-//     margin-top: 55px;
-//   }
-// }
+.is-portrait {
+  mat-sidenav-container {
+    margin-top: 0px;
+  }
+}
 
-// .noscroll {
-//   position: fixed;
-//   width: 100%;
-// }
+.noscroll {
+  position: fixed;
+  width: 100%;
+}
 
-// .is-handset {
-//   .noscroll {
-//     -webkit-overflow-scrolling: auto;
-//   }
-// }
+.is-handset {
+  .noscroll {
+    -webkit-overflow-scrolling: auto;
+  }
+}
 
-// .navbar-move-with-scroll {
-//   fullerstack-navbar {
-//     position: absolute;
-//   }
-//   mat-sidenav-container {
-//     height: 100%;
-//   }
-// }
+.navbar-move-with-scroll {
+  app-navbar {
+    position: absolute;
+  }
+  mat-sidenav-container {
+    height: 100%;
+  }
+}
 
-// .navbar-always-show {
-//   fullerstack-navbar {
-//     position: sticky;
-//   }
-//   mat-sidenav-container {
-//     margin-top: 0;
-//   }
-//   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-//     /* IE10+ CSS styles go here */
-//     margin-top: 64px;
-//   }
-//   @supports (-ms-accelerator: true) {
-//     /* IE Edge 12+ CSS styles go here */
-//     margin-top: 64px;
-//   }
-// }
+.navbar-always-show {
+  app-navbar {
+    position: sticky;
+  }
+  mat-sidenav-container {
+    margin-top: 0;
+  }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    margin-top: 64px;
+  }
+  @supports (-ms-accelerator: true) {
+    /* IE Edge 12+ CSS styles go here */
+    margin-top: 64px;
+  }
+}
