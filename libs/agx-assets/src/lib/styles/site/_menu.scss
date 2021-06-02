@@ -1,4 +1,4 @@
-.fs-menu {
+.fs-sidenav-menu {
   width: 240px;
   a {
     display: block;
@@ -41,6 +41,24 @@
   }
 }
 
-.fs-menu:nth-child(1) {
-  margin-top: 15px;
+// .fs-sidenav-menu:nth-child(1) {
+//   margin-top: 15px;
+// }
+
+@media (max-width: 599px) {
+  .fs-sidenav-menu {
+    margin-top: 0px !important;
+  }
+}
+
+@media (min-width: 600px) {
+  .fs-sidenav-menu {
+    margin-top: 8px !important;
+  }
+}
+
+@media (min-width: 960px) {
+  .fs-sidenav-menu {
+    margin-top: 64px !important;
+  }
 }

@@ -24,14 +24,14 @@ mat-sidenav-container {
   }
 }
 
-.is-handset {
+.fs-handset {
   mat-sidenav-container {
     margin-top: 0px;
     height: 100vh;
   }
 }
 
-.is-portrait {
+.fs-portrait {
   mat-sidenav-container {
     margin-top: 0px;
   }
@@ -42,7 +42,7 @@ mat-sidenav-container {
   width: 100%;
 }
 
-.is-handset {
+.fs-handset {
   .noscroll {
     -webkit-overflow-scrolling: auto;
   }

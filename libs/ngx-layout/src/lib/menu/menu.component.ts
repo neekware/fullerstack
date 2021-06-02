@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { DefaultMenuTree, MenuItem, MenuNode } from '@fullerstack/ngx-menu';
+import { MenuItem, MenuNode } from '@fullerstack/ngx-menu';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { LayoutService } from '../layout.service';
-import { LayoutMenuTree } from './menu.default';
+import { layoutMenuTree } from './menu.default';
 
 @Component({
   selector: 'fullerstack-menu',
@@ -12,23 +13,22 @@ import { LayoutMenuTree } from './menu.default';
   styleUrls: ['./menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MenuComponent implements OnInit {
-  rootNode: MenuNode = null;
+export class MenuComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<boolean>();
+  rootNode: MenuNode;
 
-  constructor(
-    readonly router: Router,
-    readonly layout: LayoutService,
-    readonly auth: AuthService
-  ) {}
+  constructor(readonly layout: LayoutService, readonly auth: AuthService) {}
 
   ngOnInit() {
     this.layout.menu.setPermissionVerificationFunction(this.hasPermission.bind(this));
 
-    this.rootNode = this.layout.menu.buildMenuTree(LayoutMenuTree);
+    this.rootNode = this.layout.menu.buildMenuTree(layoutMenuTree);
 
-    this.auth.authChanged$.subscribe((state) => {
-      const forceMenuRebuild = true;
-      this.rootNode = this.layout.menu.buildMenuTree(LayoutMenuTree, forceMenuRebuild);
+    this.auth.authChanged$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (state) => {
+        const forceMenuRebuild = true;
+        this.rootNode = this.layout.menu.buildMenuTree(layoutMenuTree, forceMenuRebuild);
+      },
     });
   }
 
@@ -54,5 +54,10 @@ export class MenuComponent implements OnInit {
 
     const hasPerm = menuPerms.some((value) => userPerms.indexOf(value) >= 0);
     return hasPerm;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

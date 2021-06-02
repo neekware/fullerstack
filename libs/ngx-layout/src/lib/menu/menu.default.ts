@@ -1,7 +1,7 @@
 import { _ } from '@fullerstack/ngx-i18n';
 import { MenuItem } from '@fullerstack/ngx-menu';
 
-export const LayoutMenuTree: MenuItem[] = [
+export const layoutMenuTree: MenuItem[] = [
   {
     name: _('COMMON.ADMIN'),
     icon: 'wrench',
