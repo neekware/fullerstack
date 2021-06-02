@@ -1,4 +1,4 @@
-.fs-wrapper {
+.fs-layout-wrapper {
   top: 0;
   transition: all 0.6s;
 }
@@ -17,7 +17,7 @@ mat-sidenav-container {
   height: 100vh;
 }
 
-.hidden-navbar {
+.fs-hidden-navbar {
   margin-top: -64px;
   fullerstack-navbar {
     top: -64px;
@@ -37,13 +37,13 @@ mat-sidenav-container {
   }
 }
 
-.noscroll {
+.fs-noscroll {
   position: fixed;
   width: 100%;
 }
 
 .fs-handset {
-  .noscroll {
+  .fs-noscroll {
     -webkit-overflow-scrolling: auto;
   }
 }

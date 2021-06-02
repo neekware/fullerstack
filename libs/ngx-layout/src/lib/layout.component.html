@@ -1,7 +1,7 @@
 <div
   [dir]="i18n.direction"
-  class="fs-wrapper"
-  [class.hidden-navbar]="hideNavbar"
+  class="fs-layout-wrapper"
+  [class.fs-hidden-navbar]="hideNavbar"
   [ngClass]="layout.navbarModeClass"
   [class.fs-handset]="layout.state.isHandset"
   [class.fs-portrait]="layout.state.isPortrait"
@@ -11,7 +11,7 @@
 >
   <fullerstack-navbar></fullerstack-navbar>
 
-  <mat-sidenav-container [class.noscroll]="!allowScroll">
+  <mat-sidenav-container [class.fs-noscroll]="!allowScroll">
     <mat-sidenav
       #sideMenu
       position="start"
@@ -20,7 +20,7 @@
       [mode]="layout.state.menuMode"
       [opened]="layout.state.menuOpen"
       [attr.role]="layout.state.menuRole"
-      class="menu-panel"
+      class="fs-menu-panel"
     >
       <fullerstack-menu></fullerstack-menu>
     </mat-sidenav>
@@ -33,7 +33,7 @@
       [mode]="layout.state.notifyMode"
       [opened]="layout.state.notifyOpen"
       [attr.role]="layout.state.notifyRole"
-      class="notification-panel"
+      class="fs-notification-panel"
     >
       <fullerstack-notification></fullerstack-notification>
     </mat-sidenav>
