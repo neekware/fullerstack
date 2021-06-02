@@ -1,6 +1,6 @@
-<div class="footer" fxLayout="column">
+<div class="fs-footer" fxLayout="column">
   <div
-    class="footer-top"
+    class="fs-footer-top"
     fxFlex="100"
     fxLayout="column"
     fxLayout.gt-xs="row"
@@ -19,10 +19,9 @@
     </mat-list>
   </div>
 
-  <div class="footer-credit" fxLayoutAlign="center center">
+  <div class="fs-footer-credit" fxLayoutAlign="center center">
     <a routerLink="/" class="no-underline">
-      <strong>{{ appName }} &nbsp;</strong>
-      © {{ today | date: 'y' }}
+      <strong>{{ appName }} &nbsp;</strong> © {{ today | date: 'y' }}
     </a>
   </div>
 </div>

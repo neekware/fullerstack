@@ -1,4 +1,4 @@
-<!-- <a
+<a
   *ngIf="link.isInternalLink"
   routerLink="{{ link.link }}"
   (click)="redirectUrl(link)"
@@ -13,26 +13,6 @@
 
 <a *ngIf="link.isExternalLink" href="{{ link.link }}" target="{{ link.target }}" [class.disabled]="link.disabled">
   <div fxLayoutGap="14px" [fxFlexOffset]="link.offset(16)">
-    <mat-icon [class.text-color-muted]="link.disabled" svgIcon="{{ link.icon }}"></mat-icon>
-    <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
-  </div>
-</a> -->
-
-<a
-  *ngIf="link.isInternalLink"
-  routerLink="{{ link.link }}"
-  (click)="redirectUrl(link)"
-  [class.active]="link.isActive(router.url)"
-  [class.disabled]="link.disabled"
->
-  <div class="flex flex-row ml-2 align-middle">
-    <mat-icon [class.text-color-muted]="link.disabled" *ngIf="link?.icon" svgIcon="{{ link.icon }}" class=""></mat-icon>
-    <div [class.text-color-muted]="link.disabled" class="mx-1.5">{{ link.name | translate }}</div>
-  </div>
-</a>
-
-<a *ngIf="link.isExternalLink" href="{{ link.link }}" target="{{ link.target }}" [class.disabled]="link.disabled">
-  <div>
     <mat-icon [class.text-color-muted]="link.disabled" svgIcon="{{ link.icon }}"></mat-icon>
     <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
   </div>

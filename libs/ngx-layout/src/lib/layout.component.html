@@ -1,12 +1,12 @@
 <div
   [dir]="i18n.direction"
-  class="app-wrapper"
+  class="fs-wrapper"
   [class.hidden-navbar]="hideNavbar"
   [ngClass]="layout.navbarModeClass"
   [class.is-handset]="layout.state.isHandset"
   [class.is-portrait]="layout.state.isPortrait"
-  [class.app-theme-light]="!layout.state.isDarkTheme"
-  [class.app-theme-dark]="layout.state.isDarkTheme"
+  [class.fs-theme-light]="!layout.state.isDarkTheme"
+  [class.fs-theme-dark]="layout.state.isDarkTheme"
   [@fadeOutInSlow]="layout.state.isDarkTheme ? 'out' : 'in'"
 >
   <fullerstack-navbar></fullerstack-navbar>
@@ -41,7 +41,7 @@
     <mat-sidenav-content [@slideIn]="routeState(outlet)">
       <div>
         <router-outlet #outlet="outlet"></router-outlet>
-        <fullerstack-footer></fullerstack-footer>
+        <fullerstack-footer [appName]="layout.options.appName"></fullerstack-footer>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

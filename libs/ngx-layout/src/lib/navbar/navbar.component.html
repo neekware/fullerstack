@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="flex flex-row justify-between">
+<mat-toolbar class="main-navbar" color="primary">
   <button (click)="layout.toggleMenu()" mat-icon-button aria-label="Toggle sidenav">
     <mat-icon [@rotate90]="menuIconState" [svgIcon]="layout.state.menuOpen ? 'close' : 'menu'"></mat-icon>
   </button>
@@ -23,7 +23,7 @@
       aria-label="notification icon"
       [svgIcon]="layout.state.notifyOpen ? 'bell' : 'bell-ring'"
     ></mat-icon>
-    <span [class.bell-label]="true"></span>
+    <span [class.fs-bell-label]="true"></span>
   </button>
 
   <button [matMenuTriggerFor]="accountMenu" mat-icon-button>

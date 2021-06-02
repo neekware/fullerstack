@@ -1,44 +1,44 @@
-app-footer {
-  .footer {
+fullerstack-footer {
+  .fs-footer {
     position: relative;
     bottom: 0;
     width: 100%;
   }
-  .footer-top {
+  .fs-footer-top {
     background-color: mat-color($primary);
-    color: #FFF;
+    color: #fff;
     padding: 15px 15px 20px 15px;
   }
-  .footer-credit {
+  .fs-footer-credit {
     background-color: mat-color($mat-light-blue, 700);
     height: 56px;
-    color: #FFF;
+    color: #fff;
     margin-top: -1px;
   }
 }
 
 @media (max-width: 599px) {
-  app-footer {
+  fullerstack-footer {
     .mat-list-item {
       background: mat-color($mat-light-blue, 800);
     }
   }
 }
 
-.app-theme-dark {
-  app-footer {
-    .footer-top {
+.fs-theme-dark {
+  fullerstack-footer {
+    .fs-footer-top {
       background-color: mat-color($mat-dark-brown, A700);
     }
-    .footer-credit {
+    .fs-footer-credit {
       background-color: mat-color($mat-dark-brown, 700);
     }
   }
 }
 
 @media (max-width: 599px) {
-  .app-theme-dark {
-    app-footer {
+  .fs-theme-dark {
+    fullerstack-footer {
       .mat-list-item {
         background: mat-color($mat-dark-brown, 700);
       }
