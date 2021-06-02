@@ -4,7 +4,7 @@
 @include angular-material-theme($theme);
 
 // Secondary Theme
-.fullerstack-theme-dark {
+.fs-theme-dark {
   @include angular-material-theme($dark-theme);
 }
 
