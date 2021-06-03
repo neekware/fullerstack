@@ -19,8 +19,7 @@ export interface authLogin {
 }
 
 export interface authLoginVariables {
-  email: string;
-  password: string;
+  input: UserCredentialsInput;
 }
 
 /* tslint:disable */
@@ -29,25 +28,22 @@ export interface authLoginVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authSignup
+// GraphQL mutation operation: authRegister
 // ====================================================
 
-export interface authSignup_authSignup {
+export interface authRegister_authRegister {
   __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string;
 }
 
-export interface authSignup {
-  authSignup: authSignup_authSignup;
+export interface authRegister {
+  authRegister: authRegister_authRegister;
 }
 
-export interface authSignupVariables {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName?: string | null;
+export interface authRegisterVariables {
+  input: UserCreateInput;
 }
 
 /* tslint:disable */
@@ -58,6 +54,18 @@ export interface authSignupVariables {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export interface UserCreateInput {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
+
+export interface UserCredentialsInput {
+  email: string;
+  password: string;
+}
 
 //==============================================================
 // END Enums and Input Objects

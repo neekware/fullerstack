@@ -43,7 +43,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["zen-observable"],
+            "allowedCommonJsDependencies": ["zen-observable", "graphql-tag"],
             "outputPath": "dist/apps/fullerstack",
             "index": "apps/fullerstack/src/index.html",
             "main": "apps/fullerstack/src/main.ts",
@@ -140,7 +140,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "fullerstack:build",
-            "proxyConfig": "apps/fullerstack/proxy/proxy.dev.json"
+            "proxyConfig": "apps/fullerstack/proxy/proxy.dev.json",
+            "sourceMap": {
+              "scripts": true,
+              "styles": true,
+              "vendor": true
+            }
           },
           "configurations": {
             "production": {

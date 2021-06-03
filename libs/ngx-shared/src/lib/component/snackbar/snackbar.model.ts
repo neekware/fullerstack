@@ -37,4 +37,6 @@ export class SnackbarStatus {
   console?: boolean;
   // log it to remote server(s)
   remote?: boolean;
+  // show immediately
+  show?: boolean;
 }

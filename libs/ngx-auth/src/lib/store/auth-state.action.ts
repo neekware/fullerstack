@@ -1,11 +1,13 @@
-import { AuthLoginCredentials, AuthRegisterCredentials, AuthState } from './auth-state.model';
+import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+
+import { AuthState } from './auth-state.model';
 
 export class Initialize {
   static type = '[AUTH] Initialize';
 }
 export class LoginRequest {
   static type = '[AUTH] LoginRequest';
-  constructor(readonly payload: AuthLoginCredentials) {}
+  constructor(readonly payload: gqlSchema.UserCredentialsInput) {}
 }
 export class LoginSuccess {
   static type = '[AUTH] LoginSuccess';
@@ -16,7 +18,7 @@ export class LoginFailure {
 }
 export class RegisterRequest {
   static type = '[AUTH] RegisterRequest';
-  constructor(readonly payload: AuthRegisterCredentials) {}
+  constructor(readonly payload: gqlSchema.UserCreateInput) {}
 }
 export class RegisterSuccess {
   static type = '[AUTH] RegisterSuccess';

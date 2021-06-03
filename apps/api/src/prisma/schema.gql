@@ -34,9 +34,9 @@ type Mutation {
   authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
   authLogin(input: UserCredentialsInput!): AuthTokenDto!
   authRefreshToken: AuthTokenDto!
+  authRegister(input: UserCreateInput!): AuthTokenDto!
   authResetPassword: AuthTokenDto!
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
-  authSignup(input: UserCreateInput!): AuthTokenDto!
 
   """Privileged user update"""
   userUpdate(input: UserUpdateAdvancedInput!): UserDto!
@@ -88,7 +88,6 @@ input UserCreateInput {
   firstName: String!
   lastName: String!
   password: String!
-  username: String!
 }
 
 input UserCredentialsInput {

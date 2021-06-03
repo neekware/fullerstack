@@ -6,7 +6,7 @@ import { Action, State, StateContext } from '@ngxs/store';
 import * as actions from './auth-state.action';
 import { AUTH_STATE_KEY } from './auth-state.constant';
 import { DefaultAuthState } from './auth-state.default';
-import { AuthEffect } from './auth-state.effect';
+import { AuthEffectsService } from './auth-state.effect';
 import { AuthState } from './auth-state.model';
 import { signState } from './auth-state.util';
 
@@ -16,7 +16,7 @@ import { signState } from './auth-state.util';
 })
 @Injectable()
 export class AuthStoreState {
-  constructor(readonly msg: MsgService, readonly stateService: AuthEffect) {}
+  constructor(readonly msg: MsgService, readonly stateService: AuthEffectsService) {}
 
   @Action(actions.Initialize)
   initializeRequest({ setState }: StateContext<AuthState>) {
@@ -82,7 +82,6 @@ export class AuthStoreState {
         ...DefaultAuthState,
         ...{
           isLoggedIn: true,
-          token: payload,
         },
       })
     );
@@ -101,61 +100,61 @@ export class AuthStoreState {
     );
   }
 
-  @Action(actions.LogoutRequest)
-  logoutRequest({ setState }: StateContext<AuthState>) {
-    setState(signState(DefaultAuthState));
-    this.msg.successSnackBar(_('AUTH.SUCCESS.LOGOUT'));
-  }
+  // @Action(actions.LogoutRequest)
+  // logoutRequest({ setState }: StateContext<AuthState>) {
+  //   setState(signState(DefaultAuthState));
+  //   this.msg.successSnackBar(_('AUTH.SUCCESS.LOGOUT'));
+  // }
 
-  @Action(actions.TokenRefreshRequest)
-  tokenRefreshRequest(
-    { getState, setState }: StateContext<AuthState>,
-    { payload }: actions.TokenRefreshRequest
-  ) {
-    setState(
-      signState({
-        ...getState(),
-        ...{
-          isRefreshingToken: true,
-        },
-      })
-    );
-    return this.stateService.refreshRequest(payload);
-  }
+  // @Action(actions.TokenRefreshRequest)
+  // tokenRefreshRequest(
+  //   { getState, setState }: StateContext<AuthState>,
+  //   { payload }: actions.TokenRefreshRequest
+  // ) {
+  //   setState(
+  //     signState({
+  //       ...getState(),
+  //       ...{
+  //         isRefreshingToken: true,
+  //       },
+  //     })
+  //   );
+  //   return this.stateService.refreshRequest(payload);
+  // }
 
-  @Action(actions.TokenRefreshSuccess)
-  tokenRefreshSuccess(
-    { setState }: StateContext<AuthState>,
-    { payload }: actions.TokenRefreshSuccess
-  ) {
-    setState(
-      signState({
-        ...DefaultAuthState,
-        ...{
-          isLoggedIn: true,
-          token: payload,
-        },
-      })
-    );
-  }
+  // @Action(actions.TokenRefreshSuccess)
+  // tokenRefreshSuccess(
+  //   { setState }: StateContext<AuthState>,
+  //   { payload }: actions.TokenRefreshSuccess
+  // ) {
+  //   setState(
+  //     signState({
+  //       ...DefaultAuthState,
+  //       ...{
+  //         isLoggedIn: true,
+  //         token: payload,
+  //       },
+  //     })
+  //   );
+  // }
 
-  @Action(actions.TokenRefreshFailure)
-  tokenRefreshFailure({ setState }: StateContext<AuthState>) {
-    setState(
-      signState({
-        ...DefaultAuthState,
-        ...{
-          hasError: true,
-        },
-      })
-    );
-  }
+  // @Action(actions.TokenRefreshFailure)
+  // tokenRefreshFailure({ setState }: StateContext<AuthState>) {
+  //   setState(
+  //     signState({
+  //       ...DefaultAuthState,
+  //       ...{
+  //         hasError: true,
+  //       },
+  //     })
+  //   );
+  // }
 
-  @Action(actions.MultiTabSyncRequest)
-  multiTabSyncRequest(
-    { setState }: StateContext<AuthState>,
-    { payload }: actions.MultiTabSyncRequest
-  ) {
-    setState(signState(payload));
-  }
+  // @Action(actions.MultiTabSyncRequest)
+  // multiTabSyncRequest(
+  //   { setState }: StateContext<AuthState>,
+  //   { payload }: actions.MultiTabSyncRequest
+  // ) {
+  //   setState(signState(payload));
+  // }
 }

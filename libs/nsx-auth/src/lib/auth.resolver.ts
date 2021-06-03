@@ -26,7 +26,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => AuthTokenDto)
-  async authSignup(
+  async authRegister(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: UserCreateInput

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { GqlService, gqlMgr } from '@fullerstack/ngx-gql';
+import { GqlService } from '@fullerstack/ngx-gql';
 import { Observable, from, of as observableOf, of, timer } from 'rxjs';
 import { catchError, map, switchMapTo, take } from 'rxjs/operators';
-
-const EmailFoundQueryNode = gqlMgr.getOperation('EmailFound');
 
 @Injectable()
 export class ValidationAsyncService {

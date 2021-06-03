@@ -36,12 +36,13 @@
       "@fullerstack/ngx-layout": ["libs/ngx-layout/src/index.ts"],
       "@fullerstack/ngx-auth": ["libs/ngx-auth/src/index.ts"],
       "@fullerstack": ["libs/ngx-auth/src/index.ts"],
-      "@fullerstack/ngx-gql/schema": ["libs/ngx-gql/src/schema.ts"],
+      "@fullerstack/ngx-gql/schema": ["libs/ngx-gql/src/lib/gql.schema.ts"],
+      "@fullerstack/ngx-gql/operations": ["libs/ngx-gql/src/lib/graphql/index.gql.ts"],
       "@fullerstack/ngx-gql": ["libs/ngx-gql/src/index.ts"],
       "@fullerstack/ngx-uix": ["libs/ngx-uix/src/index.ts"],
       "@fullerstack/ngx-util": ["libs/ngx-util/src/index.ts"],
       "@fullerstack/ngx-shared": ["libs/ngx-shared/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp", "dist", "coverage"]
 }

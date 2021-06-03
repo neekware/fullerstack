@@ -1,159 +1,198 @@
-/* eslint-disable */
 import { Injectable } from '@angular/core';
-import { GqlService, gqlMgr } from '@fullerstack/ngx-gql';
-import * as schema from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
-import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
+import { AUTH_STATE_KEY } from '@fullerstack/ngx-auth';
+import { GqlService } from '@fullerstack/ngx-gql';
+import * as gqlOperations from '@fullerstack/ngx-gql/operations';
+import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import { GTagService } from '@fullerstack/ngx-gtag';
+import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { Store } from '@ngxs/store';
 import { Observable, from } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 
 import * as actions from './auth-state.action';
-import { AuthLoginCredentials, AuthRegisterCredentials } from './auth-state.model';
+import { AuthMessageMap, DefaultAuthState } from './auth-state.default';
+import { AuthState } from './auth-state.model';
+import { sanitizeState } from './auth-state.util';
 
-const JwtLoginMutationNode = gqlMgr.getOperation('JwtLogin');
-const JwtRegisterMutationNode = gqlMgr.getOperation('JwtRegister');
-const JwtRefreshMutationNode = gqlMgr.getOperation('JwtRefresh');
-
-@Injectable()
-export class AuthEffect {
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthEffectsService {
   constructor(
-    private msg: MsgService,
-    private logger: LoggerService,
-    private gql: GqlService,
-    private store: Store
-  ) {}
-
-  private loginHandleError(
-    msg: string,
-    level: LogLevels,
-    credentials?: AuthLoginCredentials
-  ): Observable<any> {
-    this.msg.setMsg({
-      text: msg || _('AUTH.ERROR.LOGIN'),
-      detail: `Login Failed ${JSON.stringify(credentials)}, (${msg})`,
-      code: 'AUTH.ERROR.LOGIN',
-      level: LogLevels.error,
-    });
-    return this.store.dispatch(new actions.LoginFailure());
+    readonly store: Store,
+    readonly msg: MsgService,
+    readonly gtag: GTagService,
+    readonly logger: LoggerService,
+    readonly gql: GqlService
+  ) {
+    this.initStorageEventHandler();
   }
 
-  loginRequest(credentials: AuthLoginCredentials): Observable<any> {
-    this.logger.info('Login request sent ...');
+  private initStorageEventHandler() {
+    addEventListener(
+      'storage',
+      (event) => {
+        if (event.key === AUTH_STATE_KEY) {
+          let newState = <AuthState>(sanitizeState(event.newValue) || DefaultAuthState);
+          this.store.dispatch(new actions.MultiTabSyncRequest(newState));
+        }
+      },
+      false
+    );
+  }
 
+  loginRequest(input: gqlSchema.UserCredentialsInput): Observable<any> {
+    this.logger.debug('Login request sent ...');
     return from(
-      this.gql.client.mutate<schema.JwtLoginMutation>({
-        mutation: JwtLoginMutationNode,
-        variables: credentials,
+      this.gql.client.mutate<gqlSchema.authLogin>({
+        mutation: gqlOperations.AuthLoginMutation,
+        variables: input,
       })
     ).pipe(
-      map(({ data }) => data.jwtLogin),
-      map(
-        (resp) => {
-          if (resp.ok) {
-            this.msg.setMsg({
-              text: _('AUTH.SUCCESS.LOGIN'),
-              level: LogLevels.debug,
-            });
-            return this.store.dispatch(new actions.LoginSuccess(resp.token));
-          } else {
-            return this.loginHandleError(resp.msg, LogLevels.warn, credentials);
-          }
-        },
-        (error) => {
-          return this.loginHandleError(error.message, LogLevels.warn, credentials);
+      take(1),
+      map(({ data }) => {
+        return data.authLogin;
+      }),
+      map((resp) => {
+        if (resp.ok) {
+          this.gtag.trackEvent('login', {
+            method: 'password',
+            event_category: 'auth',
+            event_label: 'login success',
+          });
+          this.msg.setMsg(AuthMessageMap.success.login);
+          return this.store.dispatch(new actions.LoginSuccess(resp.token));
         }
-      ),
-      catchError((error, caught) => {
-        return this.loginHandleError(error.message, LogLevels.warn, credentials);
+        this.gtag.trackEvent('login_failed', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: resp.message,
+        });
+        this.logger.error(resp.message);
+        this.msg.setMsg(AuthMessageMap.error.login);
+        return this.store.dispatch(new actions.LoginFailure());
+      }),
+      catchError((error, caught$) => {
+        this.gtag.trackEvent('login_failed', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: error.message,
+        });
+        this.logger.error(error);
+        this.msg.setMsg(AuthMessageMap.error.server);
+        return this.store.dispatch(new actions.LoginFailure());
       })
     );
   }
 
-  private registerHandleError(
-    msg: string,
-    level: LogLevels,
-    credentials?: AuthRegisterCredentials
-  ): Observable<any> {
-    this.msg.setMsg({
-      text: msg || _('AUTH.ERROR.REGISTER'),
-      detail: `Registration Failed ${JSON.stringify(credentials)}, (${msg})`,
-      code: 'AUTH.ERROR.REGISTER',
-      level: LogLevels.error,
-    });
-    return this.store.dispatch(new actions.RegisterFailure());
-  }
-
-  registerRequest(credentials: AuthRegisterCredentials): Observable<any> {
+  registerRequest(input: gqlSchema.UserCreateInput): Observable<any> {
     this.logger.debug('Register request sent ...');
     return from(
-      this.gql.client.mutate<schema.JwtRegisterMutation>({
-        mutation: JwtRegisterMutationNode,
-        variables: credentials,
+      this.gql.client.mutate<gqlSchema.authRegister>({
+        mutation: gqlOperations.AuthRegisterMutation,
+        variables: input,
       })
     ).pipe(
-      map(({ data }) => data.jwtRegister),
-      map(
-        (resp) => {
-          if (resp.ok) {
-            this.msg.setMsg({
-              text: _('AUTH.SUCCESS.REGISTER'),
-              level: LogLevels.debug,
-            });
-            return this.store.dispatch(new actions.RegisterSuccess(resp.token));
-          } else {
-            return this.registerHandleError(resp.msg, LogLevels.warn, credentials);
-          }
-        },
-        (error) => {
-          return this.registerHandleError(error.message, LogLevels.warn, credentials);
+      take(1),
+      map(({ data }) => data.authRegister),
+      map((resp) => {
+        this.gtag.trackEvent('register', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: 'register success',
+        });
+        if (resp.ok) {
+          this.msg.setMsg(AuthMessageMap.success.register);
+          return this.store.dispatch(new actions.RegisterSuccess(resp.token));
         }
-      ),
-      catchError((error, caught) => {
-        return this.registerHandleError(error.message, LogLevels.warn, credentials);
+        this.gtag.trackEvent('register_failed', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: resp.message,
+        });
+        this.logger.error(resp.message);
+        this.msg.setMsg(AuthMessageMap.error.register);
+        return this.store.dispatch(new actions.RegisterFailure());
+      }),
+      catchError((error, caught$) => {
+        this.gtag.trackEvent('register_failed', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: error.message,
+        });
+        this.logger.error(error);
+        this.msg.setMsg(AuthMessageMap.error.server);
+        return this.store.dispatch(new actions.RegisterFailure());
       })
     );
-  }
 
-  private refreshHandleError(msg: string, level: LogLevels, token?: string): Observable<any> {
-    this.msg.setMsg({
-      text: msg || _('AUTH.ERROR.REFRESH'),
-      detail: `Registration Failed ${token}, (${msg})`,
-      code: 'AUTH.ERROR.REFRESH',
-      level: LogLevels.error,
-    });
-    return this.store.dispatch(new actions.TokenRefreshFailure());
-  }
+    // refreshTokenRequest(authToken: string): Observable<any> {
+    //   this.log.debug('Token refresh request sent ...');
+    //   return this.gql.client
+    //     .mutate<schema.AuthTokenRefresh>({
+    //       mutation: operations.AuthTokenRefreshMutation,
+    //       variables: { authToken: authToken },
+    //     })
+    //     .pipe(
+    //       take(1),
+    //       map(({ data }) => data.authTokenRefresh),
+    //       map((resp) => {
+    //         if (resp.ok) {
+    //           return pick(resp, ['accessToken', 'userProfile']);
+    //         }
+    //         this.log.error(resp.msg);
+    //         return this.store.dispatch(new actions.LogoutRequest());
+    //       }),
+    //       catchError((error, caught$) => {
+    //         this.gtag.trackEvent('refresh_token_failed', {
+    //           method: 'token',
+    //           event_category: 'auth',
+    //           event_label: error.message,
+    //         });
+    //         this.log.error(error);
+    //         this.msg.processMsg(AuthMessageMap.error.server);
+    //         return observableOf(null);
+    //       })
+    //     );
+    // }
 
-  refreshRequest(token: string): Observable<any> {
-    this.logger.debug('Token refresh request sent ...');
-    return from(
-      this.gql.client.mutate<schema.JwtRefreshMutation>({
-        mutation: JwtRefreshMutationNode,
-        variables: { token: token },
-      })
-    ).pipe(
-      map(({ data }) => data.jwtRefresh),
-      map(
-        (resp) => {
-          if (resp.ok) {
-            this.msg.setMsg({
-              text: _('AUTH.SUCCESS.REFRESH'),
-              level: LogLevels.debug,
-            });
-            return this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
-          } else {
-            return this.refreshHandleError(resp.msg, LogLevels.warn, token);
-          }
-        },
-        (error) => {
-          return this.refreshHandleError(error.message, LogLevels.warn, token);
-        }
-      ),
-      catchError((error, caught) => {
-        return this.refreshHandleError(error.message, LogLevels.warn, token);
-      })
-    );
+    // logoutRequest(authToken: string): Observable<any> {
+    //   this.log.debug('Logout request sent ...');
+    //   return this.gql.client
+    //     .mutate<schema.AuthLogout>({
+    //       mutation: operations.AuthLogoutMutation,
+    //       variables: { authToken },
+    //     })
+    //     .pipe(
+    //       take(1),
+    //       map(({ data }) => data.authLogout),
+    //       map((resp) => {
+    //         if (resp.ok) {
+    //           this.gtag.trackEvent('logout', {
+    //             event_category: 'auth',
+    //             event_label: 'logout success',
+    //           });
+    //           this.msg.processMsg(AuthMessageMap.success.logout);
+    //           return this.store.dispatch(new actions.LogoutSuccess());
+    //         }
+    //         this.gtag.trackEvent('logout_failed', {
+    //           event_category: 'auth',
+    //           event_label: resp.msg,
+    //         });
+    //         this.log.error(resp.msg);
+    //         this.msg.processMsg(AuthMessageMap.error.logout);
+    //         return this.store.dispatch(new actions.LogoutFailure());
+    //       }),
+    //       catchError((error, caught$) => {
+    //         this.gtag.trackEvent('logout_failed', {
+    //           event_category: 'auth',
+    //           event_label: error.message,
+    //         });
+    //         this.log.error(error);
+    //         this.msg.processMsg(AuthMessageMap.error.server);
+    //         return this.store.dispatch(new actions.LogoutFailure());
+    //       })
+    //     );
   }
 }

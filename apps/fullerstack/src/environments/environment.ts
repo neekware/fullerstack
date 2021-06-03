@@ -19,4 +19,7 @@ export const environment: Readonly<ApplicationConfig> = {
   production: false,
   appName: 'FullerStack',
   logger: { level: LogLevels.debug },
+  gql: {
+    endpoint: 'http://localhost:4201/graphql',
+  },
 };

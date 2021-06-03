@@ -52,10 +52,6 @@ export class UserCreateInput {
   @MinLength(AUTH_PASSWORD_MIN_LENGTH)
   password: string;
 
-  @Field()
-  @MinLength(4)
-  username: string;
-
   @Field({ nullable: false })
   firstName: string;
 

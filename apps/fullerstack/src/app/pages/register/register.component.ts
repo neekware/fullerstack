@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
-import { AuthRegisterCredentials, AuthService } from '@fullerstack/ngx-auth';
+import { tryGet } from '@fullerstack/agx-util';
+import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
+import * as gqlSchema from '@fullerstack/ngx-gql/schema';
 import { _ } from '@fullerstack/ngx-i18n';
 
 @Component({
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  register(data: AuthRegisterCredentials) {
+  register(data: gqlSchema.UserCreateInput) {
     this.auth.registerDispatch(data);
   }
 }
