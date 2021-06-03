@@ -1,4 +1,3 @@
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import {
   AuthGuardAnonymousGql,
   AuthGuardGql,
