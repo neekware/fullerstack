@@ -11,9 +11,9 @@ import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultGqlConfig } from './gql.default';
+import { DefaultGqlConfig, GQL_CLIENT_NAME } from './gql.default';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GqlService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
@@ -39,6 +39,7 @@ export class GqlService {
 
   private setupApolloClient() {
     this.apollo.create({
+      name: GQL_CLIENT_NAME,
       link: this.getMainLink(),
       cache: new InMemoryCache(),
       defaultOptions: {

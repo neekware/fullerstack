@@ -144,4 +144,7 @@ program
   .option('-d, --dev', 'Publish @<lib>@next')
   .parse(process.argv);
 
-main();
+main().catch((err) => {
+  console.error(`Error releasing`, err);
+  process.exit(1);
+});

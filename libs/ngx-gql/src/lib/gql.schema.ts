@@ -1,46 +1,64 @@
-/* eslint:disable */
-//  This file was automatically generated and should not be edited.
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
 
-export interface JwtLoginMutationVariables {
+// ====================================================
+// GraphQL mutation operation: authLogin
+// ====================================================
+
+export interface authLogin_authLogin {
+  __typename: "AuthTokenDto";
+  ok: boolean;
+  token: string;
+  message: string;
+}
+
+export interface authLogin {
+  authLogin: authLogin_authLogin;
+}
+
+export interface authLoginVariables {
   email: string;
   password: string;
 }
 
-export interface JwtLoginMutation {
-  jwtLogin: {
-    ok: boolean;
-    msg: string | null;
-    errno: string | null;
-    token: string | null;
-  } | null;
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: authSignup
+// ====================================================
+
+export interface authSignup_authSignup {
+  __typename: "AuthTokenDto";
+  ok: boolean;
+  token: string;
+  message: string;
 }
 
-export interface JwtRegisterMutationVariables {
+export interface authSignup {
+  authSignup: authSignup_authSignup;
+}
+
+export interface authSignupVariables {
+  email: string;
+  password: string;
   firstName: string;
   lastName?: string | null;
-  language?: string | null;
-  email: string;
-  password: string;
 }
 
-export interface JwtRegisterMutation {
-  jwtRegister: {
-    ok: boolean;
-    msg: string | null;
-    errno: string | null;
-    token: string | null;
-  } | null;
-}
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
 
-export interface JwtRefreshMutationVariables {
-  token: string;
-}
+//==============================================================
+// START Enums and Input Objects
+//==============================================================
 
-export interface JwtRefreshMutation {
-  jwtRefresh: {
-    ok: boolean;
-    msg: string | null;
-    errno: string | null;
-    token: string | null;
-  } | null;
-}
+//==============================================================
+// END Enums and Input Objects
+//==============================================================

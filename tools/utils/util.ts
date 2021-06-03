@@ -14,7 +14,7 @@ export const projPkgJson = require(path.join(projDir, 'package.json'));
  * Runs a command, capture and return the output
  * @param script {string} an executable command
  */
-export function execute(script: string): Promise<any> {
+export function execute(script: string, debug = false): Promise<any> {
   return new Promise((resolvePromise, rejectPromise) => {
     childProcess.exec(script, { maxBuffer: 1024 * 1000 }, (error, stdout, stderr) => {
       if (error) {
