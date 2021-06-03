@@ -2034,10 +2034,10 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@devoxa/prisma-relay-cursor-connection@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@devoxa/prisma-relay-cursor-connection/-/prisma-relay-cursor-connection-1.1.1.tgz#9f2703d977bfe6a8f869bb841cdf62b571dce10f"
-  integrity sha512-03cJcDCfAPfTMOE2bVnd9rDKcCAHjfUnKC6byoimN1j1m4R4IWWs+lj86m8g7VzYGJOdCRA6rZvi9zSp9qCbeA==
+"@devoxa/prisma-relay-cursor-connection@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@devoxa/prisma-relay-cursor-connection/-/prisma-relay-cursor-connection-2.0.2.tgz#01d2d713293a4546b38935eb56c36360ccb3c4ba"
+  integrity sha512-1Q/y7R7OxWtx5lpy5nn4ywSK5DGDGablOhX3ys2mXGidHshTaBMGv9semV3wPmaCBxvEtazAMgNuvkH0Kx+Yjg==
 
 "@discoveryjs/json-ext@0.5.2":
   version "0.5.2"

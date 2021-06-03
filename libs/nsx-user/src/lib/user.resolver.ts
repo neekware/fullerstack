@@ -12,7 +12,7 @@ import { NotFoundException, UnauthorizedException, UseGuards } from '@nestjs/com
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
 
-import { PaginatedUser, UserDto, UserUpdateAdvancedInput, UserUpdateInput } from './user.model';
+import { UserDto, UserUpdateAdvancedInput, UserUpdateInput } from './user.model';
 import { UserOrder } from './user.order';
 import { UserDataAccessScope } from './user.scope';
 import { UserService } from './user.service';
@@ -68,54 +68,36 @@ export class UserResolver {
   }
 
   @UseGuards(AuthGuardAnonymousGql)
-  @Query(() => PaginatedUser)
+  @Query(() => [UserDto])
   async users(
     @UserDecorator() currentUser: User,
-    @Args() { after, before, first, last }: PaginationArgs,
-    @Args({ name: 'query', type: () => String, nullable: true })
-    query: string,
-    @Args({
-      name: 'orderBy',
-      type: () => UserOrder,
-      nullable: true,
-    })
-    orderBy: UserOrder
+    @Args() { cursor, take, skip }: PaginationArgs,
+    @Args({ name: 'query', type: () => String, defaultValue: '' }) query: string,
+    @Args({ name: 'orderBy', type: () => UserOrder, nullable: true }) orderBy: UserOrder
   ) {
-    query = query || '';
-    const users = await findManyCursorConnection(
-      async (args) => {
-        const users = await this.prisma.user.findMany({
-          // include: { group: true },
-          where: {
-            AND: [{ isActive: true }],
-            OR: [
-              { username: { contains: query } },
-              { email: { contains: query } },
-              { firstName: { contains: query } },
-              { lastName: { contains: query } },
-            ],
-          },
-          orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : undefined,
-          ...args,
-        });
-        return users.map(
-          (user) => UserDataAccessScope.getSecuredUser(user, currentUser) as UserDto
-        );
+    const filterBy = Object.assign(
+      {},
+      {
+        where: {
+          AND: [{ isActive: true }],
+          OR: [
+            { username: { contains: query } },
+            { email: { contains: query } },
+            { firstName: { contains: query } },
+            { lastName: { contains: query } },
+          ],
+        },
       },
-      () =>
-        this.prisma.user.count({
-          where: {
-            AND: [{ isActive: true }],
-            OR: [
-              { username: { contains: query } },
-              { email: { contains: query } },
-              { firstName: { contains: query } },
-              { lastName: { contains: query } },
-            ],
-          },
-        }),
-      { first, last, before, after }
+      cursor && { cursor: { id: cursor } },
+      take && { take },
+      (skip && { skip }) || (cursor && { skip: 1 }),
+      orderBy && { [orderBy.field]: orderBy.direction }
     );
-    return users;
+
+    const users = await this.prisma.user.findMany(filterBy);
+    const prunedUsers = users.map(
+      (user) => UserDataAccessScope.getSecuredUser(user, currentUser) as UserDto
+    );
+    return prunedUsers;
   }
 }
