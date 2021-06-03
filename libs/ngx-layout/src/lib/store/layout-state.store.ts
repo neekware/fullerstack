@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { signObject } from '@fullerstack/agx-util';
 import { Action, State, StateContext } from '@ngxs/store';
 
 import * as actions from './layout-state.action';
@@ -15,12 +16,17 @@ export class LayoutStoreState {
 
   @Action([actions.Initialize])
   initializeRequest({ setState }: StateContext<LayoutState>) {
-    setState(DefaultLayoutState);
+    setState(signObject<LayoutState>(DefaultLayoutState));
   }
 
   @Action(actions.SetMenuStatus)
-  setMenuStatus({ patchState }: StateContext<LayoutState>, { payload }: actions.SetMenuStatus) {
-    patchState({ menuOpen: payload });
+  setMenuStatus(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetMenuStatus
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), menuOpen: payload })
+    );
   }
 
   @Action(actions.ToggleMenu)
@@ -30,22 +36,39 @@ export class LayoutStoreState {
     if (nextState.menuOpen && prevState.notifyOpen && prevState.isHandset) {
       nextState['notifyOpen'] = false;
     }
-    patchState(nextState);
+    patchState(
+      signObject<LayoutState>({ ...prevState, ...nextState })
+    );
   }
 
   @Action(actions.SetMenuMode)
-  setMenuMode({ patchState }: StateContext<LayoutState>, { payload }: actions.SetMenuMode) {
-    patchState({ menuMode: payload });
+  setMenuMode(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetMenuMode
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), menuMode: payload })
+    );
   }
 
   @Action(actions.SetMenuRole)
-  setMenuRole({ patchState }: StateContext<LayoutState>, { payload }: actions.SetMenuRole) {
-    patchState({ menuRole: payload });
+  setMenuRole(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetMenuRole
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), menuRole: payload })
+    );
   }
 
   @Action(actions.SetNotifyStatus)
-  setNotifyStatus({ patchState }: StateContext<LayoutState>, { payload }: actions.SetNotifyStatus) {
-    patchState({ notifyOpen: payload });
+  setNotifyStatus(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetNotifyStatus
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), notifyOpen: payload })
+    );
   }
 
   @Action(actions.ToggleNotification)
@@ -55,49 +78,85 @@ export class LayoutStoreState {
     if (nextState.notifyOpen && prevState.menuOpen && prevState.isHandset) {
       nextState['menuOpen'] = false;
     }
-    patchState(nextState);
+    patchState(
+      signObject<LayoutState>({ ...getState(), ...nextState })
+    );
   }
 
   @Action(actions.SetNotifyMode)
-  setNotifyMode({ patchState }: StateContext<LayoutState>, { payload }: actions.SetNotifyMode) {
-    patchState({ notifyMode: payload });
+  setNotifyMode(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetNotifyMode
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), notifyMode: payload })
+    );
   }
 
   @Action(actions.SetNotifyRole)
-  setNotifyRole({ patchState }: StateContext<LayoutState>, { payload }: actions.SetNotifyRole) {
-    patchState({ notifyRole: payload });
+  setNotifyRole(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetNotifyRole
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), notifyRole: payload })
+    );
   }
 
   @Action(actions.SetFullscreenStatus)
   setFullscreenStatus(
-    { patchState }: StateContext<LayoutState>,
+    { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetFullscreenStatus
   ) {
-    patchState({ fullscreenOpen: payload });
+    patchState(
+      signObject<LayoutState>({ ...getState(), fullscreenOpen: payload })
+    );
   }
 
   @Action(actions.ToggleFullscreen)
   toggleFullscreen({ getState, patchState }: StateContext<LayoutState>) {
-    patchState({ fullscreenOpen: !getState().fullscreenOpen });
+    patchState(
+      signObject<LayoutState>({ ...getState(), fullscreenOpen: !getState().fullscreenOpen })
+    );
   }
 
   @Action(actions.SetIsHandset)
-  setIsHandset({ patchState }: StateContext<LayoutState>, { payload }: actions.SetIsHandset) {
-    patchState({ isHandset: payload });
+  setIsHandset(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetIsHandset
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), isHandset: payload })
+    );
   }
 
   @Action(actions.SetIsPortrait)
-  setIsPortrait({ patchState }: StateContext<LayoutState>, { payload }: actions.SetIsPortrait) {
-    patchState({ isPortrait: payload });
+  setIsPortrait(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetIsPortrait
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), isPortrait: payload })
+    );
   }
 
   @Action(actions.SetIsDarkTheme)
-  setIsDarkTheme({ patchState }: StateContext<LayoutState>, { payload }: actions.SetIsDarkTheme) {
-    patchState({ isDarkTheme: payload });
+  setIsDarkTheme(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetIsDarkTheme
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), isDarkTheme: payload })
+    );
   }
 
   @Action(actions.SetNavbarMode)
-  setNavbarMode({ patchState }: StateContext<LayoutState>, { payload }: actions.SetNavbarMode) {
-    patchState({ navbarMode: payload });
+  setNavbarMode(
+    { getState, patchState }: StateContext<LayoutState>,
+    { payload }: actions.SetNavbarMode
+  ) {
+    patchState(
+      signObject<LayoutState>({ ...getState(), navbarMode: payload })
+    );
   }
 }

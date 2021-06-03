@@ -20,6 +20,7 @@ export enum SidenavRole {
   'directory' = 'directory',
 }
 export interface LayoutState {
+  signature: string;
   isHandset: boolean;
   isPortrait: boolean;
   isDarkTheme: boolean;

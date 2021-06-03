@@ -2,7 +2,7 @@ import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/l
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { tryGet } from '@fullerstack/agx-util';
+import { sanitizeJsonStringOrObject, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import {
   ApplicationConfig,
@@ -20,7 +20,7 @@ import { DeepReadonly } from 'ts-essentials';
 
 import * as actions from './store/layout-state.action';
 import { DefaultLayoutState } from './store/layout-state.default';
-import { LayoutState, NavbarMode, SidenavMode } from './store/layout-state.model';
+import { LAYOUT_STATE_KEY, LayoutState, NavbarMode, SidenavMode } from './store/layout-state.model';
 import { LayoutStoreState } from './store/layout-state.store';
 
 @Injectable()
@@ -107,6 +107,22 @@ export class LayoutService implements OnDestroy {
     this.breakpointInit();
     this.fullscreenInit();
     this.routeChangeInit();
+    this.initStorageEventHandler();
+  }
+
+  private initStorageEventHandler() {
+    addEventListener(
+      'storage',
+      (event) => {
+        if (event.key === LAYOUT_STATE_KEY) {
+          let newState = sanitizeJsonStringOrObject(event.newValue);
+          if (!newState) {
+            this.store.dispatch(new actions.Initialize());
+          }
+        }
+      },
+      false
+    );
   }
 
   private stateInit() {

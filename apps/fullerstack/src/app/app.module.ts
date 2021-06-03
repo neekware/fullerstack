@@ -1,9 +1,9 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { AUTH_STATE_KEY, AuthModule } from '@fullerstack/ngx-auth';
+import { AUTH_STATE_KEY, AuthInterceptor, AuthModule } from '@fullerstack/ngx-auth';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { GqlModule } from '@fullerstack/ngx-gql';
 import { I18nModule } from '@fullerstack/ngx-i18n';
@@ -48,7 +48,7 @@ import { RegisterComponent } from './pages/register/register.component';
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     NgxsLoggerPluginModule.forRoot({ logger: console, collapsed: true }),
     NgxsStoragePluginModule.forRoot({
-      key: [AUTH_STATE_KEY, LAYOUT_STATE_KEY],
+      key: [LAYOUT_STATE_KEY],
     }),
     ConfigModule.forRoot(environment),
     LoggerModule,
@@ -62,7 +62,12 @@ import { RegisterComponent } from './pages/register/register.component';
     UixModule,
     LayoutModule,
   ],
-  providers: [ValidationService, ValidationAsyncService],
+  providers: [
+    ValidationService,
+    ValidationAsyncService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

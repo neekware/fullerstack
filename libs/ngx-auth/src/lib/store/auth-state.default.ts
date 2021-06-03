@@ -4,15 +4,14 @@ import { MessageMap } from '@fullerstack/ngx-msg';
 import { DeepReadonly } from 'ts-essentials';
 
 import { AuthState } from './auth-state.model';
-import { signState } from './auth-state.util';
 
-export const DefaultAuthState: DeepReadonly<AuthState> = signState({
-  signature: null,
+export const DefaultAuthState: DeepReadonly<AuthState> = {
   isLoggedIn: false,
   isRegistering: false,
   isAuthenticating: false,
   hasError: false,
-});
+  token: null,
+};
 
 export const AuthMessageMap: MessageMap = {
   success: {

@@ -1,6 +1,7 @@
 import { LayoutState, NavbarMode, SidenavMode, SidenavRole } from './layout-state.model';
 
 export const DefaultLayoutState: LayoutState = {
+  signature: null,
   isHandset: false,
   isPortrait: false,
   isDarkTheme: false,

@@ -8,7 +8,6 @@ import { AUTH_STATE_KEY } from './auth-state.constant';
 import { DefaultAuthState } from './auth-state.default';
 import { AuthEffectsService } from './auth-state.effect';
 import { AuthState } from './auth-state.model';
-import { signState } from './auth-state.util';
 
 @State<AuthState>({
   name: AUTH_STATE_KEY,
@@ -20,84 +19,60 @@ export class AuthStoreState {
 
   @Action(actions.Initialize)
   initializeRequest({ setState }: StateContext<AuthState>) {
-    setState(signState(DefaultAuthState));
+    setState(DefaultAuthState);
   }
 
   @Action(actions.LoginRequest)
   loginRequest({ setState }: StateContext<AuthState>, { payload }: actions.LoginRequest) {
-    setState(
-      signState({
-        ...DefaultAuthState,
-        ...{
-          isAuthenticating: true,
-        },
-      })
-    );
+    setState({
+      ...DefaultAuthState,
+      isAuthenticating: true,
+    });
     return this.stateService.loginRequest(payload);
   }
 
   @Action(actions.LoginSuccess)
   loginSuccess({ setState }: StateContext<AuthState>, { payload }: actions.LoginSuccess) {
-    setState(
-      signState({
-        ...DefaultAuthState,
-        ...{
-          isLoggedIn: true,
-          token: payload,
-        },
-      })
-    );
+    setState({
+      ...DefaultAuthState,
+      isLoggedIn: true,
+      token: payload,
+    });
     this.msg.successSnackBar(_('AUTH.SUCCESS.LOGIN'));
   }
 
   @Action(actions.LoginFailure)
   loginFailure({ getState, setState }: StateContext<AuthState>) {
-    setState(
-      signState({
-        ...getState(),
-        ...{
-          hasError: true,
-        },
-      })
-    );
+    setState({
+      ...getState(),
+      hasError: true,
+    });
   }
 
   @Action(actions.RegisterRequest)
   registerRequest({ setState }: StateContext<AuthState>, { payload }: actions.RegisterRequest) {
-    setState(
-      signState({
-        ...DefaultAuthState,
-        ...{
-          isRegistering: true,
-        },
-      })
-    );
+    setState({
+      ...DefaultAuthState,
+      isRegistering: true,
+    });
     return this.stateService.registerRequest(payload);
   }
 
   @Action(actions.RegisterSuccess)
   registerSuccess({ setState }: StateContext<AuthState>, { payload }: actions.RegisterSuccess) {
-    setState(
-      signState({
-        ...DefaultAuthState,
-        ...{
-          isLoggedIn: true,
-        },
-      })
-    );
+    setState({
+      ...DefaultAuthState,
+      isLoggedIn: true,
+    });
     this.msg.successSnackBar(_('AUTH.SUCCESS.REGISTER'), { duration: 5000 });
   }
 
   @Action(actions.RegisterFailure)
   registerFailure({ getState, setState }: StateContext<AuthState>) {
-    setState(
-      signState({
-        ...getState(),
-        ...{
-          hasError: true,
-        },
-      })
-    );
+    setState({
+      ...getState(),
+      hasError: true,
+    });
   }
 
   // @Action(actions.LogoutRequest)

@@ -13,7 +13,6 @@ import { catchError, map, take } from 'rxjs/operators';
 import * as actions from './auth-state.action';
 import { AuthMessageMap, DefaultAuthState } from './auth-state.default';
 import { AuthState } from './auth-state.model';
-import { sanitizeState } from './auth-state.util';
 
 @Injectable({
   providedIn: 'root',
@@ -25,22 +24,7 @@ export class AuthEffectsService {
     readonly gtag: GTagService,
     readonly logger: LoggerService,
     readonly gql: GqlService
-  ) {
-    this.initStorageEventHandler();
-  }
-
-  private initStorageEventHandler() {
-    addEventListener(
-      'storage',
-      (event) => {
-        if (event.key === AUTH_STATE_KEY) {
-          let newState = <AuthState>(sanitizeState(event.newValue) || DefaultAuthState);
-          this.store.dispatch(new actions.MultiTabSyncRequest(newState));
-        }
-      },
-      false
-    );
-  }
+  ) {}
 
   loginRequest(input: gqlSchema.UserCredentialsInput): Observable<any> {
     this.logger.debug('Login request sent ...');

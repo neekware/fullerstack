@@ -14,27 +14,28 @@ import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { Select, Store } from '@ngxs/store';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAuthConfig } from './auth.default';
 import * as actions from './store/auth-state.action';
-import { AUTH_STATE_KEY } from './store/auth-state.constant';
 import { DefaultAuthState } from './store/auth-state.default';
 import { AuthState } from './store/auth-state.model';
 import { AuthStoreState } from './store/auth-state.store';
-import { sanitizeState } from './store/auth-state.util';
 
 @Injectable()
 export class AuthService implements OnDestroy {
+  options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   @Output() authChanged$ = new EventEmitter<AuthState>();
   @Select(AuthStoreState) private stateSub$: Observable<AuthState>;
-  private destroy$ = new Subject<boolean>();
-  options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<AuthState> = DefaultAuthState;
-  private _refreshTimer = null;
+  isLoading: boolean;
+  private destroy$ = new Subject<boolean>();
+  loginUrl: string;
+  registerUrl: string;
+  loggedInUrl: string;
 
   constructor(
     readonly router: Router,
@@ -46,81 +47,57 @@ export class AuthService implements OnDestroy {
     readonly gql: GqlService
   ) {
     this.options = ldNestedMerge({ gtag: DefaultAuthConfig }, this.config.options);
-
-    this.doInit();
     logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
-  }
 
-  private doInit() {
-    this.initStorageEventHandler();
-    this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe((newState) => {
-      if (sanitizeState(newState)) {
-        if (this.state.signature !== newState.signature) {
-          const prevState = this.state;
-          this.state = newState;
-          this.stateChangeRedirectHandler(prevState);
+    this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (newState) => {
+        if (this.state.isLoggedIn !== newState.isLoggedIn) {
+          const prevState = cloneDeep(this.state);
+          this.state = cloneDeep(newState);
+          this.handleRedirect(prevState);
           this.authChanged$.emit(this.state);
         }
-      } else {
-        this.logoutDispatch();
-      }
+        this.isLoading =
+          !newState.hasError && (newState.isAuthenticating || newState.isRegistering);
+      },
     });
+
+    this.loginUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
+    this.loggedInUrl = tryGet(() => this.options.localConfig.loggedInLandingPageUrl, '/');
+    this.registerUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
   }
 
-  private stateChangeRedirectHandler(prevState: AuthState) {
-    const loginUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
-
-    const registrationUrl = tryGet(
-      () => this.options.localConfig.registerPageUrl,
-      '/auth/register'
-    );
-
-    const loggedInUrl = tryGet(() => this.options.localConfig.loggedInLandingPageUrl, '/');
-
+  private handleRedirect(prevState: AuthState) {
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
+      this.logoutDispatch();
       this.initDispatch();
-      this.router.navigate([loggedInUrl]);
+      this.router.navigate([this.loggedInUrl]);
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
       switch (this.router.url) {
-        case loginUrl:
-        case registrationUrl:
-          this.router.navigate([loggedInUrl]);
+        case this.loginUrl:
+        case this.registerUrl:
+          this.router.navigate([this.loggedInUrl]);
       }
     }
   }
 
-  private initStorageEventHandler() {
-    if (this.options.localConfig.multiTab) {
-      addEventListener(
-        'storage',
-        (event) => {
-          if (event.key === AUTH_STATE_KEY) {
-            let newState = <AuthState>(sanitizeState(event.newValue) || DefaultAuthState);
-            this.store.dispatch(new actions.MultiTabSyncRequest(newState));
-          }
-        },
-        false
-      );
+  initDispatch() {
+    if (!this.state.isLoggedIn) {
+      this.store.dispatch(new actions.Initialize());
     }
-  }
-
-  get isLoading() {
-    return !this.state.hasError && (this.state.isAuthenticating || this.state.isRegistering);
   }
 
   initiateLoginState() {
     if (!this.state.isLoggedIn) {
       this.msg.reset();
-      const redirectUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
-      this.router.navigate([redirectUrl]);
+      this.router.navigate([this.loginUrl]);
     }
   }
 
   initiateRegisterState() {
     if (!this.state.isLoggedIn) {
       this.msg.reset();
-      const redirectUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
-      this.router.navigate([redirectUrl]);
+      this.router.navigate([this.registerUrl]);
     }
   }
 
@@ -128,14 +105,7 @@ export class AuthService implements OnDestroy {
     if (this.state.isLoggedIn) {
       this.msg.reset();
       this.logoutDispatch();
-      const redirectUrl = tryGet(() => this.options.localConfig.loggedOutRedirectUrl, '/');
-      this.router.navigate([redirectUrl]);
-    }
-  }
-
-  initDispatch() {
-    if (!this.state.isLoggedIn) {
-      this.store.dispatch(new actions.Initialize());
+      this.router.navigate([this.loggedInUrl]);
     }
   }
 
