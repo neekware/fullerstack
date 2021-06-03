@@ -47,7 +47,7 @@ export class AuthEffectsService {
     return from(
       this.gql.client.mutate<gqlSchema.authLogin>({
         mutation: gqlOperations.AuthLoginMutation,
-        variables: input,
+        variables: { input },
       })
     ).pipe(
       take(1),
@@ -91,7 +91,7 @@ export class AuthEffectsService {
     return from(
       this.gql.client.mutate<gqlSchema.authRegister>({
         mutation: gqlOperations.AuthRegisterMutation,
-        variables: input,
+        variables: { input },
       })
     ).pipe(
       take(1),

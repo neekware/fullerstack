@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/neekware/fullerstack.git",
   "scripts": {
-    "ts-node": "./node_modules/.bin/ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
+    "ts-node": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json",
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "start": "ng serve",
@@ -48,15 +48,15 @@
     "e2e:ci": "yarn nx:ci  e2e fullerstack-e2e --configuration=ci --headless",
     "api:ci": "yarn nx:ci  serve api --configuration=ci",
     "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=fullerstack-e2e",
-    "coverage:merge": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/coverageMerge.ts",
-    "release": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/release.ts",
+    "coverage:merge": "yarn ts-node ./tools/utils/coverageMerge.ts",
+    "release": "yarn ts-node ./tools/utils/release.ts",
     "prisma:migrate:create": "node ./node_modules/.bin/prisma migrate dev --create-only --schema=apps/api/src/prisma/schema.prisma",
     "prisma:migrate:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
     "prisma:migrate:dev": "node ./node_modules/.bin/prisma migrate dev --schema=apps/api/src/prisma/schema.prisma",
     "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:seed": "node ./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature",
+    "prisma:seed": "./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature",
     "xlate:extract": "ngx-translate-extract -i ./apps ./libs -o ./libs/agx-assets/src/lib/i18n/{en,fr,es,he,fa}.json -m _ --sort",
-    "gql:generate": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json ./tools/utils/gql.ts"
+    "gql:generate": "yarn ts-node ./tools/utils/gql.ts"
   },
   "importSort": {
     ".js, .ts": {
@@ -90,7 +90,7 @@
     "@ngxs/storage-plugin": "^3.7.1",
     "@ngxs/store": "^3.7.1",
     "@nrwl/angular": "12.3.6",
-    "@prisma/client": "^2.24.0",
+    "@prisma/client": "^2.24.1",
     "apollo-angular": "^2.6.0",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
@@ -181,7 +181,7 @@
     "postcss": "^8.2.13",
     "prettier": "2.2.1",
     "prettier-plugin-import-sort": "^0.0.6",
-    "prisma": "^2.24.0",
+    "prisma": "^2.24.1",
     "prisma-dbml-generator": "^0.5.0",
     "ts-jest": "26.5.5",
     "ts-node": "^9.1.1",
