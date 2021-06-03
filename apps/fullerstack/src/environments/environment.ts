@@ -22,4 +22,7 @@ export const environment: Readonly<ApplicationConfig> = {
   gql: {
     endpoint: 'http://localhost:4201/graphql',
   },
+  gtag: {
+    isEnabled: false,
+  },
 };

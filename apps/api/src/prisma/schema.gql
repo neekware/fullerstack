@@ -8,7 +8,7 @@ type AuthStatusDto {
 }
 
 type AuthTokenDto {
-  message: String!
+  message: String
   ok: Boolean!
   token: String!
 }

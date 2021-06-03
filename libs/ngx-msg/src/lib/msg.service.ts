@@ -1,5 +1,5 @@
 import { Directionality } from '@angular/cdk/bidi';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
 import {
@@ -9,24 +9,28 @@ import {
   SnackbarType,
 } from '@fullerstack/ngx-shared';
 import { TranslateService } from '@ngx-translate/core';
+import { cloneDeep } from 'lodash-es';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 @Injectable()
-export class MsgService {
+export class MsgService implements OnDestroy {
   status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
+  destroy$ = new Subject<boolean>();
 
   constructor(
     readonly dir: Directionality,
     readonly matSnackbar: MatSnackBar,
     readonly logger: LoggerService,
-    readonly translate: TranslateService
+    readonly translateService: TranslateService
   ) {
     this.reset();
   }
 
   reset() {
     this.status = {
-      ...SnackbarStatusDefault,
+      ...cloneDeep(SnackbarStatusDefault),
       level: this.logger.options.logger.level,
       color: this.getColor(this.logger.options.logger.level),
     };
@@ -35,10 +39,9 @@ export class MsgService {
   setMsg(msg: SnackbarStatus) {
     this.status = {
       ...this.status,
+      ...msg,
       ...{
-        msg,
         color: this.getColor(msg.level),
-        console: msg?.console,
       },
     };
     if (this.status.console) {
@@ -65,25 +68,28 @@ export class MsgService {
   }
 
   private logToConsole() {
-    this.translate.get(this.status.text).subscribe((translatedText: string) => {
-      switch (this.status.level) {
-        case LogLevels.critical:
-          this.logger.critical(translatedText);
-          break;
-        case LogLevels.error:
-          this.logger.error(translatedText);
-          break;
-        case LogLevels.warn:
-          this.logger.warn(translatedText);
-          break;
-        case LogLevels.info:
-          this.logger.info(translatedText);
-          break;
-        case LogLevels.debug:
-          this.logger.debug(translatedText);
-          break;
-      }
-    });
+    this.translateService
+      .get(this.status.text)
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe((msgText: string) => {
+        switch (this.status.level) {
+          case LogLevels.critical:
+            this.logger.critical(msgText);
+            break;
+          case LogLevels.error:
+            this.logger.error(msgText);
+            break;
+          case LogLevels.warn:
+            this.logger.warn(msgText);
+            break;
+          case LogLevels.info:
+            this.logger.info(msgText);
+            break;
+          case LogLevels.debug:
+            this.logger.debug(msgText);
+            break;
+        }
+      });
   }
 
   private openSnackBar(msg: string, msgType: SnackbarType, config?: MatSnackBarConfig) {
@@ -96,7 +102,7 @@ export class MsgService {
       },
       ...(config || {}),
     };
-    this.translate.get(msg).subscribe((translatedText: string) => {
+    this.translateService.get(msg).subscribe((translatedText: string) => {
       config.data = {
         msgText: translatedText,
         msgType,
@@ -115,5 +121,10 @@ export class MsgService {
 
   errorSnackBar(msg: string, config?: MatSnackBarConfig) {
     this.openSnackBar(msg, SnackbarType.error, config);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

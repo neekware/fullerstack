@@ -31,7 +31,7 @@ export class AuthTokenDto {
   @Field()
   token: string;
 
-  @Field()
+  @Field({ nullable: true })
   message?: string;
 
   @Field()
