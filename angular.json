@@ -133,19 +133,21 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fullerstack:build",
-            "proxyConfig": "apps/fullerstack/proxy/proxy.dev.json",
-            "sourceMap": {
-              "scripts": true,
-              "styles": true,
-              "vendor": true
-            }
+            "browserTarget": "fullerstack:build:development",
+            "proxyConfig": "apps/fullerstack/proxy/proxy.dev.json"
           },
           "configurations": {
             "production": {
