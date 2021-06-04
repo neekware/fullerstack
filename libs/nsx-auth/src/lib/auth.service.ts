@@ -7,6 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
+import { v4 as uuid_v4 } from 'uuid';
 
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
 import { SecurityService } from './auth.security.service';
@@ -28,6 +29,7 @@ export class AuthService {
           ...payload,
           email: payload.email.toLowerCase(),
           password: hashedPassword,
+          username: uuid_v4(),
           role: 'USER',
           isActive: true,
         } as Prisma.UserCreateInput,
