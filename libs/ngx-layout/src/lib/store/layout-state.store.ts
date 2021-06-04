@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { signObject } from '@fullerstack/agx-util';
+import { signObject } from '@fullerstack/ngx-util';
 import { Action, State, StateContext } from '@ngxs/store';
 
 import * as actions from './layout-state.action';

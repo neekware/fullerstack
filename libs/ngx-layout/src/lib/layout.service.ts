@@ -2,7 +2,7 @@ import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/l
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { sanitizeJsonStringOrObject, tryGet } from '@fullerstack/agx-util';
+import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import {
   ApplicationConfig,
@@ -13,6 +13,7 @@ import { I18nService, _ } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MenuService } from '@fullerstack/ngx-menu';
 import { UixService } from '@fullerstack/ngx-uix';
+import { sanitizeJsonStringOrObject } from '@fullerstack/ngx-util';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
