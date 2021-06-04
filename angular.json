@@ -174,13 +174,13 @@
           "options": {
             "jestConfig": "apps/fullerstack/jest.config.js",
             "passWithNoTests": true
-          },
-          "ci": {
-            "sourceMap": false,
-            "codeCoverage": true,
-            "progress": false,
-            "watch": false
           }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
         }
       }
     },
@@ -690,6 +690,9 @@
           "configurations": {
             "production": {
               "tsConfig": "libs/ngx-gtag/tsconfig.lib.prod.json"
+            },
+            "ci": {
+              "tsConfig": "libs/ngx-gtag/tsconfig.lib.prod.json"
             }
           }
         },
@@ -706,6 +709,12 @@
             "jestConfig": "libs/ngx-gtag/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "ci": {
+          "sourceMap": false,
+          "codeCoverage": true,
+          "progress": false,
+          "watch": false
         }
       }
     },
