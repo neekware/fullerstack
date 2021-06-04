@@ -49,7 +49,6 @@
             "main": "apps/fullerstack/src/main.ts",
             "polyfills": "apps/fullerstack/src/polyfills.ts",
             "tsConfig": "apps/fullerstack/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/fullerstack/src/favicon.ico",
               "apps/fullerstack/src/assets",
@@ -77,7 +76,13 @@
                 "input": "apps/fullerstack/src/styles.scss"
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -134,13 +139,7 @@
                 }
               ]
             },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
+            "development": {}
           }
         },
         "serve": {
