@@ -175,12 +175,6 @@
             "jestConfig": "apps/fullerstack/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
@@ -284,12 +278,6 @@
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
@@ -339,12 +327,6 @@
           "options": {
             "jestConfig": "libs/ngx-config/jest.config.js",
             "passWithNoTests": true
-          },
-          "ci": {
-            "sourceMap": false,
-            "codeCoverage": true,
-            "progress": false,
-            "watch": false
           }
         }
       }
@@ -383,12 +365,6 @@
             "jestConfig": "libs/ngx-logger/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
@@ -431,12 +407,6 @@
             "jestConfig": "libs/nsx-user/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
@@ -537,12 +507,6 @@
             "jestConfig": "libs/ngx-subify/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
@@ -580,12 +544,6 @@
             "jestConfig": "libs/ngx-jwt/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
@@ -623,12 +581,6 @@
             "jestConfig": "libs/ngx-menu/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
@@ -666,12 +618,6 @@
             "jestConfig": "libs/ngx-i18n/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
@@ -709,12 +655,6 @@
             "jestConfig": "libs/ngx-gtag/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "ci": {
-          "sourceMap": false,
-          "codeCoverage": true,
-          "progress": false,
-          "watch": false
         }
       }
     },
