@@ -1,18 +1,16 @@
-import { Directionality } from '@angular/cdk/bidi';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { I18nService } from '@fullerstack/ngx-i18n';
 import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
-import {
-  SnackbarComponent,
-  SnackbarStatus,
-  SnackbarStatusDefault,
-  SnackbarType,
-} from '@fullerstack/ngx-shared';
 import { TranslateService } from '@ngx-translate/core';
 import { cloneDeep } from 'lodash-es';
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
+
+import { SnackbarComponent } from './snackbar/snackbar.component';
+import { SnackbarStatusDefault } from './snackbar/snackbar.default';
+import { SnackbarStatus, SnackbarType } from './snackbar/snackbar.model';
 
 @Injectable()
 export class MsgService implements OnDestroy {
@@ -20,7 +18,7 @@ export class MsgService implements OnDestroy {
   destroy$ = new Subject<boolean>();
 
   constructor(
-    readonly dir: Directionality,
+    readonly i18n: I18nService,
     readonly matSnackbar: MatSnackBar,
     readonly logger: LoggerService,
     readonly translateService: TranslateService
@@ -97,18 +95,21 @@ export class MsgService implements OnDestroy {
     config = {
       ...{
         duration: 2000,
-        direction: this.dir.value,
-        horizontalPosition: this.dir.value === 'ltr' ? 'left' : 'right',
+        direction: this.i18n.direction,
+        horizontalPosition: this.i18n.direction === 'ltr' ? 'left' : 'right',
       },
       ...(config || {}),
     };
-    this.translateService.get(msg).subscribe((translatedText: string) => {
-      config.data = {
-        msgText: translatedText,
-        msgType,
-      };
-      this.matSnackbar.openFromComponent(SnackbarComponent, config);
-    });
+    this.translateService
+      .get(msg)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((translatedText: string) => {
+        config.data = {
+          msgText: translatedText,
+          msgType,
+        };
+        this.matSnackbar.openFromComponent(SnackbarComponent, config);
+      });
   }
 
   successSnackBar(msg: string, config?: MatSnackBarConfig) {

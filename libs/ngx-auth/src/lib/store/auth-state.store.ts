@@ -38,7 +38,7 @@ export class AuthStoreState {
       isLoggedIn: true,
       token: payload,
     });
-    this.msg.successSnackBar(_('AUTH.SUCCESS.LOGIN'));
+    this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 4000 });
   }
 
   @Action(actions.LoginFailure)
@@ -64,7 +64,7 @@ export class AuthStoreState {
       ...DefaultAuthState,
       isLoggedIn: true,
     });
-    this.msg.successSnackBar(_('AUTH.SUCCESS.REGISTER'), { duration: 5000 });
+    this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 5000 });
   }
 
   @Action(actions.RegisterFailure)

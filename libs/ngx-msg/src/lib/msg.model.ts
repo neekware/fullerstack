@@ -1,4 +1,4 @@
-import { SnackbarStatus } from '@fullerstack/ngx-shared';
+import { SnackbarStatus } from "./snackbar/snackbar.model";
 
 export interface MessageMap {
   [id: string]: {

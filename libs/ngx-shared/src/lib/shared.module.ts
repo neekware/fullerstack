@@ -11,7 +11,6 @@ import { HintComponent } from './component/hint/hint.component';
 import { LoginFormComponent } from './component/login/login-form.component';
 import { RegisterFormComponent } from './component/register/register-form.component';
 import { RippleComponent } from './component/ripple/ripple.component';
-import { SnackbarComponent } from './component/snackbar/snackbar.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule, I18nModule],
@@ -21,7 +20,6 @@ import { SnackbarComponent } from './component/snackbar/snackbar.component';
     CardComponent,
     RippleComponent,
     ConfirmationDialogComponent,
-    SnackbarComponent,
     LoginFormComponent,
     RegisterFormComponent,
   ],
@@ -31,7 +29,6 @@ import { SnackbarComponent } from './component/snackbar/snackbar.component';
     CardComponent,
     RippleComponent,
     ConfirmationDialogComponent,
-    SnackbarComponent,
     LoginFormComponent,
     RegisterFormComponent,
   ],

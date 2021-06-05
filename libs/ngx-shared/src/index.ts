@@ -15,6 +15,3 @@ export * from './lib/component/hint/hint.util';
 export * from './lib/component/hint/hint.component';
 
 export * from './lib/component/ripple/ripple.component';
-export * from './lib/component/snackbar/snackbar.model';
-export * from './lib/component/snackbar/snackbar.default';
-export * from './lib/component/snackbar/snackbar.component';

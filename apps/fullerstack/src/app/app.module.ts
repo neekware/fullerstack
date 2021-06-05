@@ -65,7 +65,7 @@ import { RegisterComponent } from './pages/register/register.component';
   providers: [
     ValidationService,
     ValidationAsyncService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 
   bootstrap: [AppComponent],

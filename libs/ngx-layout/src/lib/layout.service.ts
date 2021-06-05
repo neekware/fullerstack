@@ -182,9 +182,12 @@ export class LayoutService implements OnDestroy {
   }
 
   toggleFullscreen() {
-    this.store.dispatch(new actions.ToggleFullscreen()).subscribe((state) => {
-      this.uix.toggleFullscreen();
-    });
+    this.store
+      .dispatch(new actions.ToggleFullscreen())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((state) => {
+        this.uix.toggleFullscreen();
+      });
   }
 
   setIsHandset(isHandset: boolean) {
