@@ -11,7 +11,6 @@ describe('UixService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, ConfigModule.forRoot(), UixModule],
-      providers: [UixService],
     });
 
     service = TestBed.inject(UixService);
