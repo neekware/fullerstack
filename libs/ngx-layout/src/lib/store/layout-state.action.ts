@@ -2,6 +2,7 @@ import { NavbarMode, SidenavMode, SidenavRole } from './layout-state.model';
 
 export class Initialize {
   static type = '[LAYOUT] Initialize';
+  constructor(readonly payload: string) {}
 }
 export class SetMenuStatus {
   static type = '[LAYOUT] SetMenuStatus';

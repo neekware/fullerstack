@@ -21,6 +21,7 @@ export enum SidenavRole {
 }
 export interface LayoutState {
   signature: string;
+  appName: string;
   isHandset: boolean;
   isPortrait: boolean;
   isDarkTheme: boolean;

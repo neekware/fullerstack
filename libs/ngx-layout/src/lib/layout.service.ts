@@ -32,7 +32,6 @@ export class LayoutService implements OnDestroy {
   private destroy$ = new Subject<boolean>();
   handset$: Observable<BreakpointState>;
   portrait$: Observable<BreakpointState>;
-  siteName: string;
   routeReady = false;
   isDarkTheme = false;
   sessionLinks = {
@@ -91,7 +90,6 @@ export class LayoutService implements OnDestroy {
       Breakpoints.WebPortrait,
     ]);
 
-    this.siteName = this.options.appName;
     this.doInit();
 
     this.logger.info('LayoutService ready ...');
@@ -118,7 +116,7 @@ export class LayoutService implements OnDestroy {
         if (event.key === LAYOUT_STATE_KEY) {
           let newState = sanitizeJsonStringOrObject(event.newValue);
           if (!newState) {
-            this.store.dispatch(new actions.Initialize());
+            this.store.dispatch(new actions.Initialize(this.options.appName));
           }
         }
       },
@@ -133,7 +131,7 @@ export class LayoutService implements OnDestroy {
       this.navbarModeClass = this.getNavbarModeClass();
     });
 
-    this.store.dispatch(new actions.Initialize());
+    this.store.dispatch(new actions.Initialize(this.options.appName));
 
     this.auth.authChanged$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
       if (this.state.notifyOpen && !state.isLoggedIn) {

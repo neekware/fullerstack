@@ -47,7 +47,10 @@ export class AuthService implements OnDestroy {
     readonly gql: GqlService
   ) {
     this.options = ldNestedMerge({ gtag: DefaultAuthConfig }, this.config.options);
-    logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
+
+    this.loginUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
+    this.loggedInUrl = tryGet(() => this.options.localConfig.loggedInLandingPageUrl, '/');
+    this.registerUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
@@ -62,9 +65,8 @@ export class AuthService implements OnDestroy {
       },
     });
 
-    this.loginUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
-    this.loggedInUrl = tryGet(() => this.options.localConfig.loggedInLandingPageUrl, '/');
-    this.registerUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
+    logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
+    this.refreshDispatch();
   }
 
   private handleRedirect(prevState: AuthState) {
@@ -82,9 +84,7 @@ export class AuthService implements OnDestroy {
   }
 
   initDispatch() {
-    if (!this.state.isLoggedIn) {
-      this.store.dispatch(new actions.Initialize());
-    }
+    this.store.dispatch(new actions.Initialize());
   }
 
   initiateLoginState() {
@@ -125,10 +125,8 @@ export class AuthService implements OnDestroy {
     this.store.dispatch(new actions.LogoutRequest());
   }
 
-  refreshDispatch(token: string) {
-    if (this.state.isLoggedIn) {
-      this.store.dispatch(new actions.TokenRefreshRequest(token));
-    }
+  refreshDispatch() {
+    this.store.dispatch(new actions.TokenRefreshRequest());
   }
 
   goTo(url: string) {

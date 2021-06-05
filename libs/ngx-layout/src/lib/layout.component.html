@@ -9,7 +9,7 @@
   [class.fs-theme-dark]="layout.state.isDarkTheme"
   [@fadeOutInSlow]="layout.state.isDarkTheme ? 'out' : 'in'"
 >
-  <fullerstack-navbar></fullerstack-navbar>
+  <fullerstack-navbar [authState]="auth.state" [layoutState]="layout.state"></fullerstack-navbar>
 
   <mat-sidenav-container [class.fs-noscroll]="!allowScroll">
     <mat-sidenav
@@ -41,7 +41,7 @@
     <mat-sidenav-content [@slideIn]="routeState(outlet)">
       <div>
         <router-outlet #outlet="outlet"></router-outlet>
-        <fullerstack-footer [appName]="layout.options.appName"></fullerstack-footer>
+        <fullerstack-footer [appName]="layout.state.appName"></fullerstack-footer>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

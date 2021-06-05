@@ -15,8 +15,10 @@ export class LayoutStoreState {
   constructor() {}
 
   @Action([actions.Initialize])
-  initializeRequest({ setState }: StateContext<LayoutState>) {
-    setState(signObject<LayoutState>(DefaultLayoutState));
+  initializeLayout({ setState }: StateContext<LayoutState>, { payload }: actions.Initialize) {
+    setState(
+      signObject<LayoutState>({ ...DefaultLayoutState, appName: payload })
+    );
   }
 
   @Action(actions.SetMenuStatus)

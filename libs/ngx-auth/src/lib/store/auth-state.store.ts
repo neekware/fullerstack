@@ -18,7 +18,7 @@ export class AuthStoreState {
   constructor(readonly msg: MsgService, readonly effects: AuthEffectsService) {}
 
   @Action(actions.Initialize)
-  initializeRequest({ setState }: StateContext<AuthState>) {
+  initialize({ setState }: StateContext<AuthState>) {
     setState(DefaultAuthState);
   }
 
@@ -91,14 +91,8 @@ export class AuthStoreState {
   }
 
   @Action(actions.TokenRefreshRequest)
-  tokenRefreshRequest(
-    { getState, setState }: StateContext<AuthState>,
-    { payload }: actions.TokenRefreshRequest
-  ) {
-    setState({
-      ...getState(),
-      token: payload,
-    });
+  tokenRefreshRequest({ getState, setState }: StateContext<AuthState>) {
+    return this.effects.tokenRefreshRequest();
   }
 
   @Action(actions.TokenRefreshSuccess)

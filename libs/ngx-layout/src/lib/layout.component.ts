@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from '@fullerstack/ngx-auth';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { fadeAnimations, routeAnimations } from '@fullerstack/ngx-shared';
@@ -29,6 +30,7 @@ export class LayoutComponent implements OnDestroy, AfterViewInit {
     @Inject(DOCUMENT) readonly document: Document,
     public logger: LoggerService,
     public i18n: I18nService,
+    public auth: AuthService,
     public layout: LayoutService
   ) {}
 

@@ -29,7 +29,6 @@ export class RegisterFailure {
 }
 export class TokenRefreshRequest {
   static type = '[AUTH] TokenRefreshRequest';
-  constructor(readonly payload: string) {}
 }
 export class TokenRefreshSuccess {
   static type = '[AUTH] TokenRefreshSuccess';

@@ -2,6 +2,7 @@ import { LayoutState, NavbarMode, SidenavMode, SidenavRole } from './layout-stat
 
 export const DefaultLayoutState: LayoutState = {
   signature: null,
+  appName: null,
   isHandset: false,
   isPortrait: false,
   isDarkTheme: false,

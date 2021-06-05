@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@fullerstack/ngx-auth';
+import { AuthService, AuthState } from '@fullerstack/ngx-auth';
 import { _ } from '@fullerstack/ngx-i18n';
 import { rotationAnimations, shakeAnimations } from '@fullerstack/ngx-shared';
 import { UixService } from '@fullerstack/ngx-uix';
@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { LayoutService } from '../layout.service';
+import { LayoutState } from '../store/layout-state.model';
 
 @Component({
   selector: 'fullerstack-navbar',
@@ -17,6 +18,9 @@ import { LayoutService } from '../layout.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  @Input() authState: AuthState;
+  @Input() layoutState: LayoutState;
+
   menuIconState = 'back';
   notifyIconState = 'back';
   brandImage = '/assets/images/logos/brand-large.png';
@@ -29,7 +33,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     settings: {
       title: _('COMMON.SETTINGS'),
       path: '/settings/language/change',
-      icon: 'settings',
+      icon: 'cog-outline',
     },
     login: {
       title: _('COMMON.LOGIN'),
