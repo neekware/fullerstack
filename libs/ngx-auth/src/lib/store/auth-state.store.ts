@@ -59,7 +59,7 @@ export class AuthStoreState {
   }
 
   @Action(actions.RegisterSuccess)
-  registerSuccess({ setState }: StateContext<AuthState>, { payload }: actions.RegisterSuccess) {
+  registerSuccess({ setState }: StateContext<AuthState>) {
     setState({
       ...DefaultAuthState,
       isLoggedIn: true,
@@ -91,7 +91,7 @@ export class AuthStoreState {
   }
 
   @Action(actions.TokenRefreshRequest)
-  tokenRefreshRequest({ getState, setState }: StateContext<AuthState>) {
+  tokenRefreshRequest() {
     return this.effects.tokenRefreshRequest();
   }
 

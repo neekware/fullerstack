@@ -38,7 +38,7 @@ export class AuthAsyncValidation {
         });
         return resp.ok ? null : { emailInUse: true };
       }),
-      catchError((error, caught$) => {
+      catchError((error) => {
         this.gtag.trackEvent('email_available_failed', {
           method: 'query',
           event_category: 'auth',

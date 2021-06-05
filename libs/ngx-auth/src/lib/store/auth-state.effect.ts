@@ -57,7 +57,7 @@ export class AuthEffectsService implements OnDestroy {
         this.msg.setMsg(AuthMessageMap.error.login);
         return this.store.dispatch(new actions.LoginFailure());
       }),
-      catchError((error, caught$) => {
+      catchError((error) => {
         this.gtag.trackEvent('login_failed', {
           method: 'password',
           event_category: 'auth',
@@ -100,7 +100,7 @@ export class AuthEffectsService implements OnDestroy {
         this.msg.setMsg(AuthMessageMap.error.register);
         return this.store.dispatch(new actions.RegisterFailure());
       }),
-      catchError((error, caught$) => {
+      catchError((error) => {
         this.gtag.trackEvent('register_failed', {
           method: 'password',
           event_category: 'auth',
@@ -129,7 +129,7 @@ export class AuthEffectsService implements OnDestroy {
         }
         return this.store.dispatch(new actions.LogoutRequest());
       }),
-      catchError((error, caught$) => {
+      catchError((error) => {
         this.gtag.trackEvent('refresh_token_failed', {
           method: 'token',
           event_category: 'auth',
@@ -169,7 +169,7 @@ export class AuthEffectsService implements OnDestroy {
         this.msg.setMsg(AuthMessageMap.error.logout);
         return this.store.dispatch(new actions.LogoutFailure());
       }),
-      catchError((error, caught$) => {
+      catchError((error) => {
         this.gtag.trackEvent('logout_failed', {
           event_category: 'auth',
           event_label: error.message,

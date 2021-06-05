@@ -1,14 +1,14 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthModule } from '@fullerstack';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { JwtModule } from '@fullerstack/ngx-jwt';
 import { LoggerModule } from '@fullerstack/ngx-logger';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { NgxsModule } from '@ngxs/store';
+import { AuthModule } from '../auth.module';
 
-import { AuthEffect } from './auth-state.effect';
+import { AuthEffectsService } from './auth-state.effect';
 
 export const environment: ApplicationConfig = {
   appName: 'Fullerstack',
@@ -19,8 +19,8 @@ export const environment: ApplicationConfig = {
   gql: { endpoint: '/api/gql' },
 };
 
-describe('Auth: AuthEffect', () => {
-  let service: AuthEffect;
+describe('Auth: AuthEffectsService', () => {
+  let service: AuthEffectsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -36,10 +36,10 @@ describe('Auth: AuthEffect', () => {
         MsgModule,
         AuthModule,
       ],
-      providers: [AuthEffect],
+      providers: [AuthEffectsService],
     });
 
-    service = TestBed.inject(AuthEffect);
+    service = TestBed.inject(AuthEffectsService);
   });
 
   afterAll(() => {

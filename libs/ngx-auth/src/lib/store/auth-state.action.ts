@@ -1,7 +1,5 @@
 import * as gqlSchema from '@fullerstack/ngx-gql/schema';
 
-import { AuthState } from './auth-state.model';
-
 export class Initialize {
   static type = '[AUTH] Initialize';
 }
