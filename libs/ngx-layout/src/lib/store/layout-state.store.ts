@@ -12,8 +12,6 @@ import { LAYOUT_STATE_KEY, LayoutState } from './layout-state.model';
 })
 @Injectable()
 export class LayoutStoreState {
-  constructor() {}
-
   @Action([actions.Initialize])
   initializeLayout({ setState }: StateContext<LayoutState>, { payload }: actions.Initialize) {
     setState(

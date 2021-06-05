@@ -34,7 +34,7 @@ export class MaterialService {
    * @param iconPath path to icon set (ex: '/assets/fonts/mdi.svg')
    */
   registerSvgIconSet(iconPath: string, cacheBustingHash = null) {
-    const path = cacheBustingHash ? `${iconPath}?${cacheBustingHash}` : iconPath;
+    iconPath = cacheBustingHash ? `${iconPath}?${cacheBustingHash}` : iconPath;
     const securePath = this.sanitizer.bypassSecurityTrustResourceUrl(iconPath);
     this.registry.addSvgIconSet(securePath);
   }

@@ -114,7 +114,7 @@ export class LayoutService implements OnDestroy {
       'storage',
       (event) => {
         if (event.key === LAYOUT_STATE_KEY) {
-          let newState = sanitizeJsonStringOrObject(event.newValue);
+          const newState = sanitizeJsonStringOrObject(event.newValue);
           if (!newState) {
             this.store.dispatch(new actions.Initialize(this.options.appName));
           }
@@ -183,7 +183,7 @@ export class LayoutService implements OnDestroy {
     this.store
       .dispatch(new actions.ToggleFullscreen())
       .pipe(takeUntil(this.destroy$))
-      .subscribe((state) => {
+      .subscribe(() => {
         this.uix.toggleFullscreen();
       });
   }

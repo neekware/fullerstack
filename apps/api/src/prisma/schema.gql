@@ -17,9 +17,7 @@ input ChangePasswordInput {
   newPassword: String!
   oldPassword: String!
 
-  """
-  Force authentication on all other active sessions
-  """
+  """Force authentication on all other active sessions"""
   resetOtherSessions: Boolean = false
 }
 
@@ -42,28 +40,20 @@ type Mutation {
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   isEmailAvailable(email: String!): AuthStatusDto!
 
-  """
-  Privileged user update
-  """
+  """Privileged user update"""
   userUpdate(input: UserUpdateAdvancedInput!): UserDto!
 
-  """
-  Update user's own info
-  """
+  """Update user's own info"""
   userUpdateSelf(input: UserUpdateInput!): UserDto!
 }
 
-"""
-Ascending or Descending direction for a given `orderBy` argument.
-"""
+"""Ascending or Descending direction for a given `orderBy` argument."""
 enum OrderDirection {
   asc
   desc
 }
 
-"""
-User permission
-"""
+"""User permission"""
 enum Permission {
   appALL
   groupALL
@@ -79,27 +69,15 @@ enum Permission {
 }
 
 type Query {
-  """
-  Get other user info
-  """
+  """Get other user info"""
   user(input: UserUpdateAdvancedInput!): UserDto!
 
-  """
-  Get user's own info
-  """
+  """Get user's own info"""
   userSelf: UserDto!
-  users(
-    cursor: String
-    orderBy: UserOrder
-    query: String = ""
-    skip: Int
-    take: Int
-  ): [UserDto!]!
+  users(cursor: String, orderBy: UserOrder, query: String = "", skip: Int, take: Int): [UserDto!]!
 }
 
-"""
-User role
-"""
+"""User role"""
 enum Role {
   ADMIN
   STAFF
@@ -120,36 +98,26 @@ input UserCredentialsInput {
 }
 
 type UserDto {
-  """
-  Object's creation time
-  """
+  """Object's creation time"""
   createdAt: DateTime!
   email: String
   firstName: String
   groupId: ID
   id: ID!
 
-  """
-  User is active
-  """
+  """User is active"""
   isActive: Boolean
 
-  """
-  User is verified
-  """
+  """User is verified"""
   isVerified: Boolean
   lastName: String
   permissions: [Permission!]
   role: Role
 
-  """
-  Session version
-  """
+  """Session version"""
   sessionVersion: Int
 
-  """
-  Object's update time
-  """
+  """Object's update time"""
   updatedAt: DateTime!
   username: String
 }
@@ -164,9 +132,7 @@ input UserOrder {
   field: UserOrderField!
 }
 
-"""
-User connection order list.
-"""
+"""User connection order list."""
 enum UserOrderField {
   createdAt
   firstName
@@ -181,14 +147,10 @@ input UserUpdateAdvancedInput {
   groupId: ID
   id: ID!
 
-  """
-  User is active
-  """
+  """User is active"""
   isActive: Boolean
 
-  """
-  User is verified
-  """
+  """User is verified"""
   isVerified: Boolean
   lastName: String
   permissions: [Permission!]!

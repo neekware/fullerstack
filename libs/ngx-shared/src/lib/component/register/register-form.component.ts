@@ -72,7 +72,7 @@ export class RegisterFormComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { email, password, ...rest } = this.form.value;
     const { firstName, lastName } = tokenizeFullName(this.form.value.name);
-    const language = this.i18n.currentLanguage;
+    // const language = this.i18n.currentLanguage;
     this.submit$.emit({
       firstName,
       lastName,

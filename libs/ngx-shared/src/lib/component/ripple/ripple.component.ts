@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './ripple.component.html',
   styleUrls: ['./ripple.component.scss'],
 })
-export class RippleComponent {
-  constructor() {}
-}
+export class RippleComponent {}

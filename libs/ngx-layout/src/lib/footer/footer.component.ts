@@ -10,7 +10,7 @@ import { FooterItem } from './footer.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
-  @Input() appName: string = 'Footer';
+  @Input() appName = 'Fullerstack';
 
   today = new Date();
   footers: FooterItem[] = [

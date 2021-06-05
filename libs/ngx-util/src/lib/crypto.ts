@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// eslint-disable  @typescript-eslint/no-unused-vars
 
 import crypto from 'crypto-es';
 
 export function signObject<T extends { signature: string }>(obj: T): T {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { signature, ...newObj } = obj || ({} as T);
   return {
     ...obj,

@@ -9,7 +9,7 @@
 </mat-error>
 
 <mat-hint
-  *ngIf="!(show$ | async) && !!hint"
+  *ngIf="(show$ | async) === (false || null || undefined) && !!hint"
   align="end"
   [class.ltr-direction]="ltrDirection"
   [class.rtl-direction]="!ltrDirection"

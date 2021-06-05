@@ -1,12 +1,11 @@
 import { JwtDto } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
-import { Query, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { CookiesDecorator, RequestDecorator, ResponseDecorator } from './auth.decorator';
-import { AuthGuardAnonymousGql } from './auth.guard.anonymous';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
   AuthStatusDto,

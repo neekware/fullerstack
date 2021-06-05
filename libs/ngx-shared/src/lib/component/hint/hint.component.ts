@@ -30,8 +30,8 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
   @Input() hint: string;
 
   private _touched = false;
-  @Input('touched')
-  set touched(value: boolean) {
+  @Input()
+  set isTouched(value: boolean) {
     this._touched = value;
     this.process();
   }
@@ -52,7 +52,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       this.ltrDirection = this.direction === 'ltr';
     } else {
       this.i18n.languageChanges$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe({
-        next: (value) => {
+        next: () => {
           this.ltrDirection = this.i18n.direction === 'ltr';
         },
       });
@@ -72,7 +72,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       this.control.statusChanges
         .pipe(debounceTime(HINT_DEBOUNCE_TIME), takeUntil(this.destroy$))
         .subscribe({
-          next: (state) => {
+          next: () => {
             this.process();
           },
         });

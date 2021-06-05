@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { I18nService, _ } from '@fullerstack/ngx-i18n';
+import { I18nService } from '@fullerstack/ngx-i18n';
 
 @Component({
   selector: 'fullerstack-confimation-dialog',

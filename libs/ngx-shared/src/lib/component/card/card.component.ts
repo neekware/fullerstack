@@ -15,7 +15,7 @@ export class CardComponent implements OnInit {
   @Input() subtitle: string;
   @Input() icon: string;
   @Input() iconColor: string;
-  @Input() menu: any = [];
+  @Input() menu = [];
   @Input() progress = false;
 
   wiggleState = 'back';
