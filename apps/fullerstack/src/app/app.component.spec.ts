@@ -14,7 +14,7 @@ const appEnv: Readonly<ApplicationConfig> = {
   },
 };
 
-describe('AppComponent', () => {
+xdescribe('AppComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
