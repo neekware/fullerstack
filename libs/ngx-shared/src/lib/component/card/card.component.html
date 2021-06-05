@@ -1,0 +1,42 @@
+<mat-card fxLayout="column" style="padding: 0">
+  <mat-card-header fxLayout="row" class="header-box">
+    <div fxLayout="column" fxLayoutAlign="center">
+      <mat-card-title style="margin-bottom: 0; font-size: 1.2rem">{{ title | translate }}</mat-card-title>
+      <mat-card-subtitle *ngIf="subtitle" style="margin: 5px 0 0 0">{{ subtitle | translate }}</mat-card-subtitle>
+    </div>
+
+    <div fxFlex></div>
+
+    <div *ngIf="icon && !hasMenu">
+      <mat-icon *ngIf="!isMainColor" [style.color]="iconColor" svgIcon="{{ icon }}" class="card-header-icon mt0_5"></mat-icon>
+      <mat-icon *ngIf="isMainColor" color="iconColor" svgIcon="{{ icon }}" class="card-header-icon mt0_5"></mat-icon>
+    </div>
+
+    <div *ngIf="hasMenu">
+      <button
+        [matMenuTriggerFor]="optionMenu"
+        mat-icon-button
+        class="menu-button"
+        matTooltip="{{ 'COMMON.ACTIONS' | translate }}"
+        [matTooltipPosition]="optionMenuTooltipPosition"
+      >
+        <mat-icon [@wiggleIt]="wiggleState" svgIcon="dots-vertical" class="option-icon"></mat-icon>
+      </button>
+
+      <mat-menu #optionMenu="matMenu" x-position="before">
+        <a *ngFor="let item of menu" [routerLink]="item.path" mat-menu-item>
+          <mat-icon *ngIf="item.icon" color="{{ item.iconColor }}" svgIcon="{{ item.icon }}"></mat-icon>
+          <mat-icon *ngIf="!item.icon"></mat-icon>
+          {{ item.name | translate }}
+        </a>
+      </mat-menu>
+    </div>
+  </mat-card-header>
+
+  <mat-divider *ngIf="!progress" class="border-t-2"></mat-divider>
+  <mat-progress-bar *ngIf="progress" color="warn" mode="indeterminate"></mat-progress-bar>
+
+  <mat-card-content style="padding: 15px">
+    <ng-content></ng-content>
+  </mat-card-content>
+</mat-card>

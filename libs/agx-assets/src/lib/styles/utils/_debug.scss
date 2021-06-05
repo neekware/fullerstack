@@ -1,0 +1,10 @@
+/*! debug.css v0.0.3 | MIT License | https://gist.github.com/zaydek/6b2e55258734deabbd2b4a284321d6f6 */
+
+[debug],
+[debug] * {
+  color: hsla(210, 100%, 100%, 0.9) !important;
+  background: hsla(210, 100%, 50%, 0.5) !important;
+  outline: solid 0.25rem hsla(210, 100%, 100%, 0.5) !important;
+  box-shadow: none !important;
+  filter: none !important;
+}

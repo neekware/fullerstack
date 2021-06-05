@@ -1,4 +1,6 @@
 # Add files here to ignore them from prettier formatting
 
 /dist
+/graph
 /coverage
+/node_modules

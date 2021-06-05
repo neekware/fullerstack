@@ -8,13 +8,13 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[css]": {
-    "editor.defaultFormatter": "vscode.css-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.colorCustomizations": {
     "statusBar.background": "#b85833",
@@ -40,21 +40,27 @@
     "Neekman",
     "Postgres",
     "SEEKRET",
+    "Serializers",
     "Sidenav",
     "Singup",
     "Subify",
     "Tribbiani",
     "Unprocessable",
     "ais",
+    "bluegrey",
+    "deeppurple",
     "eventview",
+    "fontawesome",
     "fullerstack",
     "fullspan",
     "gtag",
     "herzlich",
+    "minlength",
     "nestjs",
     "ngxs",
     "pageview",
     "rehydrated",
+    "screenfull",
     "sidenav",
     "signup",
     "submenu",

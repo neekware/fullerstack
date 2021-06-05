@@ -1,0 +1,31 @@
+<div class="fs-options pb4">
+  <mat-divider class="divider"></mat-divider>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <button mat-fab color="warn" class="option-trigger" (click)="toggleMenu()">
+      <mat-icon [@rotate180]="rotateState" svgIcon="tune"></mat-icon>
+    </button>
+    <div class="option-title" [@expandFade]="optionTitleState">{{ 'COMMON.OPTIONS' | translate }}</div>
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="8px" [@expandFade]="optionState" class="options-box">
+    <div fxFlex fxLayout fxLayoutAlign="start center" *ngIf="i18n.enabledLanguages.length > 1" class="option-item language">
+      <mat-form-field fxFlex="100">
+        <mat-select
+          placeholder="{{ 'COMMON.LANGUAGE' | translate }}"
+          #ctrl="ngModel"
+          [(ngModel)]="currentLanguage"
+          (ngModelChange)="i18n.setCurrentLanguage(currentLanguage)"
+        >
+          <mat-option *ngFor="let iso of i18n.enabledLanguages" [value]="iso">
+            {{ i18n.getLanguageName(iso) }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" class="option-item">
+      <span fxFlex>{{ 'COMMON.DARK' | translate }}</span>
+      <mat-slide-toggle [(ngModel)]="isDarkTheme" (change)="layout.setIsDarkTheme($event.checked)"></mat-slide-toggle>
+    </div>
+  </div>
+</div>

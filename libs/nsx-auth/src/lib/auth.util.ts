@@ -1,3 +1,4 @@
+import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { ExecutionContext } from '@nestjs/common';
@@ -11,9 +12,7 @@ export function getRequestFromContext(context: ExecutionContext): HttpRequest {
   return convertExecutionContextToGqlContext(context).request as HttpRequest;
 }
 
-export function getResponseFromContext(
-  context: ExecutionContext
-): HttpResponse {
+export function getResponseFromContext(context: ExecutionContext): HttpResponse {
   return convertExecutionContextToGqlContext(context).response as HttpResponse;
 }
 
@@ -22,17 +21,12 @@ export function getCookiesFromContext(context: ExecutionContext): string[] {
   return tryGet<string[]>(() => request?.cookies, []);
 }
 
-export function getCookieFromContext(
-  context: ExecutionContext,
-  name: string
-): string {
+export function getCookieFromContext(context: ExecutionContext, name: string): string {
   const cookies = getCookiesFromContext(context);
   return tryGet<string>(() => cookies[name], undefined);
 }
 
-export function getJwtTokenFromAuthorizationHeader(
-  request: HttpRequest
-): string {
+export function getJwtTokenFromAuthorizationHeader(request: HttpRequest): string {
   const authorization = tryGet(() => request.headers.authorization, '');
-  return authorization.replace('Bearer ', '');
+  return authorization.replace(`${JWT_BEARER_REALM} `, '');
 }

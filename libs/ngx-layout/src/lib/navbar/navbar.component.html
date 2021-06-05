@@ -1,0 +1,59 @@
+<mat-toolbar class="main-navbar" color="primary">
+  <button (click)="layout.toggleMenu()" mat-icon-button aria-label="Toggle sidenav">
+    <mat-icon [@rotate90]="menuIconState" [svgIcon]="layoutState.menuOpen ? 'close' : 'menu'"></mat-icon>
+  </button>
+
+  <div *ngIf="!authState.isLoggedIn" fxFlex></div>
+
+  <div class="branding" (click)="auth.goTo('/')">
+    <img [src]="brandImage" alt="{{ layoutState.appName | translate }}" />
+  </div>
+
+  <div fxFlex></div>
+
+  <button
+    *ngIf="authState.isLoggedIn"
+    (click)="layout.toggleNotification()"
+    mat-icon-button
+    aria-label="Toggle notifications"
+    class="ml-xs overflow-visible"
+  >
+    <mat-icon
+      [@wiggleIt]="notifyIconState"
+      aria-label="notification icon"
+      [svgIcon]="layoutState.notifyOpen ? 'bell' : 'bell-ring'"
+    ></mat-icon>
+    <span [class.fs-bell-label]="true"></span>
+  </button>
+
+  <button [matMenuTriggerFor]="accountMenu" mat-icon-button>
+    <mat-icon svgIcon="account" *ngIf="authState.isLoggedIn"></mat-icon>
+    <mat-icon svgIcon="dots-vertical" *ngIf="!authState.isLoggedIn"></mat-icon>
+  </button>
+  <mat-menu #accountMenu="matMenu" x-position="before">
+    <div *ngIf="authState.isLoggedIn">
+      <a [routerLink]="navbarLinks.profile.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.profile.icon }}"></mat-icon>
+        {{ navbarLinks.profile.title | translate }}
+      </a>
+      <a [routerLink]="navbarLinks.settings.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.settings.icon }}"></mat-icon>
+        {{ navbarLinks.settings.title | translate }}
+      </a>
+      <button mat-menu-item (click)="auth.logoutDispatch()">
+        <mat-icon svgIcon="{{ navbarLinks.logout.icon }}"></mat-icon>
+        {{ navbarLinks.logout.title | translate }}
+      </button>
+    </div>
+    <div *ngIf="!authState.isLoggedIn">
+      <a [routerLink]="navbarLinks.login.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.login.icon }}"></mat-icon>
+        {{ navbarLinks.login.title | translate }}
+      </a>
+      <a [routerLink]="navbarLinks.register.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.register.icon }}"></mat-icon>
+        {{ navbarLinks.register.title | translate }}
+      </a>
+    </div>
+  </mat-menu>
+</mat-toolbar>

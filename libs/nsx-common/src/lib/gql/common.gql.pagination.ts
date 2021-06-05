@@ -1,5 +1,5 @@
-import { Field, ObjectType, Int } from '@nestjs/graphql';
 import { Type } from '@nestjs/common';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function Paginated<T>(classRef: Type<T>): any {

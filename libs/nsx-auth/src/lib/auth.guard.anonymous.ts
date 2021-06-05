@@ -1,8 +1,5 @@
-import {
-  Injectable,
-  ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { AuthGuardGql } from './auth.guard.gql';
 import { SecurityService } from './auth.security.service';

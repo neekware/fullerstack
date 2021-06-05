@@ -62,7 +62,7 @@ export const AppMenuTree: MenuItem[] = [
       },
       {
         name: 'Settings',
-        icon: 'account-card-details',
+        icon: 'account-cog',
         link: '/admin/accounts/settings',
         fullspan: true,
         permissions: ['admin_root', 'admin_staff', 'admin_hr'],
@@ -121,7 +121,7 @@ export const AppMenuTree: MenuItem[] = [
 ];
 
 @Component({
-  selector: 'app-root',
+  selector: 'fullerstack-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -210,7 +210,7 @@ for (const node in menuTree.children) {
   // node..hasChildren - has children?
   // node..isInternalLink - is a link & internal (ex: /dashboard/)
   // node..isExternalLink - is a link * external (ex: www.youtube.com)
-  // node..isFullspan - is link that requires menu to slide away
+  // node..isFullSpan - is link that requires menu to slide away
   // node..offset(value: number, unit = 'px') - offset for multi-level menu (for margin or padding)
   // node..isActive(url: string) - is this node active for the active route
 }

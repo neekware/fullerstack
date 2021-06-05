@@ -1,35 +1,31 @@
+import { JwtDto } from '@fullerstack/agx-dto';
+import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
+import { PrismaService } from '@fullerstack/nsx-prisma';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Permission, Role, User } from '@prisma/client';
+import { compare, hash } from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import { merge as ldNestMerge } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
-import { hash, compare } from 'bcrypt';
 import { v4 as uuid_v4 } from 'uuid';
-import * as jwt from 'jsonwebtoken';
-import { Permission, Role, User } from '@prisma/client';
 
-import { JwtDto } from '@fullerstack/api-dto';
-import { PrismaService } from '@fullerstack/nsx-prisma';
-import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
-
+import { AUTH_MODULE_NAME, AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
-import { AUTH_SESSION_COOKIE_NAME, AUTH_MODULE_NAME } from './auth.constant';
 
 @Injectable()
 export class SecurityService {
   private readonly logger = new Logger(AUTH_MODULE_NAME);
-  readonly config: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
+  readonly options: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
   readonly jwtSecret: string;
 
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly configService: ConfigService
-  ) {
-    this.config = ldNestMerge(
-      { ...this.config },
-      this.configService.get<SecurityConfig>('appConfig.securityConfig')
+  constructor(private readonly prisma: PrismaService, private readonly config: ConfigService) {
+    this.options = ldNestMerge(
+      { ...this.options },
+      this.config.get<SecurityConfig>('appConfig.securityConfig')
     );
-    this.jwtSecret = this.configService.get<string>('AUTH_SEEKRET_KEY');
+    this.jwtSecret = this.config.get<string>('AUTH_SEEKRET_KEY');
     this.rehydrateSuperuser();
   }
 
@@ -39,8 +35,8 @@ export class SecurityService {
    */
   private async rehydrateSuperuser() {
     let sessionVersion = 1;
-    const email = this.configService.get<string>('AUTH_SUPERUSER_EMAIL');
-    const password = this.configService.get<string>('AUTH_SUPERUSER_PASSWORD');
+    const email = this.config.get<string>('AUTH_SUPERUSER_EMAIL');
+    const password = this.config.get<string>('AUTH_SUPERUSER_PASSWORD');
 
     const user = await this.prisma.user.findUnique({ where: { email } });
     if (user) {
@@ -98,10 +94,7 @@ export class SecurityService {
    * @param password text password
    * @returns promise of a boolean
    */
-  async validatePassword(
-    password: string,
-    hashedPassword: string
-  ): Promise<boolean> {
+  async validatePassword(password: string, hashedPassword: string): Promise<boolean> {
     const validPassword = await compare(password, hashedPassword);
     return validPassword;
   }
@@ -119,10 +112,7 @@ export class SecurityService {
     newPassword: string,
     resetOtherSessions: boolean
   ): Promise<User> {
-    const validPassword = await this.validatePassword(
-      oldPassword,
-      user.password
-    );
+    const validPassword = await this.validatePassword(oldPassword, user.password);
 
     if (!validPassword) {
       throw new BadRequestException('Error - Invalid password');
@@ -133,9 +123,7 @@ export class SecurityService {
     return this.prisma.user.update({
       data: {
         password: hashedPassword,
-        sessionVersion: resetOtherSessions
-          ? user.sessionVersion + 1
-          : user.sessionVersion,
+        sessionVersion: resetOtherSessions ? user.sessionVersion + 1 : user.sessionVersion,
       },
       where: { id: user.id },
     });
@@ -152,9 +140,7 @@ export class SecurityService {
     return this.prisma.user.update({
       data: {
         password: hashedPassword,
-        sessionVersion: resetOtherSessions
-          ? user.sessionVersion + 1
-          : user.sessionVersion,
+        sessionVersion: resetOtherSessions ? user.sessionVersion + 1 : user.sessionVersion,
       },
       where: { id: user.id },
     });
@@ -168,7 +154,7 @@ export class SecurityService {
    */
   async hashPassword(password?: string): Promise<string> {
     password = password || uuid_v4();
-    return await hash(password, this.config.bcryptSaltOrRound);
+    return await hash(password, this.options.bcryptSaltOrRound);
   }
 
   /**
@@ -178,7 +164,7 @@ export class SecurityService {
    */
   generateSessionToken(payload: JwtDto): string {
     return jwt.sign(payload, this.jwtSecret, {
-      expiresIn: this.config.sessionTokenExpiry,
+      expiresIn: this.options.sessionTokenExpiry,
     });
   }
 
@@ -189,7 +175,7 @@ export class SecurityService {
    */
   generateAccessToken(payload: JwtDto): string {
     return jwt.sign(payload, this.jwtSecret, {
-      expiresIn: this.config.accessTokenExpiry,
+      expiresIn: this.options.accessTokenExpiry,
     });
   }
 
@@ -201,6 +187,14 @@ export class SecurityService {
   setHttpCookie(payload: JwtDto, response: HttpResponse) {
     const sessionToken = this.generateSessionToken(payload);
     response.cookie(AUTH_SESSION_COOKIE_NAME, sessionToken, { httpOnly: true });
+  }
+
+  /**
+   * Clears a httpCookie on the response object containing the session token
+   * @param response original http response object
+   */
+  clearHttpCookie(response: HttpResponse) {
+    response.clearCookie(AUTH_SESSION_COOKIE_NAME);
   }
 
   /**
@@ -221,10 +215,7 @@ export class SecurityService {
    */
   verifyToken(token: string): JwtDto {
     try {
-      const { userId, sessionVersion } = jwt.verify(
-        token,
-        this.jwtSecret
-      ) as JwtDto;
+      const { userId, sessionVersion } = jwt.verify(token, this.jwtSecret) as JwtDto;
       return { userId, sessionVersion };
     } catch (err) {
       return undefined;

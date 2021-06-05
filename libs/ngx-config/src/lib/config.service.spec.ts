@@ -1,9 +1,7 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { DeepReadonly } from 'ts-essentials';
+
 import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
 import { ApplicationConfig, HttpMethod } from './config.model';
 import { ConfigModule } from './config.module';

@@ -1,0 +1,33 @@
+@import 'variables';
+
+// Primary Theme (Default)
+@include angular-material-theme($theme);
+
+// Secondary Theme
+.fs-theme-dark {
+  @include angular-material-theme($dark-theme);
+}
+
+.color-primary {
+  color: mat-color($primary);
+}
+
+.color-accent {
+  color: mat-color($accent);
+}
+
+.color-warn {
+  color: mat-color($warn);
+}
+
+.bg-color-primary {
+  background-color: mat-color($primary);
+}
+
+.bg-color-accent {
+  background-color: mat-color($accent);
+}
+
+.bg-color-warn {
+  background-color: mat-color($warn);
+}

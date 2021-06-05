@@ -1,0 +1,64 @@
+.fs-sidenav-menu {
+  width: 240px;
+  a {
+    display: block;
+    cursor: pointer;
+    color: unset;
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 40px;
+  }
+  a:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  a.active {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.04);
+  }
+  a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: inherit;
+  }
+  mat-icon svg {
+    vertical-align: middle;
+  }
+  mat-expansion-panel-header {
+    padding: 0 16px;
+  }
+  mat-expansion-panel-header:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  mat-expansion-panel-header.active {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+  }
+}
+
+// .fs-sidenav-menu:nth-child(1) {
+//   margin-top: 15px;
+// }
+
+@media (max-width: 599px) {
+  .fs-sidenav-menu {
+    margin-top: 0px !important;
+  }
+}
+
+@media (min-width: 600px) {
+  .fs-sidenav-menu {
+    margin-top: 8px !important;
+  }
+}
+
+@media (min-width: 960px) {
+  .fs-sidenav-menu {
+    margin-top: 64px !important;
+  }
+}

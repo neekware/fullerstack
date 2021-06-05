@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
-import { merge as ldNestedMerge } from 'lodash-es';
-import { DeepReadonly } from 'ts-essentials';
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
-import { LogLevels, LogNames, LogColors } from './logger.model';
+import { merge as ldNestedMerge } from 'lodash-es';
+import { DeepReadonly } from 'ts-essentials';
+
 import { DefaultLoggerConfig } from './logger.default';
+import { LogColors, LogLevels, LogNames } from './logger.model';
 
 /**
  * An injectable class that handles logging service
@@ -21,10 +22,7 @@ export class LoggerService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(readonly config: ConfigService) {
-    this.options = ldNestedMerge(
-      { logger: DefaultLoggerConfig },
-      this.config.options
-    );
+    this.options = ldNestedMerge({ logger: DefaultLoggerConfig }, this.config.options);
 
     if (!this.config.options.production) {
       this.info('LogService ready ...');
@@ -109,11 +107,6 @@ export class LoggerService {
     }
 
     const color = LogColors[level];
-    console.log(
-      `%c${this.time} [${LogNames[level]}]`,
-      `color:${color}`,
-      message,
-      ...extras
-    );
+    console.log(`%c${this.time} [${LogNames[level]}]`, `color:${color}`, message, ...extras);
   }
 }

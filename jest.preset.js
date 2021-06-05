@@ -5,15 +5,16 @@ const nxPreset = require('@nrwl/jest/preset');
  */
 module.exports = {
   ...nxPreset,
-  ... { 
+  ...{
     moduleNameMapper: {
-    "^lodash-es$": "lodash"
-    }
+      '^lodash-es$': 'lodash',
+      '^crypto-es$': 'crypto-js',
+    },
   },
   ...{
     testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
-    transform: {'^.+\\.(ts|js|html)$': 'ts-jest'},
+    transform: { '^.+\\.(ts|js|html)$': 'ts-jest' },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageReporters: ['html', 'json', 'lcov'],
-  }
+  },
 };

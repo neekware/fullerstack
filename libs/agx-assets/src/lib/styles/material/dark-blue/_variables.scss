@@ -1,0 +1,94 @@
+// https://github.com/angular/material2/blob/master/src/lib/core/theming/_palette.scss
+@import '../../../../../../../node_modules/@angular/material/theming';
+
+// Primary color (light)
+$mat-light-blue: (
+  50: #bbdefb,
+  100: #82b1ff,
+  200: #448aff,
+  300: #2979ff,
+  400: #0d47a1,
+  500: #0143a3,
+  600: rgb(1, 59, 145),
+  700: rgb(1, 49, 121),
+  800: rgb(1, 49, 121),
+  900: rgb(1, 40, 97),
+  A100: #448aff,
+  A200: #2979ff,
+  A400: #2962ff,
+  A700: #0d47a1,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+
+$primary: mat-palette($mat-light-blue);
+$accent: mat-palette($mat-amber, A200, A100, A400);
+$warn: mat-palette($mat-red);
+$theme: mat-light-theme($primary, $accent, $warn);
+$background: map-get($theme, background);
+$foreground: map-get($theme, foreground);
+
+$gradient-start: mat-color($mat-light-blue, 500);
+$gradient-end: mat-color($mat-light-blue, 300);
+$gradient-color: mat-contrast($mat-light-blue, 800);
+
+// Secondary color (dark brown)
+$mat-dark-brown: (
+  50: #c1aba0,
+  100: #a38d85,
+  200: #6b5c57,
+  300: #514845,
+  400: #322f2e,
+  500: #272323,
+  600: #252322,
+  700: #141312,
+  800: #0d0b0b,
+  900: #030303,
+  A100: #90837e,
+  A200: #a18f89,
+  A400: #61534e,
+  A700: #302725,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+
+@include mat-core();
+
+$dark-primary: mat-palette($mat-dark-brown);
+$dark-accent: mat-palette($mat-amber, A200, A100, A400);
+$dark-warn: mat-palette($mat-deep-orange);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$dark-background: map-get($dark-theme, background);
+$dark-foreground: map-get($dark-theme, foreground);
+
+$dark-gradient-start: mat-color($mat-dark-brown, 500);
+$dark-gradient-end: mat-color($mat-dark-brown, 300);
+$dark-gradient-color: mat-contrast($mat-dark-brown, 800);

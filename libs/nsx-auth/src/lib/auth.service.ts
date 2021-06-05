@@ -1,13 +1,13 @@
+import { tryGet } from '@fullerstack/agx-util';
+import { PrismaService, isConstraintError } from '@fullerstack/nsx-prisma';
 import {
+  BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
-  ConflictException,
-  BadRequestException,
 } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
-
-import { tryGet } from '@fullerstack/agx-util';
-import { isConstraintError, PrismaService } from '@fullerstack/nsx-prisma';
+import { v4 as uuid_v4 } from 'uuid';
 
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
 import { SecurityService } from './auth.security.service';
@@ -21,9 +21,7 @@ export class AuthService {
 
   async createUser(payload: UserCreateInput): Promise<User> {
     let user: User;
-    const hashedPassword = await this.securityService.hashPassword(
-      payload.password
-    );
+    const hashedPassword = await this.securityService.hashPassword(payload.password);
 
     try {
       user = await this.prisma.user.create({
@@ -31,6 +29,7 @@ export class AuthService {
           ...payload,
           email: payload.email.toLowerCase(),
           password: hashedPassword,
+          username: uuid_v4(),
           role: 'USER',
           isActive: true,
         } as Prisma.UserCreateInput,
@@ -71,5 +70,12 @@ export class AuthService {
   async isUserVerified(userId: string): Promise<boolean> {
     const user = await this.securityService.validateUser(userId);
     return user ? user.isVerified : false;
+  }
+
+  async isEmailAvailable(email: string): Promise<boolean> {
+    const users = await this.prisma.user.findMany({
+      where: { email: { contains: email, mode: 'insensitive' } },
+    });
+    return !users?.length;
   }
 }

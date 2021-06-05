@@ -1,8 +1,10 @@
 import * as fs from 'fs';
-import * as ld from 'lodash';
 import * as path from 'path';
+
 import * as program from 'commander';
+import * as ld from 'lodash';
 import * as semver from 'semver';
+
 import { distDir, execute, projPkgJson } from './util';
 
 /**
@@ -45,9 +47,7 @@ async function syncPackageData(moduleBuildPath: string): Promise<void> {
   ];
 
   // overwrite the following props from the workspace package.json
-  const overwriteInfo = precedenceInfo.filter(
-    (prop) => !modulePkg.hasOwnProperty(prop)
-  );
+  const overwriteInfo = precedenceInfo.filter((prop) => !modulePkg.hasOwnProperty(prop));
 
   // update common attributes
   const parentInfo = ld.pick(projPkgJson, overwriteInfo);
@@ -131,9 +131,7 @@ async function main() {
 
     if (!program.dev) {
       console.log('You probably want to also tag the version now:');
-      console.log(
-        ` git tag -a ${newVersion} -m 'version ${newVersion}' && git push --tags`
-      );
+      console.log(` git tag -a ${newVersion} -m 'version ${newVersion}' && git push --tags`);
     }
   }
 }
@@ -146,4 +144,7 @@ program
   .option('-d, --dev', 'Publish @<lib>@next')
   .parse(process.argv);
 
-main();
+main().catch((err) => {
+  console.error(`Error releasing`, err);
+  process.exit(1);
+});

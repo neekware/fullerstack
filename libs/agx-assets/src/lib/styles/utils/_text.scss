@@ -1,0 +1,32 @@
+// https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/mixins/_text-emphasis.scss
+@mixin text-emphasis-variant($parent, $color) {
+  #{$parent} {
+    color: $color;
+  }
+  a#{$parent}:hover,
+  a#{$parent}:focus {
+    color: darken($color, 10%);
+  }
+}
+
+@include text-emphasis-variant('.text-color-primary', mat-color($primary));
+@include text-emphasis-variant('.text-color-warn', mat-color($warn));
+@include text-emphasis-variant('.text-color-accent', mat-color($accent));
+@include text-emphasis-variant(
+  '.text-color-default',
+  mat-color($foreground, base)
+);
+@include text-emphasis-variant(
+  '.text-color-muted',
+  mat-color($foreground, secondary-text)
+);
+.fs-theme-dark {
+  @include text-emphasis-variant(
+    '.text-color-muted',
+    mat-color($dark-foreground, secondary-text)
+  );
+  @include text-emphasis-variant(
+    '.text-color-default',
+    mat-color($dark-foreground, base)
+  );
+}

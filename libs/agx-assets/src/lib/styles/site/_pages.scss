@@ -1,0 +1,23 @@
+.fs-page-content {
+  padding: 15px 0;
+  box-sizing: content-box !important;
+  min-height: 70vh;
+}
+
+.fs-page-header {
+  height: 98px !important;
+  margin-top: 64px;
+}
+
+.fs-page-card {
+  margin: 0 auto;
+  margin-top: -106px;
+  padding: 15px 4px;
+}
+
+@media (max-width: 599px) {
+  .fs-page-header {
+    height: 98px !important;
+    margin-top: 56px;
+  }
+}

@@ -1,0 +1,48 @@
+fullerstack-home {
+  .bulletin-board {
+    background-color: mat-color($primary);
+    background: -webkit-linear-gradient($gradient-start, $gradient-end);
+    background: linear-gradient($gradient-start, $gradient-end);
+    color: $gradient-color;
+  }
+  .bulletin-background {
+    background: url('/assets/images/misc/worldmap-blue.png') no-repeat center
+        center,
+      -webkit-linear-gradient(270deg, $gradient-start, $gradient-end),
+      linear-gradient($gradient-start, $gradient-end);
+    background-size: contain;
+  }
+  .fs-header-background {
+    background: mat-color($primary);
+  }
+  .fs-header-headline {
+    color: mat-color($primary, default-contrast);
+  }
+  .fs-header-start {
+    color: mat-color($primary);
+  }
+  .fs-homepage-row {
+    color: mat-color($foreground, secondary-text);
+  }
+}
+
+.fs-theme-dark {
+  fullerstack-home {
+    .bulletin-board {
+      background-color: mat-color($primary);
+      background: -webkit-linear-gradient(
+        $dark-gradient-start,
+        $dark-gradient-end
+      );
+      background: linear-gradient($dark-gradient-start, $dark-gradient-end);
+      color: $dark-gradient-color;
+    }
+    .bulletin-background {
+      background: url('/assets/images/misc/worldmap-brown.png') no-repeat center
+          center,
+        -webkit-linear-gradient(270deg, $dark-gradient-start, $dark-gradient-end),
+        linear-gradient($dark-gradient-start, $dark-gradient-end);
+      background-size: contain;
+    }
+  }
+}

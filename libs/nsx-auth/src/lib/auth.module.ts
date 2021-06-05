@@ -1,11 +1,11 @@
 import { Global, Module } from '@nestjs/common';
 
-import { AuthService } from './auth.service';
-import { SecurityService } from './auth.security.service';
-import { AuthResolver } from './auth.resolver';
 import { AuthGuardGql } from './auth.guard.gql';
-import { AuthGuardRole } from './auth.guard.role';
 import { AuthGuardPermission } from './auth.guard.permission';
+import { AuthGuardRole } from './auth.guard.role';
+import { AuthResolver } from './auth.resolver';
+import { SecurityService } from './auth.security.service';
+import { AuthService } from './auth.service';
 
 @Global()
 @Module({

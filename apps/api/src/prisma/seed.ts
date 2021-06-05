@@ -1,5 +1,15 @@
 import { Permission, PrismaClient, Role } from '@prisma/client';
+import { hash } from 'bcrypt';
+import { v4 as uuid_v4 } from 'uuid';
+
+import { environment } from '../environments/environment';
+
 const prisma = new PrismaClient();
+
+async function hashPassword(password?: string): Promise<string> {
+  password = password || uuid_v4();
+  return await hash(password, environment.securityConfig.bcryptSaltOrRound);
+}
 
 /**
  * WARNING - For use during development ONLY
@@ -46,7 +56,7 @@ async function main() {
     username: 'RachelGreen',
     firstName: 'Rachel',
     lastName: 'Green',
-    password: 'pass4rachel',
+    password: await hashPassword('pass4rachel'),
     isActive: true,
     isVerified: true,
     role: Role.SUPERUSER,
@@ -64,7 +74,7 @@ async function main() {
     username: 'MonicaGeller',
     firstName: 'Monica',
     lastName: 'Geller',
-    password: 'pass4monica',
+    password: await hashPassword('pass4monica'),
     isActive: true,
     isVerified: true,
     role: Role.ADMIN,
@@ -82,7 +92,7 @@ async function main() {
     username: 'JoeyTribbiani',
     firstName: 'Joey',
     lastName: 'Tribbiani',
-    password: 'pass4joey',
+    password: await hashPassword('pass4joey'),
     isActive: true,
     isVerified: true,
     role: Role.STAFF,
@@ -106,7 +116,7 @@ async function main() {
     username: 'RossGeller',
     firstName: 'Ross',
     lastName: 'Geller',
-    password: 'pass4ross',
+    password: await hashPassword('pass4ross'),
     isActive: true,
     isVerified: true,
     role: Role.USER,
@@ -129,7 +139,7 @@ async function main() {
     username: 'ChandlerBing',
     firstName: 'Chandler',
     lastName: 'Bing',
-    password: 'pass4chandler',
+    password: await hashPassword('pass4chandler'),
     isActive: true,
     isVerified: true,
     role: Role.USER,
@@ -152,7 +162,7 @@ async function main() {
     username: 'PhoebeBuffay',
     firstName: 'Phoebe',
     lastName: 'Buffay',
-    password: 'pass4phoebe',
+    password: await hashPassword('pass4phoebe'),
     isActive: true,
     isVerified: true,
     role: Role.USER,

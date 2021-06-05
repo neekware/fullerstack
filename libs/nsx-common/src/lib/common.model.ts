@@ -1,5 +1,5 @@
-import { Role, Permission } from '@prisma/client';
-import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Permission, Role } from '@prisma/client';
 
 export { Request as HttpRequest, Response as HttpResponse } from 'express';
 

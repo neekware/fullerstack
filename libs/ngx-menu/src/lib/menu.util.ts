@@ -69,7 +69,7 @@ export class MenuNode implements MenuItem {
   /**
    * @returns true if node is link that hinds the menu on click
    */
-  get isFullspan(): boolean {
+  get isFullSpan(): boolean {
     return this.isLink && this.fullspan;
   }
 

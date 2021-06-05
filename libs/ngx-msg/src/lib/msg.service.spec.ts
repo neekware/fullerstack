@@ -1,16 +1,11 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
-import {
-  MatSnackBarRef,
-  MAT_SNACK_BAR_DATA,
-} from '@angular/material/snack-bar';
-
+import { TestBed } from '@angular/core/testing';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { I18nModule } from '@fullerstack/ngx-i18n';
 
-import { MsgService } from './msg.service';
-
 import { MsgModule } from './msg.module';
+import { MsgService } from './msg.service';
 
 // disable console log/warn during test
 jest.spyOn(console, 'log').mockImplementation(() => undefined);

@@ -1,12 +1,13 @@
-import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { of } from 'rxjs';
-import { timeout, catchError } from 'rxjs/operators';
+import { Inject, Injectable } from '@angular/core';
 import { merge as ldNestedMerge } from 'lodash-es';
+import { of } from 'rxjs';
+import { catchError, timeout } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
+
 import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
-import { ApplicationConfig, HttpMethod, RemoteType } from './config.model';
 import { CONFIG_TOKEN, DefaultApplicationConfig } from './config.default';
+import { ApplicationConfig, HttpMethod, RemoteType } from './config.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,15 +45,12 @@ export class ConfigService {
             const postBody = remoteConfig.body || {};
             httpRequest = this.http.post(url, postBody, { headers });
           }
-          const httpTimeout =
-            (remoteConfig.timeout || DEFAULT_HTTP_TIMEOUT) * 1000;
+          const httpTimeout = (remoteConfig.timeout || DEFAULT_HTTP_TIMEOUT) * 1000;
           httpRequest
             .pipe(
               timeout(httpTimeout),
               catchError((err: Response) => {
-                console.warn(
-                  `ConfigService failed. (${err.statusText || 'unknown'})`
-                );
+                console.warn(`ConfigService failed. (${err.statusText || 'unknown'})`);
                 return of({});
               })
             )

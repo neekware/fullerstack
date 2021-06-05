@@ -1,20 +1,20 @@
-import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-
-import { DeepReadonly } from 'ts-essentials';
-import { get, merge as ldNestedMerge } from 'lodash-es';
-import { tap, filter, map, switchMap } from 'rxjs/operators';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {
-  ConfigService,
   ApplicationConfig,
+  ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { merge as ldNestedMerge } from 'lodash-es';
+import { Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { DeepReadonly } from 'ts-essentials';
 
-import { GTagEventParams, GTagPageViewParams } from './gtag.model';
 import { DefaultGTagConfig } from './gtag.default';
+import { GTagEventParams, GTagPageViewParams } from './gtag.model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare let gtag: (...args: any) => void;
@@ -23,20 +23,20 @@ declare let gtag: (...args: any) => void;
 @Injectable({
   providedIn: 'root',
 })
-export class GTagService {
+export class GTagService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
+  destroy$ = new Subject<boolean>();
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
+    @Inject(DOCUMENT) readonly document: Document,
     readonly router: Router,
+    readonly title: Title,
     readonly route: ActivatedRoute,
     readonly config: ConfigService,
     readonly logger: LoggerService
   ) {
-    this.options = ldNestedMerge(
-      { gtag: DefaultGTagConfig },
-      this.config.options
-    );
+    this.options = ldNestedMerge({ gtag: DefaultGTagConfig }, this.config.options);
+
     if (this.options.gtag.isEnabled) {
       if (!this.options.gtag.trackingId) {
         throw new Error('Error - GTag enabled without a valid tracking ID');
@@ -45,9 +45,7 @@ export class GTagService {
       this.loadScript();
       this.initScript();
 
-      this.logger.info(
-        `GTagService ready ... (${this.options.gtag.trackingId})`
-      );
+      this.logger.info(`GTagService ready ... (${this.options.gtag.trackingId})`);
 
       if (this.options.gtag?.routeChangeTracking) {
         this.enablePageView();
@@ -88,15 +86,14 @@ export class GTagService {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        map(() => this.route),
-        map((route) => route.firstChild),
-        switchMap((route) => route.data),
-        map((data) => get(data, 'title', this.options.appName)),
-        tap((title) => {
-          this.trackPageView({ page_title: title });
-        })
+        map(() => this.title.getTitle() || this.options.appName),
+        takeUntil(this.destroy$)
       )
-      .subscribe();
+      .subscribe({
+        next: (title) => {
+          this.trackPageView({ page_title: title });
+        },
+      });
   }
 
   trackPageView(params?: GTagPageViewParams) {
@@ -116,9 +113,7 @@ export class GTagService {
           this.logger.error('Error - Failed to track page view', err);
         }
       } else {
-        this.logger.warn(
-          'Error - Skipping page track. Gtag may not be ready yet ...'
-        );
+        this.logger.warn('Error - Skipping page track. Gtag may not be ready yet ...');
       }
     }
   }
@@ -132,10 +127,13 @@ export class GTagService {
           this.logger.error('Error - Failed to track event', err);
         }
       } else {
-        this.logger.warn(
-          'Error - Skipping event track. Gtag may not be ready yet ...'
-        );
+        this.logger.warn('Error - Skipping event track. Gtag may not be ready yet ...');
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

@@ -1,47 +1,48 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { Directionality } from '@angular/cdk/bidi';
+import { I18nService } from '@fullerstack/ngx-i18n';
+import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
 import { TranslateService } from '@ngx-translate/core';
+import { cloneDeep } from 'lodash-es';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
-import { LoggerService, LogLevels } from '@fullerstack/ngx-logger';
-
-import { SnackbarType } from './snackbar/snackbar.model';
-import { SnackbarComponent } from './snackbar';
-import { SnackbarStatusDefault } from './msg.default';
-import { SnackbarStatus } from './msg.model';
+import { SnackbarComponent } from './snackbar/snackbar.component';
+import { SnackbarStatusDefault } from './snackbar/snackbar.default';
+import { SnackbarStatus, SnackbarType } from './snackbar/snackbar.model';
 
 @Injectable()
-export class MsgService {
-  private _status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
+export class MsgService implements OnDestroy {
+  status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
+  destroy$ = new Subject<boolean>();
 
   constructor(
-    readonly dir: Directionality,
+    readonly i18n: I18nService,
     readonly matSnackbar: MatSnackBar,
     readonly logger: LoggerService,
-    readonly translate: TranslateService
+    readonly translateService: TranslateService
   ) {
     this.reset();
   }
 
   reset() {
-    this._status = {
-      ...SnackbarStatusDefault,
+    this.status = {
+      ...cloneDeep(SnackbarStatusDefault),
       level: this.logger.options.logger.level,
       color: this.getColor(this.logger.options.logger.level),
     };
   }
 
   setMsg(msg: SnackbarStatus) {
-    this._status = {
-      ...this._status,
+    this.status = {
+      ...this.status,
+      ...msg,
       ...{
-        msg,
         color: this.getColor(msg.level),
-        console: msg?.console,
       },
     };
-    if (this._status.console) {
+    if (this.status.console) {
       this.logToConsole();
     }
   }
@@ -65,50 +66,50 @@ export class MsgService {
   }
 
   private logToConsole() {
-    this.translate
-      .get(this._status.text)
-      .subscribe((translatedText: string) => {
-        switch (this._status.level) {
+    this.translateService
+      .get(this.status.text)
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe((msgText: string) => {
+        switch (this.status.level) {
           case LogLevels.critical:
-            this.logger.critical(translatedText);
+            this.logger.critical(msgText);
             break;
           case LogLevels.error:
-            this.logger.error(translatedText);
+            this.logger.error(msgText);
             break;
           case LogLevels.warn:
-            this.logger.warn(translatedText);
+            this.logger.warn(msgText);
             break;
           case LogLevels.info:
-            this.logger.info(translatedText);
+            this.logger.info(msgText);
             break;
           case LogLevels.debug:
-            this.logger.debug(translatedText);
+            this.logger.debug(msgText);
             break;
         }
       });
   }
 
-  private openSnackBar(
-    msg: string,
-    msgType: SnackbarType,
-    config?: MatSnackBarConfig
-  ) {
-    msg = msg || this._status.text;
+  private openSnackBar(msg: string, msgType: SnackbarType, config?: MatSnackBarConfig) {
+    msg = msg || this.status.text;
     config = {
       ...{
         duration: 2000,
-        direction: this.dir.value,
-        horizontalPosition: this.dir.value === 'ltr' ? 'left' : 'right',
+        direction: this.i18n.direction,
+        horizontalPosition: this.i18n.direction === 'ltr' ? 'left' : 'right',
       },
       ...(config || {}),
     };
-    this.translate.get(msg).subscribe((translatedText: string) => {
-      config.data = {
-        msgText: translatedText,
-        msgType,
-      };
-      this.matSnackbar.openFromComponent(SnackbarComponent, config);
-    });
+    this.translateService
+      .get(msg)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((translatedText: string) => {
+        config.data = {
+          msgText: translatedText,
+          msgType,
+        };
+        this.matSnackbar.openFromComponent(SnackbarComponent, config);
+      });
   }
 
   successSnackBar(msg: string, config?: MatSnackBarConfig) {
@@ -123,7 +124,8 @@ export class MsgService {
     this.openSnackBar(msg, SnackbarType.error, config);
   }
 
-  get status() {
-    return this._status;
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

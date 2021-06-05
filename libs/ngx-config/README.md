@@ -59,13 +59,13 @@ import { Component } from '@angular/core';
 import { ConfigService } from '@fullerstack/ngx-config';
 
 @Component({
-  selector: 'app-root',
+  selector: 'fullerstack-root',
 })
 export class AppComponent {
   title: string;
 
-  constructor(public configService: ConfigService) {
-    this.title = this.configService.options.appName;
+  constructor(public config: ConfigService) {
+    this.title = this.config.options.appName;
   }
 }
 ```
@@ -127,14 +127,14 @@ import { ConfigService } from '@fullerstack/ngx-config';
 import { merge } from 'lodash';
 
 @Component({
-  selector: 'app-root'
+  selector: 'fullerstack-root'
 })
 export class AppComponent {
   title: string;
   options = {};
 
-  constructor(public configService: ConfigService) {
-    this.options = merge({ name: 'AppComponent' }, this.configService.options};
+  constructor(public config: ConfigService) {
+    this.options = merge({ name: 'AppComponent' }, this.config.options};
     const remoteConfigData = this.options.remoteData;
   }
 }

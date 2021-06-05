@@ -22,7 +22,7 @@ const DefaultMenuTree: MenuItem[] = [
       },
       {
         name: 'Settings',
-        icon: 'account-card-details',
+        icon: 'account-cog',
         link: '/admin/accounts/settings',
         fullspan: true,
         permissions: ['admin_root', 'admin_staff', 'admin_hr'],
@@ -129,15 +129,13 @@ describe('MenuService', () => {
     const admin = menuTree.children.filter((node) => node.name === 'Admin');
     expect(admin).toBeTruthy();
 
-    const subscriptions = admin[0].children.filter(
-      (node) => node.name === 'Subscriptions'
-    );
+    const subscriptions = admin[0].children.filter((node) => node.name === 'Subscriptions');
     expect(subscriptions.length).toEqual(1);
     expect(subscriptions[0].link).toEqual('/admin/accounts/Subscriptions');
     expect(subscriptions[0].fullspan).toEqual(true);
   });
 
-  it('should create menu - isActive, isLink, isNode, isFullspan', () => {
+  it('should create menu - isActive, isLink, isNode, isFullSpan', () => {
     service.setPermissionVerificationFunction(hasPermission);
     const menuTree = service.buildMenuTree(DefaultMenuTree);
     const admin = menuTree.children.filter((node) => node.name === 'Admin');
@@ -146,15 +144,11 @@ describe('MenuService', () => {
     expect(admin[0].isActive('/admin/accounts/Subscriptions')).toEqual(true);
     expect(admin[0].isActive('/invalid/node')).toEqual(false);
 
-    const subscriptions = admin[0].children.filter(
-      (node) => node.name === 'Subscriptions'
-    );
+    const subscriptions = admin[0].children.filter((node) => node.name === 'Subscriptions');
 
-    expect(subscriptions[0].isActive('/admin/accounts/Subscriptions')).toEqual(
-      true
-    );
+    expect(subscriptions[0].isActive('/admin/accounts/Subscriptions')).toEqual(true);
     expect(subscriptions[0].isActive('/invalid/link')).toEqual(false);
-    expect(admin[0].isFullspan).toEqual(false);
+    expect(admin[0].isFullSpan).toEqual(false);
     expect(subscriptions[0].isInternalLink).toEqual(true);
   });
 
@@ -164,9 +158,7 @@ describe('MenuService', () => {
     const admin = menuTree.children.filter((node) => node.name === 'Admin');
     expect(admin).toBeTruthy();
 
-    const subscriptions = admin[0].children.filter(
-      (node) => node.name === 'Settings'
-    );
+    const subscriptions = admin[0].children.filter((node) => node.name === 'Settings');
     expect(subscriptions.length).toEqual(0);
   });
 
@@ -183,9 +175,7 @@ describe('MenuService', () => {
   it('should create menu - children, allowed, no icons', () => {
     service.setPermissionVerificationFunction(hasPermission);
     const menuTree = service.buildMenuTree(DefaultMenuTree);
-    const admin = menuTree.children.filter(
-      (node) => node.name === 'Yahoo Finance'
-    );
+    const admin = menuTree.children.filter((node) => node.name === 'Yahoo Finance');
     expect(admin).toBeTruthy();
     expect(admin[0].allowed).toEqual(true);
     expect(admin[0].disabled).toEqual(true);
@@ -196,9 +186,7 @@ describe('MenuService', () => {
   it('should create menu - offset, node, link, internal, external ...', () => {
     service.setPermissionVerificationFunction(hasPermission);
     const menuTree = service.buildMenuTree(DefaultMenuTree);
-    const admin = menuTree.children.filter(
-      (node) => node.name === 'Yahoo Finance'
-    );
+    const admin = menuTree.children.filter((node) => node.name === 'Yahoo Finance');
     expect(admin).toBeTruthy();
     expect(admin[0].offset(0.9, 'rem')).toEqual('0.9rem');
     expect(admin[0].isNode).toEqual(false);

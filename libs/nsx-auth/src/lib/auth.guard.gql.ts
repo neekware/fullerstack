@@ -1,14 +1,14 @@
 import {
-  Injectable,
-  ExecutionContext,
-  UnauthorizedException,
-  NotFoundException,
   BadRequestException,
+  ExecutionContext,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { SecurityService } from './auth.security.service';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
+import { SecurityService } from './auth.security.service';
 import {
   getCookiesFromContext,
   getJwtTokenFromAuthorizationHeader,
@@ -45,9 +45,7 @@ export class AuthGuardGql extends AuthGuard('jwt') {
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
-      throw new BadRequestException(
-        'Error - Invalid session or remotely terminated'
-      );
+      throw new BadRequestException('Error - Invalid session or remotely terminated');
     }
 
     request.user = user;

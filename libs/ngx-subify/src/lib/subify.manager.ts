@@ -19,9 +19,7 @@ export class SubifyManager {
 
   /** Unsubscribes from all tracked subscriptions */
   unsubscribe() {
-    this.trackedSubs.forEach(
-      (sub) => sub && isFunction(sub.unsubscribe) && sub.unsubscribe()
-    );
+    this.trackedSubs.forEach((sub) => sub && isFunction(sub.unsubscribe) && sub.unsubscribe());
     this.trackedSubs = [];
   }
 }

@@ -1,10 +1,12 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { JwtDto } from '@fullerstack/agx-dto';
+import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 
-import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
-import { JwtDto } from '@fullerstack/api-dto';
-
+import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
+import { CookiesDecorator, RequestDecorator, ResponseDecorator } from './auth.decorator';
+import { AuthGuardGql } from './auth.guard.gql';
 import {
   AuthStatusDto,
   AuthTokenDto,
@@ -13,15 +15,8 @@ import {
   UserCreateInput,
   UserCredentialsInput,
 } from './auth.model';
-import { AuthService } from './auth.service';
-import {
-  CookiesDecorator,
-  RequestDecorator,
-  ResponseDecorator,
-} from './auth.decorator';
 import { SecurityService } from './auth.security.service';
-import { AuthGuardGql } from './auth.guard.gql';
-import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
+import { AuthService } from './auth.service';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
@@ -31,7 +26,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => AuthTokenDto)
-  async authSignup(
+  async authRegister(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: UserCreateInput
@@ -58,9 +53,7 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
   ) {
-    const payload: JwtDto = this.securityService.verifyToken(
-      cookies[AUTH_SESSION_COOKIE_NAME]
-    );
+    const payload: JwtDto = this.securityService.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME]);
     if (!payload) {
       throw new UnauthorizedException('Error - Invalid or expired session');
     }
@@ -71,13 +64,27 @@ export class AuthResolver {
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
-      throw new UnauthorizedException(
-        'Error - Invalid session or remotely terminated'
-      );
+      throw new UnauthorizedException('Error - Invalid session or remotely terminated');
     }
 
     const token = this.securityService.issueToken(user, request, response);
     return { ok: true, token };
+  }
+
+  @Mutation(() => AuthStatusDto)
+  async authLogout(
+    @CookiesDecorator() cookies: string[],
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse
+  ) {
+    this.securityService.clearHttpCookie(response);
+    return { ok: true };
+  }
+
+  @Mutation(() => AuthStatusDto)
+  async isEmailAvailable(@Args('email', { type: () => String }) email: string) {
+    const isAvailable = await this.authService.isEmailAvailable(email);
+    return { ok: isAvailable };
   }
 
   @UseGuards(AuthGuardGql)

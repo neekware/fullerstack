@@ -1,0 +1,14 @@
+.fs-bell-label {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: absolute;
+  right: 8px;
+  top: 5px;
+  box-sizing: content-box;
+  background: #c91d2e;
+  z-index: 2;
+  border: 2px solid #fafafb;
+  transition: top cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s;
+}

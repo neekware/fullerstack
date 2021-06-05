@@ -3,12 +3,12 @@
 # ------------------------------------------------------
 
 type AuthStatusDto {
-  message: String!
+  message: String
   ok: Boolean!
 }
 
 type AuthTokenDto {
-  message: String!
+  message: String
   ok: Boolean!
   token: String!
 }
@@ -33,10 +33,12 @@ scalar DateTime
 type Mutation {
   authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
   authLogin(input: UserCredentialsInput!): AuthTokenDto!
+  authLogout: AuthStatusDto!
   authRefreshToken: AuthTokenDto!
+  authRegister(input: UserCreateInput!): AuthTokenDto!
   authResetPassword: AuthTokenDto!
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
-  authSignup(input: UserCreateInput!): AuthTokenDto!
+  isEmailAvailable(email: String!): AuthStatusDto!
 
   """Privileged user update"""
   userUpdate(input: UserUpdateAdvancedInput!): UserDto!
@@ -49,13 +51,6 @@ type Mutation {
 enum OrderDirection {
   asc
   desc
-}
-
-type PaginatedUser {
-  edges: [UserDtoEdge!]
-  hasNextPage: Boolean!
-  nodes: [UserDto!]
-  totalCount: Int!
 }
 
 """User permission"""
@@ -79,7 +74,7 @@ type Query {
 
   """Get user's own info"""
   userSelf: UserDto!
-  users(after: String, before: String, first: Int, last: Int, limit: Int = 20, offset: Int = 0, orderBy: UserOrder, query: String, skip: Int): PaginatedUser!
+  users(cursor: String, orderBy: UserOrder, query: String = "", skip: Int, take: Int): [UserDto!]!
 }
 
 """User role"""
@@ -95,7 +90,6 @@ input UserCreateInput {
   firstName: String!
   lastName: String!
   password: String!
-  username: String!
 }
 
 input UserCredentialsInput {

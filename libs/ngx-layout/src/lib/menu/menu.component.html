@@ -1,0 +1,10 @@
+<div class="fs-sidenav-menu">
+  <div *ngFor="let node of rootNode.children">
+    <mat-accordion *ngIf="node.isNode">
+      <fullerstack-menu-node [node]="node"></fullerstack-menu-node>
+    </mat-accordion>
+    <fullerstack-menu-link *ngIf="node.isLink" [link]="node"></fullerstack-menu-link>
+  </div>
+
+  <fullerstack-options></fullerstack-options>
+</div>
