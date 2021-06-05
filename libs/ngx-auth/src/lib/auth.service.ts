@@ -125,11 +125,11 @@ export class AuthService implements OnDestroy {
     this.store.dispatch(new actions.LogoutRequest());
   }
 
-  // refreshDispatch() {
-  //   if (this.state.isLoggedIn) {
-  //     this.store.dispatch(new actions.TokenRefreshRequest(this.state.token));
-  //   }
-  // }
+  refreshDispatch(token: string) {
+    if (this.state.isLoggedIn) {
+      this.store.dispatch(new actions.TokenRefreshRequest(token));
+    }
+  }
 
   goTo(url: string) {
     this.router.navigate([url]);

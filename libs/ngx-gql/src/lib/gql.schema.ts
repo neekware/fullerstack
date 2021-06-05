@@ -11,7 +11,7 @@ export interface authLogin_authLogin {
   __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
-  message: string;
+  message: string | null;
 }
 
 export interface authLogin {
@@ -35,7 +35,7 @@ export interface authRegister_authRegister {
   __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
-  message: string;
+  message: string | null;
 }
 
 export interface authRegister {
@@ -44,6 +44,26 @@ export interface authRegister {
 
 export interface authRegisterVariables {
   input: UserCreateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: authRefreshToken
+// ====================================================
+
+export interface authRefreshToken_authRefreshToken {
+  __typename: "AuthTokenDto";
+  ok: boolean;
+  token: string;
+  message: string | null;
+}
+
+export interface authRefreshToken {
+  authRefreshToken: authRefreshToken_authRefreshToken;
 }
 
 /* tslint:disable */

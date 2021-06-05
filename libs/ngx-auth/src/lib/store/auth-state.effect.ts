@@ -7,7 +7,7 @@ import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { Store } from '@ngxs/store';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 
 import * as actions from './auth-state.action';
@@ -26,7 +26,7 @@ export class AuthEffectsService {
     readonly gql: GqlService
   ) {}
 
-  loginRequest(input: gqlSchema.UserCredentialsInput): Observable<any> {
+  loginRequest(input: gqlSchema.UserCredentialsInput): Observable<unknown> {
     this.logger.debug('Login request sent ...');
     return from(
       this.gql.client.mutate<gqlSchema.authLogin>({
@@ -70,7 +70,7 @@ export class AuthEffectsService {
     );
   }
 
-  registerRequest(input: gqlSchema.UserCreateInput): Observable<any> {
+  registerRequest(input: gqlSchema.UserCreateInput): Observable<unknown> {
     this.logger.debug('Register request sent ...');
     return from(
       this.gql.client.mutate<gqlSchema.authRegister>({
@@ -110,73 +110,71 @@ export class AuthEffectsService {
         return this.store.dispatch(new actions.RegisterFailure());
       })
     );
-
-    // refreshTokenRequest(authToken: string): Observable<any> {
-    //   this.log.debug('Token refresh request sent ...');
-    //   return this.gql.client
-    //     .mutate<schema.AuthTokenRefresh>({
-    //       mutation: operations.AuthTokenRefreshMutation,
-    //       variables: { authToken: authToken },
-    //     })
-    //     .pipe(
-    //       take(1),
-    //       map(({ data }) => data.authTokenRefresh),
-    //       map((resp) => {
-    //         if (resp.ok) {
-    //           return pick(resp, ['accessToken', 'userProfile']);
-    //         }
-    //         this.log.error(resp.msg);
-    //         return this.store.dispatch(new actions.LogoutRequest());
-    //       }),
-    //       catchError((error, caught$) => {
-    //         this.gtag.trackEvent('refresh_token_failed', {
-    //           method: 'token',
-    //           event_category: 'auth',
-    //           event_label: error.message,
-    //         });
-    //         this.log.error(error);
-    //         this.msg.processMsg(AuthMessageMap.error.server);
-    //         return observableOf(null);
-    //       })
-    //     );
-    // }
-
-    // logoutRequest(authToken: string): Observable<any> {
-    //   this.log.debug('Logout request sent ...');
-    //   return this.gql.client
-    //     .mutate<schema.AuthLogout>({
-    //       mutation: operations.AuthLogoutMutation,
-    //       variables: { authToken },
-    //     })
-    //     .pipe(
-    //       take(1),
-    //       map(({ data }) => data.authLogout),
-    //       map((resp) => {
-    //         if (resp.ok) {
-    //           this.gtag.trackEvent('logout', {
-    //             event_category: 'auth',
-    //             event_label: 'logout success',
-    //           });
-    //           this.msg.processMsg(AuthMessageMap.success.logout);
-    //           return this.store.dispatch(new actions.LogoutSuccess());
-    //         }
-    //         this.gtag.trackEvent('logout_failed', {
-    //           event_category: 'auth',
-    //           event_label: resp.msg,
-    //         });
-    //         this.log.error(resp.msg);
-    //         this.msg.processMsg(AuthMessageMap.error.logout);
-    //         return this.store.dispatch(new actions.LogoutFailure());
-    //       }),
-    //       catchError((error, caught$) => {
-    //         this.gtag.trackEvent('logout_failed', {
-    //           event_category: 'auth',
-    //           event_label: error.message,
-    //         });
-    //         this.log.error(error);
-    //         this.msg.processMsg(AuthMessageMap.error.server);
-    //         return this.store.dispatch(new actions.LogoutFailure());
-    //       })
-    //     );
   }
+
+  tokenRefreshRequest(): Observable<unknown> {
+    this.logger.debug('Token refresh request sent ...');
+    return from(
+      this.gql.client.mutate<gqlSchema.authRefreshToken>({
+        mutation: gqlOperations.AuthRefreshTokenMutation,
+      })
+    ).pipe(
+      take(1),
+      map(({ data }) => data.authRefreshToken),
+      map((resp) => {
+        if (resp.ok) {
+          return this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
+        }
+        return this.store.dispatch(new actions.LogoutRequest());
+      }),
+      catchError((error, caught$) => {
+        this.gtag.trackEvent('refresh_token_failed', {
+          method: 'token',
+          event_category: 'auth',
+          event_label: error.message,
+        });
+        this.logger.error(error);
+        this.msg.setMsg(AuthMessageMap.error.server);
+        return of(null);
+      })
+    );
+  }
+
+  // logoutRequest(authToken: string): Observable<unknown>{
+  //   this.log.debug('Logout request sent ...');
+  //   return this.gql.client
+  //     .mutate<schema.AuthLogout>({
+  //       mutation: operations.AuthLogoutMutation,
+  //       variables: { authToken },
+  //     })
+  //     .pipe(
+  //       take(1),
+  //       map(({ data }) => data.authLogout),
+  //       map((resp) => {
+  //         if (resp.ok) {
+  //           this.gtag.trackEvent('logout', {
+  //             event_category: 'auth',
+  //             event_label: 'logout success',
+  //           });
+  //           this.msg.processMsg(AuthMessageMap.success.logout);
+  //           return this.store.dispatch(new actions.LogoutSuccess());
+  //         }
+  //         this.gtag.trackEvent('logout_failed', {
+  //           event_category: 'auth',
+  //           event_label: resp.msg,
+  //         });
+  //         this.log.error(resp.msg);
+  //         this.msg.processMsg(AuthMessageMap.error.logout);
+  //         return this.store.dispatch(new actions.LogoutFailure());
+  //       }),
+  //       catchError((error, caught$) => {
+  //         this.gtag.trackEvent('logout_failed', {
+  //           event_category: 'auth',
+  //           event_label: error.message,
+  //         });
+  //         this.log.error(error);
+  //         this.msg.processMsg(AuthMessageMap.error.server);
+  //         return this.store.dispatch(new actions.LogoutFailure());
+  //       })
+  //     );
 }
