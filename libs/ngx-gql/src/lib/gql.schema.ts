@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface authLogin_authLogin {
-  __typename: "AuthTokenDto";
+  __typename: 'AuthTokenDto';
   ok: boolean;
   token: string;
   message: string | null;
@@ -32,7 +32,7 @@ export interface authLoginVariables {
 // ====================================================
 
 export interface authRegister_authRegister {
-  __typename: "AuthTokenDto";
+  __typename: 'AuthTokenDto';
   ok: boolean;
   token: string;
   message: string | null;
@@ -56,7 +56,7 @@ export interface authRegisterVariables {
 // ====================================================
 
 export interface authRefreshToken_authRefreshToken {
-  __typename: "AuthTokenDto";
+  __typename: 'AuthTokenDto';
   ok: boolean;
   token: string;
   message: string | null;
@@ -76,7 +76,7 @@ export interface authRefreshToken {
 // ====================================================
 
 export interface authLogout_authLogout {
-  __typename: "AuthStatusDto";
+  __typename: 'AuthStatusDto';
   ok: boolean;
   message: string;
 }
@@ -95,7 +95,7 @@ export interface authLogout {
 // ====================================================
 
 export interface isEmailAvailable_isEmailAvailable {
-  __typename: "AuthStatusDto";
+  __typename: 'AuthStatusDto';
   ok: boolean;
   message: string;
 }
