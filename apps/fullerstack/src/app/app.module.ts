@@ -14,7 +14,7 @@ import { MaterialModule } from '@fullerstack/ngx-material';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { SharedModule } from '@fullerstack/ngx-shared';
 import { UixModule } from '@fullerstack/ngx-uix';
-import { ValidationAsyncService, ValidationService } from '@fullerstack/ngx-util';
+import { ValidationService } from '@fullerstack/ngx-util';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
@@ -64,7 +64,6 @@ import { RegisterComponent } from './pages/register/register.component';
   ],
   providers: [
     ValidationService,
-    ValidationAsyncService,
     // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 

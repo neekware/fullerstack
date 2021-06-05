@@ -8,9 +8,10 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
+import { AuthAsyncValidation } from '@fullerstack/ngx-auth';
 import * as gqlSchema from '@fullerstack/ngx-gql/schema';
 import { I18nService, _ } from '@fullerstack/ngx-i18n';
-import { ValidationAsyncService, ValidationService } from '@fullerstack/ngx-util';
+import { ValidationService } from '@fullerstack/ngx-util';
 
 @Component({
   selector: 'fullerstack-register-form',
@@ -34,7 +35,7 @@ export class RegisterFormComponent implements OnInit {
     readonly formBuilder: FormBuilder,
     readonly i18n: I18nService,
     readonly validation: ValidationService,
-    readonly asyncValidation: ValidationAsyncService
+    readonly asyncValidation: AuthAsyncValidation
   ) {}
 
   ngOnInit() {

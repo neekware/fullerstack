@@ -190,7 +190,7 @@
   "VALIDATION.EMAIL_IN_USE": "ایمیل در حال حاضر در حال استفاده",
   "VALIDATION.EMAIL_NOT_FOUND": "ایمیل یافت نشد",
   "VALIDATION.INCORRECT_PASSWORD": "رمز عبور اشتباه است",
-  "VALIDATION.INPUT_NOT_AS_EXPACTED": "ورودی با مقدار مورد نظر منطبق نبود",
+  "VALIDATION.INPUT_NOT_AS_EXPECTED": "ورودی با مقدار مورد نظر منطبق نبود",
   "VALIDATION.INPUT_SHOULD_DIFFER": "ورودی نامعتبر است، یک مقدار متفاوت را انتخاب کنید",
   "VALIDATION.INVALID_CREDIT_CARD": "شماره کارت اعتباری نامعتبر است",
   "VALIDATION.INVALID_EMAIL": "آدرس ایمیل نامعتبر است",

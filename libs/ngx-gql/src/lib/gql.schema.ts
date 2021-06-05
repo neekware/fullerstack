@@ -76,13 +76,36 @@ export interface authRefreshToken {
 // ====================================================
 
 export interface authLogout_authLogout {
-  __typename: "AuthLogoutDto";
+  __typename: "AuthStatusDto";
   ok: boolean;
-  message: string | null;
+  message: string;
 }
 
 export interface authLogout {
   authLogout: authLogout_authLogout;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: isEmailAvailable
+// ====================================================
+
+export interface isEmailAvailable_isEmailAvailable {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string;
+}
+
+export interface isEmailAvailable {
+  isEmailAvailable: isEmailAvailable_isEmailAvailable;
+}
+
+export interface isEmailAvailableVariables {
+  email: string;
 }
 
 /* tslint:disable */

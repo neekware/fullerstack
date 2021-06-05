@@ -16,11 +16,11 @@ export interface AuthFilterType<T> {
 
 @ObjectType()
 export class AuthStatusDto {
-  @Field()
+  @Field({ nullable: true })
   message?: string;
 
   @Field()
-  ok?: boolean;
+  ok: boolean;
 }
 
 /**
@@ -31,18 +31,6 @@ export class AuthTokenDto {
   @Field()
   token: string;
 
-  @Field({ nullable: true })
-  message?: string;
-
-  @Field()
-  ok?: boolean;
-}
-
-/**
- * Auth logout (server -> client)
- */
-@ObjectType()
-export class AuthLogoutDto {
   @Field({ nullable: true })
   message?: string;
 

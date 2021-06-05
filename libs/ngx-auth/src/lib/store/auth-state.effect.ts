@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { AUTH_STATE_KEY } from '@fullerstack/ngx-auth';
+import { Injectable, OnDestroy } from '@angular/core';
 import { GqlService } from '@fullerstack/ngx-gql';
 import * as gqlOperations from '@fullerstack/ngx-gql/operations';
 import * as gqlSchema from '@fullerstack/ngx-gql/schema';
@@ -7,17 +6,18 @@ import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { Store } from '@ngxs/store';
-import { Observable, from, of } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { Observable, Subject, from, of } from 'rxjs';
+import { catchError, map, take, takeUntil } from 'rxjs/operators';
 
 import * as actions from './auth-state.action';
-import { AuthMessageMap, DefaultAuthState } from './auth-state.default';
-import { AuthState } from './auth-state.model';
+import { AuthMessageMap } from './auth-state.default';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthEffectsService {
+export class AuthEffectsService implements OnDestroy {
+  private destroy$ = new Subject<boolean>();
+
   constructor(
     readonly store: Store,
     readonly msg: MsgService,
@@ -66,7 +66,8 @@ export class AuthEffectsService {
         this.logger.error(error);
         this.msg.setMsg(AuthMessageMap.error.server);
         return this.store.dispatch(new actions.LoginFailure());
-      })
+      }),
+      takeUntil(this.destroy$)
     );
   }
 
@@ -108,7 +109,8 @@ export class AuthEffectsService {
         this.logger.error(error);
         this.msg.setMsg(AuthMessageMap.error.server);
         return this.store.dispatch(new actions.RegisterFailure());
-      })
+      }),
+      takeUntil(this.destroy$)
     );
   }
 
@@ -136,7 +138,8 @@ export class AuthEffectsService {
         this.logger.error(error);
         this.msg.setMsg(AuthMessageMap.error.server);
         return of(null);
-      })
+      }),
+      takeUntil(this.destroy$)
     );
   }
 
@@ -174,7 +177,13 @@ export class AuthEffectsService {
         this.logger.error(error);
         this.msg.setMsg(AuthMessageMap.error.server);
         return this.store.dispatch(new actions.LogoutFailure());
-      })
+      }),
+      takeUntil(this.destroy$)
     );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

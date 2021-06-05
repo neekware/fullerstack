@@ -1,14 +1,14 @@
 import { JwtDto } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
-import { UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Query, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { CookiesDecorator, RequestDecorator, ResponseDecorator } from './auth.decorator';
+import { AuthGuardAnonymousGql } from './auth.guard.anonymous';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
-  AuthLogoutDto,
   AuthStatusDto,
   AuthTokenDto,
   ChangePasswordInput,
@@ -72,7 +72,7 @@ export class AuthResolver {
     return { ok: true, token };
   }
 
-  @Mutation(() => AuthLogoutDto)
+  @Mutation(() => AuthStatusDto)
   async authLogout(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
@@ -80,6 +80,12 @@ export class AuthResolver {
   ) {
     this.securityService.clearHttpCookie(response);
     return { ok: true };
+  }
+
+  @Mutation(() => AuthStatusDto)
+  async isEmailAvailable(@Args('email', { type: () => String }) email: string) {
+    const isAvailable = await this.authService.isEmailAvailable(email);
+    return { ok: isAvailable };
   }
 
   @UseGuards(AuthGuardGql)

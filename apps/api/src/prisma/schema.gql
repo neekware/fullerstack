@@ -2,13 +2,8 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AuthLogoutDto {
-  message: String
-  ok: Boolean!
-}
-
 type AuthStatusDto {
-  message: String!
+  message: String
   ok: Boolean!
 }
 
@@ -38,11 +33,12 @@ scalar DateTime
 type Mutation {
   authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
   authLogin(input: UserCredentialsInput!): AuthTokenDto!
-  authLogout: AuthLogoutDto!
+  authLogout: AuthStatusDto!
   authRefreshToken: AuthTokenDto!
   authRegister(input: UserCreateInput!): AuthTokenDto!
   authResetPassword: AuthTokenDto!
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
+  isEmailAvailable(email: String!): AuthStatusDto!
 
   """Privileged user update"""
   userUpdate(input: UserUpdateAdvancedInput!): UserDto!

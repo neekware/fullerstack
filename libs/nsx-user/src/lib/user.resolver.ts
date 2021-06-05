@@ -80,10 +80,10 @@ export class UserResolver {
         where: {
           AND: [{ isActive: true }],
           OR: [
-            { username: { contains: query } },
-            { email: { contains: query } },
-            { firstName: { contains: query } },
-            { lastName: { contains: query } },
+            { username: { contains: query, mode: 'insensitive' } },
+            { email: { contains: query, mode: 'insensitive' } },
+            { firstName: { contains: query, mode: 'insensitive' } },
+            { lastName: { contains: query, mode: 'insensitive' } },
           ],
         },
       },

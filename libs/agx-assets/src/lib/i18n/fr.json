@@ -190,7 +190,7 @@
   "VALIDATION.EMAIL_IN_USE": "cet email est déjà utilisé",
   "VALIDATION.EMAIL_NOT_FOUND": "Email non trouvé",
   "VALIDATION.INCORRECT_PASSWORD": "Mot de passe incorrect",
-  "VALIDATION.INPUT_NOT_AS_EXPACTED": "L'entrée ne correspond pas à la valeur attendue",
+  "VALIDATION.INPUT_NOT_AS_EXPECTED": "L'entrée ne correspond pas à la valeur attendue",
   "VALIDATION.INPUT_SHOULD_DIFFER": "Entrée non valide, choisissez une valeur différente",
   "VALIDATION.INVALID_CREDIT_CARD": "Numéro de carte de crédit invalide",
   "VALIDATION.INVALID_EMAIL": "Adresse e-mail invalide",

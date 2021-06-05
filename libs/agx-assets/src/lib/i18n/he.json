@@ -190,7 +190,7 @@
   "VALIDATION.EMAIL_IN_USE": "דוא\"ל כבר בשימוש",
   "VALIDATION.EMAIL_NOT_FOUND": "אימייל לא נמצא",
   "VALIDATION.INCORRECT_PASSWORD": "סיסמא לא נכונה",
-  "VALIDATION.INPUT_NOT_AS_EXPACTED": "הקלט לא תאם את הערך הצפוי",
+  "VALIDATION.INPUT_NOT_AS_EXPECTED": "הקלט לא תאם את הערך הצפוי",
   "VALIDATION.INPUT_SHOULD_DIFFER": "קלט לא חוקי, בחר ערך אחר",
   "VALIDATION.INVALID_CREDIT_CARD": "מספר כרטיס אשראי שגוי",
   "VALIDATION.INVALID_EMAIL": "כתובת אימייל לא חוקית",

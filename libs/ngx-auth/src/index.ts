@@ -5,3 +5,4 @@ export * from './lib/auth.default';
 export * from './lib/auth.service';
 export * from './lib/auth.module';
 export * from './lib/auth.interceptor';
+export * from './lib/auth.validation';

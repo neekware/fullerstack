@@ -42,3 +42,13 @@ export const AuthLogoutMutation = gql`
     }
   }
 `;
+
+// auth register
+export const AuthIsEmailAvailable = gql`
+  mutation isEmailAvailable($email: String!) {
+    isEmailAvailable(email: $email) {
+      ok
+      message
+    }
+  }
+`;
