@@ -71,6 +71,25 @@ export interface authRefreshToken {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL mutation operation: authLogout
+// ====================================================
+
+export interface authLogout_authLogout {
+  __typename: "AuthLogoutDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authLogout {
+  authLogout: authLogout_authLogout;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================

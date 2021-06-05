@@ -39,6 +39,18 @@ export class AuthTokenDto {
 }
 
 /**
+ * Auth logout (server -> client)
+ */
+@ObjectType()
+export class AuthLogoutDto {
+  @Field({ nullable: true })
+  message?: string;
+
+  @Field()
+  ok?: boolean;
+}
+
+/**
  * User creation type (client -> server)
  */
 @InputType()

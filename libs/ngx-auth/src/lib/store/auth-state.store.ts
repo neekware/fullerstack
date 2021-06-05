@@ -75,11 +75,20 @@ export class AuthStoreState {
     });
   }
 
-  // @Action(actions.LogoutRequest)
-  // logoutRequest({ setState }: StateContext<AuthState>) {
-  //   setState(signState(DefaultAuthState));
-  //   this.msg.successSnackBar(_('AUTH.SUCCESS.LOGOUT'));
-  // }
+  @Action(actions.LogoutRequest)
+  logoutRequest() {
+    return this.effects.logoutRequest();
+  }
+
+  @Action(actions.LogoutSuccess)
+  logoutSuccess({ setState }: StateContext<AuthState>) {
+    setState(DefaultAuthState);
+  }
+
+  @Action(actions.LogoutFailure)
+  logoutFailure({ setState }: StateContext<AuthState>) {
+    setState(DefaultAuthState);
+  }
 
   @Action(actions.TokenRefreshRequest)
   tokenRefreshRequest(
@@ -111,12 +120,4 @@ export class AuthStoreState {
       hasError: true,
     });
   }
-
-  // @Action(actions.MultiTabSyncRequest)
-  // multiTabSyncRequest(
-  //   { setState }: StateContext<AuthState>,
-  //   { payload }: actions.MultiTabSyncRequest
-  // ) {
-  //   setState(signState(payload));
-  // }
 }

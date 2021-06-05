@@ -8,6 +8,7 @@ import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { CookiesDecorator, RequestDecorator, ResponseDecorator } from './auth.decorator';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
+  AuthLogoutDto,
   AuthStatusDto,
   AuthTokenDto,
   ChangePasswordInput,
@@ -69,6 +70,16 @@ export class AuthResolver {
 
     const token = this.securityService.issueToken(user, request, response);
     return { ok: true, token };
+  }
+
+  @Mutation(() => AuthLogoutDto)
+  async authLogout(
+    @CookiesDecorator() cookies: string[],
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse
+  ) {
+    this.securityService.clearHttpCookie(response);
+    return { ok: true };
   }
 
   @UseGuards(AuthGuardGql)

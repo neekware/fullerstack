@@ -1,5 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { Observable } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
@@ -11,11 +12,12 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(readonly auth: AuthService, readonly effects: AuthEffectsService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    let authReq: HttpRequest<any>;
     if (this.auth.state.token) {
-      authReq = request.clone({
+      request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.auth.state.token}`,
+          'Content-Type': 'application/json; charset=utf-8',
+          Accept: 'application/json',
+          Authorization: `${JWT_BEARER_REALM} ${this.auth.state.token}`,
         },
       });
     }

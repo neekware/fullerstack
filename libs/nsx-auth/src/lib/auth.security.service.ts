@@ -190,6 +190,14 @@ export class SecurityService {
   }
 
   /**
+   * Clears a httpCookie on the response object containing the session token
+   * @param response original http response object
+   */
+  clearHttpCookie(response: HttpResponse) {
+    response.clearCookie(AUTH_SESSION_COOKIE_NAME);
+  }
+
+  /**
    * Sets a httpCookie on the response object containing an expiry of `now`
    * @param response original http response object
    */

@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthLogoutDto {
+  message: String
+  ok: Boolean!
+}
+
 type AuthStatusDto {
   message: String!
   ok: Boolean!
@@ -33,6 +38,7 @@ scalar DateTime
 type Mutation {
   authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
   authLogin(input: UserCredentialsInput!): AuthTokenDto!
+  authLogout: AuthLogoutDto!
   authRefreshToken: AuthTokenDto!
   authRegister(input: UserCreateInput!): AuthTokenDto!
   authResetPassword: AuthTokenDto!

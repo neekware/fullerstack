@@ -41,7 +41,9 @@ export class TokenRefreshFailure {
 export class LogoutRequest {
   static type = '[AUTH] LogoutRequest';
 }
-export class MultiTabSyncRequest {
-  static type = '[AUTH] MultiTabSyncRequest';
-  constructor(readonly payload: AuthState) {}
+export class LogoutSuccess {
+  static type = '[AUTH] LogoutSuccess';
+}
+export class LogoutFailure {
+  static type = '[AUTH] LogoutFailure';
 }

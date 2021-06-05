@@ -32,3 +32,13 @@ export const AuthRefreshTokenMutation = gql`
     }
   }
 `;
+
+// auth logout (cookie is cleared)
+export const AuthLogoutMutation = gql`
+  mutation authLogout {
+    authLogout {
+      ok
+      message
+    }
+  }
+`;

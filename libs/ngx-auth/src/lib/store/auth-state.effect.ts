@@ -140,41 +140,41 @@ export class AuthEffectsService {
     );
   }
 
-  // logoutRequest(authToken: string): Observable<unknown>{
-  //   this.log.debug('Logout request sent ...');
-  //   return this.gql.client
-  //     .mutate<schema.AuthLogout>({
-  //       mutation: operations.AuthLogoutMutation,
-  //       variables: { authToken },
-  //     })
-  //     .pipe(
-  //       take(1),
-  //       map(({ data }) => data.authLogout),
-  //       map((resp) => {
-  //         if (resp.ok) {
-  //           this.gtag.trackEvent('logout', {
-  //             event_category: 'auth',
-  //             event_label: 'logout success',
-  //           });
-  //           this.msg.processMsg(AuthMessageMap.success.logout);
-  //           return this.store.dispatch(new actions.LogoutSuccess());
-  //         }
-  //         this.gtag.trackEvent('logout_failed', {
-  //           event_category: 'auth',
-  //           event_label: resp.msg,
-  //         });
-  //         this.log.error(resp.msg);
-  //         this.msg.processMsg(AuthMessageMap.error.logout);
-  //         return this.store.dispatch(new actions.LogoutFailure());
-  //       }),
-  //       catchError((error, caught$) => {
-  //         this.gtag.trackEvent('logout_failed', {
-  //           event_category: 'auth',
-  //           event_label: error.message,
-  //         });
-  //         this.log.error(error);
-  //         this.msg.processMsg(AuthMessageMap.error.server);
-  //         return this.store.dispatch(new actions.LogoutFailure());
-  //       })
-  //     );
+  logoutRequest(): Observable<unknown> {
+    this.logger.debug('Logout request sent ...');
+    return from(
+      this.gql.client.mutate<gqlSchema.authLogout>({
+        mutation: gqlOperations.AuthLogoutMutation,
+      })
+    ).pipe(
+      take(1),
+      map(({ data }) => data.authLogout),
+      map((resp) => {
+        if (resp.ok) {
+          this.gtag.trackEvent('logout', {
+            event_category: 'auth',
+            event_label: 'logout success',
+          });
+          this.msg.setMsg(AuthMessageMap.success.logout);
+          return this.store.dispatch(new actions.LogoutSuccess());
+        }
+        this.gtag.trackEvent('logout_failed', {
+          event_category: 'auth',
+          event_label: resp.message,
+        });
+        this.logger.error(resp.message);
+        this.msg.setMsg(AuthMessageMap.error.logout);
+        return this.store.dispatch(new actions.LogoutFailure());
+      }),
+      catchError((error, caught$) => {
+        this.gtag.trackEvent('logout_failed', {
+          event_category: 'auth',
+          event_label: error.message,
+        });
+        this.logger.error(error);
+        this.msg.setMsg(AuthMessageMap.error.server);
+        return this.store.dispatch(new actions.LogoutFailure());
+      })
+    );
+  }
 }
