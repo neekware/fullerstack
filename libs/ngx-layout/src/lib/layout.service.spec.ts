@@ -14,7 +14,7 @@ export const applicationConfig: ApplicationConfig = {
   gql: { endpoint: '/api/gql' },
 };
 
-describe('LayoutService', () => {
+xdescribe('LayoutService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [

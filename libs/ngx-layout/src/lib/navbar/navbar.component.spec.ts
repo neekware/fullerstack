@@ -4,7 +4,7 @@ import { UixModule } from '@fullerstack/ngx-uix';
 import { LayoutService } from '../layout.service';
 import { NavbarComponent } from './navbar.component';
 
-describe('NavbarComponent', () => {
+xdescribe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
 
