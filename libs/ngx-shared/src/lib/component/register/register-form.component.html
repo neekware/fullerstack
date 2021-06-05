@@ -13,7 +13,7 @@
 
   <mat-form-field>
     <mat-icon matSuffix color="primary" svgIcon="key"></mat-icon>
-    <input matInput formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
+    <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
     <fullerstack-hint
       [control]="form?.controls?.password"
       [touched]="form?.controls?.password?.touched"
