@@ -9,7 +9,7 @@ export class ValidationService {
   readonly PASSWORD_MIN_LEN = 6;
 
   // Visa, MasterCard, American Express, Diners Club, Discover, JCB
-  validateCreditCard(control: FormControl): null | ValidationErrors {
+  validateCreditCard(control: FormControl): ValidationErrors | null {
     if (
       control.value.match(
         /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/
@@ -23,7 +23,7 @@ export class ValidationService {
   }
 
   // RFC 2822 compliant regex
-  validateEmail(control: FormControl): null | ValidationErrors {
+  validateEmail(control: FormControl): ValidationErrors | null {
     if (
       control.value.match(
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -37,7 +37,7 @@ export class ValidationService {
   }
 
   // Password is between 6 and 100 characters and has at least one number.
-  validatePassword(control: FormControl): null | ValidationErrors {
+  validatePassword(control: FormControl): ValidationErrors | null {
     if (control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/)) {
       return null;
     } else {

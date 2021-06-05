@@ -64,7 +64,7 @@ export class RegisterFormComponent implements OnInit {
         ],
         passwordConfirmation: ['', [Validators.required]],
       },
-      { validator: this.validation.matchingPasswords }
+      { validators: this.validation.matchingPasswords }
     );
   }
 
