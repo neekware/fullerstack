@@ -3,9 +3,9 @@ import { MatChip, MatChipList } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { I18nModule } from '@fullerstack/ngx-i18n';
+import { MsgModule } from '@fullerstack/ngx-msg';
 import { TranslateService } from '@ngx-translate/core';
 
-import { MsgModule } from '../msg.module';
 import { AlertComponent } from './alert.component';
 
 // disable console log/warn during test
