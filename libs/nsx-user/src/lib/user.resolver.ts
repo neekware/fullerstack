@@ -23,7 +23,7 @@ export class UserResolver {
   @UseGuards(AuthGuardGql)
   @Query(() => UserDto, { description: "Get user's own info" })
   async userSelf(@UserDecorator() currentUser: User) {
-    return UserDataAccessScope.getSecuredUser(currentUser);
+    return UserDataAccessScope.getSecuredUser(currentUser, currentUser);
   }
 
   @UseGuards(AuthGuardGql)
