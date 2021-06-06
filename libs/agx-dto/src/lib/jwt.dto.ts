@@ -3,4 +3,4 @@ export interface JwtDto {
   sessionVersion: number;
 }
 
-export const JWT_BEARER_REALM = 'JWT';
+export const JWT_BEARER_REALM = 'Bearer';
