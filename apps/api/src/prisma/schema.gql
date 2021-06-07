@@ -40,11 +40,11 @@ type Mutation {
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   isEmailAvailable(email: String!): AuthStatusDto!
 
-  """Privileged user update"""
-  userUpdate(input: UserUpdateAdvancedInput!): UserDto!
-
   """Update user's own info"""
-  userUpdateSelf(input: UserUpdateInput!): UserDto!
+  userSelfUpdate(input: UserSelfUpdateInput!): UserDto!
+
+  """Privileged user update"""
+  userUpdate(input: UserUpdateInput!): UserDto!
 }
 
 """Ascending or Descending direction for a given `orderBy` argument."""
@@ -70,7 +70,7 @@ enum Permission {
 
 type Query {
   """Get other user info"""
-  user(input: UserUpdateAdvancedInput!): UserDto!
+  user(input: UserWhereByIdInput!): UserDto!
 
   """Get user's own info"""
   userSelf: UserDto!
@@ -114,9 +114,6 @@ type UserDto {
   permissions: [Permission!]
   role: Role
 
-  """Session version"""
-  sessionVersion: Int
-
   """Object's update time"""
   updatedAt: DateTime!
   username: String
@@ -142,7 +139,12 @@ enum UserOrderField {
   username
 }
 
-input UserUpdateAdvancedInput {
+input UserSelfUpdateInput {
+  firstName: String
+  lastName: String
+}
+
+input UserUpdateInput {
   firstName: String
   groupId: ID
   id: ID!
@@ -157,8 +159,6 @@ input UserUpdateAdvancedInput {
   role: Role
 }
 
-input UserUpdateInput {
-  firstName: String
+input UserWhereByIdInput {
   id: ID!
-  lastName: String
 }

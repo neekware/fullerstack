@@ -46,7 +46,7 @@ export const I18nTranslations = {
 };
 
 class CustomLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  getTranslation(lang: string): Observable<unknown> {
     return observableOf(I18nTranslations[lang]);
   }
 }

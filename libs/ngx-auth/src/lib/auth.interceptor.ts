@@ -1,5 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { Observable } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -7,11 +7,23 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AuthEffectsService } from './store/auth-state.effect';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(readonly auth: AuthService, readonly effects: AuthEffectsService) {}
+  private auth: AuthService;
+  private effects: AuthEffectsService;
+
+  constructor(private injector: Injector) {
+    setTimeout(() => {
+      this.auth = this.injector.get(AuthService);
+      this.effects = this.injector.get(AuthEffectsService);
+    });
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (!this.auth) {
+      return next.handle(request);
+    }
+
     if (this.auth.state.token) {
       request = request.clone({
         setHeaders: {

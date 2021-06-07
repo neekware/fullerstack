@@ -11,6 +11,7 @@ import { HintComponent } from './component/hint/hint.component';
 import { LoginFormComponent } from './component/login/login-form.component';
 import { RegisterFormComponent } from './component/register/register-form.component';
 import { RippleComponent } from './component/ripple/ripple.component';
+import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule, I18nModule],
@@ -22,6 +23,7 @@ import { RippleComponent } from './component/ripple/ripple.component';
     ConfirmationDialogComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    UserProfileFormComponent,
   ],
   exports: [
     HintComponent,
@@ -31,6 +33,7 @@ import { RippleComponent } from './component/ripple/ripple.component';
     ConfirmationDialogComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    UserProfileFormComponent,
   ],
   providers: [],
 })

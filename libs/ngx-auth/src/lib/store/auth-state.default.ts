@@ -19,28 +19,22 @@ export const AuthMessageMap: MessageMap = {
       text: _('SUCCESS.AUTH.LOGIN'),
       code: 'SUCCESS.AUTH.LOGIN',
       level: LogLevels.info,
-      console: true,
-      show: true,
     },
     logout: {
       text: _('SUCCESS.AUTH.LOGOUT'),
       code: 'SUCCESS.AUTH.LOGOUT',
       level: LogLevels.info,
-      console: true,
-      show: true,
     },
     register: {
       text: _('SUCCESS.AUTH.REGISTER'),
       code: 'SUCCESS.AUTH.REGISTER',
       level: LogLevels.info,
-      console: true,
-      show: true,
     },
     refresh: {
       text: _('SUCCESS.AUTH.REFRESH'),
       code: 'SUCCESS.AUTH.REFRESH',
       level: LogLevels.info,
-      console: true,
+      consoleOnly: true,
     },
   },
   error: {
@@ -48,7 +42,6 @@ export const AuthMessageMap: MessageMap = {
       text: _('ERROR.AUTH.LOGIN'),
       code: 'ERROR.AUTH.LOGIN',
       level: LogLevels.warn,
-      show: true,
     },
     logout: {
       text: _('ERROR.AUTH.LOGOUT'),
@@ -59,17 +52,18 @@ export const AuthMessageMap: MessageMap = {
       text: _('ERROR.AUTH.REGISTER'),
       code: 'ERROR.AUTH.REGISTER',
       level: LogLevels.warn,
-      show: true,
     },
     refresh: {
       text: _('ERROR.AUTH.REFRESH'),
       code: 'ERROR.AUTH.REFRESH',
       level: LogLevels.warn,
+      consoleOnly: true,
     },
     server: {
       text: _('ERROR.SERVER'),
       code: 'ERROR.SERVER',
       level: LogLevels.error,
+      consoleOnly: true,
     },
   },
 };

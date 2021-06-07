@@ -1,4 +1,4 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import { ExecutionContext, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Role, User } from '@prisma/client';
 
@@ -24,13 +24,25 @@ export class AuthGuardRole extends AuthGuardGql {
 
       const user = getRequestFromContext(context).user as User;
 
+      if (!roles || (!roles.include && !roles.exclude)) {
+        throw new HttpException(
+          {
+            status: HttpStatus.INTERNAL_SERVER_ERROR,
+            error: 'Improperly configured - `AuthGuardRole` must be used with `UseRoles`',
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
+      }
+
       // user role should not be in the exclude list
-      if (roles?.exclude?.some((role) => user.role === role)) {
-        return false;
+      if (roles?.exclude?.length) {
+        return !roles.exclude.some((role) => user.role === role);
       }
 
       // user role should be in the include list
-      return roles?.include?.some((role) => user.role === role);
+      if (roles?.include?.length) {
+        return roles.include.some((role) => user.role === role);
+      }
     }
 
     return false;

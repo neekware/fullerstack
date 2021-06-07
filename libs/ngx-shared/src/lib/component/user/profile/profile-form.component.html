@@ -1,0 +1,19 @@
+<form [formGroup]="form" (submit)="submit()" [autocomplete]="autocomplete" fxLayout="column">
+  <mat-form-field>
+    <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
+    <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" />
+    <fullerstack-hint [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched" [hint]="nameHint"></fullerstack-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
+    <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
+    <fullerstack-hint [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched" [hint]="emailHint"></fullerstack-hint>
+  </mat-form-field>
+
+  <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
+    <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
+      {{ 'COMMON.UPDATE' | translate }}
+    </button>
+  </div>
+</form>

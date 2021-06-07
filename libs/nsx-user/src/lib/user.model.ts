@@ -19,9 +19,6 @@ export class UserDto extends BaseModelDto implements Partial<User> {
   @Field({ nullable: true, description: 'User is active' })
   isActive: boolean;
 
-  @Field({ nullable: true, description: 'Session version' })
-  sessionVersion: number;
-
   @Directive('@lowercase')
   @Field({ nullable: true })
   username: string;
@@ -43,18 +40,16 @@ export class UserDto extends BaseModelDto implements Partial<User> {
 }
 
 @InputType()
-export class UserUpdateInput implements Partial<User> {
-  @Field(() => ID)
-  id: string;
-
+export class UserSelfUpdateInput implements Partial<User> {
   @Field({ nullable: true })
   firstName?: string;
 
   @Field({ nullable: true })
   lastName?: string;
 }
+
 @InputType()
-export class UserUpdateAdvancedInput implements Partial<User> {
+export class UserUpdateInput implements Partial<User> {
   @Field(() => ID)
   id: string;
 
@@ -138,17 +133,34 @@ export class UserWhereInput implements Partial<User> {
 
 @InputType()
 export class UserWhereUniqueInput implements Partial<User> {
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   id?: string;
 
   @Directive('@lowercase')
-  @Field()
-  @IsEmail()
+  @Field(() => String, { nullable: true })
   email?: string;
 
   @Directive('@lowercase')
-  @Field()
+  @Field(() => String, { nullable: true })
   username?: string;
+}
+
+@InputType()
+export class UserWhereByIdInput {
+  @Field(() => ID, { nullable: false })
+  id: string;
+}
+
+@InputType()
+export class UserWhereByEmailInput {
+  @Field(() => String, { nullable: false })
+  email: string;
+}
+
+@InputType()
+export class UserWhereByUsernameInput {
+  @Field(() => String, { nullable: false })
+  username: string;
 }
 
 @ObjectType()

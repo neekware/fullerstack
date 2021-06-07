@@ -9,5 +9,6 @@ export const SnackbarStatusDefault: SnackbarStatus = {
   level: LogLevels.info,
   color: null,
   console: true,
+  consoleOnly: false,
   remote: false,
 };
