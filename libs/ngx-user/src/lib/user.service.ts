@@ -1,21 +1,28 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { GqlService } from '@fullerstack/ngx-gql';
-import * as gqlOperations from '@fullerstack/ngx-gql/operations';
-import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
+import {
+  User,
+  UserSelfUpdateInput,
+  user,
+  userSelf,
+  userSelfUpdate,
+} from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { Observable, Subject, from, of } from 'rxjs';
-import { catchError, map, take, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject, from, of } from 'rxjs';
+import { catchError, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 
-import { UserMessageMap } from './user.default';
+import { DefaultUser, UserMessageMap } from './user.default';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  profile: gqlSchema.User;
+  profileChanged$ = new BehaviorSubject<User>(DefaultUser);
+  profile: User = DefaultUser;
   private destroy$ = new Subject<boolean>();
 
   constructor(
@@ -25,26 +32,25 @@ export class UserService {
     readonly logger: LoggerService,
     readonly auth: AuthService
   ) {
-    this.auth.authChanged$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (state) => {
-        if (state.isLoggedIn) {
-          this.userSelf()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe({
-              next: (user) => {
-                this.profile = user as gqlSchema.User;
-              },
-            });
-        }
-      },
-    });
+    this.auth.authChanged$
+      .pipe(
+        filter((state) => state.isLoggedIn),
+        switchMap(() => this.userSelf()),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (user) => {
+          this.profile = user as User;
+          this.profileChanged$.next(this.profile);
+        },
+      });
   }
 
   userSelf(): Observable<unknown> {
     this.msg.reset();
     return from(
-      this.gql.client.query<gqlSchema.userSelf>({
-        query: gqlOperations.UserSelfQuery,
+      this.gql.client.query<userSelf>({
+        query: UserSelfQuery,
       })
     ).pipe(
       take(1),
@@ -61,11 +67,11 @@ export class UserService {
     );
   }
 
-  userSelfUpdate(input: gqlSchema.UserSelfUpdateInput): Observable<unknown> {
+  userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {
     this.msg.reset();
     return from(
-      this.gql.client.query<gqlSchema.userSelfUpdate>({
-        query: gqlOperations.UserSelfUpdateMutation,
+      this.gql.client.query<userSelfUpdate>({
+        query: UserSelfUpdateMutation,
         variables: {},
       })
     ).pipe(
@@ -86,8 +92,8 @@ export class UserService {
   user(id: string): Observable<unknown> {
     this.msg.reset();
     return from(
-      this.gql.client.query<gqlSchema.user>({
-        query: gqlOperations.UserQuery,
+      this.gql.client.query<user>({
+        query: UserQuery,
         variables: { id },
       })
     ).pipe(

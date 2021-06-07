@@ -1,6 +1,14 @@
+import { User } from '@fullerstack/ngx-gql/schema';
 import { _ } from '@fullerstack/ngx-i18n';
 import { LogLevels } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
+
+export const DefaultUser = {
+  firstName: null,
+  lastName: null,
+  email: null,
+  id: null,
+} as User;
 
 export const UserMessageMap: MessageMap = {
   success: {

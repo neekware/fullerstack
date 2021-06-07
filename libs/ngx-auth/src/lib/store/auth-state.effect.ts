@@ -1,7 +1,19 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { GqlService } from '@fullerstack/ngx-gql';
-import * as gqlOperations from '@fullerstack/ngx-gql/operations';
-import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import {
+  AuthLoginMutation,
+  AuthLogoutMutation,
+  AuthRefreshTokenMutation,
+  AuthRegisterMutation,
+} from '@fullerstack/ngx-gql/operations';
+import {
+  UserCreateInput,
+  UserCredentialsInput,
+  authLogin,
+  authLogout,
+  authRefreshToken,
+  authRegister,
+} from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
@@ -26,11 +38,11 @@ export class AuthEffectsService implements OnDestroy {
     readonly gql: GqlService
   ) {}
 
-  loginRequest(input: gqlSchema.UserCredentialsInput): Observable<unknown> {
+  loginRequest(input: UserCredentialsInput): Observable<unknown> {
     this.logger.debug('Login request sent ...');
     return from(
-      this.gql.client.mutate<gqlSchema.authLogin>({
-        mutation: gqlOperations.AuthLoginMutation,
+      this.gql.client.mutate<authLogin>({
+        mutation: AuthLoginMutation,
         variables: { input },
       })
     ).pipe(
@@ -71,11 +83,11 @@ export class AuthEffectsService implements OnDestroy {
     );
   }
 
-  registerRequest(input: gqlSchema.UserCreateInput): Observable<unknown> {
+  registerRequest(input: UserCreateInput): Observable<unknown> {
     this.logger.debug('Register request sent ...');
     return from(
-      this.gql.client.mutate<gqlSchema.authRegister>({
-        mutation: gqlOperations.AuthRegisterMutation,
+      this.gql.client.mutate<authRegister>({
+        mutation: AuthRegisterMutation,
         variables: { input },
       })
     ).pipe(
@@ -117,8 +129,8 @@ export class AuthEffectsService implements OnDestroy {
   tokenRefreshRequest(): Observable<unknown> {
     this.logger.debug('Token refresh request sent ...');
     return from(
-      this.gql.client.mutate<gqlSchema.authRefreshToken>({
-        mutation: gqlOperations.AuthRefreshTokenMutation,
+      this.gql.client.mutate<authRefreshToken>({
+        mutation: AuthRefreshTokenMutation,
       })
     ).pipe(
       take(1),
@@ -146,8 +158,8 @@ export class AuthEffectsService implements OnDestroy {
   logoutRequest(): Observable<unknown> {
     this.logger.debug('Logout request sent ...');
     return from(
-      this.gql.client.mutate<gqlSchema.authLogout>({
-        mutation: gqlOperations.AuthLogoutMutation,
+      this.gql.client.mutate<authLogout>({
+        mutation: AuthLogoutMutation,
       })
     ).pipe(
       take(1),

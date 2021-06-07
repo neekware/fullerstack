@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { GqlService } from '@fullerstack/ngx-gql';
-import * as gqlOperations from '@fullerstack/ngx-gql/operations';
-import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import { AuthIsEmailAvailable } from '@fullerstack/ngx-gql/operations';
+import { isEmailAvailable } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { Observable, from, of, timer } from 'rxjs';
 import { catchError, map, switchMapTo, take } from 'rxjs/operators';
@@ -21,8 +21,8 @@ export class AuthAsyncValidation {
 
   isEmailAvailable(email: string): Observable<unknown> {
     return from(
-      this.gql.client.mutate<gqlSchema.isEmailAvailable>({
-        mutation: gqlOperations.AuthIsEmailAvailable,
+      this.gql.client.mutate<isEmailAvailable>({
+        mutation: AuthIsEmailAvailable,
         variables: { email },
       })
     ).pipe(

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
-import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { _ } from '@fullerstack/ngx-i18n';
 
 @Component({
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(data: gqlSchema.UserCredentialsInput) {
+  login(data: UserCredentialsInput) {
     this.auth.loginDispatch(data);
   }
 }

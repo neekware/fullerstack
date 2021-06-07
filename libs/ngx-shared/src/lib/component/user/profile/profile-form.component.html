@@ -1,8 +1,22 @@
 <form [formGroup]="form" (submit)="submit()" [autocomplete]="autocomplete" fxLayout="column">
   <mat-form-field>
     <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
-    <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" />
-    <fullerstack-hint [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched" [hint]="nameHint"></fullerstack-hint>
+    <input matInput formControlName="firstName" placeholder="{{ 'COMMON.FIRST_NAME' | translate }}" />
+    <fullerstack-hint
+      [control]="form?.controls?.firstName"
+      [isTouched]="form?.controls?.firstName?.touched"
+      [hint]="firstNameHint"
+    ></fullerstack-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-icon matSuffix color="primary" svgIcon="account-multiple"></mat-icon>
+    <input matInput formControlName="lastName" placeholder="{{ 'COMMON.LAST_NAME' | translate }}" />
+    <fullerstack-hint
+      [control]="form?.controls?.lastName"
+      [isTouched]="form?.controls?.lastName?.touched"
+      [hint]="lastNameHint"
+    ></fullerstack-hint>
   </mat-form-field>
 
   <mat-form-field>

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
-import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import { UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { _ } from '@fullerstack/ngx-i18n';
 import { UserService } from '@fullerstack/ngx-user';
 
@@ -14,7 +13,7 @@ import { UserService } from '@fullerstack/ngx-user';
 export class ProfileUpdateComponent implements OnInit {
   title = _('COMMON.PROFILE');
   subtitle = _('COMMON.PROFILE_UPDATE');
-  icon = 'account-plus-outline';
+  icon = 'account-edit-outline';
 
   constructor(
     readonly config: ConfigService,
@@ -34,7 +33,7 @@ export class ProfileUpdateComponent implements OnInit {
     // }
   }
 
-  update(data: gqlSchema.UserSelfUpdateInput) {
+  update(data: UserSelfUpdateInput) {
     this.user.userSelfUpdate(data);
   }
 }
