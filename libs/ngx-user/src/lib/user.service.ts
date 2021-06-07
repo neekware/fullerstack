@@ -13,7 +13,7 @@ import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { BehaviorSubject, Observable, Subject, from, of } from 'rxjs';
-import { catchError, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 import { DefaultUser, UserMessageMap } from './user.default';
 
@@ -24,6 +24,7 @@ export class UserService {
   profileChanged$ = new BehaviorSubject<User>(DefaultUser);
   profile: User = DefaultUser;
   private destroy$ = new Subject<boolean>();
+  isLoading = false;
 
   constructor(
     readonly msg: MsgService,
@@ -47,6 +48,7 @@ export class UserService {
   }
 
   userSelf(): Observable<unknown> {
+    this.isLoading = true;
     this.msg.reset();
     return from(
       this.gql.client.query<userSelf>({
@@ -55,7 +57,9 @@ export class UserService {
     ).pipe(
       take(1),
       map(({ data }) => data?.userSelf),
+      tap(() => (this.isLoading = false)),
       catchError((error) => {
+        this.isLoading = false;
         this.gtag.trackEvent('UserService:[userSelf]', {
           event_category: 'user',
           event_label: error.message,
@@ -68,16 +72,23 @@ export class UserService {
   }
 
   userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {
+    this.isLoading = true;
     this.msg.reset();
     return from(
-      this.gql.client.query<userSelfUpdate>({
-        query: UserSelfUpdateMutation,
-        variables: {},
+      this.gql.client.mutate<userSelfUpdate>({
+        mutation: UserSelfUpdateMutation,
+        variables: { input },
       })
     ).pipe(
       take(1),
       map(({ data }) => data.userSelfUpdate),
+      tap((user) => {
+        this.profile = user as User;
+        this.profileChanged$.next(this.profile);
+        this.isLoading = false;
+      }),
       catchError((error) => {
+        this.isLoading = false;
         this.gtag.trackEvent('UserService:[userSelfUpdate]', {
           event_category: 'user',
           event_label: error.message,
@@ -90,6 +101,7 @@ export class UserService {
   }
 
   user(id: string): Observable<unknown> {
+    this.isLoading = true;
     this.msg.reset();
     return from(
       this.gql.client.query<user>({
@@ -99,7 +111,9 @@ export class UserService {
     ).pipe(
       take(1),
       map(({ data }) => data.user),
+      tap(() => (this.isLoading = false)),
       catchError((error) => {
+        this.isLoading = false;
         this.gtag.trackEvent('UserService:[user]', {
           event_category: 'user',
           event_label: error.message,

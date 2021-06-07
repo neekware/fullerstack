@@ -52,7 +52,6 @@ export class UserProfileFormComponent implements OnChanges {
   }
 
   submit() {
-    const { firstName, lastName } = tokenizeFullName(this.form.value.name);
-    this.submit$.emit({ firstName, lastName });
+    this.submit$.emit(this.form.value);
   }
 }

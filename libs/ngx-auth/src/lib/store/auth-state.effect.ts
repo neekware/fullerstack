@@ -78,8 +78,7 @@ export class AuthEffectsService implements OnDestroy {
         this.logger.error(error);
         this.msg.setMsg(AuthMessageMap.error.server);
         return this.store.dispatch(new actions.LoginFailure());
-      }),
-      takeUntil(this.destroy$)
+      })
     );
   }
 
@@ -121,8 +120,7 @@ export class AuthEffectsService implements OnDestroy {
         this.logger.error(error);
         this.msg.setMsg(AuthMessageMap.error.server);
         return this.store.dispatch(new actions.RegisterFailure());
-      }),
-      takeUntil(this.destroy$)
+      })
     );
   }
 
@@ -150,8 +148,7 @@ export class AuthEffectsService implements OnDestroy {
         this.logger.error(error);
         this.msg.setMsg(AuthMessageMap.error.server);
         return of(null);
-      }),
-      takeUntil(this.destroy$)
+      })
     );
   }
 
@@ -189,8 +186,7 @@ export class AuthEffectsService implements OnDestroy {
         this.logger.error(error);
         this.msg.setMsg(AuthMessageMap.error.server);
         return this.store.dispatch(new actions.LogoutFailure());
-      }),
-      takeUntil(this.destroy$)
+      })
     );
   }
 
