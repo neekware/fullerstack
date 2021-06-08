@@ -45,7 +45,7 @@ export class GqlService {
       defaultOptions: {
         watchQuery: {
           fetchPolicy: 'network-only',
-          errorPolicy: 'ignore',
+          errorPolicy: 'all',
         },
         query: {
           fetchPolicy: 'network-only',
