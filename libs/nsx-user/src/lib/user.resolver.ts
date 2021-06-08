@@ -32,10 +32,8 @@ export class UserResolver {
     @UserDecorator() currentUser: User,
     @Args('input') payload: UserSelfUpdateInput
   ) {
-    throw new NotFoundException('Error - User not found');
-
-    // const user = await this.userService.updateUser(currentUser.id, payload);
-    // return UserDataAccessScope.getSecuredUser(user, currentUser);
+    const user = await this.userService.updateUser(currentUser.id, payload);
+    return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 
   @UseRoles({ exclude: [Role.USER] })
