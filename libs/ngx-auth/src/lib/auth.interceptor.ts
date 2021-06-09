@@ -64,10 +64,11 @@ export class AuthInterceptor implements HttpInterceptor {
           error?.statusCode === HttpStatusCode.Unauthorized
         ) {
           return this.effects.tokenRefreshRequest().pipe(
+            tap((sdf) => console.log(sdf)),
             switchMap((token) => {
               if (token) {
                 request = this.insertToken(request, token as string);
-                return next.handle(request);
+                return next.handle(request).pipe(tap((resp) => console.log(resp)));
               }
               return caught$;
             })

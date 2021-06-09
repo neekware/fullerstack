@@ -132,9 +132,11 @@ export class AuthEffectsService implements OnDestroy {
         map(({ data }) => data.authRefreshToken),
         map((resp) => {
           if (resp.ok) {
-            return this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
+            this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
+            return resp.token;
           }
-          return this.store.dispatch(new actions.LogoutRequest());
+          this.store.dispatch(new actions.LogoutRequest());
+          return null;
         }),
         catchError((error) => {
           this.gtag.trackEvent('refresh_token_failed', {
@@ -144,7 +146,7 @@ export class AuthEffectsService implements OnDestroy {
           });
           this.logger.error(error);
           this.msg.setMsg(AuthMessageMap.error.server);
-          return of(null);
+          return null;
         })
       );
   }
