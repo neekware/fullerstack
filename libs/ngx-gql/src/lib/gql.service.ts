@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { InMemoryCache } from '@apollo/client/core';
+import {
+  FetchResult,
+  InMemoryCache,
+  MutationOptions,
+  OperationVariables,
+  QueryOptions,
+} from '@apollo/client/core';
 import {
   ApplicationConfig,
   ConfigService,
@@ -9,6 +15,7 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { merge as ldNestedMerge } from 'lodash-es';
+import { Observable, from } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultGqlConfig, GQL_CLIENT_NAME } from './gql.default';
@@ -57,5 +64,17 @@ export class GqlService {
 
   get client() {
     return this.apollo.client;
+  }
+
+  query<T = any, TVariables = OperationVariables>(
+    options: QueryOptions<TVariables, T>
+  ): Observable<FetchResult<T>> {
+    return from(this.apollo.client.query<T, TVariables>(options));
+  }
+
+  mutate<T = any, TVariables = OperationVariables>(
+    options: MutationOptions<T, TVariables>
+  ): Observable<FetchResult<T>> {
+    return from(this.apollo.client.mutate<T, TVariables>(options));
   }
 }

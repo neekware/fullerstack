@@ -50,78 +50,78 @@ export class UserService {
   userSelf(): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
-    return from(
-      this.gql.client.query<userSelf>({
+    return this.gql
+      .query<userSelf>({
         query: UserSelfQuery,
       })
-    ).pipe(
-      take(1),
-      map(({ data }) => data?.userSelf),
-      tap(() => (this.isLoading = false)),
-      catchError((error) => {
-        this.isLoading = false;
-        this.gtag.trackEvent('UserService:[userSelf]', {
-          event_category: 'user',
-          event_label: error.message,
-        });
-        this.logger.error(error);
-        this.msg.setMsg(UserMessageMap.error.server);
-        return of(null);
-      })
-    );
+      .pipe(
+        take(1),
+        map(({ data }) => data?.userSelf),
+        tap(() => (this.isLoading = false)),
+        catchError((error) => {
+          this.isLoading = false;
+          this.gtag.trackEvent('UserService:[userSelf]', {
+            event_category: 'user',
+            event_label: error.message,
+          });
+          this.logger.error(error);
+          this.msg.setMsg(UserMessageMap.error.server);
+          return of(null);
+        })
+      );
   }
 
   userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
-    return from(
-      this.gql.client.mutate<userSelfUpdate>({
+    return this.gql
+      .mutate<userSelfUpdate>({
         mutation: UserSelfUpdateMutation,
         variables: { input },
       })
-    ).pipe(
-      take(1),
-      map(({ data }) => data.userSelfUpdate),
-      tap((user) => {
-        this.profile = user as User;
-        this.profileChanged$.next(this.profile);
-        this.isLoading = false;
-      }),
-      catchError((error) => {
-        this.isLoading = false;
-        this.gtag.trackEvent('UserService:[userSelfUpdate]', {
-          event_category: 'user',
-          event_label: error.message,
-        });
-        this.logger.error(error);
-        this.msg.setMsg(UserMessageMap.error.server);
-        return of(null);
-      })
-    );
+      .pipe(
+        take(1),
+        map(({ data }) => data.userSelfUpdate),
+        tap((user) => {
+          this.profile = user as User;
+          this.profileChanged$.next(this.profile);
+          this.isLoading = false;
+        }),
+        catchError((error) => {
+          this.isLoading = false;
+          this.gtag.trackEvent('UserService:[userSelfUpdate]', {
+            event_category: 'user',
+            event_label: error.message,
+          });
+          this.logger.error(error);
+          this.msg.setMsg(UserMessageMap.error.server);
+          return of(null);
+        })
+      );
   }
 
   user(id: string): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
-    return from(
-      this.gql.client.query<user>({
+    return this.gql
+      .query<user>({
         query: UserQuery,
         variables: { id },
       })
-    ).pipe(
-      take(1),
-      map(({ data }) => data.user),
-      tap(() => (this.isLoading = false)),
-      catchError((error) => {
-        this.isLoading = false;
-        this.gtag.trackEvent('UserService:[user]', {
-          event_category: 'user',
-          event_label: error.message,
-        });
-        this.logger.error(error);
-        this.msg.setMsg(UserMessageMap.error.server);
-        return of(null);
-      })
-    );
+      .pipe(
+        take(1),
+        map(({ data }) => data.user),
+        tap(() => (this.isLoading = false)),
+        catchError((error) => {
+          this.isLoading = false;
+          this.gtag.trackEvent('UserService:[user]', {
+            event_category: 'user',
+            event_label: error.message,
+          });
+          this.logger.error(error);
+          this.msg.setMsg(UserMessageMap.error.server);
+          return of(null);
+        })
+      );
   }
 }
