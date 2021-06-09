@@ -52,11 +52,11 @@ export class GqlService {
       cache: new InMemoryCache(),
       defaultOptions: {
         watchQuery: {
-          fetchPolicy: 'network-only',
+          fetchPolicy: 'no-cache',
           errorPolicy: 'all',
         },
         query: {
-          fetchPolicy: 'network-only',
+          fetchPolicy: 'no-cache',
           errorPolicy: 'all',
         },
       },
