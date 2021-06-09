@@ -55,7 +55,6 @@ export class UserService {
         query: UserSelfQuery,
       })
       .pipe(
-        take(1),
         map(({ data }) => data?.userSelf),
         tap(() => (this.isLoading = false)),
         catchError((error) => {
@@ -80,7 +79,6 @@ export class UserService {
         variables: { input },
       })
       .pipe(
-        take(1),
         map(({ data }) => data.userSelfUpdate),
         tap((user) => {
           this.profile = user as User;
@@ -109,7 +107,6 @@ export class UserService {
         variables: { id },
       })
       .pipe(
-        take(1),
         map(({ data }) => data.user),
         tap(() => (this.isLoading = false)),
         catchError((error) => {

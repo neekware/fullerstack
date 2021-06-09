@@ -46,7 +46,6 @@ export class AuthEffectsService implements OnDestroy {
         variables: { input },
       })
       .pipe(
-        take(1),
         map(({ data }) => {
           return data.authLogin;
         }),
@@ -90,7 +89,6 @@ export class AuthEffectsService implements OnDestroy {
         variables: { input },
       })
       .pipe(
-        take(1),
         map(({ data }) => data.authRegister),
         map((resp) => {
           this.gtag.trackEvent('register', {
@@ -131,7 +129,6 @@ export class AuthEffectsService implements OnDestroy {
         mutation: AuthRefreshTokenMutation,
       })
       .pipe(
-        take(1),
         map(({ data }) => data.authRefreshToken),
         map((resp) => {
           if (resp.ok) {
@@ -159,7 +156,6 @@ export class AuthEffectsService implements OnDestroy {
         mutation: AuthLogoutMutation,
       })
       .pipe(
-        take(1),
         map(({ data }) => data.authLogout),
         map((resp) => {
           if (resp.ok) {

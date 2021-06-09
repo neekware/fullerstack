@@ -16,6 +16,7 @@ import { Apollo } from 'apollo-angular';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { Observable, from } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultGqlConfig, GQL_CLIENT_NAME } from './gql.default';
@@ -69,12 +70,12 @@ export class GqlService {
   query<T = any, TVariables = OperationVariables>(
     options: QueryOptions<TVariables, T>
   ): Observable<FetchResult<T>> {
-    return from(this.apollo.client.query<T, TVariables>(options));
+    return from(this.apollo.client.query<T, TVariables>(options)).pipe(first());
   }
 
   mutate<T = any, TVariables = OperationVariables>(
     options: MutationOptions<T, TVariables>
   ): Observable<FetchResult<T>> {
-    return from(this.apollo.client.mutate<T, TVariables>(options));
+    return from(this.apollo.client.mutate<T, TVariables>(options)).pipe(first());
   }
 }

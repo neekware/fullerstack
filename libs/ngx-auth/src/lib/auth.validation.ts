@@ -26,7 +26,6 @@ export class AuthAsyncValidation {
         variables: { email },
       })
     ).pipe(
-      take(1),
       map(({ data }) => {
         return data.isEmailAvailable;
       }),
