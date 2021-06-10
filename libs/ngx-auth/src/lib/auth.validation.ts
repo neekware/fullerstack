@@ -20,31 +20,31 @@ export class AuthAsyncValidation {
   }
 
   isEmailAvailable(email: string): Observable<unknown> {
-    return from(
-      this.gql.client.mutate<isEmailAvailable>({
+    return this.gql
+      .mutate<isEmailAvailable>({
         mutation: AuthIsEmailAvailable,
         variables: { email },
       })
-    ).pipe(
-      map(({ data }) => {
-        return data.isEmailAvailable;
-      }),
-      map((resp) => {
-        this.gtag.trackEvent('email_available', {
-          method: 'query',
-          event_category: 'auth',
-          event_label: email,
-        });
-        return resp.ok ? null : { emailInUse: true };
-      }),
-      catchError((error) => {
-        this.gtag.trackEvent('email_available_failed', {
-          method: 'query',
-          event_category: 'auth',
-          event_label: `(${email} ): ${error.message}`,
-        });
-        return of({ serverError: true });
-      })
-    );
+      .pipe(
+        map(({ data }) => {
+          return data.isEmailAvailable;
+        }),
+        map((resp) => {
+          this.gtag.trackEvent('email_available', {
+            method: 'query',
+            event_category: 'auth',
+            event_label: email,
+          });
+          return resp.ok ? null : { emailInUse: true };
+        }),
+        catchError((error) => {
+          this.gtag.trackEvent('email_available_failed', {
+            method: 'query',
+            event_category: 'auth',
+            event_label: `(${email} ): ${error.message}`,
+          });
+          return of({ serverError: true });
+        })
+      );
   }
 }
