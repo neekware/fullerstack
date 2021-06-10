@@ -57,8 +57,8 @@ export class GqlService {
     const errorConverterLink = new ApolloLink((operation, forward) => {
       return forward(operation).map((data) => {
         if (data?.errors?.length > 0) {
-          data?.errors.forEach(({ extensions, path }) => {
-            const { exception } = extensions;
+          for (const error of data?.errors) {
+            const { exception } = error?.extensions;
             if (exception?.status === HttpStatusCode.Unauthorized) {
               refreshRequestAction();
               const error = new Error(exception?.message);
@@ -66,7 +66,7 @@ export class GqlService {
               error['status'] = exception?.status;
               throw error;
             }
-          });
+          }
         }
         return data;
       });

@@ -1,33 +1,17 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-  HttpStatusCode,
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
-import { tryGet } from '@fullerstack/agx-util';
-import { GqlService } from '@fullerstack/ngx-gql';
 import { Observable } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { of } from 'zen-observable';
 
 import { AuthService } from './auth.service';
-import { AuthEffectsService } from './store/auth-state.effect';
 
 @Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
-  private gql: GqlService;
   private auth: AuthService;
-  private effects: AuthEffectsService;
 
   constructor(private injector: Injector) {
     setTimeout(() => {
-      this.gql = this.injector.get(GqlService);
       this.auth = this.injector.get(AuthService);
-      this.effects = this.injector.get(AuthEffectsService);
     });
   }
 
