@@ -105,6 +105,9 @@
     },
     "ngx-user": {
       "tags": ["name:ngx-user", "scope-ngx-data"]
+    },
+    "cache-store": {
+      "tags": ["name:cache-store", "scope:data-util"]
     }
   }
 }
