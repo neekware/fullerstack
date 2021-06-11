@@ -897,6 +897,44 @@
           }
         }
       }
+    },
+    "ngx-cachify": {
+      "projectType": "library",
+      "root": "libs/ngx-cachify",
+      "sourceRoot": "libs/ngx-cachify/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "outputs": ["dist/libs/ngx-cachify"],
+          "options": {
+            "project": "libs/ngx-cachify/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-cachify/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/ngx-cachify/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-cachify"],
+          "options": {
+            "jestConfig": "libs/ngx-cachify/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/ngx-cachify/src/**/*.ts", "libs/ngx-cachify/src/**/*.html"]
+          }
+        }
+      }
     }
   }
 }

@@ -108,6 +108,9 @@
     },
     "cache-store": {
       "tags": ["name:cache-store", "scope:data-util"]
+    },
+    "ngx-cachify": {
+      "tags": ["name:ngx-cachify", "scope:ngx-data-util"]
     }
   }
 }
