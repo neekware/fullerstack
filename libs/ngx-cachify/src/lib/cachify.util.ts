@@ -17,12 +17,12 @@ export class OrderedStatePath {
    */
   append(key: string | number, value: string | number) {
     key = this.stringToKey(`${key}`);
-    if (!key || key.length < 1) {
+    if (!key?.length) {
       throw Error('Error: empty key is not allowed!');
     }
 
     value = this.stringToKey(`${value}`);
-    if (!value || value.length < 1) {
+    if (!value?.length) {
       throw Error('Error: empty value is not allowed!');
     }
 
