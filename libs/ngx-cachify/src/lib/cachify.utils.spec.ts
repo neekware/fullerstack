@@ -1,18 +1,8 @@
-import { OrderedStatePath, interpolate, isFunction } from './cachify.util';
+import { interpolate } from '@fullerstack/agx-util';
+
+import { OrderedStatePath } from './cachify.util';
 
 describe('Cachify:Util', () => {
-  it('should isFunction return true', () => {
-    expect(
-      isFunction(() => {
-        return false;
-      })
-    ).toBe(true);
-  });
-
-  it('should isFunction return false', () => {
-    expect(isFunction({})).toBe(false);
-  });
-
   it('should interpolate without any params', () => {
     const input = 'some.foo.bar.thingy';
     const output = interpolate(input, {});

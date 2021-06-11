@@ -1,6 +1,5 @@
+import { isFunction } from 'lodash-es';
 import { Subscription } from 'rxjs';
-
-import { isFunction } from './subify.util';
 
 export class SubifyManager {
   protected trackedSubs: Subscription[] = [];

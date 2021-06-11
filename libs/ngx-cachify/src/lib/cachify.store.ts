@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { isFunction } from 'lodash-es';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
+import { deepFreeze } from './cachify.freeze';
 import { ImmutableStore, SetStateReducer, StoreType } from './cachify.model';
-import { deepFreeze, isFunction } from './cachify.util';
 
 export class CacheStore<T = StoreType> {
   private state$: ImmutableStore<T>;

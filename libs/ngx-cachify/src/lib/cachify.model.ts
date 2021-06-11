@@ -85,14 +85,6 @@ export interface StoreType {
 }
 
 /**
- * Options for interpolation
- */
-export interface InterpolationOptions {
-  singleSpace: boolean;
-  trim: boolean;
-}
-
-/**
  * Http Cache Entry
  */
 export interface CachifyEntry {

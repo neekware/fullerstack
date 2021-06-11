@@ -19,14 +19,6 @@ export const DefaultCachifyConfig: CachifyConfig = {
 };
 
 /**
- * Default interpolation options
- */
-export const DefaultInterpolationOptions = {
-  singleSpace: true,
-  trim: true,
-};
-
-/**
  * Enabled fetch policy
  */
 export const DefaultFetchPolicies = [
