@@ -7,6 +7,7 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpResponse,
+  HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
@@ -54,7 +55,7 @@ export class CachifyInterceptor implements HttpInterceptor {
           if (cachedResponse) {
             return of(cachedResponse);
           }
-          return throwError(new HttpErrorResponse({}));
+          return throwError(new HttpErrorResponse({ status: HttpStatusCode.BadRequest }));
 
         case CachifyFetchPolicy.CacheOff:
           return this.playItForward(request, next, meta);
@@ -103,6 +104,11 @@ export class CachifyInterceptor implements HttpInterceptor {
     headers.set('X-Request-ID', uuid).set('X-Correlation-ID', uuid);
   }
 
+  /**
+   *
+   * @param request http request
+   * @returns return caching meta data if available or default value (no caching)
+   */
   private getContextMeta(request: HttpRequest<any>): CachifyContextMeta {
     const meta =
       request.context.get<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN) || DefaultContextMeta;

@@ -23,16 +23,13 @@ import { CacheStore } from './cachify.store';
 })
 export class CachifyService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
-  private cacheStore = new CacheStore({});
   private cacheMap = new Map<string, CachifyEntry>();
+  private cacheStore: CacheStore;
 
   constructor(private config: ConfigService, private logger: LoggerService) {
     this.options = ldNestedMerge({ cachify: DefaultCachifyConfig }, this.config.options);
+    this.cacheStore = new CacheStore({}, this.options.cachify.immutable);
     this.logger.debug('CachifyService ready ...');
-  }
-
-  get store() {
-    return this.cacheStore;
   }
 
   /**
@@ -62,7 +59,7 @@ export class CachifyService {
     const expiryTime = Date.now() + ttl * 1000;
     const entry: CachifyEntry = { key, response, expiryTime };
     this.cacheMap.set(key, entry);
-    this.store.setState({ [key]: entry.response.body });
+    this.cacheStore.setState({ [key]: entry.response?.body });
     this.pruneCache();
   }
 

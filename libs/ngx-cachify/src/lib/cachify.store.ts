@@ -12,7 +12,7 @@ export class CacheStore<T = StoreType> {
    * Initialize the store with the given initial state value
    * @param initialState The initial state of store
    */
-  constructor(initialState: T, readonly isProduction = true) {
+  constructor(initialState: T, readonly isImmutable = true) {
     this.state$ = new ImmutableStore<T>(initialState);
   }
 
@@ -67,7 +67,7 @@ export class CacheStore<T = StoreType> {
    * @returns immutable state during development, mutable during production
    */
   private immutable<J>(state: J): J {
-    if (!this.isProduction) {
+    if (!this.isImmutable) {
       return deepFreeze(state) as J;
     }
     return state as J;
