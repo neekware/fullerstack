@@ -11,6 +11,7 @@ describe('SnackbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatIconModule],
       providers: [
         {
           provide: MatSnackBarRef,
