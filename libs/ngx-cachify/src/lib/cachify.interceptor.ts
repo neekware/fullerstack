@@ -9,43 +9,18 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of as observableOf, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
-import {
-  CACHIFY_FETCH_POLICY,
-  CACHIFY_KEY,
-  CACHIFY_TTL,
-  CachifyFetchPolicy,
-  CachifyMetaData,
-} from './cachify.model';
+import { CACHIFY_CONTEXT_TOKEN, DefaultContextMeta } from './cachify.default';
+import { CachifyContextMeta, CachifyFetchPolicy } from './cachify.model';
 import { CachifyService } from './cachify.service';
 import { isPolicyEnabled } from './cachify.util';
 
 @Injectable()
 export class CachifyInterceptor implements HttpInterceptor {
   constructor(private cache: CachifyService) {}
-
-  /**
-   * Extracts and returns the intercept meta data from request header
-   * @param request Intercepted request
-   */
-  private getMeta(req: HttpRequest<any>): CachifyMetaData {
-    const policy = req.headers.get(CACHIFY_FETCH_POLICY);
-    if (policy && !isPolicyEnabled(policy)) {
-      throw Error(`Error: Invalid fetch policy (${policy})`);
-    }
-
-    const meta = {
-      policy: policy as CachifyFetchPolicy,
-      key: req.headers.get(CACHIFY_KEY),
-      ttl: +(req.headers.get(CACHIFY_TTL) || this.cache.options.httpCache.ttl),
-    };
-
-    this.cleanMeta(req);
-    return meta;
-  }
 
   /**
    * Inserts a unique identifier to each requests headers.
@@ -57,14 +32,13 @@ export class CachifyInterceptor implements HttpInterceptor {
     headers.set('X-Request-ID', uuid).set('X-Correlation-ID', uuid);
   }
 
-  /**
-   * Removes intercept meta data from http headers
-   * @param request Intercepted request
-   */
-  private cleanMeta(request: HttpRequest<any>) {
-    [CACHIFY_TTL, CACHIFY_KEY, CACHIFY_FETCH_POLICY].forEach((item) =>
-      request.headers.delete(item)
-    );
+  private getContextMeta(request: HttpRequest<any>): CachifyContextMeta {
+    const meta =
+      request.context.get<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN) || DefaultContextMeta;
+    if (!isPolicyEnabled(meta.policy)) {
+      throw Error(`Error: Invalid fetch policy (${meta.policy})`);
+    }
+    return meta;
   }
 
   /**
@@ -74,21 +48,21 @@ export class CachifyInterceptor implements HttpInterceptor {
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.addUniqueRequestId(request.headers);
+    const meta = this.getContextMeta(request);
 
-    const meta = this.getMeta(request);
     if (meta && meta.key) {
       const cachedResponse = this.cache.get(meta.key);
       switch (meta.policy) {
         case CachifyFetchPolicy.CacheFirst:
           if (cachedResponse) {
-            return observableOf(cachedResponse);
+            return of(cachedResponse);
           }
           return this.playItForward(request, next, meta);
 
         case CachifyFetchPolicy.CacheAndNetwork:
           if (cachedResponse) {
             this.playItForward(request, next, meta);
-            return observableOf(cachedResponse);
+            return of(cachedResponse);
           }
           return this.playItForward(request, next, meta);
 
@@ -97,7 +71,7 @@ export class CachifyInterceptor implements HttpInterceptor {
 
         case CachifyFetchPolicy.CacheOnly:
           if (cachedResponse) {
-            return observableOf(cachedResponse);
+            return of(cachedResponse);
           }
           return throwError(new HttpErrorResponse({}));
 
@@ -110,16 +84,16 @@ export class CachifyInterceptor implements HttpInterceptor {
 
   /**
    * Completes http request
-   * @param req Initial request
+   * @param request Initial request
    * @param next Next step
    * @param meta Intercept meta data
    */
   playItForward(
-    req: HttpRequest<any>,
+    request: HttpRequest<any>,
     next: HttpHandler,
-    meta?: CachifyMetaData
+    meta?: CachifyContextMeta
   ): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(
+    return next.handle(request).pipe(
       tap((event) => {
         if (meta && event instanceof HttpResponse) {
           if (meta.key) {

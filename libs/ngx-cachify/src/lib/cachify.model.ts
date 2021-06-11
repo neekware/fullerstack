@@ -8,9 +8,13 @@ import { BehaviorSubject } from 'rxjs';
  */
 export class CachifyConfig {
   // disable cache globally
-  disabled: boolean;
+  disabled?: boolean;
+
+  // freeze state, full or partial
+  immutable?: boolean;
+
   // estimate expiry time of cache (in seconds)
-  ttl: number;
+  ttl?: number;
 }
 
 /**
@@ -56,18 +60,16 @@ export enum CachifyFetchPolicy {
   CacheAndNetwork = 'cache-and-network',
 }
 
+export const CACHIFY_META = '__CACHIFY_META__';
+
 /**
  * Unique Meta Data for http request
  */
-export interface CachifyMetaData {
+export interface CachifyContextMeta {
   policy: CachifyFetchPolicy;
   key: string;
   ttl: number;
 }
-
-export const CACHIFY_KEY = '__CACHIFY_KEY__';
-export const CACHIFY_FETCH_POLICY = '__CACHIFY_FETCH_POLICY__';
-export const CACHIFY_TTL = '__CACHIFY_TTL__';
 
 /**
  * State Reducer that gives the caller the option of defining the new state partial using a callback by

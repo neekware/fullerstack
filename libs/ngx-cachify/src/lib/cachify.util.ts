@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpHeaders } from '@angular/common/http';
+import { HttpContextToken, HttpHeaders } from '@angular/common/http';
 import { merge as ldNestedMerge } from 'lodash-es';
 
-import { DefaultFetchPolicies, DefaultInterpolationOptions } from './cachify.default';
 import {
-  CACHIFY_FETCH_POLICY,
-  CACHIFY_KEY,
-  CACHIFY_TTL,
-  CachifyMetaData,
-  InterpolationOptions,
-} from './cachify.model';
+  DefaultContextMeta,
+  DefaultFetchPolicies,
+  DefaultInterpolationOptions,
+} from './cachify.default';
+import { CachifyContextMeta, InterpolationOptions } from './cachify.model';
 
 /**
  * Checks if an object is a function
@@ -110,22 +108,6 @@ export function isPolicyEnabled(policy: string): boolean {
     (key) => DefaultFetchPolicies[key] === policy
   );
   return !!enabled;
-}
-
-/**
- * Adds Http Cache Meta to headers
- * @param meta Http cache meta data
- * @param headers Http Headers instance
- */
-export function addMetaToHttpHeaders(meta: CachifyMetaData, headers?: HttpHeaders): HttpHeaders {
-  if (!headers) {
-    headers = new HttpHeaders();
-  }
-  headers = headers
-    .append(CACHIFY_FETCH_POLICY, meta.policy)
-    .append(CACHIFY_KEY, meta.key)
-    .append(CACHIFY_TTL, meta.ttl.toString());
-  return headers;
 }
 
 /**
