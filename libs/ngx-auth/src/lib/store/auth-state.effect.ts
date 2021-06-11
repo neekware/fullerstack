@@ -18,8 +18,8 @@ import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { Store } from '@ngxs/store';
-import { Observable, Subject, from, of } from 'rxjs';
-import { catchError, map, take, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import * as actions from './auth-state.action';
 import { AuthMessageMap } from './auth-state.default';

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './profile-update.component.html',
   styleUrls: ['./profile-update.component.scss'],
 })
-export class ProfileUpdateComponent implements OnInit, OnDestroy {
+export class ProfileUpdateComponent implements OnDestroy {
   destroy$ = new Subject<boolean>();
   title = _('COMMON.PROFILE');
   subtitle = _('COMMON.PROFILE_UPDATE');
@@ -23,18 +23,6 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     readonly auth: AuthService,
     readonly user: UserService
   ) {}
-
-  ngOnInit() {
-    // if (this.auth.state.isLoggedIn) {
-    //   const redirectUrl = tryGet(
-    //     () => this.config.options.localConfig.registerInLandingPageUrl,
-    //     '/'
-    //   );
-    //   this.auth.goTo(redirectUrl);
-    // } else {
-    //   this.auth.initiateRegisterState();
-    // }
-  }
 
   update(data: UserSelfUpdateInput) {
     this.user.userSelfUpdate(data).pipe(takeUntil(this.destroy$)).subscribe();

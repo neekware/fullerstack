@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { tryGet } from '@fullerstack/agx-util';
 import { Role, User } from '@prisma/client';
 

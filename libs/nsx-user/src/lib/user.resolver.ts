@@ -7,7 +7,7 @@ import {
 } from '@fullerstack/nsx-auth';
 import { PaginationArgs } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { NotFoundException, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
 
