@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ProfileUpdateComponent } from './pages/user/profile-update.component';
 
 export const AppRoutes: Routes = [
   {
@@ -35,6 +36,16 @@ export const AppRoutes: Routes = [
     component: RegisterComponent,
     data: {
       title: _('APP.REGISTER'),
+    },
+  },
+  {
+    path: 'user/profile/update',
+    component: ProfileUpdateComponent,
+    // canActivate: [GuardAuthenticationService],
+    // canDeactivate: [GuardDeactivateService],
+    data: {
+      title: _('COMMON.PROFILE_UPDATE'),
+      description: _('APP.DESCRIPTION.PROFILE_UPDATE'),
     },
   },
   {

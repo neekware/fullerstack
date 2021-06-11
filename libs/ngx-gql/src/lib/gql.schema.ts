@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface authLogin_authLogin {
-  __typename: 'AuthTokenDto';
+  __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
@@ -32,7 +32,7 @@ export interface authLoginVariables {
 // ====================================================
 
 export interface authRegister_authRegister {
-  __typename: 'AuthTokenDto';
+  __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
@@ -56,7 +56,7 @@ export interface authRegisterVariables {
 // ====================================================
 
 export interface authRefreshToken_authRefreshToken {
-  __typename: 'AuthTokenDto';
+  __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
@@ -76,9 +76,9 @@ export interface authRefreshToken {
 // ====================================================
 
 export interface authLogout_authLogout {
-  __typename: 'AuthStatusDto';
+  __typename: "AuthStatusDto";
   ok: boolean;
-  message: string;
+  message: string | null;
 }
 
 export interface authLogout {
@@ -95,9 +95,9 @@ export interface authLogout {
 // ====================================================
 
 export interface isEmailAvailable_isEmailAvailable {
-  __typename: 'AuthStatusDto';
+  __typename: "AuthStatusDto";
   ok: boolean;
-  message: string;
+  message: string | null;
 }
 
 export interface isEmailAvailable {
@@ -113,9 +113,181 @@ export interface isEmailAvailableVariables {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL query operation: userSelf
+// ====================================================
+
+export interface userSelf_userSelf {
+  __typename: "UserDto";
+  id: string;
+  email: string | null;
+  /**
+   * User is active
+   */
+  isActive: boolean | null;
+  /**
+   * User is verified
+   */
+  isVerified: boolean | null;
+  username: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  role: Role | null;
+  permissions: Permission[] | null;
+  groupId: string | null;
+}
+
+export interface userSelf {
+  /**
+   * Get user's own info
+   */
+  userSelf: userSelf_userSelf;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: user
+// ====================================================
+
+export interface user_user {
+  __typename: "UserDto";
+  id: string;
+  email: string | null;
+  /**
+   * User is active
+   */
+  isActive: boolean | null;
+  /**
+   * User is verified
+   */
+  isVerified: boolean | null;
+  username: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  role: Role | null;
+  permissions: Permission[] | null;
+  groupId: string | null;
+}
+
+export interface user {
+  /**
+   * Get other user info
+   */
+  user: user_user;
+}
+
+export interface userVariables {
+  input: UserWhereByIdInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: userSelfUpdate
+// ====================================================
+
+export interface userSelfUpdate_userSelfUpdate {
+  __typename: "UserDto";
+  id: string;
+  email: string | null;
+  /**
+   * User is active
+   */
+  isActive: boolean | null;
+  /**
+   * User is verified
+   */
+  isVerified: boolean | null;
+  username: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  role: Role | null;
+  permissions: Permission[] | null;
+  groupId: string | null;
+}
+
+export interface userSelfUpdate {
+  /**
+   * Update user's own info
+   */
+  userSelfUpdate: userSelfUpdate_userSelfUpdate;
+}
+
+export interface userSelfUpdateVariables {
+  input: UserSelfUpdateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: User
+// ====================================================
+
+export interface User {
+  __typename: "UserDto";
+  id: string;
+  email: string | null;
+  /**
+   * User is active
+   */
+  isActive: boolean | null;
+  /**
+   * User is verified
+   */
+  isVerified: boolean | null;
+  username: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  role: Role | null;
+  permissions: Permission[] | null;
+  groupId: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+/**
+ * User permission
+ */
+export enum Permission {
+  appALL = "appALL",
+  groupALL = "groupALL",
+  groupCREATE = "groupCREATE",
+  groupDELETE = "groupDELETE",
+  groupREAD = "groupREAD",
+  groupUPDATE = "groupUPDATE",
+  userALL = "userALL",
+  userCREATE = "userCREATE",
+  userDELETE = "userDELETE",
+  userREAD = "userREAD",
+  userUPDATE = "userUPDATE",
+}
+
+/**
+ * User role
+ */
+export enum Role {
+  ADMIN = "ADMIN",
+  STAFF = "STAFF",
+  SUPERUSER = "SUPERUSER",
+  USER = "USER",
+}
 
 export interface UserCreateInput {
   email: string;
@@ -127,6 +299,15 @@ export interface UserCreateInput {
 export interface UserCredentialsInput {
   email: string;
   password: string;
+}
+
+export interface UserSelfUpdateInput {
+  firstName?: string | null;
+  lastName?: string | null;
+}
+
+export interface UserWhereByIdInput {
+  id: string;
 }
 
 //==============================================================

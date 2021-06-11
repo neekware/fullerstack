@@ -8,14 +8,14 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { GqlService } from '@fullerstack/ngx-gql';
-import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import { UserCreateInput, UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { Select, Store } from '@ngxs/store';
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
@@ -28,7 +28,7 @@ import { AuthStoreState } from './store/auth-state.store';
 @Injectable()
 export class AuthService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
-  @Output() authChanged$ = new EventEmitter<AuthState>();
+  authChanged$ = new BehaviorSubject<AuthState>(DefaultAuthState);
   @Select(AuthStoreState) private stateSub$: Observable<AuthState>;
   state: DeepReadonly<AuthState> = DefaultAuthState;
   isLoading: boolean;
@@ -58,7 +58,7 @@ export class AuthService implements OnDestroy {
           const prevState = cloneDeep(this.state);
           this.state = cloneDeep(newState);
           this.handleRedirect(prevState);
-          this.authChanged$.emit(this.state);
+          this.authChanged$.next(this.state);
         }
         this.isLoading =
           !newState.hasError && (newState.isAuthenticating || newState.isRegistering);
@@ -66,6 +66,7 @@ export class AuthService implements OnDestroy {
     });
 
     logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
+    this.gql.promoteError(this.refreshDispatch.bind(this));
     this.refreshDispatch();
   }
 
@@ -109,13 +110,13 @@ export class AuthService implements OnDestroy {
     }
   }
 
-  loginDispatch(payload: gqlSchema.UserCredentialsInput) {
+  loginDispatch(payload: UserCredentialsInput) {
     if (!this.state.isLoggedIn) {
       this.store.dispatch(new actions.LoginRequest(payload));
     }
   }
 
-  registerDispatch(payload: gqlSchema.UserCreateInput) {
+  registerDispatch(payload: UserCreateInput) {
     if (!this.state.isLoggedIn) {
       this.store.dispatch(new actions.RegisterRequest(payload));
     }
@@ -125,8 +126,8 @@ export class AuthService implements OnDestroy {
     this.store.dispatch(new actions.LogoutRequest());
   }
 
-  refreshDispatch() {
-    this.store.dispatch(new actions.TokenRefreshRequest());
+  refreshDispatch(): Observable<any> {
+    return this.store.dispatch(new actions.TokenRefreshRequest());
   }
 
   goTo(url: string) {

@@ -102,6 +102,9 @@
     },
     "ngx-shared": {
       "tags": ["name:ngx-shared", "scope:ngx-util"]
+    },
+    "ngx-user": {
+      "tags": ["name:ngx-user", "scope-ngx-data"]
     }
   }
 }

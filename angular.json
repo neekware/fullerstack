@@ -853,6 +853,28 @@
           }
         }
       }
+    },
+    "ngx-user": {
+      "projectType": "library",
+      "root": "libs/ngx-user",
+      "sourceRoot": "libs/ngx-user/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-user"],
+          "options": {
+            "jestConfig": "libs/ngx-user/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/ngx-user/src/**/*.ts", "libs/ngx-user/src/**/*.html"]
+          }
+        }
+      }
     }
   }
 }

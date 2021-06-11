@@ -3,13 +3,13 @@ import { PrismaService } from '@fullerstack/nsx-prisma';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
-import { UserUpdateInput, UserWhereUniqueInput } from './user.model';
+import { UserSelfUpdateInput, UserWhereUniqueInput } from './user.model';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  updateUser(userId: string, newUserData: UserUpdateInput): Promise<User> {
+  updateUser(userId: string, newUserData: UserSelfUpdateInput): Promise<User> {
     return this.prisma.user.update({
       data: newUserData,
       where: {

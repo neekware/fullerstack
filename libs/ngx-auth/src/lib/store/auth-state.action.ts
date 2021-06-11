@@ -1,11 +1,11 @@
-import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import { UserCreateInput, UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 
 export class Initialize {
   static type = '[AUTH] Initialize';
 }
 export class LoginRequest {
   static type = '[AUTH] LoginRequest';
-  constructor(readonly payload: gqlSchema.UserCredentialsInput) {}
+  constructor(readonly payload: UserCredentialsInput) {}
 }
 export class LoginSuccess {
   static type = '[AUTH] LoginSuccess';
@@ -16,7 +16,7 @@ export class LoginFailure {
 }
 export class RegisterRequest {
   static type = '[AUTH] RegisterRequest';
-  constructor(readonly payload: gqlSchema.UserCreateInput) {}
+  constructor(readonly payload: UserCreateInput) {}
 }
 export class RegisterSuccess {
   static type = '[AUTH] RegisterSuccess';

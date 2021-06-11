@@ -9,7 +9,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
 import { AuthAsyncValidation } from '@fullerstack/ngx-auth';
-import * as gqlSchema from '@fullerstack/ngx-gql/schema';
+import { UserCreateInput } from '@fullerstack/ngx-gql/schema';
 import { I18nService, _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 
@@ -21,7 +21,7 @@ import { ValidationService } from '@fullerstack/ngx-util';
 })
 export class RegisterFormComponent implements OnInit {
   form: FormGroup;
-  @Output() submit$ = new EventEmitter<gqlSchema.UserCreateInput>();
+  @Output() submit$ = new EventEmitter<UserCreateInput>();
   @Input() autocomplete = 'off';
   @Input() title = _('COMMON.REGISTER');
   @Input() subtitle = _('COMMON.ACCOUNT_CREATE');

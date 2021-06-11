@@ -7,11 +7,11 @@ import {
 } from '@fullerstack/nsx-auth';
 import { PaginationArgs } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { NotFoundException, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
 
-import { UserDto, UserUpdateAdvancedInput, UserUpdateInput } from './user.model';
+import { UserDto, UserSelfUpdateInput, UserUpdateInput, UserWhereByIdInput } from './user.model';
 import { UserOrder } from './user.order';
 import { UserDataAccessScope } from './user.scope';
 import { UserService } from './user.service';
@@ -28,13 +28,10 @@ export class UserResolver {
 
   @UseGuards(AuthGuardGql)
   @Mutation(() => UserDto, { description: "Update user's own info" })
-  async userUpdateSelf(
+  async userSelfUpdate(
     @UserDecorator() currentUser: User,
-    @Args('input') payload: UserUpdateInput
+    @Args('input') payload: UserSelfUpdateInput
   ) {
-    if (currentUser.id !== payload.id) {
-      throw new UnauthorizedException('Error - Insufficient access');
-    }
     const user = await this.userService.updateUser(currentUser.id, payload);
     return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
@@ -42,25 +39,18 @@ export class UserResolver {
   @UseRoles({ exclude: [Role.USER] })
   @UseGuards(AuthGuardGql, AuthGuardRole)
   @Query(() => UserDto, { description: 'Get other user info' })
-  async user(@UserDecorator() currentUser: User, @Args('input') userData: UserUpdateAdvancedInput) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userData.id },
-    });
-
-    if (!user) {
-      throw new NotFoundException('Error - User not found');
+  async user(@UserDecorator() currentUser: User, @Args('input') input: UserWhereByIdInput) {
+    const user = await this.prisma.user.findUnique({ where: { id: input.id } });
+    if (user) {
+      return UserDataAccessScope.getSecuredUser(user, currentUser);
     }
-
-    return UserDataAccessScope.getSecuredUser(user, currentUser);
+    throw new NotFoundException('Error - User not found');
   }
 
   @UseRoles({ exclude: [Role.USER] })
   @UseGuards(AuthGuardGql, AuthGuardRole)
   @Mutation(() => UserDto, { description: 'Privileged user update' })
-  async userUpdate(
-    @UserDecorator() currentUser: User,
-    @Args('input') userData: UserUpdateAdvancedInput
-  ) {
+  async userUpdate(@UserDecorator() currentUser: User, @Args('input') userData: UserUpdateInput) {
     await this.userService.canUpdateUser(currentUser, userData.id);
     const user = await this.userService.updateUser(userData.id, userData);
     return UserDataAccessScope.getSecuredUser(user, currentUser);

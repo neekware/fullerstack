@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navbarLinks = {
     profile: {
       title: _('COMMON.PROFILE'),
-      path: '/profile/update',
+      path: '/user/profile/update',
       icon: 'account',
     },
     settings: {

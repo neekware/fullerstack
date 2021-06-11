@@ -1,0 +1,33 @@
+<form [formGroup]="form" (submit)="submit()" [autocomplete]="autocomplete" fxLayout="column">
+  <mat-form-field>
+    <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
+    <input matInput formControlName="firstName" placeholder="{{ 'COMMON.FIRST_NAME' | translate }}" />
+    <fullerstack-hint
+      [control]="form?.controls?.firstName"
+      [isTouched]="form?.controls?.firstName?.touched"
+      [hint]="firstNameHint"
+    ></fullerstack-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-icon matSuffix color="primary" svgIcon="account-multiple"></mat-icon>
+    <input matInput formControlName="lastName" placeholder="{{ 'COMMON.LAST_NAME' | translate }}" />
+    <fullerstack-hint
+      [control]="form?.controls?.lastName"
+      [isTouched]="form?.controls?.lastName?.touched"
+      [hint]="lastNameHint"
+    ></fullerstack-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
+    <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
+    <fullerstack-hint [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched" [hint]="emailHint"></fullerstack-hint>
+  </mat-form-field>
+
+  <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
+    <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
+      {{ 'COMMON.UPDATE' | translate }}
+    </button>
+  </div>
+</form>
