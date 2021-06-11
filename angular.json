@@ -876,28 +876,6 @@
         }
       }
     },
-    "cache-store": {
-      "projectType": "library",
-      "root": "libs/cache-store",
-      "sourceRoot": "libs/cache-store/src",
-      "prefix": "fullerstack",
-      "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/cache-store"],
-          "options": {
-            "jestConfig": "libs/cache-store/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/cache-store/src/**/*.ts", "libs/cache-store/src/**/*.html"]
-          }
-        }
-      }
-    },
     "ngx-cachify": {
       "projectType": "library",
       "root": "libs/ngx-cachify",

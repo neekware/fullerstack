@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpHeaders } from '@angular/common/http';
-import { merge as ldMerge } from 'lodash';
+import { merge as ldNestedMerge } from 'lodash-es';
 
 import { DefaultFetchPolicies, DefaultInterpolationOptions } from './cachify.default';
 import {
@@ -35,7 +36,7 @@ export const interpolate = (
   params: { [id: string]: string | number },
   options?: InterpolationOptions
 ): string => {
-  options = ldMerge(DefaultInterpolationOptions, options || {});
+  options = ldNestedMerge(DefaultInterpolationOptions, options || {});
   let output = template(inputString, params);
   if (options.singleSpace) {
     output = output.replace(/\s+/g, ' ');

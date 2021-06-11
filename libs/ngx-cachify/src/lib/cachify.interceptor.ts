@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -60,8 +61,10 @@ export class CachifyInterceptor implements HttpInterceptor {
    * Removes intercept meta data from http headers
    * @param request Intercepted request
    */
-  private cleanMeta(req: HttpRequest<any>) {
-    [CACHIFY_TTL, CACHIFY_KEY, CACHIFY_FETCH_POLICY].forEach((item) => req.headers.delete(item));
+  private cleanMeta(request: HttpRequest<any>) {
+    [CACHIFY_TTL, CACHIFY_KEY, CACHIFY_FETCH_POLICY].forEach((item) =>
+      request.headers.delete(item)
+    );
   }
 
   /**
@@ -69,10 +72,10 @@ export class CachifyInterceptor implements HttpInterceptor {
    * @param request Intercepted request
    * @param next Handler for this intercept
    */
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.addUniqueRequestId(req.headers);
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.addUniqueRequestId(request.headers);
 
-    const meta = this.getMeta(req);
+    const meta = this.getMeta(request);
     if (meta && meta.key) {
       const cachedResponse = this.cache.get(meta.key);
       switch (meta.policy) {
@@ -80,17 +83,17 @@ export class CachifyInterceptor implements HttpInterceptor {
           if (cachedResponse) {
             return observableOf(cachedResponse);
           }
-          return this.playItForward(req, next, meta);
+          return this.playItForward(request, next, meta);
 
         case CachifyFetchPolicy.CacheAndNetwork:
           if (cachedResponse) {
-            this.playItForward(req, next, meta);
+            this.playItForward(request, next, meta);
             return observableOf(cachedResponse);
           }
-          return this.playItForward(req, next, meta);
+          return this.playItForward(request, next, meta);
 
         case CachifyFetchPolicy.NetworkOnly:
-          return this.playItForward(req, next, meta);
+          return this.playItForward(request, next, meta);
 
         case CachifyFetchPolicy.CacheOnly:
           if (cachedResponse) {
@@ -99,10 +102,10 @@ export class CachifyInterceptor implements HttpInterceptor {
           return throwError(new HttpErrorResponse({}));
 
         case CachifyFetchPolicy.CacheOff:
-          return this.playItForward(req, next, meta);
+          return this.playItForward(request, next, meta);
       }
     }
-    return this.playItForward(req, next);
+    return this.playItForward(request, next);
   }
 
   /**

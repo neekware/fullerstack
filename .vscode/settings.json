@@ -59,6 +59,7 @@
     "minlength",
     "nestjs",
     "ngxs",
+    "packagr",
     "pageview",
     "rehydrated",
     "screenfull",
