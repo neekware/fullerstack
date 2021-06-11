@@ -1,5 +1,4 @@
-import { interpolate } from '@fullerstack/agx-util';
-
+import { interpolate } from './cachify.interpolate';
 import { OrderedStatePath } from './cachify.util';
 
 describe('Cachify:Util', () => {
