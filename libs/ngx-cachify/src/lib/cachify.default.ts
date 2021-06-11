@@ -52,7 +52,7 @@ export const DefaultMaxCacheExpiry = 60 * 60 * 24 * 30;
  * Default cache context meta data
  */
 export const DefaultContextMeta: CachifyContextMeta = {
-  key: undefined,
+  key: null,
   ttl: DEFAULT_CACHE_EXPIRY,
   policy: DefaultFetchPolicy,
 };
