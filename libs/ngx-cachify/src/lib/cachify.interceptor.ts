@@ -23,25 +23,6 @@ export class CachifyInterceptor implements HttpInterceptor {
   constructor(private cache: CachifyService) {}
 
   /**
-   * Inserts a unique identifier to each requests headers.
-   * The purpose is for client request / server response / log correlation.
-   * @param headers Http headers
-   */
-  private addUniqueRequestId(headers: HttpHeaders) {
-    const uuid = uuidV4();
-    headers.set('X-Request-ID', uuid).set('X-Correlation-ID', uuid);
-  }
-
-  private getContextMeta(request: HttpRequest<any>): CachifyContextMeta {
-    const meta =
-      request.context.get<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN) || DefaultContextMeta;
-    if (!isPolicyEnabled(meta.policy)) {
-      throw Error(`Error: Invalid fetch policy (${meta.policy})`);
-    }
-    return meta;
-  }
-
-  /**
    * The logic to handle the cache intercept per meta data instructions
    * @param request Intercepted request
    * @param next Handler for this intercept
@@ -110,5 +91,24 @@ export class CachifyInterceptor implements HttpInterceptor {
         }
       })
     );
+  }
+
+  /**
+   * Inserts a unique identifier to each requests headers.
+   * The purpose is for client request / server response / log correlation.
+   * @param headers Http headers
+   */
+  private addUniqueRequestId(headers: HttpHeaders) {
+    const uuid = uuidV4();
+    headers.set('X-Request-ID', uuid).set('X-Correlation-ID', uuid);
+  }
+
+  private getContextMeta(request: HttpRequest<any>): CachifyContextMeta {
+    const meta =
+      request.context.get<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN) || DefaultContextMeta;
+    if (!isPolicyEnabled(meta.policy)) {
+      throw Error(`Error: Invalid fetch policy (${meta.policy})`);
+    }
+    return meta;
   }
 }
