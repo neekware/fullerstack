@@ -1,13 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpContextToken, HttpHeaders } from '@angular/common/http';
 import { merge as ldNestedMerge } from 'lodash-es';
 
-import {
-  DefaultContextMeta,
-  DefaultFetchPolicies,
-  DefaultInterpolationOptions,
-} from './cachify.default';
-import { CachifyContextMeta, InterpolationOptions } from './cachify.model';
+import { DefaultFetchPolicies, DefaultInterpolationOptions } from './cachify.default';
+import { InterpolationOptions } from './cachify.model';
 
 /**
  * Checks if an object is a function
