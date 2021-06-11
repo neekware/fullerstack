@@ -32,7 +32,7 @@ export class CachifyInterceptor implements HttpInterceptor {
     this.addUniqueRequestId(request.headers);
     const meta = this.getContextMeta(request);
 
-    if (meta && meta.key) {
+    if (meta?.key) {
       const cachedResponse = this.cache.get(meta.key);
       switch (meta.policy) {
         case CachifyFetchPolicy.CacheFirst:
