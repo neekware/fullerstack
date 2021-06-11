@@ -1,11 +1,11 @@
 import { TestBed, async } from '@angular/core/testing';
 
-import { CacheStoreModule } from './cache-store.module';
+import { CachifyModule } from './cachify.module';
 
-describe('CacheStoreModule', () => {
+describe('CachifyModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CacheStoreModule],
+      imports: [CachifyModule],
     }).compileComponents();
   }));
 
@@ -14,6 +14,6 @@ describe('CacheStoreModule', () => {
   // NB: This particular test does not do anything useful.
   //     It does NOT check for correct instantiation of the module.
   it('should have a module definition', () => {
-    expect(CacheStoreModule).toBeDefined();
+    expect(CachifyModule).toBeDefined();
   });
 });

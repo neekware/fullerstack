@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'cache-store',
+  displayName: 'cachify',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../coverage/libs/cache-store',
+  coverageDirectory: '../../coverage/libs/cachify',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
