@@ -66,7 +66,6 @@ export class AuthService implements OnDestroy {
     });
 
     logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
-    this.gql.promoteError(this.refreshDispatch.bind(this));
     this.refreshDispatch();
   }
 

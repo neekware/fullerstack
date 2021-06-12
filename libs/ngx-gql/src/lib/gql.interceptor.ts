@@ -15,13 +15,17 @@ export class GqlInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    request = request.clone({
+      withCredentials: true,
+    });
+
     if (this.gql && request.url.includes(`${this.gql.options.gql.endpoint}`)) {
-      const nextReq = request.clone({
+      request = request.clone({
         headers: request.headers
           .set('Cache-Control', 'no-cache, no-store')
           .set('Pragma', 'no-cache'),
+        responseType: 'json',
       });
-      return next.handle(nextReq);
     }
 
     return next.handle(request);

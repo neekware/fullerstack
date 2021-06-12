@@ -1,19 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { GqlService } from '@fullerstack/ngx-gql';
+import { GqlResponseBody, GqlService, makeGqlBody } from '@fullerstack/ngx-gql';
 import {
   AuthLoginMutation,
   AuthLogoutMutation,
   AuthRefreshTokenMutation,
   AuthRegisterMutation,
 } from '@fullerstack/ngx-gql/operations';
-import {
-  UserCreateInput,
-  UserCredentialsInput,
-  authLogin,
-  authLogout,
-  authRefreshToken,
-  authRegister,
-} from '@fullerstack/ngx-gql/schema';
+import { UserCreateInput, UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
@@ -31,6 +25,7 @@ export class AuthEffectsService implements OnDestroy {
   private destroy$ = new Subject<boolean>();
 
   constructor(
+    readonly http: HttpClient,
     readonly store: Store,
     readonly msg: MsgService,
     readonly gtag: GTagService,
@@ -40,15 +35,10 @@ export class AuthEffectsService implements OnDestroy {
 
   loginRequest(input: UserCredentialsInput): Observable<unknown> {
     this.logger.debug('Login request sent ...');
-    return this.gql
-      .mutate<authLogin>({
-        mutation: AuthLoginMutation,
-        variables: { input },
-      })
+    return this.http
+      .post(this.gql.options.gql.endpoint, makeGqlBody(AuthLoginMutation, { input }))
       .pipe(
-        map(({ data }) => {
-          return data.authLogin;
-        }),
+        map((resp: GqlResponseBody) => resp.data.authLogin),
         map((resp) => {
           if (resp.ok) {
             this.gtag.trackEvent('login', {
@@ -83,13 +73,10 @@ export class AuthEffectsService implements OnDestroy {
 
   registerRequest(input: UserCreateInput): Observable<unknown> {
     this.logger.debug('Register request sent ...');
-    return this.gql
-      .mutate<authRegister>({
-        mutation: AuthRegisterMutation,
-        variables: { input },
-      })
+    return this.http
+      .post(this.gql.options.gql.endpoint, makeGqlBody(AuthRegisterMutation, { input }))
       .pipe(
-        map(({ data }) => data.authRegister),
+        map((resp: GqlResponseBody) => resp.data.authRegister),
         map((resp) => {
           this.gtag.trackEvent('register', {
             method: 'password',
@@ -124,12 +111,10 @@ export class AuthEffectsService implements OnDestroy {
 
   tokenRefreshRequest(): Observable<unknown> {
     this.logger.debug('Token refresh request sent ...');
-    return this.gql
-      .mutate<authRefreshToken>({
-        mutation: AuthRefreshTokenMutation,
-      })
+    return this.http
+      .post(this.gql.options.gql.endpoint, makeGqlBody(AuthRefreshTokenMutation))
       .pipe(
-        map(({ data }) => data.authRefreshToken),
+        map((resp: GqlResponseBody) => resp.data.authRefreshToken),
         map((resp) => {
           if (resp.ok) {
             this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
@@ -153,39 +138,35 @@ export class AuthEffectsService implements OnDestroy {
 
   logoutRequest(): Observable<unknown> {
     this.logger.debug('Logout request sent ...');
-    return this.gql
-      .mutate<authLogout>({
-        mutation: AuthLogoutMutation,
+    return this.http.post(this.gql.options.gql.endpoint, makeGqlBody(AuthLogoutMutation)).pipe(
+      map((resp: GqlResponseBody) => resp.data.authLogout),
+      map((resp) => {
+        if (resp.ok) {
+          this.gtag.trackEvent('logout', {
+            event_category: 'auth',
+            event_label: 'logout success',
+          });
+          this.msg.setMsg(AuthMessageMap.success.logout);
+          return this.store.dispatch(new actions.LogoutSuccess());
+        }
+        this.gtag.trackEvent('logout_failed', {
+          event_category: 'auth',
+          event_label: resp.message,
+        });
+        this.logger.error(resp.message);
+        this.msg.setMsg(AuthMessageMap.error.logout);
+        return this.store.dispatch(new actions.LogoutFailure());
+      }),
+      catchError((error) => {
+        this.gtag.trackEvent('logout_failed', {
+          event_category: 'auth',
+          event_label: error.message,
+        });
+        this.logger.error(error);
+        this.msg.setMsg(AuthMessageMap.error.server);
+        return this.store.dispatch(new actions.LogoutFailure());
       })
-      .pipe(
-        map(({ data }) => data.authLogout),
-        map((resp) => {
-          if (resp.ok) {
-            this.gtag.trackEvent('logout', {
-              event_category: 'auth',
-              event_label: 'logout success',
-            });
-            this.msg.setMsg(AuthMessageMap.success.logout);
-            return this.store.dispatch(new actions.LogoutSuccess());
-          }
-          this.gtag.trackEvent('logout_failed', {
-            event_category: 'auth',
-            event_label: resp.message,
-          });
-          this.logger.error(resp.message);
-          this.msg.setMsg(AuthMessageMap.error.logout);
-          return this.store.dispatch(new actions.LogoutFailure());
-        }),
-        catchError((error) => {
-          this.gtag.trackEvent('logout_failed', {
-            event_category: 'auth',
-            event_label: error.message,
-          });
-          this.logger.error(error);
-          this.msg.setMsg(AuthMessageMap.error.server);
-          return this.store.dispatch(new actions.LogoutFailure());
-        })
-      );
+    );
   }
 
   ngOnDestroy() {

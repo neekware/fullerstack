@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { GqlService } from '@fullerstack/ngx-gql';
+import { GqlResponseBody, GqlService, makeGqlBody } from '@fullerstack/ngx-gql';
 import { AuthIsEmailAvailable } from '@fullerstack/ngx-gql/operations';
 import { isEmailAvailable } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
@@ -9,7 +10,7 @@ import { catchError, map, switchMapTo, take } from 'rxjs/operators';
 
 @Injectable()
 export class AuthAsyncValidation {
-  constructor(readonly gql: GqlService, readonly gtag: GTagService) {}
+  constructor(readonly http: HttpClient, readonly gql: GqlService, readonly gtag: GTagService) {}
 
   validateEmailAvailability(debounce = 600): AsyncValidatorFn {
     return (
@@ -20,15 +21,10 @@ export class AuthAsyncValidation {
   }
 
   isEmailAvailable(email: string): Observable<unknown> {
-    return this.gql
-      .mutate<isEmailAvailable>({
-        mutation: AuthIsEmailAvailable,
-        variables: { email },
-      })
+    return this.http
+      .post(this.gql.options.gql.endpoint, makeGqlBody(AuthIsEmailAvailable, { email }))
       .pipe(
-        map(({ data }) => {
-          return data.isEmailAvailable;
-        }),
+        map((resp: GqlResponseBody) => resp.data.isEmailAvailable),
         map((resp) => {
           this.gtag.trackEvent('email_available', {
             method: 'query',
