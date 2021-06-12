@@ -15,10 +15,6 @@ export class GqlInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    request = request.clone({
-      withCredentials: true,
-    });
-
     if (this.gql && request.url.includes(`${this.gql.options.gql.endpoint}`)) {
       request = request.clone({
         headers: request.headers

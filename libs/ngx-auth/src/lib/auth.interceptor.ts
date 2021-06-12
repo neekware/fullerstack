@@ -16,6 +16,10 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // include cookie in all request
+    request = request.clone({ withCredentials: true });
+
+    // include token only/if we have one
     if (this.auth && this.auth.state.token) {
       request = request.clone({
         setHeaders: {
