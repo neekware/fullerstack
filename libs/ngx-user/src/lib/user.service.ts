@@ -1,12 +1,7 @@
-import { HttpClient, HttpContext } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
-import {
-  CACHIFY_CONTEXT_TOKEN,
-  CachifyContextMeta,
-  CachifyFetchPolicy,
-  makeContext,
-} from '@fullerstack/ngx-cachify';
+import { CachifyFetchPolicy, makeCachifyContext } from '@fullerstack/ngx-cachify';
 import { GqlResponseBody, GqlService, makeGqlBody } from '@fullerstack/ngx-gql';
 import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
 import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
@@ -17,7 +12,7 @@ import { ExecutionResult } from 'graphql';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
-import { DefaultUser, UserMessageMap } from './user.default';
+import { DefaultUser } from './user.default';
 
 export interface FetchResult<
   TData = {
@@ -66,7 +61,7 @@ export class UserService {
     this.msg.reset();
     return this.http
       .post(this.gql.options.gql.endpoint, makeGqlBody(UserSelfQuery), {
-        context: makeContext({
+        context: makeCachifyContext({
           key: 'UserSelfQuery',
           policy: CachifyFetchPolicy.CacheAndNetwork,
           ttl: 100,
@@ -104,7 +99,7 @@ export class UserService {
     this.msg.reset();
     return this.http
       .post(this.auth.options.gql.endpoint, makeGqlBody(UserSelfUpdateMutation, { input }), {
-        context: makeContext({
+        context: makeCachifyContext({
           key: 'UserSelfUpdateMutation',
           policy: CachifyFetchPolicy.CacheAndNetwork,
           ttl: 100,

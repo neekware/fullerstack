@@ -75,6 +75,6 @@ export function isPolicyEnabled(policy: string): boolean {
  * @param meta http metadata passed in as context
  * @returns context object
  */
-export function makeContext(meta: CachifyContextMeta) {
+export function makeCachifyContext(meta: CachifyContextMeta) {
   return new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, meta);
 }
