@@ -5,6 +5,7 @@ import {
   CACHIFY_CONTEXT_TOKEN,
   CachifyContextMeta,
   CachifyFetchPolicy,
+  makeContext,
 } from '@fullerstack/ngx-cachify';
 import { GqlResponseBody, GqlService, makeGqlBody } from '@fullerstack/ngx-gql';
 import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
@@ -65,7 +66,7 @@ export class UserService {
     this.msg.reset();
     return this.http
       .post(this.gql.options.gql.endpoint, makeGqlBody(UserSelfQuery), {
-        context: new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, {
+        context: makeContext({
           key: 'UserSelfQuery',
           policy: CachifyFetchPolicy.CacheAndNetwork,
           ttl: 100,
@@ -103,7 +104,7 @@ export class UserService {
     this.msg.reset();
     return this.http
       .post(this.auth.options.gql.endpoint, makeGqlBody(UserSelfUpdateMutation, { input }), {
-        context: new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, {
+        context: makeContext({
           key: 'UserSelfUpdateMutation',
           policy: CachifyFetchPolicy.CacheAndNetwork,
           ttl: 100,

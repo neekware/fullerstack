@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { DefaultFetchPolicies } from './cachify.default';
+import { HttpContext } from '@angular/common/http';
+
+import { CACHIFY_CONTEXT_TOKEN, DefaultFetchPolicies } from './cachify.default';
+import { CachifyContextMeta } from './cachify.model';
 
 /**
  * Class to create ordered path to our internal state/store
@@ -65,4 +68,13 @@ export function isPolicyEnabled(policy: string): boolean {
     (key) => DefaultFetchPolicies[key] === policy
   );
   return !!enabled;
+}
+
+/**
+ * Returns cachify meta data
+ * @param meta http metadata passed in as context
+ * @returns context object
+ */
+export function makeContext(meta: CachifyContextMeta) {
+  return new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, meta);
 }
