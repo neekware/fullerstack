@@ -70,9 +70,8 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
   providers: [
     ValidationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: GqlInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: CachifyInterceptor, multi: true },
-
+    { provide: HTTP_INTERCEPTORS, useClass: GqlInterceptor, multi: true },
   ],
 
   bootstrap: [AppComponent],

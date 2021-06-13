@@ -68,7 +68,7 @@ export const CACHIFY_META = '__CACHIFY_META__';
 export interface CachifyContextMeta {
   policy: CachifyFetchPolicy;
   key: string;
-  ttl: number;
+  ttl?: number;
 }
 
 /**

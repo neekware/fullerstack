@@ -1,15 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
+import {
+  CACHIFY_CONTEXT_TOKEN,
+  CachifyContextMeta,
+  CachifyFetchPolicy,
+} from '@fullerstack/ngx-cachify';
 import { GqlResponseBody, GqlService, makeGqlBody } from '@fullerstack/ngx-gql';
 import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
-import {
-  User,
-  UserSelfUpdateInput,
-  user,
-  userSelf,
-  userSelfUpdate,
-} from '@fullerstack/ngx-gql/schema';
+import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
@@ -64,10 +63,18 @@ export class UserService {
   userSelf(): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
-    return this.http.post(this.gql.options.gql.endpoint, makeGqlBody(UserSelfQuery)).pipe(
-      map((resp: GqlResponseBody) => resp.data.userSelf),
-      tap(() => (this.isLoading = false))
-    );
+    return this.http
+      .post(this.gql.options.gql.endpoint, makeGqlBody(UserSelfQuery), {
+        context: new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, {
+          key: 'UserSelfQuery',
+          policy: CachifyFetchPolicy.CacheAndNetwork,
+          ttl: 100,
+        }),
+      })
+      .pipe(
+        map((resp: GqlResponseBody) => resp.data.userSelf),
+        tap(() => (this.isLoading = false))
+      );
 
     // this.isLoading = true;
     // this.msg.reset();
@@ -95,7 +102,13 @@ export class UserService {
     this.isLoading = true;
     this.msg.reset();
     return this.http
-      .post(this.auth.options.gql.endpoint, makeGqlBody(UserSelfUpdateMutation, { input }))
+      .post(this.auth.options.gql.endpoint, makeGqlBody(UserSelfUpdateMutation, { input }), {
+        context: new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, {
+          key: 'UserSelfUpdateMutation',
+          policy: CachifyFetchPolicy.CacheAndNetwork,
+          ttl: 100,
+        }),
+      })
       .pipe(
         catchError((error) => {
           if (error.error instanceof ErrorEvent) {

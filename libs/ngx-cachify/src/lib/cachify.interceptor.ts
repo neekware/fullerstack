@@ -77,7 +77,7 @@ export class CachifyInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       tap((event) => {
-        if (event instanceof HttpResponse && meta?.key) {
+        if (event instanceof HttpResponse && event.type && meta?.key) {
           switch (meta.policy) {
             case CachifyFetchPolicy.CacheFirst:
             case CachifyFetchPolicy.CacheAndNetwork:
