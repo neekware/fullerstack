@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { GqlResponseBody, GqlService, makeGqlBody } from '@fullerstack/ngx-gql';
+import { GqlResponseBody, GqlService } from '@fullerstack/ngx-gql';
 import {
   AuthLoginMutation,
   AuthLogoutMutation,
@@ -35,110 +35,104 @@ export class AuthEffectsService implements OnDestroy {
 
   loginRequest(input: UserCredentialsInput): Observable<unknown> {
     this.logger.debug('Login request sent ...');
-    return this.http
-      .post(this.gql.options.gql.endpoint, makeGqlBody(AuthLoginMutation, { input }))
-      .pipe(
-        map((resp: GqlResponseBody) => resp.data.authLogin),
-        map((resp) => {
-          if (resp.ok) {
-            this.gtag.trackEvent('login', {
-              method: 'password',
-              event_category: 'auth',
-              event_label: 'login success',
-            });
-            this.msg.setMsg(AuthMessageMap.success.login);
-            return this.store.dispatch(new actions.LoginSuccess(resp.token));
-          }
-          this.gtag.trackEvent('login_failed', {
+    return this.gql.client.request(AuthLoginMutation, { input }).pipe(
+      map((resp: GqlResponseBody) => resp.data.authLogin),
+      map((resp) => {
+        if (resp.ok) {
+          this.gtag.trackEvent('login', {
             method: 'password',
             event_category: 'auth',
-            event_label: resp.message,
+            event_label: 'login success',
           });
-          this.logger.error(resp.message);
-          this.msg.setMsg(AuthMessageMap.error.login);
-          return this.store.dispatch(new actions.LoginFailure());
-        }),
-        catchError((error) => {
-          this.gtag.trackEvent('login_failed', {
-            method: 'password',
-            event_category: 'auth',
-            event_label: error.message,
-          });
-          this.logger.error(error);
-          this.msg.setMsg(AuthMessageMap.error.server);
-          return this.store.dispatch(new actions.LoginFailure());
-        })
-      );
+          this.msg.setMsg(AuthMessageMap.success.login);
+          return this.store.dispatch(new actions.LoginSuccess(resp.token));
+        }
+        this.gtag.trackEvent('login_failed', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: resp.message,
+        });
+        this.logger.error(resp.message);
+        this.msg.setMsg(AuthMessageMap.error.login);
+        return this.store.dispatch(new actions.LoginFailure());
+      }),
+      catchError((error) => {
+        this.gtag.trackEvent('login_failed', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: error.message,
+        });
+        this.logger.error(error);
+        this.msg.setMsg(AuthMessageMap.error.server);
+        return this.store.dispatch(new actions.LoginFailure());
+      })
+    );
   }
 
   registerRequest(input: UserCreateInput): Observable<unknown> {
     this.logger.debug('Register request sent ...');
-    return this.http
-      .post(this.gql.options.gql.endpoint, makeGqlBody(AuthRegisterMutation, { input }))
-      .pipe(
-        map((resp: GqlResponseBody) => resp.data.authRegister),
-        map((resp) => {
-          this.gtag.trackEvent('register', {
-            method: 'password',
-            event_category: 'auth',
-            event_label: 'register success',
-          });
-          if (resp.ok) {
-            this.msg.setMsg(AuthMessageMap.success.register);
-            return this.store.dispatch(new actions.RegisterSuccess(resp.token));
-          }
-          this.gtag.trackEvent('register_failed', {
-            method: 'password',
-            event_category: 'auth',
-            event_label: resp.message,
-          });
-          this.logger.error(resp.message);
-          this.msg.setMsg(AuthMessageMap.error.register);
-          return this.store.dispatch(new actions.RegisterFailure());
-        }),
-        catchError((error) => {
-          this.gtag.trackEvent('register_failed', {
-            method: 'password',
-            event_category: 'auth',
-            event_label: error.message,
-          });
-          this.logger.error(error);
-          this.msg.setMsg(AuthMessageMap.error.server);
-          return this.store.dispatch(new actions.RegisterFailure());
-        })
-      );
+    return this.gql.client.request(AuthRegisterMutation, { input }).pipe(
+      map((resp: GqlResponseBody) => resp.data.authRegister),
+      map((resp) => {
+        this.gtag.trackEvent('register', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: 'register success',
+        });
+        if (resp.ok) {
+          this.msg.setMsg(AuthMessageMap.success.register);
+          return this.store.dispatch(new actions.RegisterSuccess(resp.token));
+        }
+        this.gtag.trackEvent('register_failed', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: resp.message,
+        });
+        this.logger.error(resp.message);
+        this.msg.setMsg(AuthMessageMap.error.register);
+        return this.store.dispatch(new actions.RegisterFailure());
+      }),
+      catchError((error) => {
+        this.gtag.trackEvent('register_failed', {
+          method: 'password',
+          event_category: 'auth',
+          event_label: error.message,
+        });
+        this.logger.error(error);
+        this.msg.setMsg(AuthMessageMap.error.server);
+        return this.store.dispatch(new actions.RegisterFailure());
+      })
+    );
   }
 
   tokenRefreshRequest(): Observable<unknown> {
     this.logger.debug('Token refresh request sent ...');
-    return this.http
-      .post(this.gql.options.gql.endpoint, makeGqlBody(AuthRefreshTokenMutation))
-      .pipe(
-        map((resp: GqlResponseBody) => resp.data.authRefreshToken),
-        map((resp) => {
-          if (resp.ok) {
-            this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
-            return resp.token;
-          }
-          this.store.dispatch(new actions.LogoutRequest());
-          return null;
-        }),
-        catchError((error) => {
-          this.gtag.trackEvent('refresh_token_failed', {
-            method: 'token',
-            event_category: 'auth',
-            event_label: error.message,
-          });
-          this.logger.error(error);
-          this.msg.setMsg(AuthMessageMap.error.server);
-          return null;
-        })
-      );
+    return this.gql.client.request(AuthRefreshTokenMutation).pipe(
+      map((resp: GqlResponseBody) => resp.data.authRefreshToken),
+      map((resp) => {
+        if (resp.ok) {
+          this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
+          return resp.token;
+        }
+        this.store.dispatch(new actions.LogoutRequest());
+        return null;
+      }),
+      catchError((error) => {
+        this.gtag.trackEvent('refresh_token_failed', {
+          method: 'token',
+          event_category: 'auth',
+          event_label: error.message,
+        });
+        this.logger.error(error);
+        this.msg.setMsg(AuthMessageMap.error.server);
+        return null;
+      })
+    );
   }
 
   logoutRequest(): Observable<unknown> {
     this.logger.debug('Logout request sent ...');
-    return this.http.post(this.gql.options.gql.endpoint, makeGqlBody(AuthLogoutMutation)).pipe(
+    return this.gql.client.request(AuthLogoutMutation).pipe(
       map((resp: GqlResponseBody) => resp.data.authLogout),
       map((resp) => {
         if (resp.ok) {

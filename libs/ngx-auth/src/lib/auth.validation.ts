@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { GqlResponseBody, GqlService, makeGqlBody } from '@fullerstack/ngx-gql';
+import { GqlResponseBody, GqlService } from '@fullerstack/ngx-gql';
 import { AuthIsEmailAvailable } from '@fullerstack/ngx-gql/operations';
 import { isEmailAvailable } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
@@ -21,26 +21,24 @@ export class AuthAsyncValidation {
   }
 
   isEmailAvailable(email: string): Observable<unknown> {
-    return this.http
-      .post(this.gql.options.gql.endpoint, makeGqlBody(AuthIsEmailAvailable, { email }))
-      .pipe(
-        map((resp: GqlResponseBody) => resp.data.isEmailAvailable),
-        map((resp) => {
-          this.gtag.trackEvent('email_available', {
-            method: 'query',
-            event_category: 'auth',
-            event_label: email,
-          });
-          return resp.ok ? null : { emailInUse: true };
-        }),
-        catchError((error) => {
-          this.gtag.trackEvent('email_available_failed', {
-            method: 'query',
-            event_category: 'auth',
-            event_label: `(${email} ): ${error.message}`,
-          });
-          return of({ serverError: true });
-        })
-      );
+    return this.gql.client.request(AuthIsEmailAvailable, { email }).pipe(
+      map((resp: GqlResponseBody) => resp.data.isEmailAvailable),
+      map((resp) => {
+        this.gtag.trackEvent('email_available', {
+          method: 'query',
+          event_category: 'auth',
+          event_label: email,
+        });
+        return resp.ok ? null : { emailInUse: true };
+      }),
+      catchError((error) => {
+        this.gtag.trackEvent('email_available_failed', {
+          method: 'query',
+          event_category: 'auth',
+          event_label: `(${email} ): ${error.message}`,
+        });
+        return of({ serverError: true });
+      })
+    );
   }
 }

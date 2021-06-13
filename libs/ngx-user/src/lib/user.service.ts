@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { CachifyFetchPolicy, makeCachifyContext } from '@fullerstack/ngx-cachify';
-import { GqlResponseBody, GqlService, makeGqlBody } from '@fullerstack/ngx-gql';
+import { GqlResponseBody, GqlService, createGqlBody } from '@fullerstack/ngx-gql';
 import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
 import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
@@ -59,14 +59,18 @@ export class UserService {
   userSelf(): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
-    return this.http
-      .post(this.gql.options.gql.endpoint, makeGqlBody(UserSelfQuery), {
-        context: makeCachifyContext({
-          key: 'UserSelfQuery',
-          policy: CachifyFetchPolicy.CacheAndNetwork,
-          ttl: 100,
-        }),
-      })
+    return this.gql.client
+      .request(
+        UserSelfQuery,
+        {},
+        {
+          context: makeCachifyContext({
+            key: 'UserSelfQuery',
+            policy: CachifyFetchPolicy.CacheAndNetwork,
+            ttl: 100,
+          }),
+        }
+      )
       .pipe(
         map((resp: GqlResponseBody) => resp.data.userSelf),
         tap(() => (this.isLoading = false))
@@ -97,14 +101,18 @@ export class UserService {
   userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
-    return this.http
-      .post(this.auth.options.gql.endpoint, makeGqlBody(UserSelfUpdateMutation, { input }), {
-        context: makeCachifyContext({
-          key: 'UserSelfUpdateMutation',
-          policy: CachifyFetchPolicy.CacheAndNetwork,
-          ttl: 100,
-        }),
-      })
+    return this.gql.client
+      .request(
+        UserSelfUpdateMutation,
+        { input },
+        {
+          context: makeCachifyContext({
+            key: 'UserSelfUpdateMutation',
+            policy: CachifyFetchPolicy.CacheAndNetwork,
+            ttl: 100,
+          }),
+        }
+      )
       .pipe(
         catchError((error) => {
           if (error.error instanceof ErrorEvent) {
@@ -155,7 +163,7 @@ export class UserService {
     this.isLoading = true;
     this.msg.reset();
 
-    return this.http.post(this.auth.options.gql.endpoint, makeGqlBody(UserQuery, { id })).pipe(
+    return this.gql.client.request(UserQuery, { id }).pipe(
       map((resp: GqlResponseBody) => resp.data.user),
       tap(() => (this.isLoading = false))
     );
