@@ -1,7 +1,15 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
+import { gqlErrorsConverter } from './gql.error';
 import { GqlService } from './gql.service';
 
 @Injectable()
@@ -22,6 +30,24 @@ export class GqlInterceptor implements HttpInterceptor {
           .set('Pragma', 'no-cache'),
         responseType: 'json',
       });
+      return next.handle(request).pipe(
+        gqlErrorsConverter(),
+        // catchError((error) => {
+        //   if (error.error instanceof ErrorEvent) {
+        //     console.log(`Error: ${error.error.message}`);
+        //   } else {
+        //     console.log(`Error: ${error.message}`);
+        //   }
+        //   return of([]);
+        // }),
+        map((event) => {
+          if (event instanceof HttpResponse && event?.type) {
+            // gqlParseError(event);
+            return event;
+          }
+          return event;
+        })
+      );
     }
 
     return next.handle(request);

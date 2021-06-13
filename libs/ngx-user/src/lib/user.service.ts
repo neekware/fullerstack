@@ -64,7 +64,7 @@ export class UserService {
   userSelf(): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
-    return this.http.post(this.auth.options.gql.endpoint, makeGqlBody(UserSelfQuery)).pipe(
+    return this.http.post(this.gql.options.gql.endpoint, makeGqlBody(UserSelfQuery)).pipe(
       map((resp: GqlResponseBody) => resp.data.userSelf),
       tap(() => (this.isLoading = false))
     );
@@ -97,6 +97,14 @@ export class UserService {
     return this.http
       .post(this.auth.options.gql.endpoint, makeGqlBody(UserSelfUpdateMutation, { input }))
       .pipe(
+        catchError((error) => {
+          if (error.error instanceof ErrorEvent) {
+            console.log(`Error: ${error.error.message}`);
+          } else {
+            console.log(`Error: ${error.message}`);
+          }
+          return of([]);
+        }),
         map((resp: GqlResponseBody) => resp.data.userSelfUpdate),
         tap((user) => {
           this.profile = user as User;

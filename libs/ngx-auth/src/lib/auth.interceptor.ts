@@ -1,7 +1,14 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { Observable } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 
@@ -30,6 +37,13 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      debounceTime(100),
+      map((event) => {
+        if (event instanceof HttpResponse && event?.type) {
+          return event;
+        }
+      })
+    );
   }
 }
