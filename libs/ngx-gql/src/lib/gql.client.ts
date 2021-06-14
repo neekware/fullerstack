@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { GqlHttpOptions, GqlResponseBody, Variables } from './gql.model';
-import { createGqlBody, createHeaders } from './gql.util';
+import { createGqlBody, createGqlHeaders } from './gql.util';
 
 export class GraphQLClient {
   constructor(readonly http: HttpClient, readonly endpoint: string) {}
@@ -18,7 +18,7 @@ export class GraphQLClient {
     const body = createGqlBody(query, variables || {});
     const newOptions = {
       ...cloneDeep(options),
-      headers: createHeaders(options?.headers),
+      headers: createGqlHeaders(options?.headers),
       responseType: options?.responseType ?? 'json',
       withCredentials: options?.withCredentials ?? true,
     };

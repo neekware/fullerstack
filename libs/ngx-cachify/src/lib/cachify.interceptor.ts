@@ -10,12 +10,14 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { cloneDeep } from 'lodash-es';
+import * as objectHash from 'object-hash';
 import { Observable, of, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
 import { CACHIFY_CONTEXT_TOKEN, DefaultContextMeta } from './cachify.default';
-import { CachifyContextMeta, CachifyFetchPolicy } from './cachify.model';
+import { CACHIFY_AUTO_KEY, CachifyContextMeta, CachifyFetchPolicy } from './cachify.model';
 import { CachifyService } from './cachify.service';
 import { isPolicyEnabled } from './cachify.util';
 
@@ -43,7 +45,7 @@ export class CachifyInterceptor implements HttpInterceptor {
 
         case CachifyFetchPolicy.CacheAndNetwork:
           if (cachedResponse) {
-            this.playItForward(request, next, meta);
+            this.playItForward(request, next, meta).subscribe();
             return of(cachedResponse);
           }
           return this.playItForward(request, next, meta);
@@ -110,6 +112,27 @@ export class CachifyInterceptor implements HttpInterceptor {
     if (!isPolicyEnabled(meta.policy)) {
       throw Error(`Error: Invalid fetch policy (${meta.policy})`);
     }
+
+    if (meta?.key === CACHIFY_AUTO_KEY) {
+      meta.key = this.makeRequestCacheKey(request);
+    }
+
     return meta;
+  }
+
+  /**
+   * Given a request object, it will return a unique string to be used as cache key
+   * @param request Http request object
+   * Note: blobs are excluded from the key
+   */
+  private makeRequestCacheKey(req: HttpRequest<any>): string {
+    const uniqueData = {
+      method: req.method,
+      responseType: req.responseType,
+      urlWithParams: req.urlWithParams,
+      ...cloneDeep(req.body || {}),
+      ...cloneDeep(req.headers || {}),
+    };
+    return objectHash(uniqueData);
   }
 }

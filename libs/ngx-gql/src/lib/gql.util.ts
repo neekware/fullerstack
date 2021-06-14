@@ -36,18 +36,17 @@ export function createGqlBody<V = Variables>(doc: DocumentNode, variables?: V): 
  * @param headers caller's header
  * @returns headers with no-cache added
  */
-export function createHeaders(headers = {}): HttpHeaders {
+export function createGqlHeaders(headers = {}): HttpHeaders {
   let httpHeaders = new HttpHeaders();
 
   for (const key of Object.keys(headers)) {
     httpHeaders = httpHeaders.append(key, headers[key]);
   }
 
-  // indicate the request type
-  httpHeaders = httpHeaders.append('RequestType', 'GQL');
-
-  // disable any browser-level caching of gql requests
-  httpHeaders = httpHeaders.set('Cache-Control', 'no-cache, no-store').set('Pragma', 'no-cache');
-
-  return httpHeaders;
+  return httpHeaders
+    .set('Cache-Control', 'no-cache, no-store')
+    .set('Pragma', 'no-cache')
+    .set('Content-Type', 'application/json; charset=utf-8')
+    .set('Accept', 'application/json')
+    .set('RequestFlavor', 'GQL');
 }

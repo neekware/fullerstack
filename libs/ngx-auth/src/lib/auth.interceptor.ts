@@ -1,14 +1,8 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode, JWT_BEARER_REALM } from '@fullerstack/agx-dto';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 import { AuthEffectsService } from './store/auth-state.effect';
@@ -26,12 +20,11 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // include cookie in all request
     request = this.insertToken(request, this.auth?.state.token);
 
     return next.handle(request).pipe(
       catchError((error) => {
-        if (error?.status === HttpStatusCode.UNAUTHORIZED) {
+        if (this.effects && error?.status === HttpStatusCode.UNAUTHORIZED) {
           return this.effects?.tokenRefreshRequest().pipe(
             map((token) => {
               if (!token) {
@@ -44,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
               request = this.insertToken(request, token);
               return next.handle(request);
             })
-          );
+          ) as Observable<HttpEvent<unknown>>;
         }
 
         return throwError(error);
@@ -53,13 +46,10 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private insertToken(request: HttpRequest<unknown>, token: string) {
-    // include token only/if we have one
     if (token) {
       return request.clone({
         setHeaders: {
-          'Content-Type': 'application/json; charset=utf-8',
-          Accept: 'application/json',
-          Authorization: `${JWT_BEARER_REALM} ${this.auth.state.token}`,
+          Authorization: `${JWT_BEARER_REALM} ${token}`,
         },
       });
     }

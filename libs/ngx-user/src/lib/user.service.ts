@@ -8,7 +8,7 @@ import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { ExecutionResult } from 'graphql';
+import * as objectHash from 'object-hash';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
@@ -54,7 +54,7 @@ export class UserService {
         {},
         {
           context: makeCachifyContext({
-            key: 'UserSelfQuery',
+            key: objectHash(createGqlBody(UserSelfQuery)),
             policy: CachifyFetchPolicy.CacheAndNetwork,
             ttl: 60,
           }),

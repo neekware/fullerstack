@@ -60,7 +60,9 @@ export enum CachifyFetchPolicy {
   CacheAndNetwork = 'cache-and-network',
 }
 
-export const CACHIFY_META = '__CACHIFY_META__';
+export const CACHIFY_META = 'CACHIFY_META';
+
+export const CACHIFY_AUTO_KEY = 'CACHIFY_AUTO_KEY';
 
 /**
  * Unique Meta Data for http request
