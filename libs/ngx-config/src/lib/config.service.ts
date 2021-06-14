@@ -9,9 +9,7 @@ import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
 import { CONFIG_TOKEN, DefaultApplicationConfig } from './config.default';
 import { ApplicationConfig, HttpMethod, RemoteType } from './config.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ConfigService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 

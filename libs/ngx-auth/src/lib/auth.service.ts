@@ -25,7 +25,7 @@ import { DefaultAuthState } from './store/auth-state.default';
 import { AuthState } from './store/auth-state.model';
 import { AuthStoreState } from './store/auth-state.store';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   authChanged$ = new BehaviorSubject<AuthState>(DefaultAuthState);

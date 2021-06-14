@@ -16,9 +16,7 @@ import { DefaultI18nConfig, DefaultLanguage, RtlLanguages } from './i18n.default
 import { registerActiveLocales } from './i18n.locale';
 import { AvailableLanguage, LanguageDirection } from './i18n.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class I18nService {
   @Output() languageChanges$ = new EventEmitter<string>();
   private destroy$ = new Subject<boolean>();

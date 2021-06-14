@@ -3,12 +3,11 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { GqlResponseBody, GqlService } from '@fullerstack/ngx-gql';
 import { AuthIsEmailAvailable } from '@fullerstack/ngx-gql/operations';
-import { isEmailAvailable } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { Observable, from, of, timer } from 'rxjs';
 import { catchError, map, switchMapTo, take } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthAsyncValidation {
   constructor(readonly http: HttpClient, readonly gql: GqlService, readonly gtag: GTagService) {}
 

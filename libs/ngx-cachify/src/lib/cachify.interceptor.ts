@@ -21,7 +21,7 @@ import { CACHIFY_AUTO_KEY, CachifyContextMeta, CachifyFetchPolicy } from './cach
 import { CachifyService } from './cachify.service';
 import { isPolicyEnabled } from './cachify.util';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CachifyInterceptor implements HttpInterceptor {
   constructor(private cache: CachifyService) {}
 

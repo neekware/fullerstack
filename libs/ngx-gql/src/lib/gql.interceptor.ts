@@ -12,7 +12,7 @@ import { catchError, map } from 'rxjs/operators';
 import { gqlErrorsConverter } from './gql.error';
 import { GqlService } from './gql.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GqlInterceptor implements HttpInterceptor {
   private gql: GqlService;
 

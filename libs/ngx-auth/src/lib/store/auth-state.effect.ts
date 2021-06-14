@@ -18,9 +18,7 @@ import { catchError, map } from 'rxjs/operators';
 import * as actions from './auth-state.action';
 import { AuthMessageMap } from './auth-state.default';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthEffectsService implements OnDestroy {
   private destroy$ = new Subject<boolean>();
 

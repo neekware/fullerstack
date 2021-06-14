@@ -15,9 +15,7 @@ import { LogColors, LogLevels, LogNames } from './logger.model';
 /**
  * An injectable class that handles logging service
  */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class LoggerService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 

@@ -13,7 +13,7 @@ import { AuthState } from './auth-state.model';
   name: AUTH_STATE_KEY,
   defaults: DefaultAuthState,
 })
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthStoreState {
   constructor(readonly msg: MsgService, readonly effects: AuthEffectsService) {}
 

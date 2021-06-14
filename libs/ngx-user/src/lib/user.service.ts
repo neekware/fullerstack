@@ -14,9 +14,7 @@ import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operato
 
 import { DefaultUser } from './user.default';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class UserService {
   profileChanged$ = new BehaviorSubject<User>(DefaultUser);
   profile: User = DefaultUser;

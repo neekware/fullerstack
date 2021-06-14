@@ -10,7 +10,7 @@ import { LAYOUT_STATE_KEY, LayoutState } from './layout-state.model';
   name: LAYOUT_STATE_KEY,
   defaults: DefaultLayoutState,
 })
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LayoutStoreState {
   @Action([actions.Initialize])
   initializeLayout({ setState }: StateContext<LayoutState>, { payload }: actions.Initialize) {

@@ -15,12 +15,7 @@ import { DefaultCachifyConfig, DefaultMaxCacheExpiry } from './cachify.default';
 import { CachifyEntry } from './cachify.model';
 import { CacheStore } from './cachify.store';
 
-/**
- * An injectable class that handles Cachify service
- */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class CachifyService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private cacheMap = new Map<string, CachifyEntry>();
