@@ -14,17 +14,6 @@ import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operato
 
 import { DefaultUser } from './user.default';
 
-export interface FetchResult<
-  TData = {
-    [key: string]: any;
-  },
-  C = Record<string, any>,
-  E = Record<string, any>
-> extends ExecutionResult {
-  data?: TData | null;
-  extensions?: E;
-  context?: C;
-}
 @Injectable({
   providedIn: 'root',
 })
@@ -67,7 +56,7 @@ export class UserService {
           context: makeCachifyContext({
             key: 'UserSelfQuery',
             policy: CachifyFetchPolicy.CacheAndNetwork,
-            ttl: 100,
+            ttl: 60,
           }),
         }
       )
@@ -101,34 +90,22 @@ export class UserService {
   userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
-    return this.gql.client
-      .request(
-        UserSelfUpdateMutation,
-        { input },
-        {
-          context: makeCachifyContext({
-            key: 'UserSelfUpdateMutation',
-            policy: CachifyFetchPolicy.CacheAndNetwork,
-            ttl: 100,
-          }),
+    return this.gql.client.request(UserSelfUpdateMutation, { input }).pipe(
+      catchError((error) => {
+        if (error.error instanceof ErrorEvent) {
+          console.log(`Error: ${error.error.message}`);
+        } else {
+          console.log(`Error: ${error.message}`);
         }
-      )
-      .pipe(
-        catchError((error) => {
-          if (error.error instanceof ErrorEvent) {
-            console.log(`Error: ${error.error.message}`);
-          } else {
-            console.log(`Error: ${error.message}`);
-          }
-          return of([]);
-        }),
-        map((resp: GqlResponseBody) => resp.data.userSelfUpdate),
-        tap((user) => {
-          this.profile = user as User;
-          this.profileChanged$.next(this.profile);
-          this.isLoading = false;
-        })
-      );
+        return of([]);
+      }),
+      map((resp: GqlResponseBody) => resp.data.userSelfUpdate),
+      tap((user) => {
+        this.profile = user as User;
+        this.profileChanged$.next(this.profile);
+        this.isLoading = false;
+      })
+    );
   }
 
   // userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {

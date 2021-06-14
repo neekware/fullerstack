@@ -105,7 +105,7 @@ export class AuthEffectsService implements OnDestroy {
     );
   }
 
-  tokenRefreshRequest(): Observable<unknown> {
+  tokenRefreshRequest(): Observable<string> {
     this.logger.debug('Token refresh request sent ...');
     return this.gql.client.request(AuthRefreshTokenMutation).pipe(
       map((resp: GqlResponseBody) => resp.data.authRefreshToken),
