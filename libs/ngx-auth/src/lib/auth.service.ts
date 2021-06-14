@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { EventEmitter, Injectable, OnDestroy, Output } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { tryGet } from '@fullerstack/agx-util';
 import {
@@ -22,6 +22,7 @@ import { DeepReadonly } from 'ts-essentials';
 import { DefaultAuthConfig } from './auth.default';
 import * as actions from './store/auth-state.action';
 import { DefaultAuthState } from './store/auth-state.default';
+import { AuthEffectsService } from './store/auth-state.effect';
 import { AuthState } from './store/auth-state.model';
 import { AuthStoreState } from './store/auth-state.store';
 
@@ -44,7 +45,8 @@ export class AuthService implements OnDestroy {
     readonly logger: LoggerService,
     readonly msg: MsgService,
     readonly jwt: JwtService,
-    readonly gql: GqlService
+    readonly gql: GqlService,
+    readonly effects: AuthEffectsService
   ) {
     this.options = ldNestedMerge({ gtag: DefaultAuthConfig }, this.config.options);
 
@@ -54,12 +56,11 @@ export class AuthService implements OnDestroy {
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
-        if (this.state.isLoggedIn !== newState.isLoggedIn) {
-          const prevState = cloneDeep(this.state);
-          this.state = cloneDeep(newState);
-          this.handleRedirect(prevState);
-          this.authChanged$.next(this.state);
-        }
+        const prevState = cloneDeep(this.state);
+        this.state = cloneDeep(newState);
+        this.handleRedirect(prevState);
+        this.authChanged$.next(this.state);
+
         this.isLoading =
           !newState.hasError && (newState.isAuthenticating || newState.isRegistering);
       },
@@ -127,6 +128,10 @@ export class AuthService implements OnDestroy {
 
   refreshDispatch(): Observable<any> {
     return this.store.dispatch(new actions.TokenRefreshRequest());
+  }
+
+  refreshRequest(): Observable<string> {
+    return this.effects.tokenRefreshRequest();
   }
 
   goTo(url: string) {

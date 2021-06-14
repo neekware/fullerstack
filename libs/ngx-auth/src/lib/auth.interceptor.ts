@@ -2,30 +2,31 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode, JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
-import { AuthEffectsService } from './store/auth-state.effect';
 
 @Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
   private auth: AuthService;
-  private effects: AuthEffectsService;
 
   constructor(private injector: Injector) {
     setTimeout(() => {
       this.auth = this.injector.get(AuthService);
-      this.effects = this.injector.get(AuthEffectsService);
     });
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (!this.auth) {
+      return next.handle(request);
+    }
+
     request = this.insertToken(request, this.auth?.state.token);
 
     return next.handle(request).pipe(
       catchError((error) => {
-        if (this.effects && error?.status === HttpStatusCode.UNAUTHORIZED) {
-          return this.effects?.tokenRefreshRequest().pipe(
+        if (error?.status === HttpStatusCode.UNAUTHORIZED) {
+          return this.auth.refreshRequest().pipe(
             map((token) => {
               if (!token) {
                 this.auth.logoutDispatch();

@@ -51,7 +51,7 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
     RouterModule.forRoot(AppRoutes),
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
-    NgxsLoggerPluginModule.forRoot({ logger: console, collapsed: true }),
+    NgxsLoggerPluginModule.forRoot({ logger: console, collapsed: false }),
     NgxsStoragePluginModule.forRoot({
       key: [LAYOUT_STATE_KEY],
     }),
