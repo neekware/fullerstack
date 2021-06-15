@@ -17,12 +17,12 @@ import { AuthState } from './auth-state.model';
 export class AuthStoreState {
   constructor(readonly msg: MsgService, readonly effects: AuthEffectsService) {}
 
-  @Action(actions.Initialize)
+  @Action(actions.Initialize, { cancelUncompleted: true })
   initialize({ setState }: StateContext<AuthState>) {
     setState(DefaultAuthState);
   }
 
-  @Action(actions.LoginRequest)
+  @Action(actions.LoginRequest, { cancelUncompleted: true })
   loginRequest({ setState }: StateContext<AuthState>, { payload }: actions.LoginRequest) {
     setState({
       ...DefaultAuthState,
@@ -31,7 +31,7 @@ export class AuthStoreState {
     return this.effects.loginRequest(payload);
   }
 
-  @Action(actions.LoginSuccess)
+  @Action(actions.LoginSuccess, { cancelUncompleted: true })
   loginSuccess({ setState }: StateContext<AuthState>, { payload }: actions.LoginSuccess) {
     setState({
       ...DefaultAuthState,
@@ -41,7 +41,7 @@ export class AuthStoreState {
     this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 4000 });
   }
 
-  @Action(actions.LoginFailure)
+  @Action(actions.LoginFailure, { cancelUncompleted: true })
   loginFailure({ getState, setState }: StateContext<AuthState>) {
     setState({
       ...getState(),
@@ -49,7 +49,7 @@ export class AuthStoreState {
     });
   }
 
-  @Action(actions.RegisterRequest)
+  @Action(actions.RegisterRequest, { cancelUncompleted: true })
   registerRequest({ setState }: StateContext<AuthState>, { payload }: actions.RegisterRequest) {
     setState({
       ...DefaultAuthState,
@@ -58,7 +58,7 @@ export class AuthStoreState {
     return this.effects.registerRequest(payload);
   }
 
-  @Action(actions.RegisterSuccess)
+  @Action(actions.RegisterSuccess, { cancelUncompleted: true })
   registerSuccess({ setState }: StateContext<AuthState>) {
     setState({
       ...DefaultAuthState,
@@ -67,7 +67,7 @@ export class AuthStoreState {
     this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 5000 });
   }
 
-  @Action(actions.RegisterFailure)
+  @Action(actions.RegisterFailure, { cancelUncompleted: true })
   registerFailure({ getState, setState }: StateContext<AuthState>) {
     setState({
       ...getState(),
@@ -75,27 +75,27 @@ export class AuthStoreState {
     });
   }
 
-  @Action(actions.LogoutRequest)
+  @Action(actions.LogoutRequest, { cancelUncompleted: true })
   logoutRequest() {
     return this.effects.logoutRequest();
   }
 
-  @Action(actions.LogoutSuccess)
+  @Action(actions.LogoutSuccess, { cancelUncompleted: true })
   logoutSuccess({ setState }: StateContext<AuthState>) {
     setState(DefaultAuthState);
   }
 
-  @Action(actions.LogoutFailure)
+  @Action(actions.LogoutFailure, { cancelUncompleted: true })
   logoutFailure({ setState }: StateContext<AuthState>) {
     setState(DefaultAuthState);
   }
 
-  @Action(actions.TokenRefreshRequest)
+  @Action(actions.TokenRefreshRequest, { cancelUncompleted: true })
   tokenRefreshRequest() {
     return this.effects.tokenRefreshRequest();
   }
 
-  @Action(actions.TokenRefreshSuccess)
+  @Action(actions.TokenRefreshSuccess, { cancelUncompleted: true })
   tokenRefreshSuccess(
     { setState }: StateContext<AuthState>,
     { payload }: actions.TokenRefreshSuccess
@@ -107,7 +107,7 @@ export class AuthStoreState {
     });
   }
 
-  @Action(actions.TokenRefreshFailure)
+  @Action(actions.TokenRefreshFailure, { cancelUncompleted: true })
   tokenRefreshFailure({ setState }: StateContext<AuthState>) {
     setState({
       ...DefaultAuthState,

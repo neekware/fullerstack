@@ -16,9 +16,9 @@ import { DefaultUser } from './user.default';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+  private destroy$ = new Subject<boolean>();
   profileChanged$ = new BehaviorSubject<User>(DefaultUser);
   profile: User = DefaultUser;
-  private destroy$ = new Subject<boolean>();
   isLoading = false;
 
   constructor(
@@ -32,7 +32,7 @@ export class UserService {
     this.auth.authChanged$
       .pipe(
         filter((state) => state.isLoggedIn),
-        switchMap(() => this.userSelf()),
+        switchMap(() => this.userSelf(CachifyFetchPolicy.NetworkFirst)),
         takeUntil(this.destroy$)
       )
       .subscribe({
@@ -43,7 +43,7 @@ export class UserService {
       });
   }
 
-  userSelf(): Observable<unknown> {
+  userSelf(cachePolicy?: CachifyFetchPolicy): Observable<unknown> {
     this.isLoading = true;
     this.msg.reset();
     return this.gql.client
@@ -53,7 +53,7 @@ export class UserService {
         {
           context: makeCachifyContext({
             key: objectHash(createGqlBody(UserSelfQuery)),
-            policy: CachifyFetchPolicy.CacheAndNetwork,
+            policy: cachePolicy,
             ttl: 60,
           }),
         }

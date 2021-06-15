@@ -12,14 +12,14 @@ import { LAYOUT_STATE_KEY, LayoutState } from './layout-state.model';
 })
 @Injectable({ providedIn: 'root' })
 export class LayoutStoreState {
-  @Action([actions.Initialize])
+  @Action(actions.Initialize, { cancelUncompleted: true })
   initializeLayout({ setState }: StateContext<LayoutState>, { payload }: actions.Initialize) {
     setState(
       signObject<LayoutState>({ ...DefaultLayoutState, appName: payload })
     );
   }
 
-  @Action(actions.SetMenuStatus)
+  @Action(actions.SetMenuStatus, { cancelUncompleted: true })
   setMenuStatus(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetMenuStatus
@@ -29,7 +29,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.ToggleMenu)
+  @Action(actions.ToggleMenu, { cancelUncompleted: true })
   toggleMenu({ getState, patchState }: StateContext<LayoutState>) {
     const prevState = getState();
     const nextState = { menuOpen: !prevState.menuOpen };
@@ -41,7 +41,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetMenuMode)
+  @Action(actions.SetMenuMode, { cancelUncompleted: true })
   setMenuMode(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetMenuMode
@@ -51,7 +51,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetMenuRole)
+  @Action(actions.SetMenuRole, { cancelUncompleted: true })
   setMenuRole(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetMenuRole
@@ -61,7 +61,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetNotifyStatus)
+  @Action(actions.SetNotifyStatus, { cancelUncompleted: true })
   setNotifyStatus(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetNotifyStatus
@@ -71,7 +71,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.ToggleNotification)
+  @Action(actions.ToggleNotification, { cancelUncompleted: true })
   toggleNotification({ getState, patchState }: StateContext<LayoutState>) {
     const prevState = getState();
     const nextState = { notifyOpen: !prevState.notifyOpen };
@@ -83,7 +83,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetNotifyMode)
+  @Action(actions.SetNotifyMode, { cancelUncompleted: true })
   setNotifyMode(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetNotifyMode
@@ -93,7 +93,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetNotifyRole)
+  @Action(actions.SetNotifyRole, { cancelUncompleted: true })
   setNotifyRole(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetNotifyRole
@@ -103,7 +103,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetFullscreenStatus)
+  @Action(actions.SetFullscreenStatus, { cancelUncompleted: true })
   setFullscreenStatus(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetFullscreenStatus
@@ -113,14 +113,14 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.ToggleFullscreen)
+  @Action(actions.ToggleFullscreen, { cancelUncompleted: true })
   toggleFullscreen({ getState, patchState }: StateContext<LayoutState>) {
     patchState(
       signObject<LayoutState>({ ...getState(), fullscreenOpen: !getState().fullscreenOpen })
     );
   }
 
-  @Action(actions.SetIsHandset)
+  @Action(actions.SetIsHandset, { cancelUncompleted: true })
   setIsHandset(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetIsHandset
@@ -130,7 +130,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetIsPortrait)
+  @Action(actions.SetIsPortrait, { cancelUncompleted: true })
   setIsPortrait(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetIsPortrait
@@ -140,7 +140,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetIsDarkTheme)
+  @Action(actions.SetIsDarkTheme, { cancelUncompleted: true })
   setIsDarkTheme(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetIsDarkTheme
@@ -150,7 +150,7 @@ export class LayoutStoreState {
     );
   }
 
-  @Action(actions.SetNavbarMode)
+  @Action(actions.SetNavbarMode, { cancelUncompleted: true })
   setNavbarMode(
     { getState, patchState }: StateContext<LayoutState>,
     { payload }: actions.SetNavbarMode

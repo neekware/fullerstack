@@ -3,7 +3,7 @@
 import { HttpContext } from '@angular/common/http';
 
 import { CACHIFY_CONTEXT_TOKEN, DefaultFetchPolicies } from './cachify.default';
-import { CachifyContextMeta } from './cachify.model';
+import { CachifyContextMeta, CachifyFetchPolicy } from './cachify.model';
 
 /**
  * Class to create ordered path to our internal state/store
@@ -76,5 +76,8 @@ export function isPolicyEnabled(policy: string): boolean {
  * @returns context object
  */
 export function makeCachifyContext(meta: CachifyContextMeta) {
-  return new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, meta);
+  return new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, {
+    ...meta,
+    policy: meta.policy || CachifyFetchPolicy.NetworkFirst,
+  });
 }
