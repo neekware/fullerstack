@@ -12,7 +12,8 @@ export interface LoggerConfig {
  * Each level enables itself and all level(s) above
  */
 export enum LogLevels {
-  critical = 0,
+  ignore = 0,
+  critical,
   error,
   warn,
   info,

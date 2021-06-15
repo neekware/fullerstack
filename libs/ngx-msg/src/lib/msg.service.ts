@@ -39,7 +39,7 @@ export class MsgService implements OnDestroy {
       ...this.status,
       ...msg,
       ...{
-        color: this.getColor(msg.level),
+        color: this.getColor(msg?.level),
       },
     };
     if (this.status.console) {
@@ -49,6 +49,7 @@ export class MsgService implements OnDestroy {
 
   private getColor(level: LogLevels) {
     let color = 'primary';
+    level = level || LogLevels.info;
     switch (level) {
       case LogLevels.critical:
       case LogLevels.error:

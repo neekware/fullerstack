@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { tryGet } from '@fullerstack/agx-util';
 import { cloneDeep } from 'lodash-es';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,7 +24,10 @@ export class GraphQLClient {
       withCredentials: options?.withCredentials ?? true,
     };
 
-    return this.http.post<T>(url || this.endpoint, body, newOptions);
-    // .pipe(map((resp: GqlResponseBody) => resp.data as T));
+    return this.http.post(url || this.endpoint, body, newOptions).pipe(
+      map((resp: GqlResponseBody) => {
+        return tryGet(() => resp.data[body.operationName] as T);
+      })
+    ) as Observable<T>;
   }
 }

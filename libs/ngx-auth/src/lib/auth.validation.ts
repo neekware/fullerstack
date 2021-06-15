@@ -19,9 +19,8 @@ export class AuthAsyncValidation {
     };
   }
 
-  isEmailAvailable(email: string): Observable<unknown> {
+  isEmailAvailable<isEmailAvailable>(email: string): Observable<unknown> {
     return this.gql.client.request(AuthIsEmailAvailable, { email }).pipe(
-      map((resp: GqlResponseBody) => resp.data.isEmailAvailable),
       map((resp) => {
         this.gtag.trackEvent('email_available', {
           method: 'query',

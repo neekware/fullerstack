@@ -14,6 +14,7 @@ export interface GqlRequestBody {
 export interface GqlResponseBody {
   data: any;
   error?: any;
+  [id: string]: any;
 }
 
 export interface Variables {

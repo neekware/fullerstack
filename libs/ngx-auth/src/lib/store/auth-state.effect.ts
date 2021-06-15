@@ -34,7 +34,7 @@ export class AuthEffectsService implements OnDestroy {
   loginRequest(input: UserCredentialsInput): Observable<unknown> {
     this.logger.debug('Login request sent ...');
     return this.gql.client.request(AuthLoginMutation, { input }).pipe(
-      map((resp: GqlResponseBody) => resp.data.authLogin),
+      // map((resp: GqlResponseBody) => resp.data.authLogin),
       map((resp) => {
         if (resp.ok) {
           this.gtag.trackEvent('login', {
@@ -70,7 +70,7 @@ export class AuthEffectsService implements OnDestroy {
   registerRequest(input: UserCreateInput): Observable<unknown> {
     this.logger.debug('Register request sent ...');
     return this.gql.client.request(AuthRegisterMutation, { input }).pipe(
-      map((resp: GqlResponseBody) => resp.data.authRegister),
+      // map((resp: GqlResponseBody) => resp.data.authRegister),
       map((resp) => {
         this.gtag.trackEvent('register', {
           method: 'password',
@@ -106,7 +106,7 @@ export class AuthEffectsService implements OnDestroy {
   tokenRefreshRequest(): Observable<string> {
     this.logger.debug('Token refresh request sent ...');
     return this.gql.client.request(AuthRefreshTokenMutation).pipe(
-      map((resp: GqlResponseBody) => resp.data.authRefreshToken),
+      // map((resp: GqlResponseBody) => resp.data.authRefreshToken),
       map((resp) => {
         if (resp.ok) {
           this.store.dispatch(new actions.TokenRefreshSuccess(resp.token));
@@ -131,7 +131,7 @@ export class AuthEffectsService implements OnDestroy {
   logoutRequest(): Observable<unknown> {
     this.logger.debug('Logout request sent ...');
     return this.gql.client.request(AuthLogoutMutation).pipe(
-      map((resp: GqlResponseBody) => resp.data.authLogout),
+      // map((resp: GqlResponseBody) => resp.data.authLogout),
       map((resp) => {
         if (resp.ok) {
           this.gtag.trackEvent('logout', {

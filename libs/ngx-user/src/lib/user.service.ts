@@ -2,17 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { CachifyFetchPolicy, makeCachifyContext } from '@fullerstack/ngx-cachify';
-import { GqlResponseBody, GqlService, createGqlBody } from '@fullerstack/ngx-gql';
+import { GqlService, createGqlBody } from '@fullerstack/ngx-gql';
 import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
-import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
+import { User, UserSelfUpdateInput, userSelf, userSelfUpdate } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import * as objectHash from 'object-hash';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
-import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
-import { DefaultUser } from './user.default';
+import { DefaultUser, UserMessageMap } from './user.default';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -43,11 +43,11 @@ export class UserService {
       });
   }
 
-  userSelf(cachePolicy?: CachifyFetchPolicy): Observable<unknown> {
+  userSelf(cachePolicy?: CachifyFetchPolicy): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
     return this.gql.client
-      .request(
+      .request<User>(
         UserSelfQuery,
         {},
         {
@@ -58,52 +58,43 @@ export class UserService {
           }),
         }
       )
-      .pipe(
-        map((resp: GqlResponseBody) => resp.data.userSelf),
-        tap(() => (this.isLoading = false))
-      );
-
-    // this.isLoading = true;
-    // this.msg.reset();
-    // return this.gql
-    //   .query<userSelf>({
-    //     query: UserSelfQuery,
-    //   })
-    //   .pipe(
-    //     map(({ data }) => data?.userSelf),
-    //     tap(() => (this.isLoading = false)),
-    //     catchError((error) => {
-    //       this.isLoading = false;
-    //       this.gtag.trackEvent('UserService:[userSelf]', {
-    //         event_category: 'user',
-    //         event_label: error.message,
-    //       });
-    //       this.logger.error(error);
-    //       this.msg.setMsg(UserMessageMap.error.server);
-    //       return of(null);
-    //     })
-    //   );
+      .pipe(tap(() => (this.isLoading = false)));
   }
 
-  userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {
+  // this.isLoading = true;
+  // this.msg.reset();
+  // return this.gql
+  //   .query<userSelf>({
+  //     query: UserSelfQuery,
+  //   })
+  //   .pipe(
+  //     map(({ data }) => data?.userSelf),
+  //     tap(() => (this.isLoading = false)),
+  //     catchError((error) => {
+  //       this.isLoading = false;
+  //       this.gtag.trackEvent('UserService:[userSelf]', {
+  //         event_category: 'user',
+  //         event_label: error.message,
+  //       });
+  //       this.logger.error(error);
+  //       this.msg.setMsg(UserMessageMap.error.server);
+  //       return of(null);
+  //     })
+  //   );
+
+  userSelfUpdate(input: UserSelfUpdateInput): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
-    return this.gql.client.request(UserSelfUpdateMutation, { input }).pipe(
-      catchError((error) => {
-        if (error.error instanceof ErrorEvent) {
-          console.log(`Error: ${error.error.message}`);
-        } else {
-          console.log(`Error: ${error.message}`);
-        }
-        return of([]);
-      }),
-      map((resp: GqlResponseBody) => resp.data.userSelfUpdate),
-      tap((user) => {
-        this.profile = user as User;
-        this.profileChanged$.next(this.profile);
-        this.isLoading = false;
-      })
-    );
+    return this.gql.client
+      .request<User>(UserSelfUpdateMutation, { input })
+      .pipe(
+        tap((user) => {
+          this.profile = user;
+          this.profileChanged$.next(this.profile);
+          this.isLoading = false;
+          this.msg.successSnackBar(UserMessageMap.success.update.text, { duration: 4000 });
+        })
+      );
   }
 
   // userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {
@@ -134,33 +125,31 @@ export class UserService {
   //     );
   // }
 
-  user(id: string): Observable<unknown> {
+  user(id: string): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
-
-    return this.gql.client.request(UserQuery, { id }).pipe(
-      map((resp: GqlResponseBody) => resp.data.user),
-      tap(() => (this.isLoading = false))
-    );
-
-    // return this.gql
-    //   .query<user>({
-    //     query: UserQuery,
-    //     variables: { id },
-    //   })
-    //   .pipe(
-    //     map(({ data }) => data.user),
-    //     tap(() => (this.isLoading = false)),
-    //     catchError((error) => {
-    //       this.isLoading = false;
-    //       this.gtag.trackEvent('UserService:[user]', {
-    //         event_category: 'user',
-    //         event_label: error.message,
-    //       });
-    //       this.logger.error(error);
-    //       this.msg.setMsg(UserMessageMap.error.server);
-    //       return of(null);
-    //     })
-    //   );
+    return this.gql.client
+      .request<User>(UserQuery, { id })
+      .pipe(tap(() => (this.isLoading = false)));
   }
+
+  // return this.gql
+  //   .query<user>({
+  //     query: UserQuery,
+  //     variables: { id },
+  //   })
+  //   .pipe(
+  //     map(({ data }) => data.user),
+  //     tap(() => (this.isLoading = false)),
+  //     catchError((error) => {
+  //       this.isLoading = false;
+  //       this.gtag.trackEvent('UserService:[user]', {
+  //         event_category: 'user',
+  //         event_label: error.message,
+  //       });
+  //       this.logger.error(error);
+  //       this.msg.setMsg(UserMessageMap.error.server);
+  //       return of(null);
+  //     })
+  //   );
 }
