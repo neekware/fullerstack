@@ -95,7 +95,7 @@ export class MsgService implements OnDestroy {
     msg = msg || this.status.text;
     config = {
       ...{
-        duration: 2000,
+        duration: config?.duration || 2000,
         direction: this.i18n.direction,
         horizontalPosition: this.i18n.direction === 'ltr' ? 'left' : 'right',
       },

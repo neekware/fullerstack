@@ -92,7 +92,7 @@ export class UserService {
           this.profile = user;
           this.profileChanged$.next(this.profile);
           this.isLoading = false;
-          this.msg.successSnackBar(UserMessageMap.success.update.text, { duration: 4000 });
+          this.msg.successSnackBar(UserMessageMap.success.update.text, { duration: 3000 });
         })
       );
   }
