@@ -4,13 +4,13 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { CachifyFetchPolicy, makeCachifyContext } from '@fullerstack/ngx-cachify';
 import { GqlService, createGqlBody } from '@fullerstack/ngx-gql';
 import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
-import { User, UserSelfUpdateInput, userSelf, userSelfUpdate } from '@fullerstack/ngx-gql/schema';
+import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import * as objectHash from 'object-hash';
-import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
-import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { catchError, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { DefaultUser, UserMessageMap } from './user.default';
 
@@ -58,29 +58,14 @@ export class UserService {
           }),
         }
       )
-      .pipe(tap(() => (this.isLoading = false)));
+      .pipe(
+        tap(() => (this.isLoading = false)),
+        catchError((error, caught$) => {
+          this.logger.error(error);
+          return caught$;
+        })
+      );
   }
-
-  // this.isLoading = true;
-  // this.msg.reset();
-  // return this.gql
-  //   .query<userSelf>({
-  //     query: UserSelfQuery,
-  //   })
-  //   .pipe(
-  //     map(({ data }) => data?.userSelf),
-  //     tap(() => (this.isLoading = false)),
-  //     catchError((error) => {
-  //       this.isLoading = false;
-  //       this.gtag.trackEvent('UserService:[userSelf]', {
-  //         event_category: 'user',
-  //         event_label: error.message,
-  //       });
-  //       this.logger.error(error);
-  //       this.msg.setMsg(UserMessageMap.error.server);
-  //       return of(null);
-  //     })
-  //   );
 
   userSelfUpdate(input: UserSelfUpdateInput): Observable<User> {
     this.isLoading = true;
@@ -93,63 +78,25 @@ export class UserService {
           this.profileChanged$.next(this.profile);
           this.isLoading = false;
           this.msg.successSnackBar(UserMessageMap.success.update.text, { duration: 3000 });
+        }),
+        catchError((error, caught$) => {
+          this.logger.error(error);
+          return caught$;
         })
       );
   }
-
-  // userSelfUpdate(input: UserSelfUpdateInput): Observable<unknown> {
-  //   this.isLoading = true;
-  //   this.msg.reset();
-  //   return this.gql
-  //     .mutate<userSelfUpdate>({
-  //       mutation: UserSelfUpdateMutation,
-  //       variables: { input },
-  //     })
-  //     .pipe(
-  //       map(({ data }) => data.userSelfUpdate),
-  //       tap((user) => {
-  //         this.profile = user as User;
-  //         this.profileChanged$.next(this.profile);
-  //         this.isLoading = false;
-  //       }),
-  //       catchError((error) => {
-  //         this.isLoading = false;
-  //         this.gtag.trackEvent('UserService:[userSelfUpdate]', {
-  //           event_category: 'user',
-  //           event_label: error.message,
-  //         });
-  //         this.logger.error(error);
-  //         this.msg.setMsg(UserMessageMap.error.server);
-  //         return of(null);
-  //       })
-  //     );
-  // }
 
   user(id: string): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
     return this.gql.client
       .request<User>(UserQuery, { id })
-      .pipe(tap(() => (this.isLoading = false)));
+      .pipe(
+        tap(() => (this.isLoading = false)),
+        catchError((error, caught$) => {
+          this.logger.error(error);
+          return caught$;
+        })
+      );
   }
-
-  // return this.gql
-  //   .query<user>({
-  //     query: UserQuery,
-  //     variables: { id },
-  //   })
-  //   .pipe(
-  //     map(({ data }) => data.user),
-  //     tap(() => (this.isLoading = false)),
-  //     catchError((error) => {
-  //       this.isLoading = false;
-  //       this.gtag.trackEvent('UserService:[user]', {
-  //         event_category: 'user',
-  //         event_label: error.message,
-  //       });
-  //       this.logger.error(error);
-  //       this.msg.setMsg(UserMessageMap.error.server);
-  //       return of(null);
-  //     })
-  //   );
 }

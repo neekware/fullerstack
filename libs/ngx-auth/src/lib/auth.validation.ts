@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { GqlResponseBody, GqlService } from '@fullerstack/ngx-gql';
 import { AuthIsEmailAvailable } from '@fullerstack/ngx-gql/operations';
+import { AuthStatus } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { Observable, from, of, timer } from 'rxjs';
 import { catchError, map, switchMapTo, take } from 'rxjs/operators';
@@ -20,23 +21,15 @@ export class AuthAsyncValidation {
   }
 
   isEmailAvailable<isEmailAvailable>(email: string): Observable<unknown> {
-    return this.gql.client.request(AuthIsEmailAvailable, { email }).pipe(
-      map((resp) => {
-        this.gtag.trackEvent('email_available', {
-          method: 'query',
-          event_category: 'auth',
-          event_label: email,
-        });
-        return resp.ok ? null : { emailInUse: true };
-      }),
-      catchError((error) => {
-        this.gtag.trackEvent('email_available_failed', {
-          method: 'query',
-          event_category: 'auth',
-          event_label: `(${email} ): ${error.message}`,
-        });
-        return of({ serverError: true });
-      })
-    );
+    return this.gql.client
+      .request<AuthStatus>(AuthIsEmailAvailable, { email })
+      .pipe(
+        map((resp) => {
+          return resp.ok ? null : { emailInUse: true };
+        }),
+        catchError((error, caught$) => {
+          return caught$;
+        })
+      );
   }
 }
