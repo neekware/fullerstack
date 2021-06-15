@@ -72,10 +72,10 @@ export class AuthService {
     return user ? user.isVerified : false;
   }
 
-  async isEmailAvailable(email: string): Promise<boolean> {
+  async isEmailInUse(email: string): Promise<boolean> {
     const users = await this.prisma.user.findMany({
       where: { email: { contains: email, mode: 'insensitive' } },
     });
-    return !users?.length;
+    return users?.length > 0;
   }
 }

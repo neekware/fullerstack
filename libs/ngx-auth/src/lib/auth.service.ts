@@ -8,7 +8,11 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { GqlService } from '@fullerstack/ngx-gql';
-import { UserCreateInput, UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
+import {
+  AuthTokenStatus,
+  UserCreateInput,
+  UserCredentialsInput,
+} from '@fullerstack/ngx-gql/schema';
 import { _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
@@ -130,7 +134,7 @@ export class AuthService implements OnDestroy {
     return this.store.dispatch(new actions.TokenRefreshRequest());
   }
 
-  refreshRequest(): Observable<string> {
+  refreshRequest(): Observable<AuthTokenStatus> {
     return this.effects.tokenRefreshRequest();
   }
 

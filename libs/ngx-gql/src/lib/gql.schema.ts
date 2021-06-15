@@ -77,8 +77,6 @@ export interface authRefreshToken {
 
 export interface authLogout_authLogout {
   __typename: "AuthStatusDto";
-  ok: boolean;
-  message: string | null;
 }
 
 export interface authLogout {
@@ -222,6 +220,37 @@ export interface userSelfUpdate {
 
 export interface userSelfUpdateVariables {
   input: UserSelfUpdateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AuthStatus
+// ====================================================
+
+export interface AuthStatus {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AuthTokenStatus
+// ====================================================
+
+export interface AuthTokenStatus {
+  __typename: "AuthTokenDto";
+  ok: boolean;
+  token: string;
+  message: string | null;
 }
 
 /* tslint:disable */

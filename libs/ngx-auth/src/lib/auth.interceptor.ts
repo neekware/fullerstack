@@ -1,6 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode, JWT_BEARER_REALM } from '@fullerstack/agx-dto';
+import { AuthTokenStatus } from '@fullerstack/ngx-gql/schema';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
@@ -27,15 +28,15 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error) => {
         if (error?.status === HttpStatusCode.UNAUTHORIZED) {
           return this.auth.refreshRequest().pipe(
-            map((token) => {
-              if (!token) {
+            map((resp) => {
+              if (!resp?.ok) {
                 this.auth.logoutDispatch();
                 return throwError(error);
               }
-              return token;
+              return resp;
             }),
-            switchMap((token: string) => {
-              request = this.insertToken(request, token);
+            switchMap((resp: AuthTokenStatus) => {
+              request = this.insertToken(request, resp.token);
               return next.handle(request);
             })
           ) as Observable<HttpEvent<unknown>>;

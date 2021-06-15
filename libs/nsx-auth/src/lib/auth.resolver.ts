@@ -83,7 +83,7 @@ export class AuthResolver {
 
   @Mutation(() => AuthStatusDto)
   async isEmailAvailable(@Args('email', { type: () => String }) email: string) {
-    const isAvailable = await this.authService.isEmailAvailable(email);
+    const isAvailable = !(await this.authService.isEmailInUse(email));
     return { ok: isAvailable };
   }
 
