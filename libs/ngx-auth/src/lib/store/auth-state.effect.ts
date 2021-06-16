@@ -19,7 +19,6 @@ import { Observable, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import * as actions from './auth-state.action';
-import { AuthMessageMap } from './auth-state.default';
 
 @Injectable({ providedIn: 'root' })
 export class AuthEffectsService implements OnDestroy {
@@ -97,16 +96,12 @@ export class AuthEffectsService implements OnDestroy {
     this.logger.debug('Logout request sent ...');
     return this.gql.client.request<AuthStatus>(AuthLogoutMutation).pipe(
       map((resp) => {
-        if (resp.ok) {
-          this.store.dispatch(new actions.LogoutSuccess());
-        } else {
-          this.store.dispatch(new actions.LogoutFailure());
-        }
+        this.store.dispatch(new actions.LogoutSuccess());
         return resp;
       }),
       catchError((error, caught$) => {
         this.logger.error(error);
-        this.store.dispatch(new actions.LogoutFailure());
+        this.store.dispatch(new actions.LogoutSuccess());
         return caught$;
       })
     );

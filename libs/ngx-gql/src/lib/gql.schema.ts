@@ -77,6 +77,8 @@ export interface authRefreshToken {
 
 export interface authLogout_authLogout {
   __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
 }
 
 export interface authLogout {

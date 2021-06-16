@@ -49,10 +49,10 @@ export const AuthRefreshTokenMutation = gql`
 export const AuthLogoutMutation = gql`
   mutation authLogout {
     authLogout {
-      ...AuthTokenStatus
+      ...AuthStatus
     }
   }
-  ${AuthTokenStatusFragment}
+  ${AuthStatusFragment}
 `;
 
 // auth email is not in use

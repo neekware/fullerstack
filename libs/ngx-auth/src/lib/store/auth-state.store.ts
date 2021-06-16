@@ -29,6 +29,8 @@ export class AuthStoreState {
       ...DefaultAuthState,
       isAuthenticating: true,
     });
+
+    // return OR subscribe and handle the observable manually
     return this.effects.loginRequest(payload);
   }
 
@@ -39,7 +41,7 @@ export class AuthStoreState {
       isLoggedIn: true,
       token: payload,
     });
-    this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 4000 });
+    this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
   }
 
   @Action(actions.LoginFailure, { cancelUncompleted: true })
@@ -56,6 +58,8 @@ export class AuthStoreState {
       ...DefaultAuthState,
       isRegistering: true,
     });
+
+    // return OR subscribe and handle the observable manually
     return this.effects.registerRequest(payload);
   }
 
@@ -65,7 +69,7 @@ export class AuthStoreState {
       ...DefaultAuthState,
       isLoggedIn: true,
     });
-    this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 5000 });
+    this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
   }
 
   @Action(actions.RegisterFailure, { cancelUncompleted: true })
@@ -77,23 +81,25 @@ export class AuthStoreState {
   }
 
   @Action(actions.LogoutRequest, { cancelUncompleted: true })
-  logoutRequest() {
-    return this.effects.logoutRequest();
+  logoutRequest({ getState }: StateContext<AuthState>) {
+    if (getState().isLoggedIn) {
+      // return OR subscribe and handle the observable manually
+      return this.effects.logoutRequest();
+    }
   }
 
   @Action(actions.LogoutSuccess, { cancelUncompleted: true })
-  logoutSuccess({ setState }: StateContext<AuthState>) {
-    setState(DefaultAuthState);
-  }
-
-  @Action(actions.LogoutFailure, { cancelUncompleted: true })
-  logoutFailure({ setState }: StateContext<AuthState>) {
+  logoutSuccess({ getState, setState }: StateContext<AuthState>) {
+    if (getState().isLoggedIn) {
+      this.msg.successSnackBar(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
+    }
     setState(DefaultAuthState);
   }
 
   @Action(actions.TokenRefreshRequest, { cancelUncompleted: true })
   tokenRefreshRequest() {
-    return this.effects.tokenRefreshRequest().pipe(map((resp) => resp.token));
+    // return OR subscribe and handle the observable manually
+    return this.effects.tokenRefreshRequest();
   }
 
   @Action(actions.TokenRefreshSuccess, { cancelUncompleted: true })

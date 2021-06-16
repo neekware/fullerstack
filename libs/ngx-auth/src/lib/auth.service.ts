@@ -76,7 +76,6 @@ export class AuthService implements OnDestroy {
 
   private handleRedirect(prevState: AuthState) {
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
-      this.logoutDispatch();
       this.initDispatch();
       this.router.navigate([this.loggedInUrl]);
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
@@ -109,7 +108,6 @@ export class AuthService implements OnDestroy {
   initiateLogoutState() {
     if (this.state.isLoggedIn) {
       this.msg.reset();
-      this.logoutDispatch();
       this.router.navigate([this.loggedInUrl]);
     }
   }
