@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { CachifyFetchPolicy, interpolate, makeCachifyContext } from '@fullerstack/ngx-cachify';
+import { CachifyFetchPolicy, makeCachifyContext } from '@fullerstack/ngx-cachify';
 import { GqlService, createGqlBody } from '@fullerstack/ngx-gql';
 import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
 import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
@@ -12,7 +11,7 @@ import * as objectHash from 'object-hash';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { catchError, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
-import { DefaultUser, UserMessageMap } from './user.default';
+import { DefaultUser } from './user.default';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -22,7 +21,6 @@ export class UserService {
   isLoading = false;
 
   constructor(
-    readonly http: HttpClient,
     readonly msg: MsgService,
     readonly gql: GqlService,
     readonly gtag: GTagService,
@@ -43,13 +41,13 @@ export class UserService {
       });
   }
 
-  userSelfQuery(cachePolicy?: CachifyFetchPolicy): Observable<User> {
+  userSelfQuery(id: string, cachePolicy?: CachifyFetchPolicy): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
     return this.gql.client
       .request<User>(
         UserSelfQuery,
-        { id: this.auth.userId },
+        { id },
         {
           context: makeCachifyContext({
             key: objectHash(createGqlBody(UserSelfQuery)),
