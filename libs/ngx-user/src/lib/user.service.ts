@@ -17,7 +17,7 @@ import { DefaultUser, UserMessageMap } from './user.default';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private destroy$ = new Subject<boolean>();
-  userChanged$ = new BehaviorSubject<User>(DefaultUser);
+  profileChanged$ = new BehaviorSubject<User>(DefaultUser);
   profile: User = DefaultUser;
   isLoading = false;
 
@@ -38,7 +38,7 @@ export class UserService {
       .subscribe({
         next: (user) => {
           this.profile = user as User;
-          this.userChanged$.next(this.profile);
+          this.profileChanged$.next(this.profile);
         },
       });
   }
@@ -77,7 +77,7 @@ export class UserService {
         tap((user) => {
           this.isLoading = false;
           this.profile = user;
-          this.userChanged$.next(this.profile);
+          this.profileChanged$.next(this.profile);
         }),
         catchError((error, caught$) => {
           this.isLoading = false;
