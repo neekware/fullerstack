@@ -41,6 +41,3 @@ export class LogoutRequest {
 export class LogoutSuccess {
   static type = '[AUTH] LogoutSuccess';
 }
-export class LogoutFailure {
-  static type = '[AUTH] LogoutFailure';
-}

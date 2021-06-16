@@ -1,0 +1,20 @@
+{
+  "version": "0.0.1",
+  "name": "@fullerstack/ngx-cachify",
+  "description": "A Translation Library for Angular",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-cachify/README.md",
+  "keywords": [
+    "ng",
+    "angular",
+    "translation",
+    "i18n",
+    "i10n"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^12.0.2",
+    "@angular/core": "^12.0.2"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

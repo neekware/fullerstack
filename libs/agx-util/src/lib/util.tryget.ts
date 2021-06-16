@@ -5,7 +5,7 @@
  * Try/Catch method - fast try (when found), slow catch (when undefined)
  * https://un33k-ng-type-error.stackblitz.io/
  *
- * Performant: when loop of 1000 or less.
+ * Performance is optimal: when loop of 1000 or less.
  * Chrome: try: 0.3ms, catch: 6.2 ms (loop of 1000)
  *         ~1800% faster than lodash get on success (try)
  *         ~10% slower than lodash get on failure (catch)

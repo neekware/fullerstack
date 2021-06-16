@@ -9,16 +9,11 @@ import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
 import { CONFIG_TOKEN, DefaultApplicationConfig } from './config.default';
 import { ApplicationConfig, HttpMethod, RemoteType } from './config.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ConfigService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
-  constructor(
-    private http: HttpClient,
-    @Inject(CONFIG_TOKEN) private readonly config: ApplicationConfig
-  ) {
+  constructor(readonly http: HttpClient, @Inject(CONFIG_TOKEN) readonly config: ApplicationConfig) {
     this.options = { ...ldNestedMerge(this.options, config) };
     if (!this.options.production) {
       /* istanbul ignore next */

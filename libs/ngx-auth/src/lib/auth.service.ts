@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { EventEmitter, Injectable, OnDestroy, Output } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { tryGet } from '@fullerstack/agx-util';
 import {
@@ -8,7 +8,11 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { GqlService } from '@fullerstack/ngx-gql';
-import { UserCreateInput, UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
+import {
+  AuthTokenStatus,
+  UserCreateInput,
+  UserCredentialsInput,
+} from '@fullerstack/ngx-gql/schema';
 import { _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
@@ -22,10 +26,11 @@ import { DeepReadonly } from 'ts-essentials';
 import { DefaultAuthConfig } from './auth.default';
 import * as actions from './store/auth-state.action';
 import { DefaultAuthState } from './store/auth-state.default';
+import { AuthEffectsService } from './store/auth-state.effect';
 import { AuthState } from './store/auth-state.model';
 import { AuthStoreState } from './store/auth-state.store';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   authChanged$ = new BehaviorSubject<AuthState>(DefaultAuthState);
@@ -44,7 +49,8 @@ export class AuthService implements OnDestroy {
     readonly logger: LoggerService,
     readonly msg: MsgService,
     readonly jwt: JwtService,
-    readonly gql: GqlService
+    readonly gql: GqlService,
+    readonly effects: AuthEffectsService
   ) {
     this.options = ldNestedMerge({ gtag: DefaultAuthConfig }, this.config.options);
 
@@ -54,25 +60,22 @@ export class AuthService implements OnDestroy {
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
-        if (this.state.isLoggedIn !== newState.isLoggedIn) {
-          const prevState = cloneDeep(this.state);
-          this.state = cloneDeep(newState);
-          this.handleRedirect(prevState);
-          this.authChanged$.next(this.state);
-        }
+        const prevState = cloneDeep(this.state);
+        this.state = cloneDeep(newState);
+        this.handleRedirect(prevState);
+        this.authChanged$.next(this.state);
+
         this.isLoading =
           !newState.hasError && (newState.isAuthenticating || newState.isRegistering);
       },
     });
 
     logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
-    this.gql.promoteError(this.refreshDispatch.bind(this));
     this.refreshDispatch();
   }
 
   private handleRedirect(prevState: AuthState) {
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
-      this.logoutDispatch();
       this.initDispatch();
       this.router.navigate([this.loggedInUrl]);
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
@@ -105,7 +108,6 @@ export class AuthService implements OnDestroy {
   initiateLogoutState() {
     if (this.state.isLoggedIn) {
       this.msg.reset();
-      this.logoutDispatch();
       this.router.navigate([this.loggedInUrl]);
     }
   }
@@ -128,6 +130,10 @@ export class AuthService implements OnDestroy {
 
   refreshDispatch(): Observable<any> {
     return this.store.dispatch(new actions.TokenRefreshRequest());
+  }
+
+  refreshRequest(): Observable<AuthTokenStatus> {
+    return this.effects.tokenRefreshRequest();
   }
 
   goTo(url: string) {

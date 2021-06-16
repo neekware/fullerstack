@@ -1,49 +1,42 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { GqlService } from '@fullerstack/ngx-gql';
 import { AuthIsEmailAvailable } from '@fullerstack/ngx-gql/operations';
-import { isEmailAvailable } from '@fullerstack/ngx-gql/schema';
-import { GTagService } from '@fullerstack/ngx-gtag';
-import { Observable, from, of, timer } from 'rxjs';
-import { catchError, map, switchMapTo, take } from 'rxjs/operators';
+import { AuthStatus } from '@fullerstack/ngx-gql/schema';
+import { LoggerService } from '@fullerstack/ngx-logger';
+import { Observable, of, timer } from 'rxjs';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthAsyncValidation {
-  constructor(readonly gql: GqlService, readonly gtag: GTagService) {}
+  constructor(
+    readonly http: HttpClient,
+    readonly gql: GqlService,
+    readonly logger: LoggerService
+  ) {}
 
   validateEmailAvailability(debounce = 600): AsyncValidatorFn {
     return (
       control: AbstractControl
     ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-      return timer(debounce).pipe(switchMapTo(from(this.isEmailAvailable(control.value))), take(1));
+      return timer(debounce).pipe(
+        switchMap(() => this.isEmailAvailable(control.value)),
+        take(1)
+      );
     };
   }
 
-  isEmailAvailable(email: string): Observable<unknown> {
-    return this.gql
-      .mutate<isEmailAvailable>({
-        mutation: AuthIsEmailAvailable,
-        variables: { email },
-      })
+  isEmailAvailable(email: string): Observable<ValidationErrors | null> {
+    return this.gql.client
+      .request<AuthStatus>(AuthIsEmailAvailable, { email })
       .pipe(
-        map(({ data }) => {
-          return data.isEmailAvailable;
-        }),
         map((resp) => {
-          this.gtag.trackEvent('email_available', {
-            method: 'query',
-            event_category: 'auth',
-            event_label: email,
-          });
           return resp.ok ? null : { emailInUse: true };
         }),
         catchError((error) => {
-          this.gtag.trackEvent('email_available_failed', {
-            method: 'query',
-            event_category: 'auth',
-            event_label: `(${email} ): ${error.message}`,
-          });
-          return of({ serverError: true });
+          this.logger.error(error);
+          return of({ emailInUse: true });
         })
       );
   }

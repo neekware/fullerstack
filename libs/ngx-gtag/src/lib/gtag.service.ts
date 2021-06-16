@@ -20,9 +20,7 @@ import { GTagEventParams, GTagPageViewParams } from './gtag.model';
 declare let gtag: (...args: any) => void;
 
 // @dynamic - Tells aot that type `Document` will be eventually resolved
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class GTagService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   destroy$ = new Subject<boolean>();

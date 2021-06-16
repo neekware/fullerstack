@@ -105,6 +105,9 @@
     },
     "ngx-user": {
       "tags": ["name:ngx-user", "scope-ngx-data"]
+    },
+    "ngx-cachify": {
+      "tags": ["name:ngx-cachify", "scope:ngx-data-util"]
     }
   }
 }

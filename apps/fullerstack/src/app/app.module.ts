@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor, AuthModule } from '@fullerstack/ngx-auth';
+import { CachifyInterceptor } from '@fullerstack/ngx-cachify';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { GqlInterceptor } from '@fullerstack/ngx-gql';
 import { GqlModule } from '@fullerstack/ngx-gql';
@@ -50,7 +51,7 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
     RouterModule.forRoot(AppRoutes),
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
-    NgxsLoggerPluginModule.forRoot({ logger: console, collapsed: true }),
+    NgxsLoggerPluginModule.forRoot({ logger: console, collapsed: false }),
     NgxsStoragePluginModule.forRoot({
       key: [LAYOUT_STATE_KEY],
     }),
@@ -69,6 +70,7 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
   providers: [
     ValidationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CachifyInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: GqlInterceptor, multi: true },
   ],
 

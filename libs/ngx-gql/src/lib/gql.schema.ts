@@ -230,6 +230,37 @@ export interface userSelfUpdateVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: AuthStatus
+// ====================================================
+
+export interface AuthStatus {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AuthTokenStatus
+// ====================================================
+
+export interface AuthTokenStatus {
+  __typename: "AuthTokenDto";
+  ok: boolean;
+  token: string;
+  message: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: User
 // ====================================================
 

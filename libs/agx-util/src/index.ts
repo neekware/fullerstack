@@ -1,2 +1,2 @@
-export * from './lib/general';
-export * from './lib/tryget';
+export * from './lib/util.general';
+export * from './lib/util.tryget';

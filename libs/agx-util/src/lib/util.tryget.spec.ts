@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { tryGet } from './tryget';
+
+import { tryGet } from './util.tryget';
 
 interface D {
   name: string;

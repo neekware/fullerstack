@@ -13,35 +13,37 @@ import { AuthState } from './auth-state.model';
   name: AUTH_STATE_KEY,
   defaults: DefaultAuthState,
 })
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthStoreState {
   constructor(readonly msg: MsgService, readonly effects: AuthEffectsService) {}
 
-  @Action(actions.Initialize)
+  @Action(actions.Initialize, { cancelUncompleted: true })
   initialize({ setState }: StateContext<AuthState>) {
     setState(DefaultAuthState);
   }
 
-  @Action(actions.LoginRequest)
+  @Action(actions.LoginRequest, { cancelUncompleted: true })
   loginRequest({ setState }: StateContext<AuthState>, { payload }: actions.LoginRequest) {
     setState({
       ...DefaultAuthState,
       isAuthenticating: true,
     });
+
+    // return OR subscribe and handle the observable manually
     return this.effects.loginRequest(payload);
   }
 
-  @Action(actions.LoginSuccess)
+  @Action(actions.LoginSuccess, { cancelUncompleted: true })
   loginSuccess({ setState }: StateContext<AuthState>, { payload }: actions.LoginSuccess) {
     setState({
       ...DefaultAuthState,
       isLoggedIn: true,
       token: payload,
     });
-    this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 4000 });
+    this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
   }
 
-  @Action(actions.LoginFailure)
+  @Action(actions.LoginFailure, { cancelUncompleted: true })
   loginFailure({ getState, setState }: StateContext<AuthState>) {
     setState({
       ...getState(),
@@ -49,25 +51,27 @@ export class AuthStoreState {
     });
   }
 
-  @Action(actions.RegisterRequest)
+  @Action(actions.RegisterRequest, { cancelUncompleted: true })
   registerRequest({ setState }: StateContext<AuthState>, { payload }: actions.RegisterRequest) {
     setState({
       ...DefaultAuthState,
       isRegistering: true,
     });
+
+    // return OR subscribe and handle the observable manually
     return this.effects.registerRequest(payload);
   }
 
-  @Action(actions.RegisterSuccess)
+  @Action(actions.RegisterSuccess, { cancelUncompleted: true })
   registerSuccess({ setState }: StateContext<AuthState>) {
     setState({
       ...DefaultAuthState,
       isLoggedIn: true,
     });
-    this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 5000 });
+    this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
   }
 
-  @Action(actions.RegisterFailure)
+  @Action(actions.RegisterFailure, { cancelUncompleted: true })
   registerFailure({ getState, setState }: StateContext<AuthState>) {
     setState({
       ...getState(),
@@ -75,27 +79,29 @@ export class AuthStoreState {
     });
   }
 
-  @Action(actions.LogoutRequest)
-  logoutRequest() {
-    return this.effects.logoutRequest();
+  @Action(actions.LogoutRequest, { cancelUncompleted: true })
+  logoutRequest({ getState }: StateContext<AuthState>) {
+    if (getState().isLoggedIn) {
+      // return OR subscribe and handle the observable manually
+      return this.effects.logoutRequest();
+    }
   }
 
-  @Action(actions.LogoutSuccess)
-  logoutSuccess({ setState }: StateContext<AuthState>) {
+  @Action(actions.LogoutSuccess, { cancelUncompleted: true })
+  logoutSuccess({ getState, setState }: StateContext<AuthState>) {
+    if (getState().isLoggedIn) {
+      this.msg.successSnackBar(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
+    }
     setState(DefaultAuthState);
   }
 
-  @Action(actions.LogoutFailure)
-  logoutFailure({ setState }: StateContext<AuthState>) {
-    setState(DefaultAuthState);
-  }
-
-  @Action(actions.TokenRefreshRequest)
+  @Action(actions.TokenRefreshRequest, { cancelUncompleted: true })
   tokenRefreshRequest() {
+    // return OR subscribe and handle the observable manually
     return this.effects.tokenRefreshRequest();
   }
 
-  @Action(actions.TokenRefreshSuccess)
+  @Action(actions.TokenRefreshSuccess, { cancelUncompleted: true })
   tokenRefreshSuccess(
     { setState }: StateContext<AuthState>,
     { payload }: actions.TokenRefreshSuccess
@@ -107,7 +113,7 @@ export class AuthStoreState {
     });
   }
 
-  @Action(actions.TokenRefreshFailure)
+  @Action(actions.TokenRefreshFailure, { cancelUncompleted: true })
   tokenRefreshFailure({ setState }: StateContext<AuthState>) {
     setState({
       ...DefaultAuthState,

@@ -24,7 +24,7 @@ import { DefaultLayoutState } from './store/layout-state.default';
 import { LAYOUT_STATE_KEY, LayoutState, NavbarMode, SidenavMode } from './store/layout-state.model';
 import { LayoutStoreState } from './store/layout-state.store';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LayoutService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<LayoutState> = DefaultLayoutState;

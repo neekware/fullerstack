@@ -22,7 +22,7 @@ export const screenfull = {
   toggle: () => {},
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UixService implements OnDestroy {
   @Output() fullscreen$ = new EventEmitter<boolean>();
   private destroy$ = new Subject<boolean>();

@@ -6,6 +6,7 @@ import { User } from '@prisma/client';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { CookiesDecorator, RequestDecorator, ResponseDecorator } from './auth.decorator';
+import { AuthGuardAnonymousGql } from './auth.guard.anonymous';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
   AuthStatusDto,
@@ -71,19 +72,16 @@ export class AuthResolver {
     return { ok: true, token };
   }
 
+  @UseGuards(AuthGuardAnonymousGql)
   @Mutation(() => AuthStatusDto)
-  async authLogout(
-    @CookiesDecorator() cookies: string[],
-    @RequestDecorator() request: HttpRequest,
-    @ResponseDecorator() response: HttpResponse
-  ) {
+  async authLogout(@ResponseDecorator() response: HttpResponse) {
     this.securityService.clearHttpCookie(response);
     return { ok: true };
   }
 
   @Mutation(() => AuthStatusDto)
   async isEmailAvailable(@Args('email', { type: () => String }) email: string) {
-    const isAvailable = await this.authService.isEmailAvailable(email);
+    const isAvailable = !(await this.authService.isEmailInUse(email));
     return { ok: isAvailable };
   }
 

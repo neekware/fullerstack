@@ -15,9 +15,7 @@ import { DefaultJwtConfig } from './jwt.default';
 /**
  * An injectable class that handles JWT service
  */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class JwtService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ValidationService {
   readonly NAME_MIN_LEN = 5;
   readonly PASSWORD_MIN_LEN = 6;
