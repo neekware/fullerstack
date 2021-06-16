@@ -49,7 +49,7 @@ export class UserService {
     return this.gql.client
       .request<User>(
         UserSelfQuery,
-        {},
+        { id: this.auth.userId },
         {
           context: makeCachifyContext({
             key: objectHash(createGqlBody(UserSelfQuery)),

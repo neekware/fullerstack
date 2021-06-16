@@ -41,11 +41,12 @@ export class UserProfileFormComponent implements OnChanges {
     }
   }
 
-  private buildForm(profile?: User) {
+  private buildForm(profile: User) {
     this.form = this.formBuilder.group({
-      firstName: [profile?.firstName || '', [Validators.required, Validators.minLength(2)]],
-      lastName: [profile?.lastName || '', [Validators.required, Validators.minLength(2)]],
-      email: [{ value: profile?.email || '', disabled: true }],
+      id: [profile.id],
+      firstName: [profile.firstName, [Validators.required, Validators.minLength(2)]],
+      lastName: [profile.lastName, [Validators.required, Validators.minLength(2)]],
+      email: [{ value: profile.email, disabled: true }],
     });
   }
 

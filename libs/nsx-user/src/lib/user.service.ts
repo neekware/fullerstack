@@ -7,7 +7,7 @@ import { UserSelfUpdateInput, UserWhereUniqueInput } from './user.model';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(readonly prisma: PrismaService) {}
 
   updateUser(userId: string, newUserData: UserSelfUpdateInput): Promise<User> {
     return this.prisma.user.update({

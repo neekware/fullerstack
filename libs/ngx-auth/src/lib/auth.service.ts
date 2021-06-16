@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtDto } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import {
   ApplicationConfig,
@@ -41,6 +42,7 @@ export class AuthService implements OnDestroy {
   loginUrl: string;
   registerUrl: string;
   loggedInUrl: string;
+  userId: string;
 
   constructor(
     readonly router: Router,
@@ -63,6 +65,7 @@ export class AuthService implements OnDestroy {
         const prevState = cloneDeep(this.state);
         this.state = cloneDeep(newState);
         this.handleRedirect(prevState);
+        this.setUserId(this.state.token);
         this.authChanged$.next(this.state);
 
         this.isLoading =
@@ -72,6 +75,18 @@ export class AuthService implements OnDestroy {
 
     logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
     this.refreshDispatch();
+  }
+
+  private setUserId(token: string): string {
+    if (token) {
+      const payload: JwtDto = this.jwt.getPayload(this.state.token);
+      if (payload) {
+        this.userId = payload.userId;
+      }
+    } else {
+      this.userId = undefined;
+    }
+    return this.userId;
   }
 
   private handleRedirect(prevState: AuthState) {

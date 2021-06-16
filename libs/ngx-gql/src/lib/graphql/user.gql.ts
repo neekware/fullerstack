@@ -16,8 +16,8 @@ export const UserFragment = gql`
 `;
 
 export const UserSelfQuery = gql`
-  query userSelf {
-    userSelf {
+  query userSelf($id: String!) {
+    userSelf(id: $id) {
       ...User
     }
   }

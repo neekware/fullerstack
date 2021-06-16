@@ -16,11 +16,11 @@ import { SecurityConfig } from './auth.model';
 
 @Injectable()
 export class SecurityService {
-  private readonly logger = new Logger(AUTH_MODULE_NAME);
+  readonly logger = new Logger(AUTH_MODULE_NAME);
   readonly options: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
   readonly jwtSecret: string;
 
-  constructor(private readonly prisma: PrismaService, private readonly config: ConfigService) {
+  constructor(readonly prisma: PrismaService, readonly config: ConfigService) {
     this.options = ldNestMerge(
       { ...this.options },
       this.config.get<SecurityConfig>('appConfig.securityConfig')

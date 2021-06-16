@@ -21,10 +21,7 @@ import { AuthService } from './auth.service';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly securityService: SecurityService
-  ) {}
+  constructor(readonly authService: AuthService, readonly securityService: SecurityService) {}
 
   @Mutation(() => AuthTokenDto)
   async authRegister(

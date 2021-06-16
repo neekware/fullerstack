@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(readonly appService: AppService) {}
 
   @Get('ping')
   ping(): HealthCheck {

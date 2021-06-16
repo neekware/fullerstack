@@ -14,10 +14,7 @@ import { SecurityService } from './auth.security.service';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly securityService: SecurityService
-  ) {}
+  constructor(readonly prisma: PrismaService, readonly securityService: SecurityService) {}
 
   async createUser(payload: UserCreateInput): Promise<User> {
     let user: User;
