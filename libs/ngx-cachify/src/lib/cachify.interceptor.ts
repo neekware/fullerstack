@@ -13,7 +13,7 @@ import { Injectable } from '@angular/core';
 import { cloneDeep } from 'lodash-es';
 import * as objectHash from 'object-hash';
 import { Observable, of, throwError } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
 import { CACHIFY_CONTEXT_TOKEN, DefaultContextMeta } from './cachify.default';

@@ -36,7 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
             return of(null);
           }
 
-          return this.retryOperationPostRefreshToken(request, next, error);
+          return this.retryOperationPostRefreshToken(request, next);
         }
 
         return throwError(error);
@@ -46,8 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private retryOperationPostRefreshToken(
     request: HttpRequest<unknown>,
-    next: HttpHandler,
-    error: any
+    next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return this.auth.refreshRequest().pipe(
       map((resp) => {

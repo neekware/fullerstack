@@ -7,8 +7,7 @@ import {
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode } from '@fullerstack/agx-dto';
-import { tryGet } from '@fullerstack/agx-util';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { gqlErrorsConverter } from './gql.error';

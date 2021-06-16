@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { _ } from '@fullerstack/ngx-i18n';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { Action, State, StateContext } from '@ngxs/store';
-import { map } from 'rxjs/operators';
 
 import * as actions from './auth-state.action';
 import { AUTH_STATE_KEY } from './auth-state.constant';

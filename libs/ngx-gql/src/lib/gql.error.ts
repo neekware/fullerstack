@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { HttpStatusCode } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';

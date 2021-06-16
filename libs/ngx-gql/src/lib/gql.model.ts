@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DocumentNode } from 'graphql/language/ast';
 
