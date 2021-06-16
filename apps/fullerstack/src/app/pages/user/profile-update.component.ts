@@ -25,7 +25,7 @@ export class ProfileUpdateComponent implements OnDestroy {
   ) {}
 
   update(data: UserSelfUpdateInput) {
-    this.user.userSelfUpdate(data).pipe(takeUntil(this.destroy$)).subscribe();
+    this.user.userSelfUpdateMutate(data).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
   ngOnDestroy() {
