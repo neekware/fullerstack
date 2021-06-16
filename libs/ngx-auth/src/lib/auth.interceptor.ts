@@ -31,6 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
           const operationName = tryGet(() => request?.body['operationName']);
           if (operationName === 'authRefreshToken') {
             this.auth.logoutDispatch();
+            return of(null);
           } else if (operationName === 'authLogout') {
             return of(null);
           }
