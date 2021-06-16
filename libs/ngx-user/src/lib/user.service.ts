@@ -61,6 +61,7 @@ export class UserService {
       .pipe(
         tap(() => (this.isLoading = false)),
         catchError((error, caught$) => {
+          this.isLoading = false;
           this.logger.error(error);
           return caught$;
         })
@@ -74,12 +75,12 @@ export class UserService {
       .request<User>(UserSelfUpdateMutation, { input })
       .pipe(
         tap((user) => {
+          this.isLoading = false;
           this.profile = user;
           this.profileChanged$.next(this.profile);
-          this.isLoading = false;
-          this.msg.successSnackBar(UserMessageMap.success.update.text, { duration: 3000 });
         }),
         catchError((error, caught$) => {
+          this.isLoading = false;
           this.logger.error(error);
           return caught$;
         })
@@ -94,6 +95,7 @@ export class UserService {
       .pipe(
         tap(() => (this.isLoading = false)),
         catchError((error, caught$) => {
+          this.isLoading = false;
           this.logger.error(error);
           return caught$;
         })

@@ -6,6 +6,11 @@ import { AuthTokenStatus } from '@fullerstack/ngx-gql/schema';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
+import {
+  AuthLogoutOperation,
+  AuthRefreshTokenOperation,
+  AuthResponseOperationName,
+} from './auth.default';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -28,12 +33,12 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error?.status === HttpStatusCode.UNAUTHORIZED) {
-          const operationName = tryGet(() => request?.body['operationName']);
-          if (operationName === 'authRefreshToken') {
-            this.auth.logoutDispatch();
-            return of(null);
-          } else if (operationName === 'authLogout') {
-            return of(null);
+          const operationName = tryGet(() => request?.body[AuthResponseOperationName]);
+          switch (operationName) {
+            case AuthRefreshTokenOperation:
+              this.auth.logoutDispatch();
+            case AuthLogoutOperation:
+              return of(null);
           }
 
           return this.retryOperationPostRefreshToken(request, next);
