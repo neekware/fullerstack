@@ -144,6 +144,10 @@ export interface userSelf {
   userSelf: userSelf_userSelf;
 }
 
+export interface userSelfVariables {
+  id: string;
+}
+
 /* tslint:disable */
 /* eslint-disable */
 // @generated
@@ -334,6 +338,7 @@ export interface UserCredentialsInput {
 
 export interface UserSelfUpdateInput {
   firstName?: string | null;
+  id: string;
   lastName?: string | null;
 }
 

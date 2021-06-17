@@ -11,7 +11,11 @@
     [icon]="icon"
     [progress]="user.isLoading"
   >
-    <fullerstack-user-profile-form (submit$)="update($event)" [profile]="user.profile"></fullerstack-user-profile-form>
+    <fullerstack-user-profile-form
+      (submit$)="update($event)"
+      (form$)="formSet($event)"
+      [profile]="user.profile"
+    ></fullerstack-user-profile-form>
 
     <mat-divider class="mt1"></mat-divider>
 

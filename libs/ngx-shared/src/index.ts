@@ -15,3 +15,6 @@ export * from './lib/component/hint/hint.util';
 export * from './lib/component/hint/hint.component';
 
 export * from './lib/component/ripple/ripple.component';
+
+export * from './lib/service/confirm/confirm.service';
+export * from './lib/service/guard/deactivate.guard';

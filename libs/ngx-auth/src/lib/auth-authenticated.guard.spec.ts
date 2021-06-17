@@ -5,12 +5,12 @@ import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { GqlModule } from '@fullerstack/ngx-gql';
 import { makeMockI18nModule } from '@fullerstack/ngx-i18n/mock';
 import { JwtModule } from '@fullerstack/ngx-jwt';
-import { LogLevels, LoggerModule } from '@fullerstack/ngx-logger';
+import { LoggerModule, LogLevels } from '@fullerstack/ngx-logger';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { NgxsModule } from '@ngxs/store';
 
+import { AuthAuthenticatedGuard } from './auth-authenticated.guard';
 import { AuthModule } from './auth.module';
-import { AuthService } from './auth.service';
 
 export const environment: ApplicationConfig = {
   appName: 'Fullerstack',
@@ -22,8 +22,8 @@ export const environment: ApplicationConfig = {
 // disable console log during test
 jest.spyOn(console, 'log').mockImplementation(() => undefined);
 
-describe('AuthService', () => {
-  let service: AuthService;
+describe('AuthAuthenticatedGuard', () => {
+  let service: AuthAuthenticatedGuard;
 
   beforeEach(
     waitForAsync(() => {
@@ -41,10 +41,10 @@ describe('AuthService', () => {
           MsgModule,
           AuthModule,
         ],
-        providers: [AuthService],
+        providers: [AuthAuthenticatedGuard],
       });
 
-      service = TestBed.inject(AuthService);
+      service = TestBed.inject(AuthAuthenticatedGuard);
     })
   );
 

@@ -6,6 +6,11 @@ import { AuthTokenStatus } from '@fullerstack/ngx-gql/schema';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
+import {
+  AuthLogoutOperation,
+  AuthRefreshTokenOperation,
+  AuthResponseOperationName,
+} from './auth.default';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -13,12 +18,17 @@ export class AuthInterceptor implements HttpInterceptor {
   private auth: AuthService;
 
   constructor(private injector: Injector) {
+    /**
+     * This interceptor will initialize before the the auth module
+     * So, we inject it manually, with a bit of delay to prevent circular injection deps
+     */
     setTimeout(() => {
       this.auth = this.injector.get(AuthService);
     });
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Auth module is not ready yet, so pass the request through
     if (!this.auth) {
       return next.handle(request);
     }
@@ -28,12 +38,13 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error?.status === HttpStatusCode.UNAUTHORIZED) {
-          const operationName = tryGet(() => request?.body['operationName']);
-          if (operationName === 'authRefreshToken') {
-            this.auth.logoutDispatch();
-            return of(null);
-          } else if (operationName === 'authLogout') {
-            return of(null);
+          const operationName = tryGet(() => request?.body[AuthResponseOperationName]);
+          switch (operationName) {
+            case AuthRefreshTokenOperation:
+              this.auth.logoutDispatch();
+              return of(null);
+            case AuthLogoutOperation:
+              return of(null);
           }
 
           return this.retryOperationPostRefreshToken(request, next);

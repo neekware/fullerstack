@@ -29,7 +29,7 @@ export class AuthStoreState {
       isAuthenticating: true,
     });
 
-    // return OR subscribe and handle the observable manually
+    // return OR subscribe to handle the observable manually
     return this.effects.loginRequest(payload);
   }
 
@@ -58,7 +58,7 @@ export class AuthStoreState {
       isRegistering: true,
     });
 
-    // return OR subscribe and handle the observable manually
+    // return OR subscribe to handle the observable manually
     return this.effects.registerRequest(payload);
   }
 
@@ -82,7 +82,7 @@ export class AuthStoreState {
   @Action(actions.LogoutRequest, { cancelUncompleted: true })
   logoutRequest({ getState }: StateContext<AuthState>) {
     if (getState().isLoggedIn) {
-      // return OR subscribe and handle the observable manually
+      // return OR subscribe to handle the observable manually
       return this.effects.logoutRequest();
     }
   }
@@ -97,7 +97,7 @@ export class AuthStoreState {
 
   @Action(actions.TokenRefreshRequest, { cancelUncompleted: true })
   tokenRefreshRequest() {
-    // return OR subscribe and handle the observable manually
+    // return OR subscribe to handle the observable manually
     return this.effects.tokenRefreshRequest();
   }
 

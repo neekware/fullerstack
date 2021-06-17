@@ -41,6 +41,9 @@ export class UserDto extends BaseModelDto implements Partial<User> {
 
 @InputType()
 export class UserSelfUpdateInput implements Partial<User> {
+  @Field(() => ID, { nullable: false })
+  id: string;
+
   @Field({ nullable: true })
   firstName?: string;
 

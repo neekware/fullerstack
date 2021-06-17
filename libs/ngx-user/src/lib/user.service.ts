@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { CachifyFetchPolicy, makeCachifyContext } from '@fullerstack/ngx-cachify';
@@ -10,9 +9,9 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import * as objectHash from 'object-hash';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { catchError, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
-import { DefaultUser, UserMessageMap } from './user.default';
+import { DefaultUser } from './user.default';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -22,7 +21,6 @@ export class UserService {
   isLoading = false;
 
   constructor(
-    readonly http: HttpClient,
     readonly msg: MsgService,
     readonly gql: GqlService,
     readonly gtag: GTagService,
@@ -32,7 +30,7 @@ export class UserService {
     this.auth.authChanged$
       .pipe(
         filter((state) => state.isLoggedIn),
-        switchMap(() => this.userSelf(CachifyFetchPolicy.NetworkFirst)),
+        switchMap(() => this.userSelfQuery(this.auth.userId, CachifyFetchPolicy.NetworkFirst)),
         takeUntil(this.destroy$)
       )
       .subscribe({
@@ -43,13 +41,13 @@ export class UserService {
       });
   }
 
-  userSelf(cachePolicy?: CachifyFetchPolicy): Observable<User> {
+  userSelfQuery(id: string, cachePolicy?: CachifyFetchPolicy): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
     return this.gql.client
       .request<User>(
         UserSelfQuery,
-        {},
+        { id },
         {
           context: makeCachifyContext({
             key: objectHash(createGqlBody(UserSelfQuery)),
@@ -58,45 +56,28 @@ export class UserService {
           }),
         }
       )
-      .pipe(
-        tap(() => (this.isLoading = false)),
-        catchError((error, caught$) => {
-          this.logger.error(error);
-          return caught$;
-        })
-      );
+      .pipe(tap(() => (this.isLoading = false)));
   }
 
-  userSelfUpdate(input: UserSelfUpdateInput): Observable<User> {
+  userSelfUpdateMutate(input: UserSelfUpdateInput): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
     return this.gql.client
       .request<User>(UserSelfUpdateMutation, { input })
       .pipe(
         tap((user) => {
+          this.isLoading = false;
           this.profile = user;
           this.profileChanged$.next(this.profile);
-          this.isLoading = false;
-          this.msg.successSnackBar(UserMessageMap.success.update.text, { duration: 3000 });
-        }),
-        catchError((error, caught$) => {
-          this.logger.error(error);
-          return caught$;
         })
       );
   }
 
-  user(id: string): Observable<User> {
+  userQuery(id: string): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
     return this.gql.client
       .request<User>(UserQuery, { id })
-      .pipe(
-        tap(() => (this.isLoading = false)),
-        catchError((error, caught$) => {
-          this.logger.error(error);
-          return caught$;
-        })
-      );
+      .pipe(tap(() => (this.isLoading = false)));
   }
 }

@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
+import { AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
 import { _ } from '@fullerstack/ngx-i18n';
+import { DeactivateGuard } from '@fullerstack/ngx-shared';
 
 import { AboutComponent } from './pages/about/about.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -41,8 +43,8 @@ export const AppRoutes: Routes = [
   {
     path: 'user/profile/update',
     component: ProfileUpdateComponent,
-    // canActivate: [GuardAuthenticationService],
-    // canDeactivate: [GuardDeactivateService],
+    canActivate: [AuthAuthenticatedGuard],
+    canDeactivate: [DeactivateGuard],
     data: {
       title: _('COMMON.PROFILE_UPDATE'),
       description: _('APP.DESCRIPTION.PROFILE_UPDATE'),

@@ -7,7 +7,7 @@ import {
 } from '@fullerstack/nsx-auth';
 import { PaginationArgs } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { NotFoundException, UseGuards } from '@nestjs/common';
+import { ForbiddenException, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
 
@@ -22,7 +22,10 @@ export class UserResolver {
 
   @UseGuards(AuthGuardGql)
   @Query(() => UserDto, { description: "Get user's own info" })
-  async userSelf(@UserDecorator() currentUser: User) {
+  async userSelf(@UserDecorator() currentUser: User, @Args('id') id: string) {
+    if (id !== currentUser.id) {
+      throw new ForbiddenException('Invalid id for self');
+    }
     return UserDataAccessScope.getSecuredUser(currentUser, currentUser);
   }
 
