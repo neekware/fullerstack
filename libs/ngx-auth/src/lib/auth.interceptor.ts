@@ -18,12 +18,17 @@ export class AuthInterceptor implements HttpInterceptor {
   private auth: AuthService;
 
   constructor(private injector: Injector) {
+    /**
+     * This interceptor will initialize before the the auth module
+     * So, we inject it manually, with a bit of delay to prevent circular injection deps
+     */
     setTimeout(() => {
       this.auth = this.injector.get(AuthService);
     });
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Auth module is not ready yet, so pass the request through
     if (!this.auth) {
       return next.handle(request);
     }
