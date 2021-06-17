@@ -23,6 +23,7 @@ const template = (tpl, args) => tpl.replace(/\${(\w+)}/g, (_, v) => args[v]);
 
 /**
  * Interpolation of template with args with params
+ * Ex: input: 'user/${id}', params: {id: '222'}, output: 'user/222')
  * @param inputString An input of type string
  * @param params A key:value object of parameters
  * @param options Options for Interpolation
