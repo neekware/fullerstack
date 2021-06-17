@@ -9,7 +9,7 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import * as objectHash from 'object-hash';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { catchError, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { DefaultUser } from './user.default';
 
@@ -30,7 +30,7 @@ export class UserService {
     this.auth.authChanged$
       .pipe(
         filter((state) => state.isLoggedIn),
-        switchMap(() => this.userSelfQuery(CachifyFetchPolicy.NetworkFirst)),
+        switchMap(() => this.userSelfQuery(this.auth.userId, CachifyFetchPolicy.NetworkFirst)),
         takeUntil(this.destroy$)
       )
       .subscribe({
@@ -56,14 +56,7 @@ export class UserService {
           }),
         }
       )
-      .pipe(
-        tap(() => (this.isLoading = false)),
-        catchError((error, caught$) => {
-          this.isLoading = false;
-          this.logger.error(error);
-          return caught$;
-        })
-      );
+      .pipe(tap(() => (this.isLoading = false)));
   }
 
   userSelfUpdateMutate(input: UserSelfUpdateInput): Observable<User> {
@@ -76,11 +69,6 @@ export class UserService {
           this.isLoading = false;
           this.profile = user;
           this.profileChanged$.next(this.profile);
-        }),
-        catchError((error, caught$) => {
-          this.isLoading = false;
-          this.logger.error(error);
-          return caught$;
         })
       );
   }
@@ -90,13 +78,6 @@ export class UserService {
     this.msg.reset();
     return this.gql.client
       .request<User>(UserQuery, { id })
-      .pipe(
-        tap(() => (this.isLoading = false)),
-        catchError((error, caught$) => {
-          this.isLoading = false;
-          this.logger.error(error);
-          return caught$;
-        })
-      );
+      .pipe(tap(() => (this.isLoading = false)));
   }
 }
