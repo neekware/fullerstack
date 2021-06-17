@@ -29,6 +29,7 @@
       "@fullerstack/nsx-auth": ["libs/nsx-auth/src/index.ts"],
       "@fullerstack/ngx-jwt": ["libs/ngx-jwt/src/index.ts"],
       "@fullerstack/ngx-menu": ["libs/ngx-menu/src/index.ts"],
+      "@fullerstack/ngx-i18n/mock": ["libs/ngx-i18n/src/mock.ts"],
       "@fullerstack/ngx-i18n": ["libs/ngx-i18n/src/index.ts"],
       "@fullerstack/ngx-gtag": ["libs/ngx-gtag/src/index.ts"],
       "@fullerstack/ngx-msg": ["libs/ngx-msg/src/index.ts"],
