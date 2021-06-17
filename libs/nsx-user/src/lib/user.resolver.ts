@@ -22,7 +22,7 @@ export class UserResolver {
 
   @UseGuards(AuthGuardGql)
   @Query(() => UserDto, { description: "Get user's own info" })
-  async userSelf(@UserDecorator() currentUser: User, @Args('id') id: String) {
+  async userSelf(@UserDecorator() currentUser: User, @Args('id') id: string) {
     if (id !== currentUser.id) {
       throw new ForbiddenException('Invalid id for self');
     }

@@ -42,6 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
           switch (operationName) {
             case AuthRefreshTokenOperation:
               this.auth.logoutDispatch();
+              return of(null);
             case AuthLogoutOperation:
               return of(null);
           }

@@ -10,7 +10,7 @@ export class ConfirmationDialogService {
   constructor(readonly dialog: MatDialog) {}
 
   confirmation(title?: string, info?: string, question?: string): Observable<boolean> {
-    let dialogRef = this.dialog.open(ConfirmationDialogComponent);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
     dialogRef.componentInstance.title = title || _('COMMON.CONFIRMATION');
     dialogRef.componentInstance.question = question || _('COMMON.ARE_YOU_SURE');
     dialogRef.componentInstance.info = info;
