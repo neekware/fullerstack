@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
 import { _ } from '@fullerstack/ngx-i18n';
 
 import { AboutComponent } from './pages/about/about.component';
@@ -41,7 +42,7 @@ export const AppRoutes: Routes = [
   {
     path: 'user/profile/update',
     component: ProfileUpdateComponent,
-    // canActivate: [GuardAuthenticationService],
+    canActivate: [AuthAuthenticatedGuard],
     // canDeactivate: [GuardDeactivateService],
     data: {
       title: _('COMMON.PROFILE_UPDATE'),

@@ -42,6 +42,7 @@ export class AuthService implements OnDestroy {
   loginUrl: string;
   registerUrl: string;
   loggedInUrl: string;
+  nextUrl: string;
   userId: string;
 
   constructor(
@@ -97,7 +98,8 @@ export class AuthService implements OnDestroy {
       switch (this.router.url) {
         case this.loginUrl:
         case this.registerUrl:
-          this.router.navigate([this.loggedInUrl]);
+          const forwardUrl = this.nextUrl || this.loggedInUrl;
+          this.router.navigate([forwardUrl]);
       }
     }
   }
