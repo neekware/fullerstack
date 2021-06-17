@@ -44,6 +44,7 @@ export class AuthService implements OnDestroy {
   loggedInUrl: string;
   nextUrl: string;
   userId: string;
+  landingUrl: string;
 
   constructor(
     readonly router: Router,
@@ -60,6 +61,7 @@ export class AuthService implements OnDestroy {
     this.loginUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
     this.loggedInUrl = tryGet(() => this.options.localConfig.loggedInLandingPageUrl, '/');
     this.registerUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
+    this.landingUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
