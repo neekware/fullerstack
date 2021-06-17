@@ -20,6 +20,7 @@ import { ValidationService } from '@fullerstack/ngx-util';
 export class UserProfileFormComponent implements OnChanges {
   form: FormGroup;
   @Output() submit$ = new EventEmitter<UserSelfUpdateInput>();
+  @Output() form$ = new EventEmitter<FormGroup>();
   @Input() profile: User;
   @Input() autocomplete = 'off';
   @Input() title = _('COMMON.PROFILE');
@@ -48,6 +49,7 @@ export class UserProfileFormComponent implements OnChanges {
       lastName: [profile.lastName, [Validators.required, Validators.minLength(2)]],
       email: [{ value: profile.email, disabled: true }],
     });
+    this.form$.emit(this.form);
   }
 
   submit() {
