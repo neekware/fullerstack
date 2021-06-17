@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { I18nService } from '@fullerstack/ngx-i18n';
 
 @Component({
-  selector: 'fullerstack-confimation-dialog',
+  selector: 'fullerstack-confirmation-dialog',
   templateUrl: './confirm.component.html',
 })
 export class ConfirmationDialogComponent {
@@ -12,7 +12,7 @@ export class ConfirmationDialogComponent {
   info: string;
 
   constructor(
-    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    public i18n: I18nService
+    readonly dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+    readonly i18n: I18nService
   ) {}
 }
