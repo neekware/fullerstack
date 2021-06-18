@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';

@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { Permission, PrismaClient, Role } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { v4 as uuid_v4 } from 'uuid';

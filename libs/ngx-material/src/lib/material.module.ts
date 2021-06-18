@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { BidiModule } from '@angular/cdk/bidi';

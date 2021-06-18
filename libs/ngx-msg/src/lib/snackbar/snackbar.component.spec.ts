@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';

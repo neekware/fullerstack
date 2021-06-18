@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 export const getHostHref = (location: Location): string => {
   const proto = location.protocol || 'http';
   const port = location.port ? ':' + location.port : '';

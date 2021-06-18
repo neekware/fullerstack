@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import {
   AUTH_JWT_EXPIRY_DEFAULT,
   AUTH_PASSWORD_SALT_ROUND_DEFAULT,

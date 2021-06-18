@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { _ } from '@fullerstack/ngx-i18n';

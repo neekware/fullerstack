@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DocumentNode } from 'graphql/language/ast';
