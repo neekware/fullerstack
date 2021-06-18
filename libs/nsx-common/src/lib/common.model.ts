@@ -7,9 +7,15 @@
  */
 
 import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Permission, Role } from '@prisma/client';
+import { Permission, Role, User } from '@prisma/client';
+import { Request, Response } from 'express';
 
-export { Request as HttpRequest, Response as HttpResponse } from 'express';
+export interface HttpRequest extends Request {
+  user: User;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface HttpResponse extends Response {}
 
 export type PartialPick<T, K extends keyof T> = {
   [P in K]?: T[P];
