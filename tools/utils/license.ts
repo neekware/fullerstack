@@ -22,7 +22,14 @@ const licenseContent = `/**
 `;
 
 const licensableFiles = ['./apps/**/*.ts', './libs/**/*.ts', './tools/**/*.ts'];
-const fileSkipList = ['index.ts', 'test-setup.ts', 'mock.ts', 'polyfills.ts', 'main.ts'];
+const fileSkipList = [
+  'index.ts',
+  'test-setup.ts',
+  'mock.ts',
+  'polyfills.ts',
+  'main.ts',
+  'gql.schema.ts',
+];
 
 console.log('Applying license headers ...');
 
@@ -46,7 +53,10 @@ async function main() {
             if (program.verbose) {
               console.log(`skipping ... ${file}`);
             }
-          } else if (!content.startsWith(licenseContent)) {
+          } else if (
+            !content.startsWith(licenseContent) &&
+            !content.startsWith(licenseContent.trim())
+          ) {
             if (content.includes(licenseContent)) {
               console.log(`License found, but not on top, skipping it ... ${file}`);
             } else {
