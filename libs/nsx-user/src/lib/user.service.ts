@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { AUTH_ROLE_RESTRICTION_MATRIX } from '@fullerstack/nsx-auth';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { ForbiddenException, Injectable } from '@nestjs/common';

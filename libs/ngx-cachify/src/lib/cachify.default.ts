@@ -1,8 +1,19 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { HttpContextToken } from '@angular/common/http';
 
 import { CachifyConfig, CachifyContextMeta, CachifyFetchPolicy } from './cachify.model';
 
-export const DEFAULT_CACHE_EXPIRY = 60;
+/**
+ * Max cache is one month
+ */
+export const DefaultMaxCacheExpiry = 60 * 60 * 24 * 30;
 
 /**
  * Default configuration - Cachify module
@@ -15,7 +26,7 @@ export const DefaultCachifyConfig: CachifyConfig = {
   immutable: false,
 
   // by default, expiry time of http cache is 60 seconds
-  ttl: DEFAULT_CACHE_EXPIRY,
+  ttl: DefaultMaxCacheExpiry,
 };
 
 /**
@@ -36,16 +47,11 @@ export const DefaultFetchPolicies = [
 export const DefaultFetchPolicy = CachifyFetchPolicy.CacheFirst;
 
 /**
- * Max cache is one month
- */
-export const DefaultMaxCacheExpiry = 60 * 60 * 24 * 30;
-
-/**
  * Default cache context meta data
  */
 export const DefaultContextMeta: CachifyContextMeta = {
   key: null,
-  ttl: DEFAULT_CACHE_EXPIRY,
+  ttl: DefaultMaxCacheExpiry,
   policy: DefaultFetchPolicy,
 };
 

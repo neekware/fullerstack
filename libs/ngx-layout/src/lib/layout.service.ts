@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable, OnDestroy } from '@angular/core';
@@ -221,11 +229,11 @@ export class LayoutService implements OnDestroy {
   toggleOverlayThemeClass() {
     const el = this.overlay.getContainerElement().classList;
     if (this.state.isDarkTheme) {
-      el.add('fullerstack-theme-dark');
-      el.remove('fullerstack-theme-light');
+      el.add('fs-theme-dark');
+      el.remove('fs-theme-light');
     } else {
-      el.add('fullerstack-theme-light');
-      el.remove('fullerstack-theme-dark');
+      el.add('fs-theme-light');
+      el.remove('fs-theme-dark');
     }
   }
 

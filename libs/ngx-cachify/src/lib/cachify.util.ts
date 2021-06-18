@@ -1,8 +1,16 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { HttpContext } from '@angular/common/http';
 
-import { CACHIFY_CONTEXT_TOKEN, DefaultFetchPolicies } from './cachify.default';
+import { CACHIFY_CONTEXT_TOKEN, DefaultContextMeta, DefaultFetchPolicies } from './cachify.default';
 import { CachifyContextMeta, CachifyFetchPolicy } from './cachify.model';
 
 /**
@@ -80,4 +88,13 @@ export function makeCachifyContext(meta: CachifyContextMeta) {
     ...meta,
     policy: meta.policy || CachifyFetchPolicy.NetworkFirst,
   });
+}
+
+/**
+ * Return cachify context if available
+ * @param context
+ * @returns return caching meta data if available or default value (no caching)
+ */
+export function getCachifyContextMeta(ctx: HttpContext): CachifyContextMeta {
+  return ctx.get<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN) || DefaultContextMeta;
 }

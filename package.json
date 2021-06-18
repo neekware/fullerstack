@@ -56,7 +56,8 @@
     "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma",
     "prisma:seed": "./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature",
     "xlate:extract": "ngx-translate-extract -i ./apps ./libs -o ./libs/agx-assets/src/lib/i18n/{en,fr,es,he,fa}.json -m _ --sort",
-    "gql:generate": "yarn ts-node ./tools/utils/gql.ts"
+    "gql:generate": "yarn ts-node ./tools/utils/gql.ts",
+    "license": "yarn ts-node ./tools/utils/license.ts"
   },
   "importSort": {
     ".js, .ts": {

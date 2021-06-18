@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -5,7 +13,7 @@ import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { GqlModule } from '@fullerstack/ngx-gql';
 import { makeMockI18nModule } from '@fullerstack/ngx-i18n/mock';
 import { JwtModule } from '@fullerstack/ngx-jwt';
-import { LoggerModule, LogLevels } from '@fullerstack/ngx-logger';
+import { LogLevels, LoggerModule } from '@fullerstack/ngx-logger';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { NgxsModule } from '@ngxs/store';
 

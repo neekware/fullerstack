@@ -1,13 +1,20 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { CachifyFetchPolicy, makeCachifyContext } from '@fullerstack/ngx-cachify';
-import { GqlService, createGqlBody } from '@fullerstack/ngx-gql';
+import { CachifyFetchPolicy, interpolate, makeCachifyContext } from '@fullerstack/ngx-cachify';
+import { GqlService } from '@fullerstack/ngx-gql';
 import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
 import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import * as objectHash from 'object-hash';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 
@@ -41,6 +48,10 @@ export class UserService {
       });
   }
 
+  getUserCacheKey(id: string): string {
+    return interpolate('user/${id}', { id });
+  }
+
   userSelfQuery(id: string, cachePolicy?: CachifyFetchPolicy): Observable<User> {
     this.isLoading = true;
     this.msg.reset();
@@ -50,9 +61,8 @@ export class UserService {
         { id },
         {
           context: makeCachifyContext({
-            key: objectHash(createGqlBody(UserSelfQuery)),
+            key: this.getUserCacheKey(id),
             policy: cachePolicy,
-            ttl: 60,
           }),
         }
       )
