@@ -1,1 +1,14 @@
-<p>notfound works!</p>
+<mat-toolbar class="fs-page-header" color="primary" fxLayoutAlign="center center">
+  <h2>{{ 'COMMON.ERROR' | translate }} 404</h2>
+</mat-toolbar>
+
+<div class="fs-page-content">
+  <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+    <div fxLayout="row" fxLayoutAlign="center">
+      <mat-icon class="svg-x6" color="warn" svgIcon="folder-search"></mat-icon>
+    </div>
+    <div class="mt1_5" fxLayoutAlign="center">
+      <h4>{{ 'COMMON.NOT_FOUND' | translate }}</h4>
+    </div>
+  </div>
+</div>
