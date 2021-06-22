@@ -59,12 +59,8 @@
     "gql:generate": "yarn ts-node ./tools/utils/gql.ts",
     "license": "yarn ts-node ./tools/utils/license.ts",
     "pkg:update": "yarn ts-node ./tools/utils/update.ts",
-    "loc:generate": "yarn ts-node ./tools/utils/loc.ts"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo \"[Husky] pre-commit\""
-    }
+    "loc:generate": "yarn ts-node ./tools/utils/loc.ts",
+    "prepare": "husky install"
   },
   "importSort": {
     ".js, .ts": {
