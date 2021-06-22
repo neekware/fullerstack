@@ -11,16 +11,17 @@ import * as fs from 'fs';
 import * as program from 'commander';
 import * as replaceSection from 'markdown-replace-section';
 
-import { execute, projPkgJson } from './util';
+import { execute } from './util';
 
 const DEBUG = false;
+const excludeDirs = ['node_modules', 'tmp', 'coverage', 'dist'];
 
 /**
  * Note, the "Lines of Code" seconds cannot be at the end
  * https://github.com/renke/markdown-replace-section/issues/1
  */
 async function main() {
-  const loc = await execute('loc .', !DEBUG);
+  const loc = await execute(`loc . --exclude ${excludeDirs.join(' ')}`, !DEBUG);
   let readMe = fs.readFileSync('README.md', 'utf-8');
 
   readMe = replaceSection(readMe, 'Lines of Code', '```txt<br>' + loc + '```', false);
