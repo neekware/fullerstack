@@ -1,7 +1,7 @@
 <form [formGroup]="form" (submit)="submit()" fxLayout="column" autocomplete="{{ autocomplete }}">
   <mat-form-field>
     <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
-    <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" />
+    <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}"/>
     <fullerstack-hint [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched" [hint]="nameHint"></fullerstack-hint>
   </mat-form-field>
 
