@@ -63,7 +63,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo 'hellooo'"
+      "pre-commit": "echo \"[Husky] pre-commit\""
     }
   },
   "importSort": {
