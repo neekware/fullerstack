@@ -54,6 +54,11 @@
               "apps/fullerstack/src/assets",
               {
                 "glob": "**/*",
+                "input": "libs/agx-assets/src/lib/styles/css",
+                "output": "assets/css"
+              },
+              {
+                "glob": "**/*",
                 "input": "libs/agx-assets/src/lib/images",
                 "output": "assets/images"
               },
