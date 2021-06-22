@@ -14,7 +14,7 @@
   "scripts": {
     "ts-node": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json",
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main; yarn prisma:generate",
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main && yarn prisma:generate && husky install",
     "start": "ng serve",
     "start:fullerstack": "ng serve fullerstack",
     "start:api": "ng serve api",
@@ -58,7 +58,13 @@
     "xlate:extract": "ngx-translate-extract -i ./apps ./libs -o ./libs/agx-assets/src/lib/i18n/{en,fr,es,he,fa}.json -m _ --sort",
     "gql:generate": "yarn ts-node ./tools/utils/gql.ts",
     "license": "yarn ts-node ./tools/utils/license.ts",
-    "pkg:update": "yarn ts-node ./tools/utils/update.ts"
+    "pkg:update": "yarn ts-node ./tools/utils/update.ts",
+    "loc:generate": "yarn ts-node ./tools/utils/loc.ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn loc:generate && yarn license"
+    }
   },
   "importSort": {
     ".js, .ts": {
@@ -163,12 +169,15 @@
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
     "glob": "^7.1.4",
+    "husky": "^6.0.0",
     "import-sort-style-module": "^6.0.0",
     "jest": "26.2.2",
     "jest-mock-extended": "^1.0.13",
     "jest-preset-angular": "8.4.0",
     "lodash": "^4.17.21",
+    "markdown-replace-section": "^0.4.0",
     "ng-packagr": "12.0.2",
+    "pinst": "^2.1.6",
     "postcss": "^8.2.13",
     "prettier": "2.2.1",
     "prettier-plugin-import-sort": "^0.0.6",
