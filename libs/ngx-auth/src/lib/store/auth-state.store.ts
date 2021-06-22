@@ -71,10 +71,11 @@ export class AuthStoreState {
   }
 
   @Action(actions.RegisterSuccess, { cancelUncompleted: true })
-  registerSuccess({ setState }: StateContext<AuthState>) {
+  registerSuccess({ setState }: StateContext<AuthState>, { payload }: actions.RegisterSuccess) {
     setState({
       ...DefaultAuthState,
       isLoggedIn: true,
+      token: payload,
     });
     this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
   }

@@ -75,8 +75,8 @@ export class AuthService implements OnDestroy {
       next: (newState) => {
         const prevState = cloneDeep(this.state);
         this.state = cloneDeep(newState);
-        this.handleRedirect(prevState);
         this.setUserId(this.state.token);
+        this.handleRedirect(prevState);
         this.authChanged$.next(this.state);
 
         this.isLoading =
