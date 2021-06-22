@@ -20,7 +20,7 @@ import { LoginFormComponent } from './component/login/login-form.component';
 import { RegisterFormComponent } from './component/register/register-form.component';
 import { RippleComponent } from './component/ripple/ripple.component';
 import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
-import { AutocompleteDirective, FormAutocompleteDirective } from './directive/input/autocomplete.directive';
+import { AutocompleteDirective } from './directive/autocomplete/autocomplete.directive';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule, I18nModule],
@@ -34,7 +34,6 @@ import { AutocompleteDirective, FormAutocompleteDirective } from './directive/in
     RegisterFormComponent,
     UserProfileFormComponent,
     AutocompleteDirective,
-    FormAutocompleteDirective,
   ],
   exports: [
     HintComponent,
@@ -46,7 +45,6 @@ import { AutocompleteDirective, FormAutocompleteDirective } from './directive/in
     RegisterFormComponent,
     UserProfileFormComponent,
     AutocompleteDirective,
-    FormAutocompleteDirective,
   ],
   providers: [],
 })

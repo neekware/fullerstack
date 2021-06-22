@@ -8,14 +8,18 @@
 
 import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Permission, Role, User } from '@prisma/client';
-import { Request, Response } from 'express';
 
-export interface HttpRequest extends Request {
-  user: User;
+/**
+ * Augment Request with a user attribute
+ * https://www.typescriptlang.org/docs/handbook/declaration-merging.html
+ */
+declare module 'express' {
+  export interface Request {
+    user: User;
+  }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface HttpResponse extends Response {}
+export { Request as HttpRequest, Response as HttpResponse } from 'express';
 
 export type PartialPick<T, K extends keyof T> = {
   [P in K]?: T[P];
