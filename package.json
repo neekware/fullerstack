@@ -63,7 +63,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn loc:generate && yarn license"
+      "pre-commit": "echo 'hellooo'"
     }
   },
   "importSort": {
