@@ -7,7 +7,7 @@
  */
 
 import { Routes } from '@angular/router';
-import { AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
+import { AuthAnonymousGuard, AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
 import { _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
 
@@ -29,7 +29,6 @@ export const AppRoutes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
-    // canActivate: [AuthGuardService]
     data: {
       title: _('APP.ABOUT'),
     },
@@ -37,6 +36,7 @@ export const AppRoutes: Routes = [
   {
     path: 'auth/login',
     component: LoginComponent,
+    canActivate: [AuthAnonymousGuard],
     data: {
       title: _('APP.LOGIN'),
     },
@@ -44,6 +44,7 @@ export const AppRoutes: Routes = [
   {
     path: 'auth/register',
     component: RegisterComponent,
+    canActivate: [AuthAnonymousGuard],
     data: {
       title: _('APP.REGISTER'),
     },

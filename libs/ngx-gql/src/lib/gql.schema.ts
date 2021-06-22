@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright Neekware Inc. All Rights Reserved.
- *
- * Use of this source code is governed by a proprietary notice
- * that can be found at http://neekware.com/license/PRI.html
- */
-
 /* tslint:disable */
 /* eslint-disable */
 // @generated
@@ -16,7 +8,7 @@
 // ====================================================
 
 export interface authLogin_authLogin {
-  __typename: 'AuthTokenDto';
+  __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
@@ -40,7 +32,7 @@ export interface authLoginVariables {
 // ====================================================
 
 export interface authRegister_authRegister {
-  __typename: 'AuthTokenDto';
+  __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
@@ -64,7 +56,7 @@ export interface authRegisterVariables {
 // ====================================================
 
 export interface authRefreshToken_authRefreshToken {
-  __typename: 'AuthTokenDto';
+  __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
@@ -84,7 +76,7 @@ export interface authRefreshToken {
 // ====================================================
 
 export interface authLogout_authLogout {
-  __typename: 'AuthStatusDto';
+  __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
@@ -103,7 +95,7 @@ export interface authLogout {
 // ====================================================
 
 export interface isEmailAvailable_isEmailAvailable {
-  __typename: 'AuthStatusDto';
+  __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
@@ -126,7 +118,7 @@ export interface isEmailAvailableVariables {
 // ====================================================
 
 export interface userSelf_userSelf {
-  __typename: 'UserDto';
+  __typename: "UserDto";
   id: string;
   email: string | null;
   /**
@@ -166,7 +158,7 @@ export interface userSelfVariables {
 // ====================================================
 
 export interface user_user {
-  __typename: 'UserDto';
+  __typename: "UserDto";
   id: string;
   email: string | null;
   /**
@@ -206,7 +198,7 @@ export interface userVariables {
 // ====================================================
 
 export interface userSelfUpdate_userSelfUpdate {
-  __typename: 'UserDto';
+  __typename: "UserDto";
   id: string;
   email: string | null;
   /**
@@ -246,7 +238,7 @@ export interface userSelfUpdateVariables {
 // ====================================================
 
 export interface AuthStatus {
-  __typename: 'AuthStatusDto';
+  __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
@@ -261,7 +253,7 @@ export interface AuthStatus {
 // ====================================================
 
 export interface AuthTokenStatus {
-  __typename: 'AuthTokenDto';
+  __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
@@ -277,7 +269,7 @@ export interface AuthTokenStatus {
 // ====================================================
 
 export interface User {
-  __typename: 'UserDto';
+  __typename: "UserDto";
   id: string;
   email: string | null;
   /**
@@ -309,27 +301,27 @@ export interface User {
  * User permission
  */
 export enum Permission {
-  appALL = 'appALL',
-  groupALL = 'groupALL',
-  groupCREATE = 'groupCREATE',
-  groupDELETE = 'groupDELETE',
-  groupREAD = 'groupREAD',
-  groupUPDATE = 'groupUPDATE',
-  userALL = 'userALL',
-  userCREATE = 'userCREATE',
-  userDELETE = 'userDELETE',
-  userREAD = 'userREAD',
-  userUPDATE = 'userUPDATE',
+  appALL = "appALL",
+  groupALL = "groupALL",
+  groupCREATE = "groupCREATE",
+  groupDELETE = "groupDELETE",
+  groupREAD = "groupREAD",
+  groupUPDATE = "groupUPDATE",
+  userALL = "userALL",
+  userCREATE = "userCREATE",
+  userDELETE = "userDELETE",
+  userREAD = "userREAD",
+  userUPDATE = "userUPDATE",
 }
 
 /**
  * User role
  */
 export enum Role {
-  ADMIN = 'ADMIN',
-  STAFF = 'STAFF',
-  SUPERUSER = 'SUPERUSER',
-  USER = 'USER',
+  ADMIN = "ADMIN",
+  STAFF = "STAFF",
+  SUPERUSER = "SUPERUSER",
+  USER = "USER",
 }
 
 export interface UserCreateInput {

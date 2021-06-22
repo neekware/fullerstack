@@ -6,4 +6,5 @@ export * from './lib/auth.service';
 export * from './lib/auth.module';
 export * from './lib/auth.interceptor';
 export * from './lib/auth-authenticated.guard';
+export * from './lib/auth-anonymous.guard';
 export * from './lib/auth.validation';

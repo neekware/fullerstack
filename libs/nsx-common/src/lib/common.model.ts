@@ -7,7 +7,17 @@
  */
 
 import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Permission, Role } from '@prisma/client';
+import { Permission, Role, User } from '@prisma/client';
+
+/**
+ * Augment Request with a user attribute
+ * https://www.typescriptlang.org/docs/handbook/declaration-merging.html
+ */
+declare module 'express' {
+  export interface Request {
+    user: User;
+  }
+}
 
 export { Request as HttpRequest, Response as HttpResponse } from 'express';
 

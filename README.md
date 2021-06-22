@@ -129,6 +129,26 @@ X.Y.Z Version
     `MINOR` version -- adding functionality in a backwards-compatible manner
     `PATCH` version -- making backwards-compatible bug fixes
 
+## Lines of Code
+
+```txt<br>--------------------------------------------------------------------------------
+ Language             Files        Lines        Blank      Comment         Code
+--------------------------------------------------------------------------------
+ TypeScript             324        16555         1866         3360        11329
+ JSON                   121         4303            0            0         4303
+ Markdown                27         1675          396            0         1279
+ Sass                    48         1322          123           28         1171
+ JavaScript              29          650            8           48          594
+ HTML                    25          675           82            4          589
+ CSS                      1           96            7            0           89
+ Plain Text               4           93           10            0           83
+ SQL                      1           63           13           12           38
+ Toml                     1            3            0            2            1
+--------------------------------------------------------------------------------
+ Total                  581        25435         2505         3454        19476
+--------------------------------------------------------------------------------
+```
+
 ## Sponsors
 
 [ [Neekware Inc.](http://neekware.com) ] [ [Nx](https://nx.dev) ]
