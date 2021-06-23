@@ -47,7 +47,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((errors) => {
         const gqlErrors = new GqlErrorsHandler(errors);
-        if (!!gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
+        if (gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
           const operationName = tryGet(() => request?.body[AuthResponseOperationName]);
           switch (operationName) {
             case AuthRefreshTokenOperation:
@@ -79,7 +79,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
           catchError((errors) => {
             const gqlErrors = new GqlErrorsHandler(errors);
-            if (!!gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
+            if (gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
               this.auth.logoutDispatch();
               return of(null);
             }
