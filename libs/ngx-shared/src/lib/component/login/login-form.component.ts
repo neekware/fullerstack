@@ -28,10 +28,10 @@ import { ValidationService } from '@fullerstack/ngx-util';
 export class LoginFormComponent implements OnInit {
   form: FormGroup;
   @Output() submit$ = new EventEmitter<UserCredentialsInput>();
-  @Input() autocomplete = 'off';
   @Input() title = _('COMMON.LOGIN');
   @Input() subtitle = _('COMMON.ACCOUNT_ACCESS');
   @Input() icon = 'lock-open-outline';
+  @Input() autocomplete = 'off';
   @Input() emailHint: string;
   @Input() passwordHint: string;
 
