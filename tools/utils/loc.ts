@@ -17,7 +17,7 @@ const DEBUG = false;
 const excludeDirs = ['node_modules', 'tmp', 'coverage', 'dist'];
 
 /**
- * Note, the "Lines of Code" seconds cannot be at the end
+ * Note, the "Lines of Code" section cannot be at the end
  * https://github.com/renke/markdown-replace-section/issues/1
  */
 async function main() {
