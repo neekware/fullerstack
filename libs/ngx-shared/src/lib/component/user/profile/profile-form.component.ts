@@ -77,4 +77,8 @@ export class UserProfileFormComponent implements OnChanges {
   submit() {
     this.submit$.emit(this.form.value);
   }
+
+  get showStatus(): boolean {
+    return !this.form.valid || (this.form.pristine && !!this.statusMessage);
+  }
 }
