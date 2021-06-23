@@ -8,6 +8,7 @@
 
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ActionStatus } from '@fullerstack/agx-dto';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
@@ -29,6 +30,7 @@ export class ProfileUpdateComponent implements OnDestroy {
   title = _('COMMON.PROFILE');
   subtitle = _('COMMON.PROFILE_UPDATE');
   icon = 'account-edit-outline';
+  actionStatus: ActionStatus;
 
   constructor(
     readonly config: ConfigService,
@@ -38,7 +40,16 @@ export class ProfileUpdateComponent implements OnDestroy {
   ) {}
 
   update(data: UserSelfUpdateInput) {
-    this.user.userSelfUpdateMutate(data).pipe(takeUntil(this.destroy$)).subscribe();
+    this.user
+      .userSelfUpdateMutate(data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (user) => {
+          if (user) {
+            this.actionStatus = ActionStatus.success;
+          }
+        },
+      });
   }
 
   formSet(form: FormGroup) {

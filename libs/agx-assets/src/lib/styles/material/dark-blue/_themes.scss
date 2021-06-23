@@ -3,9 +3,25 @@
 // Primary Theme (Default)
 @include angular-material-theme($theme);
 
+.mat-success {
+  color: rgb(28, 184, 176);
+}
+
+.mat-info {
+  color: rgb(59, 155, 214);
+}
+
 // Secondary Theme
 .fs-theme-dark {
   @include angular-material-theme($dark-theme);
+
+  .mat-success {
+    color: rgb(92, 224, 136);
+  }
+
+  .mat-info {
+    color: rgb(112, 182, 226);
+  }
 }
 
 .color-primary {
