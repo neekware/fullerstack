@@ -10,6 +10,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode, JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
+import { GqlErrorsHandler } from '@fullerstack/ngx-gql';
 import { AuthTokenStatus } from '@fullerstack/ngx-gql/schema';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -44,8 +45,9 @@ export class AuthInterceptor implements HttpInterceptor {
     request = this.insertToken(request, this.auth?.state.token);
 
     return next.handle(request).pipe(
-      catchError((error) => {
-        if (error?.status === HttpStatusCode.UNAUTHORIZED) {
+      catchError((errors) => {
+        const gqlErrors = new GqlErrorsHandler(errors);
+        if (!!gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
           const operationName = tryGet(() => request?.body[AuthResponseOperationName]);
           switch (operationName) {
             case AuthRefreshTokenOperation:
@@ -54,11 +56,9 @@ export class AuthInterceptor implements HttpInterceptor {
             case AuthLogoutOperation:
               return of(null);
           }
-
           return this.retryOperationPostRefreshToken(request, next);
         }
-
-        return throwError(error);
+        return throwError(() => gqlErrors);
       })
     );
   }
@@ -76,19 +76,24 @@ export class AuthInterceptor implements HttpInterceptor {
       }),
       switchMap((resp: AuthTokenStatus) => {
         request = this.insertToken(request, resp.token);
-        return next.handle(request);
+        return next.handle(request).pipe(
+          catchError((errors) => {
+            const gqlErrors = new GqlErrorsHandler(errors);
+            if (!!gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
+              this.auth.logoutDispatch();
+              return of(null);
+            }
+            return throwError(() => gqlErrors);
+          })
+        );
       })
     ) as Observable<HttpEvent<unknown>>;
   }
 
   private insertToken(request: HttpRequest<unknown>, token: string) {
-    if (token) {
-      return request.clone({
-        setHeaders: {
-          Authorization: `${JWT_BEARER_REALM} ${token}`,
-        },
-      });
+    if (!token) {
+      return request;
     }
-    return request;
+    return request.clone({ setHeaders: { Authorization: `${JWT_BEARER_REALM} ${token}` } });
   }
 }

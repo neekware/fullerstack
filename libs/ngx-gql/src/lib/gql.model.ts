@@ -36,6 +36,12 @@ export interface GraphQLError {
   path: string[];
 }
 
+export interface GraphQLResponseError {
+  error: string;
+  message: string;
+  statusCode: number;
+}
+
 export interface GqlResponse<T = any> {
   data?: T;
   errors?: GraphQLError[];

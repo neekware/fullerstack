@@ -58,7 +58,7 @@ export class UserProfileFormComponent implements OnChanges {
           this.statusMessage = 'SUCCESS.USER.UPDATE';
           break;
         case ActionStatus.failure:
-          this.statusMessage = 'FAILED.USER.UPDATE';
+          this.statusMessage = 'ERROR.USER.UPDATE';
           break;
       }
     }

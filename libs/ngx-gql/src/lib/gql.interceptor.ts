@@ -10,7 +10,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { gqlErrorsConverter } from './gql.error';
+import { gqlErrorsInterceptor } from './gql.error';
 
 @Injectable({ providedIn: 'root' })
 export class GqlInterceptor implements HttpInterceptor {
@@ -26,6 +26,6 @@ export class GqlInterceptor implements HttpInterceptor {
      * This interceptor will pull the errors out, and re-raise them as http error
      * Other interceptors then can handle them as regular http errors
      */
-    return next.handle(request).pipe(gqlErrorsConverter());
+    return next.handle(request).pipe(gqlErrorsInterceptor());
   }
 }

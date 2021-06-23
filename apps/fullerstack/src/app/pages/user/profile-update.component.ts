@@ -11,8 +11,10 @@ import { FormGroup } from '@angular/forms';
 import { ActionStatus } from '@fullerstack/agx-dto';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
+import { GqlErrorsHandler } from '@fullerstack/ngx-gql';
 import { UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { _ } from '@fullerstack/ngx-i18n';
+import { LoggerService } from '@fullerstack/ngx-logger';
 import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
 import { UserService } from '@fullerstack/ngx-user';
 import { Observable, Subject } from 'rxjs';
@@ -31,9 +33,11 @@ export class ProfileUpdateComponent implements OnDestroy {
   subtitle = _('COMMON.PROFILE_UPDATE');
   icon = 'account-edit-outline';
   actionStatus: ActionStatus;
+  actionMessage: string;
 
   constructor(
     readonly config: ConfigService,
+    readonly logger: LoggerService,
     readonly auth: AuthService,
     readonly user: UserService,
     readonly confirm: ConfirmationDialogService
@@ -48,6 +52,10 @@ export class ProfileUpdateComponent implements OnDestroy {
           if (user) {
             this.actionStatus = ActionStatus.success;
           }
+        },
+        error: (errors: GqlErrorsHandler) => {
+          this.logger.error(errors);
+          this.actionStatus = ActionStatus.failure;
         },
       });
   }

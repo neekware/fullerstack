@@ -65,7 +65,7 @@ export class CachifyInterceptor implements HttpInterceptor {
           if (cachedResponse) {
             return of(cachedResponse);
           }
-          return throwError(new HttpErrorResponse({ status: HttpStatusCode.BadRequest }));
+          return throwError(() => new HttpErrorResponse({ status: HttpStatusCode.BadRequest }));
 
         case CachifyFetchPolicy.CacheOff:
           return this.playItForward(request, next, meta);
