@@ -14,7 +14,7 @@ import * as replaceSection from 'markdown-replace-section';
 import { execute } from './util';
 
 const DEBUG = false;
-const excludeDirs = ['node_modules', 'tmp', 'coverage', 'dist'];
+const excludeDirs = ['node_modules', 'tmp', 'coverage', 'dist', 'gql.schema.ts'];
 
 /**
  * Note, the "Lines of Code" section cannot be at the end
