@@ -23,7 +23,7 @@ import {
 } from '@fullerstack/ngx-gql/schema';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { Store } from '@ngxs/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import * as actions from './auth-state.action';
@@ -52,10 +52,10 @@ export class AuthEffectsService implements OnDestroy {
           }
           return resp;
         }),
-        catchError((error, caught$) => {
+        catchError((error) => {
           this.logger.error(error);
           this.store.dispatch(new actions.LoginFailure());
-          return caught$;
+          return of(error);
         })
       );
   }
@@ -73,10 +73,10 @@ export class AuthEffectsService implements OnDestroy {
           }
           return resp;
         }),
-        catchError((error, caught$) => {
+        catchError((error) => {
           this.logger.error(error);
           this.store.dispatch(new actions.RegisterFailure());
-          return caught$;
+          return of(error);
         })
       );
   }
@@ -92,10 +92,10 @@ export class AuthEffectsService implements OnDestroy {
         }
         return resp;
       }),
-      catchError((error, caught$) => {
+      catchError((error) => {
         this.logger.error(error);
         this.store.dispatch(new actions.LogoutRequest());
-        return caught$;
+        return of(error);
       })
     );
   }
@@ -107,10 +107,10 @@ export class AuthEffectsService implements OnDestroy {
         this.store.dispatch(new actions.LogoutSuccess());
         return resp;
       }),
-      catchError((error, caught$) => {
+      catchError((error) => {
         this.logger.error(error);
         this.store.dispatch(new actions.LogoutSuccess());
-        return caught$;
+        return of(error);
       })
     );
   }

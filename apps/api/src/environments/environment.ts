@@ -21,7 +21,7 @@ const appConfig: ConfigModuleOptions = {
 
 const securityConfig: SecurityConfig = {
   accessTokenExpiry: '30s',
-  sessionTokenExpiry: '1m',
+  sessionTokenExpiry: '24h',
   bcryptSaltOrRound: 2,
 };
 

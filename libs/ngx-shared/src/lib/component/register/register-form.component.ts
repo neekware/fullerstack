@@ -30,10 +30,10 @@ import { ValidationService } from '@fullerstack/ngx-util';
 export class RegisterFormComponent implements OnInit {
   form: FormGroup;
   @Output() submit$ = new EventEmitter<UserCreateInput>();
-  @Input() autocomplete = 'off';
   @Input() title = _('COMMON.REGISTER');
   @Input() subtitle = _('COMMON.ACCOUNT_CREATE');
   @Input() icon = 'account-plus-outline';
+  @Input() autocomplete = 'off';
   @Input() nameHint: string;
   @Input() emailHint: string;
   @Input() passwordHint: string;

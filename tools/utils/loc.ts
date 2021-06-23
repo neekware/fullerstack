@@ -14,10 +14,10 @@ import * as replaceSection from 'markdown-replace-section';
 import { execute } from './util';
 
 const DEBUG = false;
-const excludeDirs = ['node_modules', 'tmp', 'coverage', 'dist'];
+const excludeDirs = ['node_modules', 'tmp', 'coverage', 'dist', 'gql.schema.ts'];
 
 /**
- * Note, the "Lines of Code" seconds cannot be at the end
+ * Note, the "Lines of Code" section cannot be at the end
  * https://github.com/renke/markdown-replace-section/issues/1
  */
 async function main() {
