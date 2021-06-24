@@ -32,7 +32,7 @@ export class CacheStore<T = StoreType> {
    * Note: Emits the current state as the first item in the stream
    */
   getState(): Observable<T> {
-    return this.state$.asObservable().pipe(map((state) => this.handleImmutability(state)));
+    return this.state$.asObservable();
   }
 
   /**
@@ -40,7 +40,7 @@ export class CacheStore<T = StoreType> {
    * @returns Object of type T
    */
   getStateSnapshot(): T {
-    return this.handleImmutability(this.state$.getValue());
+    return this.state$.getValue();
   }
 
   /**
@@ -54,7 +54,7 @@ export class CacheStore<T = StoreType> {
     const currentState = this.getStateSnapshot();
     const partialState = isFunction(updater) ? updater(currentState) : updater;
     const nextState = Object.assign({}, currentState, partialState);
-    this.state$.next(nextState);
+    this.isImmutable ? this.state$.next(deepFreeze(nextState)) : this.state$.next(nextState);
   }
 
   /**
@@ -65,21 +65,8 @@ export class CacheStore<T = StoreType> {
   select<K>(key: string): Observable<K> {
     const selected$ = this.state$.pipe(
       map((state: T) => state[key] as K),
-      distinctUntilChanged(),
-      map((state) => this.handleImmutability(state))
+      distinctUntilChanged()
     );
     return selected$;
-  }
-
-  /**
-   *
-   * @param state partial or full state to be returned
-   * @returns immutable state during development, mutable during production
-   */
-  private handleImmutability<J>(state: J): J {
-    if (!this.isImmutable) {
-      return deepFreeze(state) as J;
-    }
-    return state as J;
   }
 }

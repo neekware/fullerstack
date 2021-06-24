@@ -22,8 +22,8 @@ export const DefaultCachifyConfig: CachifyConfig = {
   // by default cache is disabled
   disabled: true,
 
-  // freeze state, full or partial
-  immutable: false,
+  // freeze state
+  immutable: true,
 
   // by default, expiry time of http cache is 60 seconds
   ttl: DefaultMaxCacheExpiry,

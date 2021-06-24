@@ -28,7 +28,7 @@ const gtag: GTagConfig = {
 
 const cachify: CachifyConfig = {
   disabled: false,
-  immutable: false,
+  immutable: true, // minimally set to true during development
   ttl: 60, // 1 minute
 } as const;
 
