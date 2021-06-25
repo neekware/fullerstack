@@ -5,6 +5,7 @@
  * Use of this source code is governed by a proprietary notice
  * that can be found at http://neekware.com/license/PRI.html
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
 import {
@@ -27,8 +28,8 @@ export class StoreService {
   private store: Store;
 
   constructor(private config: ConfigService, private logger: LoggerService) {
-    this.options = ldNestedMerge({ cachify: DefaultStoreConfig }, this.config.options);
-    this.store = new Store({}, this.options.cachify.immutable);
+    this.options = ldNestedMerge({ store: DefaultStoreConfig }, this.config.options);
+    this.store = new Store({}, this.options.store.immutable);
     this.logger.debug('StoreService ready ...');
   }
 

@@ -16,22 +16,22 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { Store } from '@fullerstack/ngx-store';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultCachifyConfig, DefaultMaxCacheExpiry } from './cachify.default';
 import { CachifyEntry } from './cachify.model';
-import { CacheStore } from './cachify.store';
 
 @Injectable({ providedIn: 'root' })
 export class CachifyService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private cacheMap = new Map<string, CachifyEntry>();
-  private cacheStore: CacheStore;
+  private cacheStore: Store;
 
   constructor(private config: ConfigService, private logger: LoggerService) {
     this.options = ldNestedMerge({ cachify: DefaultCachifyConfig }, this.config.options);
-    this.cacheStore = new CacheStore({}, this.options.cachify.immutable);
+    this.cacheStore = new Store({}, this.options.cachify.immutable);
     this.logger.debug('CachifyService ready ...');
   }
 
