@@ -23,6 +23,7 @@ import { LoggerModule } from '@fullerstack/ngx-logger';
 import { MaterialModule } from '@fullerstack/ngx-material';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { SharedModule } from '@fullerstack/ngx-shared';
+import { StoreModule } from '@fullerstack/ngx-store';
 import { UixModule } from '@fullerstack/ngx-uix';
 import { UserModule } from '@fullerstack/ngx-user';
 import { ValidationService } from '@fullerstack/ngx-util';
@@ -65,6 +66,7 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
     }),
     ConfigModule.forRoot(environment),
     LoggerModule,
+    StoreModule,
     JwtModule,
     MsgModule,
     SharedModule,
