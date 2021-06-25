@@ -44,7 +44,8 @@
       "@fullerstack/ngx-util": ["libs/ngx-util/src/index.ts"],
       "@fullerstack/ngx-shared": ["libs/ngx-shared/src/index.ts"],
       "@fullerstack/ngx-user": ["libs/ngx-user/src/index.ts"],
-      "@fullerstack/ngx-cachify": ["libs/ngx-cachify/src/index.ts"]
+      "@fullerstack/ngx-cachify": ["libs/ngx-cachify/src/index.ts"],
+      "@fullerstack/ngx-store": ["libs/ngx-store/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", "dist", "coverage"]

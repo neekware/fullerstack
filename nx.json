@@ -108,6 +108,9 @@
     },
     "ngx-cachify": {
       "tags": ["name:ngx-cachify", "scope:ngx-data-util"]
+    },
+    "ngx-store": {
+      "tags": ["name:agx-store"]
     }
   }
 }
