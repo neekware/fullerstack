@@ -141,7 +141,7 @@ export class LayoutService implements OnDestroy {
 
     this.store.dispatch(new actions.Initialize(this.options.appName));
 
-    this.auth.authChanged$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
+    this.auth.stateSub$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
       if (this.state.notifyOpen && !state.isLoggedIn) {
         this.toggleNotification();
       }

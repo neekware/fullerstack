@@ -33,11 +33,11 @@ export class LoginComponent implements OnInit {
       const redirectUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
       this.auth.goTo(redirectUrl);
     } else {
-      this.auth.initiateLoginState();
+      this.auth.initState();
     }
   }
 
   login(data: UserCredentialsInput) {
-    this.auth.loginDispatch(data);
+    this.auth.loginRequest(data);
   }
 }

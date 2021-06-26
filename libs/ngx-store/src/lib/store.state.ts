@@ -11,7 +11,7 @@
 import { isFunction } from 'lodash-es';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 import { v4 as uuidV4 } from 'uuid';
 
@@ -85,12 +85,13 @@ export class Store<T = StoreType> {
    */
   setState<K = any>(privateKey: string, updater: SetStateReducer<T> | Partial<T> | K): void;
   setState<K = any>(privateKey: string, updater: K): void {
-    if (!this.registry.get(privateKey)) {
+    const entry = this.registry.get(privateKey);
+    if (!entry) {
       throw new Error(`setState: No slice registration with private key: (${privateKey})`);
     }
     const currentState = this.getState();
     const partialState = isFunction(updater) ? updater(currentState) : updater;
-    const nextState = Object.assign({}, currentState, partialState);
+    const nextState = Object.assign({}, currentState, { [entry.sliceName]: partialState });
     this.config?.immutable
       ? this.storeState$.next(deepFreeze(nextState))
       : this.storeState$.next(nextState);
@@ -119,10 +120,9 @@ export class Store<T = StoreType> {
    * Note: Emits the the current state key match as the first item in the stream
    */
   select$<K>(sliceName: string): Observable<K> {
-    const selected$ = this.storeState$.pipe(
+    return this.storeState$.pipe(
       map((state: T) => state[sliceName] as K),
       distinctUntilChanged()
     );
-    return selected$;
   }
 }

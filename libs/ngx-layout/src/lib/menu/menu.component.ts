@@ -32,7 +32,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     this.rootNode = this.layout.menu.buildMenuTree(layoutMenuTree);
 
-    this.auth.authChanged$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.auth.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         const forceMenuRebuild = true;
         this.rootNode = this.layout.menu.buildMenuTree(layoutMenuTree, forceMenuRebuild);

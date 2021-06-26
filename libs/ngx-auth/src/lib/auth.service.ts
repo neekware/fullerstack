@@ -18,6 +18,13 @@ import {
 } from '@fullerstack/ngx-config';
 import { GqlService } from '@fullerstack/ngx-gql';
 import {
+  AuthLoginMutation,
+  AuthLogoutMutation,
+  AuthRefreshTokenMutation,
+  AuthRegisterMutation,
+} from '@fullerstack/ngx-gql/operations';
+import {
+  AuthStatus,
   AuthTokenStatus,
   UserCreateInput,
   UserCredentialsInput,
@@ -26,43 +33,37 @@ import { _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { Select, Store } from '@ngxs/store';
+import { StoreService } from '@fullerstack/ngx-store';
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, first, takeUntil, tap } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultAuthConfig } from './auth.default';
-import * as actions from './store/auth-state.action';
-import { DefaultAuthState } from './store/auth-state.default';
-import { AuthEffectsService } from './store/auth-state.effect';
-import { AuthState } from './store/auth-state.model';
-import { AuthStoreState } from './store/auth-state.store';
+import { DefaultAuthConfig, DefaultAuthState } from './auth.default';
+import { AUTH_STATE_SLICE_NAME, AuthState } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
-  options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
-  authChanged$ = new BehaviorSubject<AuthState>(DefaultAuthState);
-  @Select(AuthStoreState) private stateSub$: Observable<AuthState>;
-  state: DeepReadonly<AuthState> = DefaultAuthState;
-  isLoading: boolean;
+  private statePrivateKey: string;
   private destroy$ = new Subject<boolean>();
+  options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
+  state: DeepReadonly<AuthState> = DefaultAuthState;
+  stateSub$: Observable<AuthState>;
+  isLoading: boolean;
   loginUrl: string;
   registerUrl: string;
   loggedInUrl: string;
   nextUrl: string;
-  userId: string;
   landingUrl: string;
 
   constructor(
     readonly router: Router,
-    readonly store: Store,
+    readonly store: StoreService,
     readonly config: ConfigService,
     readonly logger: LoggerService,
     readonly msg: MsgService,
     readonly jwt: JwtService,
-    readonly gql: GqlService,
-    readonly effects: AuthEffectsService
+    readonly gql: GqlService
   ) {
     this.options = ldNestedMerge({ gtag: DefaultAuthConfig }, this.config.options);
 
@@ -71,38 +72,19 @@ export class AuthService implements OnDestroy {
     this.registerUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
     this.landingUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
 
-    this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (newState) => {
-        const prevState = cloneDeep(this.state);
-        this.state = cloneDeep(newState);
-        this.setUserId(this.state.token);
-        this.handleRedirect(prevState);
-        this.authChanged$.next(this.state);
+    this.registerState();
+    this.initState();
+    this.subState();
+    this.tokenRefreshRequest();
 
-        this.isLoading =
-          !newState.hasError && (newState.isAuthenticating || newState.isRegistering);
-      },
-    });
-
-    logger.info(`AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`);
-    this.refreshDispatch();
-  }
-
-  private setUserId(token: string): string {
-    if (token) {
-      const payload: JwtDto = this.jwt.getPayload(this.state.token);
-      if (payload) {
-        this.userId = payload.userId;
-      }
-    } else {
-      this.userId = undefined;
-    }
-    return this.userId;
+    logger.info(
+      `[AUTH] AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`
+    );
   }
 
   private handleRedirect(prevState: AuthState) {
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
-      this.initDispatch();
+      this.initState();
       this.router.navigate([this.loggedInUrl]);
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
       switch (this.router.url) {
@@ -114,53 +96,179 @@ export class AuthService implements OnDestroy {
     }
   }
 
-  initDispatch() {
-    this.store.dispatch(new actions.Initialize());
+  /**
+   * Initialize Auth state
+   */
+  registerState() {
+    this.statePrivateKey = this.store.registerSlice(AUTH_STATE_SLICE_NAME);
   }
 
-  initiateLoginState() {
-    if (!this.state.isLoggedIn) {
-      this.msg.reset();
-      this.router.navigate([this.loginUrl]);
-    }
+  /**
+   * Initialize Auth state
+   */
+  initState() {
+    this.store.setState(this.statePrivateKey, DefaultAuthState);
   }
 
-  initiateRegisterState() {
-    if (!this.state.isLoggedIn) {
-      this.msg.reset();
-      this.router.navigate([this.registerUrl]);
-    }
+  /**
+   * Subscribe to Auth state changes
+   */
+  subState() {
+    this.stateSub$ = this.store.select$<AuthState>(AUTH_STATE_SLICE_NAME);
+
+    this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (newState) => {
+        const prevState = cloneDeep(this.state);
+        this.state = { ...DefaultAuthState, ...newState };
+        this.handleRedirect(prevState);
+
+        this.isLoading =
+          !newState.hasError && (newState.isAuthenticating || newState.isRegistering);
+      },
+    });
   }
 
-  initiateLogoutState() {
-    if (this.state.isLoggedIn) {
-      this.msg.reset();
-      this.router.navigate([this.loggedInUrl]);
-    }
+  loginRequest(input: UserCredentialsInput) {
+    this.store.setState(this.statePrivateKey, { ...DefaultAuthState, isAuthenticating: true });
+    this.logger.debug('[AUTH] Login request sent ...');
+
+    return this.gql.client
+      .request<AuthTokenStatus>(AuthLoginMutation, { input })
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe({
+        next: (resp) => {
+          let updateState: AuthState;
+          if (resp.ok) {
+            updateState = {
+              ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId),
+            };
+            this.logger.debug('[AUTH] Login request success ...');
+          } else {
+            updateState = {
+              ...DefaultAuthState,
+              isAuthenticating: true,
+              hasError: true,
+              message: resp.message,
+            };
+            this.logger.error(`[AUTH] Login request failed ... ${resp.message}`);
+          }
+          this.store.setState(this.statePrivateKey, updateState);
+        },
+        error: (err) => {
+          this.logger.error('[AUTH] ', err);
+          this.store.setState(this.statePrivateKey, {
+            ...DefaultAuthState,
+            isAuthenticating: true,
+            hasError: true,
+            message: err.message,
+          });
+        },
+      });
   }
 
-  loginDispatch(payload: UserCredentialsInput) {
-    if (!this.state.isLoggedIn) {
-      this.store.dispatch(new actions.LoginRequest(payload));
-    }
+  registerRequest(input: UserCreateInput) {
+    this.store.setState(this.statePrivateKey, { ...DefaultAuthState, isRegistering: true });
+    this.logger.debug('[AUTH] Register request sent ...');
+
+    return this.gql.client
+      .request<AuthTokenStatus>(AuthRegisterMutation, { input })
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe({
+        next: (resp) => {
+          let updateState: AuthState;
+          if (resp.ok) {
+            updateState = {
+              ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId),
+            };
+            this.logger.debug('[AUTH] Login request success ...');
+          } else {
+            updateState = {
+              ...DefaultAuthState,
+              hasError: true,
+              message: resp.message,
+            };
+            this.logger.error(`[AUTH] Register request failed ... ${resp.message}`);
+          }
+          this.store.setState(this.statePrivateKey, updateState);
+        },
+        error: (err) => {
+          this.logger.error('[AUTH] ', err);
+          this.store.setState(this.statePrivateKey, {
+            ...DefaultAuthState,
+            hasError: true,
+            message: err.message,
+          });
+        },
+      });
   }
 
-  registerDispatch(payload: UserCreateInput) {
-    if (!this.state.isLoggedIn) {
-      this.store.dispatch(new actions.RegisterRequest(payload));
-    }
+  tokenRefreshRequest() {
+    this.logger.debug('[AUTH] Token refresh request sent ...');
+    return this.gql.client
+      .request<AuthTokenStatus>(AuthRefreshTokenMutation)
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe({
+        next: (resp) => {
+          let updateState: AuthState;
+          if (resp.ok) {
+            updateState = {
+              ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId),
+            };
+          } else {
+            updateState = {
+              ...DefaultAuthState,
+              hasError: true,
+              message: resp.message,
+            };
+          }
+          this.store.setState(this.statePrivateKey, updateState);
+        },
+        error: (err) => {
+          this.logger.error(err);
+          this.store.setState(this.statePrivateKey, {
+            ...DefaultAuthState,
+            hasError: true,
+            message: err.message,
+          });
+        },
+      });
   }
 
-  logoutDispatch() {
-    this.store.dispatch(new actions.LogoutRequest());
+  tokenRetryRequest(): Observable<AuthTokenStatus> {
+    this.logger.debug('[AUTH] Retry token refresh request sent ...');
+    return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
+      tap((resp) => {
+        if (resp.ok) {
+          this.store.setState(this.statePrivateKey, { ...this.state, token: resp.token });
+        }
+      })
+    );
   }
 
-  refreshDispatch(): Observable<any> {
-    return this.store.dispatch(new actions.TokenRefreshRequest());
-  }
-
-  refreshRequest(): Observable<AuthTokenStatus> {
-    return this.effects.tokenRefreshRequest();
+  logoutRequest() {
+    this.logger.debug('[AUTH] Logout request sent ...');
+    return this.gql.client
+      .request<AuthStatus>(AuthLogoutMutation)
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.initState();
+          this.logger.debug('[AUTH] Logout request success ...');
+        },
+        error: (err) => {
+          this.logger.error('[AUTH] ', err);
+          this.initState();
+        },
+      });
   }
 
   goTo(url: string) {

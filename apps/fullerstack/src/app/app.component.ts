@@ -46,15 +46,4 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.healthCheck$ = this.http.get<HealthCheck>('/api/ping');
   }
-
-  login() {
-    this.auth.loginDispatch({
-      email: 'admin@fullerstack.net',
-      password: 'hello',
-    });
-  }
-
-  logout() {
-    this.auth.logoutDispatch();
-  }
 }

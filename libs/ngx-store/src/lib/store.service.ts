@@ -58,7 +58,7 @@ export class StoreService<T = StoreType> {
    */
   setState<K = any>(privateKey: string, updater: SetStateReducer<T> | Partial<T> | K): void;
   setState<K = any>(privateKey: string, updater: K): void {
-    this.setState<K>(privateKey, updater);
+    this.store.setState<K>(privateKey, updater);
   }
 
   /**

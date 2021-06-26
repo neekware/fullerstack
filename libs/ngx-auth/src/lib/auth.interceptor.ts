@@ -51,7 +51,7 @@ export class AuthInterceptor implements HttpInterceptor {
           const operationName = tryGet(() => request?.body[AuthResponseOperationName]);
           switch (operationName) {
             case AuthRefreshTokenOperation:
-              this.auth.logoutDispatch();
+              this.auth.logoutRequest();
               return of(null);
             case AuthLogoutOperation:
               return of(null);
@@ -67,10 +67,10 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return this.auth.refreshRequest().pipe(
+    return this.auth.tokenRetryRequest().pipe(
       map((resp) => {
         if (!resp?.ok) {
-          this.auth.logoutDispatch();
+          this.auth.logoutRequest();
         }
         return resp;
       }),
@@ -80,7 +80,7 @@ export class AuthInterceptor implements HttpInterceptor {
           catchError((errors) => {
             const gqlErrors = new GqlErrorsHandler(errors);
             if (gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
-              this.auth.logoutDispatch();
+              this.auth.logoutRequest();
               return of(null);
             }
             return throwError(() => gqlErrors);
