@@ -33,7 +33,7 @@ import { _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { StoreService } from '@fullerstack/ngx-store';
+import { StoreLogger, StoreService } from '@fullerstack/ngx-store';
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { filter, first, takeUntil, tap } from 'rxjs/operators';
@@ -72,8 +72,8 @@ export class AuthService implements OnDestroy {
     this.registerUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
     this.landingUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
 
-    this.registerState();
-    this.initState();
+    this.registerStateStore();
+    this.initStoreState();
     this.subState();
     this.tokenRefreshRequest();
 
@@ -84,7 +84,7 @@ export class AuthService implements OnDestroy {
 
   private handleRedirect(prevState: AuthState) {
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
-      this.initState();
+      this.initStoreState();
       this.router.navigate([this.loggedInUrl]);
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
       switch (this.router.url) {
@@ -99,21 +99,24 @@ export class AuthService implements OnDestroy {
   /**
    * Initialize Auth state
    */
-  registerState() {
-    this.statePrivateKey = this.store.registerSlice(AUTH_STATE_SLICE_NAME);
+  private registerStateStore() {
+    this.statePrivateKey = this.store.registerSlice(
+      AUTH_STATE_SLICE_NAME,
+      !this.options.production ? this.logger.info.bind(this.logger) : undefined
+    );
   }
 
   /**
    * Initialize Auth state
    */
-  initState() {
+  private initStoreState() {
     this.store.setState(this.statePrivateKey, DefaultAuthState);
   }
 
   /**
    * Subscribe to Auth state changes
    */
-  subState() {
+  private subState() {
     this.stateSub$ = this.store.select$<AuthState>(AUTH_STATE_SLICE_NAME);
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
@@ -149,7 +152,6 @@ export class AuthService implements OnDestroy {
           } else {
             updateState = {
               ...DefaultAuthState,
-              isAuthenticating: true,
               hasError: true,
               message: resp.message,
             };
@@ -161,7 +163,6 @@ export class AuthService implements OnDestroy {
           this.logger.error('[AUTH] ', err);
           this.store.setState(this.statePrivateKey, {
             ...DefaultAuthState,
-            isAuthenticating: true,
             hasError: true,
             message: err.message,
           });
@@ -233,7 +234,7 @@ export class AuthService implements OnDestroy {
           this.store.setState(this.statePrivateKey, updateState);
         },
         error: (err) => {
-          this.logger.error(err);
+          this.logger.error('[ AUTH ]', err);
           this.store.setState(this.statePrivateKey, {
             ...DefaultAuthState,
             hasError: true,
@@ -261,12 +262,12 @@ export class AuthService implements OnDestroy {
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          this.initState();
+          this.initStoreState();
           this.logger.debug('[AUTH] Logout request success ...');
         },
         error: (err) => {
           this.logger.error('[AUTH] ', err);
-          this.initState();
+          this.initStoreState();
         },
       });
   }
@@ -278,6 +279,6 @@ export class AuthService implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
-    this.logger.debug('AuthService destroyed ...');
+    this.logger.debug('[AUTH] AuthService destroyed ...');
   }
 }

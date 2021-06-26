@@ -32,8 +32,6 @@ export class RegisterComponent implements OnInit {
         '/'
       );
       this.auth.goTo(redirectUrl);
-    } else {
-      this.auth.initState();
     }
   }
 

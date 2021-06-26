@@ -34,6 +34,7 @@ export enum LogLevels {
  * Log level name - order is important
  */
 export const LogNames: DeepReadonly<string[]> = [
+  'IGNORE',
   'CRITICAL',
   'ERROR',
   'WARN',
@@ -46,6 +47,7 @@ export const LogNames: DeepReadonly<string[]> = [
  * Log level colors - order is important
  */
 export const LogColors: DeepReadonly<string[]> = [
+  'ignore',
   'red',
   'OrangeRed ',
   'orange',

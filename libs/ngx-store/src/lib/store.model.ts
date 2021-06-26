@@ -8,6 +8,8 @@
 
 import { BehaviorSubject } from 'rxjs';
 
+export type StoreLogger = (message: any, ...extras: any[]) => void;
+
 /**
  * Store config declaration
  */
@@ -47,4 +49,5 @@ export class ImmutableStore<T extends StoreType> extends BehaviorSubject<T> {
 export interface StoreRegistryEntry {
   sliceName: string;
   privateKey: string;
+  logger?: StoreLogger;
 }

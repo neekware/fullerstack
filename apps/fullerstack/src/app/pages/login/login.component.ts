@@ -32,8 +32,6 @@ export class LoginComponent implements OnInit {
     if (this.auth.state.isLoggedIn) {
       const redirectUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
       this.auth.goTo(redirectUrl);
-    } else {
-      this.auth.initState();
     }
   }
 

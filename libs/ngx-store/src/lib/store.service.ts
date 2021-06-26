@@ -8,6 +8,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
+import { tryGet } from '@fullerstack/agx-util';
 import {
   ApplicationConfig,
   ConfigService,
@@ -19,7 +20,7 @@ import { Observable } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultStoreConfig } from './store.default';
-import { SetStateReducer, StoreType } from './store.model';
+import { SetStateReducer, StoreLogger, StoreType } from './store.model';
 import { Store } from './store.state';
 
 @Injectable()
@@ -27,9 +28,9 @@ export class StoreService<T = StoreType> {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private store: Store;
 
-  constructor(private config: ConfigService, private logger: LoggerService) {
+  constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ store: DefaultStoreConfig }, this.config.options);
-    this.store = new Store<StoreType>({}, this.options.store.immutable);
+    this.store = new Store<T>({} as T, { ...this.options.store });
     this.logger.debug('StoreService ready ...');
   }
 
@@ -38,8 +39,8 @@ export class StoreService<T = StoreType> {
    * @param sliceName slice name to claim write ownership
    * @returns registration private key
    */
-  registerSlice(sliceName: string): string {
-    return this.store.registerSlice(sliceName);
+  registerSlice(sliceName: string, logger?: StoreLogger): string {
+    return this.store.registerSlice(sliceName, logger);
   }
 
   /**

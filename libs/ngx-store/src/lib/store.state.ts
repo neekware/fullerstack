@@ -21,6 +21,7 @@ import {
   ImmutableStore,
   SetStateReducer,
   StoreConfig,
+  StoreLogger,
   StoreRegistryEntry,
   StoreType,
 } from './store.model';
@@ -44,7 +45,7 @@ export class Store<T = StoreType> {
    * @param sliceName name of a slice from state (hint: attribute key of an object)
    * @returns Private key confirming `write` permission of the slice
    */
-  registerSlice(sliceName: string): string {
+  registerSlice(sliceName: string, logger?: StoreLogger): string {
     this.registry.forEach((entity) => {
       if (entity.sliceName === sliceName) {
         throw new Error(
@@ -54,7 +55,7 @@ export class Store<T = StoreType> {
     });
 
     const privateKey = uuidV4();
-    this.registry.set(privateKey, { sliceName, privateKey });
+    this.registry.set(privateKey, { sliceName, privateKey, logger });
     return privateKey;
   }
 
@@ -90,11 +91,15 @@ export class Store<T = StoreType> {
       throw new Error(`setState: No slice registration with private key: (${privateKey})`);
     }
     const currentState = this.getState();
+    if (entry.logger) entry.logger(`[ Prev State ][${entry.sliceName}]`, currentState);
+
     const partialState = isFunction(updater) ? updater(currentState) : updater;
     const nextState = Object.assign({}, currentState, { [entry.sliceName]: partialState });
     this.config?.immutable
       ? this.storeState$.next(deepFreeze(nextState))
       : this.storeState$.next(nextState);
+
+    if (entry.logger) entry.logger(`[ Next State ][${entry.sliceName}]`, nextState);
   }
 
   /**
