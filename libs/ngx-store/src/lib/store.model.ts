@@ -8,6 +8,7 @@
 
 import { BehaviorSubject } from 'rxjs';
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type StoreLogger = (message: any, ...extras: any[]) => void;
 
 /**

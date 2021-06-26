@@ -8,7 +8,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
-import { tryGet } from '@fullerstack/agx-util';
 import {
   ApplicationConfig,
   ConfigService,
