@@ -43,3 +43,8 @@ export class ImmutableStore<T extends StoreType> extends BehaviorSubject<T> {
     return super.getValue() as Readonly<T>;
   }
 }
+
+export interface StoreRegistryEntry {
+  sliceName: string;
+  privateKey: string;
+}

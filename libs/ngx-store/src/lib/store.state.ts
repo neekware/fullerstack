@@ -17,11 +17,17 @@ import { v4 as uuidV4 } from 'uuid';
 
 import { DefaultStoreConfig } from './store.default';
 import { deepFreeze } from './store.freeze';
-import { ImmutableStore, SetStateReducer, StoreConfig, StoreType } from './store.model';
+import {
+  ImmutableStore,
+  SetStateReducer,
+  StoreConfig,
+  StoreRegistryEntry,
+  StoreType,
+} from './store.model';
 
 export class Store<T = StoreType> {
   private config: DeepReadonly<StoreConfig> = DefaultStoreConfig;
-  private registry = new Map<string, string>(); // <privateKey, sliceName>
+  private registry = new Map<string, StoreRegistryEntry>();
   private storeState$: ImmutableStore<T>;
 
   /**
@@ -39,16 +45,16 @@ export class Store<T = StoreType> {
    * @returns Private key confirming `write` permission of the slice
    */
   registerSlice(sliceName: string): string {
-    this.registry.forEach((pKey, sName) => {
-      if (sliceName === sName) {
+    this.registry.forEach((entity) => {
+      if (entity.sliceName === sliceName) {
         throw new Error(
-          `registerSlice: Found slice registration with private key: (${privateKey})`
+          `registerSlice: Found slice registration with private key: (${entity.privateKey})`
         );
       }
     });
 
     const privateKey = uuidV4();
-    this.registry.set(privateKey, sliceName);
+    this.registry.set(privateKey, { sliceName, privateKey });
     return privateKey;
   }
 
@@ -57,11 +63,18 @@ export class Store<T = StoreType> {
    * @param privateKey private key for state slice registration
    */
   deregisterSlice(privateKey: string) {
-    if (this.registry.get(privateKey)) {
-      this.registry.delete(privateKey);
+    const entity = this.registry.get(privateKey);
+    if (!entity) {
+      throw new Error(`deregisterSlice: No slice registration with private key: (${privateKey})`);
     }
 
-    throw new Error(`deregisterSlice: No slice registration with private key: (${privateKey})`);
+    const state = this.getState();
+    const newState = { ...state, ...{ [entity.sliceName]: undefined } };
+    this.config?.immutable
+      ? this.storeState$.next(deepFreeze(newState))
+      : this.storeState$.next(newState);
+
+    this.registry.delete(privateKey);
   }
 
   /**
@@ -70,8 +83,8 @@ export class Store<T = StoreType> {
    * @param updater Partial data or function to update state
    * Note: https://github.com/Microsoft/TypeScript/issues/18823
    */
-  setState(privateKey: string, updater: SetStateReducer<T> | Partial<T>): void;
-  setState(privateKey: string, updater: any): void {
+  setState<K = any>(privateKey: string, updater: SetStateReducer<T> | Partial<T> | K): void;
+  setState<K = any>(privateKey: string, updater: K): void {
     if (!this.registry.get(privateKey)) {
       throw new Error(`setState: No slice registration with private key: (${privateKey})`);
     }

@@ -62,7 +62,7 @@ export class CachifyService {
     const expiryTime = Date.now() + ttl * 1000;
     const entry: CachifyEntry = { key, response, expiryTime };
     this.cacheMap.set(key, entry);
-    this.cacheStore.setState({ [key]: entry.response?.body });
+    this.cacheStore.setState(key, entry.response?.body);
     this.pruneCache();
   }
 

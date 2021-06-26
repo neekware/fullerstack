@@ -34,13 +34,31 @@ export class StoreService<T = StoreType> {
   }
 
   /**
+   * Claim slice within state
+   * @param sliceName slice name to claim write ownership
+   * @returns registration private key
+   */
+  registerSlice(sliceName: string): string {
+    return this.store.registerSlice(sliceName);
+  }
+
+  /**
+   * Remove ownership of a slice, and delete the slice
+   * @param privateKey slice ownership proof
+   * @returns void
+   */
+  deregisterSlice(privateKey: string) {
+    return this.store.deregisterSlice(privateKey);
+  }
+
+  /**
    * Mutates (create/update) a slice within state
    * @param privateKey key required by owner of slice for `write` operation
    * @param updater object or function that returns a partial object of type T
    */
-  setState(privateKey: string, updater: SetStateReducer<T> | Partial<T>): void;
-  setState(privateKey: string, updater: any): void {
-    this.setState(privateKey, updater);
+  setState<K = any>(privateKey: string, updater: SetStateReducer<T> | Partial<T> | K): void;
+  setState<K = any>(privateKey: string, updater: K): void {
+    this.setState<K>(privateKey, updater);
   }
 
   /**
