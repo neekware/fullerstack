@@ -10,6 +10,7 @@
  * Auth config declaration
  */
 export interface AuthConfig {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [id: string]: any;
 }
 

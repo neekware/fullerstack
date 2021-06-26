@@ -9,7 +9,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MsgModule, MsgService } from '@fullerstack/ngx-msg';
-import { NgxsModule } from '@ngxs/store';
 
 import { AuthService } from './auth.service';
 import { AuthAsyncValidation } from './auth.validation';

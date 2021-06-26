@@ -7,10 +7,10 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { StoreService } from '@fullerstack/ngx-store';
 
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthService } from './auth.service';
-import { AuthEffectsService } from './store/auth-state.effect';
 
 describe('AuthInterceptor', () => {
   beforeEach(() =>
@@ -22,7 +22,7 @@ describe('AuthInterceptor', () => {
           useValue: {},
         },
         {
-          provide: AuthEffectsService,
+          provide: StoreService,
           useValue: {},
         },
       ],
