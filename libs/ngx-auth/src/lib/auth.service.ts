@@ -28,6 +28,7 @@ import {
   UserCreateInput,
   UserCredentialsInput,
 } from '@fullerstack/ngx-gql/schema';
+import { _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
@@ -70,8 +71,8 @@ export class AuthService implements OnDestroy {
     this.registerUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
     this.landingUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
 
-    this.registerStateStore();
-    this.initStoreState();
+    this.registerState();
+    this.initState();
     this.subState();
     this.tokenRefreshRequest();
 
@@ -82,7 +83,7 @@ export class AuthService implements OnDestroy {
 
   private handleRedirect(prevState: AuthState) {
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
-      this.initStoreState();
+      this.initState();
       this.goTo(this.loggedInUrl);
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
       switch (this.router.url) {
@@ -96,7 +97,7 @@ export class AuthService implements OnDestroy {
   /**
    * Initialize Auth state
    */
-  private registerStateStore() {
+  private registerState() {
     this.statePrivateKey = this.store.registerSlice(
       AUTH_STATE_SLICE_NAME,
       !this.options.production ? this.logger.info.bind(this.logger) : undefined
@@ -106,7 +107,7 @@ export class AuthService implements OnDestroy {
   /**
    * Initialize Auth state
    */
-  private initStoreState() {
+  private initState() {
     this.store.setState(this.statePrivateKey, DefaultAuthState);
   }
 
@@ -142,6 +143,7 @@ export class AuthService implements OnDestroy {
             const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
             updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
             this.logger.debug('[AUTH] Login request success ...');
+            this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
           } else {
             updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
             this.logger.error(`[AUTH] Login request failed ... ${resp.message}`);
@@ -149,12 +151,12 @@ export class AuthService implements OnDestroy {
           this.store.setState(this.statePrivateKey, updateState);
         },
         error: (err) => {
-          this.logger.error('[AUTH] ', err);
           this.store.setState(this.statePrivateKey, {
             ...DefaultAuthState,
             hasError: true,
             message: err.message,
           });
+          this.logger.error('[AUTH] ', err);
         },
       });
   }
@@ -173,6 +175,7 @@ export class AuthService implements OnDestroy {
             const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
             updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
             this.logger.debug('[AUTH] Login request success ...');
+            this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
           } else {
             updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
             this.logger.error(`[AUTH] Register request failed ... ${resp.message}`);
@@ -180,12 +183,12 @@ export class AuthService implements OnDestroy {
           this.store.setState(this.statePrivateKey, updateState);
         },
         error: (err) => {
-          this.logger.error('[AUTH] ', err);
           this.store.setState(this.statePrivateKey, {
             ...DefaultAuthState,
             hasError: true,
             message: err.message,
           });
+          this.logger.error('[AUTH] ', err);
         },
       });
   }
@@ -228,19 +231,25 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  logoutRequest() {
+  logoutRequest(onError = false) {
     this.logger.debug('[AUTH] Logout request sent ...');
+    this.initState();
+
     return this.gql.client
       .request<AuthStatus>(AuthLogoutMutation)
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          this.initStoreState();
           this.logger.debug('[AUTH] Logout request success ...');
+          if (!onError) {
+            this.msg.successSnackBar(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
+          } else {
+            this.msg.errorSnackBar(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
+          }
         },
         error: (err) => {
           this.logger.error('[AUTH] ', err);
-          this.initStoreState();
+          this.msg.errorSnackBar(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
         },
       });
   }
