@@ -6,7 +6,6 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-/* eslint-disable */
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtDto } from '@fullerstack/agx-dto';
@@ -29,14 +28,13 @@ import {
   UserCreateInput,
   UserCredentialsInput,
 } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { StoreLogger, StoreService } from '@fullerstack/ngx-store';
+import { StoreService } from '@fullerstack/ngx-store';
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
-import { filter, first, takeUntil, tap } from 'rxjs/operators';
+import { first, takeUntil, tap } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAuthConfig, DefaultAuthState } from './auth.default';
@@ -85,13 +83,12 @@ export class AuthService implements OnDestroy {
   private handleRedirect(prevState: AuthState) {
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
       this.initStoreState();
-      this.router.navigate([this.loggedInUrl]);
+      this.goTo(this.loggedInUrl);
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
       switch (this.router.url) {
         case this.loginUrl:
         case this.registerUrl:
-          const forwardUrl = this.nextUrl || this.loggedInUrl;
-          this.router.navigate([forwardUrl]);
+          this.goTo(this.nextUrl || this.loggedInUrl);
       }
     }
   }
@@ -142,19 +139,11 @@ export class AuthService implements OnDestroy {
         next: (resp) => {
           let updateState: AuthState;
           if (resp.ok) {
-            updateState = {
-              ...DefaultAuthState,
-              isLoggedIn: true,
-              token: resp.token,
-              userId: tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId),
-            };
+            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
+            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
             this.logger.debug('[AUTH] Login request success ...');
           } else {
-            updateState = {
-              ...DefaultAuthState,
-              hasError: true,
-              message: resp.message,
-            };
+            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
             this.logger.error(`[AUTH] Login request failed ... ${resp.message}`);
           }
           this.store.setState(this.statePrivateKey, updateState);
@@ -181,19 +170,11 @@ export class AuthService implements OnDestroy {
         next: (resp) => {
           let updateState: AuthState;
           if (resp.ok) {
-            updateState = {
-              ...DefaultAuthState,
-              isLoggedIn: true,
-              token: resp.token,
-              userId: tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId),
-            };
+            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
+            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
             this.logger.debug('[AUTH] Login request success ...');
           } else {
-            updateState = {
-              ...DefaultAuthState,
-              hasError: true,
-              message: resp.message,
-            };
+            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
             this.logger.error(`[AUTH] Register request failed ... ${resp.message}`);
           }
           this.store.setState(this.statePrivateKey, updateState);
@@ -218,18 +199,10 @@ export class AuthService implements OnDestroy {
         next: (resp) => {
           let updateState: AuthState;
           if (resp.ok) {
-            updateState = {
-              ...DefaultAuthState,
-              isLoggedIn: true,
-              token: resp.token,
-              userId: tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId),
-            };
+            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
+            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
           } else {
-            updateState = {
-              ...DefaultAuthState,
-              hasError: true,
-              message: resp.message,
-            };
+            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
           }
           this.store.setState(this.statePrivateKey, updateState);
         },
@@ -273,7 +246,9 @@ export class AuthService implements OnDestroy {
   }
 
   goTo(url: string) {
-    this.router.navigate([url]);
+    setTimeout(() => {
+      this.router.navigate([url]);
+    });
   }
 
   ngOnDestroy() {

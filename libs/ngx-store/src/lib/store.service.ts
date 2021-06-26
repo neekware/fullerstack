@@ -56,7 +56,7 @@ export class StoreService<T = StoreType> {
    * @param privateKey key required by owner of slice for `write` operation
    * @param updater object or function that returns a partial object of type T
    */
-  setState<K = any>(privateKey: string, updater: SetStateReducer<T> | Partial<T> | K): void;
+  setState<K = any>(privateKey: string, updater: SetStateReducer<T, K> | Partial<T> | K): void;
   setState<K = any>(privateKey: string, updater: K): void {
     this.store.setState<K>(privateKey, updater);
   }

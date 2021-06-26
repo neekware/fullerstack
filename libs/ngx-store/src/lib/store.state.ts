@@ -84,14 +84,14 @@ export class Store<T = StoreType> {
    * @param updater Partial data or function to update state
    * Note: https://github.com/Microsoft/TypeScript/issues/18823
    */
-  setState<K = any>(privateKey: string, updater: SetStateReducer<T> | Partial<T> | K): void;
+  setState<K = any>(privateKey: string, updater: SetStateReducer<T, K> | Partial<T> | K): void;
   setState<K = any>(privateKey: string, updater: K): void {
     const entry = this.registry.get(privateKey);
     if (!entry) {
       throw new Error(`setState: No slice registration with private key: (${privateKey})`);
     }
     const currentState = this.getState();
-    if (entry.logger) entry.logger(`[ Prev State ][${entry.sliceName}]`, currentState);
+    if (entry.logger) entry.logger(`[STATE][PREV][${entry.sliceName}]`, currentState);
 
     const partialState = isFunction(updater) ? updater(currentState) : updater;
     const nextState = Object.assign({}, currentState, { [entry.sliceName]: partialState });
@@ -99,7 +99,7 @@ export class Store<T = StoreType> {
       ? this.storeState$.next(deepFreeze(nextState))
       : this.storeState$.next(nextState);
 
-    if (entry.logger) entry.logger(`[ Next State ][${entry.sliceName}]`, nextState);
+    if (entry.logger) entry.logger(`[STATE][NEXT][${entry.sliceName}]`, nextState);
   }
 
   /**
