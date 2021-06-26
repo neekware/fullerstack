@@ -220,7 +220,7 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  tokenRetryRequest(): Observable<AuthTokenStatus> {
+  tokenRetryRequest$(): Observable<AuthTokenStatus> {
     this.logger.debug('[AUTH] Retry token refresh request sent ...');
     return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
       tap((resp) => {

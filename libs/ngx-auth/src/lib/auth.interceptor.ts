@@ -67,7 +67,7 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return this.auth.tokenRetryRequest().pipe(
+    return this.auth.tokenRetryRequest$().pipe(
       map((resp) => {
         if (!resp?.ok) {
           this.auth.logoutRequest();
