@@ -13,6 +13,7 @@ import { AuthModule } from '@fullerstack/ngx-auth';
 import { I18nModule } from '@fullerstack/ngx-i18n';
 import { MaterialModule } from '@fullerstack/ngx-material';
 import { MenuService } from '@fullerstack/ngx-menu';
+import { SharedModule } from '@fullerstack/ngx-shared';
 import { UixModule } from '@fullerstack/ngx-uix';
 
 import { FooterComponent } from './footer/footer.component';
@@ -26,7 +27,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { OptionsComponent } from './options/options.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MaterialModule, I18nModule, UixModule, AuthModule],
+  imports: [CommonModule, RouterModule, MaterialModule, I18nModule, UixModule, SharedModule, AuthModule],
   declarations: [
     MenuComponent,
     MenuLinkComponent,

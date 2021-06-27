@@ -39,6 +39,11 @@ export const layoutMenuTree: MenuItem[] = [
     ],
   },
   {
+    name: _('COMMON.ABOUT'),
+    icon: 'information-outline',
+    link: '/about/us',
+  },
+  {
     name: _('COMMON.CURRENCY_EXCHANGE'),
     icon: 'cash-multiple',
     link: '/forex',

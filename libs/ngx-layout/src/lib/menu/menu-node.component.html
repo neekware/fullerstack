@@ -1,13 +1,15 @@
-<mat-expansion-panel [expanded]="node.isActive(router.url)" [class.active]="node.isActive(router.url)" [disabled]="node.disabled">
-  <mat-expansion-panel-header>
-    <mat-panel-title fxFlex fxLayout="row" fxLayoutGap="16px">
-      <mat-icon [class.text-color-muted]="node.disabled" svgIcon="{{ node.icon }}"></mat-icon>
-      <span [class.text-color-muted]="node.disabled">{{ node.name | translate }}</span>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
+<div *tmpLet="node.isActive(router.url) as activeNode">
+  <mat-expansion-panel [expanded]="activeNode" [class.active]="activeNode" [disabled]="node.disabled">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex fxLayout="row" fxLayoutGap="16px">
+        <mat-icon [class.text-color-muted]="node.disabled" svgIcon="{{ node.icon }}"></mat-icon>
+        <span [class.text-color-muted]="node.disabled">{{ node.name | translate }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
 
-  <div *ngFor="let child of node.children">
-    <fullerstack-menu-node *ngIf="child.isNode" [node]="child"></fullerstack-menu-node>
-    <fullerstack-menu-link *ngIf="child.isLink" [link]="child"></fullerstack-menu-link>
-  </div>
-</mat-expansion-panel>
+    <div *ngFor="let child of node.children">
+      <fullerstack-menu-node *ngIf="child.isNode" [node]="child"></fullerstack-menu-node>
+      <fullerstack-menu-link *ngIf="child.isLink" [link]="child"></fullerstack-menu-link>
+    </div>
+  </mat-expansion-panel>
+</div>

@@ -94,7 +94,7 @@ export class MenuNode implements MenuItem {
    * @param url current route url
    * @returns true if node or any of its children are active
    */
-  isActive(url) {
+  isActive(url: string) {
     if (this.link === url) {
       return true;
     }

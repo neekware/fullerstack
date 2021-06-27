@@ -27,7 +27,7 @@ export const AppRoutes: Routes = [
     },
   },
   {
-    path: 'about',
+    path: 'about/us',
     component: AboutComponent,
     data: {
       title: _('APP.ABOUT'),
