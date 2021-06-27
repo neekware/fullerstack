@@ -1,18 +1,18 @@
 <form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="{{ autocomplete }}">
   <mat-form-field>
-    <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
+    <mat-icon matSuffix svgIcon="account"></mat-icon>
     <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" />
     <fullerstack-hint [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched" [hint]="nameHint"></fullerstack-hint>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
+    <mat-icon matSuffix svgIcon="email"></mat-icon>
     <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
     <fullerstack-hint [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched" [hint]="emailHint"></fullerstack-hint>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-icon matSuffix color="primary" svgIcon="key"></mat-icon>
+    <mat-icon matSuffix svgIcon="key"></mat-icon>
     <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
     <fullerstack-hint
       [control]="form?.controls?.password"
@@ -22,7 +22,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-icon matSuffix color="primary" svgIcon="key-change"></mat-icon>
+    <mat-icon matSuffix svgIcon="key-change"></mat-icon>
     <input matInput type="password" formControlName="passwordConfirmation" placeholder="{{ 'COMMON.PASSWORD_CONFIRMATION' | translate }}" />
     <fullerstack-hint
       [control]="form?.controls?.passwordConfirmation"
