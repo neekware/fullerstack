@@ -10,7 +10,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { sample } from 'lodash-es';
 import { Observable, Subject, timer } from 'rxjs';
-import { map, share, takeUntil } from 'rxjs/operators';
+import { filter, map, share, takeUntil } from 'rxjs/operators';
 
 import { LayoutService } from '../layout.service';
 
@@ -114,6 +114,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentTime$ = timer(0, 1000).pipe(
+      filter(() => this.layout.state.notifyOpen),
       map(() => new Date()),
       share(),
       takeUntil(this.destroy$)
