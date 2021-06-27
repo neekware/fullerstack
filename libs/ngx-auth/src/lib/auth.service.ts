@@ -38,8 +38,8 @@ import { Observable, Subject } from 'rxjs';
 import { first, takeUntil, tap } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultAuthConfig, DefaultAuthState } from './auth.default';
-import { AUTH_STATE_SLICE_NAME, AuthState } from './auth.model';
+import { DefaultAuthConfig, DefaultAuthState, DefaultAuthUrls } from './auth.default';
+import { AUTH_STATE_SLICE_NAME, AuthState, AuthUrls } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
@@ -48,12 +48,9 @@ export class AuthService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<AuthState> = DefaultAuthState;
   stateSub$: Observable<AuthState>;
-  isLoading: boolean;
-  loginUrl: string;
-  registerUrl: string;
-  loggedInUrl: string;
+  authUrls: DeepReadonly<AuthUrls> = DefaultAuthUrls;
   nextUrl: string;
-  landingUrl: string;
+  isLoading: boolean;
 
   constructor(
     readonly router: Router,
@@ -66,10 +63,13 @@ export class AuthService implements OnDestroy {
   ) {
     this.options = ldNestedMerge({ gtag: DefaultAuthConfig }, this.config.options);
 
-    this.loginUrl = tryGet(() => this.options.localConfig.loginPageUrl, '/auth/login');
-    this.loggedInUrl = tryGet(() => this.options.localConfig.loggedInLandingPageUrl, '/');
-    this.registerUrl = tryGet(() => this.options.localConfig.registerPageUrl, '/auth/register');
-    this.landingUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
+    this.authUrls = {
+      ...this.authUrls,
+      loginUrl: this.options?.localConfig?.loginPageUrl || this.authUrls.loginUrl,
+      loggedInUrl: this.options?.localConfig?.loggedInUrl || this.authUrls.loggedInUrl,
+      registerUrl: this.options?.localConfig?.registerUrl || this.authUrls.registerUrl,
+      landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
+    };
 
     this.registerState();
     this.initState();
@@ -84,12 +84,12 @@ export class AuthService implements OnDestroy {
   private handleRedirect(prevState: AuthState) {
     if (!this.state.isLoggedIn && prevState.isLoggedIn) {
       this.initState();
-      this.goTo(this.loggedInUrl);
+      this.goTo(this.authUrls.loggedInUrl);
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
       switch (this.router.url) {
-        case this.loginUrl:
-        case this.registerUrl:
-          this.goTo(this.nextUrl || this.loggedInUrl);
+        case this.authUrls.loginUrl:
+        case this.authUrls.registerUrl:
+          this.goTo(this.nextUrl || this.authUrls.loggedInUrl);
       }
     }
   }

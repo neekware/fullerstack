@@ -13,7 +13,7 @@ import { LogLevels } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
 import { DeepReadonly } from 'ts-essentials';
 
-import { AuthConfig, AuthState } from './auth.model';
+import { AuthConfig, AuthState, AuthUrls } from './auth.model';
 
 /**
  * Default configuration - Auth module
@@ -87,4 +87,11 @@ export const AuthMessageMap: MessageMap = {
       consoleOnly: true,
     },
   },
+};
+
+export const DefaultAuthUrls: DeepReadonly<AuthUrls> = {
+  loginUrl: '/auth/login',
+  registerUrl: '/auth/register',
+  loggedInUrl: '/',
+  landingUrl: '/',
 };

@@ -52,13 +52,13 @@ export class AuthAuthenticatedGuard implements CanActivate, CanActivateChild, Ca
     if (this.auth.state.isLoggedIn) {
       return true;
     }
-    this.auth.goTo(this.auth.loginUrl);
+    this.auth.goTo(this.auth.authUrls.loginUrl);
   }
 
   private handleRequest(url?: string): boolean {
     if (this.auth.state.isLoggedIn) return true;
     this.auth.nextUrl = url;
-    this.auth.goTo(this.auth.loginUrl);
+    this.auth.goTo(this.auth.authUrls.loginUrl);
     return false;
   }
 }

@@ -15,8 +15,8 @@ import { UixService } from '@fullerstack/ngx-uix';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { LayoutState } from '../layout.model';
 import { LayoutService } from '../layout.service';
-import { LayoutState } from '../store/layout-state.model';
 
 @Component({
   selector: 'fullerstack-navbar',
@@ -70,7 +70,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.layout.state$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.layout.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (state) => {
         this.menuIconState = state.menuOpen ? 'back' : 'forth';
         this.notifyIconState = state.notifyOpen ? 'back' : 'forth';

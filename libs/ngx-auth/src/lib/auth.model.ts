@@ -25,3 +25,10 @@ export interface AuthState {
 }
 
 export const AUTH_STATE_SLICE_NAME = 'auth';
+
+export interface AuthUrls {
+  loginUrl: string;
+  registerUrl: string;
+  loggedInUrl: string;
+  landingUrl: string;
+}

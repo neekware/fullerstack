@@ -9,7 +9,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
-import { NgxsModule } from '@ngxs/store';
 
 import { LayoutService } from '../layout.service';
 import { OptionsComponent } from './options.component';
@@ -30,12 +29,7 @@ xdescribe('OptionsComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          NgxsModule.forRoot([]),
-          NgxsModule.forFeature([]),
-          ConfigModule.forRoot(environment),
-          LoggerModule,
-        ],
+        imports: [ConfigModule.forRoot(environment), LoggerModule],
         declarations: [OptionsComponent],
         providers: [LayoutService],
       }).compileComponents();
