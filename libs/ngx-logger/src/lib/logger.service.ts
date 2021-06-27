@@ -40,7 +40,7 @@ export class LoggerService {
    * @param message logging message
    * @param extras extra messages
    */
-  critical(message, ...extras: any[]) {
+  critical(message: any, ...extras: any[]) {
     this.doLog(LogLevels.critical, message, extras);
   }
 
@@ -49,7 +49,7 @@ export class LoggerService {
    * @param message logging message
    * @param extras extra messages
    */
-  error(message, ...extras: any[]) {
+  error(message: any, ...extras: any[]) {
     this.doLog(LogLevels.error, message, extras);
   }
 
@@ -58,7 +58,7 @@ export class LoggerService {
    * @param message logging message
    * @param extras extra messages
    */
-  warn(message, ...extras: any[]) {
+  warn(message: any, ...extras: any[]) {
     this.doLog(LogLevels.warn, message, extras);
   }
 
@@ -67,7 +67,7 @@ export class LoggerService {
    * @param message logging message
    * @param extras extra messages
    */
-  info(message, ...extras: any[]) {
+  info(message: any, ...extras: any[]) {
     this.doLog(LogLevels.info, message, extras);
   }
 
@@ -76,7 +76,7 @@ export class LoggerService {
    * @param message logging message
    * @param extras extra messages
    */
-  debug(message, ...extras: any[]) {
+  debug(message: any, ...extras: any[]) {
     this.doLog(LogLevels.debug, message, extras);
   }
 
@@ -85,7 +85,7 @@ export class LoggerService {
    * @param message logging message
    * @param extras extra messages
    */
-  trace(message, ...extras: any[]) {
+  trace(message: any, ...extras: any[]) {
     this.doLog(LogLevels.trace, message, extras);
   }
 

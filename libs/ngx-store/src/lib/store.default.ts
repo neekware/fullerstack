@@ -6,10 +6,12 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-export interface AuthState {
-  isLoggedIn: boolean;
-  isRegistering: boolean;
-  isAuthenticating: boolean;
-  hasError: boolean;
-  token: string;
-}
+import { StoreConfig } from './store.model';
+
+/**
+ * Default configuration - Cachify module
+ */
+export const DefaultStoreConfig: StoreConfig = {
+  // freeze state
+  immutable: true,
+};

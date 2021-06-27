@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "name": "@fullerstack/ngx-store",
+  "description": "A Simple Redux Flat Store Library for Angular",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-store/README.md",
+  "keywords": [
+    "ng",
+    "angular",
+    "redux",
+    "store"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^12.0.2",
+    "@angular/core": "^12.0.2"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

@@ -43,7 +43,7 @@ export class LayoutComponent implements OnDestroy, AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.layout.state$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
+    this.layout.stateSub$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
       if (state.menuOpen) {
         this.sideMenu.open();
       } else {

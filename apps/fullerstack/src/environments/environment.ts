@@ -12,6 +12,7 @@ import { GqlConfig } from '@fullerstack/ngx-gql';
 import { GTagConfig } from '@fullerstack/ngx-gtag';
 import { I18nConfig } from '@fullerstack/ngx-i18n';
 import { LogLevels, LoggerConfig } from '@fullerstack/ngx-logger';
+import { StoreConfig } from '@fullerstack/ngx-store';
 
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
@@ -41,7 +42,7 @@ const gtag: GTagConfig = {
 
 const cachify: CachifyConfig = {
   disabled: false,
-  immutable: true,
+  immutable: false, // mainly caches responses, so set to false
   ttl: 30, // 30 seconds
 } as const;
 
@@ -96,6 +97,11 @@ const i18n: I18nConfig = {
   cacheBustingHash: 'v0.0.1',
 };
 
+const store: StoreConfig = {
+  // we want to explicitly set it to true, if we use it at app-level
+  immutable: true,
+} as const;
+
 export const environment: Readonly<ApplicationConfig> = {
   version: '0.0.1',
   production: false,
@@ -104,5 +110,6 @@ export const environment: Readonly<ApplicationConfig> = {
   i18n,
   gql,
   gtag,
+  store,
   cachify,
 };

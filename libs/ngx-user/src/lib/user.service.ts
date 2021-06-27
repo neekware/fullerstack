@@ -34,10 +34,12 @@ export class UserService {
     readonly logger: LoggerService,
     readonly auth: AuthService
   ) {
-    this.auth.authChanged$
+    this.auth.stateSub$
       .pipe(
         filter((state) => state.isLoggedIn),
-        switchMap(() => this.userSelfQuery(this.auth.userId, CachifyFetchPolicy.NetworkFirst)),
+        switchMap(() =>
+          this.userSelfQuery(this.auth.state.userId, CachifyFetchPolicy.NetworkFirst)
+        ),
         takeUntil(this.destroy$)
       )
       .subscribe({

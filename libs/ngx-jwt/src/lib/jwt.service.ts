@@ -42,7 +42,7 @@ export class JwtService {
    * @param token JWT token (base64 encrypted)
    * @returns a payload object or null if decode fails
    */
-  getPayload(token: string): any {
+  getPayload<T>(token: string): any {
     let parts = [];
 
     try {
@@ -58,7 +58,7 @@ export class JwtService {
     try {
       const decoded = Base64.decode(parts[1]);
       const payload = JSON.parse(decoded);
-      return payload;
+      return payload as T;
     } catch (e) {
       this.logger.error('Cannot decode the token');
     }

@@ -28,7 +28,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthAnonymousGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private logger: LoggerService, private auth: AuthService) {
-    this.logger.info('AuthAnonymousGuard loaded ...');
+    this.logger.info('[AUTH] AuthAnonymousGuard loaded ...');
   }
 
   canActivate(
@@ -52,12 +52,12 @@ export class AuthAnonymousGuard implements CanActivate, CanActivateChild, CanLoa
     if (!this.auth.state.isLoggedIn) {
       return true;
     }
-    this.auth.goTo(this.auth.landingUrl);
+    this.auth.goTo(this.auth.authUrls.landingUrl);
   }
 
   private handleRequest(url?: string): boolean {
     if (!this.auth.state.isLoggedIn) return true;
-    this.auth.goTo(this.auth.landingUrl);
+    this.auth.goTo(this.auth.authUrls.landingUrl);
     return false;
   }
 }

@@ -9,7 +9,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { HttpResponse } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 
 /**
  * Cachify config declaration
@@ -101,18 +100,4 @@ export interface CachifyEntry {
   key: string;
   response: HttpResponse<any>;
   expiryTime: number;
-}
-
-export class ImmutableStore<T extends StoreType> extends BehaviorSubject<T> {
-  constructor(initialData: T) {
-    super(initialData);
-  }
-
-  next(data: T): void {
-    super.next(data);
-  }
-
-  getValue(): Readonly<T> {
-    return super.getValue() as Readonly<T>;
-  }
 }

@@ -15,7 +15,7 @@ import { makeMockI18nModule } from '@fullerstack/ngx-i18n/mock';
 import { JwtModule } from '@fullerstack/ngx-jwt';
 import { LogLevels, LoggerModule } from '@fullerstack/ngx-logger';
 import { MsgModule } from '@fullerstack/ngx-msg';
-import { NgxsModule } from '@ngxs/store';
+import { StoreModule } from '@fullerstack/ngx-store';
 
 import { AuthAuthenticatedGuard } from './auth-authenticated.guard';
 import { AuthModule } from './auth.module';
@@ -39,8 +39,6 @@ describe('AuthAuthenticatedGuard', () => {
         imports: [
           HttpClientTestingModule,
           RouterTestingModule,
-          NgxsModule.forRoot([]),
-          NgxsModule.forFeature([]),
           ConfigModule.forRoot(environment),
           LoggerModule,
           ...makeMockI18nModule(),
@@ -48,6 +46,7 @@ describe('AuthAuthenticatedGuard', () => {
           GqlModule,
           MsgModule,
           AuthModule,
+          StoreModule,
         ],
         providers: [AuthAuthenticatedGuard],
       });

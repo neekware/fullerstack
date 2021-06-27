@@ -40,7 +40,7 @@
         <mat-icon svgIcon="{{ navbarLinks.settings.icon }}"></mat-icon>
         {{ navbarLinks.settings.title | translate }}
       </a>
-      <button mat-menu-item (click)="auth.logoutDispatch()">
+      <button mat-menu-item (click)="auth.logoutRequest()">
         <mat-icon svgIcon="{{ navbarLinks.logout.icon }}"></mat-icon>
         {{ navbarLinks.logout.title | translate }}
       </button>

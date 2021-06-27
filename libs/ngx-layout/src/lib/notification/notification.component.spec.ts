@@ -9,7 +9,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { LoggerModule } from '@fullerstack/ngx-logger';
-import { NgxsModule } from '@ngxs/store';
 
 import { LayoutService } from '../layout.service';
 import { NotificationComponent } from './notification.component';
@@ -30,12 +29,7 @@ xdescribe('NotificationComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          NgxsModule.forRoot([]),
-          NgxsModule.forFeature([]),
-          ConfigModule.forRoot(environment),
-          LoggerModule,
-        ],
+        imports: [ConfigModule.forRoot(environment), LoggerModule],
         declarations: [NotificationComponent],
         providers: [LayoutService],
       }).compileComponents();

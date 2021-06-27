@@ -32,12 +32,10 @@ export class RegisterComponent implements OnInit {
         '/'
       );
       this.auth.goTo(redirectUrl);
-    } else {
-      this.auth.initiateRegisterState();
     }
   }
 
   register(data: UserCreateInput) {
-    this.auth.registerDispatch(data);
+    this.auth.registerRequest(data);
   }
 }

@@ -9,5 +9,26 @@
 /**
  * Auth config declaration
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface AuthConfig {}
+export interface AuthConfig {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [id: string]: any;
+}
+
+export interface AuthState {
+  userId: string;
+  isLoggedIn: boolean;
+  isRegistering: boolean;
+  isAuthenticating: boolean;
+  hasError: boolean;
+  token: string;
+  message: string;
+}
+
+export const AUTH_STATE_SLICE_NAME = 'auth';
+
+export interface AuthUrls {
+  loginUrl: string;
+  registerUrl: string;
+  loggedInUrl: string;
+  landingUrl: string;
+}

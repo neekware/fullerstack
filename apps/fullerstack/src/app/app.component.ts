@@ -14,6 +14,7 @@ import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { StoreService } from '@fullerstack/ngx-store';
 import { UixService } from '@fullerstack/ngx-uix';
 import { UserService } from '@fullerstack/ngx-user';
 import { Observable } from 'rxjs';
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
     readonly http: HttpClient,
     readonly config: ConfigService,
     readonly logger: LoggerService,
+    readonly store: StoreService,
     readonly auth: AuthService,
     readonly i18n: I18nService,
     readonly uix: UixService,
@@ -43,16 +45,5 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.healthCheck$ = this.http.get<HealthCheck>('/api/ping');
-  }
-
-  login() {
-    this.auth.loginDispatch({
-      email: 'admin@fullerstack.net',
-      password: 'hello',
-    });
-  }
-
-  logout() {
-    this.auth.logoutDispatch();
   }
 }
