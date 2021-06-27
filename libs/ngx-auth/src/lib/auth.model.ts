@@ -10,6 +10,7 @@
  * Auth config declaration
  */
 export interface AuthConfig {
+  logState?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [id: string]: any;
 }
@@ -23,8 +24,6 @@ export interface AuthState {
   token: string;
   message: string;
 }
-
-export const AUTH_STATE_SLICE_NAME = 'auth';
 
 export interface AuthUrls {
   loginUrl: string;

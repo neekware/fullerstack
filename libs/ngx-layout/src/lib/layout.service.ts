@@ -28,11 +28,12 @@ import { takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultLayoutConfig, DefaultLayoutState } from './layout.default';
-import { LAYOUT_STATE_SLICE_NAME, LayoutState, NavbarMode, SidenavMode } from './layout.model';
+import { LayoutState, NavbarMode, SidenavMode } from './layout.model';
 
 @Injectable({ providedIn: 'root' })
 export class LayoutService implements OnDestroy {
-  private statePrivateKey: string;
+  private sliceName = 'LAYOUT';
+  private claimId: string;
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<LayoutState> = DefaultLayoutState;
@@ -71,7 +72,7 @@ export class LayoutService implements OnDestroy {
       Breakpoints.WebPortrait,
     ]);
 
-    this.registerState();
+    this.claimSlice();
     this.initState();
     this.subState();
     this.subFullscreen();
@@ -84,20 +85,18 @@ export class LayoutService implements OnDestroy {
   }
 
   /**
-   * Initialize Layout state
+   * Claim Auth state:slice
    */
-  private registerState() {
-    this.statePrivateKey = this.store.claimSlice(
-      LAYOUT_STATE_SLICE_NAME,
-      !this.options.production ? this.logger.debug.bind(this.logger) : undefined
-    );
+  private claimSlice() {
+    const logger = this.options?.layout?.logState ? this.logger.debug.bind(this.logger) : undefined;
+    this.claimId = this.store.claimSlice(this.sliceName, logger);
   }
 
   /**
    * Initialize Layout state
    */
   private initState() {
-    this.store.setState(this.statePrivateKey, {
+    this.store.setState(this.claimId, {
       ...DefaultLayoutState,
       appName: this.options.appName,
     });
@@ -107,7 +106,7 @@ export class LayoutService implements OnDestroy {
    * Subscribe to Layout state changes
    */
   private subState() {
-    this.stateSub$ = this.store.select$<LayoutState>(LAYOUT_STATE_SLICE_NAME);
+    this.stateSub$ = this.store.select$<LayoutState>(this.sliceName);
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
@@ -194,7 +193,7 @@ export class LayoutService implements OnDestroy {
   }
 
   setMenu(menuOpen: boolean) {
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       menuOpen,
     });
@@ -202,7 +201,7 @@ export class LayoutService implements OnDestroy {
 
   toggleMenu() {
     const notifyClose = !this.state.menuOpen && !this.state.notifyOpen && this.state.isHandset;
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       menuOpen: !this.state.menuOpen,
       notifyOpen: notifyClose ? false : this.state.notifyOpen,
@@ -210,14 +209,14 @@ export class LayoutService implements OnDestroy {
   }
 
   setMenuMode(menuMode: SidenavMode) {
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       menuMode,
     });
   }
 
   setNavbarMode(navbarMode: NavbarMode) {
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       navbarMode,
     });
@@ -225,7 +224,7 @@ export class LayoutService implements OnDestroy {
 
   toggleNotification() {
     const menuClose = !this.state.notifyOpen && this.state.menuOpen && this.state.isHandset;
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       notifyOpen: !this.state.notifyOpen,
       menuOpen: menuClose ? false : this.state.menuOpen,
@@ -233,7 +232,7 @@ export class LayoutService implements OnDestroy {
   }
 
   setFullscreen(isFullscreen: boolean) {
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       isFullscreen,
     });
@@ -241,7 +240,7 @@ export class LayoutService implements OnDestroy {
   }
 
   toggleFullscreen() {
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       isFullscreen: !this.state.isFullscreen,
     });
@@ -249,21 +248,21 @@ export class LayoutService implements OnDestroy {
   }
 
   setIsHandset(isHandset: boolean) {
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       isHandset,
     });
   }
 
   setIsPortrait(isPortrait: boolean) {
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       isPortrait,
     });
   }
 
   setDarkTheme(isDarkTheme: boolean) {
-    this.store.setState<LayoutState>(this.statePrivateKey, {
+    this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       isDarkTheme,
     });
