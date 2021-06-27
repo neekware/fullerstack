@@ -71,6 +71,7 @@ export class AuthService implements OnDestroy {
       landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
     };
 
+    this.initUrls();
     this.registerState();
     this.initState();
     this.subState();
@@ -95,12 +96,25 @@ export class AuthService implements OnDestroy {
   }
 
   /**
+   * Initialize Auth related navigable urls
+   */
+  private initUrls() {
+    this.authUrls = {
+      ...this.authUrls,
+      loginUrl: this.options?.localConfig?.loginPageUrl || this.authUrls.loginUrl,
+      loggedInUrl: this.options?.localConfig?.loggedInUrl || this.authUrls.loggedInUrl,
+      registerUrl: this.options?.localConfig?.registerUrl || this.authUrls.registerUrl,
+      landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
+    };
+  }
+
+  /**
    * Initialize Auth state
    */
   private registerState() {
-    this.statePrivateKey = this.store.registerSlice(
+    this.statePrivateKey = this.store.claimSlice(
       AUTH_STATE_SLICE_NAME,
-      !this.options.production ? this.logger.info.bind(this.logger) : undefined
+      !this.options.production ? this.logger.debug.bind(this.logger) : undefined
     );
   }
 
@@ -263,6 +277,7 @@ export class AuthService implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
+    this.store.releaseSlice(AUTH_STATE_SLICE_NAME);
     this.logger.debug('[AUTH] AuthService destroyed ...');
   }
 }

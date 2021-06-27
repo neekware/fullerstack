@@ -49,6 +49,6 @@ export class ImmutableStore<T extends StoreType> extends BehaviorSubject<T> {
 
 export interface StoreRegistryEntry {
   sliceName: string;
-  privateKey: string;
+  claimId: string;
   logger?: StoreLogger;
 }

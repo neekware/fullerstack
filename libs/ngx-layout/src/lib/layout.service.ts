@@ -87,9 +87,9 @@ export class LayoutService implements OnDestroy {
    * Initialize Layout state
    */
   private registerState() {
-    this.statePrivateKey = this.store.registerSlice(
+    this.statePrivateKey = this.store.claimSlice(
       LAYOUT_STATE_SLICE_NAME,
-      !this.options.production ? this.logger.info.bind(this.logger) : undefined
+      !this.options.production ? this.logger.debug.bind(this.logger) : undefined
     );
   }
 
