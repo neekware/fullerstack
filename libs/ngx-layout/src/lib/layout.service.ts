@@ -200,11 +200,11 @@ export class LayoutService implements OnDestroy {
   }
 
   toggleMenu() {
-    const notifyClose = !this.state.menuOpen && !this.state.notifyOpen && this.state.isHandset;
+    const closeNotify = !this.state.menuOpen && this.state.notifyOpen && this.state.isHandset;
     this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       menuOpen: !this.state.menuOpen,
-      notifyOpen: notifyClose ? false : this.state.notifyOpen,
+      notifyOpen: closeNotify ? false : this.state.notifyOpen,
     });
   }
 
@@ -223,11 +223,11 @@ export class LayoutService implements OnDestroy {
   }
 
   toggleNotification() {
-    const menuClose = !this.state.notifyOpen && this.state.menuOpen && this.state.isHandset;
+    const closeMenu = !this.state.notifyOpen && this.state.menuOpen && this.state.isHandset;
     this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
       notifyOpen: !this.state.notifyOpen,
-      menuOpen: menuClose ? false : this.state.menuOpen,
+      menuOpen: closeMenu ? false : this.state.menuOpen,
     });
   }
 
