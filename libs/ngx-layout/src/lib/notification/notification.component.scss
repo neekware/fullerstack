@@ -16,3 +16,8 @@
   height: auto;
   padding: 7px 0;
 }
+
+::ng-deep .mat-tab-labels {
+  justify-content: space-around;
+  display: flex;
+}
