@@ -32,6 +32,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { AboutComponent } from './pages/about/about.component';
+import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
@@ -47,6 +48,7 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
     NotfoundComponent,
     AppComponent,
     ProfileUpdateComponent,
+    ForexComponent,
   ],
   imports: [
     BrowserModule,
