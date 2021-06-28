@@ -89,7 +89,8 @@ export class Store<T = StoreType> {
       throw new Error(`setState: No slice registration with private key: (${claimId})`);
     }
     const currentState = this.getState();
-    if (entry.logger) entry.logger(`[STATE][PREV][${entry.sliceName}]`, currentState);
+    if (entry.logger)
+      entry.logger(`[${entry.sliceName}][PREV STATE]`, currentState[entry.sliceName]);
 
     const partialState = isFunction(updater) ? updater(currentState) : updater;
     const nextState = Object.assign({}, currentState, { [entry.sliceName]: partialState });
@@ -97,7 +98,7 @@ export class Store<T = StoreType> {
       ? this.storeState$.next(deepFreeze(nextState))
       : this.storeState$.next(nextState);
 
-    if (entry.logger) entry.logger(`[STATE][NEXT][${entry.sliceName}]`, nextState);
+    if (entry.logger) entry.logger(`[${entry.sliceName}][NEXT STATE]`, nextState[entry.sliceName]);
   }
 
   /**

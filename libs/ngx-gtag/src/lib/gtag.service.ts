@@ -30,6 +30,7 @@ declare let gtag: (...args: any) => void;
 // @dynamic - Tells aot that type `Document` will be eventually resolved
 @Injectable({ providedIn: 'root' })
 export class GTagService implements OnDestroy {
+  private nameSpace = 'GTAG';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   destroy$ = new Subject<boolean>();
 
@@ -51,7 +52,9 @@ export class GTagService implements OnDestroy {
       this.loadScript();
       this.initScript();
 
-      this.logger.info(`GTagService ready ... (${this.options.gtag.trackingId})`);
+      this.logger.info(
+        `[${this.nameSpace}] GTagService ready ... (${this.options.gtag.trackingId})`
+      );
 
       if (this.options.gtag?.routeChangeTracking) {
         this.enablePageView();

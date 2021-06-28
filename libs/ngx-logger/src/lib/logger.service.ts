@@ -25,13 +25,14 @@ import { LogColors, LogLevels, LogNames } from './logger.model';
  */
 @Injectable({ providedIn: 'root' })
 export class LoggerService {
+  private nameSpace = 'LOGGER';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(readonly config: ConfigService) {
     this.options = ldNestedMerge({ logger: DefaultLoggerConfig }, this.config.options);
 
     if (!this.config.options.production) {
-      this.info('LogService ready ...');
+      this.info(`[${this.nameSpace}] LogService ready ...`);
     }
   }
 

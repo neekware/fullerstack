@@ -43,7 +43,7 @@ import { AuthState, AuthUrls } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
-  private sliceName = 'AUTH';
+  private nameSpace = 'AUTH';
   private claimId: string;
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
@@ -79,7 +79,9 @@ export class AuthService implements OnDestroy {
     this.tokenRefreshRequest();
 
     logger.info(
-      `[AUTH] AuthService ready ... (${this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'})`
+      `[${this.nameSpace}] AuthService ready ... (${
+        this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'
+      })`
     );
   }
 
@@ -114,7 +116,7 @@ export class AuthService implements OnDestroy {
    */
   private claimSlice() {
     const logger = this.options?.auth?.logState ? this.logger.debug.bind(this.logger) : undefined;
-    this.claimId = this.store.claimSlice(this.sliceName, logger);
+    this.claimId = this.store.claimSlice(this.nameSpace, logger);
   }
 
   /**
@@ -128,7 +130,7 @@ export class AuthService implements OnDestroy {
    * Subscribe to Auth state:slice changes
    */
   private subState() {
-    this.stateSub$ = this.store.select$<AuthState>(this.sliceName);
+    this.stateSub$ = this.store.select$<AuthState>(this.nameSpace);
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
@@ -144,7 +146,7 @@ export class AuthService implements OnDestroy {
 
   loginRequest(input: UserCredentialsInput) {
     this.store.setState(this.claimId, { ...DefaultAuthState, isAuthenticating: true });
-    this.logger.debug('[AUTH] Login request sent ...');
+    this.logger.debug(`[${this.nameSpace}] Login request sent ...`);
 
     return this.gql.client
       .request<AuthTokenStatus>(AuthLoginMutation, { input })
@@ -155,7 +157,7 @@ export class AuthService implements OnDestroy {
           if (resp.ok) {
             const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
             updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
-            this.logger.debug('[AUTH] Login request success ...');
+            this.logger.debug(`[${this.nameSpace}] Login request success ...`);
             this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
           } else {
             updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
@@ -169,14 +171,14 @@ export class AuthService implements OnDestroy {
             hasError: true,
             message: err.message,
           });
-          this.logger.error('[AUTH] ', err);
+          this.logger.error(`[${this.nameSpace}] `, err);
         },
       });
   }
 
   registerRequest(input: UserCreateInput) {
     this.store.setState(this.claimId, { ...DefaultAuthState, isRegistering: true });
-    this.logger.debug('[AUTH] Register request sent ...');
+    this.logger.debug(`[${this.nameSpace}] Register request sent ...`);
 
     return this.gql.client
       .request<AuthTokenStatus>(AuthRegisterMutation, { input })
@@ -187,11 +189,11 @@ export class AuthService implements OnDestroy {
           if (resp.ok) {
             const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
             updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
-            this.logger.debug('[AUTH] Login request success ...');
+            this.logger.debug(`[${this.nameSpace}] Login request success ...`);
             this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
           } else {
             updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
-            this.logger.error(`[AUTH] Register request failed ... ${resp.message}`);
+            this.logger.error(`[${this.nameSpace}] Register request failed ... ${resp.message}`);
           }
           this.store.setState(this.claimId, updateState);
         },
@@ -201,13 +203,13 @@ export class AuthService implements OnDestroy {
             hasError: true,
             message: err.message,
           });
-          this.logger.error('[AUTH] ', err);
+          this.logger.error(`[${this.nameSpace}] `, err);
         },
       });
   }
 
   tokenRefreshRequest() {
-    this.logger.debug('[AUTH] Token refresh request sent ...');
+    this.logger.debug(`[${this.nameSpace}] Token refresh request sent ...`);
     return this.gql.client
       .request<AuthTokenStatus>(AuthRefreshTokenMutation)
       .pipe(first(), takeUntil(this.destroy$))
@@ -223,7 +225,7 @@ export class AuthService implements OnDestroy {
           this.store.setState(this.claimId, updateState);
         },
         error: (err) => {
-          this.logger.error('[ AUTH ]', err);
+          this.logger.error(`[${this.nameSpace}] `, err);
           this.store.setState(this.claimId, {
             ...DefaultAuthState,
             hasError: true,
@@ -234,7 +236,7 @@ export class AuthService implements OnDestroy {
   }
 
   tokenRetryRequest$(): Observable<AuthTokenStatus> {
-    this.logger.debug('[AUTH] Retry token refresh request sent ...');
+    this.logger.debug(`[${this.nameSpace}] Retry token refresh request sent ...`);
     return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
       tap((resp) => {
         if (resp.ok) {
@@ -245,7 +247,7 @@ export class AuthService implements OnDestroy {
   }
 
   logoutRequest(onError = false) {
-    this.logger.debug('[AUTH] Logout request sent ...');
+    this.logger.debug(`[${this.nameSpace}] Logout request sent ...`);
     this.initState();
 
     return this.gql.client
@@ -253,7 +255,7 @@ export class AuthService implements OnDestroy {
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          this.logger.debug('[AUTH] Logout request success ...');
+          this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
           if (!onError) {
             this.msg.successSnackBar(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
           } else {
@@ -261,7 +263,7 @@ export class AuthService implements OnDestroy {
           }
         },
         error: (err) => {
-          this.logger.error('[AUTH] ', err);
+          this.logger.error(`[${this.nameSpace}] `, err);
           this.msg.errorSnackBar(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
         },
       });
@@ -276,7 +278,7 @@ export class AuthService implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
-    this.store.releaseSlice(this.sliceName);
-    this.logger.debug('[AUTH] AuthService destroyed ...');
+    this.store.releaseSlice(this.nameSpace);
+    this.logger.debug(`[${this.nameSpace}] AuthService destroyed ...`);
   }
 }

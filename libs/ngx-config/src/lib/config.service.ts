@@ -19,13 +19,18 @@ import { ApplicationConfig, HttpMethod, RemoteType } from './config.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
+  private nameSpace = 'CONFIG';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(readonly http: HttpClient, @Inject(CONFIG_TOKEN) readonly config: ApplicationConfig) {
     this.options = { ...ldNestedMerge(this.options, config) };
     if (!this.options.production) {
       /* istanbul ignore next */
-      console.log(`ConfigService ready ...`);
+      console.log(
+        `%c${new Date().toISOString()} [INFO]`,
+        `color:teal`,
+        `[${this.nameSpace}] ConfigService ready ...`
+      );
     }
   }
 

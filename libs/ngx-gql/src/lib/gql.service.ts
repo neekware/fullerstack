@@ -23,6 +23,7 @@ import { DefaultGqlConfig } from './gql.default';
 
 @Injectable({ providedIn: 'root' })
 export class GqlService implements OnDestroy {
+  private nameSpace = 'GQL';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   client: DeepReadonly<GraphQLClient>;
 
@@ -33,7 +34,7 @@ export class GqlService implements OnDestroy {
   ) {
     this.options = ldNestedMerge({ gql: DefaultGqlConfig }, this.config.options);
     this.client = new GraphQLClient(this.http, this.options.gql.endpoint);
-    logger.info('GqlService ready ...');
+    this.logger.info(`[${this.nameSpace}] GqlService ready ...`);
   }
 
   ngOnDestroy() {
