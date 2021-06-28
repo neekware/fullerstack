@@ -87,35 +87,80 @@ npx create-nx-workspace fullerstack
 
 ### Installation
 
-git clone https://github.com/neekware/fullerstack.git && cd fullerstack && npm install
+```bash
+# Clone the repo
+git clone https://github.com/neekware/fullerstack.git
 
-### Graph dependencies
+# Install the dependencies
+cd fullerstack
+yarn install
+
+# Create a database (postgres)
+createdb fullerstack
+
+# Copy environment variables and update
+cp example.env .env
+
+# Migrate the database
+yarn prisma:migrate:dev
+
+# Seed your database
+yarn prisma:seed
+
+# Start the backend (in terminal #1)
+yarn start:api
+
+# Start the frontend (in terminal #2)
+yarn start:fullerstack
+
+# Visit frontend (on mac use open, on windows, just type it in)
+open http://localhost:4200
+
+# Register / Login and take the site for a spin
+# Note superuser account is set in your .env (refer to AUTH_SUPERUSER_EMAIL, AUTH_SUPERUSER_PASSWORD)
+```
+
+### Development (Affected libs, files, dependencies)
+
+```bash
+# Graph dependencies
 
 yarn dep-graph
 
-### Webpack analyzer
+# Webpack analyzer
 
-nx build fullerstack --stats-json --prod && yarn stats
+yarn nx build fullerstack --stats-json --prod && yarn stats
 
-### Graph dependencies uncommitted changes from affected libs/apps
+# Graph dependencies uncommitted changes from affected libs/apps
 
 yarn affected -- --target dep-graph --uncommitted
 
-### Graph dependencies changes from affected libs/apps on main
+# Graph dependencies changes from affected libs/apps on main
 
-yarn affected -- --target dep-graph --base=main
+yarn affected --target dep-graph --base=main
 
-### Test uncommitted changes from affected libs/apps
+# Test uncommitted changes from affected libs/apps
 
-yarn affected -- --target test --uncommitted
+yarn affected --target test --uncommitted
 
-### Test committed changes on main
+# Test committed changes on main
 
-yarn affected -- --target test --base=main
+yarn affected --target test --base=main
 
-### Format changed files
+# Format changed files
 
 yarn format
+
+# Format all files (.html, .scss, .css, .js, .ts)
+
+yarn format:all
+
+#  Test CI
+
+yarn test:ci
+
+yarn format:all
+```
 
 ## License
 
@@ -134,9 +179,9 @@ X.Y.Z Version
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             326        16567         1849         3334        11384
- JSON                   127         4443            0            0         4443
- Markdown                28         1720          412            0         1308
+ TypeScript             323        16432         1835         3308        11289
+ JSON                   127         4447            0            0         4447
+ Markdown                28         1765          427            0         1338
  Sass                    49         1398          136           28         1234
  JavaScript              30          674            8           48          618
  HTML                    25          645           42            4          599
@@ -145,7 +190,7 @@ X.Y.Z Version
  SQL                      1           63           13           12           38
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  592        25702         2477         3428        19797
+ Total                  589        25616         2478         3402        19736
 --------------------------------------------------------------------------------
 ```
 
