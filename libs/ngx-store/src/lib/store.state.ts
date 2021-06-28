@@ -90,7 +90,7 @@ export class Store<T = StoreType> {
     }
     const currentState = this.getState();
     if (entry.logger)
-      entry.logger(`[${entry.sliceName}][PREV STATE]`, {
+      entry.logger(`[STORE][PREV][${entry.sliceName}]`, {
         [entry.sliceName]: currentState[entry.sliceName],
       });
 
@@ -101,7 +101,7 @@ export class Store<T = StoreType> {
       : this.storeState$.next(nextState);
 
     if (entry.logger)
-      entry.logger(`[${entry.sliceName}][NEXT STATE]`, {
+      entry.logger(`[STORE][NEXT][${entry.sliceName}]`, {
         [entry.sliceName]: nextState[entry.sliceName],
       });
   }
