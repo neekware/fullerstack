@@ -90,7 +90,9 @@ export class Store<T = StoreType> {
     }
     const currentState = this.getState();
     if (entry.logger)
-      entry.logger(`[${entry.sliceName}][PREV STATE]`, currentState[entry.sliceName]);
+      entry.logger(`[${entry.sliceName}][PREV STATE]`, {
+        [entry.sliceName]: currentState[entry.sliceName],
+      });
 
     const partialState = isFunction(updater) ? updater(currentState) : updater;
     const nextState = Object.assign({}, currentState, { [entry.sliceName]: partialState });
@@ -98,7 +100,10 @@ export class Store<T = StoreType> {
       ? this.storeState$.next(deepFreeze(nextState))
       : this.storeState$.next(nextState);
 
-    if (entry.logger) entry.logger(`[${entry.sliceName}][NEXT STATE]`, nextState[entry.sliceName]);
+    if (entry.logger)
+      entry.logger(`[${entry.sliceName}][NEXT STATE]`, {
+        [entry.sliceName]: nextState[entry.sliceName],
+      });
   }
 
   /**
