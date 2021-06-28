@@ -27,7 +27,15 @@ import { NotificationComponent } from './notification/notification.component';
 import { OptionsComponent } from './options/options.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MaterialModule, I18nModule, UixModule, SharedModule, AuthModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MaterialModule,
+    I18nModule,
+    UixModule,
+    SharedModule,
+    AuthModule,
+  ],
   declarations: [
     MenuComponent,
     MenuLinkComponent,

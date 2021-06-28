@@ -8,7 +8,7 @@
 
 import { BehaviorSubject } from 'rxjs';
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export type StoreLogger = (message: any, ...extras: any[]) => void;
 
 /**
@@ -29,7 +29,6 @@ export type SetStateReducer<T = any, K = any> = (currentState: T) => Partial<T> 
  * Store Type - Object
  */
 export interface StoreType {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   [key: string]: any;
 }
 

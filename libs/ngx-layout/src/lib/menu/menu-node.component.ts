@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuNode } from '@fullerstack/ngx-menu';
 
@@ -14,7 +14,6 @@ import { MenuNode } from '@fullerstack/ngx-menu';
   selector: 'fullerstack-menu-node',
   templateUrl: './menu-node.component.html',
   styleUrls: ['./menu-node.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuNodeComponent {
   @Input() node: MenuNode;
