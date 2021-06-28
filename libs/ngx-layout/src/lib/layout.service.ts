@@ -44,7 +44,6 @@ export class LayoutService implements OnDestroy {
   routeReady = false;
   isDarkTheme = false;
   navbarModeClass = null;
-  currentUrl = null;
 
   constructor(
     readonly router: Router,
@@ -176,7 +175,6 @@ export class LayoutService implements OnDestroy {
     this.router.events.pipe(takeUntil(this.destroy$)).subscribe({
       next: (event) => {
         if (event instanceof NavigationEnd) {
-          this.currentUrl = event.url;
           if (this.routeReady) {
             if (this.state.notifyOpen) {
               this.toggleNotification();
