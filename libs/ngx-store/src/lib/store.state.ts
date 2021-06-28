@@ -41,32 +41,30 @@ export class Store<T = StoreType> {
   }
 
   /**
-   * A slice of the state can be registered by only one entity
-   * @param sliceName name of a slice from state (hint: attribute key of an object)
-   * @returns Private key confirming `write` permission of the slice
+   * Claim a slice within state
+   * @param sliceName slice name (hint: attribute key of an object)
+   * @returns Slice ownership claim ID (required for write/update and release of slice)
    */
-  registerSlice(sliceName: string, logger?: StoreLogger): string {
+  claimSlice(sliceName: string, logger?: StoreLogger): string {
     this.registry.forEach((entity) => {
       if (entity.sliceName === sliceName) {
-        throw new Error(
-          `registerSlice: Found slice registration with private key: (${entity.privateKey})`
-        );
+        throw new Error(`claimSlice: Slice ${sliceName} already claimed (${entity.claimId})`);
       }
     });
 
-    const privateKey = uuidV4();
-    this.registry.set(privateKey, { sliceName, privateKey, logger });
-    return privateKey;
+    const claimId = uuidV4();
+    this.registry.set(claimId, { sliceName, claimId, logger });
+    return claimId;
   }
 
   /**
-   * Remove registration of a slice `write` permission
-   * @param privateKey private key for state slice registration
+   * Release slice
+   * @param claimId Slice ownership claim ID
    */
-  deregisterSlice(privateKey: string) {
-    const entity = this.registry.get(privateKey);
+  releaseSlice(claimId: string) {
+    const entity = this.registry.get(claimId);
     if (!entity) {
-      throw new Error(`deregisterSlice: No slice registration with private key: (${privateKey})`);
+      throw new Error(`releaseSlice: No slice found with claim ID: (${claimId})`);
     }
 
     const state = this.getState();
@@ -75,7 +73,7 @@ export class Store<T = StoreType> {
       ? this.storeState$.next(deepFreeze(newState))
       : this.storeState$.next(newState);
 
-    this.registry.delete(privateKey);
+    this.registry.delete(claimId);
   }
 
   /**
@@ -84,11 +82,11 @@ export class Store<T = StoreType> {
    * @param updater Partial data or function to update state
    * Note: https://github.com/Microsoft/TypeScript/issues/18823
    */
-  setState<K = any>(privateKey: string, updater: SetStateReducer<T, K> | Partial<T> | K): void;
-  setState<K = any>(privateKey: string, updater: K): void {
-    const entry = this.registry.get(privateKey);
+  setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): void;
+  setState<K = any>(claimId: string, updater: K): void {
+    const entry = this.registry.get(claimId);
     if (!entry) {
-      throw new Error(`setState: No slice registration with private key: (${privateKey})`);
+      throw new Error(`setState: No slice registration with private key: (${claimId})`);
     }
     const currentState = this.getState();
     if (entry.logger) entry.logger(`[STATE][PREV][${entry.sliceName}]`, currentState);

@@ -7,3 +7,21 @@
     width: 280px;
   }
 }
+
+@media (max-width: 599px) {
+  .fs-sidenav-notify {
+    margin-top: 0px !important;
+  }
+}
+
+@media (min-width: 600px) {
+  .fs-sidenav-notify {
+    margin-top: 8px !important;
+  }
+}
+
+@media (min-width: 960px) {
+  .fs-sidenav-notify {
+    margin-top: 64px !important;
+  }
+}

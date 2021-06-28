@@ -6,12 +6,12 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-export const LAYOUT_STATE_SLICE_NAME = 'layout';
-
 /**
  * Layout config declaration
  */
 export interface LayoutConfig {
+  logState?: boolean;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [id: string]: any;
 }

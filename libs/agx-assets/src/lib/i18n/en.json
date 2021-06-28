@@ -1,6 +1,6 @@
 {
   "APP.DESCRIPTION.ABOUT": "About Us",
-  "APP.DESCRIPTION.ACCOUNT_VERIFY": "Account verificaiton",
+  "APP.DESCRIPTION.ACCOUNT_VERIFY": "Account verification",
   "APP.DESCRIPTION.EMAIL_CHANGE": "Profile email change",
   "APP.DESCRIPTION.EMAIL_CHANGE_REQUEST": "Request profile email change",
   "APP.DESCRIPTION.FOREX": "Foreign currency exchange, currency converter",
@@ -27,6 +27,7 @@
   "COMMON.ACCOUNT_DELETE": "Delete Account",
   "COMMON.ACTIONS": "Actions",
   "COMMON.ADMIN": "Admin",
+  "COMMON.ALERT": "Alert",
   "COMMON.ANALYZE": "Analyze",
   "COMMON.ARE_YOU_SURE": "Are you sure ?",
   "COMMON.BLOG": "Blog",

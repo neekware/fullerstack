@@ -65,7 +65,7 @@ export class ProfileUpdateComponent implements OnDestroy {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.form?.dirty) {
+    if (this.form?.dirty && this.auth.state.isLoggedIn) {
       const title = _('COMMON.LEAVE_PAGE');
       const info = _('WARN.DISCARD_CHANGES_ACTION');
       return this.confirm.confirmation(title, info);

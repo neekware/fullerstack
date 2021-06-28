@@ -1,83 +1,70 @@
-<div class="fullerstack-notification">
-  <p>Notification works</p>
+<div class="fs-sidenav-notify">
+  <mat-tab-group class="pb4" [selectedIndex]="activeTabIndex" (selectedTabChange)="handleTapChange($event)">
+    <mat-tab>
+      <ng-template matTabLabel>
+        <mat-icon class="mr0_5" color="primary" svgIcon="update"></mat-icon>
+        {{ 'COMMON.LATEST' | translate }}
+      </ng-template>
+      <mat-list fxFlex fxLayout="column">
+        <h3 class="mb-1" mat-subheader>Today</h3>
+        <div class="update-box">
+          <div fxLayout="row">
+            <h2 fxFlex>{{ currentTime$ | async | date }}</h2>
+            <h4>{{ currentTime$ | async | date: 'shortTime' }}</h4>
+          </div>
+          <div fxLayout="row" class="mt-1_5">
+            <h4 fxFlex>San Diego, CA</h4>
+            <div fxLayout="row">
+              <h4>21°</h4>
+              <mat-icon class="color-accent weather-icon" svgIcon="white-balance-sunny"></mat-icon>
+            </div>
+          </div>
+        </div>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <mat-list class="update-list">
+        <h3 mat-subheader>Markets</h3>
+        <mat-list-item *ngFor="let market of markets">
+          <span matLine>{{ market.ticker }}</span>
+          <p matLine>
+            <span [style.color]="market.color">{{ market.change }}</span>
+          </p>
+          <span>{{ market.price }}</span>
+        </mat-list-item>
+      </mat-list>
 
-  <p>Notification works</p>
+      <mat-divider></mat-divider>
+      <mat-list class="update-list">
+        <h3 mat-subheader>Stocks</h3>
+        <mat-list-item *ngFor="let stock of stocks">
+          <span matLine>{{ stock.ticker }}</span>
+          <p matLine>
+            <span [style.color]="stock.color">{{ stock.change }}</span>
+          </p>
+          <span>{{ stock.price }}</span>
+        </mat-list-item>
+      </mat-list>
+    </mat-tab>
 
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
-
-  <p>Notification works</p>
+    <mat-tab>
+      <ng-template matTabLabel>
+        <mat-icon class="mr0_5" color="warn" svgIcon="bell"></mat-icon>
+        {{ 'COMMON.ALERT' | translate }}
+      </ng-template>
+      <div class="scrollbox" fxFlex fxLayout="column">
+        <mat-list>
+          <mat-list-item *ngFor="let notify of notifications">
+            <mat-icon matListIcon color="{{ notify.color }}" svgIcon="{{ notify.icon }}"></mat-icon>
+            <h3 matLine>{{ notify.title }}</h3>
+            <p matLine>
+              <span>{{ notify.message }}</span>
+            </p>
+            <span>
+              <mat-icon svgIcon="dots-vertical"></mat-icon>
+            </span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

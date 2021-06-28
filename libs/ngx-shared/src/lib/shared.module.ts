@@ -21,6 +21,7 @@ import { RegisterFormComponent } from './component/register/register-form.compon
 import { RippleComponent } from './component/ripple/ripple.component';
 import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
 import { AutocompleteDirective } from './directive/autocomplete/autocomplete.directive';
+import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule, I18nModule],
@@ -34,6 +35,7 @@ import { AutocompleteDirective } from './directive/autocomplete/autocomplete.dir
     RegisterFormComponent,
     UserProfileFormComponent,
     AutocompleteDirective,
+    TmpLetDirective,
   ],
   exports: [
     HintComponent,
@@ -45,6 +47,7 @@ import { AutocompleteDirective } from './directive/autocomplete/autocomplete.dir
     RegisterFormComponent,
     UserProfileFormComponent,
     AutocompleteDirective,
+    TmpLetDirective,
   ],
   providers: [],
 })

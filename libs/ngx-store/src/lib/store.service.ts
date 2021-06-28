@@ -30,35 +30,34 @@ export class StoreService<T = StoreType> {
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ store: DefaultStoreConfig }, this.config.options);
     this.store = new Store<T>({} as T, { ...this.options.store });
-    this.logger.debug('StoreService ready ...');
+    this.logger.info('StoreService ready ...');
   }
 
   /**
-   * Claim slice within state
-   * @param sliceName slice name to claim write ownership
-   * @returns registration private key
+   * Claim a slice within state
+   * @param sliceName slice name (hint: attribute key of an object)
+   * @returns Slice ownership claim ID (required for write/update and release of slice)
    */
-  registerSlice(sliceName: string, logger?: StoreLogger): string {
-    return this.store.registerSlice(sliceName, logger);
+  claimSlice(sliceName: string, logger?: StoreLogger): string {
+    return this.store.claimSlice(sliceName, logger);
   }
 
   /**
-   * Remove ownership of a slice, and delete the slice
-   * @param privateKey slice ownership proof
-   * @returns void
+   * Release slice
+   * @param claimId Slice ownership claim ID
    */
-  deregisterSlice(privateKey: string) {
-    return this.store.deregisterSlice(privateKey);
+  releaseSlice(claimId: string) {
+    return this.store.releaseSlice(claimId);
   }
 
   /**
    * Mutates (create/update) a slice within state
-   * @param privateKey key required by owner of slice for `write` operation
+   * @param claimId Claim ID of slice required for any mutation, full or partial
    * @param updater object or function that returns a partial object of type T
    */
-  setState<K = any>(privateKey: string, updater: SetStateReducer<T, K> | Partial<T> | K): void;
-  setState<K = any>(privateKey: string, updater: K): void {
-    this.store.setState<K>(privateKey, updater);
+  setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): void;
+  setState<K = any>(claimId: string, updater: K): void {
+    this.store.setState<K>(claimId, updater);
   }
 
   /**

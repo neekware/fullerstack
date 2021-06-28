@@ -32,7 +32,7 @@ export class CachifyService {
   constructor(private config: ConfigService, private logger: LoggerService) {
     this.options = ldNestedMerge({ cachify: DefaultCachifyConfig }, this.config.options);
     this.cacheStore = new Store({}, this.options.cachify.immutable);
-    this.logger.debug('CachifyService ready ...');
+    this.logger.info('CachifyService ready ...');
   }
 
   /**

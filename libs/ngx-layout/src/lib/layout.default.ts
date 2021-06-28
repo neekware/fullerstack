@@ -13,7 +13,9 @@ import { LayoutConfig, LayoutState, NavbarMode, SidenavMode, SidenavRole } from 
 /**
  * Default configuration - Layout module
  */
-export const DefaultLayoutConfig: LayoutConfig = {};
+export const DefaultLayoutConfig: LayoutConfig = {
+  logState: false,
+};
 
 export const DefaultLayoutState: LayoutState = {
   appName: null,

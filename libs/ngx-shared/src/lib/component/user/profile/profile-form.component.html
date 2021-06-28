@@ -1,6 +1,6 @@
 <form [formGroup]="form" (submit)="submit()" [autocomplete]="autocomplete" fxLayout="column">
   <mat-form-field>
-    <mat-icon matSuffix color="primary" svgIcon="account"></mat-icon>
+    <mat-icon matSuffix svgIcon="account"></mat-icon>
     <input matInput formControlName="firstName" placeholder="{{ 'COMMON.FIRST_NAME' | translate }}" />
     <fullerstack-hint
       [control]="form?.controls?.firstName"
@@ -10,7 +10,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-icon matSuffix color="primary" svgIcon="account-multiple"></mat-icon>
+    <mat-icon matSuffix svgIcon="account-multiple"></mat-icon>
     <input matInput formControlName="lastName" placeholder="{{ 'COMMON.LAST_NAME' | translate }}" />
     <fullerstack-hint
       [control]="form?.controls?.lastName"
@@ -20,7 +20,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-icon matSuffix color="primary" svgIcon="email"></mat-icon>
+    <mat-icon matSuffix svgIcon="email"></mat-icon>
     <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
     <fullerstack-hint [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched" [hint]="emailHint"></fullerstack-hint>
   </mat-form-field>

@@ -12,6 +12,7 @@ import { _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
 
 import { AboutComponent } from './pages/about/about.component';
+import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
@@ -27,10 +28,17 @@ export const AppRoutes: Routes = [
     },
   },
   {
-    path: 'about',
+    path: 'about/us',
     component: AboutComponent,
     data: {
       title: _('APP.ABOUT'),
+    },
+  },
+  {
+    path: 'forex',
+    component: ForexComponent,
+    data: {
+      title: _('COMMON.FOREX'),
     },
   },
   {

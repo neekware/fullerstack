@@ -18,7 +18,9 @@ import { AuthConfig, AuthState, AuthUrls } from './auth.model';
 /**
  * Default configuration - Auth module
  */
-export const DefaultAuthConfig: AuthConfig = {};
+export const DefaultAuthConfig: AuthConfig = {
+  logState: false,
+};
 
 export const AuthResponseOperationName = 'operationName';
 export const AuthRefreshTokenOperation = getOperationName(AuthRefreshTokenMutation);

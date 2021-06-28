@@ -39,11 +39,12 @@ import { first, takeUntil, tap } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAuthConfig, DefaultAuthState, DefaultAuthUrls } from './auth.default';
-import { AUTH_STATE_SLICE_NAME, AuthState, AuthUrls } from './auth.model';
+import { AuthState, AuthUrls } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
-  private statePrivateKey: string;
+  private sliceName = 'AUTH';
+  private claimId: string;
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<AuthState> = DefaultAuthState;
@@ -61,7 +62,7 @@ export class AuthService implements OnDestroy {
     readonly jwt: JwtService,
     readonly gql: GqlService
   ) {
-    this.options = ldNestedMerge({ gtag: DefaultAuthConfig }, this.config.options);
+    this.options = ldNestedMerge({ auth: DefaultAuthConfig }, this.config.options);
 
     this.authUrls = {
       ...this.authUrls,
@@ -71,7 +72,8 @@ export class AuthService implements OnDestroy {
       landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
     };
 
-    this.registerState();
+    this.initUrls();
+    this.claimSlice();
     this.initState();
     this.subState();
     this.tokenRefreshRequest();
@@ -95,27 +97,38 @@ export class AuthService implements OnDestroy {
   }
 
   /**
-   * Initialize Auth state
+   * Initialize Auth related navigable urls
    */
-  private registerState() {
-    this.statePrivateKey = this.store.registerSlice(
-      AUTH_STATE_SLICE_NAME,
-      !this.options.production ? this.logger.info.bind(this.logger) : undefined
-    );
+  private initUrls() {
+    this.authUrls = {
+      ...this.authUrls,
+      loginUrl: this.options?.localConfig?.loginPageUrl || this.authUrls.loginUrl,
+      loggedInUrl: this.options?.localConfig?.loggedInUrl || this.authUrls.loggedInUrl,
+      registerUrl: this.options?.localConfig?.registerUrl || this.authUrls.registerUrl,
+      landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
+    };
   }
 
   /**
-   * Initialize Auth state
+   * Claim Auth state:slice
+   */
+  private claimSlice() {
+    const logger = this.options?.auth?.logState ? this.logger.debug.bind(this.logger) : undefined;
+    this.claimId = this.store.claimSlice(this.sliceName, logger);
+  }
+
+  /**
+   * Initialize Auth state:slice
    */
   private initState() {
-    this.store.setState(this.statePrivateKey, DefaultAuthState);
+    this.store.setState(this.claimId, DefaultAuthState);
   }
 
   /**
-   * Subscribe to Auth state changes
+   * Subscribe to Auth state:slice changes
    */
   private subState() {
-    this.stateSub$ = this.store.select$<AuthState>(AUTH_STATE_SLICE_NAME);
+    this.stateSub$ = this.store.select$<AuthState>(this.sliceName);
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
@@ -130,7 +143,7 @@ export class AuthService implements OnDestroy {
   }
 
   loginRequest(input: UserCredentialsInput) {
-    this.store.setState(this.statePrivateKey, { ...DefaultAuthState, isAuthenticating: true });
+    this.store.setState(this.claimId, { ...DefaultAuthState, isAuthenticating: true });
     this.logger.debug('[AUTH] Login request sent ...');
 
     return this.gql.client
@@ -148,10 +161,10 @@ export class AuthService implements OnDestroy {
             updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
             this.logger.error(`[AUTH] Login request failed ... ${resp.message}`);
           }
-          this.store.setState(this.statePrivateKey, updateState);
+          this.store.setState(this.claimId, updateState);
         },
         error: (err) => {
-          this.store.setState(this.statePrivateKey, {
+          this.store.setState(this.claimId, {
             ...DefaultAuthState,
             hasError: true,
             message: err.message,
@@ -162,7 +175,7 @@ export class AuthService implements OnDestroy {
   }
 
   registerRequest(input: UserCreateInput) {
-    this.store.setState(this.statePrivateKey, { ...DefaultAuthState, isRegistering: true });
+    this.store.setState(this.claimId, { ...DefaultAuthState, isRegistering: true });
     this.logger.debug('[AUTH] Register request sent ...');
 
     return this.gql.client
@@ -180,10 +193,10 @@ export class AuthService implements OnDestroy {
             updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
             this.logger.error(`[AUTH] Register request failed ... ${resp.message}`);
           }
-          this.store.setState(this.statePrivateKey, updateState);
+          this.store.setState(this.claimId, updateState);
         },
         error: (err) => {
-          this.store.setState(this.statePrivateKey, {
+          this.store.setState(this.claimId, {
             ...DefaultAuthState,
             hasError: true,
             message: err.message,
@@ -207,11 +220,11 @@ export class AuthService implements OnDestroy {
           } else {
             updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
           }
-          this.store.setState(this.statePrivateKey, updateState);
+          this.store.setState(this.claimId, updateState);
         },
         error: (err) => {
           this.logger.error('[ AUTH ]', err);
-          this.store.setState(this.statePrivateKey, {
+          this.store.setState(this.claimId, {
             ...DefaultAuthState,
             hasError: true,
             message: err.message,
@@ -225,7 +238,7 @@ export class AuthService implements OnDestroy {
     return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
       tap((resp) => {
         if (resp.ok) {
-          this.store.setState(this.statePrivateKey, { ...this.state, token: resp.token });
+          this.store.setState(this.claimId, { ...this.state, token: resp.token });
         }
       })
     );
@@ -263,6 +276,7 @@ export class AuthService implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
+    this.store.releaseSlice(this.sliceName);
     this.logger.debug('[AUTH] AuthService destroyed ...');
   }
 }
