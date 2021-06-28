@@ -32,7 +32,7 @@ import { LayoutState, NavbarMode, SidenavMode } from './layout.model';
 
 @Injectable({ providedIn: 'root' })
 export class LayoutService implements OnDestroy {
-  private sliceName = 'LAYOUT';
+  private nameSpace = 'LAYOUT';
   private claimId: string;
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
@@ -80,7 +80,7 @@ export class LayoutService implements OnDestroy {
     this.subStorage();
     this.subRouteChange();
 
-    this.logger.info('[LAYOUT] LayoutService ready ...');
+    this.logger.info(`[${this.nameSpace}] LayoutService ready ...`);
   }
 
   /**
@@ -88,7 +88,7 @@ export class LayoutService implements OnDestroy {
    */
   private claimSlice() {
     const logger = this.options?.layout?.logState ? this.logger.debug.bind(this.logger) : undefined;
-    this.claimId = this.store.claimSlice(this.sliceName, logger);
+    this.claimId = this.store.claimSlice(this.nameSpace, logger);
   }
 
   /**
@@ -105,7 +105,7 @@ export class LayoutService implements OnDestroy {
    * Subscribe to Layout state changes
    */
   private subState() {
-    this.stateSub$ = this.store.select$<LayoutState>(this.sliceName);
+    this.stateSub$ = this.store.select$<LayoutState>(this.nameSpace);
 
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
@@ -294,6 +294,6 @@ export class LayoutService implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
-    this.logger.debug('LayoutService destroyed ...');
+    this.logger.debug(`[${this.nameSpace}] LayoutService destroyed ...`);
   }
 }

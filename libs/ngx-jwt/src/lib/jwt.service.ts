@@ -25,6 +25,7 @@ import { DefaultJwtConfig } from './jwt.default';
  */
 @Injectable({ providedIn: 'root' })
 export class JwtService {
+  private nameSpace = 'JWT';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   /**
@@ -34,7 +35,7 @@ export class JwtService {
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ jwt: DefaultJwtConfig }, this.config.options);
 
-    this.logger.info('JwtService ready ...');
+    this.logger.info(`[${this.nameSpace}] JwtService ready ...`);
   }
 
   /**

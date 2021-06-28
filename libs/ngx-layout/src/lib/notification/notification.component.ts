@@ -22,7 +22,7 @@ import { LayoutService } from '../layout.service';
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
-  activeTabIndex = 1;
+  activeTabIndex = sample([0, 1]);
   currentTime$: Observable<Date>;
 
   notifications = [
@@ -104,13 +104,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     },
   ];
 
-  hasNewNotification = true;
-
-  constructor(readonly layout: LayoutService) {
-    if (this.hasNewNotification) {
-      this.activeTabIndex = 1;
-    }
-  }
+  constructor(readonly layout: LayoutService) {}
 
   ngOnInit() {
     this.currentTime$ = timer(0, 1000).pipe(
@@ -123,7 +117,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   handleTapChange(event: MatTabChangeEvent) {
     this.activeTabIndex = event.index;
-    this.hasNewNotification = sample([true, false]);
   }
 
   ngOnDestroy() {

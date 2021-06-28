@@ -10,7 +10,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ForexComponent } from './forex.component';
 
-describe('ForexComponent', () => {
+xdescribe('ForexComponent', () => {
   let component: ForexComponent;
   let fixture: ComponentFixture<ForexComponent>;
 

@@ -26,6 +26,7 @@ import { AvailableLanguage, LanguageDirection } from './i18n.model';
 
 @Injectable({ providedIn: 'root' })
 export class I18nService {
+  private nameSpace = 'I18N';
   @Output() languageChanges$ = new EventEmitter<string>();
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
@@ -44,7 +45,9 @@ export class I18nService {
 
     this.initLanguage();
 
-    this.logger.info(`I18nService ready ... (${this.currentLanguage} - ${this.direction})`);
+    this.logger.info(
+      `[${this.nameSpace}] I18nService ready ... (${this.currentLanguage} - ${this.direction})`
+    );
   }
 
   isLanguageEnabled(iso: string): boolean {
@@ -74,7 +77,9 @@ export class I18nService {
     if (this.isLanguageEnabled(iso)) {
       this.xlate.use(iso);
     } else {
-      this.logger.warn(`I18nService - language not enabled ... (${this.currentLanguage})`);
+      this.logger.warn(
+        `[${this.nameSpace}] I18nService - language not enabled ... (${this.currentLanguage})`
+      );
     }
   }
 
@@ -87,7 +92,9 @@ export class I18nService {
       this.currentLanguage = event.lang;
       this.direction = this.getLanguageDirection(event.lang);
       this.languageChanges$.emit(event.lang);
-      this.logger.info(`I18nService - language changed ... (${this.currentLanguage})`);
+      this.logger.info(
+        `[${this.nameSpace}] I18nService - language changed ... (${this.currentLanguage})`
+      );
     });
 
     registerActiveLocales(this.options.i18n.availableLanguages, this.options.i18n.enabledLanguages);

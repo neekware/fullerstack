@@ -87,35 +87,69 @@ npx create-nx-workspace fullerstack
 
 ### Installation
 
-git clone https://github.com/neekware/fullerstack.git && cd fullerstack && npm install
+```bash
+# Clone the repo
+git clone https://github.com/neekware/fullerstack.git
 
-### Graph dependencies
+# Install the dependencies
+cd fullerstack
+yarn install
 
-yarn dep-graph
+# Create a database (postgres)
+createdb fullerstack
 
-### Webpack analyzer
+# Copy environment variables and update
+cp example.env .env
 
-nx build fullerstack --stats-json --prod && yarn stats
+# Migrate the database
+yarn prisma:migrate:dev
 
-### Graph dependencies uncommitted changes from affected libs/apps
+# Seed your database
+yarn prisma:seed
 
-yarn affected -- --target dep-graph --uncommitted
+# Start the backend (in terminal #1)
+yarn start:api
 
-### Graph dependencies changes from affected libs/apps on main
+# Start the frontend (in terminal #2)
+yarn start:fullerstack
 
-yarn affected -- --target dep-graph --base=main
+# Visit frontend (on mac use open, on windows, just type it in)
+open http://localhost:4200
 
-### Test uncommitted changes from affected libs/apps
+# Register / Login and take the site for a spin
+# Note superuser account is set in your .env (refer to AUTH_SUPERUSER_EMAIL, AUTH_SUPERUSER_PASSWORD)
+```
 
-yarn affected -- --target test --uncommitted
+### Development (Affected libs, files, dependencies)
 
-### Test committed changes on main
+```bash
+# Webpack analyzer
+yarn nx build fullerstack --stats-json --prod && yarn stats
 
-yarn affected -- --target test --base=main
+# Graph dependencies
+# https://nx.dev/latest/angular/cli/affected-dep-graph
 
-### Format changed files
+# Graph dependencies default
+yarn nx dep-graph
 
-yarn format
+# Graph dependencies on a branch
+yarn affected:dep-graph --base=<branch-name> --head=HEAD
+
+# Graph dependencies on main
+yarn affected --target=test --base=main
+
+# Format changed files
+yarn format:all
+
+#  Lint CI
+yarn lint:ci
+
+#  Test CI
+yarn test:ci
+
+#  Test build
+yarn build:ci
+```
 
 ## License
 
@@ -134,18 +168,18 @@ X.Y.Z Version
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             324        16475         1843         3316        11316
- JSON                   127         4443            0            0         4443
- Markdown                28         1720          412            0         1308
+ TypeScript             323        16432         1835         3308        11289
+ JSON                   127         4448            0            0         4448
+ Markdown                28         1754          417            0         1337
  Sass                    49         1398          136           28         1234
  JavaScript              30          674            8           48          618
- HTML                    25          661           44            4          613
+ HTML                    25          645           42            4          599
  CSS                      1           96            7            0           89
  Plain Text               4           93           10            0           83
  SQL                      1           63           13           12           38
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  590        25626         2473         3410        19743
+ Total                  589        25606         2468         3402        19736
 --------------------------------------------------------------------------------
 ```
 

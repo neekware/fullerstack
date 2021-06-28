@@ -32,6 +32,7 @@ export const screenfull = {
 
 @Injectable({ providedIn: 'root' })
 export class UixService implements OnDestroy {
+  private nameSpace = 'UIX';
   @Output() fullscreen$ = new EventEmitter<boolean>();
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
@@ -46,7 +47,7 @@ export class UixService implements OnDestroy {
 
     this.initFullscreen();
     this.loadSvgIcons();
-    this.logger.info('UixService ready ...');
+    this.logger.info(`[${this.nameSpace}] UixService ready ...`);
   }
 
   private loadSvgIcons() {

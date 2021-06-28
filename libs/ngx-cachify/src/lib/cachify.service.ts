@@ -25,6 +25,7 @@ import { CachifyEntry } from './cachify.model';
 
 @Injectable({ providedIn: 'root' })
 export class CachifyService {
+  private nameSpace = 'CACHIFY';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private cacheMap = new Map<string, CachifyEntry>();
   private cacheStore: Store;
@@ -32,7 +33,7 @@ export class CachifyService {
   constructor(private config: ConfigService, private logger: LoggerService) {
     this.options = ldNestedMerge({ cachify: DefaultCachifyConfig }, this.config.options);
     this.cacheStore = new Store({}, this.options.cachify.immutable);
-    this.logger.info('CachifyService ready ...');
+    this.logger.info(`[${this.nameSpace}] CachifyService ready ...`);
   }
 
   /**

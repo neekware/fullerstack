@@ -22,6 +22,7 @@
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
+    "<--------- [ affected related ] ------->": "affected related",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
@@ -30,6 +31,7 @@
     "affected:lint": "nx affected:lint",
     "affected:dep-graph": "nx affected:dep-graph",
     "affected": "nx affected",
+    "<--------- [ format related ] ------->": "format related",
     "format": "nx format:write",
     "format:write": "nx format:write",
     "format:check": "nx format:check",
@@ -40,6 +42,7 @@
     "help": "nx help",
     "stats:build": "yarn build fullerstack --prod --stats-json",
     "stats:show": "webpack-bundle-analyzer dist/apps/fullerstack/stats.json",
+    "<--------- [ ci related ] ------->": "ci related",
     "nx:ci": "node ./node_modules/@nrwl/cli/bin/nx.js",
     "format:ci": "yarn nx:ci format:check",
     "lint:ci": "yarn nx:ci  run-many --target=lint --all --configuration=ci --parallel",
@@ -50,6 +53,7 @@
     "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=fullerstack-e2e",
     "coverage:merge": "yarn ts-node ./tools/utils/coverageMerge.ts",
     "release": "yarn ts-node ./tools/utils/release.ts",
+    "<--------- [ prisma related ] ------->": "prisma related",
     "prisma:migrate:create": "node ./node_modules/.bin/prisma migrate dev --create-only --schema=apps/api/src/prisma/schema.prisma",
     "prisma:migrate:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
     "prisma:migrate:dev": "node ./node_modules/.bin/prisma migrate dev --schema=apps/api/src/prisma/schema.prisma",
@@ -60,7 +64,8 @@
     "license": "yarn ts-node ./tools/utils/license.ts",
     "pkg:update": "yarn ts-node ./tools/utils/update.ts",
     "loc:generate": "yarn ts-node ./tools/utils/loc.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve:dist": "cd dist/apps/fullerstack; open http://localhost:8080; python3 -m http.server 8080"
   },
   "importSort": {
     ".js, .ts": {

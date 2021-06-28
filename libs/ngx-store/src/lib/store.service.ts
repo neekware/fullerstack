@@ -24,13 +24,14 @@ import { Store } from './store.state';
 
 @Injectable()
 export class StoreService<T = StoreType> {
+  private nameSpace = 'STORE';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private store: Store;
 
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ store: DefaultStoreConfig }, this.config.options);
     this.store = new Store<T>({} as T, { ...this.options.store });
-    this.logger.info('StoreService ready ...');
+    this.logger.info(`[${this.nameSpace}] StoreService ready ...`);
   }
 
   /**
