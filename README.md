@@ -123,43 +123,32 @@ open http://localhost:4200
 ### Development (Affected libs, files, dependencies)
 
 ```bash
-# Graph dependencies
-
-yarn dep-graph
-
 # Webpack analyzer
-
 yarn nx build fullerstack --stats-json --prod && yarn stats
 
-# Graph dependencies uncommitted changes from affected libs/apps
+# Graph dependencies
+# https://nx.dev/latest/angular/cli/affected-dep-graph
 
-yarn affected -- --target dep-graph --uncommitted
+# Graph dependencies default
+yarn nx dep-graph
 
-# Graph dependencies changes from affected libs/apps on main
+# Graph dependencies on a branch
+yarn affected:dep-graph --base=<branch-name> --head=HEAD
 
-yarn affected --target dep-graph --base=main
-
-# Test uncommitted changes from affected libs/apps
-
-yarn affected --target test --uncommitted
-
-# Test committed changes on main
-
-yarn affected --target test --base=main
+# Graph dependencies on main
+yarn affected --target=test --base=main
 
 # Format changed files
-
-yarn format
-
-# Format all files (.html, .scss, .css, .js, .ts)
-
 yarn format:all
+
+#  Lint CI
+yarn lint:ci
 
 #  Test CI
-
 yarn test:ci
 
-yarn format:all
+#  Test build
+yarn build:ci
 ```
 
 ## License
@@ -181,7 +170,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             323        16432         1835         3308        11289
  JSON                   127         4448            0            0         4448
- Markdown                28         1765          427            0         1338
+ Markdown                28         1754          417            0         1337
  Sass                    49         1398          136           28         1234
  JavaScript              30          674            8           48          618
  HTML                    25          645           42            4          599
@@ -190,7 +179,7 @@ X.Y.Z Version
  SQL                      1           63           13           12           38
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  589        25617         2478         3402        19737
+ Total                  589        25606         2468         3402        19736
 --------------------------------------------------------------------------------
 ```
 
