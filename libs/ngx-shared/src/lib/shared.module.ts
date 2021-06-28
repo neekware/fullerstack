@@ -21,6 +21,7 @@ import { RegisterFormComponent } from './component/register/register-form.compon
 import { RippleComponent } from './component/ripple/ripple.component';
 import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
 import { AutocompleteDirective } from './directive/autocomplete/autocomplete.directive';
+import { DebounceClickDirective } from './directive/debounce-click/debounce-click.directive';
 import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     UserProfileFormComponent,
     AutocompleteDirective,
     TmpLetDirective,
+    DebounceClickDirective,
   ],
   exports: [
     HintComponent,
@@ -48,6 +50,7 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     UserProfileFormComponent,
     AutocompleteDirective,
     TmpLetDirective,
+    DebounceClickDirective,
   ],
   providers: [],
 })
