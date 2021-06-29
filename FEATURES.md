@@ -48,7 +48,7 @@ i18n, i10n support
 Right to left (LTR) support
 ```
 
-<img width="auto" src="libs/agx-assets/src/lib/images/misc/RTL.png">
+<img width="auto" src="libs/agx-assets/src/lib/images/misc/rtl.png">
 
 <br/><br/>
 
