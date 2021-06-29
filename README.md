@@ -9,9 +9,15 @@ This project is a mono-repo for FullerStack which is an open source dashboard po
 
 ## Mission
 
-To create an open source dashboard from the ground-up. `Quality of Experience` is the ultimate mission, and that includes simplicity, elegance, quality and performance. Designed for future, built for today!<br/>
-Sample Demo: ( [avidtrader.co](https://app.avidtrader.co/) ) <br/>
-Screenshots: ([screenshots](https://raw.githubusercontent.com/neekware/fullerstack/main/FEATURES.md))
+To create an open source dashboard from the ground-up. `Quality of Experience` is the ultimate mission, and that includes simplicity, elegance, quality and performance. `Designed for future, built for today!`<br/>
+
+## `Elegance in simplicity`
+
+<img width="auto" src="libs/agx-assets/src/lib/images/misc/login.png">
+
+Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app.avidtrader.co/) )
+
+<br/>
 
 ## Features
 
@@ -145,7 +151,7 @@ yarn build:ci
 
 ## Dependency Graph
 
-### `Visual` confirmation of your `system architecture` - Prevent circular dependencies via `eslint`
+#### `Visual` confirmation of your `system architecture`, and prevent circular dependencies via `eslint`
 
 ```bash
 # Graph dependencies on a branch
@@ -155,6 +161,7 @@ yarn affected:dep-graph --base=<branch-name> --head=HEAD
 ```
 
 <img width="auto" src="libs/agx-assets/src/lib/images/misc/dep-graph.png">
+<br/><br/>
 
 ## License
 
@@ -175,7 +182,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             323        16432         1835         3308        11289
  JSON                   127         4448            0            0         4448
- Markdown                29         1820          443            0         1377
+ Markdown                29         1827          447            0         1380
  Sass                    49         1398          136           28         1234
  JavaScript              30          674            8           48          618
  HTML                    25          645           42            4          599
@@ -184,7 +191,7 @@ X.Y.Z Version
  SQL                      1           63           13           12           38
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  590        25672         2494         3402        19776
+ Total                  590        25679         2498         3402        19779
 --------------------------------------------------------------------------------
 ```
 
