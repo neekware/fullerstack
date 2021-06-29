@@ -9,7 +9,11 @@ This project is a mono-repo for FullerStack which is an open source dashboard po
 
 ## Mission
 
-To create an open source dashboard similar to [avidtrader.co](https://app.avidtrader.co/)
+To create an open source dashboard from the ground-up. `Quality of Experience` is the ultimate mission, and that includes simplicity, elegance, quality and performance. Designed for future, built for today!<br/>
+Sample Demo: ( [avidtrader.co](https://app.avidtrader.co/) ) <br/>
+Screenshots: ([screenshots](https://raw.githubusercontent.com/neekware/fullerstack/main/FEATURES.md))
+
+## Features
 
 - Quality of Experience and Security First
 - Geo Location Support
@@ -120,23 +124,11 @@ open http://localhost:4200
 # Note superuser account is set in your .env (refer to AUTH_SUPERUSER_EMAIL, AUTH_SUPERUSER_PASSWORD)
 ```
 
-### Development (Affected libs, files, dependencies)
+### Development (lint, test, build, format)
 
 ```bash
 # Webpack analyzer
 yarn nx build fullerstack --stats-json --prod && yarn stats
-
-# Graph dependencies
-# https://nx.dev/latest/angular/cli/affected-dep-graph
-
-# Graph dependencies default
-yarn nx dep-graph
-
-# Graph dependencies on a branch
-yarn affected:dep-graph --base=<branch-name> --head=HEAD
-
-# Graph dependencies on main
-yarn affected --target=test --base=main
 
 # Format changed files
 yarn format:all
@@ -150,6 +142,19 @@ yarn test:ci
 #  Test build
 yarn build:ci
 ```
+
+## Dependency Graph
+
+### `Visual` confirmation of your `system architecture` - Prevent circular dependencies via `eslint`
+
+```bash
+# Graph dependencies on a branch
+# More: https://nx.dev/latest/angular/cli/affected-dep-graph
+
+yarn affected:dep-graph --base=<branch-name> --head=HEAD
+```
+
+<img width="auto" src="libs/agx-assets/src/lib/images/misc/dep-graph.png">
 
 ## License
 
@@ -170,7 +175,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             323        16432         1835         3308        11289
  JSON                   127         4448            0            0         4448
- Markdown                28         1754          417            0         1337
+ Markdown                29         1820          443            0         1377
  Sass                    49         1398          136           28         1234
  JavaScript              30          674            8           48          618
  HTML                    25          645           42            4          599
@@ -179,7 +184,7 @@ X.Y.Z Version
  SQL                      1           63           13           12           38
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  589        25606         2468         3402        19736
+ Total                  590        25672         2494         3402        19776
 --------------------------------------------------------------------------------
 ```
 
