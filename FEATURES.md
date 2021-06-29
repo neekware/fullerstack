@@ -1,4 +1,4 @@
-# Fullerstack - Visual Feature
+# Fullerstack - Visual Features
 
 <br/>
 
@@ -59,3 +59,7 @@ Alert and Notification
 ```
 
 <img width="auto" src="libs/agx-assets/src/lib/images/misc/alert.png">
+
+<br/><br/>
+
+# Explore more features at: ( [avidtrader.co](https://app.avidtrader.co/) )
