@@ -38,7 +38,7 @@ Light, Dark and Custom
 i18n, i10n support
 ```
 
-<img width="auto" src="libs/agx-assets/src/lib/images/misc/language.png">
+<img width="auto" src="libs/agx-assets/src/lib/images/misc/lang.png">
 
 <br/><br/>
 
@@ -48,7 +48,7 @@ i18n, i10n support
 Right to left (LTR) support
 ```
 
-<img width="auto" src="libs/agx-assets/src/lib/images/misc/rtl.png">
+<img width="auto" src="libs/agx-assets/src/lib/images/misc/lang-rtl.png">
 
 <br/><br/>
 
@@ -58,7 +58,7 @@ Right to left (LTR) support
 Alert and Notification
 ```
 
-<img width="auto" src="libs/agx-assets/src/lib/images/misc/alert.png">
+<img width="auto" src="libs/agx-assets/src/lib/images/misc/notify.png">
 
 <br/><br/>
 
