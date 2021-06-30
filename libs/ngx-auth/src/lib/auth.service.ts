@@ -28,7 +28,7 @@ import {
   UserCreateInput,
   UserCredentialsInput,
 } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';

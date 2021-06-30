@@ -18,7 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
 import { AuthAsyncValidation } from '@fullerstack/ngx-auth';
 import { UserCreateInput } from '@fullerstack/ngx-gql/schema';
-import { I18nService, _ } from '@fullerstack/ngx-i18n';
+import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 
 @Component({

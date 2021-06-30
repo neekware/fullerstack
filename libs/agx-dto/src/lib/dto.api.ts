@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { _ } from './dto.util';
+import { i18nExtractor as _ } from './dto.util';
 
 export interface HealthCheck {
   ping: boolean;
@@ -28,7 +28,7 @@ export const ApiError = {
   Error_Unauthorized: _('ERROR.AUTH.UNAUTHORIZED'),
   Error_Forbidden: _('ERROR.AUTH.FORBIDDEN'),
   Error_EmailInUse: _('ERROR.AUTH.EMAIL_IN_USE'),
-  Error_UsernameInUse: _('ERROR.AUTH.USERNAME_IN_USE'),
+  Error_UsernameInUse: _('ERROR.AUTH.USERNAME_IN_USEZ'),
 };
 
 export enum ActionStatus {

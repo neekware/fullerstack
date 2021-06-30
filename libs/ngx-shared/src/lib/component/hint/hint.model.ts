@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 
 /**
  * Debounce time for verification and showing the hint

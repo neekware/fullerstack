@@ -11,7 +11,7 @@ import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 
 @Component({
   selector: 'fullerstack-login',

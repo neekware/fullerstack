@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 
 @Component({

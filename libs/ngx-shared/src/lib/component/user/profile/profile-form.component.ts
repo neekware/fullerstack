@@ -17,7 +17,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActionStatus } from '@fullerstack/agx-dto';
 import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
-import { I18nService, _ } from '@fullerstack/ngx-i18n';
+import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 
 @Component({

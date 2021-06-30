@@ -9,7 +9,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, AuthState } from '@fullerstack/ngx-auth';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { rotationAnimations, shakeAnimations } from '@fullerstack/ngx-shared';
 import { UixService } from '@fullerstack/ngx-uix';
 import { Subject } from 'rxjs';
