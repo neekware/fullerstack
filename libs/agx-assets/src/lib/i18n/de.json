@@ -130,6 +130,7 @@
 	"ERROR.AUTH.EMAIL_IN_USE": "",
 	"ERROR.AUTH.FORBIDDEN": "",
 	"ERROR.AUTH.INVALID_INACTIVE_USER": "",
+	"ERROR.AUTH.INVALID_OR_REMOTELY_TERMINATED_SESSION": "",
 	"ERROR.AUTH.LOGIN": "Anmeldung fehlgeschlagen. Unbekannte E-Mail oder falsches Passwort",
 	"ERROR.AUTH.LOGOUT": "Abmeldung fehlgeschlagen.",
 	"ERROR.AUTH.REFRESH": "Fehler beim Aktualisieren des Authentifizierungstokens",

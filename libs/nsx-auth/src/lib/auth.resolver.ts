@@ -71,7 +71,7 @@ export class AuthResolver {
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
-      throw new UnauthorizedException('Error - Invalid session or remotely terminated');
+      throw new UnauthorizedException(_('ERROR.AUTH.INVALID_OR_REMOTELY_TERMINATED_SESSION'));
     }
 
     const token = this.securityService.issueToken(user, request, response);

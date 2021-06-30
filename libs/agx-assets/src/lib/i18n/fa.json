@@ -130,6 +130,7 @@
 	"ERROR.AUTH.EMAIL_IN_USE": "",
 	"ERROR.AUTH.FORBIDDEN": "",
 	"ERROR.AUTH.INVALID_INACTIVE_USER": "",
+	"ERROR.AUTH.INVALID_OR_REMOTELY_TERMINATED_SESSION": "",
 	"ERROR.AUTH.LOGIN": "ورود ناموفق بود ایمیل ناشناخته یا گذرواژه بد",
 	"ERROR.AUTH.LOGOUT": "خروج نشد",
 	"ERROR.AUTH.REFRESH": "نوشتن مجوز تأیید اعتبار نتوانست",

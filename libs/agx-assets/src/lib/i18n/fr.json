@@ -130,6 +130,7 @@
 	"ERROR.AUTH.EMAIL_IN_USE": "",
 	"ERROR.AUTH.FORBIDDEN": "",
 	"ERROR.AUTH.INVALID_INACTIVE_USER": "",
+	"ERROR.AUTH.INVALID_OR_REMOTELY_TERMINATED_SESSION": "",
 	"ERROR.AUTH.LOGIN": "Échec de la connexion. Email inconnu ou mauvais mot de passe",
 	"ERROR.AUTH.LOGOUT": "La déconnexion a échoué.",
 	"ERROR.AUTH.REFRESH": "Échec de l'actualisation du jeton d'authentification",

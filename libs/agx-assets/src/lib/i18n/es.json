@@ -130,6 +130,7 @@
 	"ERROR.AUTH.EMAIL_IN_USE": "",
 	"ERROR.AUTH.FORBIDDEN": "",
 	"ERROR.AUTH.INVALID_INACTIVE_USER": "",
+	"ERROR.AUTH.INVALID_OR_REMOTELY_TERMINATED_SESSION": "",
 	"ERROR.AUTH.LOGIN": "Error de inicio de sesion. Correo electrónico desconocido o contraseña incorrecta",
 	"ERROR.AUTH.LOGOUT": "Logout failed.",
 	"ERROR.AUTH.REFRESH": "Error al actualizar el token de autenticación",
