@@ -22,13 +22,13 @@ export const ApiConstants = {
 export const ThrottlerException = 'ThrottlerException: Too Many Requests';
 
 export const ApiError = {
-  Error_TooManyRequests: _('ERROR.REQUEST.THROTTLE'),
+  Error_TooManyRequests: _('ERROR.SERVER.THROTTLE'),
   Error_UserNotFound: _('ERROR.AUTH.LOGIN'),
   Error_TokenRefresh: _('ERROR.AUTH.REFRESH'),
   Error_Unauthorized: _('ERROR.AUTH.UNAUTHORIZED'),
   Error_Forbidden: _('ERROR.AUTH.FORBIDDEN'),
   Error_EmailInUse: _('ERROR.AUTH.EMAIL_IN_USE'),
-  Error_UsernameInUse: _('ERROR.AUTH.USERNAME_IN_USEZ'),
+  Error_UsernameInUse: _('ERROR.AUTH.USERNAME_IN_USE'),
 };
 
 export enum ActionStatus {

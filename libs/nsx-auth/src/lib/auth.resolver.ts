@@ -7,6 +7,7 @@
  */
 
 import { JwtDto } from '@fullerstack/agx-dto';
+import { i18nExtractor as _ } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
@@ -61,12 +62,12 @@ export class AuthResolver {
   ) {
     const payload: JwtDto = this.securityService.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME]);
     if (!payload) {
-      throw new UnauthorizedException('Error - Invalid or expired session');
+      throw new UnauthorizedException(_('ERROR.AUTH.UNAUTHORIZED'));
     }
 
     const user = await this.securityService.validateUser(payload.userId);
     if (!user) {
-      throw new UnauthorizedException('Error - Invalid or inactive user');
+      throw new UnauthorizedException(_('ERROR.AUTH.INVALID_INACTIVE_USER'));
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
