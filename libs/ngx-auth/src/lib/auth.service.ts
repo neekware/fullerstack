@@ -276,7 +276,7 @@ export class AuthService implements OnDestroy {
 
   goTo(url: string) {
     setTimeout(() => {
-      this.router.navigate([url]);
+      this.router.navigate([url || '/']);
     });
   }
 

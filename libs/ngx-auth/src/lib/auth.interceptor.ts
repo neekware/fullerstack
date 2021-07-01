@@ -26,7 +26,7 @@ import { AuthService } from './auth.service';
 export class AuthInterceptor implements HttpInterceptor {
   private auth: AuthService;
 
-  constructor(private injector: Injector) {
+  constructor(readonly injector: Injector) {
     /**
      * This interceptor will initialize before the the auth module
      * So, we inject it manually, with a bit of delay to prevent circular injection deps

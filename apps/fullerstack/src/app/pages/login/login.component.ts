@@ -7,7 +7,6 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
@@ -30,8 +29,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
-      const redirectUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
-      this.auth.goTo(redirectUrl);
+      this.auth.goTo(this.auth.authUrls.landingUrl);
     }
   }
 

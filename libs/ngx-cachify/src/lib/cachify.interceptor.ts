@@ -31,7 +31,7 @@ import { isPolicyEnabled } from './cachify.util';
 
 @Injectable({ providedIn: 'root' })
 export class CachifyInterceptor implements HttpInterceptor {
-  constructor(private cache: CachifyService) {}
+  constructor(readonly cache: CachifyService) {}
 
   /**
    * The logic to handle the cache intercept per meta data instructions

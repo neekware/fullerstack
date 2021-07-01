@@ -87,7 +87,7 @@ import { SubService } from '@fullerstack/subify';
 export class HomeComponent {
   customSub$: Subscription;
 
-  constructor(private subService: SubService) {
+  constructor(readonly subService: SubService) {
     // track a single subscription
     this.subService.track = interval(1000).subscribe(num => console.log(`customSub1$ - ${num}`));
 
