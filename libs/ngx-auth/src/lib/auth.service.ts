@@ -48,7 +48,7 @@ export class AuthService implements OnDestroy {
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<AuthState> = DefaultAuthState;
-  stateSub$: Observable<AuthState>;
+  readonly stateSub$: Observable<AuthState>;
   authUrls: DeepReadonly<AuthUrls> = DefaultAuthUrls;
   nextUrl: string;
   isLoading: boolean;
@@ -71,6 +71,8 @@ export class AuthService implements OnDestroy {
       registerUrl: this.options?.localConfig?.registerUrl || this.authUrls.registerUrl,
       landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
     };
+
+    this.stateSub$ = this.store.select$<AuthState>(this.nameSpace);
 
     this.initUrls();
     this.claimSlice();
@@ -130,8 +132,6 @@ export class AuthService implements OnDestroy {
    * Subscribe to Auth state:slice changes
    */
   private subState() {
-    this.stateSub$ = this.store.select$<AuthState>(this.nameSpace);
-
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
         const prevState = cloneDeep(this.state);
