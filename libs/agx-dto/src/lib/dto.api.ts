@@ -22,13 +22,25 @@ export const ApiConstants = {
 export const ThrottlerException = 'ThrottlerException: Too Many Requests';
 
 export const ApiError = {
-  Error_TooManyRequests: _('ERROR.SERVER.THROTTLE'),
-  Error_UserNotFound: _('ERROR.AUTH.LOGIN'),
-  Error_TokenRefresh: _('ERROR.AUTH.REFRESH'),
-  Error_Unauthorized: _('ERROR.AUTH.UNAUTHORIZED'),
-  Error_Forbidden: _('ERROR.AUTH.FORBIDDEN'),
-  Error_EmailInUse: _('ERROR.AUTH.EMAIL_IN_USE'),
-  Error_UsernameInUse: _('ERROR.AUTH.USERNAME_IN_USE'),
+  Error: {
+    Server: {
+      Error_TooManyRequests: _('ERROR.SERVER.THROTTLE'),
+    },
+    Auth: {
+      UserNotFound: _('ERROR.AUTH.LOGIN'),
+      InvalidOrExpiredSession: _('ERROR.AUTH.INVALID_OR_EXPIRED_SESSION'),
+      MissingAccessToken: _('ERROR.AUTH.MISSING_ACCESS_TOKEN'),
+      InvalidAccessToken: _('ERROR.AUTH.INVALID_ACCESS_TOKEN'),
+      InvalidOrInactiveUser: _('ERROR.AUTH.INVALID_INACTIVE_USER'),
+      InvalidOrRemotelyTerminatedSession: _('ERROR.AUTH.INVALID_OR_REMOTELY_TERMINATED_SESSION'),
+      Unauthorized: _('ERROR.AUTH.UNAUTHORIZED'),
+      Forbidden: _('ERROR.AUTH.FORBIDDEN'),
+      EmailInUse: _('ERROR.AUTH.EMAIL_IN_USE'),
+      UsernameInUse: _('ERROR.AUTH.USERNAME_IN_USE'),
+      InvalidPassword: _('ERROR.AUTH.INVALID_PASSWORD'),
+      InvalidUserOrPassword: _('ERROR.AUTH.INVALID_USER_OR_PASSWORD'),
+    },
+  },
 };
 
 export enum ActionStatus {

@@ -6,8 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { JwtDto } from '@fullerstack/agx-dto';
-import { i18nExtractor as _ } from '@fullerstack/agx-dto';
+import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
@@ -62,16 +61,16 @@ export class AuthResolver {
   ) {
     const payload: JwtDto = this.securityService.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME]);
     if (!payload) {
-      throw new UnauthorizedException(_('ERROR.AUTH.UNAUTHORIZED'));
+      throw new UnauthorizedException(ApiError.Error.Auth.Unauthorized);
     }
 
     const user = await this.securityService.validateUser(payload.userId);
     if (!user) {
-      throw new UnauthorizedException(_('ERROR.AUTH.INVALID_INACTIVE_USER'));
+      throw new UnauthorizedException(ApiError.Error.Auth.InvalidOrInactiveUser);
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
-      throw new UnauthorizedException(_('ERROR.AUTH.INVALID_OR_REMOTELY_TERMINATED_SESSION'));
+      throw new UnauthorizedException(ApiError.Error.Auth.InvalidOrRemotelyTerminatedSession);
     }
 
     const token = this.securityService.issueToken(user, request, response);

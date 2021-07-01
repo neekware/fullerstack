@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { i18nExtractor as _ } from '@fullerstack/agx-dto';
+import { ApiError } from '@fullerstack/agx-dto';
 import {
   AuthGuardAnonymousGql,
   AuthGuardGql,
@@ -33,7 +33,7 @@ export class UserResolver {
   @Query(() => UserDto, { description: "Get user's own info" })
   async userSelf(@UserDecorator() currentUser: User, @Args('id') id: string) {
     if (id !== currentUser.id) {
-      throw new ForbiddenException(_('ERROR.AUTH.FORBIDDEN'));
+      throw new ForbiddenException(ApiError.Error.Auth.Forbidden);
     }
     return UserDataAccessScope.getSecuredUser(currentUser, currentUser);
   }
@@ -56,7 +56,7 @@ export class UserResolver {
     if (user) {
       return UserDataAccessScope.getSecuredUser(user, currentUser);
     }
-    throw new NotFoundException(_('ERROR.AUTH.UNAUTHORIZED'));
+    throw new NotFoundException(ApiError.Error.Auth.Unauthorized);
   }
 
   @UseRoles({ exclude: [Role.USER] })

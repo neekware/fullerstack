@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { ApiError } from '@fullerstack/agx-dto';
 import {
   BadRequestException,
   ExecutionContext,
@@ -34,26 +35,26 @@ export class AuthGuardGql extends AuthGuard('jwt') {
 
     const cookies = getCookiesFromContext(context);
     if (!this.securityService.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME])) {
-      throw new UnauthorizedException('Error - Invalid or expired session');
+      throw new UnauthorizedException(ApiError.Error.Auth.InvalidOrExpiredSession);
     }
 
     const token = getJwtTokenFromAuthorizationHeader(request);
     if (!token) {
-      throw new UnauthorizedException('Error - Missing or invalid jwt token');
+      throw new UnauthorizedException(ApiError.Error.Auth.MissingAccessToken);
     }
 
     const payload = this.securityService.verifyToken(token);
     if (!payload) {
-      throw new UnauthorizedException('Error - Invalid jwt token');
+      throw new UnauthorizedException(ApiError.Error.Auth.InvalidAccessToken);
     }
 
     const user = await this.securityService.validateUser(payload.userId);
     if (!user) {
-      throw new NotFoundException('Error - Invalid or inactive user');
+      throw new NotFoundException(ApiError.Error.Auth.InvalidOrInactiveUser);
     }
 
     if (user?.sessionVersion !== payload.sessionVersion) {
-      throw new BadRequestException('Error - Invalid session or remotely terminated');
+      throw new BadRequestException(ApiError.Error.Auth.InvalidOrRemotelyTerminatedSession);
     }
 
     request.user = user;

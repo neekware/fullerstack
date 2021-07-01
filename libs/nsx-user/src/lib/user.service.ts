@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { ApiError } from '@fullerstack/agx-dto';
 import { AUTH_ROLE_RESTRICTION_MATRIX } from '@fullerstack/nsx-auth';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { ForbiddenException, Injectable } from '@nestjs/common';
@@ -30,7 +31,7 @@ export class UserService {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     const forbidden = AUTH_ROLE_RESTRICTION_MATRIX[currentUser.role];
     if (forbidden.some((some) => some === user.role)) {
-      throw new ForbiddenException('Error - Operation on privileged entity not permitted');
+      throw new ForbiddenException(ApiError.Error.Auth.Forbidden);
     }
     return true;
   }

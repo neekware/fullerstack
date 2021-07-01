@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { ApiError } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { PrismaService, isConstraintError } from '@fullerstack/nsx-prisma';
 import {
@@ -57,7 +58,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new NotFoundException('Error - Invalid or inactive user');
+      throw new NotFoundException(ApiError.Error.Auth.InvalidOrInactiveUser);
     }
 
     const passwordValid = await this.securityService.validatePassword(
@@ -66,7 +67,7 @@ export class AuthService {
     );
 
     if (!passwordValid) {
-      throw new BadRequestException('Error - Invalid or bad password');
+      throw new BadRequestException(ApiError.Error.Auth.InvalidUserOrPassword);
     }
 
     return user;

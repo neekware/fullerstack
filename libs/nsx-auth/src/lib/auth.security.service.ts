@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { JwtDto } from '@fullerstack/agx-dto';
+import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
@@ -123,7 +123,7 @@ export class SecurityService {
     const validPassword = await this.validatePassword(oldPassword, user.password);
 
     if (!validPassword) {
-      throw new BadRequestException('Error - Invalid password');
+      throw new BadRequestException(ApiError.Error.Auth.InvalidPassword);
     }
 
     const hashedPassword = await this.hashPassword(newPassword);
