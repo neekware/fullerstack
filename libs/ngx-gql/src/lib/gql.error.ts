@@ -8,12 +8,11 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpResponse } from '@angular/common/http';
+import { ApiError, ThrottlerException } from '@fullerstack/agx-dto';
 import { Observable, of, throwError } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 
 import { GraphQLResponseError } from './gql.model';
-
-export const NEST_THROTTLE = 'ThrottlerException: Too Many Requests';
 
 /**
  * Intercepts incoming responses and throws gql error to be handled by catchError
@@ -42,7 +41,7 @@ export class GqlErrorsHandler {
 
   find(error: string | number): GraphQLResponseError {
     if (typeof error === 'string') {
-      return this.parsed.find((err) => err.error.toLocaleLowerCase() === error.toLocaleLowerCase());
+      return this.parsed.find((err) => err.error === error);
     } else if (typeof error === 'number') {
       return this.parsed.find((err) => err.statusCode === error);
     }
@@ -50,13 +49,32 @@ export class GqlErrorsHandler {
   }
 
   throttleError(): boolean {
-    return !!this.find(NEST_THROTTLE);
+    return (
+      !!this.find(ApiError.Error.Server.Error_TooManyRequests) || !!this.find(ThrottlerException)
+    );
   }
 
   parseGqlErrors(errors: any[]): Array<any> {
     const parsed = (errors || [])
-      .map((item: any) => item?.extensions?.exception?.response)
-      .filter((item: any) => !!item);
+      .map((item) => {
+        const response = item?.extensions?.exception?.response;
+        if (response) {
+          if (typeof response === 'string') {
+            return {
+              operationName: item?.path[0],
+              error: item.error || item.message,
+              statusCode: item?.extensions?.exception?.status,
+            };
+          }
+          return {
+            operationName: item?.path[0],
+            error: response.message || item.message || item.error,
+            statusCode: response.statusCode,
+          };
+        }
+        return null;
+      })
+      .filter((item) => !!item);
     return parsed;
   }
 }
