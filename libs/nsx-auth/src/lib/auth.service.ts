@@ -57,20 +57,18 @@ export class AuthService {
       where: { email: credentials.email },
     });
 
-    if (!user) {
-      throw new NotFoundException(ApiError.Error.Auth.InvalidOrInactiveUser);
+    if (user) {
+      const passwordValid = await this.securityService.validatePassword(
+        credentials.password,
+        user.password
+      );
+
+      if (passwordValid) {
+        return user;
+      }
     }
 
-    const passwordValid = await this.securityService.validatePassword(
-      credentials.password,
-      user.password
-    );
-
-    if (!passwordValid) {
-      throw new BadRequestException(ApiError.Error.Auth.InvalidUserOrPassword);
-    }
-
-    return user;
+    throw new BadRequestException(ApiError.Error.Auth.InvalidUserOrPassword);
   }
 
   async isUserVerified(userId: string): Promise<boolean> {
