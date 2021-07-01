@@ -240,7 +240,7 @@ export class AuthService implements OnDestroy {
         return this.store.setState(this.claimId, {
           ...DefaultAuthState,
           logoutRequired: true,
-          hasError: true,
+          hasError: this.state.isLoggedIn ? true : false,
           message: resp.message,
         });
       }),
@@ -250,7 +250,7 @@ export class AuthService implements OnDestroy {
           this.store.setState(this.claimId, {
             ...DefaultAuthState,
             logoutRequired: true,
-            hasError: true,
+            hasError: this.state.isLoggedIn ? true : false,
             message: err.topError?.message,
           })
         );

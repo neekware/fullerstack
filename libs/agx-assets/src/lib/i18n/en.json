@@ -216,6 +216,7 @@
   "VALIDATION.INVALID_NUMBER": "Invalid number",
   "VALIDATION.INVALID_PASSWORD": "Invalid password. Minimum of 6 characters and must contain a number",
   "VALIDATION.INVALID_PASSWORD_CONFIRMATION": "Both passwords must be the same",
+  "VALIDATION.MAXIMUM_LENGTH": "Maximum length is {{__value__}}",
   "VALIDATION.MINIMUM_LENGTH": "Minimum length is {{__value__}}",
   "VALIDATION.NEGATIVE_NUMBER": "Value must be non-negative",
   "VALIDATION.NON_ZERO": "Value must be non-zero",

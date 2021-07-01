@@ -107,6 +107,10 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       return this.handleMinimumLength(validatorValue.requiredLength);
     }
 
+    if (validatorName === 'maxlength') {
+      return this.handleMaximumLength(validatorValue.requiredLength);
+    }
+
     this.error = tryGet(
       () => validatorHintMessage(validatorName),
       validatorHintMessage('invalidInput')
@@ -115,6 +119,16 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
 
   handleMinimumLength(requiredLength: number) {
     const message = validatorHintMessage('minlength');
+    this.translateService
+      .get(message, { __value__: requiredLength })
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe((error: string) => {
+        this.error = error;
+      });
+  }
+
+  handleMaximumLength(requiredLength: number) {
+    const message = validatorHintMessage('maxlength');
     this.translateService
       .get(message, { __value__: requiredLength })
       .pipe(first(), takeUntil(this.destroy$))

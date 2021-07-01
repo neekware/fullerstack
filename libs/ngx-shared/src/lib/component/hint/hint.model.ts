@@ -16,6 +16,7 @@ export const HINT_DEBOUNCE_TIME = 300;
 export const ValidatorHintMessages = {
   required: _('VALIDATION.REQUIRED'),
   minlength: _('VALIDATION.MINIMUM_LENGTH'),
+  maxlength: _('VALIDATION.MAXIMUM_LENGTH'),
   nonZero: _('VALIDATION.NON_ZERO'),
   invalidNumber: _('VALIDATION.INVALID_NUMBER'),
   negativeNumber: _('VALIDATION.NEGATIVE_NUMBER'),

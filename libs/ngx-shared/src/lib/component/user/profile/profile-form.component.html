@@ -29,7 +29,9 @@
     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
       {{ 'COMMON.UPDATE' | translate }}
     </button>
-    <mat-icon *ngIf="showStatus" class="icon-success" color="success" svgIcon="check-circle"></mat-icon>
-    <span *ngIf="showStatus" class="icon-message">{{ statusMessage | translate }}</span>
+    <div *ngIf="showStatus" class="form-status" fxLayout="row" fxLayoutGap="10px">
+      <mat-icon color="success" svgIcon="check-circle"></mat-icon>
+      <span>{{ statusMessage | translate }}!</span>
+    </div>
   </div>
 </form>

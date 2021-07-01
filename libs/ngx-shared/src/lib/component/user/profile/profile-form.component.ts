@@ -15,7 +15,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActionStatus } from '@fullerstack/agx-dto';
+import { ActionStatus, ApiConstants } from '@fullerstack/agx-dto';
 import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
@@ -67,8 +67,22 @@ export class UserProfileFormComponent implements OnChanges {
   private buildForm(profile: User) {
     this.form = this.formBuilder.group({
       id: [profile.id],
-      firstName: [profile.firstName, [Validators.required, Validators.minLength(2)]],
-      lastName: [profile.lastName, [Validators.required, Validators.minLength(2)]],
+      firstName: [
+        profile.firstName,
+        [
+          Validators.required,
+          Validators.minLength(ApiConstants.FIRST_NAME_MIN_LENGTH),
+          Validators.maxLength(ApiConstants.FIRST_NAME_MAX_LENGTH),
+        ],
+      ],
+      lastName: [
+        profile.lastName,
+        [
+          Validators.required,
+          Validators.minLength(ApiConstants.LAST_NAME_MIN_LENGTH),
+          Validators.maxLength(ApiConstants.LAST_NAME_MAX_LENGTH),
+        ],
+      ],
       email: [{ value: profile.email, disabled: true }],
     });
     this.form$.emit(this.form);
