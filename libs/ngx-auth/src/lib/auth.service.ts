@@ -34,8 +34,8 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
-import { Observable, Subject } from 'rxjs';
-import { first, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { catchError, first, map, takeUntil, tap } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAuthConfig, DefaultAuthState, DefaultAuthUrls } from './auth.default';
@@ -144,36 +144,41 @@ export class AuthService implements OnDestroy {
     });
   }
 
-  loginRequest(input: UserCredentialsInput) {
+  loginRequest(input: UserCredentialsInput): Observable<AuthState> {
     this.store.setState(this.claimId, { ...DefaultAuthState, isAuthenticating: true });
     this.logger.debug(`[${this.nameSpace}] Login request sent ...`);
 
     return this.gql.client
       .request<AuthTokenStatus>(AuthLoginMutation, { input })
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        next: (resp) => {
-          let updateState: AuthState;
+      .pipe(
+        map((resp) => {
           if (resp.ok) {
-            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
-            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
             this.logger.debug(`[${this.nameSpace}] Login request success ...`);
-            this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
-          } else {
-            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
-            this.logger.error(`[AUTH] Login request failed ... ${resp.message}`);
+            return this.store.setState(this.claimId, {
+              ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+            });
           }
-          this.store.setState(this.claimId, updateState);
-        },
-        error: (err) => {
-          this.store.setState(this.claimId, {
+          this.logger.error(`[${this.nameSpace}] Login request failed ... ${resp.message}`);
+          return this.store.setState(this.claimId, {
             ...DefaultAuthState,
             hasError: true,
-            message: err.message,
+            message: resp.message,
           });
-          this.logger.error(`[${this.nameSpace}] `, err);
-        },
-      });
+        }),
+        catchError((err) => {
+          this.logger.error(`[${this.nameSpace}] Login request failed ...`, err);
+          return of(
+            this.store.setState(this.claimId, {
+              ...DefaultAuthState,
+              hasError: true,
+              message: err.message,
+            })
+          );
+        })
+      );
   }
 
   registerRequest(input: UserCreateInput) {
