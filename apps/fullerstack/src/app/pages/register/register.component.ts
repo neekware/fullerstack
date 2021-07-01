@@ -36,6 +36,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register(data: UserCreateInput) {
-    this.auth.registerRequest(data);
+    this.auth.registerRequest$(data).subscribe();
   }
 }

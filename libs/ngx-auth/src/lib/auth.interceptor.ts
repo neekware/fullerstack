@@ -67,15 +67,15 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return this.auth.tokenRetryRequest$().pipe(
-      map((resp) => {
-        if (!resp?.ok) {
+    return this.auth.tokenRefreshRequest$().pipe(
+      map((authState) => {
+        if (authState?.logoutRequired) {
           this.auth.logoutRequest();
         }
-        return resp;
+        return authState;
       }),
-      switchMap((resp: AuthTokenStatus) => {
-        request = this.insertToken(request, resp.token);
+      switchMap((authState) => {
+        request = this.insertToken(request, authState.token);
         return next.handle(request).pipe(
           catchError((errors) => {
             const gqlErrors = new GqlErrorsHandler(errors);

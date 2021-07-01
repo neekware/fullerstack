@@ -78,7 +78,7 @@ export class AuthService implements OnDestroy {
     this.claimSlice();
     this.initState();
     this.subState();
-    this.tokenRefreshRequest();
+    this.tokenRefreshRequest$().pipe(first()).subscribe();
 
     logger.info(
       `[${this.nameSpace}] AuthService ready ... (${
@@ -144,7 +144,7 @@ export class AuthService implements OnDestroy {
     });
   }
 
-  loginRequest(input: UserCredentialsInput): Observable<AuthState> {
+  loginRequest$(input: UserCredentialsInput): Observable<AuthState> {
     this.store.setState(this.claimId, { ...DefaultAuthState, isAuthenticating: true });
     this.logger.debug(`[${this.nameSpace}] Login request sent ...`);
 
@@ -181,72 +181,74 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  registerRequest(input: UserCreateInput) {
+  registerRequest$(input: UserCreateInput): Observable<AuthState> {
     this.store.setState(this.claimId, { ...DefaultAuthState, isRegistering: true });
     this.logger.debug(`[${this.nameSpace}] Register request sent ...`);
 
     return this.gql.client
       .request<AuthTokenStatus>(AuthRegisterMutation, { input })
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        next: (resp) => {
-          let updateState: AuthState;
+      .pipe(
+        map((resp) => {
           if (resp.ok) {
-            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
-            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
-            this.logger.debug(`[${this.nameSpace}] Login request success ...`);
-            this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
-          } else {
-            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
-            this.logger.error(`[${this.nameSpace}] Register request failed ... ${resp.message}`);
+            this.logger.debug(`[${this.nameSpace}] Register request success ...`);
+            return this.store.setState(this.claimId, {
+              ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+            });
           }
-          this.store.setState(this.claimId, updateState);
-        },
-        error: (err) => {
-          this.store.setState(this.claimId, {
+          this.logger.error(`[${this.nameSpace}] Register request failed ... ${resp.message}`);
+          return this.store.setState(this.claimId, {
             ...DefaultAuthState,
             hasError: true,
-            message: err.message,
+            message: resp.message,
           });
-          this.logger.error(`[${this.nameSpace}] `, err);
-        },
-      });
+        }),
+        catchError((err) => {
+          this.logger.error(`[${this.nameSpace}] Register request failed ...`, err);
+          return of(
+            this.store.setState(this.claimId, {
+              ...DefaultAuthState,
+              hasError: true,
+              message: err.message,
+            })
+          );
+        })
+      );
   }
 
-  tokenRefreshRequest() {
+  tokenRefreshRequest$(): Observable<AuthState> {
     this.logger.debug(`[${this.nameSpace}] Token refresh request sent ...`);
-    return this.gql.client
-      .request<AuthTokenStatus>(AuthRefreshTokenMutation)
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        next: (resp) => {
-          let updateState: AuthState;
-          if (resp.ok) {
-            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
-            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
-          } else {
-            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
-          }
-          this.store.setState(this.claimId, updateState);
-        },
-        error: (err) => {
-          this.logger.error(`[${this.nameSpace}] `, err);
+    return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Token refresh request success ...`);
+          return this.store.setState(this.claimId, {
+            ...DefaultAuthState,
+            isLoggedIn: true,
+            token: resp.token,
+            userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+          });
+        }
+        this.logger.error(`[${this.nameSpace}] Token refresh request failed ... ${resp.message}`);
+        return this.store.setState(this.claimId, {
+          ...DefaultAuthState,
+          logoutRequired: true,
+          hasError: true,
+          message: resp.message,
+        });
+      }),
+      catchError((err) => {
+        this.logger.error(`[${this.nameSpace}] Token refresh request failed ...`, err);
+        return of(
           this.store.setState(this.claimId, {
             ...DefaultAuthState,
+            logoutRequired: true,
             hasError: true,
             message: err.message,
-          });
-        },
-      });
-  }
-
-  tokenRetryRequest$(): Observable<AuthTokenStatus> {
-    this.logger.debug(`[${this.nameSpace}] Retry token refresh request sent ...`);
-    return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
-      tap((resp) => {
-        if (resp.ok) {
-          this.store.setState(this.claimId, { ...this.state, token: resp.token });
-        }
+          })
+        );
       })
     );
   }
@@ -259,17 +261,16 @@ export class AuthService implements OnDestroy {
       .request<AuthStatus>(AuthLogoutMutation)
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
-          this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
+        error: (err) => {
+          this.logger.error(`[${this.nameSpace}] `, err);
+        },
+        complete: () => {
           if (!onError) {
+            this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
             this.msg.successSnackBar(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
           } else {
             this.msg.errorSnackBar(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
           }
-        },
-        error: (err) => {
-          this.logger.error(`[${this.nameSpace}] `, err);
-          this.msg.errorSnackBar(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
         },
       });
   }

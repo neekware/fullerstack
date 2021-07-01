@@ -20,6 +20,7 @@ export interface AuthState {
   isLoggedIn: boolean;
   isRegistering: boolean;
   isAuthenticating: boolean;
+  logoutRequired: boolean;
   hasError: boolean;
   token: string;
   message: string;

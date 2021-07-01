@@ -31,6 +31,7 @@ export const DefaultAuthState: DeepReadonly<AuthState> = {
   isLoggedIn: false,
   isRegistering: false,
   isAuthenticating: false,
+  logoutRequired: false,
   hasError: false,
   token: null,
   message: null,

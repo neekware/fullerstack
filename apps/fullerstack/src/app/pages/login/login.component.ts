@@ -34,6 +34,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(data: UserCredentialsInput) {
-    this.auth.loginRequest(data).subscribe();
+    this.auth.loginRequest$(data).subscribe();
   }
 }
