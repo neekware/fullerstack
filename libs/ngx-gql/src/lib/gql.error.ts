@@ -8,7 +8,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpResponse } from '@angular/common/http';
-import { ApiError, ThrottlerException } from '@fullerstack/agx-dto';
+import { ApiError } from '@fullerstack/agx-dto';
 import { Observable, of, throwError } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 
@@ -41,20 +41,25 @@ export class GqlErrorsHandler {
 
   find(error: string | number): GraphQLResponseError {
     if (typeof error === 'string') {
-      return this.parsed.find((err) => err.error === error);
+      return this.parsed.find((err) => err.message === error);
     } else if (typeof error === 'number') {
       return this.parsed.find((err) => err.statusCode === error);
     }
     throw new Error('Invalid argument to find');
   }
 
+  get topError(): GraphQLResponseError | null {
+    return this.parsed?.length ? this.parsed[0] : null;
+  }
+
   throttleError(): boolean {
     return (
-      !!this.find(ApiError.Error.Server.Error_TooManyRequests) || !!this.find(ThrottlerException)
+      !!this.find(ApiError.Error.Server.Error_TooManyRequests) ||
+      !!this.find(ApiError.Error.Server.Error_TooManyRequestsNestJs)
     );
   }
 
-  parseGqlErrors(errors: any[]): Array<any> {
+  parseGqlErrors(errors: any[]): GraphQLResponseError[] {
     const parsed = (errors || [])
       .map((item) => {
         const response = item?.extensions?.exception?.response;
@@ -62,13 +67,13 @@ export class GqlErrorsHandler {
           if (typeof response === 'string') {
             return {
               operationName: item?.path[0],
-              error: item.error || item.message,
+              message: item.error || item.message,
               statusCode: item?.extensions?.exception?.status,
             };
           }
           return {
             operationName: item?.path[0],
-            error: response.message || item.message || item.error,
+            message: response.message || item.message || item.error,
             statusCode: response.statusCode,
           };
         }

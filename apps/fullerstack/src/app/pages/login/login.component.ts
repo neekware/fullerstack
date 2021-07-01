@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
@@ -16,7 +16,6 @@ import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
   selector: 'fullerstack-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
   title = _('COMMON.LOGIN');

@@ -15,7 +15,7 @@ import {
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
-import { GqlService } from '@fullerstack/ngx-gql';
+import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import {
   AuthIsEmailAvailable,
   AuthLoginMutation,
@@ -169,13 +169,14 @@ export class AuthService implements OnDestroy {
             message: resp.message,
           });
         }),
-        catchError((err) => {
+        catchError((err: GqlErrorsHandler) => {
+          const msg = err.topError?.message;
           this.logger.error(`[${this.nameSpace}] Login request failed ...`, err);
           return of(
             this.store.setState(this.claimId, {
               ...DefaultAuthState,
               hasError: true,
-              message: err.message,
+              message: err.topError?.message,
             })
           );
         })
@@ -210,13 +211,13 @@ export class AuthService implements OnDestroy {
             message: resp.message,
           });
         }),
-        catchError((err) => {
+        catchError((err: GqlErrorsHandler) => {
           this.logger.error(`[${this.nameSpace}] Register request failed ...`, err);
           return of(
             this.store.setState(this.claimId, {
               ...DefaultAuthState,
               hasError: true,
-              message: err.message,
+              message: err.topError?.message,
             })
           );
         })
@@ -244,14 +245,14 @@ export class AuthService implements OnDestroy {
           message: resp.message,
         });
       }),
-      catchError((err) => {
+      catchError((err: GqlErrorsHandler) => {
         this.logger.error(`[${this.nameSpace}] Token refresh request failed ...`, err);
         return of(
           this.store.setState(this.claimId, {
             ...DefaultAuthState,
             logoutRequired: true,
             hasError: true,
-            message: err.message,
+            message: err.topError?.message,
           })
         );
       })
@@ -285,7 +286,7 @@ export class AuthService implements OnDestroy {
       .request<AuthStatus>(AuthIsEmailAvailable, { email })
       .pipe(
         map((resp) => resp.ok),
-        catchError((err) => {
+        catchError((err: GqlErrorsHandler) => {
           this.logger.error(`[${this.nameSpace}] email availability check ...`, err);
           return of(false);
         })

@@ -37,7 +37,7 @@ export interface GraphQLError {
 }
 
 export interface GraphQLResponseError {
-  error: string;
+  message: string;
   statusCode: number;
   operationName?: string;
 }

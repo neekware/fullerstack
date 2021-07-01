@@ -34,7 +34,6 @@ export class LoginFormComponent implements OnInit {
   @Input() autocomplete = 'off';
   @Input() emailHint: string;
   @Input() passwordHint: string;
-  @Input() hasError: boolean;
 
   constructor(readonly formBuilder: FormBuilder, readonly validation: ValidationService) {}
 

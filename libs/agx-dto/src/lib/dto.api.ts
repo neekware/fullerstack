@@ -13,17 +13,16 @@ export interface HealthCheck {
 }
 
 export const ApiConstants = {
-  PASSWORD_MIN_LENGTH: 8,
+  PASSWORD_MIN_LENGTH: 6,
   PASSWORD_MAX_LENGTH: 200,
   USERNAME_MIN_LENGTH: 2,
   USERNAME_MAX_LENGTH: 64,
 };
 
-export const ThrottlerException = 'ThrottlerException: Too Many Requests';
-
 export const ApiError = {
   Error: {
     Server: {
+      Error_TooManyRequestsNestJs: 'ThrottlerException: Too Many Requests',
       Error_TooManyRequests: _('ERROR.SERVER.THROTTLE'),
     },
     Auth: {

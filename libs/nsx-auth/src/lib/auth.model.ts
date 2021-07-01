@@ -79,7 +79,6 @@ export class UserCredentialsInput {
 
   @Field()
   @IsNotEmpty()
-  @MinLength(AUTH_PASSWORD_MIN_LENGTH)
   password: string;
 }
 
