@@ -170,7 +170,6 @@ export class AuthService implements OnDestroy {
           });
         }),
         catchError((err: GqlErrorsHandler) => {
-          const msg = err.topError?.message;
           this.logger.error(`[${this.nameSpace}] Login request failed ...`, err);
           return of(
             this.store.setState(this.claimId, {

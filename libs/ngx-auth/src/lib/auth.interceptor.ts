@@ -11,7 +11,6 @@ import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode, JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { GqlErrorsHandler } from '@fullerstack/ngx-gql';
-import { AuthTokenStatus } from '@fullerstack/ngx-gql/schema';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
