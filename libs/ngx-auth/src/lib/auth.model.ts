@@ -17,6 +17,7 @@ export interface AuthConfig {
 
 export interface AuthState {
   userId: string;
+  isLoading: boolean;
   isLoggedIn: boolean;
   isRegistering: boolean;
   isAuthenticating: boolean;

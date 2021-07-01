@@ -28,6 +28,7 @@ export const AuthLogoutOperation = getOperationName(AuthLogoutMutation);
 
 export const DefaultAuthState: DeepReadonly<AuthState> = {
   userId: null,
+  isLoading: false,
   isLoggedIn: false,
   isRegistering: false,
   isAuthenticating: false,

@@ -52,7 +52,6 @@ export class AuthService implements OnDestroy {
   readonly stateSub$: Observable<AuthState>;
   authUrls: DeepReadonly<AuthUrls> = DefaultAuthUrls;
   nextUrl: string;
-  isLoading: boolean;
 
   constructor(
     readonly router: Router,
@@ -138,15 +137,16 @@ export class AuthService implements OnDestroy {
         const prevState = cloneDeep(this.state);
         this.state = { ...DefaultAuthState, ...newState };
         this.handleRedirect(prevState);
-
-        this.isLoading =
-          !newState.hasError && (newState.isAuthenticating || newState.isRegistering);
       },
     });
   }
 
   loginRequest$(input: UserCredentialsInput): Observable<AuthState> {
-    this.store.setState(this.claimId, { ...DefaultAuthState, isAuthenticating: true });
+    this.store.setState(this.claimId, {
+      ...DefaultAuthState,
+      isAuthenticating: true,
+      isLoading: true,
+    });
     this.logger.debug(`[${this.nameSpace}] Login request sent ...`);
 
     return this.gql.client
@@ -183,7 +183,11 @@ export class AuthService implements OnDestroy {
   }
 
   registerRequest$(input: UserCreateInput): Observable<AuthState> {
-    this.store.setState(this.claimId, { ...DefaultAuthState, isRegistering: true });
+    this.store.setState(this.claimId, {
+      ...DefaultAuthState,
+      isRegistering: true,
+      isLoading: true,
+    });
     this.logger.debug(`[${this.nameSpace}] Register request sent ...`);
 
     return this.gql.client

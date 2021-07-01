@@ -9,7 +9,7 @@
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
-    [progress]="auth.isLoading"
+    [progress]="auth.state.isLoading"
   >
     <fullerstack-login-form (submit$)="login($event)" fxLayout="column"></fullerstack-login-form>
 
