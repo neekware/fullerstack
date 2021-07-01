@@ -10,7 +10,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtDto } from '@fullerstack/agx-dto';
-import { tryGet } from '@fullerstack/agx-util';
 import {
   ApplicationConfig,
   ConfigService,
@@ -37,7 +36,7 @@ import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
 import { Observable, Subject, of, timer } from 'rxjs';
-import { catchError, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAuthConfig, DefaultAuthState, DefaultAuthUrls } from './auth.default';
