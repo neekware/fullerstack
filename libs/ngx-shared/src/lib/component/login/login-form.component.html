@@ -19,7 +19,7 @@
     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
       {{ 'COMMON.LOGIN' | translate }}
     </button>
-    <div *ngIf="auth?.state.hasError && !this.form.pristine" class="form-status" fxLayout="row" fxLayoutGap="10px">
+    <div *ngIf="auth?.state.hasError" class="form-status" fxLayout="row" fxLayoutGap="10px">
       <mat-icon color="warn" svgIcon="alert"></mat-icon>
       <span>{{ auth?.state.message | translate }}!</span>
     </div>
