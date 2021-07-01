@@ -17,6 +17,7 @@ import {
 } from '@fullerstack/ngx-config';
 import { GqlService } from '@fullerstack/ngx-gql';
 import {
+  AuthIsEmailAvailable,
   AuthLoginMutation,
   AuthLogoutMutation,
   AuthRefreshTokenMutation,
@@ -273,6 +274,18 @@ export class AuthService implements OnDestroy {
           }
         },
       });
+  }
+
+  isEmailAvailable(email: string): Observable<boolean> {
+    return this.gql.client
+      .request<AuthStatus>(AuthIsEmailAvailable, { email })
+      .pipe(
+        map((resp) => resp.ok),
+        catchError((err) => {
+          this.logger.error(`[${this.nameSpace}] email availability check ...`, err);
+          return of(false);
+        })
+      );
   }
 
   goTo(url: string) {
