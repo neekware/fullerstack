@@ -7,6 +7,7 @@
  */
 
 import { Injectable, OnDestroy } from '@angular/core';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtDto } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
@@ -35,8 +36,8 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
-import { Observable, Subject, of } from 'rxjs';
-import { catchError, first, map, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject, of, timer } from 'rxjs';
+import { catchError, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAuthConfig, DefaultAuthState, DefaultAuthUrls } from './auth.default';
@@ -286,6 +287,17 @@ export class AuthService implements OnDestroy {
           return of(false);
         })
       );
+  }
+
+  validateEmailAvailability(debounce = 600): AsyncValidatorFn {
+    return (
+      control: AbstractControl
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      return timer(debounce).pipe(
+        switchMap(() => this.isEmailAvailable(control.value)),
+        map((available) => (available ? null : { emailInUse: true }))
+      );
+    };
   }
 
   goTo(url: string) {

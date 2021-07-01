@@ -1,4 +1,4 @@
-<form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="{{ autocomplete }}">
+<form [formGroup]="form" (submit)="submit()" fxLayout="column" focusInvalidInput autoCompleteOff autocomplete="{{ autocomplete }}">
   <mat-form-field>
     <mat-icon matSuffix svgIcon="email"></mat-icon>
     <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />

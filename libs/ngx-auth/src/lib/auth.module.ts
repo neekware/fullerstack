@@ -11,10 +11,9 @@ import { NgModule } from '@angular/core';
 import { MsgModule, MsgService } from '@fullerstack/ngx-msg';
 
 import { AuthService } from './auth.service';
-import { AuthAsyncValidation } from './auth.validation';
 
 @NgModule({
   imports: [CommonModule, MsgModule],
-  providers: [AuthService, MsgService, AuthAsyncValidation],
+  providers: [AuthService, MsgService],
 })
 export class AuthModule {}
