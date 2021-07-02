@@ -56,7 +56,8 @@ describe('LoggerService: Loads default values, disabled', () => {
   });
 
   it('should not log anything as the level is none', () => {
-    const consoleLog = spyOn(console, 'log');
+    console.log = jest.fn();
+    const consoleLog = jest.spyOn(console, 'log');
     service.critical('Logging a critical');
     service.error('Logging a error');
     service.info('Logging a info');
@@ -69,6 +70,7 @@ describe('LoggerService: Loads default values, disabled', () => {
 describe('LoggerService: LogLevel tracing enabled', () => {
   let service: LoggerService;
   let testbed: TestBed;
+  const log = console.log;
 
   beforeAll(() => {
     TestBed.configureTestingModule({
@@ -84,27 +86,29 @@ describe('LoggerService: LogLevel tracing enabled', () => {
 
     testbed = getTestBed();
     service = testbed.inject(LoggerService);
+    console.log = jest.fn();
   });
 
   afterAll(() => {
+    console.log = log;
     testbed = null;
     service = null;
   });
 
   it('should log everything above, and including tracing', () => {
-    const consoleLog = spyOn(console, 'log');
     service.critical('Logging a critical');
     service.error('Logging a error');
     service.info('Logging a info');
     service.debug('Logging a debug');
     service.trace('Logging a trace');
-    expect(consoleLog).toHaveBeenCalledTimes(5);
+    expect(console.log).toHaveBeenCalledTimes(5);
   });
 });
 
 describe('LoggerService: LogLevel debug enabled', () => {
   let service: LoggerService;
   let testbed: TestBed;
+  const log = console.log;
 
   beforeAll(() => {
     TestBed.configureTestingModule({
@@ -120,20 +124,23 @@ describe('LoggerService: LogLevel debug enabled', () => {
 
     testbed = getTestBed();
     service = testbed.inject(LoggerService);
+    console.log = jest.fn();
   });
 
   afterAll(() => {
+    console.log = log;
     testbed = null;
     service = null;
   });
 
+  jest.spyOn(console, 'log');
+
   it('should log everything above, and including debug', () => {
-    const consoleLog = spyOn(console, 'log');
     service.critical('Logging a critical');
     service.error('Logging a error');
     service.info('Logging a info');
     service.debug('Logging a debug');
     service.trace('Logging a trace');
-    expect(consoleLog).toHaveBeenCalledTimes(4);
+    expect(console.log).toHaveBeenCalledTimes(4);
   });
 });

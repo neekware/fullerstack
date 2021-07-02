@@ -25,8 +25,10 @@ const mockSub2 = {
 
 describe('SubifyService', () => {
   let service: SubifyService;
+  const log = console.log;
 
   beforeEach(() => {
+    console.log = jest.fn();
     TestBed.configureTestingModule({
       imports: [],
       providers: [SubifyService],
@@ -37,6 +39,7 @@ describe('SubifyService', () => {
 
   afterAll(() => {
     service = null;
+    console.log = log;
   });
 
   it('should be created', () => {
@@ -62,7 +65,7 @@ describe('SubifyService', () => {
   });
 
   it('ngOnDestroy() should complete destroy$', () => {
-    const completeSpy = spyOn(service.destroy$, 'complete');
+    const completeSpy = jest.spyOn(service.destroy$, 'complete');
     service.ngOnDestroy();
     expect(completeSpy).toHaveBeenCalled();
   });
@@ -72,7 +75,7 @@ describe('SubifyService', () => {
     service.track = sub1$;
     const sub2$ = mockSub1 as Subscription;
     service.track = sub2$;
-    const logSpy = spyOn(console, 'log');
+    const logSpy = jest.spyOn(console, 'log');
     service.ngOnDestroy();
     expect(logSpy).toHaveBeenCalled();
   });
@@ -80,7 +83,7 @@ describe('SubifyService', () => {
   it('ngOnDestroy() should handle invalid subscriptions', () => {
     const sub1$ = {} as Subscription;
     service.track = [sub1$];
-    const logSpy = spyOn(console, 'log');
+    const logSpy = jest.spyOn(console, 'log');
     service.ngOnDestroy();
     expect(logSpy).not.toHaveBeenCalled();
   });

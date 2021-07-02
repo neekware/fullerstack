@@ -26,11 +26,25 @@ const mockSub2 = {
 };
 
 describe('@SubifyDecorator', () => {
+  const error = console.error;
+  const log = console.log;
+  const warn = console.warn;
+
   beforeEach(() => {
-    spyOn(console, 'error');
-    spyOn(console, 'log');
-    spyOn(console, 'warn');
+    console.error = jest.fn();
+    console.warn = jest.fn();
+    console.log = jest.fn();
   });
+
+  afterEach(() => {
+    console.error = error;
+    console.warn = warn;
+    console.log = log;
+  });
+
+  jest.spyOn(console, 'error');
+  jest.spyOn(console, 'log');
+  jest.spyOn(console, 'warn');
 
   it('should implement OnDestroy', () => {
     @SubifyDecorator()
@@ -100,7 +114,7 @@ describe('@SubifyDecorator', () => {
       ngOnDestroy() {}
     }
     const comp = new SubComponent();
-    const processTakeUtilSpy = spyOn(<any>comp, '_processTakeUtil');
+    const processTakeUtilSpy = jest.spyOn(<any>comp, '_processTakeUtil');
     comp['ngOnDestroy']();
     expect(processTakeUtilSpy).toHaveBeenCalled();
   });
@@ -114,7 +128,7 @@ describe('@SubifyDecorator', () => {
       ngOnDestroy() {}
     }
     const comp = new SubComponent();
-    const completeSpy = spyOn(<any>comp.destroy$, 'complete');
+    const completeSpy = jest.spyOn(<any>comp.destroy$, 'complete');
     comp['ngOnDestroy']();
     expect(completeSpy).toHaveBeenCalled();
   });
@@ -140,7 +154,7 @@ describe('@SubifyDecorator', () => {
       ngOnDestroy() {}
     }
     const comp = new SubComponent();
-    const processIncludesSpy = spyOn(<any>comp, '_processIncludes');
+    const processIncludesSpy = jest.spyOn(<any>comp, '_processIncludes');
     comp['ngOnDestroy']();
     expect(processIncludesSpy).toHaveBeenCalled();
   });
@@ -169,7 +183,7 @@ describe('@SubifyDecorator', () => {
       ngOnDestroy() {}
     }
     const comp = new SubComponent();
-    const processExcludesSpy = spyOn(<any>comp, '_processExcludes');
+    const processExcludesSpy = jest.spyOn(<any>comp, '_processExcludes');
     comp['ngOnDestroy']();
     expect(processExcludesSpy).toHaveBeenCalled();
   });
