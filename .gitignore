@@ -44,3 +44,6 @@ Thumbs.db
 # Prsima
 .env
 dev.db*
+
+# nx migrations
+migrations.json
