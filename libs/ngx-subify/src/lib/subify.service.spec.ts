@@ -25,8 +25,10 @@ const mockSub2 = {
 
 describe('SubifyService', () => {
   let service: SubifyService;
+  const log = console.log;
 
   beforeEach(() => {
+    console.log = jest.fn();
     TestBed.configureTestingModule({
       imports: [],
       providers: [SubifyService],
@@ -37,6 +39,7 @@ describe('SubifyService', () => {
 
   afterAll(() => {
     service = null;
+    console.log = log;
   });
 
   it('should be created', () => {

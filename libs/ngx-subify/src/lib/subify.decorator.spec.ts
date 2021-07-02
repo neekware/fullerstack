@@ -26,11 +26,25 @@ const mockSub2 = {
 };
 
 describe('@SubifyDecorator', () => {
+  const error = console.error;
+  const log = console.log;
+  const warn = console.warn;
+
   beforeEach(() => {
-    jest.spyOn(console, 'error');
-    jest.spyOn(console, 'log');
-    jest.spyOn(console, 'warn');
+    console.error = jest.fn();
+    console.warn = jest.fn();
+    console.log = jest.fn();
   });
+
+  afterEach(() => {
+    console.error = error;
+    console.warn = warn;
+    console.log = log;
+  });
+
+  jest.spyOn(console, 'error');
+  jest.spyOn(console, 'log');
+  jest.spyOn(console, 'warn');
 
   it('should implement OnDestroy', () => {
     @SubifyDecorator()

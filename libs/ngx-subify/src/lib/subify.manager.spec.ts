@@ -24,12 +24,14 @@ const mockSub2 = {
 
 describe('SubService', () => {
   let subMgr: SubifyManager;
-
+  const log = console.log;
   beforeEach(() => {
+    console.log = jest.fn();
     subMgr = new SubifyManager();
   });
 
   afterEach(() => {
+    console.log = log;
     subMgr = null;
   });
 
