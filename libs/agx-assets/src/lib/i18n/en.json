@@ -19,6 +19,7 @@
   "APP.LOGIN": "Login",
   "APP.REGISTER": "Register",
   "APP.SUB_HEADLINE": "Track - Analyze - Act - Profit",
+  "BAD_USER_INPUT": "Invalid user input",
   "COMMON.ABOUT": "About",
   "COMMON.ACCOUNT": "Account",
   "COMMON.ACCOUNT.EMAIL": "Account email",

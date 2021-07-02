@@ -12,7 +12,7 @@ import { ApiError } from '@fullerstack/agx-dto';
 import { Observable, of, throwError } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 
-import { GraphQLResponseError } from './gql.model';
+import { GqlResponse, GraphQLResponseError } from './gql.model';
 
 /**
  * Intercepts incoming responses and throws gql error to be handled by catchError
@@ -23,7 +23,7 @@ export const gqlErrorsInterceptor = () => (source: Observable<any>) =>
     concatMap((event) => {
       if (event instanceof HttpResponse && event?.type) {
         if (event?.body?.errors?.length) {
-          return throwError(() => event.body.errors);
+          return throwError(() => event);
         }
       }
       return of(event);
@@ -34,9 +34,9 @@ export class GqlErrorsHandler {
   original: any;
   parsed: GraphQLResponseError[] = [];
 
-  constructor(errors: any) {
-    this.original = errors;
-    this.parsed = this.parseGqlErrors(errors);
+  constructor(event: any) {
+    this.original = event;
+    this.parsed = this.parseGqlErrors(event);
   }
 
   find(error: string | number): GraphQLResponseError {
@@ -59,27 +59,44 @@ export class GqlErrorsHandler {
     );
   }
 
-  parseGqlErrors(errors: any[]): GraphQLResponseError[] {
-    const parsed = (errors || [])
-      .map((item) => {
-        const response = item?.extensions?.exception?.response;
-        if (response) {
-          if (typeof response === 'string') {
+  parseGqlErrors(event: any): GraphQLResponseError[] {
+    let parsed: GraphQLResponseError[] = [];
+    if (event.ok) {
+      parsed = (event?.body?.errors || [])
+        .map((item: GqlResponse) => {
+          const response = item?.extensions?.exception?.response;
+          if (response) {
+            if (typeof response === 'string') {
+              return {
+                operationName: item?.path[0],
+                message: item.error || item.message,
+                statusCode: item?.extensions?.exception?.status,
+              };
+            }
             return {
               operationName: item?.path[0],
-              message: item.error || item.message,
-              statusCode: item?.extensions?.exception?.status,
+              message: response.message || item.message || item.error,
+              statusCode: response.statusCode,
             };
           }
-          return {
-            operationName: item?.path[0],
-            message: response.message || item.message || item.error,
-            statusCode: response.statusCode,
-          };
-        }
-        return null;
-      })
-      .filter((item) => !!item);
+          return null;
+        })
+        .filter((item) => !!item);
+    } else {
+      parsed = (event?.error?.errors || [])
+        .map((item: GqlResponse) => {
+          const code = item?.extensions?.code;
+          if (code) {
+            return {
+              message: code,
+              statusCode: event.status,
+            };
+          }
+          return null;
+        })
+        .filter((item) => !!item);
+    }
+
     return parsed;
   }
 }

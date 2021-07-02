@@ -28,6 +28,7 @@ export const ApiError = {
     Server: {
       Error_TooManyRequestsNestJs: 'ThrottlerException: Too Many Requests',
       Error_TooManyRequests: _('ERROR.SERVER.THROTTLE'),
+      Error_BadUserInput: _('BAD_USER_INPUT'),
     },
     Auth: {
       UserNotFound: _('ERROR.AUTH.LOGIN'),
