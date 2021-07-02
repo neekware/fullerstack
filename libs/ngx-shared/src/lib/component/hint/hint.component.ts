@@ -19,7 +19,6 @@ import {
 import { AbstractControl } from '@angular/forms';
 import { tryGet } from '@fullerstack/agx-util';
 import { I18nService } from '@fullerstack/ngx-i18n';
-import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first, takeUntil } from 'rxjs/operators';
 
@@ -49,7 +48,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
   error: string = undefined;
   ltrDirection = true;
 
-  constructor(readonly translateService: TranslateService, readonly i18n: I18nService) {}
+  constructor(readonly i18n: I18nService) {}
 
   reset(): void {
     this.error = undefined;
@@ -119,7 +118,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
 
   handleMinimumLength(requiredLength: number) {
     const message = validatorHintMessage('minlength');
-    this.translateService
+    this.i18n.translate
       .get(message, { __value__: requiredLength })
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe((error: string) => {
@@ -129,7 +128,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
 
   handleMaximumLength(requiredLength: number) {
     const message = validatorHintMessage('maxlength');
-    this.translateService
+    this.i18n.translate
       .get(message, { __value__: requiredLength })
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe((error: string) => {

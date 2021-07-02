@@ -9,12 +9,7 @@
 import { ApiError } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { PrismaService, isConstraintError } from '@fullerstack/nsx-prisma';
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { v4 as uuid_v4 } from 'uuid';
 

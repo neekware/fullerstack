@@ -39,7 +39,7 @@ export class I18nService {
   constructor(
     readonly config: ConfigService,
     readonly logger: LoggerService,
-    readonly xlate: TranslateService
+    readonly translate: TranslateService
   ) {
     this.options = ldNestedMerge({ i18n: DefaultI18nConfig }, this.config.options);
 
@@ -66,7 +66,7 @@ export class I18nService {
   }
 
   isCurrentLanguage(iso: string): boolean {
-    return iso === this.xlate.currentLang;
+    return iso === this.translate.currentLang;
   }
 
   getLanguageName(iso: string): string {
@@ -75,7 +75,7 @@ export class I18nService {
 
   setCurrentLanguage(iso: string) {
     if (this.isLanguageEnabled(iso)) {
-      this.xlate.use(iso);
+      this.translate.use(iso);
     } else {
       this.logger.warn(
         `[${this.nameSpace}] I18nService - language not enabled ... (${this.currentLanguage})`
@@ -88,7 +88,7 @@ export class I18nService {
     this.availableLanguages = this.options.i18n.availableLanguages;
     this.enabledLanguages = this.options.i18n.enabledLanguages;
 
-    this.xlate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event) => {
+    this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       this.currentLanguage = event.lang;
       this.direction = this.getLanguageDirection(event.lang);
       this.languageChanges$.emit(event.lang);
@@ -99,10 +99,10 @@ export class I18nService {
 
     registerActiveLocales(this.options.i18n.availableLanguages, this.options.i18n.enabledLanguages);
 
-    this.xlate.addLangs(Object.keys(this.options.i18n.enabledLanguages));
-    this.xlate.setDefaultLang(this.defaultLanguage);
+    this.translate.addLangs(Object.keys(this.options.i18n.enabledLanguages));
+    this.translate.setDefaultLang(this.defaultLanguage);
 
-    let iso = this.xlate.getBrowserCultureLang().toLowerCase();
+    let iso = this.translate.getBrowserCultureLang().toLowerCase();
     if (!this.isLanguageEnabled(iso)) {
       iso = this.defaultLanguage;
     }

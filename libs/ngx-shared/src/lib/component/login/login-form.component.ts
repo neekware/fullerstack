@@ -21,7 +21,7 @@ import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'fullerstack-login-form',
@@ -61,9 +61,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.form.disable();
     this.auth
       .loginRequest$(this.form.value)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
-        next: (state) => {
+        next: () => {
           this.form.enable();
         },
       });

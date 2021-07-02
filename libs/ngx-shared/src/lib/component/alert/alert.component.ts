@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { I18nService } from '@fullerstack/ngx-i18n';
 
 @Component({
   selector: 'fullerstack-alert',
@@ -20,5 +20,5 @@ export class AlertComponent {
   @Input() color = 'primary';
   @Input() text = '';
 
-  constructor(readonly translate: TranslateService) {}
+  constructor(readonly i18n: I18nService) {}
 }
