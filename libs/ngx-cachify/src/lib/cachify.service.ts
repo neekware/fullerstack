@@ -30,7 +30,7 @@ export class CachifyService {
   private cacheMap = new Map<string, CachifyEntry>();
   private cacheStore: Store;
 
-  constructor(private config: ConfigService, private logger: LoggerService) {
+  constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ cachify: DefaultCachifyConfig }, this.config.options);
     this.cacheStore = new Store({}, this.options.cachify.immutable);
     this.logger.info(`[${this.nameSpace}] CachifyService ready ...`);

@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { MenuItem } from '@fullerstack/ngx-menu';
 
 export const layoutMenuTree: MenuItem[] = [
@@ -54,7 +54,7 @@ export const layoutMenuTree: MenuItem[] = [
     disabled: true,
     children: [
       {
-        name: _('COMMON.PORTFLIO'),
+        name: _('COMMON.PORTFOLIO'),
         icon: 'account-check',
         link: '/finance/stocks/own',
       },
@@ -70,7 +70,7 @@ export const layoutMenuTree: MenuItem[] = [
     icon: 'trending-up',
     children: [
       {
-        name: _('COMMON.PORTFLIO'),
+        name: _('COMMON.PORTFOLIO'),
         icon: 'account-check',
         link: '/finance/bonds/own',
       },
@@ -86,7 +86,7 @@ export const layoutMenuTree: MenuItem[] = [
     icon: 'trending-up',
     children: [
       {
-        name: _('COMMON.PORTFLIO'),
+        name: _('COMMON.PORTFOLIO'),
         icon: 'account-check',
         link: '/finance/etfs/own',
         fullspan: true,

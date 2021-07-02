@@ -10,7 +10,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { I18nModule } from '@fullerstack/ngx-i18n';
 import { MsgModule } from '@fullerstack/ngx-msg';
-import { TranslateService } from '@ngx-translate/core';
 
 import { HintComponent } from './hint.component';
 
@@ -30,8 +29,6 @@ describe('HintComponent', () => {
         I18nModule,
         MsgModule,
       ],
-
-      providers: [TranslateService],
       declarations: [HintComponent],
     }).compileComponents();
   });

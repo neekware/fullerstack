@@ -11,7 +11,6 @@ import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode, JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { GqlErrorsHandler } from '@fullerstack/ngx-gql';
-import { AuthTokenStatus } from '@fullerstack/ngx-gql/schema';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
@@ -26,7 +25,7 @@ import { AuthService } from './auth.service';
 export class AuthInterceptor implements HttpInterceptor {
   private auth: AuthService;
 
-  constructor(private injector: Injector) {
+  constructor(readonly injector: Injector) {
     /**
      * This interceptor will initialize before the the auth module
      * So, we inject it manually, with a bit of delay to prevent circular injection deps
@@ -67,15 +66,15 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return this.auth.tokenRetryRequest$().pipe(
-      map((resp) => {
-        if (!resp?.ok) {
+    return this.auth.tokenRefreshRequest$().pipe(
+      map((authState) => {
+        if (authState?.logoutRequired) {
           this.auth.logoutRequest();
         }
-        return resp;
+        return authState;
       }),
-      switchMap((resp: AuthTokenStatus) => {
-        request = this.insertToken(request, resp.token);
+      switchMap((authState) => {
+        request = this.insertToken(request, authState.token);
         return next.handle(request).pipe(
           catchError((errors) => {
             const gqlErrors = new GqlErrorsHandler(errors);

@@ -8,7 +8,7 @@
 
 import { Routes } from '@angular/router';
 import { AuthAnonymousGuard, AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
 
 import { AboutComponent } from './pages/about/about.component';

@@ -11,13 +11,17 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '@fullerstack/ngx-auth';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'fullerstack-login-form',
@@ -25,8 +29,9 @@ import { ValidationService } from '@fullerstack/ngx-util';
   styleUrls: ['./login-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
+  private destroy$ = new Subject<boolean>();
   @Output() submit$ = new EventEmitter<UserCredentialsInput>();
   @Input() title = _('COMMON.LOGIN');
   @Input() subtitle = _('COMMON.ACCOUNT_ACCESS');
@@ -35,7 +40,11 @@ export class LoginFormComponent implements OnInit {
   @Input() emailHint: string;
   @Input() passwordHint: string;
 
-  constructor(readonly formBuilder: FormBuilder, readonly validation: ValidationService) {}
+  constructor(
+    readonly formBuilder: FormBuilder,
+    readonly validation: ValidationService,
+    readonly auth: AuthService
+  ) {}
 
   ngOnInit() {
     this.buildForm();
@@ -49,6 +58,19 @@ export class LoginFormComponent implements OnInit {
   }
 
   submit() {
-    this.submit$.emit(this.form.value);
+    this.form.disable();
+    this.auth
+      .loginRequest$(this.form.value)
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.form.enable();
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

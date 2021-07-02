@@ -22,6 +22,7 @@ import { RippleComponent } from './component/ripple/ripple.component';
 import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
 import { AutocompleteDirective } from './directive/autocomplete/autocomplete.directive';
 import { DebounceClickDirective } from './directive/debounce-click/debounce-click.directive';
+import { InputFocusDirective } from './directive/input-focus/input-focus.directive';
 import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
 
 @NgModule({
@@ -38,6 +39,7 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     AutocompleteDirective,
     TmpLetDirective,
     DebounceClickDirective,
+    InputFocusDirective,
   ],
   exports: [
     HintComponent,
@@ -51,6 +53,7 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     AutocompleteDirective,
     TmpLetDirective,
     DebounceClickDirective,
+    InputFocusDirective,
   ],
   providers: [],
 })

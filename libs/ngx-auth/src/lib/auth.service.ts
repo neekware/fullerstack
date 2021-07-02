@@ -7,16 +7,17 @@
  */
 
 import { Injectable, OnDestroy } from '@angular/core';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtDto } from '@fullerstack/agx-dto';
-import { tryGet } from '@fullerstack/agx-util';
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
-import { GqlService } from '@fullerstack/ngx-gql';
+import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import {
+  AuthIsEmailAvailable,
   AuthLoginMutation,
   AuthLogoutMutation,
   AuthRefreshTokenMutation,
@@ -28,14 +29,14 @@ import {
   UserCreateInput,
   UserCredentialsInput,
 } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
-import { Observable, Subject } from 'rxjs';
-import { first, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject, of, timer } from 'rxjs';
+import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAuthConfig, DefaultAuthState, DefaultAuthUrls } from './auth.default';
@@ -48,10 +49,9 @@ export class AuthService implements OnDestroy {
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<AuthState> = DefaultAuthState;
-  stateSub$: Observable<AuthState>;
+  readonly stateSub$: Observable<AuthState>;
   authUrls: DeepReadonly<AuthUrls> = DefaultAuthUrls;
   nextUrl: string;
-  isLoading: boolean;
 
   constructor(
     readonly router: Router,
@@ -72,11 +72,13 @@ export class AuthService implements OnDestroy {
       landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
     };
 
+    this.stateSub$ = this.store.select$<AuthState>(this.nameSpace);
+
     this.initUrls();
     this.claimSlice();
     this.initState();
     this.subState();
-    this.tokenRefreshRequest();
+    this.tokenRefreshRequest$().pipe(first()).subscribe();
 
     logger.info(
       `[${this.nameSpace}] AuthService ready ... (${
@@ -130,118 +132,128 @@ export class AuthService implements OnDestroy {
    * Subscribe to Auth state:slice changes
    */
   private subState() {
-    this.stateSub$ = this.store.select$<AuthState>(this.nameSpace);
-
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
         const prevState = cloneDeep(this.state);
         this.state = { ...DefaultAuthState, ...newState };
         this.handleRedirect(prevState);
-
-        this.isLoading =
-          !newState.hasError && (newState.isAuthenticating || newState.isRegistering);
       },
     });
   }
 
-  loginRequest(input: UserCredentialsInput) {
-    this.store.setState(this.claimId, { ...DefaultAuthState, isAuthenticating: true });
+  loginRequest$(input: UserCredentialsInput): Observable<AuthState> {
+    this.store.setState(this.claimId, {
+      ...DefaultAuthState,
+      isAuthenticating: true,
+      isLoading: true,
+    });
     this.logger.debug(`[${this.nameSpace}] Login request sent ...`);
 
     return this.gql.client
       .request<AuthTokenStatus>(AuthLoginMutation, { input })
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        next: (resp) => {
-          let updateState: AuthState;
+      .pipe(
+        map((resp) => {
           if (resp.ok) {
-            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
-            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
             this.logger.debug(`[${this.nameSpace}] Login request success ...`);
-            this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
-          } else {
-            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
-            this.logger.error(`[AUTH] Login request failed ... ${resp.message}`);
+            return this.store.setState(this.claimId, {
+              ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+            });
           }
-          this.store.setState(this.claimId, updateState);
-        },
-        error: (err) => {
-          this.store.setState(this.claimId, {
+          this.logger.error(`[${this.nameSpace}] Login request failed ... ${resp.message}`);
+          return this.store.setState(this.claimId, {
             ...DefaultAuthState,
             hasError: true,
-            message: err.message,
+            message: resp.message,
           });
-          this.logger.error(`[${this.nameSpace}] `, err);
-        },
-      });
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          this.logger.error(`[${this.nameSpace}] Login request failed ...`, err);
+          return of(
+            this.store.setState(this.claimId, {
+              ...DefaultAuthState,
+              hasError: true,
+              message: err.topError?.message,
+            })
+          );
+        })
+      );
   }
 
-  registerRequest(input: UserCreateInput) {
-    this.store.setState(this.claimId, { ...DefaultAuthState, isRegistering: true });
+  registerRequest$(input: UserCreateInput): Observable<AuthState> {
+    this.store.setState(this.claimId, {
+      ...DefaultAuthState,
+      isRegistering: true,
+      isLoading: true,
+    });
     this.logger.debug(`[${this.nameSpace}] Register request sent ...`);
 
     return this.gql.client
       .request<AuthTokenStatus>(AuthRegisterMutation, { input })
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        next: (resp) => {
-          let updateState: AuthState;
+      .pipe(
+        map((resp) => {
           if (resp.ok) {
-            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
-            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
-            this.logger.debug(`[${this.nameSpace}] Login request success ...`);
-            this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
-          } else {
-            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
-            this.logger.error(`[${this.nameSpace}] Register request failed ... ${resp.message}`);
+            this.logger.debug(`[${this.nameSpace}] Register request success ...`);
+            return this.store.setState(this.claimId, {
+              ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+            });
           }
-          this.store.setState(this.claimId, updateState);
-        },
-        error: (err) => {
-          this.store.setState(this.claimId, {
+          this.logger.error(`[${this.nameSpace}] Register request failed ... ${resp.message}`);
+          return this.store.setState(this.claimId, {
             ...DefaultAuthState,
             hasError: true,
-            message: err.message,
+            message: resp.message,
           });
-          this.logger.error(`[${this.nameSpace}] `, err);
-        },
-      });
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          this.logger.error(`[${this.nameSpace}] Register request failed ...`, err);
+          return of(
+            this.store.setState(this.claimId, {
+              ...DefaultAuthState,
+              hasError: true,
+              message: err.topError?.message,
+            })
+          );
+        })
+      );
   }
 
-  tokenRefreshRequest() {
+  tokenRefreshRequest$(): Observable<AuthState> {
     this.logger.debug(`[${this.nameSpace}] Token refresh request sent ...`);
-    return this.gql.client
-      .request<AuthTokenStatus>(AuthRefreshTokenMutation)
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        next: (resp) => {
-          let updateState: AuthState;
-          if (resp.ok) {
-            const userId = tryGet(() => this.jwt.getPayload<JwtDto>(resp.token).userId);
-            updateState = { ...DefaultAuthState, isLoggedIn: true, token: resp.token, userId };
-          } else {
-            updateState = { ...DefaultAuthState, hasError: true, message: resp.message };
-          }
-          this.store.setState(this.claimId, updateState);
-        },
-        error: (err) => {
-          this.logger.error(`[${this.nameSpace}] `, err);
+    return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Token refresh request success ...`);
+          return this.store.setState(this.claimId, {
+            ...DefaultAuthState,
+            isLoggedIn: true,
+            token: resp.token,
+            userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+          });
+        }
+        this.logger.error(`[${this.nameSpace}] Token refresh request failed ... ${resp.message}`);
+        return this.store.setState(this.claimId, {
+          ...DefaultAuthState,
+          logoutRequired: true,
+          hasError: this.state.isLoggedIn ? true : false,
+          message: resp.message,
+        });
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        this.logger.error(`[${this.nameSpace}] Token refresh request failed ...`, err);
+        return of(
           this.store.setState(this.claimId, {
             ...DefaultAuthState,
-            hasError: true,
-            message: err.message,
-          });
-        },
-      });
-  }
-
-  tokenRetryRequest$(): Observable<AuthTokenStatus> {
-    this.logger.debug(`[${this.nameSpace}] Retry token refresh request sent ...`);
-    return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
-      tap((resp) => {
-        if (resp.ok) {
-          this.store.setState(this.claimId, { ...this.state, token: resp.token });
-        }
+            logoutRequired: true,
+            hasError: this.state.isLoggedIn ? true : false,
+            message: err.topError?.message,
+          })
+        );
       })
     );
   }
@@ -254,24 +266,46 @@ export class AuthService implements OnDestroy {
       .request<AuthStatus>(AuthLogoutMutation)
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
-          this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
+        error: (err) => {
+          this.logger.error(`[${this.nameSpace}] `, err);
+        },
+        complete: () => {
           if (!onError) {
+            this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
             this.msg.successSnackBar(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
           } else {
             this.msg.errorSnackBar(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
           }
         },
-        error: (err) => {
-          this.logger.error(`[${this.nameSpace}] `, err);
-          this.msg.errorSnackBar(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
-        },
       });
+  }
+
+  isEmailAvailable(email: string): Observable<boolean> {
+    return this.gql.client
+      .request<AuthStatus>(AuthIsEmailAvailable, { email })
+      .pipe(
+        map((resp) => resp.ok),
+        catchError((err: GqlErrorsHandler) => {
+          this.logger.error(`[${this.nameSpace}] email availability check ...`, err);
+          return of(false);
+        })
+      );
+  }
+
+  validateEmailAvailability(debounce = 600): AsyncValidatorFn {
+    return (
+      control: AbstractControl
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      return timer(debounce).pipe(
+        switchMap(() => this.isEmailAvailable(control.value)),
+        map((available) => (available ? null : { emailInUse: true }))
+      );
+    };
   }
 
   goTo(url: string) {
     setTimeout(() => {
-      this.router.navigate([url]);
+      this.router.navigate([url || '/']);
     });
   }
 

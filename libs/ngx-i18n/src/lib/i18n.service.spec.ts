@@ -92,7 +92,7 @@ describe('I18nService', () => {
   });
 
   it('should translate to English', (done) => {
-    service.xlate.get('COMMON.WELCOME').subscribe((res: string) => {
+    service.translate.get('COMMON.WELCOME').subscribe((res: string) => {
       expect(res).toEqual('Welcome');
       done();
     });

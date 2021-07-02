@@ -56,9 +56,9 @@ export class StoreService<T = StoreType> {
    * @param claimId Claim ID of slice required for any mutation, full or partial
    * @param updater object or function that returns a partial object of type T
    */
-  setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): void;
-  setState<K = any>(claimId: string, updater: K): void {
-    this.store.setState<K>(claimId, updater);
+  setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): K;
+  setState<K = any>(claimId: string, updater: K): K {
+    return this.store.setState<K>(claimId, updater);
   }
 
   /**

@@ -10,8 +10,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
-import { TranslateService } from '@ngx-translate/core';
-import { cloneDeep } from 'lodash-es';
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -22,21 +20,20 @@ import { SnackbarStatus, SnackbarType } from './snackbar/snackbar.model';
 
 @Injectable()
 export class MsgService implements OnDestroy {
-  status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
-  destroy$ = new Subject<boolean>();
+  private status: DeepReadonly<SnackbarStatus> = SnackbarStatusDefault;
+  private destroy$ = new Subject<boolean>();
 
   constructor(
     readonly i18n: I18nService,
     readonly matSnackbar: MatSnackBar,
-    readonly logger: LoggerService,
-    readonly translateService: TranslateService
+    readonly logger: LoggerService
   ) {
     this.reset();
   }
 
   reset() {
     this.status = {
-      ...cloneDeep(SnackbarStatusDefault),
+      ...SnackbarStatusDefault,
       level: this.logger.options.logger.level,
       color: this.getColor(this.logger.options.logger.level),
     };
@@ -75,7 +72,7 @@ export class MsgService implements OnDestroy {
   }
 
   private logToConsole() {
-    this.translateService
+    this.i18n.translate
       .get(this.status.text)
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe((msgText: string) => {
@@ -109,9 +106,9 @@ export class MsgService implements OnDestroy {
       },
       ...(config || {}),
     };
-    this.translateService
+    this.i18n.translate
       .get(msg)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(first(), takeUntil(this.destroy$))
       .subscribe((translatedText: string) => {
         config.data = {
           msgText: translatedText,

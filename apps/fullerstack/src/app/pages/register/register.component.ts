@@ -11,7 +11,7 @@ import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserCreateInput } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 
 @Component({
   selector: 'fullerstack-register',
@@ -36,6 +36,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register(data: UserCreateInput) {
-    this.auth.registerRequest(data);
+    this.auth.registerRequest$(data).subscribe();
   }
 }

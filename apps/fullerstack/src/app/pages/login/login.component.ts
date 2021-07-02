@@ -6,18 +6,16 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { tryGet } from '@fullerstack/agx-util';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 
 @Component({
   selector: 'fullerstack-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
   title = _('COMMON.LOGIN');
@@ -30,12 +28,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
-      const redirectUrl = tryGet(() => this.config.options.localConfig.loggedInLandingPageUrl, '/');
-      this.auth.goTo(redirectUrl);
+      this.auth.goTo(this.auth.authUrls.landingUrl);
     }
   }
 
   login(data: UserCredentialsInput) {
-    this.auth.loginRequest(data);
+    this.auth.loginRequest$(data).subscribe();
   }
 }

@@ -16,9 +16,9 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
-import { AuthAsyncValidation } from '@fullerstack/ngx-auth';
+import { AuthService } from '@fullerstack/ngx-auth';
 import { UserCreateInput } from '@fullerstack/ngx-gql/schema';
-import { I18nService, _ } from '@fullerstack/ngx-i18n';
+import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 
 @Component({
@@ -43,7 +43,7 @@ export class RegisterFormComponent implements OnInit {
     readonly formBuilder: FormBuilder,
     readonly i18n: I18nService,
     readonly validation: ValidationService,
-    readonly asyncValidation: AuthAsyncValidation
+    readonly auth: AuthService
   ) {}
 
   ngOnInit() {
@@ -64,7 +64,7 @@ export class RegisterFormComponent implements OnInit {
         email: [
           '',
           [Validators.required, this.validation.validateEmail],
-          [this.asyncValidation.validateEmailAvailability()],
+          [this.auth.validateEmailAvailability()],
         ],
         password: [
           '',

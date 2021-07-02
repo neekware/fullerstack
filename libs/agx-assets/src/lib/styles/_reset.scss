@@ -6,11 +6,11 @@ body {
   height: 100%;
 }
 
-// no highlights
-* {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: -moz-none;
-  -o-user-select: none;
-  user-select: none;
-}
+// no highlights - NOTE:  if enabled, it will freeze input fields on Safari
+// * {
+//   -webkit-user-select: none;
+//   -khtml-user-select: none;
+//   -moz-user-select: -moz-none;
+//   -o-user-select: none;
+//   user-select: none;
+// }

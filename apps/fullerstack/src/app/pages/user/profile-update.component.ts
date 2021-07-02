@@ -13,7 +13,7 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { GqlErrorsHandler } from '@fullerstack/ngx-gql';
 import { UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
 import { UserService } from '@fullerstack/ngx-user';

@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 
 /**
  * Debounce time for verification and showing the hint
@@ -16,6 +16,7 @@ export const HINT_DEBOUNCE_TIME = 300;
 export const ValidatorHintMessages = {
   required: _('VALIDATION.REQUIRED'),
   minlength: _('VALIDATION.MINIMUM_LENGTH'),
+  maxlength: _('VALIDATION.MAXIMUM_LENGTH'),
   nonZero: _('VALIDATION.NON_ZERO'),
   invalidNumber: _('VALIDATION.INVALID_NUMBER'),
   negativeNumber: _('VALIDATION.NEGATIVE_NUMBER'),

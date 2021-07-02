@@ -8,7 +8,7 @@
 
 import { getOperationName } from '@fullerstack/ngx-gql';
 import { AuthLogoutMutation, AuthRefreshTokenMutation } from '@fullerstack/ngx-gql/operations';
-import { _ } from '@fullerstack/ngx-i18n';
+import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevels } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
 import { DeepReadonly } from 'ts-essentials';
@@ -28,9 +28,11 @@ export const AuthLogoutOperation = getOperationName(AuthLogoutMutation);
 
 export const DefaultAuthState: DeepReadonly<AuthState> = {
   userId: null,
+  isLoading: false,
   isLoggedIn: false,
   isRegistering: false,
   isAuthenticating: false,
+  logoutRequired: false,
   hasError: false,
   token: null,
   message: null,

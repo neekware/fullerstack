@@ -82,8 +82,8 @@ export class Store<T = StoreType> {
    * @param updater Partial data or function to update state
    * Note: https://github.com/Microsoft/TypeScript/issues/18823
    */
-  setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): void;
-  setState<K = any>(claimId: string, updater: K): void {
+  setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): K;
+  setState<K = any>(claimId: string, updater: K): K {
     const entry = this.registry.get(claimId);
     if (!entry) {
       throw new Error(`setState: No slice registration with private key: (${claimId})`);
@@ -104,6 +104,8 @@ export class Store<T = StoreType> {
       entry.logger(`[STORE][NEXT][${entry.sliceName}]`, {
         [entry.sliceName]: nextState[entry.sliceName],
       });
+
+    return this.getState()[entry.sliceName];
   }
 
   /**

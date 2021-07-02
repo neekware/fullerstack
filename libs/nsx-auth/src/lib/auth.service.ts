@@ -6,14 +6,10 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { ApiError } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { PrismaService, isConstraintError } from '@fullerstack/nsx-prisma';
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { v4 as uuid_v4 } from 'uuid';
 
@@ -56,20 +52,18 @@ export class AuthService {
       where: { email: credentials.email },
     });
 
-    if (!user) {
-      throw new NotFoundException('Error - Invalid or inactive user');
+    if (user) {
+      const passwordValid = await this.securityService.validatePassword(
+        credentials.password,
+        user.password
+      );
+
+      if (passwordValid) {
+        return user;
+      }
     }
 
-    const passwordValid = await this.securityService.validatePassword(
-      credentials.password,
-      user.password
-    );
-
-    if (!passwordValid) {
-      throw new BadRequestException('Error - Invalid or bad password');
-    }
-
-    return user;
+    throw new BadRequestException(ApiError.Error.Auth.InvalidUserOrPassword);
   }
 
   async isUserVerified(userId: string): Promise<boolean> {

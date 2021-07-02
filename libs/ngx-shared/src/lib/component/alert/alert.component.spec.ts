@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { I18nModule } from '@fullerstack/ngx-i18n';
 import { MsgModule } from '@fullerstack/ngx-msg';
-import { TranslateService } from '@ngx-translate/core';
 
 import { AlertComponent } from './alert.component';
 
@@ -32,7 +31,7 @@ xdescribe('AlertComponent', () => {
         I18nModule,
         MsgModule,
       ],
-      providers: [MatSnackBar, MatChipList, MatChip, TranslateService],
+      providers: [MatSnackBar, MatChipList, MatChip],
       declarations: [AlertComponent],
     }).compileComponents();
   });

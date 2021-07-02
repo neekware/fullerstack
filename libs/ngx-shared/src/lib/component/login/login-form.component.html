@@ -1,4 +1,4 @@
-<form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="{{ autocomplete }}">
+<form [formGroup]="form" (submit)="submit()" fxLayout="column" focusInvalidInput autoCompleteOff autocomplete="{{ autocomplete }}">
   <mat-form-field>
     <mat-icon matSuffix svgIcon="email"></mat-icon>
     <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
@@ -19,5 +19,9 @@
     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
       {{ 'COMMON.LOGIN' | translate }}
     </button>
+    <div *ngIf="auth?.state.hasError" class="form-status" fxLayout="row" fxLayoutGap="10px">
+      <mat-icon color="warn" svgIcon="alert"></mat-icon>
+      <span>{{ auth?.state.message | translate }}!</span>
+    </div>
   </div>
 </form>

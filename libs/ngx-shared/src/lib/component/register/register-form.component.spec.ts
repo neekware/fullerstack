@@ -11,7 +11,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CONFIG_TOKEN } from '@fullerstack/ngx-config';
 import { ValidationService } from '@fullerstack/ngx-util';
-import { TranslateService } from '@ngx-translate/core';
 
 import { RegisterFormComponent } from './register-form.component';
 
@@ -29,7 +28,6 @@ xdescribe('RegisterFormComponent', () => {
           provide: CONFIG_TOKEN,
           useValue: {},
         },
-        TranslateService,
       ],
     }).compileComponents();
   });
