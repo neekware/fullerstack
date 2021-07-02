@@ -56,7 +56,7 @@ describe('LoggerService: Loads default values, disabled', () => {
   });
 
   it('should not log anything as the level is none', () => {
-    const consoleLog = spyOn(console, 'log');
+    const consoleLog = jest.spyOn(console, 'log');
     service.critical('Logging a critical');
     service.error('Logging a error');
     service.info('Logging a info');
@@ -92,7 +92,7 @@ describe('LoggerService: LogLevel tracing enabled', () => {
   });
 
   it('should log everything above, and including tracing', () => {
-    const consoleLog = spyOn(console, 'log');
+    const consoleLog = jest.spyOn(console, 'log');
     service.critical('Logging a critical');
     service.error('Logging a error');
     service.info('Logging a info');
@@ -128,7 +128,7 @@ describe('LoggerService: LogLevel debug enabled', () => {
   });
 
   it('should log everything above, and including debug', () => {
-    const consoleLog = spyOn(console, 'log');
+    const consoleLog = jest.spyOn(console, 'log');
     service.critical('Logging a critical');
     service.error('Logging a error');
     service.info('Logging a info');

@@ -55,7 +55,7 @@ describe('SubService', () => {
     subMgr.track = sub1$;
     const sub2$ = mockSub1 as Subscription;
     subMgr.track = sub2$;
-    const logSpy = spyOn(console, 'log');
+    const logSpy = jest.spyOn(console, 'log');
     subMgr.unsubscribe();
     expect(logSpy).toHaveBeenCalled();
   });
@@ -63,7 +63,7 @@ describe('SubService', () => {
   it('ngOnDestroy() should handle invalid subscriptions', () => {
     const sub1$ = {} as Subscription;
     subMgr.track = [sub1$];
-    const logSpy = spyOn(console, 'log');
+    const logSpy = jest.spyOn(console, 'log');
     subMgr.unsubscribe();
     expect(logSpy).not.toHaveBeenCalled();
   });

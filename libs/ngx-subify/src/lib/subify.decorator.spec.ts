@@ -27,9 +27,9 @@ const mockSub2 = {
 
 describe('@SubifyDecorator', () => {
   beforeEach(() => {
-    spyOn(console, 'error');
-    spyOn(console, 'log');
-    spyOn(console, 'warn');
+    jest.spyOn(console, 'error');
+    jest.spyOn(console, 'log');
+    jest.spyOn(console, 'warn');
   });
 
   it('should implement OnDestroy', () => {
@@ -100,7 +100,7 @@ describe('@SubifyDecorator', () => {
       ngOnDestroy() {}
     }
     const comp = new SubComponent();
-    const processTakeUtilSpy = spyOn(<any>comp, '_processTakeUtil');
+    const processTakeUtilSpy = jest.spyOn(<any>comp, '_processTakeUtil');
     comp['ngOnDestroy']();
     expect(processTakeUtilSpy).toHaveBeenCalled();
   });
@@ -114,7 +114,7 @@ describe('@SubifyDecorator', () => {
       ngOnDestroy() {}
     }
     const comp = new SubComponent();
-    const completeSpy = spyOn(<any>comp.destroy$, 'complete');
+    const completeSpy = jest.spyOn(<any>comp.destroy$, 'complete');
     comp['ngOnDestroy']();
     expect(completeSpy).toHaveBeenCalled();
   });
@@ -140,7 +140,7 @@ describe('@SubifyDecorator', () => {
       ngOnDestroy() {}
     }
     const comp = new SubComponent();
-    const processIncludesSpy = spyOn(<any>comp, '_processIncludes');
+    const processIncludesSpy = jest.spyOn(<any>comp, '_processIncludes');
     comp['ngOnDestroy']();
     expect(processIncludesSpy).toHaveBeenCalled();
   });
@@ -169,7 +169,7 @@ describe('@SubifyDecorator', () => {
       ngOnDestroy() {}
     }
     const comp = new SubComponent();
-    const processExcludesSpy = spyOn(<any>comp, '_processExcludes');
+    const processExcludesSpy = jest.spyOn(<any>comp, '_processExcludes');
     comp['ngOnDestroy']();
     expect(processExcludesSpy).toHaveBeenCalled();
   });
