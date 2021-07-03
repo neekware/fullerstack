@@ -14,6 +14,7 @@ import { GTagConfig } from '@fullerstack/ngx-gtag';
 import { I18nConfig } from '@fullerstack/ngx-i18n';
 import { LogLevel, LoggerConfig } from '@fullerstack/ngx-logger';
 import { StoreConfig } from '@fullerstack/ngx-store';
+import { UserConfig } from 'libs/ngx-user/src/lib/user.model';
 
 const logger: LoggerConfig = {
   level: LogLevel.error,
@@ -26,12 +27,6 @@ const gql: GqlConfig = {
 const gtag: GTagConfig = {
   trackingId: 'U-something',
   isEnabled: false,
-} as const;
-
-const cachify: CachifyConfig = {
-  disabled: false,
-  immutable: false, // mainly caches responses, so set to false
-  ttl: 60, // 1 minute
 } as const;
 
 const i18n: I18nConfig = {
@@ -85,13 +80,23 @@ const i18n: I18nConfig = {
   cacheBustingHash: 'v0.0.1',
 };
 
+const auth: AuthConfig = {
+  logState: false,
+} as const;
+
+const user: UserConfig = {
+  logState: false,
+} as const;
+
 const store: StoreConfig = {
   // we want to explicitly set it to true, if we use it at app-level
   immutable: true,
 } as const;
 
-const auth: AuthConfig = {
-  logState: false,
+const cachify: CachifyConfig = {
+  disabled: false,
+  immutable: false, // mainly caches responses, so set to false
+  ttl: 60, // 1 minute
 } as const;
 
 export const environment: Readonly<ApplicationConfig> = {
@@ -103,6 +108,7 @@ export const environment: Readonly<ApplicationConfig> = {
   gql,
   gtag,
   auth,
+  user,
   store,
   cachify,
 };

@@ -14,6 +14,7 @@ import { GTagConfig } from '@fullerstack/ngx-gtag';
 import { I18nConfig } from '@fullerstack/ngx-i18n';
 import { LogLevel, LoggerConfig } from '@fullerstack/ngx-logger';
 import { StoreConfig } from '@fullerstack/ngx-store';
+import { UserConfig } from 'libs/ngx-user/src/lib/user.model';
 
 const logger: LoggerConfig = {
   level: LogLevel.error,
@@ -83,6 +84,10 @@ const auth: AuthConfig = {
   logState: false,
 } as const;
 
+const user: UserConfig = {
+  logState: false,
+} as const;
+
 const store: StoreConfig = {
   // we want to explicitly set it to true, if we use it at app-level
   immutable: true,
@@ -103,6 +108,7 @@ export const environment: Readonly<ApplicationConfig> = {
   gql,
   gtag,
   auth,
+  user,
   store,
   cachify,
 };
