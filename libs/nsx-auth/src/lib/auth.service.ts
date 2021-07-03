@@ -38,7 +38,14 @@ export class AuthService {
     } catch (err) {
       if (isConstraintError(err)) {
         const constraint = tryGet(() => err.meta.target[0], 'Some fields');
-        throw new ConflictException(`Error: ${constraint} already in use.`);
+        switch (constraint) {
+          case 'email':
+            throw new ConflictException('ERROR.AUTH.EMAIL_IN_USE');
+          case 'username':
+            throw new ConflictException('ERROR.AUTH.USERNAME_IN_USE');
+          default:
+            throw new ConflictException(`Error: ${constraint} already in use.`);
+        }
       } else {
         throw new Error(err);
       }

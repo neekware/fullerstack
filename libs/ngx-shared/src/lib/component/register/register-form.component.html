@@ -1,7 +1,7 @@
 <form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="{{ autocomplete }}">
   <mat-form-field>
     <mat-icon matSuffix svgIcon="account"></mat-icon>
-    <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" />
+    <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" autofocus />
     <fullerstack-hint [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched" [hint]="nameHint"></fullerstack-hint>
   </mat-form-field>
 
@@ -35,5 +35,9 @@
     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
       {{ 'COMMON.REGISTER' | translate }}
     </button>
+    <div *ngIf="auth?.state.hasError && !inFocus" class="form-status" fxLayout="row" fxLayoutGap="10px">
+      <mat-icon color="warn" svgIcon="alert"></mat-icon>
+      <span>{{ auth?.state.message | translate }}!</span>
+    </div>
   </div>
 </form>

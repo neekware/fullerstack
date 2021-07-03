@@ -39,6 +39,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   @Input() autocomplete = 'off';
   @Input() emailHint: string;
   @Input() passwordHint: string;
+  inFocus = false;
 
   constructor(
     readonly formBuilder: FormBuilder,
@@ -58,6 +59,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    this.inFocus = false;
     this.form.disable();
     this.auth
       .loginRequest$(this.form.value)
@@ -67,6 +69,10 @@ export class LoginFormComponent implements OnInit, OnDestroy {
           this.form.enable();
         },
       });
+  }
+
+  onFocus() {
+    this.inFocus = true;
   }
 
   ngOnDestroy() {

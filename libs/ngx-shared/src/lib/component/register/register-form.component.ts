@@ -20,6 +20,8 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { UserCreateInput } from '@fullerstack/ngx-gql/schema';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'fullerstack-register-form',
@@ -29,6 +31,7 @@ import { ValidationService } from '@fullerstack/ngx-util';
 })
 export class RegisterFormComponent implements OnInit {
   form: FormGroup;
+  private destroy$ = new Subject<boolean>();
   @Output() submit$ = new EventEmitter<UserCreateInput>();
   @Input() title = _('COMMON.REGISTER');
   @Input() subtitle = _('COMMON.ACCOUNT_CREATE');
@@ -38,6 +41,7 @@ export class RegisterFormComponent implements OnInit {
   @Input() emailHint: string;
   @Input() passwordHint: string;
   @Input() passwordConfirmHint: string;
+  inFocus = false;
 
   constructor(
     readonly formBuilder: FormBuilder,
@@ -76,16 +80,34 @@ export class RegisterFormComponent implements OnInit {
     );
   }
 
+  onFocus() {
+    this.inFocus = true;
+  }
+
   submit() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.inFocus = false;
     const { email, password, ...rest } = this.form.value;
     const { firstName, lastName } = tokenizeFullName(this.form.value.name);
     // const language = this.i18n.currentLanguage;
-    this.submit$.emit({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+
+    this.form.disable();
+    this.auth
+      .registerRequest$({
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.form.enable();
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
