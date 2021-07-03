@@ -25,7 +25,7 @@ This library helps with verification and payload extraction of JWT tokens
 // In your environment{prod,staging}.ts
 
 import { ApplicationConfig } from '@fullerstack/ngx-config';
-import { LogLevels } from '@fullerstack/ngx-logger';
+import { LogLevel } from '@fullerstack/ngx-logger';
 
 export const environment: ApplicationConfig = {
   // app name
@@ -34,7 +34,7 @@ export const environment: ApplicationConfig = {
   production: false,
   log: {
     // log level (application-wide)
-    level: LogLevels.debug,
+    level: LogLevel.debug,
   },
   jwt: {
     // estimate time of http request between client -> server (greater than zero)

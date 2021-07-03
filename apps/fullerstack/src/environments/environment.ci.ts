@@ -12,11 +12,11 @@ import { ApplicationConfig } from '@fullerstack/ngx-config';
 import { GqlConfig } from '@fullerstack/ngx-gql';
 import { GTagConfig } from '@fullerstack/ngx-gtag';
 import { I18nConfig } from '@fullerstack/ngx-i18n';
-import { LogLevels, LoggerConfig } from '@fullerstack/ngx-logger';
+import { LogLevel, LoggerConfig } from '@fullerstack/ngx-logger';
 import { StoreConfig } from '@fullerstack/ngx-store';
 
 const logger: LoggerConfig = {
-  level: LogLevels.error,
+  level: LogLevel.error,
 } as const;
 
 const gql: GqlConfig = {

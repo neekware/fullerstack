@@ -30,7 +30,7 @@ import {
   HttpMethod,
 } from '@fullerstack/ngx-config';
 
-import { LogLevels } from '@fullerstack/ngx-logger';
+import { LogLevel } from '@fullerstack/ngx-logger';
 
 export const environment: ApplicationConfig = {
   production: false,
@@ -38,7 +38,7 @@ export const environment: ApplicationConfig = {
   logger: {
     // Log level, (default = none)
     // Anything above `info` will be logged, anything below will be skipped
-    level: LogLevels.info,
+    level: LogLevel.info,
   },
 } as const;
 ```
@@ -108,9 +108,9 @@ ConfigService ready ...
 # Note:
 
 1. `@fullerstack/ngx-logger` depends on `@fullerstack/ngx-config` for accessing the log level.
-2. You may want to set the log level to `LogLevels.debug` for development and `LogLevels.warn` for production.
+2. You may want to set the log level to `LogLevel.debug` for development and `LogLevel.warn` for production.
 3. `@fullerstack/ngx-logger` should be imported at the root level of your application.
-4. To disable the logger, set the level to `LogLevels.none`, (default).
+4. To disable the logger, set the level to `LogLevel.none`, (default).
 
 # License
 

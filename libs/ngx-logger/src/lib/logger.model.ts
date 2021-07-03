@@ -19,7 +19,7 @@ export interface LoggerConfig {
  * Log level
  * Each level enables itself and all level(s) above
  */
-export enum LogLevels {
+export enum LogLevel {
   ignore = 0, // we start at level 1, ignoring 0, for programmatic reasons (ie. using in switch)
   critical,
   error,

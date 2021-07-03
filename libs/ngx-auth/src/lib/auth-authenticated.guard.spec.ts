@@ -13,7 +13,7 @@ import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { GqlModule } from '@fullerstack/ngx-gql';
 import { makeMockI18nModule } from '@fullerstack/ngx-i18n/mock';
 import { JwtModule } from '@fullerstack/ngx-jwt';
-import { LogLevels, LoggerModule } from '@fullerstack/ngx-logger';
+import { LogLevel, LoggerModule } from '@fullerstack/ngx-logger';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { StoreModule } from '@fullerstack/ngx-store';
 
@@ -23,7 +23,7 @@ import { AuthModule } from './auth.module';
 export const environment: ApplicationConfig = {
   appName: 'Fullerstack',
   production: false,
-  logger: { level: LogLevels.trace },
+  logger: { level: LogLevel.trace },
   gql: { endpoint: '/graphql' },
 };
 
