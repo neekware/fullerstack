@@ -9,10 +9,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
@@ -20,6 +22,8 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { UserCreateInput } from '@fullerstack/ngx-gql/schema';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'fullerstack-register-form',
@@ -28,7 +32,9 @@ import { ValidationService } from '@fullerstack/ngx-util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterFormComponent implements OnInit {
+  @ViewChild('emailInput') emailField?: ElementRef;
   form: FormGroup;
+  private destroy$ = new Subject<boolean>();
   @Output() submit$ = new EventEmitter<UserCreateInput>();
   @Input() title = _('COMMON.REGISTER');
   @Input() subtitle = _('COMMON.ACCOUNT_CREATE');
@@ -38,6 +44,8 @@ export class RegisterFormComponent implements OnInit {
   @Input() emailHint: string;
   @Input() passwordHint: string;
   @Input() passwordConfirmHint: string;
+  formTouched = false;
+  onFormTouched = () => (this.formTouched = true);
 
   constructor(
     readonly formBuilder: FormBuilder,
@@ -77,15 +85,32 @@ export class RegisterFormComponent implements OnInit {
   }
 
   submit() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.formTouched = false;
     const { email, password, ...rest } = this.form.value;
     const { firstName, lastName } = tokenizeFullName(this.form.value.name);
     // const language = this.i18n.currentLanguage;
-    this.submit$.emit({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+
+    this.form.disable();
+    this.auth
+      .registerRequest$({
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.form.enable();
+          if (this.auth.state.message === 'ERROR.AUTH.EMAIL_IN_USE') {
+            this.emailField.nativeElement.select();
+          }
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

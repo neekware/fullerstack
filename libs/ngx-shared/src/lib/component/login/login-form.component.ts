@@ -39,6 +39,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   @Input() autocomplete = 'off';
   @Input() emailHint: string;
   @Input() passwordHint: string;
+  formTouched = false;
+  onFormTouched = () => (this.formTouched = true);
 
   constructor(
     readonly formBuilder: FormBuilder,
@@ -58,6 +60,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    this.formTouched = false;
     this.form.disable();
     this.auth
       .loginRequest$(this.form.value)

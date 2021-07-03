@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { LogLevels } from '@fullerstack/ngx-logger';
+import { LogLevel } from '@fullerstack/ngx-logger';
 
 export enum SnackbarType {
   'error' = 'error',
@@ -38,7 +38,7 @@ export class SnackbarStatus {
   // unique message code pinpoint to line of code
   code?: string;
   // log level
-  level?: LogLevels;
+  level?: LogLevel;
   // color of message
   color?: string;
   // log it to console

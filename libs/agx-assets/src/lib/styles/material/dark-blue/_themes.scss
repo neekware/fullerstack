@@ -24,6 +24,10 @@
   }
 }
 
+.mat-form-field-invalid .mat-icon {
+  color: mat-color($warn);
+}
+
 .color-primary {
   color: mat-color($primary);
 }

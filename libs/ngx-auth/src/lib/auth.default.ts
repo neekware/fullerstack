@@ -9,7 +9,7 @@
 import { getOperationName } from '@fullerstack/ngx-gql';
 import { AuthLogoutMutation, AuthRefreshTokenMutation } from '@fullerstack/ngx-gql/operations';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { LogLevels } from '@fullerstack/ngx-logger';
+import { LogLevel } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
 import { DeepReadonly } from 'ts-essentials';
 
@@ -43,22 +43,22 @@ export const AuthMessageMap: MessageMap = {
     login: {
       text: _('SUCCESS.AUTH.LOGIN'),
       code: 'SUCCESS.AUTH.LOGIN',
-      level: LogLevels.info,
+      level: LogLevel.info,
     },
     logout: {
       text: _('SUCCESS.AUTH.LOGOUT'),
       code: 'SUCCESS.AUTH.LOGOUT',
-      level: LogLevels.info,
+      level: LogLevel.info,
     },
     register: {
       text: _('SUCCESS.AUTH.REGISTER'),
       code: 'SUCCESS.AUTH.REGISTER',
-      level: LogLevels.info,
+      level: LogLevel.info,
     },
     refresh: {
       text: _('SUCCESS.AUTH.REFRESH'),
       code: 'SUCCESS.AUTH.REFRESH',
-      level: LogLevels.info,
+      level: LogLevel.info,
       consoleOnly: true,
     },
   },
@@ -66,28 +66,28 @@ export const AuthMessageMap: MessageMap = {
     login: {
       text: _('ERROR.AUTH.LOGIN'),
       code: 'ERROR.AUTH.LOGIN',
-      level: LogLevels.warn,
+      level: LogLevel.warn,
     },
     logout: {
       text: _('ERROR.AUTH.LOGOUT'),
       code: 'ERROR.AUTH.LOGOUT',
-      level: LogLevels.warn,
+      level: LogLevel.warn,
     },
     register: {
       text: _('ERROR.AUTH.REGISTER'),
       code: 'ERROR.AUTH.REGISTER',
-      level: LogLevels.warn,
+      level: LogLevel.warn,
     },
     refresh: {
       text: _('ERROR.AUTH.REFRESH'),
       code: 'ERROR.AUTH.REFRESH',
-      level: LogLevels.warn,
+      level: LogLevel.warn,
       consoleOnly: true,
     },
     server: {
       text: _('ERROR.SERVER'),
       code: 'ERROR.SERVER',
-      level: LogLevels.error,
+      level: LogLevel.error,
       consoleOnly: true,
     },
   },

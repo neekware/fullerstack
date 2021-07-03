@@ -12,8 +12,9 @@ import { ApplicationConfig } from '@fullerstack/ngx-config';
 import { GqlConfig } from '@fullerstack/ngx-gql';
 import { GTagConfig } from '@fullerstack/ngx-gtag';
 import { I18nConfig } from '@fullerstack/ngx-i18n';
-import { LogLevels, LoggerConfig } from '@fullerstack/ngx-logger';
+import { LogLevel, LoggerConfig } from '@fullerstack/ngx-logger';
 import { StoreConfig } from '@fullerstack/ngx-store';
+import { UserConfig } from '@fullerstack/ngx-user';
 
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
@@ -29,7 +30,7 @@ import { StoreConfig } from '@fullerstack/ngx-store';
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
 
 const logger: LoggerConfig = {
-  level: LogLevels.debug,
+  level: LogLevel.debug,
 } as const;
 
 const gql: GqlConfig = {
@@ -96,6 +97,10 @@ const auth: AuthConfig = {
   logState: true,
 } as const;
 
+const user: UserConfig = {
+  logState: true,
+} as const;
+
 const store: StoreConfig = {
   // we want to explicitly set it to true, if we use it at app-level
   immutable: true,
@@ -116,6 +121,7 @@ export const environment: Readonly<ApplicationConfig> = {
   gql,
   gtag,
   auth,
+  user,
   store,
   cachify,
 };

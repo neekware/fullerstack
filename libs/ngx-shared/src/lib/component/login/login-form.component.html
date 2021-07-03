@@ -1,7 +1,7 @@
-<form [formGroup]="form" (submit)="submit()" fxLayout="column" focusInvalidInput autoCompleteOff autocomplete="{{ autocomplete }}">
+<form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="{{ autocomplete }}" (click)="onFormTouched()">
   <mat-form-field>
     <mat-icon matSuffix svgIcon="email"></mat-icon>
-    <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
+    <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" autofocus />
     <fullerstack-hint [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched" [hint]="emailHint"></fullerstack-hint>
   </mat-form-field>
 
@@ -19,7 +19,7 @@
     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
       {{ 'COMMON.LOGIN' | translate }}
     </button>
-    <div *ngIf="auth?.state.hasError" class="form-status" fxLayout="row" fxLayoutGap="10px">
+    <div *ngIf="auth?.state.hasError && !formTouched" class="form-status" fxLayout="row" fxLayoutGap="10px">
       <mat-icon color="warn" svgIcon="alert"></mat-icon>
       <span>{{ auth?.state.message | translate }}!</span>
     </div>

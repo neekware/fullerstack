@@ -26,7 +26,7 @@ This library helps you achieving just that via Google's Analytics.
 // In your environment{prod,staging}.ts
 
 import { ApplicationConfig } from '@fullerstack/ngx-config';
-import { LogLevels } from '@fullerstack/ngx-logger';
+import { LogLevel } from '@fullerstack/ngx-logger';
 
 export const environment: ApplicationConfig = {
   // app name
@@ -35,7 +35,7 @@ export const environment: ApplicationConfig = {
 
   log: {
     // log level (application-wide)
-    level: LogLevels.debug,
+    level: LogLevel.debug,
   },
   gtag: {
     // ability to disable tracking (ex; dev / staging mode)
@@ -120,7 +120,7 @@ export class AppComponent {
 // In your environment{prod,staging}.ts
 
 import { ApplicationConfig, TargetPlatform } from '@fullerstack/ngx-config';
-import { LogLevels } from '@fullerstack/ngx-logger';
+import { LogLevel } from '@fullerstack/ngx-logger';
 
 export const environment: ApplicationConfig = {
   appName: '@fullerstack/ngx-gtag',

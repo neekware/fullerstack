@@ -105,7 +105,7 @@ export class Store<T = StoreType> {
         [entry.sliceName]: nextState[entry.sliceName],
       });
 
-    return this.getState()[entry.sliceName];
+    return this.getState()[entry.sliceName] as K;
   }
 
   /**

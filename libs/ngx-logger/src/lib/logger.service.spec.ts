@@ -11,7 +11,7 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { DeepReadonly } from 'ts-essentials';
 
-import { LogLevels } from './logger.model';
+import { LogLevel } from './logger.model';
 import { LoggerModule } from './logger.module';
 import { LoggerService } from './logger.service';
 
@@ -52,7 +52,7 @@ describe('LoggerService: Loads default values, disabled', () => {
   });
 
   it('should have the module default config options', () => {
-    expect(service.options.logger.level).toBe(LogLevels.none);
+    expect(service.options.logger.level).toBe(LogLevel.none);
   });
 
   it('should not log anything as the level is none', () => {
@@ -78,7 +78,7 @@ describe('LoggerService: LogLevel tracing enabled', () => {
         HttpClientModule,
         ConfigModule.forRoot({
           ...applicationConfig,
-          logger: { level: LogLevels.trace },
+          logger: { level: LogLevel.trace },
         }),
         LoggerModule.forRoot(),
       ],
@@ -116,7 +116,7 @@ describe('LoggerService: LogLevel debug enabled', () => {
         HttpClientModule,
         ConfigModule.forRoot({
           ...applicationConfig,
-          logger: { level: LogLevels.debug },
+          logger: { level: LogLevel.debug },
         }),
         LoggerModule.forRoot(),
       ],

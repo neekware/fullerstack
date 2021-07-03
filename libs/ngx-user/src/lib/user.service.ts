@@ -9,87 +9,146 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { CachifyFetchPolicy, interpolate, makeCachifyContext } from '@fullerstack/ngx-cachify';
-import { GqlService } from '@fullerstack/ngx-gql';
-import { UserQuery, UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
-import { User, UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
+import {
+  ApplicationConfig,
+  ConfigService,
+  DefaultApplicationConfig,
+} from '@fullerstack/ngx-config';
+import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
+import { UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
+import { UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { StoreService } from '@fullerstack/ngx-store';
+import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
+import { Observable, Subject, of } from 'rxjs';
+import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultUser } from './user.default';
+import { DefaultUserConfig, DefaultUserState } from './user.default';
+import { UserState } from './user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+  private nameSpace = 'USER';
+  private claimId: string;
   private destroy$ = new Subject<boolean>();
-  profileChanged$ = new BehaviorSubject<User>(DefaultUser);
-  profile: User = DefaultUser;
-  isLoading = false;
+  options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
+  state: DeepReadonly<UserState> = DefaultUserState;
+  readonly stateSub$: Observable<UserState>;
 
   constructor(
+    readonly config: ConfigService,
+    readonly store: StoreService,
     readonly msg: MsgService,
     readonly gql: GqlService,
     readonly gtag: GTagService,
     readonly logger: LoggerService,
     readonly auth: AuthService
   ) {
+    this.options = ldNestedMerge({ auth: DefaultUserConfig }, this.config.options);
+
+    this.stateSub$ = this.store.select$<UserState>(this.nameSpace);
+
+    this.claimSlice();
+    this.initState();
+    this.subState();
+
     this.auth.stateSub$
       .pipe(
         filter((state) => state.isLoggedIn),
-        switchMap(() =>
-          this.userSelfQuery(this.auth.state.userId, CachifyFetchPolicy.NetworkFirst)
-        ),
+        switchMap((state) => this.userSelfQuery$(state.userId)),
         takeUntil(this.destroy$)
       )
-      .subscribe({
-        next: (user) => {
-          this.profile = user as User;
-          this.profileChanged$.next(this.profile);
-        },
-      });
+      .subscribe();
+  }
+
+  /**
+   * Claim User state:slice
+   */
+  private claimSlice() {
+    const logger = this.options?.user?.logState ? this.logger.debug.bind(this.logger) : undefined;
+    this.claimId = this.store.claimSlice(this.nameSpace, logger);
+  }
+
+  /**
+   * Initialize User state:slice
+   */
+  private initState() {
+    this.store.setState(this.claimId, DefaultUserState);
+  }
+
+  /**
+   * Subscribe to User state:slice changes
+   */
+  private subState() {
+    this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (newState) => {
+        const prevState = cloneDeep(this.state);
+        this.state = { ...DefaultUserState, ...newState };
+      },
+    });
   }
 
   getUserCacheKey(id: string): string {
     return interpolate('user/${id}', { id });
   }
 
-  userSelfQuery(id: string, cachePolicy?: CachifyFetchPolicy): Observable<User> {
-    this.isLoading = true;
-    this.msg.reset();
-    return this.gql.client
-      .request<User>(
-        UserSelfQuery,
-        { id },
-        {
-          context: makeCachifyContext({
-            key: this.getUserCacheKey(id),
-            policy: cachePolicy,
-          }),
-        }
-      )
-      .pipe(tap(() => (this.isLoading = false)));
-  }
+  userSelfQuery$(id: string): Observable<UserState> {
+    this.store.setState(this.claimId, { ...DefaultUserState, isLoading: true });
+    this.logger.debug(`[${this.nameSpace}] Self query request sent ...`);
 
-  userSelfUpdateMutate(input: UserSelfUpdateInput): Observable<User> {
-    this.isLoading = true;
-    this.msg.reset();
     return this.gql.client
-      .request<User>(UserSelfUpdateMutation, { input })
+      .request<UserState>(UserSelfQuery, { id })
       .pipe(
-        tap((user) => {
-          this.isLoading = false;
-          this.profile = user;
-          this.profileChanged$.next(this.profile);
+        map((resp) => {
+          this.logger.debug(`[${this.nameSpace}] Self query request success ...`);
+          return this.store.setState<UserState>(this.claimId, { ...DefaultUserState, ...resp });
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          this.logger.error(`[${this.nameSpace}] Self query request failed ...`, err);
+          return of(
+            this.store.setState<UserState>(this.claimId, {
+              ...DefaultUserState,
+              hasError: true,
+              message: err.topError?.message,
+            })
+          );
         })
       );
   }
 
-  userQuery(id: string): Observable<User> {
-    this.isLoading = true;
-    this.msg.reset();
+  userSelfUpdateMutate$(input: UserSelfUpdateInput): Observable<UserState> {
+    this.store.setState(this.claimId, { ...this.state, isLoading: true });
+    this.logger.debug(`[${this.nameSpace}] Self update request sent ...`);
+
     return this.gql.client
-      .request<User>(UserQuery, { id })
-      .pipe(tap(() => (this.isLoading = false)));
+      .request<UserState>(UserSelfUpdateMutation, { input })
+      .pipe(
+        map((resp) => {
+          this.logger.debug(`[${this.nameSpace}] Self update request success ...`);
+          return this.store.setState<UserState>(this.claimId, { ...DefaultUserState, ...resp });
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          this.logger.error(`[${this.nameSpace}] Self update request failed ...`, err);
+          return of(
+            this.store.setState<UserState>(this.claimId, {
+              ...this.state,
+              isLoading: false,
+              hasError: true,
+              message: err.topError?.message,
+            })
+          );
+        })
+      );
   }
+
+  // userQuery(id: string): Observable<User> {
+  //   this.isLoading = true;
+  //   this.msg.reset();
+  //   return this.gql.client
+  //     .request<User>(UserQuery, { id })
+  //     .pipe(tap(() => (this.isLoading = false)));
+  // }
 }

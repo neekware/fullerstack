@@ -1,4 +1,4 @@
-<form [formGroup]="form" (submit)="submit()" [autocomplete]="autocomplete" fxLayout="column">
+<form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="{{ autocomplete }}" (click)="onFormTouched()">
   <mat-form-field>
     <mat-icon matSuffix svgIcon="account"></mat-icon>
     <input matInput formControlName="firstName" placeholder="{{ 'COMMON.FIRST_NAME' | translate }}" />
@@ -29,9 +29,9 @@
     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
       {{ 'COMMON.UPDATE' | translate }}
     </button>
-    <div *ngIf="showStatus" class="form-status" fxLayout="row" fxLayoutGap="10px">
-      <mat-icon color="success" svgIcon="check-circle"></mat-icon>
-      <span>{{ statusMessage | translate }}!</span>
+    <div *ngIf="user?.state.hasError && !formTouched" class="form-status" fxLayout="row" fxLayoutGap="10px">
+      <mat-icon color="warn" svgIcon="alert"></mat-icon>
+      <span>{{ user?.state.message | translate }}!</span>
     </div>
   </div>
 </form>

@@ -9,7 +9,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { I18nService } from '@fullerstack/ngx-i18n';
-import { LogLevels, LoggerService } from '@fullerstack/ngx-logger';
+import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -52,19 +52,19 @@ export class MsgService implements OnDestroy {
     }
   }
 
-  private getColor(level: LogLevels) {
+  private getColor(level: LogLevel) {
     let color = 'primary';
-    level = level || LogLevels.info;
+    level = level || LogLevel.info;
     switch (level) {
-      case LogLevels.critical:
-      case LogLevels.error:
+      case LogLevel.critical:
+      case LogLevel.error:
         color = 'warn';
         break;
-      case LogLevels.warn:
+      case LogLevel.warn:
         color = 'accent';
         break;
-      case LogLevels.info:
-      case LogLevels.debug:
+      case LogLevel.info:
+      case LogLevel.debug:
         color = 'primary';
         break;
     }
@@ -77,19 +77,19 @@ export class MsgService implements OnDestroy {
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe((msgText: string) => {
         switch (this.status.level) {
-          case LogLevels.critical:
+          case LogLevel.critical:
             this.logger.critical(msgText);
             break;
-          case LogLevels.error:
+          case LogLevel.error:
             this.logger.error(msgText);
             break;
-          case LogLevels.warn:
+          case LogLevel.warn:
             this.logger.warn(msgText);
             break;
-          case LogLevels.info:
+          case LogLevel.info:
             this.logger.info(msgText);
             break;
-          case LogLevels.debug:
+          case LogLevel.debug:
             this.logger.debug(msgText);
             break;
         }

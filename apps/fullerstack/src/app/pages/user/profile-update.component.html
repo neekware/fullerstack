@@ -9,13 +9,8 @@
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
-    [progress]="user.isLoading"
+    [progress]="user.state.isLoading"
   >
-    <fullerstack-user-profile-form
-      (submit$)="update($event)"
-      (form$)="formSet($event)"
-      [profile]="user.profile"
-      [actionStatus]="actionStatus"
-    ></fullerstack-user-profile-form>
+    <fullerstack-user-profile-form (form$)="formSet($event)"></fullerstack-user-profile-form>
   </fullerstack-card>
 </div>

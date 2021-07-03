@@ -18,7 +18,7 @@ import { merge as ldNestedMerge } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultLoggerConfig } from './logger.default';
-import { LogColors, LogLevels, LogNames } from './logger.model';
+import { LogColors, LogLevel, LogNames } from './logger.model';
 
 /**
  * An injectable class that handles logging service
@@ -42,7 +42,7 @@ export class LoggerService {
    * @param extras extra messages
    */
   critical(message: any, ...extras: any[]) {
-    this.doLog(LogLevels.critical, message, extras);
+    this.doLog(LogLevel.critical, message, extras);
   }
 
   /**
@@ -51,7 +51,7 @@ export class LoggerService {
    * @param extras extra messages
    */
   error(message: any, ...extras: any[]) {
-    this.doLog(LogLevels.error, message, extras);
+    this.doLog(LogLevel.error, message, extras);
   }
 
   /**
@@ -60,7 +60,7 @@ export class LoggerService {
    * @param extras extra messages
    */
   warn(message: any, ...extras: any[]) {
-    this.doLog(LogLevels.warn, message, extras);
+    this.doLog(LogLevel.warn, message, extras);
   }
 
   /**
@@ -69,7 +69,7 @@ export class LoggerService {
    * @param extras extra messages
    */
   info(message: any, ...extras: any[]) {
-    this.doLog(LogLevels.info, message, extras);
+    this.doLog(LogLevel.info, message, extras);
   }
 
   /**
@@ -78,7 +78,7 @@ export class LoggerService {
    * @param extras extra messages
    */
   debug(message: any, ...extras: any[]) {
-    this.doLog(LogLevels.debug, message, extras);
+    this.doLog(LogLevel.debug, message, extras);
   }
 
   /**
@@ -87,7 +87,7 @@ export class LoggerService {
    * @param extras extra messages
    */
   trace(message: any, ...extras: any[]) {
-    this.doLog(LogLevels.trace, message, extras);
+    this.doLog(LogLevel.trace, message, extras);
   }
 
   /**
@@ -103,12 +103,12 @@ export class LoggerService {
    * @param message logging message
    * @param extras extra message
    */
-  private doLog(level: LogLevels, message: any, extras: any[] = []) {
+  private doLog(level: LogLevel, message: any, extras: any[] = []) {
     if (
       !message ||
-      level === LogLevels.none ||
+      level === LogLevel.none ||
       level > this.options.logger.level ||
-      this.options.logger.level === LogLevels.none
+      this.options.logger.level === LogLevel.none
     ) {
       return;
     }
