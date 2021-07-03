@@ -9,10 +9,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
@@ -30,6 +32,7 @@ import { first, takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterFormComponent implements OnInit {
+  @ViewChild('emailInput') emailField?: ElementRef;
   form: FormGroup;
   private destroy$ = new Subject<boolean>();
   @Output() submit$ = new EventEmitter<UserCreateInput>();
@@ -41,7 +44,8 @@ export class RegisterFormComponent implements OnInit {
   @Input() emailHint: string;
   @Input() passwordHint: string;
   @Input() passwordConfirmHint: string;
-  inFocus = false;
+  formTouched = false;
+  onFormTouched = () => (this.formTouched = true);
 
   constructor(
     readonly formBuilder: FormBuilder,
@@ -80,12 +84,8 @@ export class RegisterFormComponent implements OnInit {
     );
   }
 
-  onFocus() {
-    this.inFocus = true;
-  }
-
   submit() {
-    this.inFocus = false;
+    this.formTouched = false;
     const { email, password, ...rest } = this.form.value;
     const { firstName, lastName } = tokenizeFullName(this.form.value.name);
     // const language = this.i18n.currentLanguage;
@@ -102,6 +102,9 @@ export class RegisterFormComponent implements OnInit {
       .subscribe({
         next: () => {
           this.form.enable();
+          if (this.auth.state.message === 'ERROR.AUTH.EMAIL_IN_USE') {
+            this.emailField.nativeElement.select();
+          }
         },
       });
   }
