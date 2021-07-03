@@ -245,7 +245,10 @@ export class AuthService implements OnDestroy {
         });
       }),
       catchError((err: GqlErrorsHandler) => {
-        this.logger.error(`[${this.nameSpace}] Token refresh request failed ...`, err);
+        if (this.state.isLoggedIn) {
+          this.logger.error(`[${this.nameSpace}] Token refresh request failed ...`, err);
+        }
+
         return of(
           this.store.setState(this.claimId, {
             ...DefaultAuthState,
