@@ -6,6 +6,8 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Store } from './store';
 import { StoreType } from './store.model';
 
@@ -13,8 +15,6 @@ jest.spyOn(console, 'log').mockImplementation(() => undefined);
 
 describe('Store:[Claim,Release,Slice,Immutable]', () => {
   let store = new Store<StoreType>({ A: { C: { D: 1 } }, B: 2 } as StoreType, true);
-
-  beforeEach(() => {});
 
   afterAll(() => {
     store = null;
@@ -62,8 +62,6 @@ describe('Store:[Claim,Release,Slice,Immutable]', () => {
 
 describe('Store:[mutable]', () => {
   let store = new Store<StoreType>({ A: { C: { D: 1 } }, B: 2 } as StoreType, true);
-
-  beforeEach(() => {});
 
   afterAll(() => {
     store = null;

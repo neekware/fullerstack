@@ -8,7 +8,7 @@
 
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { CachifyFetchPolicy, interpolate, makeCachifyContext } from '@fullerstack/ngx-cachify';
+import { interpolate } from '@fullerstack/ngx-cachify';
 import {
   ApplicationConfig,
   ConfigService,
@@ -21,9 +21,9 @@ import { GTagService } from '@fullerstack/ngx-gtag';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
-import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
+import { merge as ldNestedMerge } from 'lodash-es';
 import { Observable, Subject, of } from 'rxjs';
-import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultUserConfig, DefaultUserState } from './user.default';
@@ -85,7 +85,6 @@ export class UserService {
   private subState() {
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
-        const prevState = cloneDeep(this.state);
         this.state = { ...DefaultUserState, ...newState };
       },
     });

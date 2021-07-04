@@ -93,7 +93,11 @@ describe('Store:Util:Freeze', () => {
   });
 
   it('return true for a function', () => {
-    expect(isFunction(() => {})).toBeTruthy;
+    expect(
+      isFunction(() => {
+        return 'hello';
+      })
+    ).toBeTruthy;
   });
 
   it('return false for a non-function', () => {
