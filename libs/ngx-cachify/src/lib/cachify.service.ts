@@ -10,13 +10,13 @@
 
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { StoreState } from '@fullerstack/agx-store';
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
-import { Store } from '@fullerstack/ngx-store';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
@@ -28,11 +28,11 @@ export class CachifyService {
   private nameSpace = 'CACHIFY';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private cacheMap = new Map<string, CachifyEntry>();
-  private cacheStore: Store;
+  private cacheStore: StoreState;
 
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ cachify: DefaultCachifyConfig }, this.config.options);
-    this.cacheStore = new Store({}, this.options.cachify.immutable);
+    this.cacheStore = new StoreState({}, this.options.cachify.immutable);
     this.logger.info(`[${this.nameSpace}] CachifyService ready ...`);
   }
 

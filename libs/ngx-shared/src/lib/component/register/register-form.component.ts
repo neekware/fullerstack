@@ -12,6 +12,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -31,7 +32,7 @@ import { first, takeUntil } from 'rxjs/operators';
   styleUrls: ['./register-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent implements OnInit, OnDestroy {
   @ViewChild('emailInput') emailField?: ElementRef;
   form: FormGroup;
   private destroy$ = new Subject<boolean>();
@@ -86,7 +87,8 @@ export class RegisterFormComponent implements OnInit {
 
   submit() {
     this.formTouched = false;
-    const { email, password, ...rest } = this.form.value;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { email, password, ...ignore } = this.form.value;
     const { firstName, lastName } = tokenizeFullName(this.form.value.name);
     // const language = this.i18n.currentLanguage;
 
