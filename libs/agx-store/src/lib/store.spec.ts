@@ -8,13 +8,13 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Store } from './store';
-import { StoreType } from './store.model';
+import { StoreStateType } from './store.model';
+import { StoreState } from './store.state';
 
 jest.spyOn(console, 'log').mockImplementation(() => undefined);
 
 describe('Store:[Claim,Release,Slice,Immutable]', () => {
-  let store = new Store<StoreType>({ A: { C: { D: 1 } }, B: 2 } as StoreType, true);
+  let store = new StoreState<StoreStateType>({ A: { C: { D: 1 } }, B: 2 } as StoreStateType, true);
 
   afterAll(() => {
     store = null;
@@ -61,7 +61,7 @@ describe('Store:[Claim,Release,Slice,Immutable]', () => {
 });
 
 describe('Store:[mutable]', () => {
-  let store = new Store<StoreType>({ A: { C: { D: 1 } }, B: 2 } as StoreType, true);
+  let store = new StoreState<StoreStateType>({ A: { C: { D: 1 } }, B: 2 } as StoreStateType, true);
 
   afterAll(() => {
     store = null;

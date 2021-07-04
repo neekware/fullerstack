@@ -22,11 +22,11 @@ export type SetStateReducer<T = any, K = any> = (currentState: T) => Partial<T> 
 /**
  * Store Type - Object
  */
-export interface StoreType {
+export interface StoreStateType {
   [key: string]: any;
 }
 
-export class ImmutableStore<T extends StoreType> extends BehaviorSubject<T> {
+export class ImmutableStore<T extends StoreStateType> extends BehaviorSubject<T> {
   constructor(initialData: T) {
     super(initialData);
   }

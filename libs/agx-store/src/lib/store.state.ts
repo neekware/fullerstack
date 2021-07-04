@@ -16,11 +16,11 @@ import {
   SetStateReducer,
   StoreLogger,
   StoreRegistryEntry,
-  StoreType,
+  StoreStateType,
 } from './store.model';
 import { deepFreeze, getUniqueString, isFunction } from './store.util';
 
-export class Store<T = StoreType> {
+export class StoreState<T = StoreStateType> {
   private immutable = true;
   private registry = new Map<string, StoreRegistryEntry>();
   private storeState$: ImmutableStore<T>;
