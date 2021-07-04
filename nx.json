@@ -32,6 +32,9 @@
     "agx-dto": {
       "tags": []
     },
+    "agx-store": {
+      "tags": ["agx-store"]
+    },
     "agx-util": {
       "tags": ["name:agx-util", "scope:agx-util"]
     },

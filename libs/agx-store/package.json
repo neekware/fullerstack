@@ -1,0 +1,16 @@
+{
+  "name": "@fullerstack/agx-store",
+  "version": "0.0.1",
+  "description": "A simple flat store library for web applications",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/agx-store/README.md",
+  "keywords": [
+    "redux",
+    "store"
+  ],
+  "peerDependencies": {
+    "rxjs": "^7.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

@@ -26,5 +26,6 @@ module.exports = {
     '<rootDir>/libs/ngx-user',
     '<rootDir>/libs/ngx-cachify',
     '<rootDir>/libs/ngx-store',
+    '<rootDir>/libs/agx-store',
   ],
 };

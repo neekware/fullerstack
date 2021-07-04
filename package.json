@@ -142,6 +142,7 @@
     "@nrwl/node": "12.5.0-rc.1",
     "@nrwl/nx-cloud": "12.2.7",
     "@nrwl/tao": "12.5.0-rc.1",
+    "@nrwl/web": "^12.5.4",
     "@nrwl/workspace": "12.5.0-rc.1",
     "@types/cookie-parser": "^1.4.2",
     "@types/crypto-js": "^4.0.1",
