@@ -68,6 +68,7 @@ describe('Store:[Claim,Release,Slice,Immutable]', () => {
     const logSpy = jest.spyOn(console, 'log');
     store.setState(claimId, { a: 1 }, 'INIT_STATE');
     expect(logSpy).toHaveBeenCalledTimes(2);
+    console.log = origLog;
   });
 });
 
