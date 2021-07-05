@@ -44,30 +44,31 @@ export const layoutMenuTree: MenuItem[] = [
     link: '/about/us',
   },
   {
-    name: _('COMMON.CURRENCY_EXCHANGE'),
+    name: _('COMMON.FOREX'),
     icon: 'cash-multiple',
     link: '/forex',
   },
   {
     name: _('COMMON.STOCKS'),
     icon: 'trending-up',
-    disabled: true,
     children: [
       {
         name: _('COMMON.PORTFOLIO'),
         icon: 'account-check',
         link: '/finance/stocks/own',
+        fullspan: true,
       },
       {
-        name: _('COMMON.WISHLIST'),
+        name: _('COMMON.TREND'),
         icon: 'playlist-check',
-        link: '/finance/stocks/wishlist',
+        link: '/finance/stocks/trend',
       },
     ],
   },
   {
     name: _('COMMON.BONDS'),
     icon: 'trending-up',
+    disabled: true,
     children: [
       {
         name: _('COMMON.PORTFOLIO'),
@@ -84,6 +85,7 @@ export const layoutMenuTree: MenuItem[] = [
   {
     name: _('COMMON.ETFS'),
     icon: 'trending-up',
+    disabled: true,
     children: [
       {
         name: _('COMMON.PORTFOLIO'),
@@ -112,9 +114,9 @@ export const layoutMenuTree: MenuItem[] = [
     external: true,
     target: '_blank',
   },
-  {
-    name: _('COMMON.CONTACT_US'),
-    icon: 'at',
-    link: '/contact/us',
-  },
+  // {
+  //   name: _('COMMON.CONTACT_US'),
+  //   icon: 'at',
+  //   link: '/contact/us',
+  // },
 ];
