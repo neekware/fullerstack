@@ -75,7 +75,7 @@ async function syncPackageData(moduleBuildPath: string): Promise<void> {
  */
 async function buildPackage() {
   if (program.build) {
-    const cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache --prod`;
+    const cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache`;
     console.log(cmd);
     await execute(cmd).catch((error) => {
       console.log(`Failed to build ${program.library} ... ${error}`);
@@ -148,8 +148,9 @@ program
   .version('0.0.1', '-v, --version')
   .option('-l, --library <library>', 'Library name to push to npmjs.org')
   .option('-b, --build', 'Build the library')
-  .option('-p, --publish', 'Publish @<lib>@latest')
+  .option('-r, --release', 'Publish @<lib>@latest')
   .option('-d, --dev', 'Publish @<lib>@next')
+  .option('-p, --prod', 'Production (React/Angular)')
   .parse(process.argv);
 
 main().catch((err) => {
