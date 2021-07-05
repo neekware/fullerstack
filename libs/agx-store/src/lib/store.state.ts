@@ -79,23 +79,27 @@ export class StoreState<T = StoreStateType> {
    *  ...DefaultAuthState,
    *  isRegistering: true,
    *  isLoading: true,
-   * });
+   * }, 'AUTH_REGISTER_REQUEST');
    *
    * this.store.setState(this.claimId, (state) => {
    *  ...state[this.sliceName],
    *  isRegistering: true,
    *  isLoading: true,
-   * });
+   * }, 'AUTH_REGISTER_REQUEST');
    */
-  setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): K;
-  setState<K = any>(claimId: string, updater: K): K {
+  setState<K = any>(
+    claimId: string,
+    updater: SetStateReducer<T, K> | Partial<T> | K,
+    action?: string
+  ): K;
+  setState<K = any>(claimId: string, updater: K, action?: string): K {
     const entry = this.registry.get(claimId);
     if (!entry) {
       throw new Error(`setState: No slice registration with private key: (${claimId})`);
     }
     const currentState = this.getState();
     if (entry.logger)
-      entry.logger(`[STORE][PREV][${entry.sliceName}]`, {
+      entry.logger(`[STORE][PREV][${action ? action : entry.sliceName}]`, {
         [entry.sliceName]: currentState[entry.sliceName],
       });
 
@@ -106,7 +110,7 @@ export class StoreState<T = StoreStateType> {
       : this.storeState$.next(nextState);
 
     if (entry.logger)
-      entry.logger(`[STORE][NEXT][${entry.sliceName}]`, {
+      entry.logger(`[STORE][NEXT][${action ? action : entry.sliceName}]`, {
         [entry.sliceName]: nextState[entry.sliceName],
       });
 
