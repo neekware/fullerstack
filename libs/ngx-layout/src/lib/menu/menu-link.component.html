@@ -1,4 +1,10 @@
-<a *ngIf="link.isInternalLink" (click)="redirectUrl(link)" [class.active]="link.isActive(router.url)" [class.disabled]="link.disabled">
+<a
+  *ngIf="link.isInternalLink"
+  routerLink="{{ link.link }}"
+  (click)="handleToggle(link)"
+  [class.active]="link.isActive(router.url)"
+  [class.disabled]="link.disabled"
+>
   <div fxLayoutGap="14px" [fxFlexOffset]="link.offset(16)">
     <mat-icon [class.text-color-muted]="link.disabled" *ngIf="link?.icon" svgIcon="{{ link.icon }}"></mat-icon>
     <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>

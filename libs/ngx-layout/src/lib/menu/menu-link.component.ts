@@ -27,10 +27,9 @@ export class MenuLinkComponent {
     readonly layout: LayoutService
   ) {}
 
-  redirectUrl(node: MenuNode) {
+  handleToggle(node: MenuNode) {
     if ((node.isFullSpan || this.layout.state.isHandset) && this.layout.state.menuOpen) {
       this.layout.toggleMenu();
     }
-    this.auth.goTo(node.link);
   }
 }
