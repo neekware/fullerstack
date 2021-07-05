@@ -114,9 +114,9 @@ export const layoutMenuTree: MenuItem[] = [
     external: true,
     target: '_blank',
   },
-  // {
-  //   name: _('COMMON.CONTACT_US'),
-  //   icon: 'at',
-  //   link: '/contact/us',
-  // },
+  {
+    name: _('COMMON.CONTACT_US'),
+    icon: 'at',
+    link: '/contact/us',
+  },
 ];
