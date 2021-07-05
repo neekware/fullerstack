@@ -73,9 +73,11 @@ async function syncPackageData(moduleBuildPath: string): Promise<void> {
  * Builds a production build of a given library with its deps, from the current branch
  * @returns build status
  */
-async function buildPackage() {
+async function buildPackage(prod: boolean) {
   if (program.build) {
-    const cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache`;
+    const cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache ${
+      prod ? '--prod' : ''
+    }`;
     console.log(cmd);
     await execute(cmd).catch((error) => {
       console.log(`Failed to build ${program.library} ... ${error}`);
@@ -116,12 +118,17 @@ async function main() {
     return 1;
   }
 
-  const built = await buildPackage();
+  const moduleBuildPath = path.join(distDir, 'libs', program.library);
+  let prod = false;
+  if (fs.existsSync(path.join(moduleBuildPath, 'ng-package.json'))) {
+    prod = true;
+  }
+
+  const built = await buildPackage(prod);
   if (!built) {
     return 1;
   }
 
-  const moduleBuildPath = path.join(distDir, 'libs', program.library);
   await syncPackageData(moduleBuildPath);
 
   const modulePkg = getModulePackage(moduleBuildPath);
