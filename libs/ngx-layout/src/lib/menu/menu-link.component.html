@@ -1,7 +1,7 @@
 <a
   *ngIf="link.isInternalLink"
   routerLink="{{ link.link }}"
-  (click)="redirectUrl(link)"
+  (click)="handleToggle(link)"
   [class.active]="link.isActive(router.url)"
   [class.disabled]="link.disabled"
 >

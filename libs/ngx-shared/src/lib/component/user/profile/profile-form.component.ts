@@ -84,7 +84,8 @@ export class UserProfileFormComponent implements OnInit {
   }
 
   submit() {
-    const { id, firstName, lastName, ...rest } = this.form.value;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, firstName, lastName, ...ignore } = this.form.value;
     this.user
       .userSelfUpdateMutate$({ id, firstName, lastName })
       .pipe(takeUntil(this.destroy$))

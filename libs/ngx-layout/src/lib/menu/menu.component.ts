@@ -6,7 +6,14 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { MenuItem, MenuNode } from '@fullerstack/ngx-menu';
 import { Subject } from 'rxjs';
@@ -25,7 +32,12 @@ export class MenuComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
   rootNode: MenuNode;
 
-  constructor(readonly layout: LayoutService, readonly auth: AuthService) {}
+  constructor(
+    readonly chRef: ChangeDetectorRef,
+    readonly router: Router,
+    readonly layout: LayoutService,
+    readonly auth: AuthService
+  ) {}
 
   ngOnInit() {
     this.layout.menu.setPermissionVerificationFunction(this.hasPermission.bind(this));
@@ -37,6 +49,12 @@ export class MenuComponent implements OnInit, OnDestroy {
         const forceMenuRebuild = true;
         this.rootNode = this.layout.menu.buildMenuTree(layoutMenuTree, forceMenuRebuild);
       },
+    });
+
+    this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.chRef.markForCheck();
+      }
     });
   }
 

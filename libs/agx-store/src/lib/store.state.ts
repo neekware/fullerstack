@@ -8,26 +8,20 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { isFunction } from 'lodash-es';
-import { merge as ldNestedMerge } from 'lodash-es';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { DeepReadonly } from 'ts-essentials';
-import { v4 as uuidV4 } from 'uuid';
 
-import { DefaultStoreConfig } from './store.default';
-import { deepFreeze } from './store.freeze';
 import {
   ImmutableStore,
   SetStateReducer,
-  StoreConfig,
   StoreLogger,
   StoreRegistryEntry,
-  StoreType,
+  StoreStateType,
 } from './store.model';
+import { deepFreeze, getUniqueString, isFunction } from './store.util';
 
-export class Store<T = StoreType> {
-  private config: DeepReadonly<StoreConfig> = DefaultStoreConfig;
+export class StoreState<T = StoreStateType> {
+  private immutable = true;
   private registry = new Map<string, StoreRegistryEntry>();
   private storeState$: ImmutableStore<T>;
 
@@ -35,8 +29,8 @@ export class Store<T = StoreType> {
    * Initialize the store with the given initial state value
    * @param initialState The initial state of store
    */
-  constructor(initialState: T, config?: StoreConfig) {
-    this.config = ldNestedMerge({ ...DefaultStoreConfig, ...config });
+  constructor(initialState: T, immutable?: boolean) {
+    this.immutable = immutable;
     this.storeState$ = new ImmutableStore<T>(initialState);
   }
 
@@ -48,11 +42,11 @@ export class Store<T = StoreType> {
   claimSlice(sliceName: string, logger?: StoreLogger): string {
     this.registry.forEach((entity) => {
       if (entity.sliceName === sliceName) {
-        throw new Error(`claimSlice: Slice ${sliceName} already claimed (${entity.claimId})`);
+        throw new Error(`claimSlice: Slice ${sliceName} already claimed (${entity.sliceName})`);
       }
     });
 
-    const claimId = uuidV4();
+    const claimId = getUniqueString();
     this.registry.set(claimId, { sliceName, claimId, logger });
     return claimId;
   }
@@ -69,9 +63,7 @@ export class Store<T = StoreType> {
 
     const state = this.getState();
     const newState = { ...state, ...{ [entity.sliceName]: undefined } };
-    this.config?.immutable
-      ? this.storeState$.next(deepFreeze(newState))
-      : this.storeState$.next(newState);
+    this.immutable ? this.storeState$.next(deepFreeze(newState)) : this.storeState$.next(newState);
 
     this.registry.delete(claimId);
   }
@@ -79,8 +71,21 @@ export class Store<T = StoreType> {
   /**
    * Moves the store to a new state by merging the given (or generated) partial state
    * into the existing state (creating a new state object).
+   *
+   * @param claimId private key to claim write permission to this slice
    * @param updater Partial data or function to update state
-   * Note: https://github.com/Microsoft/TypeScript/issues/18823
+   *
+   * this.store.setState(this.claimId, {
+   *  ...DefaultAuthState,
+   *  isRegistering: true,
+   *  isLoading: true,
+   * });
+   *
+   * this.store.setState(this.claimId, (state) => {
+   *  ...state[this.sliceName],
+   *  isRegistering: true,
+   *  isLoading: true,
+   * });
    */
   setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): K;
   setState<K = any>(claimId: string, updater: K): K {
@@ -96,7 +101,7 @@ export class Store<T = StoreType> {
 
     const partialState = isFunction(updater) ? updater(currentState) : updater;
     const nextState = Object.assign({}, currentState, { [entry.sliceName]: partialState });
-    this.config?.immutable
+    this.immutable
       ? this.storeState$.next(deepFreeze(nextState))
       : this.storeState$.next(nextState);
 

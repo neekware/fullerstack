@@ -8,7 +8,23 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { isFunction } from 'lodash-es';
+/**
+ * Return true if input is a function
+ * @param input value of type any
+ * @returns true if input is of type function
+ */
+
+export function isFunction(value: any): value is (...args: any[]) => any {
+  return typeof value === 'function';
+}
+
+/**
+ * A high performance low-collision unique number generator
+ * @returns unique string
+ */
+export function getUniqueString(): string {
+  return (Date.now() + Math.random()).toString(36);
+}
 
 /**
  * Simple Object DeepFreeze implementation

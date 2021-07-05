@@ -6,8 +6,6 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-
 import { UserConfig, UserState } from './user.model';
 
 export const DefaultUserConfig: UserConfig = {

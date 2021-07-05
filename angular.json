@@ -68,6 +68,37 @@
         }
       }
     },
+    "agx-store": {
+      "root": "libs/agx-store",
+      "sourceRoot": "libs/agx-store/src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/workspace:tsc",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/agx-store",
+            "main": "libs/agx-store/src/index.ts",
+            "tsConfig": "libs/agx-store/tsconfig.lib.json",
+            "assets": ["libs/agx-store/*.md"]
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/agx-store/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/agx-store"],
+          "options": {
+            "jestConfig": "libs/agx-store/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "agx-util": {
       "root": "libs/agx-util",
       "sourceRoot": "libs/agx-util/src",

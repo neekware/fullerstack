@@ -6,9 +6,9 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { deepFreeze } from '@fullerstack/agx-store';
+import { deepFreeze, getUniqueString, isFunction } from './store.util';
 
-describe('DeepFreeze', () => {
+describe('Store:Util:Freeze', () => {
   it('should mutate an unfrozen flat object', () => {
     const flatObject = { a: 1 };
     flatObject.a = 1;
@@ -20,7 +20,7 @@ describe('DeepFreeze', () => {
     const frozenValue = deepFreeze(flatObject);
     expect(() => {
       frozenValue.a = 1;
-    }).toThrow("Cannot assign to read only property 'a' of object '[object Object]'");
+    }).toThrow("Cannot assign to read only property 'a' of object '#<Object>'");
   });
 
   it('should mutate an unfrozen nested object', () => {
@@ -51,7 +51,7 @@ describe('DeepFreeze', () => {
 
     expect(() => {
       frozenValue.b = { c: { d: 2 } };
-    }).toThrow("Cannot assign to read only property 'b' of object '[object Object]'");
+    }).toThrow("Cannot assign to read only property 'b' of object '#<Object>'");
   });
 
   it('should mutate a frozen nested object after object.assign()', () => {
@@ -70,7 +70,7 @@ describe('DeepFreeze', () => {
 
     expect(() => {
       newNestObject.b = { c: { d: 2 } };
-    }).not.toThrow("Cannot assign to read only property 'b' of object '[object Object]'");
+    }).not.toThrow("Cannot assign to read only property 'b' of object '#<Object>'");
   });
 
   it('should mutate a frozen nested object after spread operation {...}', () => {
@@ -89,6 +89,27 @@ describe('DeepFreeze', () => {
 
     expect(() => {
       newNestObject.b = { c: { d: 2 } };
-    }).not.toThrow("Cannot assign to read only property 'b' of object '[object Object]'");
+    }).not.toThrow("Cannot assign to read only property 'b' of object '#<Object>'");
+  });
+
+  it('return true for a function', () => {
+    expect(
+      isFunction(() => {
+        return 'hello';
+      })
+    ).toBeTruthy;
+  });
+
+  it('return false for a non-function', () => {
+    expect(isFunction('foo-bar')).toBeFalsy;
+    expect(isFunction({})).toBeFalsy;
+  });
+
+  it('return a unique number with low collision possibility', () => {
+    const values = {
+      one: getUniqueString(),
+      two: getUniqueString(),
+    };
+    expect(values.one).not.toEqual(values.two);
   });
 });
