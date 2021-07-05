@@ -155,9 +155,8 @@ program
   .version('0.0.1', '-v, --version')
   .option('-l, --library <library>', 'Library name to push to npmjs.org')
   .option('-b, --build', 'Build the library')
-  .option('-r, --release', 'Publish @<lib>@latest')
+  .option('-p, --publish', 'Publish @<lib>@latest')
   .option('-d, --dev', 'Publish @<lib>@next')
-  .option('-p, --prod', 'Production (React/Angular)')
   .parse(process.argv);
 
 main().catch((err) => {
