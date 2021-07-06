@@ -27,19 +27,19 @@
   },
   "projects": {
     "agx-assets": {
-      "tags": ["scope:agx-data-base"]
+      "tags": ["scope:agx-data"]
     },
     "agx-dto": {
-      "tags": ["scope:agx-data-base"]
+      "tags": ["scope:agx-data"]
     },
     "agx-store": {
-      "tags": ["scope:agx-data-base"]
+      "tags": ["scope:agx-data"]
     },
     "agx-util": {
-      "tags": ["scope:agx-util-base"]
+      "tags": ["scope:agx-util"]
     },
     "api": {
-      "tags": []
+      "tags": ["scope:api-server"]
     },
     "fullerstack": {
       "tags": ["scope:fullerstack-client"],
@@ -50,70 +50,70 @@
       "implicitDependencies": ["fullerstack"]
     },
     "ngx-auth": {
-      "tags": ["scope:ngx-data-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-cachify": {
-      "tags": ["scope:ngx-data-proper"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-config": {
-      "tags": ["scope:ngx-data-common"]
+      "tags": ["scope:ngx-data"]
     },
     "ngx-gql": {
-      "tags": ["scope:ngx-data-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-gtag": {
-      "tags": ["scope:ngx-util-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-i18n": {
-      "tags": ["scope:ngx-ui-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-jwt": {
-      "tags": ["scope:ngx-util-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-layout": {
-      "tags": ["scope:ngx-ui-proper"]
+      "tags": ["scope:ngx-ui"]
     },
     "ngx-logger": {
-      "tags": ["scope:ngx-util-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-material": {
-      "tags": ["scope:ngx-ui-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-menu": {
-      "tags": ["scope:ngx-util-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-msg": {
-      "tags": ["scope:ngx-ui-util-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-shared": {
       "tags": ["scope:ngx-shared"]
     },
     "ngx-store": {
-      "tags": ["scope:ngx-data-proper"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-subify": {
-      "tags": ["scope:ngx-util-common"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-uix": {
-      "tags": ["scope:ngx-ui-common"]
+      "tags": ["scope:ngx-ui"]
     },
     "ngx-user": {
-      "tags": ["scope:ngx-data-proper"]
+      "tags": ["scope:ngx-util"]
     },
     "ngx-util": {
-      "tags": ["scope:ngx-util-proper"]
+      "tags": ["scope:ngx-util"]
     },
     "nsx-auth": {
-      "tags": ["scope:nsx-data-proper"]
+      "tags": ["scope:nsx-util"]
     },
     "nsx-common": {
-      "tags": ["scope:nsx-data-base"]
+      "tags": ["scope:nsx-data"]
     },
     "nsx-prisma": {
-      "tags": ["scope:nsx-data-base"]
+      "tags": ["scope:nsx-data"]
     },
     "nsx-user": {
-      "tags": ["scope:nsx-data-proper"]
+      "tags": ["scope:nsx-util"]
     }
   },
   "targetDependencies": {
