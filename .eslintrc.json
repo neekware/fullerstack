@@ -76,11 +76,16 @@
               },
               {
                 "sourceTag": "scope:nsx-data",
-                "onlyDependOnLibsWithTags": ["scope:agx-data", "scope:agx-util"]
+                "onlyDependOnLibsWithTags": ["scope:agx-data", "scope:agx-util", "scope:nsx-data"]
               },
               {
                 "sourceTag": "scope:nsx-util",
-                "onlyDependOnLibsWithTags": ["scope:agx-data", "scope:agx-util", "scope:nsx-data"]
+                "onlyDependOnLibsWithTags": [
+                  "scope:agx-data",
+                  "scope:agx-util",
+                  "scope:nsx-data",
+                  "scope:nsx-util"
+                ]
               }
             ]
           }
