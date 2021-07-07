@@ -17,7 +17,7 @@ export type StoreLogger = (message: any, ...extras: any[]) => void;
  * State Reducer that gives the caller the option of defining the new state partial using a callback by
  * providing the current state snapshot.
  */
-export type SetStateReducer<T = any, K = any> = (currentState: T) => Partial<T> | K;
+export type StoreStateReducer<T = any, K = any> = (currentState: T) => Partial<T> | K;
 
 /**
  * Store Type - Object

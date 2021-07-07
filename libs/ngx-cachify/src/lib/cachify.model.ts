@@ -84,7 +84,7 @@ export interface CachifyContextMeta {
  * State Reducer that gives the caller the option of defining the new state partial using a callback by
  * providing the current state snapshot.
  */
-export type SetStateReducer<T> = (currentState: T) => Partial<T>;
+export type StoreStateReducer<T> = (currentState: T) => Partial<T>;
 
 /**
  * Store Type - Object

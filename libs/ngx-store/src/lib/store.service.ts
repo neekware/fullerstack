@@ -8,7 +8,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
-import { SetStateReducer, StoreLogger, StoreState, StoreStateType } from '@fullerstack/agx-store';
+import { StoreLogger, StoreState, StoreStateReducer, StoreStateType } from '@fullerstack/agx-store';
 import {
   ApplicationConfig,
   ConfigService,
@@ -57,7 +57,7 @@ export class StoreService<T = StoreStateType> {
    */
   setState<K = any>(
     claimId: string,
-    updater: SetStateReducer<T, K> | Partial<T> | K,
+    updater: StoreStateReducer<T, K> | Partial<T> | K,
     action?: string
   ): K;
   setState<K = any>(claimId: string, updater: K, action?: string): K {

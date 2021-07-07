@@ -13,9 +13,9 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import {
   ImmutableStore,
-  SetStateReducer,
   StoreLogger,
   StoreRegistryEntry,
+  StoreStateReducer,
   StoreStateType,
 } from './store.model';
 import { deepFreeze, getUniqueString, isFunction } from './store.util';
@@ -89,7 +89,7 @@ export class StoreState<T = StoreStateType> {
    */
   setState<K = any>(
     claimId: string,
-    updater: SetStateReducer<T, K> | Partial<T> | K,
+    updater: StoreStateReducer<T, K> | Partial<T> | K,
     action?: string
   ): K;
   setState<K = any>(claimId: string, updater: K, action?: string): K {

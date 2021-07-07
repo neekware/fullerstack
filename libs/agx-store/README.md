@@ -11,7 +11,7 @@
 
 ## Description
 
-This library helps implementing a flat `redux` store, with simplicity and performance in mind.
+This library helps implementing a flat `redux` state store, with simplicity and performance in mind.
 
 **@fullerstack/agx-store** attempts to simplify the reactive implementation of your Angular application, through minimal `redux` patterns, while promoting DRY **DRY**.
 
@@ -21,7 +21,142 @@ This library helps implementing a flat `redux` store, with simplicity and perfor
 
 # How to use
 
-TBD
+```typescript
+// auth.model.ts
+import { DeepReadonly } from 'ts-essentials';
+
+// define the shape of the auth state
+export interface AuthState {
+  userId: string;
+  isLoading: boolean;
+  isLoggedIn: boolean;
+  isRegistering: boolean;
+  isAuthenticating: boolean;
+  hasError: boolean;
+  token: string;
+}
+
+// create a immutable default state
+export const DefaultAuthState: DeepReadonly<AuthState> = {
+  userId: null,
+  isLoading: false,
+  isLoggedIn: false,
+  isRegistering: false,
+  isAuthenticating: false,
+  hasError: false,
+  token: null,
+};
+```
+
+```typescript
+import { DeepReadonly } from 'ts-essentials';
+import { Subscription } from 'rxjs';
+import { Store, StoreStateType } from '@fullerstack/agx-store';
+
+// auth service
+export class AuthService<T = StoreStateType> {
+  // state slice name to be reserved for the auth service
+  private nameSpace = 'AUTH';
+
+  // claim ID of the slice is stored post registration
+  // read-access to auth state is open to all
+  // write-access to auth state is only open to those with a valid claimId
+  private claimId: string;
+
+  // holds our local state (if we need to compare `prev` vs. `next`)
+  // a local deep clone copy of our state, which is also immutable
+  // to allow others read-access, without the ability to mutate our local state
+  state: DeepReadonly<AuthState> = DefaultAuthState;
+
+  // auth state change notification (if we need to react to `auth` state changes)
+  readonly stateSub$: Subscription;
+
+  // we need to create an instance of the store here
+  // alternatively, an app-level store could be used if available
+  private store: StoreState;
+
+  constructor() {
+    // instantiate a new local store
+    this.store = new StoreState<T>({} as T, { ...this.options.store });
+
+    // reserve our AUTH slice from the full state
+    // we choose console.log as our slice/state logger
+    // alternatively a custom logger implementing the console api can be chosen
+    this.claimId = this.store.claimSlice(sliceName, console.log);
+
+    // subscribe to state changes for auth
+    this.stateSub$ = this.store.select$<AuthState>(this.nameSpace).subscribe({
+      next: (newState) => {
+        const prevState = cloneDeep(this.state);
+        this.state = { ...DefaultAuthState, ...newState };
+        if (this.state.isLoggedIn && !prevState.isLoggedIn) {
+          console.log(`You are logged in now!`);
+        }
+        // do other stuff, if you may!
+      },
+    });
+  }
+
+  loginRequest(input: UserCredentialsInput) {
+    // set auth state to authenticating
+    // loading started ...
+    this.store.setState(
+      this.claimId, // provide write-access claimId
+      {
+        ...this.state,
+        isAuthenticating: true,
+        isLoading: true,
+      },
+      'LOGIN_REQ_SENT' // action name (optional)
+    );
+
+    // make login request (e.g. `doFetch()` is your way of communicating with your server)
+    const result = doFetch('/login', input);
+    if (result.ok) {
+      // set auth state to authenticated
+      // loading ended ...
+      this.store.setState(
+        this.claimId,
+        {
+          ...DefaultAuthState,
+          isLoggedIn: true,
+          token: resp.token,
+          userId: resp.userId,
+        },
+        'LOGIN_REQ_SUCCESS' // action
+      );
+    } else {
+      // set auth state to authentication failed
+      // loading ended ...
+      this.store.setState(
+        this.claimId,
+        {
+          ...DefaultAuthState,
+          hasError: true,
+          message: resp.message,
+        },
+        'LOGIN_REQ_FAILED' // action
+      );
+    }
+  }
+
+  // clean up and free up resources prior to class instance `destroy`
+  cleanUp() {
+    this.stateSub$.unsubscribe();
+    this.store.releaseSlice(this.nameSpace);
+    this.store = undefined;
+  }
+}
+```
+
+```txt
+[STORE][PREV][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
+[STORE][NEXT][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
+[AUTH] Login request sent ...
+[STORE][PREV][AUTH_LOGIN_RES_SUCCESS] ↠ {AUTH: {…}}
+[STORE][NEXT][AUTH_LOGIN_RES_SUCCESS] ↠ {AUTH: {…}}
+[AUTH] Login request success ...
+```
 
 # License
 
