@@ -70,7 +70,7 @@ export class AuthService<T = StoreStateType> {
   // to allow others read-access, without the ability to mutate our local state
   state: DeepReadonly<AuthState> = DefaultAuthState;
 
-  // auth state change notification (if we need to react to `auth` state changes)
+  // auth state subscription, so we can unsubscribe on cleanup
   readonly stateSub$: Subscription;
 
   // we need to create an instance of the store here
