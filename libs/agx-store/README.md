@@ -151,7 +151,7 @@ export class AuthService<T = StoreStateType> {
 }
 ```
 
-```re
+```txt
 // console.log ...
 [STORE][PREV][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
 [STORE][NEXT][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
