@@ -1,6 +1,6 @@
 # @fullerstack/agx-store <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
 
-**A simple Angular caching store that can also fetch and cache http requests**
+**A simple flat state-store that helps implement lite-redux pattern**
 
 [![status-image]][status-link]
 [![version-image]][version-link]
@@ -13,7 +13,7 @@
 
 This library helps implementing a flat `redux` state store, with simplicity and performance in mind.
 
-**@fullerstack/agx-store** attempts to simplify the reactive implementation of your Angular application, through minimal `redux` patterns, while promoting DRY **DRY**.
+**@fullerstack/agx-store** attempts to simplify the reactive implementation of your browser application, through minimal `redux` patterns, while promoting DRY **DRY**.
 
 # How to install
 
