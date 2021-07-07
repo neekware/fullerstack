@@ -1,4 +1,4 @@
-# @fullerstack/ngx-i18n <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
+# @fullerstack/ngx-i18n <img style="margin-bottom: -6px" width="30" src="../../libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
 **A simple translation library for Angular applications**
 

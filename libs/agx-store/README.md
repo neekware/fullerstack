@@ -1,4 +1,4 @@
-# @fullerstack/agx-store <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
+# @fullerstack/agx-store <img style="margin-bottom: -6px" width="30" src="../../libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
 **A simple flat state-store that helps implement lite-redux pattern**
 
@@ -37,7 +37,7 @@ export interface AuthState {
   token: string;
 }
 
-// create a immutable default state
+// create an immutable default state
 export const DefaultAuthState: DeepReadonly<AuthState> = {
   userId: null,
   isAnonymous: false,

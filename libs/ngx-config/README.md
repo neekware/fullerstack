@@ -1,4 +1,4 @@
-# @fullerstack/ngx-config <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
+# @fullerstack/ngx-config <img style="margin-bottom: -6px" width="30" src="../../libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
 **An Angular Configuration Library - Handles local and remote configurations**
 

@@ -1,4 +1,4 @@
-# @fullerstack/ngx-subify <img style="margin-bottom: -6px" width="30" src="../../apps/fullerstack/src/assets/images/fullerstack-x250.png">
+# @fullerstack/ngx-subify <img style="margin-bottom: -6px" width="30" src="../../libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
 **A simple subscription manager library for Angular applications**
 
