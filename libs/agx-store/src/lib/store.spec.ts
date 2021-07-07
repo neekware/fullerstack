@@ -54,9 +54,21 @@ describe('Store:[Claim,Release,Slice,Immutable]', () => {
       expect(() => {
         state.E = 1;
       }).toThrow("Cannot assign to read only property 'E' of object '#<Object>'");
+      store.releaseSlice(claimId);
       done();
     });
     store.setState(claimId, defaultAuth);
+  });
+
+  it('should log set state', () => {
+    const sliceName = 'auth';
+    const origLog = console.log;
+    console.log = jest.fn();
+    const claimId = store.claimSlice(sliceName, console.log);
+    const logSpy = jest.spyOn(console, 'log');
+    store.setState(claimId, { a: 1 }, 'INIT_STATE');
+    expect(logSpy).toHaveBeenCalledTimes(2);
+    console.log = origLog;
   });
 });
 

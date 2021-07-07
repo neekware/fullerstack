@@ -8,7 +8,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
-import { SetStateReducer, StoreLogger, StoreState, StoreStateType } from '@fullerstack/agx-store';
+import { StoreLogger, StoreState, StoreStateReducer, StoreStateType } from '@fullerstack/agx-store';
 import {
   ApplicationConfig,
   ConfigService,
@@ -23,7 +23,7 @@ import { DefaultStoreConfig } from './store.default';
 
 @Injectable()
 export class StoreService<T = StoreStateType> {
-  private nameSpace = 'STORE';
+  private nameSpace = 'STORE_SERVICE';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private store: StoreState;
 
@@ -55,9 +55,13 @@ export class StoreService<T = StoreStateType> {
    * @param claimId Claim ID of slice required for any mutation, full or partial
    * @param updater object or function that returns a partial object of type T
    */
-  setState<K = any>(claimId: string, updater: SetStateReducer<T, K> | Partial<T> | K): K;
-  setState<K = any>(claimId: string, updater: K): K {
-    return this.store.setState<K>(claimId, updater);
+  setState<K = any>(
+    claimId: string,
+    updater: StoreStateReducer<T, K> | Partial<T> | K,
+    action?: string
+  ): K;
+  setState<K = any>(claimId: string, updater: K, action?: string): K {
+    return this.store.setState<K>(claimId, updater, action);
   }
 
   /**

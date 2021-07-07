@@ -16,7 +16,9 @@ import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { TrendComponent } from './pages/trend/trend.component';
 import { ProfileUpdateComponent } from './pages/user/profile-update.component';
 
 export const AppRoutes: Routes = [
@@ -39,6 +41,20 @@ export const AppRoutes: Routes = [
     component: ForexComponent,
     data: {
       title: _('COMMON.FOREX'),
+    },
+  },
+  {
+    path: 'finance/stocks/own',
+    component: PortfolioComponent,
+    data: {
+      title: _('COMMON.PORTFOLIO'),
+    },
+  },
+  {
+    path: 'finance/stocks/trend',
+    component: TrendComponent,
+    data: {
+      title: _('COMMON.TREND'),
     },
   },
   {

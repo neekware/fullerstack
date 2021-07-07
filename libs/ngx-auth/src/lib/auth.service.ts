@@ -40,7 +40,7 @@ import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAuthConfig, DefaultAuthState, DefaultAuthUrls } from './auth.default';
-import { AuthState, AuthUrls } from './auth.model';
+import { AuthState, AuthStateAction, AuthUrls } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
@@ -125,7 +125,7 @@ export class AuthService implements OnDestroy {
    * Initialize Auth state:slice
    */
   private initState() {
-    this.store.setState(this.claimId, DefaultAuthState);
+    this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_INITIALIZE);
   }
 
   /**
@@ -142,11 +142,15 @@ export class AuthService implements OnDestroy {
   }
 
   loginRequest$(input: UserCredentialsInput): Observable<AuthState> {
-    this.store.setState(this.claimId, {
-      ...DefaultAuthState,
-      isAuthenticating: true,
-      isLoading: true,
-    });
+    this.store.setState(
+      this.claimId,
+      {
+        ...DefaultAuthState,
+        isAuthenticating: true,
+        isLoading: true,
+      },
+      AuthStateAction.AUTH_LOGIN_REQ_SENT
+    );
     this.logger.debug(`[${this.nameSpace}] Login request sent ...`);
 
     return this.gql.client
@@ -155,39 +159,55 @@ export class AuthService implements OnDestroy {
         map((resp) => {
           if (resp.ok) {
             this.logger.debug(`[${this.nameSpace}] Login request success ...`);
-            return this.store.setState(this.claimId, {
-              ...DefaultAuthState,
-              isLoggedIn: true,
-              token: resp.token,
-              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
-            });
+            return this.store.setState(
+              this.claimId,
+              {
+                ...DefaultAuthState,
+                isLoggedIn: true,
+                token: resp.token,
+                userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+              },
+              AuthStateAction.AUTH_LOGIN_RES_SUCCESS
+            );
           }
           this.logger.error(`[${this.nameSpace}] Login request failed ... ${resp.message}`);
-          return this.store.setState(this.claimId, {
-            ...DefaultAuthState,
-            hasError: true,
-            message: resp.message,
-          });
+          return this.store.setState(
+            this.claimId,
+            {
+              ...DefaultAuthState,
+              hasError: true,
+              message: resp.message,
+            },
+            AuthStateAction.AUTH_LOGOUT_RES_FAILED
+          );
         }),
         catchError((err: GqlErrorsHandler) => {
           this.logger.error(`[${this.nameSpace}] Login request failed ...`, err);
           return of(
-            this.store.setState(this.claimId, {
-              ...DefaultAuthState,
-              hasError: true,
-              message: err.topError?.message,
-            })
+            this.store.setState(
+              this.claimId,
+              {
+                ...DefaultAuthState,
+                hasError: true,
+                message: err.topError?.message,
+              },
+              AuthStateAction.AUTH_LOGOUT_RES_FAILED
+            )
           );
         })
       );
   }
 
   registerRequest$(input: UserCreateInput): Observable<AuthState> {
-    this.store.setState(this.claimId, {
-      ...DefaultAuthState,
-      isRegistering: true,
-      isLoading: true,
-    });
+    this.store.setState(
+      this.claimId,
+      {
+        ...DefaultAuthState,
+        isRegistering: true,
+        isLoading: true,
+      },
+      AuthStateAction.AUTH_REGISTER_REQ_SENT
+    );
     this.logger.debug(`[${this.nameSpace}] Register request sent ...`);
 
     return this.gql.client
@@ -196,28 +216,40 @@ export class AuthService implements OnDestroy {
         map((resp) => {
           if (resp.ok) {
             this.logger.debug(`[${this.nameSpace}] Register request success ...`);
-            return this.store.setState(this.claimId, {
-              ...DefaultAuthState,
-              isLoggedIn: true,
-              token: resp.token,
-              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
-            });
+            return this.store.setState(
+              this.claimId,
+              {
+                ...DefaultAuthState,
+                isLoggedIn: true,
+                token: resp.token,
+                userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+              },
+              AuthStateAction.AUTH_REGISTER_RES_SUCCESS
+            );
           }
           this.logger.error(`[${this.nameSpace}] Register request failed ... ${resp.message}`);
-          return this.store.setState(this.claimId, {
-            ...DefaultAuthState,
-            hasError: true,
-            message: resp.message,
-          });
+          return this.store.setState(
+            this.claimId,
+            {
+              ...DefaultAuthState,
+              hasError: true,
+              message: resp.message,
+            },
+            AuthStateAction.AUTH_REGISTER_RES_FAILED
+          );
         }),
         catchError((err: GqlErrorsHandler) => {
           this.logger.error(`[${this.nameSpace}] Register request failed ...`, err);
           return of(
-            this.store.setState(this.claimId, {
-              ...DefaultAuthState,
-              hasError: true,
-              message: err.topError?.message,
-            })
+            this.store.setState(
+              this.claimId,
+              {
+                ...DefaultAuthState,
+                hasError: true,
+                message: err.topError?.message,
+              },
+              AuthStateAction.AUTH_REGISTER_RES_FAILED
+            )
           );
         })
       );
@@ -229,20 +261,28 @@ export class AuthService implements OnDestroy {
       map((resp) => {
         if (resp.ok) {
           this.logger.debug(`[${this.nameSpace}] Token refresh request success ...`);
-          return this.store.setState(this.claimId, {
-            ...DefaultAuthState,
-            isLoggedIn: true,
-            token: resp.token,
-            userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
-          });
+          return this.store.setState(
+            this.claimId,
+            {
+              ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+            },
+            AuthStateAction.AUTH_REFRESH_TOKEN_RES_SUCCESS
+          );
         }
         this.logger.error(`[${this.nameSpace}] Token refresh request failed ... ${resp.message}`);
-        return this.store.setState(this.claimId, {
-          ...DefaultAuthState,
-          logoutRequired: true,
-          hasError: this.state.isLoggedIn ? true : false,
-          message: resp.message,
-        });
+        return this.store.setState(
+          this.claimId,
+          {
+            ...DefaultAuthState,
+            logoutRequired: true,
+            hasError: this.state.isLoggedIn ? true : false,
+            message: resp.message,
+          },
+          AuthStateAction.AUTH_REFRESH_TOKEN_RES_FAILED
+        );
       }),
       catchError((err: GqlErrorsHandler) => {
         if (this.state.isLoggedIn) {
@@ -250,12 +290,16 @@ export class AuthService implements OnDestroy {
         }
 
         return of(
-          this.store.setState(this.claimId, {
-            ...DefaultAuthState,
-            logoutRequired: true,
-            hasError: this.state.isLoggedIn ? true : false,
-            message: err.topError?.message,
-          })
+          this.store.setState(
+            this.claimId,
+            {
+              ...DefaultAuthState,
+              logoutRequired: true,
+              hasError: this.state.isLoggedIn ? true : false,
+              message: err.topError?.message,
+            },
+            AuthStateAction.AUTH_REFRESH_TOKEN_RES_FAILED
+          )
         );
       })
     );
@@ -263,7 +307,7 @@ export class AuthService implements OnDestroy {
 
   logoutRequest(onError = false) {
     this.logger.debug(`[${this.nameSpace}] Logout request sent ...`);
-    this.initState();
+    this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_LOGIN_REQ_SENT);
 
     return this.gql.client
       .request<AuthStatus>(AuthLogoutMutation)

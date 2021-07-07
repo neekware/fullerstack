@@ -968,8 +968,8 @@
       }
     },
     "nsx-user": {
-      "root": "libs/nsx-user/lib",
-      "sourceRoot": "libs/nsx-user/lib/src",
+      "root": "libs/nsx-user",
+      "sourceRoot": "libs/nsx-user/src",
       "projectType": "library",
       "architect": {
         "lint": {

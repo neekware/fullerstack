@@ -36,7 +36,9 @@ import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { TrendComponent } from './pages/trend/trend.component';
 import { ProfileUpdateComponent } from './pages/user/profile-update.component';
 
 @NgModule({
@@ -49,6 +51,8 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
     AppComponent,
     ProfileUpdateComponent,
     ForexComponent,
+    PortfolioComponent,
+    TrendComponent,
   ],
   imports: [
     BrowserModule,
