@@ -87,11 +87,8 @@ export class StoreState<T = StoreStateType> {
    *  isLoading: true,
    * }, 'AUTH_REGISTER_REQUEST');
    */
-  setState<K = any>(
-    claimId: string,
-    updater: StoreStateReducer<T, K> | Partial<T> | K,
-    action?: string
-  ): K;
+  setState<K = any>(claimId: string, updater: StoreStateReducer<T, K>, action?: string): K;
+  setState<K = any>(claimId: string, updater: Partial<T>, action?: string): K; // required (reducer <=> object)
   setState<K = any>(claimId: string, updater: K, action?: string): K {
     const entry = this.registry.get(claimId);
     if (!entry) {

@@ -28,6 +28,7 @@ import { DeepReadonly } from 'ts-essentials';
 // define the shape of the auth state
 export interface AuthState {
   userId: string;
+  isAnonymous: boolean;
   isLoading: boolean;
   isLoggedIn: boolean;
   isRegistering: boolean;
@@ -39,6 +40,7 @@ export interface AuthState {
 // create a immutable default state
 export const DefaultAuthState: DeepReadonly<AuthState> = {
   userId: null,
+  isAnonymous: false,
   isLoading: false,
   isLoggedIn: false,
   isRegistering: false,
@@ -107,7 +109,7 @@ export class AuthService<T = StoreStateType> {
         isAuthenticating: true,
         isLoading: true,
       },
-      'LOGIN_REQ_SENT' // action name (optional)
+      'AUTH_LOGIN_REQ_SENT' // action name (optional)
     );
 
     // make login request (e.g. `doFetch()` is your way of communicating with your server)
@@ -123,7 +125,7 @@ export class AuthService<T = StoreStateType> {
           token: resp.token,
           userId: resp.userId,
         },
-        'LOGIN_REQ_SUCCESS' // action
+        'AUTH_LOGIN_REQ_SUCCESS' // action
       );
     } else {
       // set auth state to authentication failed
@@ -135,7 +137,7 @@ export class AuthService<T = StoreStateType> {
           hasError: true,
           message: resp.message,
         },
-        'LOGIN_REQ_FAILED' // action
+        'AUTH_LOGIN_REQ_FAILED' // action
       );
     }
   }
@@ -153,9 +155,60 @@ export class AuthService<T = StoreStateType> {
 [STORE][PREV][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
 [STORE][NEXT][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
 [AUTH] Login request sent ...
-[STORE][PREV][AUTH_LOGIN_RES_SUCCESS] ↠ {AUTH: {…}}
-[STORE][NEXT][AUTH_LOGIN_RES_SUCCESS] ↠ {AUTH: {…}}
+[STORE][PREV][AUTH_LOGIN_REQ_SUCCESS] ↠ {AUTH: {…}}
+[STORE][NEXT][AUTH_LOGIN_REQ_SUCCESS] ↠ {AUTH: {…}}
 [AUTH] Login request success ...
+```
+
+# Advanced Use
+
+## Action (Optional)
+
+```typescript
+// Call signature of:
+// setState<K = any>(claimId: string, updater: K, action?: string): K {}
+
+// State can be passed in, along with claimId, skipping the action type
+// If a logger is passed in, the action will be missing from state change logs
+this.store.setState(this.claimId, {
+  isAuthenticating: true,
+  isLoading: true,
+});
+
+// State can be passed in, along with claimId, as well as an action type
+// If a logger is passed in, the action will in the state change logs
+this.store.setState(this.claimId, {
+  isAuthenticating: true,
+  isLoading: true,
+}, 'AUTH_LOGIN_REQ_SENT');
+```
+
+## Reducer (Optional)
+
+```typescript
+// Call signature of:
+// setState<K = any>(claimId: string, updater: StoreStateReducer<T, K>, action?: string): K;
+
+// Where StoreStateReducer is:
+// export type StoreStateReducer<T = any, K = any> = (fullState: T) => K;
+
+// State reducer function can be passed in, along with claimId and action type
+// If a logger is passed in, the action will be missing from state change logs
+this.store.setState(this.claimId, (fullStoreState) => {
+  if (fullStoreState['app'].private) {
+    return {
+      ...fullStoreState[this.sliceName],
+      isAuthenticating: true,
+      isLoading: true,
+    },
+  }
+  return {
+    // no login is required
+    ...DefaultAuthState,
+    isAnonymous: true
+  }
+}, 'AUTH_LOGIN_REQ_SENT');
+
 ```
 
 # License
