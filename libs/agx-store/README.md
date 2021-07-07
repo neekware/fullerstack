@@ -111,8 +111,8 @@ export class AuthService<T = StoreStateType> {
     );
 
     // make login request (e.g. `doFetch()` is your way of communicating with your server)
-    const result = doFetch('/login', input);
-    if (result.ok) {
+    const resp = doFetch('/login', input);
+    if (resp.ok) {
       // set auth state to authenticated
       // loading ended ...
       this.store.setState(
