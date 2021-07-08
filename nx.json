@@ -109,6 +109,9 @@
     "nsx-common": {
       "tags": ["scope:nsx-data"]
     },
+    "nsx-mailer": {
+      "tags": ["scope:nsx-util"]
+    },
     "nsx-prisma": {
       "tags": ["scope:nsx-data"]
     },
