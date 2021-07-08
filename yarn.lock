@@ -4715,6 +4715,13 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-10.17.56.tgz"
   integrity sha512-LuAa6t1t0Bfw4CuSR0UITsm1hP17YL+u82kfHGrHUWdhlBtH7sa7jGY5z7glGaIj/WDYDkRtgGd+KCjCzxBW1w==
 
+"@types/nodemailer@^6.4.4":
+  version "6.4.4"
+  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-6.4.4.tgz#c265f7e7a51df587597b3a49a023acaf0c741f4b"
+  integrity sha512-Ksw4t7iliXeYGvIQcSIgWQ5BLuC/mljIEbjf615svhZL10PE9t+ei8O9gDaD3FPCasUJn9KTLwz2JFJyiiyuqw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz"
@@ -4753,6 +4760,13 @@
   integrity sha512-9oKfrJXuAxvyxdrtMCxKkHgmd6DMO8NDOLvMJ1LvIWd6/xP+i81PAkpTaEca7VhJX9S009RciwZL/j6dsLsHrA==
   dependencies:
     "@types/express" "*"
+
+"@types/postmark@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@types/postmark/-/postmark-2.0.3.tgz#a8032b74633f9ef7efa14cea23c81d8d2463bb78"
+  integrity sha512-gaj+SoVh+T/MvCHfRlXz7h+BF6QBjan712aXWbhYKzNt8Yf4tCHYDPuSxZkj9xxY+RQ077Rrcex5YoOX0yh4mA==
+  dependencies:
+    postmark "*"
 
 "@types/prettier@^2.1.5":
   version "2.3.1"
@@ -16426,6 +16440,13 @@ postcss@^8.2.4:
     colorette "^1.2.2"
     nanoid "^3.1.20"
     source-map "^0.6.1"
+
+postmark@*, postmark@^2.7.6:
+  version "2.7.6"
+  resolved "https://registry.yarnpkg.com/postmark/-/postmark-2.7.6.tgz#b3134a71becd8905536de11bea02d1a16b1af08b"
+  integrity sha512-Jsnvz5H5Jau/k8mXymtmfEdYtV9u2y+9REYTF8V7N2mqIgCHWbMqeq5N5oy4YLF6uwMtE5+3sGMJLEMbbEzccA==
+  dependencies:
+    axios "^0.21.1"
 
 prelude-ls@^1.2.1:
   version "1.2.1"

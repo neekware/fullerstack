@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { NsxMailerService } from './nsx-mailer.service';
+import { MailerService } from './mailer.service';
 
 @Module({
   controllers: [],
-  providers: [NsxMailerService],
-  exports: [NsxMailerService],
+  providers: [MailerService],
+  exports: [MailerService],
 })
-export class NsxMailerModule {}
+export class MailerModule {}
