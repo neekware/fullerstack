@@ -1,6 +1,6 @@
 # @fullerstack/agx-store <img style="margin-bottom: -6px" width="30" src="../../libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
-**A simple flat state-store that helps implement lite-redux pattern**
+**A simple flat state/store that helps implementing lite-redux patterns**
 
 [![status-image]][status-link]
 [![version-image]][version-link]
