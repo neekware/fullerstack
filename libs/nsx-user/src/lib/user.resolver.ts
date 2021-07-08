@@ -15,6 +15,7 @@ import {
   UserDecorator,
 } from '@fullerstack/nsx-auth';
 import { PaginationArgs } from '@fullerstack/nsx-common';
+import { MailerService } from '@fullerstack/nsx-mailer';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { ForbiddenException, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
@@ -27,7 +28,11 @@ import { UserService } from './user.service';
 
 @Resolver(() => UserDto)
 export class UserResolver {
-  constructor(readonly userService: UserService, private prisma: PrismaService) {}
+  constructor(
+    readonly userService: UserService,
+    readonly prisma: PrismaService,
+    readonly mailer: MailerService
+  ) {}
 
   @UseGuards(AuthGuardGql)
   @Query(() => UserDto, { description: "Get user's own info" })
@@ -45,6 +50,12 @@ export class UserResolver {
     @Args('input') payload: UserSelfUpdateInput
   ) {
     const user = await this.userService.updateUser(currentUser.id, payload);
+    // this.mailer.sendPostmark({
+    //   From: 'support@avidtrader.co',
+    //   To: 'val@neekman.com',
+    //   Subject: 'User updated',
+    //   TextBody: 'User updated',
+    // });
     return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 

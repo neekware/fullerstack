@@ -13,7 +13,7 @@ import { MailerConfig, MailerProvider } from './mailer.model';
 @Injectable()
 export class MailerService implements OnModuleDestroy {
   readonly options: DeepReadonly<MailerConfig> = DefaultMailerConfig;
-  private mailer: any;
+  private transporter: any;
 
   constructor(readonly config: ConfigService) {
     this.options = ldNestMerge(
@@ -21,10 +21,10 @@ export class MailerService implements OnModuleDestroy {
       this.config.get<MailerConfig>('appConfig.mailerConfig')
     );
 
-    this.mailer = this.createMailerInstance();
+    this.transporter = this.createMailerInstance();
   }
 
-  private async createMailerInstance() {
+  private createMailerInstance() {
     switch (this.options.provider) {
       case MailerProvider.Gmail:
         return createTransport({
@@ -40,14 +40,14 @@ export class MailerService implements OnModuleDestroy {
   }
 
   sendGmail(from: string, to: string, subject: string, text: string) {
-    this.mailer.sendMail({ from, to, subject, text });
+    this.transporter.sendMail({ from, to, subject, text });
   }
 
-  async sendPostmark(message: PostmarkMessage) {
-    await this.mailer.sendMail(message);
+  sendPostmark(message: PostmarkMessage): Promise<void> {
+    return this.transporter.sendEmail(message);
   }
 
   async onModuleDestroy() {
-    this.mailer = null;
+    this.transporter = null;
   }
 }
