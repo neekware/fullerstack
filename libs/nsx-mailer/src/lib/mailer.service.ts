@@ -27,7 +27,7 @@ export class MailerService {
       case MailerProvider.Gmail:
         const user = this.config.get<string>('MAILER_API_USERNAME');
         const pass = this.config.get<string>('MAILER_API_PASSWORD');
-        return await nodemailer.createTransport({
+        return nodemailer.createTransport({
           service: MailerProvider.Gmail,
           auth: { user, pass },
         });
