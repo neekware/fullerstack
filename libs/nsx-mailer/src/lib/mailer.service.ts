@@ -1,4 +1,4 @@
-import {} from 'postmark/dist/client/models';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -27,15 +27,15 @@ export class MailerService {
   private async createMailerInstance() {
     switch (this.options.provider) {
       case MailerProvider.Gmail:
-        const user = this.config.get<string>('MAILER_API_USERNAME');
-        const pass = this.config.get<string>('MAILER_API_PASSWORD');
         return createTransport({
           service: MailerProvider.Gmail,
-          auth: { user, pass },
+          auth: {
+            user: this.config.get<string>('MAILER_API_USERNAME'),
+            pass: this.config.get<string>('MAILER_API_PASSWORD'),
+          },
         });
       case MailerProvider.Postmark:
-        const apiKey = this.config.get<string>('MAILER_API_KEY');
-        return new PostmarkClient(apiKey);
+        return new PostmarkClient(this.config.get<string>('MAILER_API_KEY'));
     }
   }
 
