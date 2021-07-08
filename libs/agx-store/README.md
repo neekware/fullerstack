@@ -1,6 +1,6 @@
 # @fullerstack/agx-store <img style="margin-bottom: -6px" width="30" src="../../libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
-**A simple flat state-store that helps implement lite-redux pattern**
+**A simple flat state/store that helps implementing lite-redux patterns**
 
 [![status-image]][status-link]
 [![version-image]][version-link]
@@ -77,9 +77,17 @@ export class AuthService<T = StoreStateType> {
   // alternatively, an app-level store could be used if available
   private store: StoreState;
 
+  // tell the store to stay immutable or not
+  // for performance gain, immutable can be set to false, post development.
+  // this way all the issues are found prior to releasing the application
+  // deep clone vs. freeze analysis, pointed this project to accepting
+  // the ownership of the incoming state data, and freezing it in-place
+  // as such leaving the state immutable is highly recommended
+  immutable = true;  // alternatively (production ? false: true)
+
   constructor() {
     // instantiate a new local store
-    this.store = new StoreState<T>({} as T, { ...this.options.store });
+    this.store = new StoreState<T>({} as T, this.immutable);
 
     // reserve our AUTH slice from the full state
     // we choose console.log as our slice/state logger
