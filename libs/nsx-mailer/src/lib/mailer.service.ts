@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge } from 'lodash';
 import { createTransport } from 'nodemailer';
@@ -11,7 +11,7 @@ import { DefaultMailerConfig } from './mailer.default';
 import { MailerConfig, MailerProvider } from './mailer.model';
 
 @Injectable()
-export class MailerService {
+export class MailerService implements OnModuleDestroy {
   readonly options: DeepReadonly<MailerConfig> = DefaultMailerConfig;
   private mailer: any;
 
@@ -45,5 +45,9 @@ export class MailerService {
 
   async sendPostmark(message: PostmarkMessage) {
     await this.mailer.sendMail(message);
+  }
+
+  async onModuleDestroy() {
+    this.mailer = null;
   }
 }

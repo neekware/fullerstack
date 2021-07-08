@@ -6,6 +6,8 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { MailerModule } from '@fullerstack/nsx-mailer';
+import { PrismaModule } from '@fullerstack/nsx-prisma';
 import { Global, Module } from '@nestjs/common';
 
 import { AuthGuardGql } from './auth.guard.gql';
@@ -17,6 +19,7 @@ import { AuthService } from './auth.service';
 
 @Global()
 @Module({
+  imports: [PrismaModule, MailerModule],
   providers: [
     SecurityService,
     AuthService,
