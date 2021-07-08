@@ -1,8 +1,10 @@
+import {} from 'postmark/dist/client/models';
+
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge } from 'lodash';
-import * as nodemailer from 'nodemailer';
-import * as postmark from 'postmark';
+import { createTransport } from 'nodemailer';
+import { Client as PostmarkClient, Message as PostmarkMessage } from 'postmark';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultMailerConfig } from './mailer.default';
@@ -27,17 +29,21 @@ export class MailerService {
       case MailerProvider.Gmail:
         const user = this.config.get<string>('MAILER_API_USERNAME');
         const pass = this.config.get<string>('MAILER_API_PASSWORD');
-        return nodemailer.createTransport({
+        return createTransport({
           service: MailerProvider.Gmail,
           auth: { user, pass },
         });
       case MailerProvider.Postmark:
         const apiKey = this.config.get<string>('MAILER_API_KEY');
-        return new postmark.Client(apiKey);
+        return new PostmarkClient(apiKey);
     }
   }
 
-  sendMail(from: string, to: string, subject: string, text: string) {
+  sendGmail(from: string, to: string, subject: string, text: string) {
     this.mailer.sendMail({ from, to, subject, text });
+  }
+
+  async sendPostmark(message: PostmarkMessage) {
+    await this.mailer.sendMail(message);
   }
 }
