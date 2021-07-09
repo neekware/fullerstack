@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { MailerConfig, MailerProvider, MailerTransport } from './mailer.model';
+import { MailerConfig } from './mailer.model';
 
 export const DefaultMailerConfig: MailerConfig = {
   // The default mailer configuration

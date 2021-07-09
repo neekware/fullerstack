@@ -16,7 +16,7 @@ import { Client as PostmarkClient, Message as PostmarkMessage } from 'postmark';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultMailerConfig } from './mailer.default';
-import { MailerConfig, MailerProvider } from './mailer.model';
+import { MailerConfig } from './mailer.model';
 
 @Injectable()
 export class MailerService implements OnModuleDestroy {
