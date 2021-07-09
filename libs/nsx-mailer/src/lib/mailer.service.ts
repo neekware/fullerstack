@@ -8,6 +8,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { getAssetFile } from '@fullerstack/nsx-common';
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge } from 'lodash';
@@ -30,6 +31,10 @@ export class MailerService implements OnModuleDestroy {
     );
 
     this.transporter = this.createMailerInstance();
+  }
+
+  private getActionTemplate(): string {
+    return getAssetFile('i18n/email-template.html');
   }
 
   private createMailerInstance() {
