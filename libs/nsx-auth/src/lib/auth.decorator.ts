@@ -11,7 +11,12 @@ import { Permission, Role, User } from '@prisma/client';
 
 import { AUTH_ROLE_KEY } from './auth.constant';
 import { AuthFilterType } from './auth.model';
-import { getCookiesFromContext, getRequestFromContext, getResponseFromContext } from './auth.util';
+import {
+  getCookiesFromContext,
+  getLanguagesFromContext,
+  getRequestFromContext,
+  getResponseFromContext,
+} from './auth.util';
 
 export const CookiesDecorator = createParamDecorator((data: unknown, context: ExecutionContext) => {
   return getCookiesFromContext(context);
@@ -30,6 +35,12 @@ export const ResponseDecorator = createParamDecorator(
 export const UserDecorator = createParamDecorator((data: unknown, context: ExecutionContext) => {
   return getRequestFromContext(context).user as User;
 });
+
+export const LanguageDecorator = createParamDecorator(
+  (data: unknown, context: ExecutionContext) => {
+    return getLanguagesFromContext(context);
+  }
+);
 
 /**
  * Decorator for enforcing role-based access

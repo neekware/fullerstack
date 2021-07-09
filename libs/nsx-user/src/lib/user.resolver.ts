@@ -11,15 +11,18 @@ import {
   AuthGuardAnonymousGql,
   AuthGuardGql,
   AuthGuardRole,
+  LanguageDecorator,
+  RequestDecorator,
   UseRoles,
   UserDecorator,
 } from '@fullerstack/nsx-auth';
-import { PaginationArgs } from '@fullerstack/nsx-common';
+import { HttpRequest, PaginationArgs } from '@fullerstack/nsx-common';
 import { MailerService } from '@fullerstack/nsx-mailer';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { ForbiddenException, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
+import { getLanguagesFromContext } from 'libs/nsx-auth/src/lib/auth.util';
 
 import { UserDto, UserSelfUpdateInput, UserUpdateInput, UserWhereByIdInput } from './user.model';
 import { UserOrder } from './user.order';
@@ -46,9 +49,11 @@ export class UserResolver {
   @UseGuards(AuthGuardGql)
   @Mutation(() => UserDto, { description: "Update user's own info" })
   async userSelfUpdate(
+    @LanguageDecorator() language: string[],
     @UserDecorator() currentUser: User,
     @Args('input') payload: UserSelfUpdateInput
   ) {
+    const lag = language[0];
     const user = await this.userService.updateUser(currentUser.id, payload);
     // this.mailer.sendPostmark({
     //   From: 'support@avidtrader.co',

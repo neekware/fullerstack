@@ -38,3 +38,10 @@ export function getJwtTokenFromAuthorizationHeader(request: HttpRequest): string
   const authorization = tryGet(() => request.headers.authorization, '');
   return authorization.replace(JWT_BEARER_REALM, '').trim();
 }
+
+export function getLanguagesFromContext(context: ExecutionContext): string[] {
+  const request = getRequestFromContext(context);
+  const acceptLanguage = request?.headers['accept-language'];
+  const langs = acceptLanguage?.match(/[a-zA-Z\-]{2,10}/g) || [];
+  return langs;
+}
