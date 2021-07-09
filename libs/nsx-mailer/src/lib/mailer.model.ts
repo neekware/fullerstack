@@ -12,6 +12,6 @@ export enum MailerTransport {
 }
 
 export interface MailerConfig {
-  provider: MailerProvider;
-  transport: MailerTransport;
+  provider: MailerProvider | string;
+  transport: MailerTransport | string;
 }

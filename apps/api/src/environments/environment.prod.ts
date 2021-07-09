@@ -37,8 +37,8 @@ const graphqlConfig: GqlModuleOptions = {
 };
 
 const mailerConfig: MailerConfig = {
-  provider: MailerProvider.Postmark,
-  transport: MailerTransport.API_KEY,
+  provider: 'postmark',
+  transport: 'api-key',
 };
 
 export const environment = {

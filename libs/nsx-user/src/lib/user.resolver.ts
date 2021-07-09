@@ -12,17 +12,15 @@ import {
   AuthGuardGql,
   AuthGuardRole,
   LanguageDecorator,
-  RequestDecorator,
   UseRoles,
   UserDecorator,
 } from '@fullerstack/nsx-auth';
-import { HttpRequest, PaginationArgs } from '@fullerstack/nsx-common';
+import { PaginationArgs } from '@fullerstack/nsx-common';
 import { MailerService } from '@fullerstack/nsx-mailer';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { ForbiddenException, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Role, User } from '@prisma/client';
-import { getLanguagesFromContext } from 'libs/nsx-auth/src/lib/auth.util';
 
 import { UserDto, UserSelfUpdateInput, UserUpdateInput, UserWhereByIdInput } from './user.model';
 import { UserOrder } from './user.order';
