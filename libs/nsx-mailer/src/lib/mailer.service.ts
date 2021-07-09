@@ -34,15 +34,15 @@ export class MailerService implements OnModuleDestroy {
 
   private createMailerInstance() {
     switch (this.options.provider) {
-      case MailerProvider.Gmail:
+      case 'Gmail':
         return createTransport({
-          service: MailerProvider.Gmail,
+          service: 'Gmail',
           auth: {
             user: this.config.get<string>('MAILER_API_USERNAME'),
             pass: this.config.get<string>('MAILER_API_PASSWORD'),
           },
         });
-      case MailerProvider.Postmark:
+      case 'Postmark':
         return new PostmarkClient(this.config.get<string>('MAILER_API_KEY'));
     }
   }
