@@ -133,7 +133,14 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets",
+              {
+                "glob": "**/*",
+                "input": "libs/agx-assets/src/lib/i18n/api",
+                "output": "assets/i18n"
+              }
+            ]
           },
           "configurations": {
             "production": {
