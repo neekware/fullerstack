@@ -7,6 +7,7 @@
  */
 
 import { SecurityConfig } from '@fullerstack/nsx-auth';
+import { I18nConfig } from '@fullerstack/nsx-i18n';
 import { MailerConfig } from '@fullerstack/nsx-mailer';
 import { NestApplicationOptions } from '@nestjs/common';
 import { ConfigModuleOptions } from '@nestjs/config';
@@ -41,6 +42,13 @@ const mailerConfig: MailerConfig = {
   transport: 'API_KEY',
 };
 
+const i18nConfig: I18nConfig = {
+  defaultLanguage: 'en',
+  availableLanguages: ['de', 'en', 'es', 'fa', 'fr', 'he', 'zh-hans'],
+  enabledLanguages: ['de', 'en', 'es', 'fa', 'fr', 'he', 'zh-hans'],
+  translationDirectory: 'assets/i18n/',
+};
+
 export const environment = {
   production: false,
   port: 4301,
@@ -50,4 +58,5 @@ export const environment = {
   graphqlConfig,
   securityConfig,
   mailerConfig,
+  i18nConfig,
 } as const;

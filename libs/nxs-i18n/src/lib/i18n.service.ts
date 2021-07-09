@@ -7,6 +7,21 @@
  */
 
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { merge as ldNestMerge } from 'lodash';
+import { DeepReadonly } from 'ts-essentials';
+
+import { DefaultI18nConfig } from './i18n.default';
+import { I18nConfig } from './i18n.model';
 
 @Injectable()
-export class I18nService {}
+export class I18nService {
+  readonly options: DeepReadonly<I18nConfig> = DefaultI18nConfig;
+
+  constructor(readonly config: ConfigService) {
+    this.options = ldNestMerge(
+      { ...this.options },
+      this.config.get<I18nConfig>('appConfig.i18nConfig')
+    );
+  }
+}
