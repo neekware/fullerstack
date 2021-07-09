@@ -1015,6 +1015,27 @@
           }
         }
       }
+    },
+    "nxs-i18n": {
+      "root": "libs/nxs-i18n",
+      "sourceRoot": "libs/nxs-i18n/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nxs-i18n/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nxs-i18n"],
+          "options": {
+            "jestConfig": "libs/nxs-i18n/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

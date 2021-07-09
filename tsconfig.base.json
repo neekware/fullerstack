@@ -43,6 +43,7 @@
       "@fullerstack/ngx-util": ["libs/ngx-util/src/index.ts"],
       "@fullerstack/nsx-auth": ["libs/nsx-auth/src/index.ts"],
       "@fullerstack/nsx-common": ["libs/nsx-common/src/index.ts"],
+      "@fullerstack/nsx-i18n": ["libs/nxs-i18n/src/index.ts"],
       "@fullerstack/nsx-mailer": ["libs/nsx-mailer/src/index.ts"],
       "@fullerstack/nsx-prisma": ["libs/nsx-prisma/src/index.ts"],
       "@fullerstack/nsx-prisma/mock": ["libs/nsx-prisma/src/mock.ts"],

@@ -117,6 +117,9 @@
     },
     "nsx-user": {
       "tags": ["scope:nsx-util"]
+    },
+    "nxs-i18n": {
+      "tags": ["scope:nsx-data"]
     }
   },
   "targetDependencies": {

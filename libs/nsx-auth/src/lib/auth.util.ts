@@ -46,6 +46,6 @@ export function getLanguagesFromContext(context: ExecutionContext): string[] {
     return [user.language];
   }
   const acceptLanguage = request?.headers['accept-language'];
-  const langs = acceptLanguage?.match(/[a-zA-Z\-]{2,10}/g) || [];
+  const langs = acceptLanguage?.match(/[a-zA-Z-]{2,10}/g) || [];
   return langs;
 }
