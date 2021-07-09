@@ -1,17 +1,16 @@
-export enum MailerProvider {
-  Gmail = 'Gmail',
-  Postmark = 'Postmark',
-  SendGrid = 'SendGrid',
-  AmazonSES = 'AmazonSES',
-}
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
 
-export enum MailerTransport {
-  SMTP = 'SMTP',
-  SMTP_SSL = 'SMTP_SSL',
-  API_KEY = 'API_KEY',
-}
+export type MailerProvider = 'Gmail' | 'Postmark' | 'SendGrid' | 'AmazonSES';
+
+export type MailerTransport = 'SMTP' | 'API_KEY';
 
 export interface MailerConfig {
-  provider: MailerProvider | string;
-  transport: MailerTransport | string;
+  provider: MailerProvider;
+  transport: MailerTransport;
 }

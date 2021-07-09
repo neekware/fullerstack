@@ -7,7 +7,7 @@
  */
 
 import { SecurityConfig } from '@fullerstack/nsx-auth';
-import { MailerConfig, MailerProvider, MailerTransport } from '@fullerstack/nsx-mailer';
+import { MailerConfig } from '@fullerstack/nsx-mailer';
 import { NestApplicationOptions } from '@nestjs/common';
 import { ConfigModuleOptions } from '@nestjs/config';
 import { GqlModuleOptions } from '@nestjs/graphql';
@@ -42,8 +42,8 @@ const graphqlConfig: GqlModuleOptions = {
 };
 
 const mailerConfig: MailerConfig = {
-  provider: 'postmark',
-  transport: 'api-key',
+  provider: 'Postmark',
+  transport: 'API_KEY',
 };
 
 export const environment = {
