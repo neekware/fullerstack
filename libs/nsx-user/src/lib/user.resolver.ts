@@ -59,6 +59,7 @@ export class UserResolver {
     //   Subject: 'User updated',
     //   TextBody: 'User updated',
     // });
+    // .then(() => console.log(`User ${user.id} updated`));
     return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 

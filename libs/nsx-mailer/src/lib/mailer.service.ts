@@ -51,7 +51,7 @@ export class MailerService implements OnModuleDestroy {
     this.transporter.sendMail({ from, to, subject, text });
   }
 
-  sendPostmark(message: PostmarkMessage): Promise<void> {
+  sendPostmark(message: PostmarkMessage): Promise<any> {
     return this.transporter.sendEmail(message);
   }
 
