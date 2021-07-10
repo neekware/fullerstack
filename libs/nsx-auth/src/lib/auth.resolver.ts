@@ -62,10 +62,10 @@ export class AuthResolver {
 
     const emailContext: RenderContext = {
       name_v: `${user.firstName} ${user.lastName}`,
-      company_name_v: this.options.siteName,
-      site_url: this.options.siteUrl,
+      site_url_v: this.options.siteUrl,
       verify_link_v: `${this.options.siteUrl}/verify/${user.email}`,
-      site_email_v: this.options.siteSupportEmail,
+      company_name_v: this.options.siteName,
+      support_email_v: this.options.siteSupportEmail,
     };
 
     const emailSubjectBody = getEmailBodySubject('welcome', 'en', emailContext);

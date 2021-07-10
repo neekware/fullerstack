@@ -56,18 +56,6 @@ export class MailerService implements OnModuleDestroy {
     return this.transporter.sendEmail(message);
   }
 
-  getDefaultEmailTemplate(): string {
-    return getAsset('i18n/email-template.html');
-  }
-
-  getEmailSubject(action: string, locale: string): string {
-    return getAsset(`i18n/api/${action}/${locale}/subject.md`);
-  }
-
-  getEmailBody(action: string, locale: string): string {
-    return getAsset(`i18n/api/${action}/${locale}/body.md`);
-  }
-
   async onModuleDestroy() {
     this.transporter = null;
   }

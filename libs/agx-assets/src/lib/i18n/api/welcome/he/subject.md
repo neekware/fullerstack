@@ -1,1 +1,1 @@
-[ {{company_name_v}} ] | ברוך הבא!
+[ {{company_name_v}} ] ברוך הבא!

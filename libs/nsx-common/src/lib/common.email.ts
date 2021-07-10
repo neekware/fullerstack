@@ -6,6 +6,8 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import * as mustache from 'mustache';
+
 import { RenderContext, renderTemplate } from './common.render';
 import { getAsset } from './common.util';
 
@@ -24,20 +26,17 @@ export function getEmailBodyTemplate(action: string, locale: string): string {
 export function getEmailSubject(action: string, locale: string, context?: RenderContext): string {
   const subjectTemplate = getEmailSubjectTemplate(action, locale);
   if (subjectTemplate) {
-    return renderTemplate(subjectTemplate, context);
+    return mustache.render(subjectTemplate, context);
   }
   return '';
 }
 
-export function getEmailBody(action: string, locale: string, context?: RenderContext): string {
+export function getHtmlEmailBody(action: string, locale: string, context?: RenderContext): string {
   const bodyTemplate = getEmailBodyTemplate(action, locale);
-  if (bodyTemplate) {
-    const newContext = { ...context, html_content_v: renderTemplate(bodyTemplate, context) };
-    const htmlTemplate = getDefaultEmailTemplate();
-    const bodyHtml = renderTemplate(htmlTemplate, context);
-    return bodyHtml;
-  }
-  return '';
+  const defaultHtmlTemplate = getDefaultEmailTemplate();
+  const htmlTemplate = mustache.render(defaultHtmlTemplate, { html_content_v: bodyTemplate });
+  const bodyHtml = mustache.render(htmlTemplate, context);
+  return bodyHtml;
 }
 
 export function getEmailBodySubject(
@@ -47,6 +46,6 @@ export function getEmailBodySubject(
 ): { Subject: string; HtmlBody: string } {
   return {
     Subject: getEmailSubject(action, locale, context),
-    HtmlBody: getEmailBody(action, locale, context),
+    HtmlBody: getHtmlEmailBody(action, locale, context),
   };
 }
