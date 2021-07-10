@@ -8,7 +8,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { getAssetFile } from '@fullerstack/nsx-common';
+import { getAsset } from '@fullerstack/nsx-common';
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge } from 'lodash';
@@ -33,10 +33,6 @@ export class MailerService implements OnModuleDestroy {
     this.transporter = this.createMailerInstance();
   }
 
-  private getActionTemplate(): string {
-    return getAssetFile('i18n/email-template.html');
-  }
-
   private createMailerInstance() {
     switch (this.options.provider) {
       case 'Gmail':
@@ -58,6 +54,18 @@ export class MailerService implements OnModuleDestroy {
 
   sendPostmark(message: PostmarkMessage): Promise<any> {
     return this.transporter.sendEmail(message);
+  }
+
+  getDefaultEmailTemplate(): string {
+    return getAsset('i18n/email-template.html');
+  }
+
+  getEmailSubject(action: string, locale: string): string {
+    return getAsset(`i18n/api/${action}/${locale}/subject.md`);
+  }
+
+  getEmailBody(action: string, locale: string): string {
+    return getAsset(`i18n/api/${action}/${locale}/body.md`);
   }
 
   async onModuleDestroy() {

@@ -9,8 +9,8 @@
 import { I18nConfig } from './i18n.model';
 
 export const DefaultI18nConfig: I18nConfig = {
-  defaultLanguage: 'en',
-  availableLanguages: ['en'],
-  enabledLanguages: ['en'],
+  defaultLocale: 'en',
+  availableLocales: ['en'],
+  enabledLocales: ['en'],
   translationDirectory: 'assets/i18n/',
 };

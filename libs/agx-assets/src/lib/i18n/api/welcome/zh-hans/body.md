@@ -6,5 +6,4 @@
 
 <a href="{{verify_link_v}}">{{verify_link_v}}</a>
 
-
-{{company_v}} 团队。
+{{company_name_v}} 团队。

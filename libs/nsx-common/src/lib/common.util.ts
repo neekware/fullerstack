@@ -11,7 +11,7 @@ import { join } from 'path';
 
 const assetCache: { [id: string]: string } = {};
 
-export function getAssetFile(filePath: string): string {
+export function getAsset(filePath: string): string {
   if (assetCache[filePath]) {
     return assetCache[filePath];
   } else {

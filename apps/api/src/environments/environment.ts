@@ -48,13 +48,16 @@ const mailerConfig: MailerConfig = {
 };
 
 const i18nConfig: I18nConfig = {
-  defaultLanguage: 'en',
-  availableLanguages: ['de', 'en', 'es', 'fa', 'fr', 'he', 'zh-hans'],
-  enabledLanguages: ['de', 'en', 'es', 'fa', 'fr', 'he', 'zh-hans'],
+  defaultLocale: 'en',
+  availableLocales: ['de', 'en', 'es', 'fa', 'fr', 'he', 'zh-hans'],
+  enabledLocales: ['de', 'en', 'es', 'fa', 'fr', 'he', 'zh-hans'],
   translationDirectory: 'assets/i18n/',
 };
 
 export const environment = {
+  siteName: 'Fullerstack',
+  siteUrl: 'http://localhost:4200',
+  siteSupportEmail: 'support@fullerstack.net',
   production: false,
   port: 4201,
   prefix: 'api',

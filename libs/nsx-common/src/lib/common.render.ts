@@ -8,20 +8,18 @@
 
 import { merge as ldNestedMerge } from 'lodash';
 
-/**
- * Options for interpolation
- */
-export interface InterpolationOptions {
+export interface RenderOptions {
   singleSpace: boolean;
   trim: boolean;
 }
 
-/**
- * Default interpolation options
- */
-export const DefaultInterpolationOptions = {
-  singleSpace: true,
-  trim: true,
+export interface RenderContext {
+  [name: string]: string | number;
+}
+
+export const DefaultRenderOptions = {
+  singleSpace: false,
+  trim: false,
 };
 
 /**
@@ -37,12 +35,12 @@ const template = (tpl, args) => tpl.replace(/\${{(\w+)}}/g, (_, v) => args[v]);
  * @param options Options for Interpolation
  * @returns A params interpolated string
  */
-export const interpolate = (
+export const renderTemplate = (
   inputString: string,
-  params: { [id: string]: string | number },
-  options?: InterpolationOptions
+  params: RenderContext,
+  options?: RenderOptions
 ): string => {
-  options = ldNestedMerge(DefaultInterpolationOptions, options || {});
+  options = ldNestedMerge(DefaultRenderOptions, options || {});
   let output = template(inputString, params);
   if (options.singleSpace) {
     output = output.replace(/\s+/g, ' ');

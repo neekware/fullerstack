@@ -1,1 +1,1 @@
-[ {{company_v}} ] | Welcome!
+[ {{company_name_v}} ] | Welcome!

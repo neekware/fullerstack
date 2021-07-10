@@ -7,8 +7,8 @@
  */
 
 export interface I18nConfig {
-  defaultLanguage: string;
-  availableLanguages: string[];
-  enabledLanguages: string[];
+  defaultLocale: string;
+  availableLocales: string[];
+  enabledLocales: string[];
   translationDirectory: string;
 }

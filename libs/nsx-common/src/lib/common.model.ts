@@ -19,6 +19,10 @@ declare module 'express' {
   }
 }
 
+export interface ApplicationConfig {
+  [id: string]: any;
+}
+
 export { Request as HttpRequest, Response as HttpResponse } from 'express';
 
 export type PartialPick<T, K extends keyof T> = {
