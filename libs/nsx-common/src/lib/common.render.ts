@@ -25,7 +25,7 @@ export const DefaultRenderOptions = {
 /**
  * Interpolation of template with args
  */
-const template = (tpl, args) => tpl.replace(/\${(\w+)}/g, (_, v) => args[v]);
+const template = (tpl, args) => tpl.replace(/{{(\w+)}}/g, (t, v) => args[v] || t);
 
 /**
  * Interpolation of template with args with params

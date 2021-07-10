@@ -1,9 +1,9 @@
-Dear {{name_v}},
+Dear {{RegexName}},
 
 Welcome and thank you for registering with us.
 
 Please click the following link to verify your account.
 
-<a href="{{verify_link_v}}">{{verify_link_v}}</a>
+<a href="{{RegexVerifyLink}}">{{RegexVerifyLink}}</a>
 
-The {{company_name_v}} team.
+The {{RegexCompanyName}} team.

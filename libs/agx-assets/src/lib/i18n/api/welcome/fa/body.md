@@ -1,9 +1,9 @@
-{{name_v}} گرامی
+{{RegexName}} گرامی
 
 خوش آمدید و از شما برای ثبت نام با ما تشکر می کنیم.
 
 لطفا برای تأیید حساب کاربری خود، روی پیوند زیر کلیک کنید.
 
-<a href="{{verify_link_v}}">{{verify_link_v}}</a>
+<a href="{{RegexVerifyLink}}">{{RegexVerifyLink}}</a>
 
-تیم {{company_name_v}}.
+تیم {{RegexCompanyName}}.

@@ -1,9 +1,9 @@
-Sehr geehrte {{name_v}},
+Sehr geehrte {{RegexName}},
 
 Willkommen und danke für die Registrierung bei uns.
 
 Bitte klicken Sie auf den folgenden Link, um Ihr Konto zu bestätigen.
 
-<a href="{{verify_link_v}}">{{verify_link_v}}</a>
+<a href="{{RegexVerifyLink}}">{{RegexVerifyLink}}</a>
 
-Das Team {{company_name_v}}.
+Das Team {{RegexCompanyName}}.

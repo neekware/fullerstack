@@ -1,1 +1,1 @@
-[ {{company_name_v}} ] Herzlich willkommen!
+[ {{RegexCompanyName}} ] Herzlich willkommen!

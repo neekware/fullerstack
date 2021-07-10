@@ -1,9 +1,9 @@
-Estimado {{name_v}},
+Estimado {{RegexName}},
 
 Bienvenido y gracias por registrarte con nosotros.
 
 Haga clic en el siguiente enlace para verificar su cuenta.
 
-<a href="{{verify_link_v}}">{{verify_link_v}}</a>
+<a href="{{RegexVerifyLink}}">{{RegexVerifyLink}}</a>
 
-El equipo de {{company_name_v}}.
+El equipo de {{RegexCompanyName}}.

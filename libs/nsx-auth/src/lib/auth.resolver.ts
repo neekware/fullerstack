@@ -61,11 +61,11 @@ export class AuthResolver {
     const token = this.security.issueToken(user, request, response);
 
     const emailContext: RenderContext = {
-      name_v: `${user.firstName} ${user.lastName}`,
-      site_url_v: this.options.siteUrl,
-      verify_link_v: `${this.options.siteUrl}/verify/${user.email}`,
-      company_name_v: this.options.siteName,
-      support_email_v: this.options.siteSupportEmail,
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexVerifyLink: `${this.options.siteUrl}/verify/${user.email}`,
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
     };
 
     const emailSubjectBody = getEmailBodySubject('welcome', 'en', emailContext);

@@ -9,13 +9,21 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
+export interface getAssetOption {
+  stripNl?: boolean;
+}
+
 const assetCache: { [id: string]: string } = {};
 
-export function getAsset(filePath: string): string {
+export function getAsset(filePath: string, options?: getAssetOption): string {
+  options = { stripNl: false, ...options };
   if (assetCache[filePath]) {
     return assetCache[filePath];
   } else {
-    const fileData = readFileSync(join(__dirname, join('assets', filePath)), 'utf-8');
+    let fileData = readFileSync(join(__dirname, join('assets', filePath)), 'utf-8');
+    if (options.stripNl) {
+      fileData = fileData.replace(/\r?\n|\r/g, '');
+    }
     assetCache[filePath] = fileData;
     return fileData;
   }

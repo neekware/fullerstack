@@ -1,9 +1,9 @@
-Cher {{name_v}},
+Cher {{RegexName}},
 
 Bienvenue et merci de votre inscription.
 
 Veuillez cliquer sur le lien suivant pour vérifier votre compte.
 
-<a href="{{verify_link_v}}">{{verify_link_v}}</a>
+<a href="{{RegexVerifyLink}}">{{RegexVerifyLink}}</a>
 
-L'équipe {{company_name_v}}
+L'équipe {{RegexCompanyName}}
