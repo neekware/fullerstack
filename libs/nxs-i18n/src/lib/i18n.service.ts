@@ -12,7 +12,7 @@ import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultI18nConfig } from './i18n.default';
+import { DefaultI18nConfig, RtlLanguageList } from './i18n.default';
 import { I18nConfig } from './i18n.model';
 
 @Injectable()
@@ -40,5 +40,9 @@ export class I18nService {
 
   getEnabledLocales(): Readonly<string[]> {
     return this.options.enabledLocales;
+  }
+
+  isRightToLeftLocale(locale: string): boolean {
+    return RtlLanguageList.includes(locale);
   }
 }

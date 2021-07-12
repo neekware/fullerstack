@@ -20,7 +20,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultI18nConfig, DefaultLanguage, RtlLanguages } from './i18n.default';
+import { DefaultI18nConfig, DefaultLanguage, RtlLanguageList } from './i18n.default';
 import { registerActiveLocales } from './i18n.locale';
 import { AvailableLanguage, LanguageDirection } from './i18n.model';
 
@@ -62,7 +62,7 @@ export class I18nService {
   }
 
   isLanguageRTL(iso: string): boolean {
-    return RtlLanguages.indexOf(iso) > -1;
+    return RtlLanguageList.indexOf(iso) > -1;
   }
 
   isCurrentLanguage(iso: string): boolean {
