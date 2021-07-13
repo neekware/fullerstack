@@ -34,6 +34,7 @@ import {
   ChangePasswordRequestInput,
   UserCreateInput,
   UserCredentialsInput,
+  UserVerifyInput,
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
@@ -174,5 +175,17 @@ export class AuthResolver {
     await this.security.resetPassword(request.user as User);
 
     return { ok: true };
+  }
+
+  @Mutation(() => AuthStatusDto)
+  async authVerifyUser(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: UserVerifyInput
+  ) {
+    const user = await this.security.verifyUser(data.token, data.idb64);
+    if (!user) {
+      throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
+    }
+    return { ok: !!user.id };
   }
 }

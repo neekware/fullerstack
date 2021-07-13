@@ -9,7 +9,7 @@
 import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Permission, Role, User } from '@prisma/client';
 import { compare, hash } from 'bcrypt';
@@ -21,6 +21,7 @@ import { v4 as uuid_v4 } from 'uuid';
 import { AUTH_MODULE_NAME, AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
+import { getUserIdFromBase64, verifySecurityToken } from './auth.util';
 
 @Injectable()
 export class SecurityService {
@@ -248,5 +249,25 @@ export class SecurityService {
   async validateUserByEmail(email: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { email } });
     return user?.isActive ? user : undefined;
+  }
+
+  async verifyUser(token: string, idb64: string): Promise<User> {
+    const userId = getUserIdFromBase64(idb64);
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new UnauthorizedException(ApiError.Error.Auth.InvalidOrInactiveUser);
+    }
+
+    const validToken = verifySecurityToken(token, user.id, this.siteSecret);
+    if (!validToken) {
+      throw new UnauthorizedException(ApiError.Error.Auth.InvalidVerificationLink);
+    }
+
+    return this.prisma.user.update({
+      data: {
+        isVerified: true,
+      },
+      where: { id: user.id },
+    });
   }
 }

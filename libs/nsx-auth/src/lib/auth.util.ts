@@ -59,7 +59,15 @@ export function getLanguagesFromContext(context: ExecutionContext): string[] {
  * @returns valid URL
  */
 export function buildVerifyUserLink(userId: string, salt: string, baseUrl: string): string {
-  const securityHash = encodeURIComponent(crypto.MD5(`${userId}${salt}`).toString());
+  const securityToken = encodeURIComponent(crypto.MD5(`${userId}${salt}`).toString());
   const b64Id = encodeURIComponent(Base64.encode(userId));
-  return `${baseUrl}/verify/user/${securityHash}/${b64Id}`;
+  return `${baseUrl}/auth/user/verify/${securityToken}/${b64Id}`;
+}
+
+export function getUserIdFromBase64(idb64: string): string {
+  return Base64.decode(idb64);
+}
+
+export function verifySecurityToken(token: string, userId: string, salt: string): boolean {
+  return token === encodeURIComponent(crypto.MD5(`${userId}${salt}`).toString());
 }

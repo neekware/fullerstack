@@ -12,7 +12,7 @@ export class Base64 {
   }
 
   public static decode(str: string): string {
-    str = str + Array(5 - (str.length % 4)).join('=');
+    str = str + Array(5 - (str.length % 4)).join('='); // Adding ending '='
     return Buffer.from(str, 'base64').toString();
   }
 

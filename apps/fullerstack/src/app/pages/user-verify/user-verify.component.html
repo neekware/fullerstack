@@ -1,0 +1,42 @@
+<mat-toolbar class="fs-page-header" color="primary"> </mat-toolbar>
+
+<div class="fs-page-content">
+  <fullerstack-card
+    class="fs-page-card"
+    fxLayout="column"
+    fxFlex.xs="100"
+    fxFlex.sm="80"
+    fxFlex.gt-sm="600px"
+    [title]="title"
+    [subtitle]="subtitle"
+    [icon]="icon"
+    [progress]="isLoading"
+  >
+    <!-- <app-blob *ngIf="isVerifyLinkValid" text="{{ 'SUCCESS.USER.VERIFY' | translate }}." icon="check-circle-outline" iconColor="green">
+    </app-blob>
+
+    <app-blob
+      *ngIf="!isVerifyLinkValid"
+      class="mt1 color-warn"
+      text="{{ 'WARN.USER.VERIFICATION_FAILURE' | translate }}."
+      icon="alert-circle"
+    >
+    </app-blob> -->
+
+    <mat-divider class="mt1"></mat-divider>
+
+    <div class="mt2" fxLayout="row">
+      <span>
+        [
+        <a routerLink="/auth/login" class="no-underline"> {{ 'COMMON.LOGIN' | translate }} </a>
+        ]
+      </span>
+      <div fxFlex></div>
+      <span>
+        [
+        <a routerLink="/recovery/password/reset" class="no-underline"> {{ 'COMMON.FORGOT_PASSWORD' | translate }} </a>
+        ]
+      </span>
+    </div>
+  </fullerstack-card>
+</div>
