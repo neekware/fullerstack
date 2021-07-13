@@ -22,7 +22,7 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.VERIFICATION');
   subtitle = _('COMMON.ACCOUNT.VERIFY');
-  status = _('SUCCESS.USER.VERIFY');
+  status: string = _('SUCCESS.USER.VERIFY');
   icon = 'account-check-outline';
   isUserVerified = false;
   isLoading = false;

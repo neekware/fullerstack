@@ -9,14 +9,13 @@
 import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import {
   ApplicationConfig,
-  Base64,
   HttpRequest,
   HttpResponse,
   RenderContext,
   getEmailBodySubject,
 } from '@fullerstack/nsx-common';
 import { I18nService } from '@fullerstack/nsx-i18n';
-import { MailerMessage, MailerService } from '@fullerstack/nsx-mailer';
+import { MailerService } from '@fullerstack/nsx-mailer';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';

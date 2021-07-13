@@ -331,7 +331,7 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  verifyUserRequest$(input: UserVerifyInput): Observable<any> {
+  verifyUserRequest$(input: UserVerifyInput): Observable<AuthStatus> {
     return this.gql.client
       .request<AuthStatus>(AuthVerifyUserMutation, { input })
       .pipe(
@@ -355,7 +355,7 @@ export class AuthService implements OnDestroy {
 
           return of({ ok: false, message: err.topError?.message });
         })
-      );
+      ) as Observable<AuthStatus>;
   }
 
   isEmailAvailable(email: string): Observable<boolean> {

@@ -9,7 +9,7 @@
 import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-import { BadRequestException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Permission, Role, User } from '@prisma/client';
 import { compare, hash } from 'bcrypt';

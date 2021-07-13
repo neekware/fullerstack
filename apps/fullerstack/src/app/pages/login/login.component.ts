@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
@@ -18,7 +18,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.LOGIN');
   subtitle = _('COMMON.ACCOUNT_ACCESS');

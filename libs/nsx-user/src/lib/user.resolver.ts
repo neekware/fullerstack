@@ -52,6 +52,7 @@ export class UserResolver {
     @Args('input') payload: UserSelfUpdateInput
   ) {
     const lag = language[0];
+    console.log(lag);
     const user = await this.userService.updateUser(currentUser.id, payload);
     // this.mailer.sendPostmark({
     //   From: 'support@avidtrader.co',
