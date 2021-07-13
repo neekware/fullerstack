@@ -49,19 +49,10 @@ export class UserResolver {
   @UseGuards(AuthGuardGql)
   @Mutation(() => UserDto, { description: "Update user's own info" })
   async userSelfUpdate(
-    @LanguageDecorator() language: string[],
     @UserDecorator() currentUser: User,
     @Args('input') payload: UserSelfUpdateInput
   ) {
-    const lag = currentUser.language || this.i18n.getPreferredLocale(language);
     const user = await this.userService.updateUser(currentUser.id, payload);
-    // this.mailer.sendPostmark({
-    //   From: 'support@avidtrader.co',
-    //   To: 'val@neekman.com',
-    //   Subject: 'User updated',
-    //   TextBody: 'User updated',
-    // });
-    // .then(() => console.log(`User ${user.id} updated`));
     return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
 
