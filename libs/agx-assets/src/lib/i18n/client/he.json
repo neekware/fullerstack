@@ -162,6 +162,7 @@
   "ERROR.USER.PASSWORD_RESET_VERIFY": "אימות הקישור לאיפוס הסיסמה נכשל",
   "ERROR.USER.UPDATE": "עדכון פרופיל המשתמש נכשל",
   "ERROR.USER.VERIFY": "אימות המשתמש נכשל",
+  "ERROR.USER.VERIFY_INVALID_LINK": "",
   "ERROR.USER.VERIFY_REQUEST": "שליחת הבקשה לאימות נכשלה",
   "INFO.CONTACT_MESSAGE_SENT": "קיבלנו את הדוא\"ל שלך. עם זאת, אין באפשרותנו להגיב על כל ההודעות. אבל ננסה!",
   "INFO.EMAIL.CHANGE_SUCCESS": "האימייל השתנה",

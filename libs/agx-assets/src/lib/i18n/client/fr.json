@@ -162,6 +162,7 @@
   "ERROR.USER.PASSWORD_RESET_VERIFY": "Impossible de vérifier le lien de réinitialisation du mot de passe",
   "ERROR.USER.UPDATE": "Échec de la mise à jour du profil utilisateur",
   "ERROR.USER.VERIFY": "Échec de la vérification de l'utilisateur",
+  "ERROR.USER.VERIFY_INVALID_LINK": "",
   "ERROR.USER.VERIFY_REQUEST": "Échec de l'envoi de la demande de vérification",
   "INFO.CONTACT_MESSAGE_SENT": "Nous avons reçu votre email. Cependant, nous sommes incapables de répondre à tous les messages. Mais nous allons essayer!",
   "INFO.EMAIL.CHANGE_SUCCESS": "L'email a changé",

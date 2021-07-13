@@ -22,7 +22,7 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.VERIFICATION');
   subtitle = _('COMMON.ACCOUNT.VERIFY');
-  icon = 'lock-open-outline';
+  icon = 'account-check-outline';
   isUserVerified = false;
   isLoading = false;
   status = _('SUCCESS.USER.VERIFY');
@@ -53,11 +53,13 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
             }
           } else {
             // handle known errors
+            this.icon = 'account-alert-outline';
             this.status = resp.message || _('WARN.USER.VERIFICATION_FAILURE');
           }
         },
         error: (err) => {
           // handler server errors
+          this.icon = 'account-alert-outline';
           this.isLoading = false;
           this.status = err.error?.message || _('WARN.USER.VERIFICATION_FAILURE');
         },

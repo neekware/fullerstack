@@ -162,6 +162,7 @@
   "ERROR.USER.PASSWORD_RESET_VERIFY": "Der Link zum Zurücksetzen des Passworts konnte nicht überprüft werden",
   "ERROR.USER.UPDATE": "Fehler beim Aktualisieren des Benutzerprofils",
   "ERROR.USER.VERIFY": "Fehler beim Überprüfen des Benutzers",
+  "ERROR.USER.VERIFY_INVALID_LINK": "",
   "ERROR.USER.VERIFY_REQUEST": "Fehler beim Senden der Überprüfungsanfrage",
   "INFO.CONTACT_MESSAGE_SENT": "Wir haben Ihre E-Mail erhalten. Wir können jedoch nicht auf alle Nachrichten antworten. Aber wir werden es versuchen!",
   "INFO.EMAIL.CHANGE_SUCCESS": "E-Mail hat sich geändert",
