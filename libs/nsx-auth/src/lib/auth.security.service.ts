@@ -255,12 +255,12 @@ export class SecurityService {
     const userId = getUserIdFromBase64(idb64);
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-      throw new UnauthorizedException(ApiError.Error.Auth.InvalidOrInactiveUser);
+      throw new BadRequestException(ApiError.Error.Auth.InvalidOrInactiveUser);
     }
 
     const validToken = verifySecurityToken(token, user.id, this.siteSecret);
     if (!validToken) {
-      throw new UnauthorizedException(ApiError.Error.Auth.InvalidVerificationLink);
+      throw new BadRequestException(ApiError.Error.Auth.InvalidVerificationLink);
     }
 
     return this.prisma.user.update({

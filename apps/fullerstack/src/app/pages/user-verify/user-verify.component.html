@@ -12,16 +12,11 @@
     [icon]="icon"
     [progress]="isLoading"
   >
-    <!-- <app-blob *ngIf="isVerifyLinkValid" text="{{ 'SUCCESS.USER.VERIFY' | translate }}." icon="check-circle-outline" iconColor="green">
-    </app-blob>
+    <fullerstack-blob *ngIf="isUserVerified" text="{{ status | translate }}." icon="check-circle-outline" iconColor="green">
+    </fullerstack-blob>
 
-    <app-blob
-      *ngIf="!isVerifyLinkValid"
-      class="mt1 color-warn"
-      text="{{ 'WARN.USER.VERIFICATION_FAILURE' | translate }}."
-      icon="alert-circle"
-    >
-    </app-blob> -->
+    <fullerstack-blob *ngIf="!isUserVerified" class="mt1 color-warn" text="{{ status | translate }}." icon="alert-circle">
+    </fullerstack-blob>
 
     <mat-divider class="mt1"></mat-divider>
 

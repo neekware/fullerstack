@@ -7,29 +7,25 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { GqlService } from '@fullerstack/ngx-gql';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { LoggerService } from '@fullerstack/ngx-logger';
-import { UserService } from '@fullerstack/ngx-user';
 import { Subject } from 'rxjs';
-import { filter, first, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'fullerstack-user-verify',
   templateUrl: './user-verify.component.html',
 })
 export class UserVerifyComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  private destroy$ = new Subject<boolean>();
   title = _('COMMON.VERIFICATION');
   subtitle = _('COMMON.ACCOUNT.VERIFY');
   icon = 'lock-open-outline';
-  isVerifyLinkValid = false;
+  isUserVerified = false;
   isLoading = false;
-  private destroy$ = new Subject<boolean>();
+  status = _('SUCCESS.USER.VERIFY');
 
   constructor(public route: ActivatedRoute, public i18n: I18nService, public auth: AuthService) {}
 
@@ -50,18 +46,20 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp) => {
           this.isLoading = false;
-          // this.isVerifyLinkValid = isValid;
           if (resp.ok) {
+            this.isUserVerified = true;
             if (this.auth.state.isLoggedIn) {
               this.auth.tokenRefreshRequest$().pipe(first(), takeUntil(this.destroy$)).subscribe();
             }
           } else {
             // handle known errors
+            this.status = resp.message || _('WARN.USER.VERIFICATION_FAILURE');
           }
         },
         error: (err) => {
           // handler server errors
           this.isLoading = false;
+          this.status = err.error?.message || _('WARN.USER.VERIFICATION_FAILURE');
         },
       });
   }
