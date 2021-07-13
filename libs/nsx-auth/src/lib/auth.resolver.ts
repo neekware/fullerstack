@@ -9,6 +9,7 @@
 import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import {
   ApplicationConfig,
+  Base64,
   HttpRequest,
   HttpResponse,
   RenderContext,
@@ -36,6 +37,7 @@ import {
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
+import { buildVerifyUserLink } from './auth.util';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
@@ -63,21 +65,19 @@ export class AuthResolver {
     const emailContext: RenderContext = {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
-      RegexVerifyLink: `${this.options.siteUrl}/verify/${user.email}`,
+      RegexVerifyLink: buildVerifyUserLink(user.id, this.security.siteSecret, this.options.siteUrl),
       RegexCompanyName: this.options.siteName,
       RegexSupportEmail: this.options.siteSupportEmail,
     };
 
     const emailSubjectBody = getEmailBodySubject('welcome', 'en', emailContext);
-    const emailMessage: MailerMessage = {
+
+    this.mailer.sendMail({
       from: this.options.siteSupportEmail,
       to: user.email,
       subject: emailSubjectBody.subject,
       html: emailSubjectBody.html,
-    };
-
-    this.mailer.sendMail(emailMessage);
-    // .then(() => console.log(`User ${user.id} updated`));
+    });
 
     return { ok: true, token };
   }

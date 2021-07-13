@@ -8,13 +8,13 @@
 
 export interface MailerConfig {
   providerName: string;
+  host: string;
+  secureConnection: boolean;
+  port: number;
   auth?: {
     user: string;
     pass: string;
   };
-  port: 587;
-  host: string;
-  secureConnection: boolean;
 }
 
 export declare class MailerMessage {

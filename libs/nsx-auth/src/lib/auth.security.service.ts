@@ -26,14 +26,14 @@ import { SecurityConfig } from './auth.model';
 export class SecurityService {
   readonly logger = new Logger(AUTH_MODULE_NAME);
   readonly options: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
-  readonly jwtSecret: string;
+  readonly siteSecret: string;
 
   constructor(readonly prisma: PrismaService, readonly config: ConfigService) {
     this.options = ldNestMerge(
       { ...this.options },
       this.config.get<SecurityConfig>('appConfig.securityConfig')
     );
-    this.jwtSecret = this.config.get<string>('AUTH_SEEKRET_KEY');
+    this.siteSecret = this.config.get<string>('SITE_SEEKRET_KEY');
     this.rehydrateSuperuser();
   }
 
@@ -171,7 +171,7 @@ export class SecurityService {
    * @returns string value of a jwt token
    */
   generateSessionToken(payload: JwtDto): string {
-    return jwt.sign(payload, this.jwtSecret, {
+    return jwt.sign(payload, this.siteSecret, {
       expiresIn: this.options.sessionTokenExpiry,
     });
   }
@@ -182,7 +182,7 @@ export class SecurityService {
    * @returns string value of a jwt token
    */
   generateAccessToken(payload: JwtDto): string {
-    return jwt.sign(payload, this.jwtSecret, {
+    return jwt.sign(payload, this.siteSecret, {
       expiresIn: this.options.accessTokenExpiry,
     });
   }
@@ -223,7 +223,7 @@ export class SecurityService {
    */
   verifyToken(token: string): JwtDto {
     try {
-      const { userId, sessionVersion } = jwt.verify(token, this.jwtSecret) as JwtDto;
+      const { userId, sessionVersion } = jwt.verify(token, this.siteSecret) as JwtDto;
       return { userId, sessionVersion };
     } catch (err) {
       return undefined;

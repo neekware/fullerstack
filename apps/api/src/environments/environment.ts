@@ -45,7 +45,7 @@ const graphqlConfig: GqlModuleOptions = {
 const mailerConfig: MailerConfig = {
   providerName: 'postmark',
   host: 'smtp.postmarkapp.com',
-  secureConnection: true, // true for 465, false for other ports
+  secureConnection: false, // true for 465, false for other ports
   port: 587,
 };
 

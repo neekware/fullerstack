@@ -8,9 +8,10 @@
 
 import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
-import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
+import { Base64, HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import * as crypto from 'crypto-js';
 
 export function convertExecutionContextToGqlContext(context: ExecutionContext) {
   return GqlExecutionContext.create(context).getContext();
@@ -48,4 +49,17 @@ export function getLanguagesFromContext(context: ExecutionContext): string[] {
   const acceptLanguage = request?.headers['accept-language'];
   const langs = acceptLanguage?.match(/[a-zA-Z-]{2,10}/g) || [];
   return langs;
+}
+
+/*
+ * Generate a safe URL, to verify a new user
+ * @param userId user id
+ * @param salt site secret
+ * @param baseUrl base url of the site
+ * @returns valid URL
+ */
+export function buildVerifyUserLink(userId: string, salt: string, baseUrl: string): string {
+  const securityHash = encodeURIComponent(crypto.MD5(`${userId}${salt}`).toString());
+  const b64Id = encodeURIComponent(Base64.encode(userId));
+  return `${baseUrl}/verify/user/${securityHash}/${b64Id}`;
 }

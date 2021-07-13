@@ -10,9 +10,8 @@ import { MailerConfig } from './mailer.model';
 
 export const DefaultMailerConfig: MailerConfig = {
   // The default mailer configuration
-  provider: 'postmark',
+  providerName: 'postmark',
   host: 'smtp.postmarkapp.com',
-  transportMethod: 'smtp',
-  secureConnection: true,
+  secureConnection: false,
   port: 587,
 };
