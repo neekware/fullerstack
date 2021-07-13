@@ -30,19 +30,43 @@ export class I18nService {
     return renderTemplate(template, params, options);
   }
 
-  getDefaultLocale(): string {
+  get defaultLocale(): string {
     return this.options.defaultLocale;
   }
 
-  getAvailableLocales(): Readonly<string[]> {
+  get availableLocales(): Readonly<string[]> {
     return this.options.availableLocales;
   }
 
-  getEnabledLocales(): Readonly<string[]> {
+  get enabledLocales(): Readonly<string[]> {
     return this.options.enabledLocales;
   }
 
   isRightToLeftLocale(locale: string): boolean {
     return RtlLanguageList.includes(locale);
+  }
+
+  getPreferredLocale(locales: string[]): string {
+    for (let locale of locales || []) {
+      if (locale) {
+        locale = locale.toLowerCase();
+        if (this.enabledLocales.includes(locale)) {
+          return locale;
+        }
+
+        const shortLocale = locale.split('-')[0];
+        if (this.enabledLocales.includes(shortLocale)) {
+          return shortLocale;
+        }
+
+        for (let fallbackLocale of this.enabledLocales) {
+          if (fallbackLocale.startsWith(locale)) {
+            return fallbackLocale;
+          }
+        }
+      }
+    }
+
+    return this.defaultLocale;
   }
 }

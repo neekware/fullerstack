@@ -16,6 +16,7 @@ import {
   UserDecorator,
 } from '@fullerstack/nsx-auth';
 import { PaginationArgs } from '@fullerstack/nsx-common';
+import { I18nService } from '@fullerstack/nsx-i18n';
 import { MailerService } from '@fullerstack/nsx-mailer';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { ForbiddenException, NotFoundException, UseGuards } from '@nestjs/common';
@@ -32,7 +33,8 @@ export class UserResolver {
   constructor(
     readonly userService: UserService,
     readonly prisma: PrismaService,
-    readonly mailer: MailerService
+    readonly mailer: MailerService,
+    readonly i18n: I18nService
   ) {}
 
   @UseGuards(AuthGuardGql)
@@ -51,8 +53,7 @@ export class UserResolver {
     @UserDecorator() currentUser: User,
     @Args('input') payload: UserSelfUpdateInput
   ) {
-    const lag = language[0];
-    console.log(lag);
+    const lag = currentUser.language || this.i18n.getPreferredLocale(language);
     const user = await this.userService.updateUser(currentUser.id, payload);
     // this.mailer.sendPostmark({
     //   From: 'support@avidtrader.co',

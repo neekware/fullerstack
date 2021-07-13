@@ -23,7 +23,12 @@ import { User } from '@prisma/client';
 import { DeepReadonly } from 'ts-essentials';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
-import { CookiesDecorator, RequestDecorator, ResponseDecorator } from './auth.decorator';
+import {
+  CookiesDecorator,
+  LanguageDecorator,
+  RequestDecorator,
+  ResponseDecorator,
+} from './auth.decorator';
 import { AuthGuardAnonymousGql } from './auth.guard.anonymous';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
@@ -55,12 +60,14 @@ export class AuthResolver {
 
   @Mutation(() => AuthTokenDto)
   async authRegister(
+    @LanguageDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: UserCreateInput
   ) {
     const user = await this.auth.createUser(data);
     const token = this.security.issueToken(user, request, response);
+    const locale = user.language || this.i18n.getPreferredLocale(language);
 
     const emailContext: RenderContext = {
       RegexName: `${user.firstName} ${user.lastName}`,
@@ -70,7 +77,7 @@ export class AuthResolver {
       RegexSupportEmail: this.options.siteSupportEmail,
     };
 
-    const emailSubjectBody = getEmailBodySubject('welcome', 'en', emailContext);
+    const emailSubjectBody = getEmailBodySubject('welcome', locale, emailContext);
 
     this.mailer.sendMail({
       from: this.options.siteSupportEmail,
