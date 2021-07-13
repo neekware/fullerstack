@@ -8,16 +8,14 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { getAsset } from '@fullerstack/nsx-common';
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { merge as ldNestMerge } from 'lodash';
-import { createTransport } from 'nodemailer';
-import { Client as PostmarkClient, Message as PostmarkMessage } from 'postmark';
+import * as nodemailer from 'nodemailer';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultMailerConfig } from './mailer.default';
-import { MailerConfig } from './mailer.model';
+import { MailerConfig, MailerMessage } from './mailer.model';
 
 @Injectable()
 export class MailerService implements OnModuleDestroy {
@@ -30,30 +28,23 @@ export class MailerService implements OnModuleDestroy {
       this.config.get<MailerConfig>('appConfig.mailerConfig')
     );
 
-    this.transporter = this.createMailerInstance();
+    this.createMailerInstance();
   }
 
   private createMailerInstance() {
-    switch (this.options.provider) {
-      case 'Gmail':
-        return createTransport({
-          service: 'Gmail',
-          auth: {
-            user: this.config.get<string>('MAILER_API_USERNAME'),
-            pass: this.config.get<string>('MAILER_API_PASSWORD'),
-          },
-        });
-      case 'Postmark':
-        return new PostmarkClient(this.config.get<string>('MAILER_API_KEY'));
-    }
+    const user = this.config.get<string>('MAILER_SMTP_USERNAME');
+    const pass = this.config.get<string>('MAILER_SMTP_PASSWORD');
+
+    this.transporter = nodemailer.createTransport({
+      host: this.options.host,
+      port: this.options.port,
+      secure: this.options.secureConnection,
+      auth: { user, pass },
+    });
   }
 
-  sendGmail(from: string, to: string, subject: string, text: string) {
-    this.transporter.sendMail({ from, to, subject, text });
-  }
-
-  sendPostmark(message: PostmarkMessage): Promise<any> {
-    return this.transporter.sendEmail(message);
+  sendMail(message: MailerMessage) {
+    return this.transporter.sendMail(message);
   }
 
   async onModuleDestroy() {

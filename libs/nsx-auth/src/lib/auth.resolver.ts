@@ -15,7 +15,7 @@ import {
   getEmailBodySubject,
 } from '@fullerstack/nsx-common';
 import { I18nService } from '@fullerstack/nsx-i18n';
-import { MailerService } from '@fullerstack/nsx-mailer';
+import { MailerMessage, MailerService } from '@fullerstack/nsx-mailer';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
@@ -69,12 +69,14 @@ export class AuthResolver {
     };
 
     const emailSubjectBody = getEmailBodySubject('welcome', 'en', emailContext);
+    const emailMessage: MailerMessage = {
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    };
 
-    this.mailer.sendPostmark({
-      To: user.email,
-      From: this.options.siteSupportEmail,
-      ...emailSubjectBody,
-    });
+    this.mailer.sendMail(emailMessage);
     // .then(() => console.log(`User ${user.id} updated`));
 
     return { ok: true, token };

@@ -38,8 +38,10 @@ const graphqlConfig: GqlModuleOptions = {
 };
 
 const mailerConfig: MailerConfig = {
-  provider: 'Postmark',
-  transport: 'API_KEY',
+  providerName: 'postmark',
+  host: 'smtp.postmarkapp.com',
+  secureConnection: true, // true for port 465, false for port 587
+  port: 587,
 };
 
 const i18nConfig: I18nConfig = {

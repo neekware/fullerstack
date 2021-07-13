@@ -6,11 +6,24 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-export type MailerProvider = 'Gmail' | 'Postmark' | 'SendGrid' | 'AmazonSES';
-
-export type MailerTransport = 'SMTP' | 'API_KEY';
-
 export interface MailerConfig {
-  provider: MailerProvider;
-  transport: MailerTransport;
+  providerName: string;
+  auth?: {
+    user: string;
+    pass: string;
+  };
+  port: 587;
+  host: string;
+  secureConnection: boolean;
+}
+
+export declare class MailerMessage {
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+  text?: string;
+  replayTo?: string;
+  cC?: string;
+  bCc?: string;
 }

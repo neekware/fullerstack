@@ -47,9 +47,9 @@ export function getEmailBodySubject(
   action: string,
   locale: string,
   context?: RenderContext
-): { Subject: string; HtmlBody: string } {
+): { subject: string; html: string } {
   return {
-    Subject: getEmailSubject(action, locale, context),
-    HtmlBody: getHtmlEmailBody(action, locale, context),
+    subject: getEmailSubject(action, locale, context),
+    html: getHtmlEmailBody(action, locale, context),
   };
 }

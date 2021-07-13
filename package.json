@@ -114,7 +114,6 @@
     "object-hash": "^2.2.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "postmark": "^2.7.6",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.1.0",
     "showdown": "^1.9.1",
