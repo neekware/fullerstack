@@ -20,7 +20,7 @@ import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { UserService, UserState } from '@fullerstack/ngx-user';
 import { ValidationService } from '@fullerstack/ngx-util';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'fullerstack-user-profile-form',
@@ -52,7 +52,7 @@ export class UserProfileFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.user.stateSub$.pipe(debounceTime(200), takeUntil(this.destroy$)).subscribe({
       next: (state) => {
         this.buildForm(state);
       },
