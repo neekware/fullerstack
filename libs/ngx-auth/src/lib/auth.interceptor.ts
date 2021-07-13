@@ -6,7 +6,13 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode, JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
@@ -45,19 +51,20 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((errors) => {
-        const gqlErrors = new GqlErrorsHandler(errors);
-        if (gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
-          const operationName = tryGet(() => request?.body[AuthResponseOperationName]);
-          switch (operationName) {
-            case AuthRefreshTokenOperation:
-              this.auth.logoutRequest();
-              return of(null);
-            case AuthLogoutOperation:
-              return of(null);
+        if (errors instanceof GqlErrorsHandler) {
+          if (errors.find(HttpStatusCode.UNAUTHORIZED)) {
+            const operationName = tryGet(() => request?.body[AuthResponseOperationName]);
+            switch (operationName) {
+              case AuthRefreshTokenOperation:
+                this.auth.logoutRequest();
+                return of(null);
+              case AuthLogoutOperation:
+                return of(null);
+            }
+            return this.retryOperationPostRefreshToken(request, next);
           }
-          return this.retryOperationPostRefreshToken(request, next);
         }
-        return throwError(() => gqlErrors);
+        return throwError(() => errors);
       })
     );
   }
@@ -77,12 +84,13 @@ export class AuthInterceptor implements HttpInterceptor {
         request = this.insertToken(request, authState.token);
         return next.handle(request).pipe(
           catchError((errors) => {
-            const gqlErrors = new GqlErrorsHandler(errors);
-            if (gqlErrors.find(HttpStatusCode.UNAUTHORIZED)) {
-              this.auth.logoutRequest();
-              return of(null);
+            if (errors instanceof GqlErrorsHandler) {
+              if (errors.find(HttpStatusCode.UNAUTHORIZED)) {
+                this.auth.logoutRequest();
+                return of(null);
+              }
             }
-            return throwError(() => gqlErrors);
+            return throwError(() => errors);
           })
         );
       })

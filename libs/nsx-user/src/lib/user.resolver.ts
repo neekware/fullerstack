@@ -51,6 +51,8 @@ export class UserResolver {
     @UserDecorator() currentUser: User,
     @Args('input') payload: UserSelfUpdateInput
   ) {
+    throw new NotFoundException(ApiError.Error.Auth.Unauthorized);
+
     const lag = language[0];
     const user = await this.userService.updateUser(currentUser.id, payload);
     // this.mailer.sendPostmark({
