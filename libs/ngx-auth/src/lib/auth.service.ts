@@ -161,6 +161,7 @@ export class AuthService implements OnDestroy {
         map((resp) => {
           if (resp.ok) {
             this.logger.debug(`[${this.nameSpace}] Login request success ...`);
+            this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
             return this.store.setState(
               this.claimId,
               {
@@ -218,6 +219,7 @@ export class AuthService implements OnDestroy {
         map((resp) => {
           if (resp.ok) {
             this.logger.debug(`[${this.nameSpace}] Register request success ...`);
+            this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
             return this.store.setState(
               this.claimId,
               {

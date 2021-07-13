@@ -11,6 +11,7 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-login',
@@ -18,13 +19,12 @@ import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  private destroy$ = new Subject<boolean>();
   title = _('COMMON.LOGIN');
   subtitle = _('COMMON.ACCOUNT_ACCESS');
   icon = 'lock-open-outline';
 
-  constructor(readonly config: ConfigService, readonly auth: AuthService) {
-    this.auth.msg.reset();
-  }
+  constructor(readonly config: ConfigService, readonly auth: AuthService) {}
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
@@ -33,6 +33,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(data: UserCredentialsInput) {
-    this.auth.loginRequest$(data).subscribe();
+    this.auth.loginRequest$(data).pipe(takeUntil(this.destroy$)).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
