@@ -9,7 +9,7 @@ This project is a mono-repo for FullerStack which is an open source dashboard po
 
 ## Mission
 
-To create an open source dashboard from the ground-up. `Quality of Experience` is the ultimate mission, and that includes simplicity, elegance, quality and performance. `Designed for future, built for today!`<br/>
+To create an open source dashboard from the ground-up. `Quality of Experience` is the ultimate mission, and that includes simplicity, elegance, quality and performance. `Designed for the future, but built for today!`<br/>
 
 ## `Elegance in simplicity`
 
@@ -22,23 +22,26 @@ Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app
 ## Features
 
 - Quality of Experience and Security First
-- Geo Location Support
-  - Geo Fencing
-  - IP address filtering
+- Built-in Auth & Auth (Authentication & Authorization)
+  - Powered by JWT (Auth & Access)
+  - Fully Stateless
+  - Permissions (Roles / Actions)
 - Translations
-  - Internationalization (i18n
+  - Internationalization (i18n)
   - Localization (i10n)
   - Left2Right, Right2Left Support
 - GraphQL
   - Frontend & Backend
 - PubSub
   - RxJS (Subscription, Push)
-- Built-in Auth & Auth (Authentication & Authorization)
-  - Powered by JWT (Auth & Access)
-  - Fully Stateless
+  - Fully reactive
 - Full SQL Support
-  - PostgresQL as 1st class citizen
+  - PostgresQL as the 1st class citizen
 - Dark Mode Support
+- Fullscreen
+- Geo Location Support (TBD)
+  - Geo Fencing
+  - IP address filtering
 - ...Etc
 
 ### The mono-repo was created via Nrwl/Nx.
@@ -182,7 +185,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             352        17944         2026         3548        12370
  JSON                   137         4799            0            0         4799
- Markdown                46         2157          525            0         1632
+ Markdown                46         2160          525            0         1635
  Sass                    52         1426          139           35         1252
  HTML                    30          907           73            5          829
  JavaScript              33          643           24           48          571
@@ -191,7 +194,7 @@ X.Y.Z Version
  SQL                      2           67           13           13           41
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  659        28136         2817         3651        21668
+ Total                  659        28139         2817         3651        21671
 --------------------------------------------------------------------------------
 ```
 
