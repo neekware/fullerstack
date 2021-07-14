@@ -25,7 +25,7 @@ import { DeepReadonly } from 'ts-essentials';
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import {
   CookiesDecorator,
-  LanguageDecorator,
+  LocaleDecorator,
   RequestDecorator,
   ResponseDecorator,
 } from './auth.decorator';
@@ -60,7 +60,7 @@ export class AuthResolver {
 
   @Mutation(() => AuthTokenDto)
   async authRegister(
-    @LanguageDecorator() language: string[],
+    @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: UserCreateInput

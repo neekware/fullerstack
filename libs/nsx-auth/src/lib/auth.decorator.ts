@@ -13,7 +13,7 @@ import { AUTH_ROLE_KEY } from './auth.constant';
 import { AuthFilterType } from './auth.model';
 import {
   getCookiesFromContext,
-  getLanguagesFromContext,
+  getLocalesFromContext,
   getRequestFromContext,
   getResponseFromContext,
 } from './auth.util';
@@ -36,11 +36,9 @@ export const UserDecorator = createParamDecorator((data: unknown, context: Execu
   return getRequestFromContext(context).user as User;
 });
 
-export const LanguageDecorator = createParamDecorator(
-  (data: unknown, context: ExecutionContext) => {
-    return getLanguagesFromContext(context);
-  }
-);
+export const LocaleDecorator = createParamDecorator((data: unknown, context: ExecutionContext) => {
+  return getLocalesFromContext(context);
+});
 
 /**
  * Decorator for enforcing role-based access

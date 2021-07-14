@@ -40,7 +40,7 @@ export function getJwtTokenFromAuthorizationHeader(request: HttpRequest): string
   return authorization.replace(JWT_BEARER_REALM, '').trim();
 }
 
-export function getLanguagesFromContext(context: ExecutionContext): string[] {
+export function getLocalesFromContext(context: ExecutionContext): string[] {
   const request = getRequestFromContext(context);
   const user = request?.user;
   if (user?.language) {

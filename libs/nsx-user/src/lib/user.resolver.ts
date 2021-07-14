@@ -11,7 +11,7 @@ import {
   AuthGuardAnonymousGql,
   AuthGuardGql,
   AuthGuardRole,
-  LanguageDecorator,
+  LocaleDecorator,
   UseRoles,
   UserDecorator,
 } from '@fullerstack/nsx-auth';
@@ -49,9 +49,11 @@ export class UserResolver {
   @UseGuards(AuthGuardGql)
   @Mutation(() => UserDto, { description: "Update user's own info" })
   async userSelfUpdate(
+    @LocaleDecorator() locales: string[],
     @UserDecorator() currentUser: User,
     @Args('input') payload: UserSelfUpdateInput
   ) {
+    console.log(locales);
     const user = await this.userService.updateUser(currentUser.id, payload);
     return UserDataAccessScope.getSecuredUser(user, currentUser);
   }
