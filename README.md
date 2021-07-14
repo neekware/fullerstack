@@ -112,7 +112,7 @@ yarn install
 createdb fullerstack
 
 # Copy environment variables and update
-cp example.env .env
+cp env.example .env
 
 # Migrate the database
 yarn prisma:migrate:dev
