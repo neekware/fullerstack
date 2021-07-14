@@ -9,7 +9,7 @@ This project is a mono-repo for FullerStack which is an open source dashboard po
 
 ## Mission
 
-To create an open source dashboard from the ground-up. `Quality of Experience` is the ultimate mission, and that includes simplicity, elegance, quality and performance. `Designed for future, built for today!`<br/>
+To create an open source dashboard from the ground-up. `Quality of Experience` is the ultimate mission, and that includes simplicity, elegance, quality and performance. `Designed for the future, but built for today!`<br/>
 
 ## `Elegance in simplicity`
 
@@ -22,23 +22,26 @@ Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app
 ## Features
 
 - Quality of Experience and Security First
-- Geo Location Support
-  - Geo Fencing
-  - IP address filtering
+- Built-in Auth & Auth (Authentication & Authorization)
+  - Powered by JWT (Auth & Access)
+  - Fully Stateless
+  - Permissions (Roles / Actions)
 - Translations
-  - Internationalization (i18n
+  - Internationalization (i18n)
   - Localization (i10n)
   - Left2Right, Right2Left Support
 - GraphQL
   - Frontend & Backend
 - PubSub
   - RxJS (Subscription, Push)
-- Built-in Auth & Auth (Authentication & Authorization)
-  - Powered by JWT (Auth & Access)
-  - Fully Stateless
+  - Fully reactive
 - Full SQL Support
-  - PostgresQL as 1st class citizen
+  - PostgresQL as the 1st class citizen
 - Dark Mode Support
+- Fullscreen
+- Geo Location Support (TBD)
+  - Geo Fencing
+  - IP address filtering
 - ...Etc
 
 ### The mono-repo was created via Nrwl/Nx.
@@ -109,7 +112,7 @@ yarn install
 createdb fullerstack
 
 # Copy environment variables and update
-cp example.env .env
+cp env.example .env
 
 # Migrate the database
 yarn prisma:migrate:dev
@@ -180,18 +183,18 @@ X.Y.Z Version
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             333        17028         1913         3403        11712
- JSON                   131         4661            0            0         4661
- Markdown                30         2073          491            0         1582
- Sass                    51         1426          139           35         1252
- HTML                    27          668           44            4          620
- JavaScript              31          611           24           48          539
+ TypeScript             355        18142         2059         3593        12490
+ JSON                   137         4802            0            0         4802
+ Markdown                46         2160          525            0         1635
+ Sass                    52         1426          139           35         1252
+ HTML                    30          907           73            5          829
+ JavaScript              33          643           24           48          571
  CSS                      1           96            7            0           89
- Plain Text               4           93           10            0           83
- SQL                      1           63           13           12           38
+ Plain Text               5           94           10            0           84
+ SQL                      2           67           13           13           41
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  610        26722         2641         3504        20577
+ Total                  662        28340         2850         3696        21794
 --------------------------------------------------------------------------------
 ```
 

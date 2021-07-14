@@ -21,19 +21,20 @@ import { v4 as uuid_v4 } from 'uuid';
 import { AUTH_MODULE_NAME, AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
+import { getUserIdFromBase64, verifySecurityToken } from './auth.util';
 
 @Injectable()
 export class SecurityService {
   readonly logger = new Logger(AUTH_MODULE_NAME);
   readonly options: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
-  readonly jwtSecret: string;
+  readonly siteSecret: string;
 
   constructor(readonly prisma: PrismaService, readonly config: ConfigService) {
     this.options = ldNestMerge(
       { ...this.options },
       this.config.get<SecurityConfig>('appConfig.securityConfig')
     );
-    this.jwtSecret = this.config.get<string>('AUTH_SEEKRET_KEY');
+    this.siteSecret = this.config.get<string>('SITE_SEEKRET_KEY');
     this.rehydrateSuperuser();
   }
 
@@ -171,7 +172,7 @@ export class SecurityService {
    * @returns string value of a jwt token
    */
   generateSessionToken(payload: JwtDto): string {
-    return jwt.sign(payload, this.jwtSecret, {
+    return jwt.sign(payload, this.siteSecret, {
       expiresIn: this.options.sessionTokenExpiry,
     });
   }
@@ -182,7 +183,7 @@ export class SecurityService {
    * @returns string value of a jwt token
    */
   generateAccessToken(payload: JwtDto): string {
-    return jwt.sign(payload, this.jwtSecret, {
+    return jwt.sign(payload, this.siteSecret, {
       expiresIn: this.options.accessTokenExpiry,
     });
   }
@@ -223,7 +224,7 @@ export class SecurityService {
    */
   verifyToken(token: string): JwtDto {
     try {
-      const { userId, sessionVersion } = jwt.verify(token, this.jwtSecret) as JwtDto;
+      const { userId, sessionVersion } = jwt.verify(token, this.siteSecret) as JwtDto;
       return { userId, sessionVersion };
     } catch (err) {
       return undefined;
@@ -248,5 +249,25 @@ export class SecurityService {
   async validateUserByEmail(email: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { email } });
     return user?.isActive ? user : undefined;
+  }
+
+  async verifyUser(token: string, idb64: string): Promise<User> {
+    const userId = getUserIdFromBase64(idb64);
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidOrInactiveUser);
+    }
+
+    const validToken = verifySecurityToken(token, user.id, this.siteSecret);
+    if (!validToken) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidVerificationLink);
+    }
+
+    return this.prisma.user.update({
+      data: {
+        isVerified: true,
+      },
+      where: { id: user.id },
+    });
   }
 }

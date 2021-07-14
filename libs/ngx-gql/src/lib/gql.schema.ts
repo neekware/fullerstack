@@ -114,6 +114,29 @@ export interface isEmailAvailableVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: authVerifyUser
+// ====================================================
+
+export interface authVerifyUser_authVerifyUser {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authVerifyUser {
+  authVerifyUser: authVerifyUser_authVerifyUser;
+}
+
+export interface authVerifyUserVariables {
+  input: UserVerifyInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: userSelf
 // ====================================================
 
@@ -340,6 +363,11 @@ export interface UserSelfUpdateInput {
   firstName?: string | null;
   id: string;
   lastName?: string | null;
+}
+
+export interface UserVerifyInput {
+  idb64: string;
+  token: string;
 }
 
 export interface UserWhereByIdInput {

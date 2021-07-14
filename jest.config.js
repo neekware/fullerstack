@@ -27,5 +27,7 @@ module.exports = {
     '<rootDir>/libs/ngx-cachify',
     '<rootDir>/libs/ngx-store',
     '<rootDir>/libs/agx-store',
+    '<rootDir>/libs/nsx-mailer',
+    '<rootDir>/libs/nxs-i18n',
   ],
 };

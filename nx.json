@@ -109,11 +109,17 @@
     "nsx-common": {
       "tags": ["scope:nsx-data"]
     },
+    "nsx-mailer": {
+      "tags": ["scope:nsx-util"]
+    },
     "nsx-prisma": {
       "tags": ["scope:nsx-data"]
     },
     "nsx-user": {
       "tags": ["scope:nsx-util"]
+    },
+    "nxs-i18n": {
+      "tags": ["scope:nsx-data"]
     }
   },
   "targetDependencies": {

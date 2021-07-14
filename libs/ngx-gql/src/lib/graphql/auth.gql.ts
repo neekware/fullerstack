@@ -64,9 +64,19 @@ export const AuthLogoutMutation = gql`
 `;
 
 // auth email is not in use
-export const AuthIsEmailAvailable = gql`
+export const AuthIsEmailAvailableQuery = gql`
   mutation isEmailAvailable($email: String!) {
     isEmailAvailable(email: $email) {
+      ...AuthStatus
+    }
+  }
+  ${AuthStatusFragment}
+`;
+
+// auth verify user
+export const AuthVerifyUserMutation = gql`
+  mutation authVerifyUser($input: UserVerifyInput!) {
+    authVerifyUser(input: $input) {
       ...AuthStatus
     }
   }

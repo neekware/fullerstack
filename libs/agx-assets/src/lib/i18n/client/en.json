@@ -163,6 +163,7 @@
   "ERROR.USER.PASSWORD_RESET_VERIFY": "Failed to verify password reset link",
   "ERROR.USER.UPDATE": "Failed to update user profile",
   "ERROR.USER.VERIFY": "Failed to verify user",
+  "ERROR.USER.VERIFY_INVALID_LINK": "Failed to verify user.  Invalid or expired link",
   "ERROR.USER.VERIFY_REQUEST": "Failed to send verification request",
   "INFO.CONTACT_MESSAGE_SENT": "We have received your email. However, we are unable to respond to all messages. But we will try!",
   "INFO.EMAIL.CHANGE_SUCCESS": "Email has changed",

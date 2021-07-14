@@ -83,6 +83,20 @@ export class UserCredentialsInput {
 }
 
 /**
+ * Authentication type (client -> server)
+ */
+@InputType()
+export class UserVerifyInput {
+  @Field()
+  @IsNotEmpty()
+  token: string;
+
+  @Field()
+  @IsNotEmpty()
+  idb64: string;
+}
+
+/**
  * Password change input type (client -> server)
  */
 @InputType()

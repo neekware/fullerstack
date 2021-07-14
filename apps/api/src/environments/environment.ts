@@ -7,6 +7,8 @@
  */
 
 import { SecurityConfig } from '@fullerstack/nsx-auth';
+import { I18nConfig } from '@fullerstack/nsx-i18n';
+import { MailerConfig } from '@fullerstack/nsx-mailer';
 import { NestApplicationOptions } from '@nestjs/common';
 import { ConfigModuleOptions } from '@nestjs/config';
 import { GqlModuleOptions } from '@nestjs/graphql';
@@ -40,7 +42,24 @@ const graphqlConfig: GqlModuleOptions = {
   },
 };
 
+const mailerConfig: MailerConfig = {
+  providerName: 'postmark',
+  host: 'smtp.postmarkapp.com',
+  secureConnection: false, // true for 465, false for other ports
+  port: 587,
+};
+
+const i18nConfig: I18nConfig = {
+  defaultLocale: 'en',
+  availableLocales: ['de', 'en', 'es', 'fa', 'fr', 'he', 'zh-hans'],
+  enabledLocales: ['de', 'en', 'es', 'fa', 'fr', 'he', 'zh-hans'],
+  translationDirectory: 'assets/i18n/',
+};
+
 export const environment = {
+  siteName: 'Fullerstack',
+  siteUrl: 'http://localhost:4200',
+  siteSupportEmail: 'support@fullerstack.net',
   production: false,
   port: 4201,
   prefix: 'api',
@@ -48,4 +67,6 @@ export const environment = {
   appConfig,
   graphqlConfig,
   securityConfig,
+  mailerConfig,
+  i18nConfig,
 } as const;

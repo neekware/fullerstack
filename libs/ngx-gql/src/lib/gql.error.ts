@@ -23,7 +23,7 @@ export const gqlErrorsInterceptor = () => (source: Observable<any>) =>
     concatMap((event) => {
       if (event instanceof HttpResponse && event?.type) {
         if (event?.body?.errors?.length) {
-          return throwError(() => event);
+          return throwError(() => new GqlErrorsHandler(event));
         }
       }
       return of(event);
