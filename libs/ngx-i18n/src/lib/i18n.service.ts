@@ -83,6 +83,10 @@ export class I18nService {
     }
   }
 
+  getBrowserLangs(): Readonly<string[]> {
+    return window?.navigator?.languages || ([] as string[]);
+  }
+
   private initLanguage() {
     this.defaultLanguage = this.options.i18n.defaultLanguage;
     this.availableLanguages = this.options.i18n.availableLanguages;
@@ -102,11 +106,36 @@ export class I18nService {
     this.translate.addLangs(Object.keys(this.options.i18n.enabledLanguages));
     this.translate.setDefaultLang(this.defaultLanguage);
 
-    let iso = this.translate.getBrowserCultureLang().toLowerCase();
-    if (!this.isLanguageEnabled(iso)) {
-      iso = this.defaultLanguage;
+    const iso = this.getInitialLanguage();
+    this.setCurrentLanguage(iso);
+  }
+
+  /*
+   * Get/Guess the initial language to load the app with
+   */
+  private getInitialLanguage(): string {
+    const browserLangs = this.getBrowserLangs();
+
+    for (let lang of browserLangs) {
+      if (lang) {
+        lang = lang.toLowerCase();
+        if (this.enabledLanguages.includes(lang)) {
+          return lang;
+        }
+
+        const shortLang = lang.split('-')[0];
+        if (shortLang && this.enabledLanguages.includes(shortLang)) {
+          return shortLang;
+        }
+
+        for (const fallbackLang of this.enabledLanguages) {
+          if (fallbackLang.startsWith(shortLang)) {
+            return fallbackLang;
+          }
+        }
+      }
     }
 
-    this.setCurrentLanguage(iso);
+    return this.defaultLanguage;
   }
 }

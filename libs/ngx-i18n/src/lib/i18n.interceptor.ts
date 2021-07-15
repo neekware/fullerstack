@@ -28,20 +28,8 @@ export class I18nInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (this.i18n) {
-      request = this.createAcceptLanguageHeader(request);
+      request = request.clone({ setHeaders: { 'Accept-Language': this.i18n.currentLanguage } });
     }
     return next.handle(request);
-  }
-
-  private createAcceptLanguageHeader(request: HttpRequest<unknown>) {
-    let acceptedLanguages = request?.headers?.get('Accept-Language');
-
-    if (acceptedLanguages) {
-      acceptedLanguages = `${this.i18n.currentLanguage},${acceptedLanguages}`;
-    } else {
-      acceptedLanguages = this.i18n.currentLanguage;
-    }
-
-    return request.clone({ setHeaders: { 'Accept-Language': acceptedLanguages } });
   }
 }

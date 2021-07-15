@@ -6,6 +6,8 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 

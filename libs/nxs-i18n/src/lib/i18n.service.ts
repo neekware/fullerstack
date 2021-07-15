@@ -60,7 +60,7 @@ export class I18nService {
         }
 
         for (const fallbackLocale of this.enabledLocales) {
-          if (fallbackLocale.startsWith(locale)) {
+          if (fallbackLocale.startsWith(shortLocale)) {
             return fallbackLocale;
           }
         }
