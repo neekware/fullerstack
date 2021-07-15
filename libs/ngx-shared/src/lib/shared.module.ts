@@ -13,6 +13,7 @@ import { I18nModule } from '@fullerstack/ngx-i18n';
 import { MaterialModule } from '@fullerstack/ngx-material';
 
 import { AlertComponent } from './component/alert';
+import { BlobComponent } from './component/blob/blob.component';
 import { CardComponent } from './component/card/card.component';
 import { ConfirmationDialogComponent } from './component/confirm/confirm.component';
 import { HintComponent } from './component/hint/hint.component';
@@ -31,6 +32,7 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     HintComponent,
     AlertComponent,
     CardComponent,
+    BlobComponent,
     RippleComponent,
     ConfirmationDialogComponent,
     LoginFormComponent,
@@ -45,6 +47,7 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     HintComponent,
     AlertComponent,
     CardComponent,
+    BlobComponent,
     RippleComponent,
     ConfirmationDialogComponent,
     LoginFormComponent,

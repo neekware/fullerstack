@@ -162,6 +162,7 @@
   "ERROR.USER.PASSWORD_RESET_VERIFY": "تأیید پیوند بازنشانی گذرواژه نشد",
   "ERROR.USER.UPDATE": "آپلود پروفایل کاربر بهروزرسانی نشد",
   "ERROR.USER.VERIFY": "تأیید کاربر نتوانست",
+  "ERROR.USER.VERIFY_INVALID_LINK": "",
   "ERROR.USER.VERIFY_REQUEST": "درخواست تأیید ارسال نشد",
   "INFO.CONTACT_MESSAGE_SENT": "ما ایمیل شما را دریافت کرده ایم با این حال، ما نمی توانیم به تمام پیام ها پاسخ دهیم. اما ما سعی خواهیم کرد!",
   "INFO.EMAIL.CHANGE_SUCCESS": "ایمیل تغییر کرده است",

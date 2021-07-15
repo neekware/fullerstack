@@ -38,6 +38,7 @@ type Mutation {
   authRegister(input: UserCreateInput!): AuthTokenDto!
   authResetPassword: AuthTokenDto!
   authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
+  authVerifyUser(input: UserVerifyInput!): AuthStatusDto!
   isEmailAvailable(email: String!): AuthStatusDto!
 
   """Update user's own info"""
@@ -158,6 +159,11 @@ input UserUpdateInput {
   lastName: String
   permissions: [Permission!]!
   role: Role
+}
+
+input UserVerifyInput {
+  idb64: String!
+  token: String!
 }
 
 input UserWhereByIdInput {

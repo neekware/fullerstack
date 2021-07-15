@@ -16,7 +16,7 @@ import { CachifyInterceptor } from '@fullerstack/ngx-cachify';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { GqlInterceptor } from '@fullerstack/ngx-gql';
 import { GqlModule } from '@fullerstack/ngx-gql';
-import { I18nModule } from '@fullerstack/ngx-i18n';
+import { I18nInterceptor, I18nModule } from '@fullerstack/ngx-i18n';
 import { JwtModule } from '@fullerstack/ngx-jwt';
 import { LayoutModule } from '@fullerstack/ngx-layout';
 import { LoggerModule } from '@fullerstack/ngx-logger';
@@ -39,6 +39,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { TrendComponent } from './pages/trend/trend.component';
+import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
 import { ProfileUpdateComponent } from './pages/user/profile-update.component';
 
 @NgModule({
@@ -53,6 +54,7 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
     ForexComponent,
     PortfolioComponent,
     TrendComponent,
+    UserVerifyComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +77,7 @@ import { ProfileUpdateComponent } from './pages/user/profile-update.component';
   ],
   providers: [
     ValidationService,
+    { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: CachifyInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: GqlInterceptor, multi: true },

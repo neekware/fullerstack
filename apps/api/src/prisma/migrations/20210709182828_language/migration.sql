@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "language" TEXT NOT NULL DEFAULT E'',
+ALTER COLUMN "firstName" SET DEFAULT E'',
+ALTER COLUMN "lastName" SET DEFAULT E'';

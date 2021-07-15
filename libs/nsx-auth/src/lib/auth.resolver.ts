@@ -7,13 +7,28 @@
  */
 
 import { ApiError, JwtDto } from '@fullerstack/agx-dto';
-import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
+import {
+  ApplicationConfig,
+  HttpRequest,
+  HttpResponse,
+  RenderContext,
+  getEmailBodySubject,
+} from '@fullerstack/nsx-common';
+import { I18nService } from '@fullerstack/nsx-i18n';
+import { MailerService } from '@fullerstack/nsx-mailer';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { User } from '@prisma/client';
+import { DeepReadonly } from 'ts-essentials';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
-import { CookiesDecorator, RequestDecorator, ResponseDecorator } from './auth.decorator';
+import {
+  CookiesDecorator,
+  LocaleDecorator,
+  RequestDecorator,
+  ResponseDecorator,
+} from './auth.decorator';
 import { AuthGuardAnonymousGql } from './auth.guard.anonymous';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
@@ -23,22 +38,54 @@ import {
   ChangePasswordRequestInput,
   UserCreateInput,
   UserCredentialsInput,
+  UserVerifyInput,
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
+import { buildVerifyUserLink } from './auth.util';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
-  constructor(readonly authService: AuthService, readonly securityService: SecurityService) {}
+  readonly options: DeepReadonly<ApplicationConfig>;
+
+  constructor(
+    readonly config: ConfigService,
+    readonly auth: AuthService,
+    readonly security: SecurityService,
+    readonly i18n: I18nService,
+    readonly mailer: MailerService
+  ) {
+    this.options = this.config.get<ApplicationConfig>('appConfig');
+  }
 
   @Mutation(() => AuthTokenDto)
   async authRegister(
+    @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: UserCreateInput
   ) {
-    const user = await this.authService.createUser(data);
-    const token = this.securityService.issueToken(user, request, response);
+    const user = await this.auth.createUser(data);
+    const token = this.security.issueToken(user, request, response);
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexVerifyLink: buildVerifyUserLink(user.id, this.security.siteSecret, this.options.siteUrl),
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject('welcome', locale, emailContext);
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
+
     return { ok: true, token };
   }
 
@@ -48,8 +95,8 @@ export class AuthResolver {
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: UserCredentialsInput
   ) {
-    const user = await this.authService.authenticateUser(data);
-    const token = this.securityService.issueToken(user, request, response);
+    const user = await this.auth.authenticateUser(data);
+    const token = this.security.issueToken(user, request, response);
     return { ok: true, token };
   }
 
@@ -59,12 +106,12 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
   ) {
-    const payload: JwtDto = this.securityService.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME]);
+    const payload: JwtDto = this.security.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME]);
     if (!payload) {
       throw new UnauthorizedException(ApiError.Error.Auth.Unauthorized);
     }
 
-    const user = await this.securityService.validateUser(payload.userId);
+    const user = await this.security.validateUser(payload.userId);
     if (!user) {
       throw new UnauthorizedException(ApiError.Error.Auth.InvalidOrInactiveUser);
     }
@@ -73,20 +120,20 @@ export class AuthResolver {
       throw new UnauthorizedException(ApiError.Error.Auth.InvalidOrRemotelyTerminatedSession);
     }
 
-    const token = this.securityService.issueToken(user, request, response);
+    const token = this.security.issueToken(user, request, response);
     return { ok: true, token };
   }
 
   @UseGuards(AuthGuardAnonymousGql)
   @Mutation(() => AuthStatusDto)
   async authLogout(@ResponseDecorator() response: HttpResponse) {
-    this.securityService.clearHttpCookie(response);
+    this.security.clearHttpCookie(response);
     return { ok: true };
   }
 
   @Mutation(() => AuthStatusDto)
   async isEmailAvailable(@Args('email', { type: () => String }) email: string) {
-    const isAvailable = !(await this.authService.isEmailInUse(email));
+    const isAvailable = !(await this.auth.isEmailInUse(email));
     return { ok: isAvailable };
   }
 
@@ -98,14 +145,14 @@ export class AuthResolver {
     @ResponseDecorator() response: HttpResponse,
     @Args('input') payload: ChangePasswordInput
   ) {
-    const user = await this.securityService.changePassword(
+    const user = await this.security.changePassword(
       request.user as User,
       payload.oldPassword,
       payload.newPassword,
       payload.resetOtherSessions
     );
 
-    const token = this.securityService.issueToken(user, request, response);
+    const token = this.security.issueToken(user, request, response);
     return { ok: true, token };
   }
 
@@ -115,7 +162,7 @@ export class AuthResolver {
     @ResponseDecorator() response: HttpResponse,
     @Args('input') payload?: ChangePasswordRequestInput
   ) {
-    await this.securityService.validateUserByEmail(payload.email);
+    await this.security.validateUserByEmail(payload.email);
 
     // send email out
 
@@ -131,8 +178,20 @@ export class AuthResolver {
   ) {
     // verify one-time hash key
 
-    await this.securityService.resetPassword(request.user as User);
+    await this.security.resetPassword(request.user as User);
 
     return { ok: true };
+  }
+
+  @Mutation(() => AuthStatusDto)
+  async authVerifyUser(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: UserVerifyInput
+  ) {
+    const user = await this.security.verifyUser(data.token, data.idb64);
+    if (!user) {
+      throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
+    }
+    return { ok: !!user.id };
   }
 }

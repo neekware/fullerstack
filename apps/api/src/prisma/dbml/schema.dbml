@@ -21,8 +21,9 @@ Table User {
   sessionVersion Int [not null, default: 1]
   isVerified Boolean [not null, default: false]
   isActive Boolean [not null, default: false]
-  firstName String [not null]
-  lastName String [not null]
+  firstName String [not null, default: '']
+  lastName String [not null, default: '']
+  language String [not null, default: '']
   role Role [not null, default: 'USER']
   permissions Permission [not null]
   groupId String

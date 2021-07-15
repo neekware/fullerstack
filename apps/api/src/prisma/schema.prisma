@@ -51,8 +51,9 @@ model User {
   sessionVersion Int          @default(1)
   isVerified     Boolean      @default(false)
   isActive       Boolean      @default(false)
-  firstName      String
-  lastName       String
+  firstName      String       @default("")
+  lastName       String       @default("")
+  language       String       @default("")
   role           Role         @default(USER)
   permissions    Permission[]
   groupId        String?

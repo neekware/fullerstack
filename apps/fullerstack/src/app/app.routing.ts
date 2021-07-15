@@ -19,6 +19,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { TrendComponent } from './pages/trend/trend.component';
+import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
 import { ProfileUpdateComponent } from './pages/user/profile-update.component';
 
 export const AppRoutes: Routes = [
@@ -71,6 +72,14 @@ export const AppRoutes: Routes = [
     canActivate: [AuthAnonymousGuard],
     data: {
       title: _('APP.REGISTER'),
+    },
+  },
+  {
+    path: 'auth/user/verify/:token/:idb64',
+    component: UserVerifyComponent,
+    data: {
+      title: _('COMMON.ACCOUNT.VERIFY'),
+      description: _('APP.DESCRIPTION.ACCOUNT_VERIFY'),
     },
   },
   {

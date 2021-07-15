@@ -1,1 +1,1 @@
-export * from './lib/agx-assets';
+export * from './lib/assets';

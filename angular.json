@@ -133,7 +133,14 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets",
+              {
+                "glob": "**/*",
+                "input": "libs/agx-assets/src/lib/i18n/api",
+                "output": "assets/i18n"
+              }
+            ]
           },
           "configurations": {
             "production": {
@@ -222,7 +229,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "libs/agx-assets/src/lib/i18n",
+                "input": "libs/agx-assets/src/lib/i18n/client",
                 "output": "assets/i18n"
               },
               {
@@ -946,6 +953,27 @@
         }
       }
     },
+    "nsx-mailer": {
+      "root": "libs/nsx-mailer",
+      "sourceRoot": "libs/nsx-mailer/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-mailer/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-mailer"],
+          "options": {
+            "jestConfig": "libs/nsx-mailer/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "nsx-prisma": {
       "root": "libs/nsx-prisma",
       "sourceRoot": "libs/nsx-prisma/src",
@@ -983,6 +1011,27 @@
           "outputs": ["coverage/libs/nsx-user"],
           "options": {
             "jestConfig": "libs/nsx-user/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "nxs-i18n": {
+      "root": "libs/nxs-i18n",
+      "sourceRoot": "libs/nxs-i18n/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nxs-i18n/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nxs-i18n"],
+          "options": {
+            "jestConfig": "libs/nxs-i18n/jest.config.js",
             "passWithNoTests": true
           }
         }

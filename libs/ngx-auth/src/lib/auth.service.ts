@@ -17,17 +17,19 @@ import {
 } from '@fullerstack/ngx-config';
 import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import {
-  AuthIsEmailAvailable,
+  AuthIsEmailAvailableQuery,
   AuthLoginMutation,
   AuthLogoutMutation,
   AuthRefreshTokenMutation,
   AuthRegisterMutation,
+  AuthVerifyUserMutation,
 } from '@fullerstack/ngx-gql/operations';
 import {
   AuthStatus,
   AuthTokenStatus,
   UserCreateInput,
   UserCredentialsInput,
+  UserVerifyInput,
 } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
@@ -78,7 +80,7 @@ export class AuthService implements OnDestroy {
     this.claimSlice();
     this.initState();
     this.subState();
-    this.tokenRefreshRequest$().pipe(first()).subscribe();
+    this.tokenRefreshRequest$().pipe(first(), takeUntil(this.destroy$)).subscribe();
 
     logger.info(
       `[${this.nameSpace}] AuthService ready ... (${
@@ -159,6 +161,7 @@ export class AuthService implements OnDestroy {
         map((resp) => {
           if (resp.ok) {
             this.logger.debug(`[${this.nameSpace}] Login request success ...`);
+            this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
             return this.store.setState(
               this.claimId,
               {
@@ -216,6 +219,7 @@ export class AuthService implements OnDestroy {
         map((resp) => {
           if (resp.ok) {
             this.logger.debug(`[${this.nameSpace}] Register request success ...`);
+            this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
             return this.store.setState(
               this.claimId,
               {
@@ -327,9 +331,36 @@ export class AuthService implements OnDestroy {
       });
   }
 
+  verifyUserRequest$(input: UserVerifyInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthVerifyUserMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(`[${this.nameSpace}] User verification request success ...`);
+          } else {
+            this.logger.error(
+              `[${this.nameSpace}] User verification request failed ... ${resp.message}`
+            );
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(
+              `[${this.nameSpace}] User verification request request failed ...`,
+              err
+            );
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
+  }
+
   isEmailAvailable(email: string): Observable<boolean> {
     return this.gql.client
-      .request<AuthStatus>(AuthIsEmailAvailable, { email })
+      .request<AuthStatus>(AuthIsEmailAvailableQuery, { email })
       .pipe(
         map((resp) => resp.ok),
         catchError((err: GqlErrorsHandler) => {

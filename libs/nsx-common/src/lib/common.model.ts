@@ -19,6 +19,11 @@ declare module 'express' {
   }
 }
 
+export interface ApplicationConfig {
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  [id: string]: any;
+}
+
 export { Request as HttpRequest, Response as HttpResponse } from 'express';
 
 export type PartialPick<T, K extends keyof T> = {

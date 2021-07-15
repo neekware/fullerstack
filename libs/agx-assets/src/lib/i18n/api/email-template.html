@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="{{RegexEmailLanguage}}" dir="{{RegexEmailLanguageDirection}}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>{{RegexEmailHeader}}</title>
+
+    <style>
+      /* FONTS */
+      @media screen {
+        @font-face {
+          font-family: 'Lato';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Lato Regular'), local('Lato-Regular'),
+            url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+        }
+
+        @font-face {
+          font-family: 'Lato';
+          font-style: normal;
+          font-weight: 700;
+          src: local('Lato Bold'), local('Lato-Bold'),
+            url(https://fonts.gstatic.com/s/lato/v11/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+        }
+
+        @font-face {
+          font-family: 'Lato';
+          font-style: italic;
+          font-weight: 400;
+          src: local('Lato Italic'), local('Lato-Italic'),
+            url(https://fonts.gstatic.com/s/lato/v11/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+        }
+
+        @font-face {
+          font-family: 'Lato';
+          font-style: italic;
+          font-weight: 700;
+          src: local('Lato Bold Italic'), local('Lato-BoldItalic'),
+            url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+        }
+      }
+
+      /* GLOBAL RESETS */
+
+      img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+        max-width: 100%;
+      }
+
+      body {
+        background-color: #f6f6f6;
+        font-family: sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0;
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      table {
+        border-collapse: separate;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        width: 100%;
+      }
+
+      table td {
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        vertical-align: top;
+      }
+
+      /* BODY & CONTAINER */
+
+      .body {
+        background-color: #f6f6f6;
+        width: 100%;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      /* HEADER, CONTENT, FOOTER */
+
+      .header {
+        font-weight: bold;
+        background-color: #2b70d4;
+        height: 76px;
+        text-align: center;
+        vertical-align: middle;
+        color: #ffffff;
+        font-size: 1.2rem;
+      }
+
+      .content {
+        clear: both;
+        margin: 15px auto;
+        width: 100%;
+        background-color: #ffffff;
+        font-size: 12px;
+        text-align: left;
+        padding: 15px;
+        display: block;
+        box-sizing: border-box;
+        display: block;
+        max-width: 580px;
+      }
+
+      .footer {
+        clear: both;
+        margin: 15px auto;
+        width: 100%;
+        color: #999999;
+        font-size: 12px;
+        text-align: center;
+        padding: 15px 0;
+        max-width: 580px;
+      }
+
+      .footer div {
+        padding: 2px 0;
+      }
+
+      .footer a {
+        color: #4a90e2;
+        text-decoration: underline;
+        white-space: nowrap;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      /* OTHER STYLES THAT MIGHT BE USEFUL */
+
+      .no-underline {
+        text-decoration: none;
+      }
+
+      .bold {
+        font-weight: bold;
+      }
+
+      hr {
+        margin-top: 25px;
+        color: #7d7d7d;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        line-height: 1.5;
+        max-width: 580px;
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body class="">
+    <table border="0" cellpadding="0" cellspacing="0" class="body">
+      <!-- START HEADER -->
+      <tr>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <td class="header">{{RegexCompanyName}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr class="content">
+                <td>{{html_content_v}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tr class="footer">
+              <td>
+                <div>
+                  <a class="no-underline" href="mailto:{{RegexSupportEmail}}">{{RegexSupportEmail}}</a>
+                </div>
+                <div>
+                  <a class="no-underline" href="{{RegexSiteUrl}}">{{RegexSiteUrl}}</a>
+                </div>
+                <div class="bold">{{RegexCompanyName}}</div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

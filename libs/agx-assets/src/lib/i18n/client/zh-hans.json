@@ -162,6 +162,7 @@
   "ERROR.USER.PASSWORD_RESET_VERIFY": "无法验证密码重置链接",
   "ERROR.USER.UPDATE": "无法更新用户配置文件",
   "ERROR.USER.VERIFY": "无法验证用户",
+  "ERROR.USER.VERIFY_INVALID_LINK": "",
   "ERROR.USER.VERIFY_REQUEST": "无法发送验证请求",
   "INFO.CONTACT_MESSAGE_SENT": "我们已收到您的电子邮件。但是，我们无法回复所有消息。但我们会尝试！",
   "INFO.EMAIL.CHANGE_SUCCESS": "电子邮件已更改",

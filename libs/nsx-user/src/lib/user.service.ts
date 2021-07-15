@@ -8,6 +8,7 @@
 
 import { ApiError } from '@fullerstack/agx-dto';
 import { AUTH_ROLE_RESTRICTION_MATRIX } from '@fullerstack/nsx-auth';
+import { MailerService } from '@fullerstack/nsx-mailer';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
@@ -16,7 +17,7 @@ import { UserSelfUpdateInput, UserWhereUniqueInput } from './user.model';
 
 @Injectable()
 export class UserService {
-  constructor(readonly prisma: PrismaService) {}
+  constructor(readonly prisma: PrismaService, readonly mailer: MailerService) {}
 
   updateUser(userId: string, newUserData: UserSelfUpdateInput): Promise<User> {
     return this.prisma.user.update({

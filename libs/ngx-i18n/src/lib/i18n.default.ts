@@ -7,12 +7,26 @@
  */
 
 import { I18nConfig, LanguageInfo } from './i18n.model';
+const RtlLanguageListMap: { [key: string]: string } = {
+  ar: 'Arabic',
+  arc: 'Aramaic',
+  dv: 'Divehi',
+  fa: 'Persian',
+  ha: 'Hausa',
+  he: 'Hebrew',
+  khw: 'Khowar',
+  ks: 'Kashmiri',
+  ku: 'Kurdish',
+  ps: 'Pashto',
+  ur: 'Urdu',
+  yi: 'Yiddish',
+};
 
 export const DefaultTranslations = {};
 
 export const DefaultLanguage = 'en';
 export const DefaultLanguageName = 'English';
-export const RtlLanguages: string[] = ['ar', 'fa', 'he'];
+export const RtlLanguageList: string[] = Object.keys(RtlLanguageListMap);
 export const EnabledLanguages = ['en', 'fr', 'es', 'he', 'fa'];
 
 export const AvailableLanguages: LanguageInfo = {
