@@ -88,16 +88,16 @@ export class I18nService {
   }
 
   private initLanguage() {
-    this.defaultLanguage = this.options.i18n.defaultLanguage;
     this.availableLanguages = this.options.i18n.availableLanguages;
     this.enabledLanguages = this.options.i18n.enabledLanguages;
+    this.defaultLanguage = this.getInitialLanguage() || this.options.i18n.defaultLanguage;
 
     this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       this.currentLanguage = event.lang;
       this.direction = this.getLanguageDirection(event.lang);
       this.languageChanges$.emit(event.lang);
       this.logger.info(
-        `[${this.nameSpace}] I18nService - language changed ... (${this.currentLanguage})`
+        `[${this.nameSpace}] I18nService - language changed ... (${this.currentLanguage} - ${this.direction})`
       );
     });
 
@@ -105,9 +105,7 @@ export class I18nService {
 
     this.translate.addLangs(Object.keys(this.options.i18n.enabledLanguages));
     this.translate.setDefaultLang(this.defaultLanguage);
-
-    const iso = this.getInitialLanguage();
-    this.setCurrentLanguage(iso);
+    this.setCurrentLanguage(this.defaultLanguage);
   }
 
   /*
