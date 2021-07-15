@@ -155,6 +155,7 @@ export interface userSelf_userSelf {
   username: string | null;
   firstName: string | null;
   lastName: string | null;
+  language: string | null;
   role: Role | null;
   permissions: Permission[] | null;
   groupId: string | null;
@@ -195,6 +196,7 @@ export interface user_user {
   username: string | null;
   firstName: string | null;
   lastName: string | null;
+  language: string | null;
   role: Role | null;
   permissions: Permission[] | null;
   groupId: string | null;
@@ -235,6 +237,7 @@ export interface userSelfUpdate_userSelfUpdate {
   username: string | null;
   firstName: string | null;
   lastName: string | null;
+  language: string | null;
   role: Role | null;
   permissions: Permission[] | null;
   groupId: string | null;
@@ -306,6 +309,7 @@ export interface User {
   username: string | null;
   firstName: string | null;
   lastName: string | null;
+  language: string | null;
   role: Role | null;
   permissions: Permission[] | null;
   groupId: string | null;

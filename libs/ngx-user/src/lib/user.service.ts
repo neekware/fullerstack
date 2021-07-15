@@ -18,6 +18,7 @@ import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import { UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
 import { UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
+import { I18nService } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
@@ -45,6 +46,7 @@ export class UserService {
     readonly gql: GqlService,
     readonly gtag: GTagService,
     readonly logger: LoggerService,
+    readonly i18n: I18nService,
     readonly auth: AuthService
   ) {
     this.options = ldNestedMerge({ auth: DefaultUserConfig }, this.config.options);
@@ -61,7 +63,13 @@ export class UserService {
         switchMap((state) => this.userSelfQuery$(state.userId)),
         takeUntil(this.destroy$)
       )
-      .subscribe();
+      .subscribe({
+        next: (state) => {
+          if (state?.language?.length && state?.language !== this.i18n.currentLanguage) {
+            this.i18n.setCurrentLanguage(state.language);
+          }
+        },
+      });
   }
 
   /**

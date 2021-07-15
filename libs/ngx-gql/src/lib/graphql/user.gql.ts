@@ -17,6 +17,7 @@ export const UserFragment = gql`
     username
     firstName
     lastName
+    language
     role
     permissions
     groupId

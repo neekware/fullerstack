@@ -19,6 +19,7 @@ export const DefaultUserState: UserState = {
   username: null,
   firstName: null,
   lastName: null,
+  language: null,
   role: null,
   permissions: [],
   groupId: null,

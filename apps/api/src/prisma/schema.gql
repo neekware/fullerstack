@@ -111,6 +111,7 @@ type UserDto {
 
   """User is verified"""
   isVerified: Boolean
+  language: String
   lastName: String
   permissions: [Permission!]
   role: Role
