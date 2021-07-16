@@ -9,7 +9,7 @@
 import * as showdown from 'showdown';
 
 import { RenderContext, renderTemplate } from './common.render';
-import { getAsset } from './common.util';
+import { fileExists, getAsset } from './common.util';
 
 const showdownConverter = new showdown.Converter({ underline: true });
 
@@ -18,11 +18,20 @@ export function getDefaultEmailTemplate(): string {
 }
 
 export function getEmailSubjectTemplate(action: string, locale: string): string {
-  return getAsset(`i18n/${action}/${locale}/subject.md`);
+  if (fileExists(`i18n/${action}/${locale}/subject.md`)) {
+    return getAsset(`i18n/${action}/${locale}/subject.md`);
+  } else if (fileExists(`i18n/${action}/en/subject.md`)) {
+    return getAsset(`i18n/${action}/en/subject.md`);
+  }
 }
 
 export function getEmailBodyTemplate(action: string, locale: string): string {
-  const mdFile = getAsset(`i18n/${action}/${locale}/body.md`, { stripNl: false });
+  let mdFile: string;
+  if (fileExists(`i18n/${action}/${locale}/body.md`)) {
+    mdFile = getAsset(`i18n/${action}/${locale}/body.md`, { stripNextLine: false });
+  } else if (fileExists(`i18n/${action}/en/body.md`)) {
+    mdFile = getAsset(`i18n/${action}/en/body.md`, { stripNextLine: false });
+  }
   const htmlFile = showdownConverter.makeHtml(mdFile);
   return htmlFile;
 }
