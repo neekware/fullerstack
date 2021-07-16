@@ -77,7 +77,7 @@ export class AuthResolver {
       RegexSupportEmail: this.options.siteSupportEmail,
     };
 
-    const emailSubjectBody = getEmailBodySubject('welcome', locale, emailContext);
+    const emailSubjectBody = getEmailBodySubject('account-creation', locale, emailContext);
 
     this.mailer.sendMail({
       from: this.options.siteSupportEmail,
