@@ -51,6 +51,14 @@ export function getLocalesFromContext(context: ExecutionContext): string[] {
   return langs;
 }
 
+export function getUserIdFromBase64(idb64: string): string {
+  return Base64.decode(idb64);
+}
+
+export function verifySecurityToken(token: string, userId: string, salt: string): boolean {
+  return token === encodeURIComponent(crypto.MD5(`${userId}${salt}`).toString());
+}
+
 /*
  * Generate a safe URL, to verify a new user
  * @param userId user id
@@ -64,10 +72,15 @@ export function buildVerifyUserLink(userId: string, salt: string, baseUrl: strin
   return `${baseUrl}/auth/user/verify/${securityToken}/${b64Id}`;
 }
 
-export function getUserIdFromBase64(idb64: string): string {
-  return Base64.decode(idb64);
-}
-
-export function verifySecurityToken(token: string, userId: string, salt: string): boolean {
-  return token === encodeURIComponent(crypto.MD5(`${userId}${salt}`).toString());
+/*
+ * Generate a safe URL, to request a password reset
+ * @param email user id
+ * @param salt site secret
+ * @param baseUrl base url of the site
+ * @returns valid URL
+ */
+export function buildPasswordResetLink(email: string, salt: string, baseUrl: string): string {
+  const securityToken = encodeURIComponent(crypto.MD5(`${email}${salt}`).toString());
+  const b64Id = encodeURIComponent(Base64.encode(email));
+  return `${baseUrl}/auth/password/reset/${securityToken}/${b64Id}`;
 }

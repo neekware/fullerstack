@@ -42,7 +42,7 @@ import {
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
-import { buildVerifyUserLink } from './auth.util';
+import { buildPasswordResetLink, buildVerifyUserLink } from './auth.util';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
@@ -143,13 +143,13 @@ export class AuthResolver {
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') payload: ChangePasswordInput
+    @Args('input') data: ChangePasswordInput
   ) {
     const user = await this.security.changePassword(
       request.user as User,
-      payload.oldPassword,
-      payload.newPassword,
-      payload.resetOtherSessions
+      data.oldPassword,
+      data.newPassword,
+      data.resetOtherSessions
     );
 
     const token = this.security.issueToken(user, request, response);
@@ -158,13 +158,38 @@ export class AuthResolver {
 
   @Mutation(() => AuthStatusDto)
   async authResetPasswordRequest(
+    @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') payload?: ChangePasswordRequestInput
+    @Args('input') data: ChangePasswordRequestInput
   ) {
-    await this.security.validateUserByEmail(payload.email);
+    const user = await this.security.validateUserByEmail(data.email);
+    if (!user) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidOrInactiveUser };
+    }
 
-    // send email out
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexVerifyLink: buildPasswordResetLink(
+        user.id,
+        this.security.siteSecret,
+        this.options.siteUrl
+      ),
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject('password-reset-request', locale, emailContext);
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
 
     return { ok: true };
   }
