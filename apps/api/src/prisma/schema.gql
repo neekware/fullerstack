@@ -34,10 +34,10 @@ type Mutation {
   authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
   authLogin(input: UserCredentialsInput!): AuthTokenDto!
   authLogout: AuthStatusDto!
+  authPasswordResetRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   authRefreshToken: AuthTokenDto!
   authRegister(input: UserCreateInput!): AuthTokenDto!
   authResetPassword: AuthTokenDto!
-  authResetPasswordRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   authVerifyUser(input: UserVerifyInput!): AuthStatusDto!
   isEmailAvailable(email: String!): AuthStatusDto!
 

@@ -20,6 +20,7 @@ import {
   AuthIsEmailAvailableQuery,
   AuthLoginMutation,
   AuthLogoutMutation,
+  AuthPasswordResetRequestMutation,
   AuthRefreshTokenMutation,
   AuthRegisterMutation,
   AuthVerifyUserMutation,
@@ -27,6 +28,7 @@ import {
 import {
   AuthStatus,
   AuthTokenStatus,
+  ChangePasswordRequestInput,
   UserCreateInput,
   UserCredentialsInput,
   UserVerifyInput,
@@ -351,6 +353,30 @@ export class AuthService implements OnDestroy {
               `[${this.nameSpace}] User verification request request failed ...`,
               err
             );
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
+  }
+
+  passwordResetRequest$(input: ChangePasswordRequestInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthPasswordResetRequestMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(`[${this.nameSpace}] Password reset request success ...`);
+          } else {
+            this.logger.error(
+              `[${this.nameSpace}] Password reset request failed ... ${resp.message}`
+            );
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(`[${this.nameSpace}] Password reset request failed ...`, err);
           }
 
           return of({ ok: false, message: err.topError?.message });

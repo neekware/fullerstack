@@ -18,6 +18,7 @@ import { CardComponent } from './component/card/card.component';
 import { ConfirmationDialogComponent } from './component/confirm/confirm.component';
 import { HintComponent } from './component/hint/hint.component';
 import { LoginFormComponent } from './component/login/login-form.component';
+import { PasswordResetRequestFormComponent } from './component/password-reset-request/password-reset-request-form.component';
 import { RegisterFormComponent } from './component/register/register-form.component';
 import { RippleComponent } from './component/ripple/ripple.component';
 import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
@@ -38,6 +39,7 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     LoginFormComponent,
     RegisterFormComponent,
     UserProfileFormComponent,
+    PasswordResetRequestFormComponent,
     AutocompleteDirective,
     TmpLetDirective,
     DebounceClickDirective,
@@ -51,6 +53,7 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     RippleComponent,
     ConfirmationDialogComponent,
     LoginFormComponent,
+    PasswordResetRequestFormComponent,
     RegisterFormComponent,
     UserProfileFormComponent,
     AutocompleteDirective,

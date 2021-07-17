@@ -157,7 +157,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
-  async authResetPasswordRequest(
+  async authPasswordResetRequest(
     @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,

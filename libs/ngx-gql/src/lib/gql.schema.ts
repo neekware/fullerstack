@@ -137,6 +137,29 @@ export interface authVerifyUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: authPasswordResetRequest
+// ====================================================
+
+export interface authPasswordResetRequest_authPasswordResetRequest {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authPasswordResetRequest {
+  authPasswordResetRequest: authPasswordResetRequest_authPasswordResetRequest;
+}
+
+export interface authPasswordResetRequestVariables {
+  input: ChangePasswordRequestInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: userSelf
 // ====================================================
 
@@ -349,6 +372,10 @@ export enum Role {
   STAFF = "STAFF",
   SUPERUSER = "SUPERUSER",
   USER = "USER",
+}
+
+export interface ChangePasswordRequestInput {
+  email: string;
 }
 
 export interface UserCreateInput {

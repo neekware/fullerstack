@@ -8,7 +8,6 @@
 
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActionStatus } from '@fullerstack/agx-dto';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
@@ -28,8 +27,6 @@ export class ProfileUpdateComponent {
   title = _('COMMON.PROFILE');
   subtitle = _('COMMON.PROFILE_UPDATE');
   icon = 'account-edit-outline';
-  actionStatus: ActionStatus;
-  actionMessage: string;
 
   constructor(
     readonly config: ConfigService,

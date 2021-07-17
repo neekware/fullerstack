@@ -82,3 +82,13 @@ export const AuthVerifyUserMutation = gql`
   }
   ${AuthStatusFragment}
 `;
+
+// auth password reset request
+export const AuthPasswordResetRequestMutation = gql`
+  mutation authPasswordResetRequest($input: ChangePasswordRequestInput!) {
+    authPasswordResetRequest(input: $input) {
+      ...AuthStatus
+    }
+  }
+  ${AuthStatusFragment}
+`;
