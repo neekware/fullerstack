@@ -82,3 +82,33 @@ export const AuthVerifyUserMutation = gql`
   }
   ${AuthStatusFragment}
 `;
+
+// auth password reset request
+export const AuthPasswordResetRequestMutation = gql`
+  mutation authPasswordResetRequest($input: ChangePasswordRequestInput!) {
+    authPasswordResetRequest(input: $input) {
+      ...AuthStatus
+    }
+  }
+  ${AuthStatusFragment}
+`;
+
+// auth password reset request verification
+export const AuthVerifyPasswordResetRequestMutation = gql`
+  mutation authVerifyPasswordResetRequest($input: VerifyPasswordResetRequestInput!) {
+    authVerifyPasswordResetRequest(input: $input) {
+      ...AuthStatus
+    }
+  }
+  ${AuthStatusFragment}
+`;
+
+// auth verify user
+export const AuthPasswordResetPerformMutation = gql`
+  mutation authPasswordResetPerform($input: PerformPasswordResetPerformInput!) {
+    authPasswordResetPerform(input: $input) {
+      ...AuthStatus
+    }
+  }
+  ${AuthStatusFragment}
+`;

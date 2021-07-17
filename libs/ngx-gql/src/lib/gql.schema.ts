@@ -137,6 +137,75 @@ export interface authVerifyUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: authPasswordResetRequest
+// ====================================================
+
+export interface authPasswordResetRequest_authPasswordResetRequest {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authPasswordResetRequest {
+  authPasswordResetRequest: authPasswordResetRequest_authPasswordResetRequest;
+}
+
+export interface authPasswordResetRequestVariables {
+  input: ChangePasswordRequestInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: authVerifyPasswordResetRequest
+// ====================================================
+
+export interface authVerifyPasswordResetRequest_authVerifyPasswordResetRequest {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authVerifyPasswordResetRequest {
+  authVerifyPasswordResetRequest: authVerifyPasswordResetRequest_authVerifyPasswordResetRequest;
+}
+
+export interface authVerifyPasswordResetRequestVariables {
+  input: VerifyPasswordResetRequestInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: authPasswordResetPerform
+// ====================================================
+
+export interface authPasswordResetPerform_authPasswordResetPerform {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authPasswordResetPerform {
+  authPasswordResetPerform: authPasswordResetPerform_authPasswordResetPerform;
+}
+
+export interface authPasswordResetPerformVariables {
+  input: PerformPasswordResetPerformInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: userSelf
 // ====================================================
 
@@ -155,6 +224,7 @@ export interface userSelf_userSelf {
   username: string | null;
   firstName: string | null;
   lastName: string | null;
+  language: string | null;
   role: Role | null;
   permissions: Permission[] | null;
   groupId: string | null;
@@ -195,6 +265,7 @@ export interface user_user {
   username: string | null;
   firstName: string | null;
   lastName: string | null;
+  language: string | null;
   role: Role | null;
   permissions: Permission[] | null;
   groupId: string | null;
@@ -235,6 +306,7 @@ export interface userSelfUpdate_userSelfUpdate {
   username: string | null;
   firstName: string | null;
   lastName: string | null;
+  language: string | null;
   role: Role | null;
   permissions: Permission[] | null;
   groupId: string | null;
@@ -306,6 +378,7 @@ export interface User {
   username: string | null;
   firstName: string | null;
   lastName: string | null;
+  language: string | null;
   role: Role | null;
   permissions: Permission[] | null;
   groupId: string | null;
@@ -347,6 +420,16 @@ export enum Role {
   USER = "USER",
 }
 
+export interface ChangePasswordRequestInput {
+  email: string;
+}
+
+export interface PerformPasswordResetPerformInput {
+  password: string;
+  resetOtherSessions?: boolean | null;
+  token: string;
+}
+
 export interface UserCreateInput {
   email: string;
   firstName: string;
@@ -366,12 +449,15 @@ export interface UserSelfUpdateInput {
 }
 
 export interface UserVerifyInput {
-  idb64: string;
   token: string;
 }
 
 export interface UserWhereByIdInput {
   id: string;
+}
+
+export interface VerifyPasswordResetRequestInput {
+  token: string;
 }
 
 //==============================================================

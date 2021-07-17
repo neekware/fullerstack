@@ -37,6 +37,9 @@ export class UserDto extends BaseModelDto implements Partial<User> {
   @Field({ nullable: true })
   lastName: string;
 
+  @Field({ nullable: true })
+  language: string;
+
   @Field(() => Role, { nullable: true })
   role: Role;
 

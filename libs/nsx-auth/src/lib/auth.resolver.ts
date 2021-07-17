@@ -36,13 +36,15 @@ import {
   AuthTokenDto,
   ChangePasswordInput,
   ChangePasswordRequestInput,
+  PerformPasswordResetPerformInput,
   UserCreateInput,
   UserCredentialsInput,
   UserVerifyInput,
+  VerifyPasswordResetRequestInput,
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
-import { buildVerifyUserLink } from './auth.util';
+import { buildPasswordResetLink, buildUserVerificationLink } from './auth.util';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
@@ -72,12 +74,16 @@ export class AuthResolver {
     const emailContext: RenderContext = {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
-      RegexVerifyLink: buildVerifyUserLink(user.id, this.security.siteSecret, this.options.siteUrl),
+      RegexVerifyLink: buildUserVerificationLink(
+        user.id,
+        this.security.siteSecret,
+        this.options.siteUrl
+      ),
       RegexCompanyName: this.options.siteName,
       RegexSupportEmail: this.options.siteSupportEmail,
     };
 
-    const emailSubjectBody = getEmailBodySubject('welcome', locale, emailContext);
+    const emailSubjectBody = getEmailBodySubject('account-creation', locale, emailContext);
 
     this.mailer.sendMail({
       from: this.options.siteSupportEmail,
@@ -106,7 +112,7 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
   ) {
-    const payload: JwtDto = this.security.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME]);
+    const payload = this.security.verifyToken<JwtDto>(cookies[AUTH_SESSION_COOKIE_NAME]);
     if (!payload) {
       throw new UnauthorizedException(ApiError.Error.Auth.Unauthorized);
     }
@@ -143,13 +149,13 @@ export class AuthResolver {
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') payload: ChangePasswordInput
+    @Args('input') data: ChangePasswordInput
   ) {
     const user = await this.security.changePassword(
       request.user as User,
-      payload.oldPassword,
-      payload.newPassword,
-      payload.resetOtherSessions
+      data.oldPassword,
+      data.newPassword,
+      data.resetOtherSessions
     );
 
     const token = this.security.issueToken(user, request, response);
@@ -157,29 +163,61 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
-  async authResetPasswordRequest(
+  async authPasswordResetRequest(
+    @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') payload?: ChangePasswordRequestInput
+    @Args('input') data: ChangePasswordRequestInput
   ) {
-    await this.security.validateUserByEmail(payload.email);
+    const user = await this.security.validateUserByEmail(data.email);
+    if (!user) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidOrInactiveUser };
+    }
 
-    // send email out
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexPasswordResetLink: buildPasswordResetLink(
+        user.id,
+        this.security.siteSecret,
+        this.options.siteUrl
+      ),
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject('password-reset-request', locale, emailContext);
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
 
     return { ok: true };
   }
 
-  @UseGuards(AuthGuardGql)
-  @Mutation(() => AuthTokenDto)
-  async authResetPassword(
-    @RequestDecorator() request: HttpRequest
-    // @ResponseDecorator() response: HttpResponse,
-    // @Args('id') payload?: string
+  @Mutation(() => AuthStatusDto)
+  async authVerifyPasswordResetRequest(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: VerifyPasswordResetRequestInput
   ) {
-    // verify one-time hash key
+    const payload = this.security.validateURIToken(data.token);
+    if (!payload) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidPasswordResetLink };
+    }
+    return { ok: true };
+  }
 
-    await this.security.resetPassword(request.user as User);
-
+  @Mutation(() => AuthStatusDto)
+  async authPasswordResetPerform(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: PerformPasswordResetPerformInput
+  ) {
+    await this.security.performPasswordReset(data.token, data.password, data.resetOtherSessions);
     return { ok: true };
   }
 
@@ -188,7 +226,7 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: UserVerifyInput
   ) {
-    const user = await this.security.verifyUser(data.token, data.idb64);
+    const user = await this.security.verifyUser(data.token);
     if (!user) {
       throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
     }

@@ -20,16 +20,22 @@ import {
   AuthIsEmailAvailableQuery,
   AuthLoginMutation,
   AuthLogoutMutation,
+  AuthPasswordResetPerformMutation,
+  AuthPasswordResetRequestMutation,
   AuthRefreshTokenMutation,
   AuthRegisterMutation,
+  AuthVerifyPasswordResetRequestMutation,
   AuthVerifyUserMutation,
 } from '@fullerstack/ngx-gql/operations';
 import {
   AuthStatus,
   AuthTokenStatus,
+  ChangePasswordRequestInput,
+  PerformPasswordResetPerformInput,
   UserCreateInput,
   UserCredentialsInput,
   UserVerifyInput,
+  VerifyPasswordResetRequestInput,
 } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
@@ -358,6 +364,81 @@ export class AuthService implements OnDestroy {
       ) as Observable<AuthStatus>;
   }
 
+  passwordResetRequest$(input: ChangePasswordRequestInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthPasswordResetRequestMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(`[${this.nameSpace}] Password reset request success ...`);
+          } else {
+            this.logger.error(
+              `[${this.nameSpace}] Password reset request failed ... ${resp.message}`
+            );
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(`[${this.nameSpace}] Password reset request failed ...`, err);
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
+  }
+
+  passwordResetPerform$(input: PerformPasswordResetPerformInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthPasswordResetPerformMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(`[${this.nameSpace}] Password reset success ...`);
+          } else {
+            this.logger.error(`[${this.nameSpace}] Password reset failed ... ${resp.message}`);
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(`[${this.nameSpace}] Password reset failed ...`, err);
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
+  }
+
+  verifyPasswordResetRequest$(input: VerifyPasswordResetRequestInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthVerifyPasswordResetRequestMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(
+              `[${this.nameSpace}] Password reset request verification success ...`
+            );
+          } else {
+            this.logger.error(
+              `[${this.nameSpace}] Password reset request verification failed ... ${resp.message}`
+            );
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(
+              `[${this.nameSpace}] Password reset request verification failed ...`,
+              err
+            );
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
+  }
+
   isEmailAvailable(email: string): Observable<boolean> {
     return this.gql.client
       .request<AuthStatus>(AuthIsEmailAvailableQuery, { email })
@@ -377,6 +458,17 @@ export class AuthService implements OnDestroy {
       return timer(debounce).pipe(
         switchMap(() => this.isEmailAvailable(control.value)),
         map((available) => (available ? null : { emailInUse: true }))
+      );
+    };
+  }
+
+  validateEmailExistence(debounce = 600): AsyncValidatorFn {
+    return (
+      control: AbstractControl
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      return timer(debounce).pipe(
+        switchMap(() => this.isEmailAvailable(control.value)),
+        map((available) => (available ? { emailNotFound: true } : null))
       );
     };
   }

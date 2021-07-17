@@ -21,7 +21,7 @@ import { v4 as uuid_v4 } from 'uuid';
 import { AUTH_MODULE_NAME, AUTH_SESSION_COOKIE_NAME } from './auth.constant';
 import { DefaultSecurityConfig } from './auth.default';
 import { SecurityConfig } from './auth.model';
-import { getUserIdFromBase64, verifySecurityToken } from './auth.util';
+import { decodeURITokenComponent } from './auth.util';
 
 @Injectable()
 export class SecurityService {
@@ -143,8 +143,8 @@ export class SecurityService {
    * @param user Current user
    * @returns promise of a User
    */
-  async resetPassword(user: User, resetOtherSessions?: boolean): Promise<User> {
-    const hashedPassword = await this.hashPassword();
+  async resetPassword(user: User, password?: string, resetOtherSessions?: boolean): Promise<User> {
+    const hashedPassword = await this.hashPassword(password);
 
     return this.prisma.user.update({
       data: {
@@ -222,10 +222,9 @@ export class SecurityService {
    * @param token jwt token
    * @returns data returned from decoded token
    */
-  verifyToken(token: string): JwtDto {
+  verifyToken<T>(token: string): T {
     try {
-      const { userId, sessionVersion } = jwt.verify(token, this.siteSecret) as JwtDto;
-      return { userId, sessionVersion };
+      return jwt.verify(token, this.siteSecret) as T;
     } catch (err) {
       return undefined;
     }
@@ -251,16 +250,20 @@ export class SecurityService {
     return user?.isActive ? user : undefined;
   }
 
-  async verifyUser(token: string, idb64: string): Promise<User> {
-    const userId = getUserIdFromBase64(idb64);
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    if (!user) {
-      throw new BadRequestException(ApiError.Error.Auth.InvalidOrInactiveUser);
+  validateURIToken(token: string): boolean {
+    const payload = decodeURITokenComponent(token, this.siteSecret);
+    return !!payload;
+  }
+
+  async verifyUser(token: string): Promise<User> {
+    const payload = decodeURITokenComponent<{ userId: string }>(token, this.siteSecret);
+    if (!payload) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidVerificationLink);
     }
 
-    const validToken = verifySecurityToken(token, user.id, this.siteSecret);
-    if (!validToken) {
-      throw new BadRequestException(ApiError.Error.Auth.InvalidVerificationLink);
+    const user = await this.prisma.user.findUnique({ where: { id: payload?.userId } });
+    if (!user) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidOrInactiveUser);
     }
 
     return this.prisma.user.update({
@@ -269,5 +272,23 @@ export class SecurityService {
       },
       where: { id: user.id },
     });
+  }
+
+  async performPasswordReset(
+    token: string,
+    password: string,
+    resetOtherSessions = false
+  ): Promise<User> {
+    const payload = decodeURITokenComponent<{ userId: string }>(token, this.siteSecret);
+    if (!payload) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidPasswordResetLink);
+    }
+
+    const user = await this.prisma.user.findUnique({ where: { id: payload?.userId } });
+    if (!user) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidOrInactiveUser);
+    }
+
+    return this.resetPassword(user, password, resetOtherSessions);
   }
 }

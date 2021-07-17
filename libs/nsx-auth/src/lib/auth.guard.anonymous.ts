@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { JwtDto } from '@fullerstack/agx-dto';
 import { ExecutionContext, Injectable } from '@nestjs/common';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
@@ -32,7 +33,7 @@ export class AuthGuardAnonymousGql extends AuthGuardGql {
     const response = getResponseFromContext(context);
     const cookie = getCookieFromContext(context, AUTH_SESSION_COOKIE_NAME);
     if (cookie) {
-      const payload = this.securityService.verifyToken(cookie);
+      const payload = this.securityService.verifyToken<JwtDto>(cookie);
       if (payload) {
         const user = await this.securityService.validateUser(payload.userId);
         if (!user) {

@@ -44,7 +44,8 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
   }
 
   private destroy$ = new Subject<boolean>();
-  show$ = new BehaviorSubject<boolean>(false);
+  hasError$ = new BehaviorSubject<boolean>(false);
+  hasHint$ = new BehaviorSubject<boolean>(false);
   error: string = undefined;
   ltrDirection = true;
 
@@ -91,11 +92,13 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       const hasError = Object.prototype.hasOwnProperty.call(this.control.errors, error);
       if ((hasError && this._touched) || !this.control.pristine) {
         this.processFeedback(error, this.control.errors[error]);
-        this.show$.next(!!this.error);
+        this.hasError$.next(!!this.error);
+        this.hasHint$.next(!this.hint && !this.error);
         return;
       }
     }
-    this.show$.next(false);
+    this.hasError$.next(false);
+    this.hasHint$.next(!this.hint);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

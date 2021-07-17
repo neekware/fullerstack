@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { ApiError } from '@fullerstack/agx-dto';
+import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import {
   BadRequestException,
   ExecutionContext,
@@ -34,7 +34,7 @@ export class AuthGuardGql extends AuthGuard('jwt') {
     const request = getRequestFromContext(context);
 
     const cookies = getCookiesFromContext(context);
-    if (!this.securityService.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME])) {
+    if (!this.securityService.verifyToken<JwtDto>(cookies[AUTH_SESSION_COOKIE_NAME])) {
       throw new UnauthorizedException(ApiError.Error.Auth.InvalidOrExpiredSession);
     }
 
@@ -43,7 +43,7 @@ export class AuthGuardGql extends AuthGuard('jwt') {
       throw new UnauthorizedException(ApiError.Error.Auth.MissingAccessToken);
     }
 
-    const payload = this.securityService.verifyToken(token);
+    const payload = this.securityService.verifyToken<JwtDto>(token);
     if (!payload) {
       throw new UnauthorizedException(ApiError.Error.Auth.InvalidAccessToken);
     }

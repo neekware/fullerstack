@@ -90,10 +90,33 @@ export class UserVerifyInput {
   @Field()
   @IsNotEmpty()
   token: string;
+}
+
+/**
+ * Authentication type (client -> server)
+ */
+@InputType()
+export class PerformPasswordResetPerformInput {
+  @Field()
+  @IsNotEmpty()
+  token: string;
 
   @Field()
   @IsNotEmpty()
-  idb64: string;
+  password: string;
+
+  @Field({ defaultValue: false })
+  resetOtherSessions: boolean;
+}
+
+/**
+ * Authentication type (client -> server)
+ */
+@InputType()
+export class VerifyPasswordResetRequestInput {
+  @Field()
+  @IsNotEmpty()
+  token: string;
 }
 
 /**

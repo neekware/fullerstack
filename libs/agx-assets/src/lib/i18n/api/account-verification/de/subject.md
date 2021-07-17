@@ -1,0 +1,1 @@
+{{RegexCompanyName}} | Bestätigung des Kontos!

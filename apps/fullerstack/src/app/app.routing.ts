@@ -16,11 +16,13 @@ import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { PasswordResetPerformComponent } from './pages/password-reset-perform/password-reset-perform.component';
+import { PasswordResetRequestComponent } from './pages/password-reset-request/password-reset-request.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
+import { ProfileUpdateComponent } from './pages/profile-update/profile-update.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { TrendComponent } from './pages/trend/trend.component';
 import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
-import { ProfileUpdateComponent } from './pages/user/profile-update.component';
 
 export const AppRoutes: Routes = [
   {
@@ -75,7 +77,7 @@ export const AppRoutes: Routes = [
     },
   },
   {
-    path: 'auth/user/verify/:token/:idb64',
+    path: 'auth/user/verify/:token',
     component: UserVerifyComponent,
     data: {
       title: _('COMMON.ACCOUNT.VERIFY'),
@@ -90,6 +92,23 @@ export const AppRoutes: Routes = [
     data: {
       title: _('COMMON.PROFILE_UPDATE'),
       description: _('APP.DESCRIPTION.PROFILE_UPDATE'),
+    },
+  },
+  {
+    path: 'auth/password/reset/request',
+    component: PasswordResetRequestComponent,
+    canActivate: [AuthAnonymousGuard],
+    data: {
+      title: _('COMMON.PASSWORD.RESET_REQUEST'),
+      description: _('APP.DESCRIPTION.PASSWORD_RESET_REQUEST'),
+    },
+  },
+  {
+    path: 'auth/password/reset/:token',
+    component: PasswordResetPerformComponent,
+    data: {
+      title: _('COMMON.PASSWORD.RENEW'),
+      description: _('APP.DESCRIPTION.PASSWORD_RENEW'),
     },
   },
   {

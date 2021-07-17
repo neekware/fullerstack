@@ -11,7 +11,7 @@ import { tryGet } from '@fullerstack/agx-util';
 import { Base64, HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import * as crypto from 'crypto-js';
+import * as jwt from 'jsonwebtoken';
 
 export function convertExecutionContextToGqlContext(context: ExecutionContext) {
   return GqlExecutionContext.create(context).getContext();
@@ -51,6 +51,23 @@ export function getLocalesFromContext(context: ExecutionContext): string[] {
   return langs;
 }
 
+export function encodeURITokenComponent(payload: any, secret: string, expiry = '1d'): string {
+  const singedToken = jwt.sign(payload, secret, { expiresIn: expiry });
+  const b64Encoded = Base64.encode(singedToken);
+  const urlEncoded = encodeURIComponent(b64Encoded);
+  return urlEncoded;
+}
+
+export function decodeURITokenComponent<T>(urlEncodedToken: string, secret: string): T {
+  const b64Encoded = decodeURIComponent(urlEncodedToken);
+  const singedToken = Base64.decode(b64Encoded);
+  try {
+    return jwt.verify(singedToken, secret) as T;
+  } catch (err) {
+    return undefined;
+  }
+}
+
 /*
  * Generate a safe URL, to verify a new user
  * @param userId user id
@@ -58,16 +75,19 @@ export function getLocalesFromContext(context: ExecutionContext): string[] {
  * @param baseUrl base url of the site
  * @returns valid URL
  */
-export function buildVerifyUserLink(userId: string, salt: string, baseUrl: string): string {
-  const securityToken = encodeURIComponent(crypto.MD5(`${userId}${salt}`).toString());
-  const b64Id = encodeURIComponent(Base64.encode(userId));
-  return `${baseUrl}/auth/user/verify/${securityToken}/${b64Id}`;
+export function buildUserVerificationLink(userId: string, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent({ userId }, secret);
+  return `${baseUrl}/auth/user/verify/${encodedToken}`;
 }
 
-export function getUserIdFromBase64(idb64: string): string {
-  return Base64.decode(idb64);
-}
-
-export function verifySecurityToken(token: string, userId: string, salt: string): boolean {
-  return token === encodeURIComponent(crypto.MD5(`${userId}${salt}`).toString());
+/*
+ * Generate a safe URL, to request a password reset
+ * @param userId user id
+ * @param salt site secret
+ * @param baseUrl base url of the site
+ * @returns valid URL
+ */
+export function buildPasswordResetLink(userId: string, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent({ userId }, secret);
+  return `${baseUrl}/auth/password/reset/${encodedToken}`;
 }

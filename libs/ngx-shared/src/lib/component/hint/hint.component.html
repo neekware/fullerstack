@@ -1,19 +1,19 @@
 <mat-error
-  *ngIf="show$ | async"
+  *ngIf="hasError$ | async"
   align="end"
   [class.ltr-direction]="ltrDirection"
   [class.rtl-direction]="!ltrDirection"
-  class="fs-error-hint"
+  class="fs-hint-error"
 >
   {{ error | translate }}
 </mat-error>
 
 <mat-hint
-  *ngIf="(show$ | async) === (false || null || undefined) && !!hint"
+  *ngIf="hasHint$ | async"
   align="end"
   [class.ltr-direction]="ltrDirection"
   [class.rtl-direction]="!ltrDirection"
-  class="fs-error-hint"
+  class="fs-hint-hint"
 >
   {{ hint | translate }}
 </mat-hint>

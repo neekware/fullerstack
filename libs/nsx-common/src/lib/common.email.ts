@@ -18,11 +18,15 @@ export function getDefaultEmailTemplate(): string {
 }
 
 export function getEmailSubjectTemplate(action: string, locale: string): string {
-  return getAsset(`i18n/${action}/${locale}/subject.md`);
+  return (
+    getAsset(`i18n/${action}/${locale}/subject.md`) || getAsset(`i18n/${action}/en/subject.md`)
+  );
 }
 
 export function getEmailBodyTemplate(action: string, locale: string): string {
-  const mdFile = getAsset(`i18n/${action}/${locale}/body.md`, { stripNl: false });
+  const mdFile =
+    getAsset(`i18n/${action}/${locale}/body.md`) || getAsset(`i18n/${action}/en/body.md`);
+
   const htmlFile = showdownConverter.makeHtml(mdFile);
   return htmlFile;
 }
