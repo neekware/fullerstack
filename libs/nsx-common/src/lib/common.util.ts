@@ -35,6 +35,7 @@ export function fileExists(filePath: string): boolean {
       return true;
     }
   } catch (err) {
-    return false;
+    /*pass*/
   }
+  return false;
 }
