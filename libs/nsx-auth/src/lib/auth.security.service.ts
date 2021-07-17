@@ -270,4 +270,23 @@ export class SecurityService {
       where: { id: user.id },
     });
   }
+
+  async performPasswordReset(
+    token: string,
+    idb64: string,
+    resetOtherSessions = false
+  ): Promise<User> {
+    const email = getUserIdFromBase64(idb64);
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidOrInactiveUser);
+    }
+
+    const validToken = verifySecurityToken(token, user.id, this.siteSecret);
+    if (!validToken) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidPasswordResetLink);
+    }
+
+    return this.resetPassword(user, resetOtherSessions);
+  }
 }

@@ -34,10 +34,10 @@ type Mutation {
   authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
   authLogin(input: UserCredentialsInput!): AuthTokenDto!
   authLogout: AuthStatusDto!
+  authPasswordResetPerform(input: PasswordResetPerformInput!): AuthStatusDto!
   authPasswordResetRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   authRefreshToken: AuthTokenDto!
   authRegister(input: UserCreateInput!): AuthTokenDto!
-  authResetPassword: AuthTokenDto!
   authVerifyUser(input: UserVerifyInput!): AuthStatusDto!
   isEmailAvailable(email: String!): AuthStatusDto!
 
@@ -52,6 +52,12 @@ type Mutation {
 enum OrderDirection {
   asc
   desc
+}
+
+input PasswordResetPerformInput {
+  idb64: String!
+  resetOtherSessions: Boolean = false
+  token: String!
 }
 
 """User permission"""

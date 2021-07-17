@@ -160,6 +160,29 @@ export interface authPasswordResetRequestVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: authPasswordResetPerform
+// ====================================================
+
+export interface authPasswordResetPerform_authPasswordResetPerform {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authPasswordResetPerform {
+  authPasswordResetPerform: authPasswordResetPerform_authPasswordResetPerform;
+}
+
+export interface authPasswordResetPerformVariables {
+  input: PasswordResetPerformInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: userSelf
 // ====================================================
 
@@ -376,6 +399,12 @@ export enum Role {
 
 export interface ChangePasswordRequestInput {
   email: string;
+}
+
+export interface PasswordResetPerformInput {
+  idb64: string;
+  resetOtherSessions?: boolean | null;
+  token: string;
 }
 
 export interface UserCreateInput {

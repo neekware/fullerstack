@@ -44,6 +44,7 @@ export const ApiError = {
       InvalidPassword: _('ERROR.AUTH.INVALID_PASSWORD'),
       InvalidUserOrPassword: _('ERROR.AUTH.INVALID_USER_OR_PASSWORD'),
       InvalidVerificationLink: _('ERROR.USER.VERIFY_INVALID_LINK'),
+      InvalidPasswordResetLink: _('ERROR.USER.PASSWORD_RESET_INVALID_LINK'),
       FailedToVerifyUser: _('ERROR.USER.VERIFY'),
     },
   },

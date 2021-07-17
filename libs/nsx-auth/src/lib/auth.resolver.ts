@@ -36,6 +36,7 @@ import {
   AuthTokenDto,
   ChangePasswordInput,
   ChangePasswordRequestInput,
+  PasswordResetPerformInput,
   UserCreateInput,
   UserCredentialsInput,
   UserVerifyInput,
@@ -195,16 +196,12 @@ export class AuthResolver {
   }
 
   @UseGuards(AuthGuardGql)
-  @Mutation(() => AuthTokenDto)
-  async authResetPassword(
-    @RequestDecorator() request: HttpRequest
-    // @ResponseDecorator() response: HttpResponse,
-    // @Args('id') payload?: string
+  @Mutation(() => AuthStatusDto)
+  async authPasswordResetPerform(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: PasswordResetPerformInput
   ) {
-    // verify one-time hash key
-
-    await this.security.resetPassword(request.user as User);
-
+    await this.security.performPasswordReset(data.token, data.idb64, data.resetOtherSessions);
     return { ok: true };
   }
 
