@@ -84,7 +84,7 @@ export function buildUserVerificationLink(userId: string, secret: string, baseUr
 
 /*
  * Generate a safe URL, to request a password reset
- * @param email user id
+ * @param userId user id
  * @param salt site secret
  * @param baseUrl base url of the site
  * @returns valid URL

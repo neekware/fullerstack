@@ -251,7 +251,8 @@ export class SecurityService {
   }
 
   validateURIToken(token: string): boolean {
-    return !!decodeURITokenComponent(token, this.siteSecret);
+    const payload = decodeURITokenComponent(token, this.siteSecret);
+    return !!payload;
   }
 
   async verifyUser(token: string): Promise<User> {

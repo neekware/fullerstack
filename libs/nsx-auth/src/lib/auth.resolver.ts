@@ -36,11 +36,11 @@ import {
   AuthTokenDto,
   ChangePasswordInput,
   ChangePasswordRequestInput,
-  PasswordResetLinkVerifyInput,
-  PasswordResetPerformInput,
+  PerformPasswordResetInput,
   UserCreateInput,
   UserCredentialsInput,
   UserVerifyInput,
+  VerifyPasswordResetRequestInput,
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
@@ -201,13 +201,13 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
-  async authPasswordResetLinkVerify(
+  async authVerifyPasswordResetRequest(
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: PasswordResetLinkVerifyInput
+    @Args('input') data: VerifyPasswordResetRequestInput
   ) {
     const payload = this.security.validateURIToken(data.token);
     if (!payload) {
-      return { ok: true, message: ApiError.Error.Auth.InvalidPasswordResetLink };
+      return { ok: false, message: ApiError.Error.Auth.InvalidPasswordResetLink };
     }
     return { ok: true };
   }
@@ -215,7 +215,7 @@ export class AuthResolver {
   @Mutation(() => AuthStatusDto)
   async authPasswordResetPerform(
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: PasswordResetPerformInput
+    @Args('input') data: PerformPasswordResetInput
   ) {
     await this.security.performPasswordReset(data.token, data.password, data.resetOtherSessions);
     return { ok: true };

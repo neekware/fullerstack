@@ -93,9 +93,19 @@ export const AuthPasswordResetRequestMutation = gql`
   ${AuthStatusFragment}
 `;
 
+// auth password reset request verification
+export const AuthVerifyPasswordResetRequestMutation = gql`
+  mutation authVerifyPasswordResetRequest($input: VerifyPasswordResetRequestInput!) {
+    authVerifyPasswordResetRequest(input: $input) {
+      ...AuthStatus
+    }
+  }
+  ${AuthStatusFragment}
+`;
+
 // auth verify user
 export const AuthPasswordResetPerformMutation = gql`
-  mutation authPasswordResetPerform($input: PasswordResetPerformInput!) {
+  mutation authPasswordResetPerform($input: PerformPasswordResetInput!) {
     authPasswordResetPerform(input: $input) {
       ...AuthStatus
     }

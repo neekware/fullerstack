@@ -100,7 +100,7 @@ export class UserVerifyInput {
  * Authentication type (client -> server)
  */
 @InputType()
-export class PasswordResetPerformInput {
+export class PerformPasswordResetInput {
   @Field()
   @IsNotEmpty()
   token: string;
@@ -117,7 +117,7 @@ export class PasswordResetPerformInput {
  * Authentication type (client -> server)
  */
 @InputType()
-export class PasswordResetLinkVerifyInput {
+export class VerifyPasswordResetRequestInput {
   @Field()
   @IsNotEmpty()
   token: string;

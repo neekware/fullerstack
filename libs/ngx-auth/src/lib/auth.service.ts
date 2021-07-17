@@ -23,6 +23,7 @@ import {
   AuthPasswordResetRequestMutation,
   AuthRefreshTokenMutation,
   AuthRegisterMutation,
+  AuthVerifyPasswordResetRequestMutation,
   AuthVerifyUserMutation,
 } from '@fullerstack/ngx-gql/operations';
 import {
@@ -32,6 +33,7 @@ import {
   UserCreateInput,
   UserCredentialsInput,
   UserVerifyInput,
+  VerifyPasswordResetRequestInput,
 } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
@@ -401,6 +403,35 @@ export class AuthService implements OnDestroy {
         catchError((err: GqlErrorsHandler) => {
           if (this.state.isLoggedIn) {
             this.logger.error(`[${this.nameSpace}] Password reset request failed ...`, err);
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
+  }
+
+  verifyPasswordResetRequest$(input: VerifyPasswordResetRequestInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthVerifyPasswordResetRequestMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(
+              `[${this.nameSpace}] Password reset request verification success ...`
+            );
+          } else {
+            this.logger.error(
+              `[${this.nameSpace}] Password reset request verification failed ... ${resp.message}`
+            );
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(
+              `[${this.nameSpace}] Password reset request verification failed ...`,
+              err
+            );
           }
 
           return of({ ok: false, message: err.topError?.message });

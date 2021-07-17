@@ -27,12 +27,16 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
   isUserVerified = false;
   isLoading = false;
 
-  constructor(public route: ActivatedRoute, public i18n: I18nService, public auth: AuthService) {}
+  constructor(
+    readonly route: ActivatedRoute,
+    readonly i18n: I18nService,
+    readonly auth: AuthService
+  ) {}
 
   ngOnInit() {
     this.route.paramMap
       .pipe(
-        filter((params) => !!(params.get('token') && params.get('idb64'))),
+        filter((params) => !!params.get('token')),
         first(),
         switchMap((params) => {
           this.isLoading = true;

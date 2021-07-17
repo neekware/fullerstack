@@ -160,6 +160,29 @@ export interface authPasswordResetRequestVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: authVerifyPasswordResetRequest
+// ====================================================
+
+export interface authVerifyPasswordResetRequest_authVerifyPasswordResetRequest {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authVerifyPasswordResetRequest {
+  authVerifyPasswordResetRequest: authVerifyPasswordResetRequest_authVerifyPasswordResetRequest;
+}
+
+export interface authVerifyPasswordResetRequestVariables {
+  input: VerifyPasswordResetRequestInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: authPasswordResetPerform
 // ====================================================
 
@@ -174,7 +197,7 @@ export interface authPasswordResetPerform {
 }
 
 export interface authPasswordResetPerformVariables {
-  input: PasswordResetPerformInput;
+  input: PerformPasswordResetInput;
 }
 
 /* tslint:disable */
@@ -401,7 +424,7 @@ export interface ChangePasswordRequestInput {
   email: string;
 }
 
-export interface PasswordResetPerformInput {
+export interface PerformPasswordResetInput {
   password: string;
   resetOtherSessions?: boolean | null;
   token: string;
@@ -431,6 +454,10 @@ export interface UserVerifyInput {
 
 export interface UserWhereByIdInput {
   id: string;
+}
+
+export interface VerifyPasswordResetRequestInput {
+  token: string;
 }
 
 //==============================================================
