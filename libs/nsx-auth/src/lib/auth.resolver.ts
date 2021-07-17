@@ -173,7 +173,7 @@ export class AuthResolver {
     const emailContext: RenderContext = {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
-      RegexVerifyLink: buildPasswordResetLink(
+      RegexPasswordResetLink: buildPasswordResetLink(
         user.id,
         this.security.siteSecret,
         this.options.siteUrl
