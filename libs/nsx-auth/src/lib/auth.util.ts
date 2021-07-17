@@ -13,8 +13,6 @@ import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import * as jwt from 'jsonwebtoken';
 
-import { AuthTokenPayload } from './auth.model';
-
 export function convertExecutionContextToGqlContext(context: ExecutionContext) {
   return GqlExecutionContext.create(context).getContext();
 }

@@ -17,10 +17,6 @@ export interface SecurityConfig {
   bcryptSaltOrRound: string | number;
 }
 
-export interface AuthTokenPayload {
-  [key: string]: any;
-}
-
 export interface AuthFilterType<T> {
   include?: T[];
   exclude?: T[];
