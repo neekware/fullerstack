@@ -402,7 +402,7 @@ export interface ChangePasswordRequestInput {
 }
 
 export interface PasswordResetPerformInput {
-  idb64: string;
+  password: string;
   resetOtherSessions?: boolean | null;
   token: string;
 }
@@ -426,7 +426,6 @@ export interface UserSelfUpdateInput {
 }
 
 export interface UserVerifyInput {
-  idb64: string;
   token: string;
 }
 

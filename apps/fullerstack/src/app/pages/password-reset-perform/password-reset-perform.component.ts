@@ -39,11 +39,15 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.auth.state.isLoggedIn) {
-      this.auth.goTo(this.auth.authUrls.landingUrl);
-    } else {
-      this.buildForm();
-    }
+    this.auth.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (state) => {
+        if (state.isLoggedIn) {
+          this.auth.goTo(this.auth.authUrls.landingUrl);
+        } else if (!this.form) {
+          this.buildForm();
+        }
+      },
+    });
   }
 
   private buildForm() {

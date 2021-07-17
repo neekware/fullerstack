@@ -38,7 +38,6 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           return this.auth.verifyUserRequest$({
             token: params.get('token'),
-            idb64: params.get('idb64'),
           });
         }),
         takeUntil(this.destroy$)

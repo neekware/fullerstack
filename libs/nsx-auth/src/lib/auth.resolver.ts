@@ -36,6 +36,7 @@ import {
   AuthTokenDto,
   ChangePasswordInput,
   ChangePasswordRequestInput,
+  PasswordResetLinkVerifyInput,
   PasswordResetPerformInput,
   UserCreateInput,
   UserCredentialsInput,
@@ -43,7 +44,7 @@ import {
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
-import { buildPasswordResetLink, buildVerifyUserLink } from './auth.util';
+import { buildPasswordResetLink, buildUserVerificationLink } from './auth.util';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
@@ -73,7 +74,11 @@ export class AuthResolver {
     const emailContext: RenderContext = {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
-      RegexVerifyLink: buildVerifyUserLink(user.id, this.security.siteSecret, this.options.siteUrl),
+      RegexVerifyLink: buildUserVerificationLink(
+        user.id,
+        this.security.siteSecret,
+        this.options.siteUrl
+      ),
       RegexCompanyName: this.options.siteName,
       RegexSupportEmail: this.options.siteSupportEmail,
     };
@@ -107,7 +112,7 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
   ) {
-    const payload: JwtDto = this.security.verifyToken(cookies[AUTH_SESSION_COOKIE_NAME]);
+    const payload = this.security.verifyToken<JwtDto>(cookies[AUTH_SESSION_COOKIE_NAME]);
     if (!payload) {
       throw new UnauthorizedException(ApiError.Error.Auth.Unauthorized);
     }
@@ -195,13 +200,24 @@ export class AuthResolver {
     return { ok: true };
   }
 
-  @UseGuards(AuthGuardGql)
+  @Mutation(() => AuthStatusDto)
+  async authPasswordResetLinkVerify(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: PasswordResetLinkVerifyInput
+  ) {
+    const payload = this.security.validateURIToken(data.token);
+    if (!payload) {
+      return { ok: true, message: ApiError.Error.Auth.InvalidPasswordResetLink };
+    }
+    return { ok: true };
+  }
+
   @Mutation(() => AuthStatusDto)
   async authPasswordResetPerform(
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: PasswordResetPerformInput
   ) {
-    await this.security.performPasswordReset(data.token, data.idb64, data.resetOtherSessions);
+    await this.security.performPasswordReset(data.token, data.password, data.resetOtherSessions);
     return { ok: true };
   }
 
@@ -210,7 +226,7 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: UserVerifyInput
   ) {
-    const user = await this.security.verifyUser(data.token, data.idb64);
+    const user = await this.security.verifyUser(data.token);
     if (!user) {
       throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
     }

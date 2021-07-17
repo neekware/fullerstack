@@ -17,6 +17,10 @@ export interface SecurityConfig {
   bcryptSaltOrRound: string | number;
 }
 
+export interface AuthTokenPayload {
+  [key: string]: any;
+}
+
 export interface AuthFilterType<T> {
   include?: T[];
   exclude?: T[];
@@ -90,10 +94,6 @@ export class UserVerifyInput {
   @Field()
   @IsNotEmpty()
   token: string;
-
-  @Field()
-  @IsNotEmpty()
-  idb64: string;
 }
 
 /**
@@ -107,10 +107,20 @@ export class PasswordResetPerformInput {
 
   @Field()
   @IsNotEmpty()
-  idb64: string;
+  password: string;
 
   @Field({ defaultValue: false })
   resetOtherSessions: boolean;
+}
+
+/**
+ * Authentication type (client -> server)
+ */
+@InputType()
+export class PasswordResetLinkVerifyInput {
+  @Field()
+  @IsNotEmpty()
+  token: string;
 }
 
 /**

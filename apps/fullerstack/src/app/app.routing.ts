@@ -77,7 +77,7 @@ export const AppRoutes: Routes = [
     },
   },
   {
-    path: 'auth/user/verify/:token/:idb64',
+    path: 'auth/user/verify/:token',
     component: UserVerifyComponent,
     data: {
       title: _('COMMON.ACCOUNT.VERIFY'),
@@ -104,7 +104,7 @@ export const AppRoutes: Routes = [
     },
   },
   {
-    path: 'auth/password/reset/:token/:idb64',
+    path: 'auth/password/reset/:token',
     component: PasswordResetPerformComponent,
     data: {
       title: _('COMMON.PASSWORD.RENEW'),

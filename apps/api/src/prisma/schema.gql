@@ -34,6 +34,7 @@ type Mutation {
   authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
   authLogin(input: UserCredentialsInput!): AuthTokenDto!
   authLogout: AuthStatusDto!
+  authPasswordResetLinkVerify(input: PasswordResetLinkVerifyInput!): AuthStatusDto!
   authPasswordResetPerform(input: PasswordResetPerformInput!): AuthStatusDto!
   authPasswordResetRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
   authRefreshToken: AuthTokenDto!
@@ -54,8 +55,12 @@ enum OrderDirection {
   desc
 }
 
+input PasswordResetLinkVerifyInput {
+  token: String!
+}
+
 input PasswordResetPerformInput {
-  idb64: String!
+  password: String!
   resetOtherSessions: Boolean = false
   token: String!
 }
@@ -169,7 +174,6 @@ input UserUpdateInput {
 }
 
 input UserVerifyInput {
-  idb64: String!
   token: String!
 }
 
