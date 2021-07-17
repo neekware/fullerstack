@@ -8,22 +8,22 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import { PasswordResetPerformComponent } from './password-reset-perform.component';
 
-xdescribe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+xdescribe('PasswordResetPerformComponent', () => {
+  let component: PasswordResetPerformComponent;
+  let fixture: ComponentFixture<PasswordResetPerformComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [LoginComponent],
+        declarations: [PasswordResetPerformComponent],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(PasswordResetPerformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
