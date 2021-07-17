@@ -407,6 +407,17 @@ export class AuthService implements OnDestroy {
     };
   }
 
+  validateEmailExistence(debounce = 600): AsyncValidatorFn {
+    return (
+      control: AbstractControl
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      return timer(debounce).pipe(
+        switchMap(() => this.isEmailAvailable(control.value)),
+        map((available) => (available ? { emailNotFound: true } : null))
+      );
+    };
+  }
+
   goTo(url: string) {
     setTimeout(() => {
       this.router.navigate([url || '/']);
