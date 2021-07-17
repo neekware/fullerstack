@@ -197,7 +197,7 @@ export interface authPasswordResetPerform {
 }
 
 export interface authPasswordResetPerformVariables {
-  input: PerformPasswordResetInput;
+  input: PerformPasswordResetPerformInput;
 }
 
 /* tslint:disable */
@@ -424,7 +424,7 @@ export interface ChangePasswordRequestInput {
   email: string;
 }
 
-export interface PerformPasswordResetInput {
+export interface PerformPasswordResetPerformInput {
   password: string;
   resetOtherSessions?: boolean | null;
   token: string;

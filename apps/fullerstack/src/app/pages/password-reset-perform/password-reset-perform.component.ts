@@ -28,6 +28,7 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
   isLoading = false;
   status = { ok: true, message: '' };
   resetLinkValid = false;
+  token: string;
 
   sessionResetMapping = [
     { name: _('COMMON.PASSWORD.TERMINATE_ALL_SESSIONS'), reset: true },
@@ -48,9 +49,8 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
         first(),
         switchMap((params) => {
           this.isLoading = true;
-          return this.auth.verifyPasswordResetRequest$({
-            token: params.get('token'),
-          });
+          this.token = params.get('token');
+          return this.auth.verifyPasswordResetRequest$({ token: this.token });
         }),
         takeUntil(this.destroy$)
       )
@@ -107,19 +107,23 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
   submit() {
     this.isLoading = true;
     this.auth
-      .passwordResetRequest$(this.form.value)
+      .passwordResetPerform$({
+        token: this.token,
+        password: this.form.value?.password,
+        resetOtherSessions: this.form.value?.resetOtherSessions,
+      })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (status) => {
           this.isLoading = false;
 
           if (status.ok) {
-            this.status = { ...status, message: _('INFO.PASSWORD.RESET_SUCCESS') };
+            this.status = { ...status, message: _('INFO.PASSWORD.RENEW_SUCCESS') };
             this.form.disable();
           } else {
             this.status = {
               ...status,
-              message: status.message || _('INFO.PASSWORD.RESET_SUCCESS'),
+              message: status.message || _('INFO.PASSWORD.PASSWORD_RENEW'),
             };
           }
         },

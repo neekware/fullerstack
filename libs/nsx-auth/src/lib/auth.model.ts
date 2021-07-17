@@ -100,7 +100,7 @@ export class UserVerifyInput {
  * Authentication type (client -> server)
  */
 @InputType()
-export class PerformPasswordResetInput {
+export class PerformPasswordResetPerformInput {
   @Field()
   @IsNotEmpty()
   token: string;

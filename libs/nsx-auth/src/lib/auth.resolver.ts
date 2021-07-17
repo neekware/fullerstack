@@ -36,7 +36,7 @@ import {
   AuthTokenDto,
   ChangePasswordInput,
   ChangePasswordRequestInput,
-  PerformPasswordResetInput,
+  PerformPasswordResetPerformInput,
   UserCreateInput,
   UserCredentialsInput,
   UserVerifyInput,
@@ -215,7 +215,7 @@ export class AuthResolver {
   @Mutation(() => AuthStatusDto)
   async authPasswordResetPerform(
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: PerformPasswordResetInput
+    @Args('input') data: PerformPasswordResetPerformInput
   ) {
     await this.security.performPasswordReset(data.token, data.password, data.resetOtherSessions);
     return { ok: true };

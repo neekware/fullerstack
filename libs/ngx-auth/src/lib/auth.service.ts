@@ -20,6 +20,7 @@ import {
   AuthIsEmailAvailableQuery,
   AuthLoginMutation,
   AuthLogoutMutation,
+  AuthPasswordResetPerformMutation,
   AuthPasswordResetRequestMutation,
   AuthRefreshTokenMutation,
   AuthRegisterMutation,
@@ -30,6 +31,7 @@ import {
   AuthStatus,
   AuthTokenStatus,
   ChangePasswordRequestInput,
+  PerformPasswordResetPerformInput,
   UserCreateInput,
   UserCredentialsInput,
   UserVerifyInput,
@@ -386,23 +388,21 @@ export class AuthService implements OnDestroy {
       ) as Observable<AuthStatus>;
   }
 
-  passwordResetPerform$(input: ChangePasswordRequestInput): Observable<AuthStatus> {
+  passwordResetPerform$(input: PerformPasswordResetPerformInput): Observable<AuthStatus> {
     return this.gql.client
-      .request<AuthStatus>(AuthPasswordResetRequestMutation, { input })
+      .request<AuthStatus>(AuthPasswordResetPerformMutation, { input })
       .pipe(
         map((resp) => {
           if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Password reset request success ...`);
+            this.logger.debug(`[${this.nameSpace}] Password reset success ...`);
           } else {
-            this.logger.error(
-              `[${this.nameSpace}] Password reset request failed ... ${resp.message}`
-            );
+            this.logger.error(`[${this.nameSpace}] Password reset failed ... ${resp.message}`);
           }
           return resp;
         }),
         catchError((err: GqlErrorsHandler) => {
           if (this.state.isLoggedIn) {
-            this.logger.error(`[${this.nameSpace}] Password reset request failed ...`, err);
+            this.logger.error(`[${this.nameSpace}] Password reset failed ...`, err);
           }
 
           return of({ ok: false, message: err.topError?.message });
