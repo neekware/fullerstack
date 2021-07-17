@@ -61,15 +61,16 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   submit() {
     this.formTouched = false;
-    this.form.disable();
-    this.auth
-      .loginRequest$(this.form.value)
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.form.enable();
-        },
-      });
+    this.submit$.emit(this.form.value);
+    // this.form.disable();
+    // this.auth
+    //   .loginRequest$(this.form.value)
+    //   .pipe(first(), takeUntil(this.destroy$))
+    //   .subscribe({
+    //     next: () => {
+    //       this.form.enable();
+    //     },
+    //   });
   }
 
   ngOnDestroy() {

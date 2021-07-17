@@ -8,10 +8,9 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { ConfigService } from '@fullerstack/ngx-config';
 import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, first, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-login',
@@ -24,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   subtitle = _('COMMON.ACCOUNT_ACCESS');
   icon = 'lock-open-outline';
 
-  constructor(readonly config: ConfigService, readonly auth: AuthService) {}
+  constructor(readonly auth: AuthService) {}
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
@@ -32,8 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  login(data: UserCredentialsInput) {
-    this.auth.loginRequest$(data).pipe(takeUntil(this.destroy$)).subscribe();
+  submit(data: UserCredentialsInput) {
+    this.auth.loginRequest$(data).pipe(first(), takeUntil(this.destroy$)).subscribe();
   }
 
   ngOnDestroy() {

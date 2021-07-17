@@ -21,10 +21,9 @@ import { ChangePasswordRequestInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 import { Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'fullerstack-login-form',
+  selector: 'fullerstack-password-reset-request-form',
   templateUrl: './password-reset-request-form.component.html',
   styleUrls: ['./password-reset-request-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,15 +59,17 @@ export class PasswordResetRequestFormComponent implements OnInit, OnDestroy {
 
   submit() {
     this.formTouched = false;
-    this.form.disable();
-    this.auth
-      .loginRequest$(this.form.value)
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.form.enable();
-        },
-      });
+    this.submit$.emit(this.form.value);
+
+    // this.form.disable();
+    // this.auth
+    //   .passwordResetRequest$(this.form.value)
+    //   .pipe(first(), takeUntil(this.destroy$))
+    //   .subscribe({
+    //     next: () => {
+    //       this.form.enable();
+    //     },
+    //   });
   }
 
   ngOnDestroy() {

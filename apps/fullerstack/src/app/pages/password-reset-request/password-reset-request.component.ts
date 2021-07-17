@@ -8,7 +8,6 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { ConfigService } from '@fullerstack/ngx-config';
 import { ChangePasswordRequestInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { Subject, takeUntil } from 'rxjs';
@@ -24,7 +23,7 @@ export class PasswordResetRequestComponent implements OnInit, OnDestroy {
   subtitle = _('COMMON.PASSWORD.RESET_REQUEST');
   icon = 'lock-open-outline';
 
-  constructor(readonly config: ConfigService, readonly auth: AuthService) {}
+  constructor(readonly auth: AuthService) {}
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
@@ -32,7 +31,7 @@ export class PasswordResetRequestComponent implements OnInit, OnDestroy {
     }
   }
 
-  passwordResetRequest(data: ChangePasswordRequestInput) {
+  submit(data: ChangePasswordRequestInput) {
     this.auth.passwordResetRequest$(data).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
