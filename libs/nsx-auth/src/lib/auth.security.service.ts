@@ -263,6 +263,23 @@ export class SecurityService {
     return !!payload;
   }
 
+  async verifyPasswordResetLink(token: string): Promise<boolean> {
+    const payload = decodeURITokenComponent<{ userId: string; lastLoginAt: Date }>(
+      token,
+      this.siteSecret
+    );
+
+    if (payload) {
+      const user = await this.validateUser(payload.userId);
+      if (user) {
+        const passwordResetLinkIssuedAt = new Date(payload.lastLoginAt).getTime();
+        const userLastLoggedInAt = new Date(user.lastLoginAt).getTime();
+        return passwordResetLinkIssuedAt >= userLastLoggedInAt;
+      }
+    }
+    throw new BadRequestException(ApiError.Error.Auth.InvalidVerificationLink);
+  }
+
   async verifyUser(token: string): Promise<User> {
     const payload = decodeURITokenComponent<{ userId: string }>(token, this.siteSecret);
     if (!payload) {

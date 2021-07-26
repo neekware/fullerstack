@@ -13,6 +13,8 @@ import { Base64, HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
+import { User } from '@prisma/client';
+
 import * as jwt from 'jsonwebtoken';
 
 export function convertExecutionContextToGqlContext(context: ExecutionContext) {
@@ -77,8 +79,8 @@ export function decodeURITokenComponent<T>(urlEncodedToken: string, secret: stri
  * @param {baseUrl} base url of the site
  * @returns valid URL
  */
-export function buildUserVerificationLink(userId: string, secret: string, baseUrl: string): string {
-  const encodedToken = encodeURITokenComponent({ userId }, secret);
+export function buildUserVerificationLink(user: User, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent({ userId: user.id }, secret);
   return `${baseUrl}/auth/user/verify/${encodedToken}`;
 }
 
@@ -89,8 +91,11 @@ export function buildUserVerificationLink(userId: string, secret: string, baseUr
  * @param {baseUrl} base url of the site
  * @returns valid URL
  */
-export function buildPasswordResetLink(userId: string, secret: string, baseUrl: string): string {
-  const encodedToken = encodeURITokenComponent({ userId }, secret);
+export function buildPasswordResetLink(user: User, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent(
+    { userId: user.id, lastLoginAt: user.lastLoginAt },
+    secret
+  );
   return `${baseUrl}/auth/password/reset/${encodedToken}`;
 }
 
@@ -101,7 +106,7 @@ export function buildPasswordResetLink(userId: string, secret: string, baseUrl: 
  * @param {baseUrl] base url of the site
  * @returns valid URL
  */
-export function buildEmailChangeLink(email: string, secret: string, baseUrl: string): string {
-  const encodedToken = encodeURITokenComponent({ email }, secret);
+export function buildEmailChangeLink(user: User, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent({ email: user.email }, secret);
   return `${baseUrl}/auth/password/reset/${encodedToken}`;
 }

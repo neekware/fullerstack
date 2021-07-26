@@ -78,7 +78,7 @@ export class AuthResolver {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
       RegexVerifyLink: buildUserVerificationLink(
-        user.id,
+        user,
         this.security.siteSecret,
         this.options.siteUrl
       ),
@@ -183,7 +183,7 @@ export class AuthResolver {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
       RegexPasswordResetLink: buildPasswordResetLink(
-        user.id,
+        user,
         this.security.siteSecret,
         this.options.siteUrl
       ),
@@ -208,10 +208,11 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: VerifyPasswordResetRequestInput
   ) {
-    const payload = this.security.validateURIToken(data.token);
-    if (!payload) {
+    const user = await this.security.verifyPasswordResetLink(data.token);
+    if (!user) {
       return { ok: false, message: ApiError.Error.Auth.InvalidPasswordResetLink };
     }
+
     return { ok: true };
   }
 
