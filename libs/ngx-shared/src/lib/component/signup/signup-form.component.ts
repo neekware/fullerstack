@@ -18,26 +18,28 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { tokenizeFullName } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { AuthUserSignupInput } from '@fullerstack/ngx-gql/schema';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
+
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'fullerstack-register-form',
-  templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss'],
+  selector: 'fullerstack-signup-form',
+  templateUrl: './signup-form.component.html',
+  styleUrls: ['./signup-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterFormComponent implements OnInit, OnDestroy {
+export class SignupFormComponent implements OnInit, OnDestroy {
   @ViewChild('emailInput') emailField?: ElementRef;
   form: FormGroup;
   private destroy$ = new Subject<boolean>();
   @Output() submit$ = new EventEmitter<AuthUserSignupInput>();
-  @Input() title = _('COMMON.REGISTER');
+  @Input() title = _('COMMON.SIGNUP');
   @Input() subtitle = _('COMMON.ACCOUNT_CREATE');
   @Input() icon = 'account-plus-outline';
   @Input() autocomplete = 'off';
@@ -91,7 +93,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
 
     this.form.disable();
     this.auth
-      .registerRequest$({
+      .signupRequest$({
         firstName,
         lastName,
         email,

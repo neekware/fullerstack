@@ -7,6 +7,7 @@
  */
 
 import { InjectionToken } from '@angular/core';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
@@ -16,7 +17,7 @@ import { ApplicationConfig, HttpMethod, LocalConfig, RemoteConfig } from './conf
 export const DefaultBaseConfig: DeepReadonly<LocalConfig> = {
   multiTab: true,
   loginPageUrl: '/auth/login',
-  registerPageUrl: '/auth/register',
+  registerPageUrl: '/auth/signup',
   loggedInLandingPageUrl: '/',
   loggedOutRedirectUrl: '/',
 };

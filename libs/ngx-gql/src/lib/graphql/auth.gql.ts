@@ -43,7 +43,7 @@ export const AuthUserLogoutMutation = gql`
   ${AuthStatusFragment}
 `;
 
-// auth register
+// auth signup
 export const AuthUserSignupMutation = gql`
   mutation authUserSignup($input: AuthUserSignupInput!) {
     authUserSignup(input: $input) {

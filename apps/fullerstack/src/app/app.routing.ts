@@ -7,6 +7,7 @@
  */
 
 import { Routes } from '@angular/router';
+
 import { AuthAnonymousGuard, AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
@@ -20,7 +21,7 @@ import { PasswordResetPerformComponent } from './pages/password-reset-perform/pa
 import { PasswordResetRequestComponent } from './pages/password-reset-request/password-reset-request.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { ProfileUpdateComponent } from './pages/profile-update/profile-update.component';
-import { RegisterComponent } from './pages/register/register.component';
+import { SignupComponent } from './pages/signup/signup.component';
 import { TrendComponent } from './pages/trend/trend.component';
 import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
 
@@ -69,11 +70,11 @@ export const AppRoutes: Routes = [
     },
   },
   {
-    path: 'auth/register',
-    component: RegisterComponent,
+    path: 'auth/signup',
+    component: SignupComponent,
     canActivate: [AuthAnonymousGuard],
     data: {
-      title: _('APP.REGISTER'),
+      title: _('APP.SIGNUP'),
     },
   },
   {

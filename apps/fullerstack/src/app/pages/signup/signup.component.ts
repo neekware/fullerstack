@@ -7,21 +7,23 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { AuthUserSignupInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'fullerstack-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'fullerstack-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
-  title = _('COMMON.REGISTER');
+  title = _('COMMON.SIGNUP');
   subtitle = _('COMMON.ACCOUNT_CREATE');
   icon = 'account-plus-outline';
 
@@ -29,16 +31,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
-      const redirectUrl = tryGet(
-        () => this.config.options.localConfig.registerInLandingPageUrl,
-        '/'
-      );
+      const redirectUrl = tryGet(() => this.config.options.localConfig.signupLandingPageUrl, '/');
       this.auth.goTo(redirectUrl);
     }
   }
 
-  register(data: AuthUserSignupInput) {
-    this.auth.registerRequest$(data).pipe(takeUntil(this.destroy$)).subscribe();
+  submit(data: AuthUserSignupInput) {
+    this.auth.signupRequest$(data).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
   ngOnDestroy() {

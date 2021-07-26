@@ -33,7 +33,7 @@
 
   <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
     <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
-      {{ 'COMMON.REGISTER' | translate }}
+      {{ 'COMMON.SIGNUP' | translate }}
     </button>
     <div *ngIf="auth?.state.hasError && !formTouched" class="form-status" fxLayout="row" fxLayoutGap="10px">
       <mat-icon color="warn" svgIcon="alert"></mat-icon>

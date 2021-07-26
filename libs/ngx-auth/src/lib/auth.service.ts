@@ -215,7 +215,7 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  registerRequest$(input: AuthUserSignupInput): Observable<AuthState> {
+  signupRequest$(input: AuthUserSignupInput): Observable<AuthState> {
     this.store.setState(
       this.claimId,
       {

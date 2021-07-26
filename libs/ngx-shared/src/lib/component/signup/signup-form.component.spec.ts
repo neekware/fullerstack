@@ -12,16 +12,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CONFIG_TOKEN } from '@fullerstack/ngx-config';
 import { ValidationService } from '@fullerstack/ngx-util';
 
-import { RegisterFormComponent } from './register-form.component';
+import { SignupFormComponent } from './signup-form.component';
 
-xdescribe('RegisterFormComponent', () => {
-  let component: RegisterFormComponent;
-  let fixture: ComponentFixture<RegisterFormComponent>;
+xdescribe('SignupFormComponent', () => {
+  let component: SignupFormComponent;
+  let fixture: ComponentFixture<SignupFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientModule, FormsModule, ReactiveFormsModule],
-      declarations: [RegisterFormComponent],
+      declarations: [SignupFormComponent],
       providers: [
         ValidationService,
         {
@@ -33,7 +33,7 @@ xdescribe('RegisterFormComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RegisterFormComponent);
+    fixture = TestBed.createComponent(SignupFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

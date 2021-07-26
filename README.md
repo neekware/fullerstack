@@ -129,7 +129,7 @@ yarn start:fullerstack
 # Visit frontend (on mac use open, on windows, just type it in)
 open http://localhost:4200
 
-# Register / Login and take the site for a spin
+# Signup / Login and take the site for a spin
 # Note superuser account is set in your .env (refer to AUTH_SUPERUSER_EMAIL, AUTH_SUPERUSER_PASSWORD)
 ```
 
@@ -183,7 +183,7 @@ X.Y.Z Version
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             361        19126         2185         3683        13258
+ TypeScript             361        19136         2198         3683        13255
  JSON                   137         4858            0            0         4858
  Markdown               102         2468          651            0         1817
  Sass                    55         1448          141           35         1272
@@ -194,7 +194,7 @@ X.Y.Z Version
  SQL                      4           72           13           15           44
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  732        29937         3119         3788        23030
+ Total                  732        29947         3132         3788        23027
 --------------------------------------------------------------------------------
 ```
 
