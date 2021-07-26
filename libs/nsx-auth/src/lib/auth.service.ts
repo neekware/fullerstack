@@ -9,8 +9,11 @@
 import { ApiError } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { PrismaService, isConstraintError } from '@fullerstack/nsx-prisma';
+
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+
 import { Prisma, User } from '@prisma/client';
+
 import { v4 as uuid_v4 } from 'uuid';
 
 import { UserCreateInput, UserCredentialsInput } from './auth.model';
@@ -33,6 +36,7 @@ export class AuthService {
           username: uuid_v4(),
           role: 'USER',
           isActive: true,
+          lastLoginAt: new Date(),
         } as Prisma.UserCreateInput,
       });
     } catch (err) {
@@ -66,7 +70,12 @@ export class AuthService {
       );
 
       if (passwordValid) {
-        return user;
+        return await this.prisma.user.update({
+          where: { email: credentials.email },
+          data: {
+            lastLoginAt: new Date(),
+          },
+        });
       }
     }
 

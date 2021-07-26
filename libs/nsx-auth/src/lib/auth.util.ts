@@ -9,8 +9,10 @@
 import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { Base64, HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
+
 import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+
 import * as jwt from 'jsonwebtoken';
 
 export function convertExecutionContextToGqlContext(context: ExecutionContext) {
@@ -70,9 +72,9 @@ export function decodeURITokenComponent<T>(urlEncodedToken: string, secret: stri
 
 /*
  * Generate a safe URL, to verify a new user
- * @param userId user id
- * @param salt site secret
- * @param baseUrl base url of the site
+ * @param {userId} user id
+ * @param {secret} site secret
+ * @param {baseUrl} base url of the site
  * @returns valid URL
  */
 export function buildUserVerificationLink(userId: string, secret: string, baseUrl: string): string {
@@ -82,12 +84,24 @@ export function buildUserVerificationLink(userId: string, secret: string, baseUr
 
 /*
  * Generate a safe URL, to request a password reset
- * @param userId user id
- * @param salt site secret
- * @param baseUrl base url of the site
+ * @param {userId} user id
+ * @param {secret} site secret
+ * @param {baseUrl} base url of the site
  * @returns valid URL
  */
 export function buildPasswordResetLink(userId: string, secret: string, baseUrl: string): string {
   const encodedToken = encodeURITokenComponent({ userId }, secret);
+  return `${baseUrl}/auth/password/reset/${encodedToken}`;
+}
+
+/*
+ * Generate a safe URL, to request an email change
+ * @param {email} user id
+ * @param {secret} site secret
+ * @param {baseUrl] base url of the site
+ * @returns valid URL
+ */
+export function buildEmailChangeLink(email: string, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent({ email }, secret);
   return `${baseUrl}/auth/password/reset/${encodedToken}`;
 }
