@@ -16,10 +16,13 @@ import {
 } from '@fullerstack/nsx-common';
 import { I18nService } from '@fullerstack/nsx-i18n';
 import { MailerService } from '@fullerstack/nsx-mailer';
+
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+
 import { User } from '@prisma/client';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
@@ -214,10 +217,42 @@ export class AuthResolver {
 
   @Mutation(() => AuthStatusDto)
   async authPasswordResetPerform(
+    @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: PerformPasswordResetPerformInput
   ) {
-    await this.security.performPasswordReset(data.token, data.password, data.resetOtherSessions);
+    const user = await this.security.performPasswordReset(
+      data.token,
+      data.password,
+      data.resetOtherSessions
+    );
+
+    if (!user) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidOrInactiveUser };
+    }
+
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject(
+      'password-reset-confirmation',
+      locale,
+      emailContext
+    );
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
+
     return { ok: true };
   }
 
