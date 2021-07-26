@@ -7,7 +7,9 @@
  */
 
 import { Permission, PrismaClient, Role } from '@prisma/client';
+
 import { hash } from 'bcrypt';
+
 import { v4 as uuid_v4 } from 'uuid';
 
 import { environment } from '../environments/environment';
@@ -67,6 +69,7 @@ async function main() {
     password: await hashPassword('pass4rachel'),
     isActive: true,
     isVerified: true,
+    lastLoginAt: new Date(),
     role: Role.SUPERUSER,
     permissions: [Permission.appALL],
   };
@@ -85,6 +88,7 @@ async function main() {
     password: await hashPassword('pass4monica'),
     isActive: true,
     isVerified: true,
+    lastLoginAt: new Date(),
     role: Role.ADMIN,
     permissions: [Permission.appALL],
   };
@@ -103,6 +107,7 @@ async function main() {
     password: await hashPassword('pass4joey'),
     isActive: true,
     isVerified: true,
+    lastLoginAt: new Date(),
     role: Role.STAFF,
     permissions: [
       Permission.groupALL,
@@ -128,6 +133,7 @@ async function main() {
     isActive: true,
     isVerified: true,
     role: Role.USER,
+    lastLoginAt: new Date(),
     permissions: [
       Permission.userCREATE,
       Permission.userREAD,
@@ -150,6 +156,7 @@ async function main() {
     password: await hashPassword('pass4chandler'),
     isActive: true,
     isVerified: true,
+    lastLoginAt: new Date(),
     role: Role.USER,
     permissions: [
       Permission.userCREATE,
@@ -173,6 +180,7 @@ async function main() {
     password: await hashPassword('pass4phoebe'),
     isActive: true,
     isVerified: true,
+    lastLoginAt: new Date(),
     role: Role.USER,
     permissions: [
       Permission.userCREATE,
