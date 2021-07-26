@@ -84,7 +84,7 @@ export class AuthService implements OnDestroy {
       ...this.authUrls,
       loginUrl: this.options?.localConfig?.loginPageUrl || this.authUrls.loginUrl,
       loggedInUrl: this.options?.localConfig?.loggedInUrl || this.authUrls.loggedInUrl,
-      registerUrl: this.options?.localConfig?.registerUrl || this.authUrls.registerUrl,
+      signupUrl: this.options?.localConfig?.signupUrl || this.authUrls.signupUrl,
       landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
     };
 
@@ -110,7 +110,7 @@ export class AuthService implements OnDestroy {
     } else if (this.state.isLoggedIn && !prevState.isLoggedIn) {
       switch (this.router.url) {
         case this.authUrls.loginUrl:
-        case this.authUrls.registerUrl:
+        case this.authUrls.signupUrl:
           this.goTo(this.nextUrl || this.authUrls.loggedInUrl);
       }
     }
@@ -124,7 +124,7 @@ export class AuthService implements OnDestroy {
       ...this.authUrls,
       loginUrl: this.options?.localConfig?.loginPageUrl || this.authUrls.loginUrl,
       loggedInUrl: this.options?.localConfig?.loggedInUrl || this.authUrls.loggedInUrl,
-      registerUrl: this.options?.localConfig?.registerUrl || this.authUrls.registerUrl,
+      signupUrl: this.options?.localConfig?.signupUrl || this.authUrls.signupUrl,
       landingUrl: this.options?.localConfig?.landingUrl || this.authUrls.landingUrl,
     };
   }
@@ -220,20 +220,20 @@ export class AuthService implements OnDestroy {
       this.claimId,
       {
         ...DefaultAuthState,
-        isRegistering: true,
+        isSigningUp: true,
         isLoading: true,
       },
-      AuthStateAction.AUTH_REGISTER_REQ_SENT
+      AuthStateAction.AUTH_SIGNUP_REQ_SENT
     );
-    this.logger.debug(`[${this.nameSpace}] Register request sent ...`);
+    this.logger.debug(`[${this.nameSpace}] Signup request sent ...`);
 
     return this.gql.client
       .request<AuthTokenStatus>(AuthUserSignupMutation, { input })
       .pipe(
         map((resp) => {
           if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Register request success ...`);
-            this.msg.successSnackBar(_('SUCCESS.AUTH.REGISTER'), { duration: 3000 });
+            this.logger.debug(`[${this.nameSpace}] Signup request success ...`);
+            this.msg.successSnackBar(_('SUCCESS.AUTH.SIGNUP'), { duration: 3000 });
             return this.store.setState(
               this.claimId,
               {
@@ -242,10 +242,10 @@ export class AuthService implements OnDestroy {
                 token: resp.token,
                 userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
               },
-              AuthStateAction.AUTH_REGISTER_RES_SUCCESS
+              AuthStateAction.AUTH_SIGNUP_RES_SUCCESS
             );
           }
-          this.logger.error(`[${this.nameSpace}] Register request failed ... ${resp.message}`);
+          this.logger.error(`[${this.nameSpace}] Signup request failed ... ${resp.message}`);
           return this.store.setState(
             this.claimId,
             {
@@ -253,11 +253,11 @@ export class AuthService implements OnDestroy {
               hasError: true,
               message: resp.message,
             },
-            AuthStateAction.AUTH_REGISTER_RES_FAILED
+            AuthStateAction.AUTH_SIGNUP_RES_FAILED
           );
         }),
         catchError((err: GqlErrorsHandler) => {
-          this.logger.error(`[${this.nameSpace}] Register request failed ...`, err);
+          this.logger.error(`[${this.nameSpace}] Signup request failed ...`, err);
           return of(
             this.store.setState(
               this.claimId,
@@ -266,7 +266,7 @@ export class AuthService implements OnDestroy {
                 hasError: true,
                 message: err.topError?.message,
               },
-              AuthStateAction.AUTH_REGISTER_RES_FAILED
+              AuthStateAction.AUTH_SIGNUP_RES_FAILED
             )
           );
         })

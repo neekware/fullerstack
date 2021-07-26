@@ -1,6 +1,6 @@
 Dear {{RegexName}},
 
-Welcome and thank you for registering with us.
+Welcome and thank you for signing up with us.
 
 Please click the following link to verify your account.
 

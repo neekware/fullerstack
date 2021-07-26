@@ -11,7 +11,6 @@ import { AuthTokenRefreshMutation, AuthUserLogoutMutation } from '@fullerstack/n
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
-
 import { DeepReadonly } from 'ts-essentials';
 
 import { AuthConfig, AuthState, AuthUrls } from './auth.model';
@@ -33,7 +32,7 @@ export const DefaultAuthState: DeepReadonly<AuthState> = {
   userId: null,
   isLoading: false,
   isLoggedIn: false,
-  isRegistering: false,
+  isSigningUp: false,
   isAuthenticating: false,
   logoutRequired: false,
   hasError: false,
@@ -54,8 +53,8 @@ export const AuthMessageMap: MessageMap = {
       level: LogLevel.info,
     },
     signup: {
-      text: _('SUCCESS.AUTH.REGISTER'),
-      code: 'SUCCESS.AUTH.REGISTER',
+      text: _('SUCCESS.AUTH.SIGNUP'),
+      code: 'SUCCESS.AUTH.SIGNUP',
       level: LogLevel.info,
     },
     refresh: {
@@ -77,8 +76,8 @@ export const AuthMessageMap: MessageMap = {
       level: LogLevel.warn,
     },
     signup: {
-      text: _('ERROR.AUTH.REGISTER'),
-      code: 'ERROR.AUTH.REGISTER',
+      text: _('ERROR.AUTH.SIGNUP'),
+      code: 'ERROR.AUTH.SIGNUP',
       level: LogLevel.warn,
     },
     refresh: {
@@ -98,7 +97,7 @@ export const AuthMessageMap: MessageMap = {
 
 export const DefaultAuthUrls: DeepReadonly<AuthUrls> = {
   loginUrl: '/auth/login',
-  registerUrl: '/auth/signup',
+  signupUrl: '/auth/signup',
   loggedInUrl: '/',
   landingUrl: '/',
 };

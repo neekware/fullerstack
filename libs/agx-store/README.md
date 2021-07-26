@@ -31,7 +31,7 @@ export interface AuthState {
   isAnonymous: boolean;
   isLoading: boolean;
   isLoggedIn: boolean;
-  isRegistering: boolean;
+  isSigningUp: boolean;
   isAuthenticating: boolean;
   hasError: boolean;
   token: string;
@@ -43,7 +43,7 @@ export const DefaultAuthState: DeepReadonly<AuthState> = {
   isAnonymous: false,
   isLoading: false,
   isLoggedIn: false,
-  isRegistering: false,
+  isSigningUp: false,
   isAuthenticating: false,
   hasError: false,
   token: null,

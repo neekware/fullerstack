@@ -17,7 +17,7 @@ import { ApplicationConfig, HttpMethod, LocalConfig, RemoteConfig } from './conf
 export const DefaultBaseConfig: DeepReadonly<LocalConfig> = {
   multiTab: true,
   loginPageUrl: '/auth/login',
-  registerPageUrl: '/auth/signup',
+  signupPageUrl: '/auth/signup',
   loggedInLandingPageUrl: '/',
   loggedOutRedirectUrl: '/',
 };
