@@ -24,29 +24,9 @@ export const AuthTokenStatusFragment = gql`
 `;
 
 // auth login
-export const AuthLoginMutation = gql`
-  mutation authLogin($input: AuthUserCredentialsInput!) {
-    authLogin(input: $input) {
-      ...AuthTokenStatus
-    }
-  }
-  ${AuthTokenStatusFragment}
-`;
-
-// auth register
-export const AuthRegisterMutation = gql`
-  mutation authRegister($input: AuthUserCreateInput!) {
-    authRegister(input: $input) {
-      ...AuthTokenStatus
-    }
-  }
-  ${AuthTokenStatusFragment}
-`;
-
-// auth refresh token (cookie must be valid)
-export const AuthRefreshTokenMutation = gql`
-  mutation authRefreshToken {
-    authRefreshToken {
+export const AuthUserLoginMutation = gql`
+  mutation authUserLogin($input: AuthUserCredentialsInput!) {
+    authUserLogin(input: $input) {
       ...AuthTokenStatus
     }
   }
@@ -54,19 +34,39 @@ export const AuthRefreshTokenMutation = gql`
 `;
 
 // auth logout (cookie is cleared)
-export const AuthLogoutMutation = gql`
-  mutation authLogout {
-    authLogout {
+export const AuthUserLogoutMutation = gql`
+  mutation authUserLogout {
+    authUserLogout {
       ...AuthStatus
     }
   }
   ${AuthStatusFragment}
 `;
 
+// auth register
+export const AuthUserSignupMutation = gql`
+  mutation authUserSignup($input: AuthUserSignupInput!) {
+    authUserSignup(input: $input) {
+      ...AuthTokenStatus
+    }
+  }
+  ${AuthTokenStatusFragment}
+`;
+
+// auth refresh token (cookie must be valid)
+export const AuthTokenRefreshMutation = gql`
+  mutation authTokenRefresh {
+    authTokenRefresh {
+      ...AuthTokenStatus
+    }
+  }
+  ${AuthTokenStatusFragment}
+`;
+
 // auth email is not in use
-export const AuthVerifyEmailAvailabilityQuery = gql`
-  mutation authVerifyEmailAvailability($input: AuthEmailVerifyAvailabilityInput!) {
-    authVerifyEmailAvailability(input: $input) {
+export const AuthEmailVerifyAvailabilityQuery = gql`
+  mutation authEmailVerifyAvailability($input: AuthEmailVerifyAvailabilityInput!) {
+    authEmailVerifyAvailability(input: $input) {
       ...AuthStatus
     }
   }
@@ -74,9 +74,9 @@ export const AuthVerifyEmailAvailabilityQuery = gql`
 `;
 
 // auth verify user
-export const AuthVerifyUserMutation = gql`
-  mutation authVerifyUser($input: AuthUserVerifyInput!) {
-    authVerifyUser(input: $input) {
+export const AuthUserVerifyMutation = gql`
+  mutation authUserVerify($input: AuthUserVerifyInput!) {
+    authUserVerify(input: $input) {
       ...AuthStatus
     }
   }
@@ -84,9 +84,9 @@ export const AuthVerifyUserMutation = gql`
 `;
 
 // auth verify current password
-export const AuthVerifyCurrentPasswordQuery = gql`
-  mutation authVerifyCurrentPassword($input: AuthPasswordVerifyInput!) {
-    authVerifyCurrentPassword(input: $input) {
+export const AuthPasswordVerifyQuery = gql`
+  mutation authPasswordVerify($input: AuthPasswordVerifyInput!) {
+    authPasswordVerify(input: $input) {
       ...AuthStatus
     }
   }
@@ -104,9 +104,9 @@ export const AuthPasswordResetRequestMutation = gql`
 `;
 
 // auth password reset request verification
-export const AuthVerifyPasswordResetRequestMutation = gql`
-  mutation authVerifyPasswordResetRequest($input: AuthPasswordVerifyResetRequestInput!) {
-    authVerifyPasswordResetRequest(input: $input) {
+export const AuthPasswordVerifyResetRequestMutation = gql`
+  mutation authPasswordVerifyResetRequest($input: AuthPasswordVerifyResetRequestInput!) {
+    authPasswordVerifyResetRequest(input: $input) {
       ...AuthStatus
     }
   }
@@ -114,9 +114,9 @@ export const AuthVerifyPasswordResetRequestMutation = gql`
 `;
 
 // auth verify user
-export const AuthPasswordResetPerformMutation = gql`
-  mutation authPasswordResetPerform($input: AuthPasswordResetPerformInput!) {
-    authPasswordResetPerform(input: $input) {
+export const AuthPasswordPerformResetMutation = gql`
+  mutation authPasswordPerformReset($input: AuthPasswordPerformResetInput!) {
+    authPasswordPerformReset(input: $input) {
       ...AuthStatus
     }
   }

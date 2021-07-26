@@ -16,13 +16,10 @@ import {
 } from '@fullerstack/nsx-common';
 import { I18nService } from '@fullerstack/nsx-i18n';
 import { MailerService } from '@fullerstack/nsx-mailer';
-
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-
 import { User } from '@prisma/client';
-
 import { DeepReadonly } from 'ts-essentials';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
@@ -39,13 +36,13 @@ import {
   AuthEmailVerifyAvailabilityInput,
   AuthPasswordChangeInput,
   AuthPasswordChangeRequestInput,
-  AuthPasswordResetPerformInput,
+  AuthPasswordPerformResetInput,
   AuthPasswordVerifyInput,
   AuthPasswordVerifyResetRequestInput,
   AuthStatusDto,
   AuthTokenDto,
-  AuthUserCreateInput,
   AuthUserCredentialsInput,
+  AuthUserSignupInput,
   AuthUserVerifyInput,
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
@@ -71,11 +68,11 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthTokenDto)
-  async authRegister(
+  async authUserSignup(
     @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: AuthUserCreateInput
+    @Args('input') data: AuthUserSignupInput
   ) {
     const user = await this.auth.createUser(data);
     const token = this.security.issueToken(user, request, response);
@@ -106,7 +103,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthTokenDto)
-  async authLogin(
+  async authUserLogin(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: AuthUserCredentialsInput
@@ -117,7 +114,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthTokenDto)
-  async authRefreshToken(
+  async authTokenRefresh(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
@@ -142,20 +139,20 @@ export class AuthResolver {
 
   @UseGuards(AuthGuardAnonymousGql)
   @Mutation(() => AuthStatusDto)
-  async authLogout(@ResponseDecorator() response: HttpResponse) {
+  async authUserLogout(@ResponseDecorator() response: HttpResponse) {
     this.security.clearHttpCookie(response);
     return { ok: true };
   }
 
   @Mutation(() => AuthStatusDto)
-  async authVerifyEmailAvailability(@Args('input') data: AuthEmailVerifyAvailabilityInput) {
+  async authEmailVerifyAvailability(@Args('input') data: AuthEmailVerifyAvailabilityInput) {
     const isAvailable = !(await this.auth.isEmailInUse(data.email));
     return { ok: isAvailable };
   }
 
   @UseGuards(AuthGuardGql)
   @Mutation(() => AuthStatusDto)
-  async authVerifyCurrentPassword(
+  async authPasswordVerify(
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: AuthPasswordVerifyInput
   ) {
@@ -166,7 +163,7 @@ export class AuthResolver {
 
   @UseGuards(AuthGuardGql)
   @Mutation(() => AuthTokenDto)
-  async authChangePassword(
+  async authPasswordChange(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
@@ -222,7 +219,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
-  async authVerifyPasswordResetRequest(
+  async authPasswordVerifyResetRequest(
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: AuthPasswordVerifyResetRequestInput
   ) {
@@ -235,10 +232,10 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
-  async authPasswordResetPerform(
+  async authPasswordPerformReset(
     @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: AuthPasswordResetPerformInput
+    @Args('input') data: AuthPasswordPerformResetInput
   ) {
     const user = await this.security.performPasswordReset(
       data.token,
@@ -276,7 +273,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
-  async authVerifyUser(
+  async authUserVerify(
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: AuthUserVerifyInput
   ) {

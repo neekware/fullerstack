@@ -10,7 +10,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
-import { AuthUserCreateInput } from '@fullerstack/ngx-gql/schema';
+import { AuthUserSignupInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
-  register(data: AuthUserCreateInput) {
+  register(data: AuthUserSignupInput) {
     this.auth.registerRequest$(data).pipe(takeUntil(this.destroy$)).subscribe();
   }
 

@@ -17,27 +17,27 @@ import {
 } from '@fullerstack/ngx-config';
 import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import {
-  AuthLoginMutation,
-  AuthLogoutMutation,
-  AuthPasswordResetPerformMutation,
+  AuthEmailVerifyAvailabilityQuery,
+  AuthPasswordPerformResetMutation,
   AuthPasswordResetRequestMutation,
-  AuthRefreshTokenMutation,
-  AuthRegisterMutation,
-  AuthVerifyCurrentPasswordQuery,
-  AuthVerifyEmailAvailabilityQuery,
-  AuthVerifyPasswordResetRequestMutation,
-  AuthVerifyUserMutation,
+  AuthPasswordVerifyQuery,
+  AuthPasswordVerifyResetRequestMutation,
+  AuthTokenRefreshMutation,
+  AuthUserLoginMutation,
+  AuthUserLogoutMutation,
+  AuthUserSignupMutation,
+  AuthUserVerifyMutation,
 } from '@fullerstack/ngx-gql/operations';
 import {
   AuthEmailVerifyAvailabilityInput,
   AuthPasswordChangeRequestInput,
-  AuthPasswordResetPerformInput,
+  AuthPasswordPerformResetInput,
   AuthPasswordVerifyInput,
   AuthPasswordVerifyResetRequestInput,
   AuthStatus,
   AuthTokenStatus,
-  AuthUserCreateInput,
   AuthUserCredentialsInput,
+  AuthUserSignupInput,
   AuthUserVerifyInput,
 } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
@@ -170,7 +170,7 @@ export class AuthService implements OnDestroy {
     this.logger.debug(`[${this.nameSpace}] Login request sent ...`);
 
     return this.gql.client
-      .request<AuthTokenStatus>(AuthLoginMutation, { input })
+      .request<AuthTokenStatus>(AuthUserLoginMutation, { input })
       .pipe(
         map((resp) => {
           if (resp.ok) {
@@ -215,7 +215,7 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  registerRequest$(input: AuthUserCreateInput): Observable<AuthState> {
+  registerRequest$(input: AuthUserSignupInput): Observable<AuthState> {
     this.store.setState(
       this.claimId,
       {
@@ -228,7 +228,7 @@ export class AuthService implements OnDestroy {
     this.logger.debug(`[${this.nameSpace}] Register request sent ...`);
 
     return this.gql.client
-      .request<AuthTokenStatus>(AuthRegisterMutation, { input })
+      .request<AuthTokenStatus>(AuthUserSignupMutation, { input })
       .pipe(
         map((resp) => {
           if (resp.ok) {
@@ -275,7 +275,7 @@ export class AuthService implements OnDestroy {
 
   tokenRefreshRequest$(): Observable<AuthState> {
     this.logger.debug(`[${this.nameSpace}] Token refresh request sent ...`);
-    return this.gql.client.request<AuthTokenStatus>(AuthRefreshTokenMutation).pipe(
+    return this.gql.client.request<AuthTokenStatus>(AuthTokenRefreshMutation).pipe(
       map((resp) => {
         if (resp.ok) {
           this.logger.debug(`[${this.nameSpace}] Token refresh request success ...`);
@@ -328,7 +328,7 @@ export class AuthService implements OnDestroy {
     this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_LOGIN_REQ_SENT);
 
     return this.gql.client
-      .request<AuthStatus>(AuthLogoutMutation)
+      .request<AuthStatus>(AuthUserLogoutMutation)
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
         error: (err) => {
@@ -347,7 +347,7 @@ export class AuthService implements OnDestroy {
 
   verifyUserRequest$(input: AuthUserVerifyInput): Observable<AuthStatus> {
     return this.gql.client
-      .request<AuthStatus>(AuthVerifyUserMutation, { input })
+      .request<AuthStatus>(AuthUserVerifyMutation, { input })
       .pipe(
         map((resp) => {
           if (resp.ok) {
@@ -396,9 +396,9 @@ export class AuthService implements OnDestroy {
       ) as Observable<AuthStatus>;
   }
 
-  passwordResetPerform$(input: AuthPasswordResetPerformInput): Observable<AuthStatus> {
+  passwordResetPerform$(input: AuthPasswordPerformResetInput): Observable<AuthStatus> {
     return this.gql.client
-      .request<AuthStatus>(AuthPasswordResetPerformMutation, { input })
+      .request<AuthStatus>(AuthPasswordPerformResetMutation, { input })
       .pipe(
         map((resp) => {
           if (resp.ok) {
@@ -420,7 +420,7 @@ export class AuthService implements OnDestroy {
 
   verifyPasswordResetRequest$(input: AuthPasswordVerifyResetRequestInput): Observable<AuthStatus> {
     return this.gql.client
-      .request<AuthStatus>(AuthVerifyPasswordResetRequestMutation, { input })
+      .request<AuthStatus>(AuthPasswordVerifyResetRequestMutation, { input })
       .pipe(
         map((resp) => {
           if (resp.ok) {
@@ -449,7 +449,7 @@ export class AuthService implements OnDestroy {
 
   verifyCurrentPassword(input: AuthPasswordVerifyInput): Observable<boolean> {
     return this.gql.client
-      .request<AuthStatus>(AuthVerifyCurrentPasswordQuery, { input })
+      .request<AuthStatus>(AuthPasswordVerifyQuery, { input })
       .pipe(
         map((resp) => resp.ok),
         catchError((err: GqlErrorsHandler) => {
@@ -472,7 +472,7 @@ export class AuthService implements OnDestroy {
 
   verifyEmailAvailability(input: AuthEmailVerifyAvailabilityInput): Observable<boolean> {
     return this.gql.client
-      .request<AuthStatus>(AuthVerifyEmailAvailabilityQuery, { input })
+      .request<AuthStatus>(AuthEmailVerifyAvailabilityQuery, { input })
       .pipe(
         map((resp) => resp.ok),
         catchError((err: GqlErrorsHandler) => {

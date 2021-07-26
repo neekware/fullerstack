@@ -9,18 +9,21 @@
 import { ApiError } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { PrismaService, isConstraintError } from '@fullerstack/nsx-prisma';
+
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+
 import { Prisma, User } from '@prisma/client';
+
 import { v4 as uuid_v4 } from 'uuid';
 
-import { AuthUserCreateInput, AuthUserCredentialsInput } from './auth.model';
+import { AuthUserCredentialsInput, AuthUserSignupInput } from './auth.model';
 import { SecurityService } from './auth.security.service';
 
 @Injectable()
 export class AuthService {
   constructor(readonly prisma: PrismaService, readonly securityService: SecurityService) {}
 
-  async createUser(payload: AuthUserCreateInput): Promise<User> {
+  async createUser(payload: AuthUserSignupInput): Promise<User> {
     let user: User;
     const hashedPassword = await this.securityService.hashPassword(payload.password);
 
@@ -34,7 +37,7 @@ export class AuthService {
           role: 'USER',
           isActive: true,
           lastLoginAt: new Date(),
-        } as Prisma.AuthUserCreateInput,
+        } as Prisma.UserCreateInput,
       });
     } catch (err) {
       if (isConstraintError(err)) {

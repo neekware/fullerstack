@@ -7,7 +7,6 @@
  */
 
 import { Directive, Field, InputType, ObjectType } from '@nestjs/graphql';
-
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
 import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constant';
@@ -51,7 +50,7 @@ export class AuthTokenDto {
  * User creation type (client -> server)
  */
 @InputType()
-export class AuthUserCreateInput {
+export class AuthUserSignupInput {
   @Directive('@lowercase')
   @Field()
   @IsEmail()
@@ -97,7 +96,7 @@ export class AuthUserVerifyInput {
  * Authentication type (client -> server)
  */
 @InputType()
-export class AuthPasswordResetPerformInput {
+export class AuthPasswordPerformResetInput {
   @Field()
   @IsNotEmpty()
   token: string;

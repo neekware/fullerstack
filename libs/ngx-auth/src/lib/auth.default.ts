@@ -7,11 +7,10 @@
  */
 
 import { getOperationName } from '@fullerstack/ngx-gql';
-import { AuthLogoutMutation, AuthRefreshTokenMutation } from '@fullerstack/ngx-gql/operations';
+import { AuthTokenRefreshMutation, AuthUserLogoutMutation } from '@fullerstack/ngx-gql/operations';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
-
 import { DeepReadonly } from 'ts-essentials';
 
 import { AuthConfig, AuthState, AuthUrls } from './auth.model';
@@ -26,8 +25,8 @@ export const DefaultAuthConfig: AuthConfig = {
 };
 
 export const AuthResponseOperationName = 'operationName';
-export const AuthRefreshTokenOperation = getOperationName(AuthRefreshTokenMutation);
-export const AuthLogoutOperation = getOperationName(AuthLogoutMutation);
+export const AuthRefreshTokenOperation = getOperationName(AuthTokenRefreshMutation);
+export const AuthLogoutOperation = getOperationName(AuthUserLogoutMutation);
 
 export const DefaultAuthState: DeepReadonly<AuthState> = {
   userId: null,

@@ -22,7 +22,7 @@ input AuthPasswordChangeRequestInput {
   email: String!
 }
 
-input AuthPasswordResetPerformInput {
+input AuthPasswordPerformResetInput {
   password: String!
   resetOtherSessions: Boolean = false
   token: String!
@@ -47,15 +47,15 @@ type AuthTokenDto {
   token: String!
 }
 
-input AuthUserCreateInput {
+input AuthUserCredentialsInput {
   email: String!
-  firstName: String!
-  lastName: String!
   password: String!
 }
 
-input AuthUserCredentialsInput {
+input AuthUserSignupInput {
   email: String!
+  firstName: String!
+  lastName: String!
   password: String!
 }
 
@@ -69,18 +69,18 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  authChangePassword(input: AuthPasswordChangeInput!): AuthTokenDto!
   authEmailChangeRequest(input: AuthEmailChangeRequestInput!): AuthStatusDto!
-  authLogin(input: AuthUserCredentialsInput!): AuthTokenDto!
-  authLogout: AuthStatusDto!
-  authPasswordResetPerform(input: AuthPasswordResetPerformInput!): AuthStatusDto!
+  authEmailVerifyAvailability(input: AuthEmailVerifyAvailabilityInput!): AuthStatusDto!
+  authPasswordChange(input: AuthPasswordChangeInput!): AuthTokenDto!
+  authPasswordPerformReset(input: AuthPasswordPerformResetInput!): AuthStatusDto!
   authPasswordResetRequest(input: AuthPasswordChangeRequestInput!): AuthStatusDto!
-  authRefreshToken: AuthTokenDto!
-  authRegister(input: AuthUserCreateInput!): AuthTokenDto!
-  authVerifyCurrentPassword(input: AuthPasswordVerifyInput!): AuthStatusDto!
-  authVerifyEmailAvailability(input: AuthEmailVerifyAvailabilityInput!): AuthStatusDto!
-  authVerifyPasswordResetRequest(input: AuthPasswordVerifyResetRequestInput!): AuthStatusDto!
-  authVerifyUser(input: AuthUserVerifyInput!): AuthStatusDto!
+  authPasswordVerify(input: AuthPasswordVerifyInput!): AuthStatusDto!
+  authPasswordVerifyResetRequest(input: AuthPasswordVerifyResetRequestInput!): AuthStatusDto!
+  authTokenRefresh: AuthTokenDto!
+  authUserLogin(input: AuthUserCredentialsInput!): AuthTokenDto!
+  authUserLogout: AuthStatusDto!
+  authUserSignup(input: AuthUserSignupInput!): AuthTokenDto!
+  authUserVerify(input: AuthUserVerifyInput!): AuthStatusDto!
 
   """Update user's own info"""
   userSelfUpdate(input: UserSelfUpdateInput!): UserDto!

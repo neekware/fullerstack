@@ -20,7 +20,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { AuthUserCreateInput } from '@fullerstack/ngx-gql/schema';
+import { AuthUserSignupInput } from '@fullerstack/ngx-gql/schema';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 import { Subject } from 'rxjs';
@@ -36,7 +36,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
   @ViewChild('emailInput') emailField?: ElementRef;
   form: FormGroup;
   private destroy$ = new Subject<boolean>();
-  @Output() submit$ = new EventEmitter<AuthUserCreateInput>();
+  @Output() submit$ = new EventEmitter<AuthUserSignupInput>();
   @Input() title = _('COMMON.REGISTER');
   @Input() subtitle = _('COMMON.ACCOUNT_CREATE');
   @Input() icon = 'account-plus-outline';

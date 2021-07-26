@@ -4,21 +4,21 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authLogin
+// GraphQL mutation operation: authUserLogin
 // ====================================================
 
-export interface authLogin_authLogin {
+export interface authUserLogin_authUserLogin {
   __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
 }
 
-export interface authLogin {
-  authLogin: authLogin_authLogin;
+export interface authUserLogin {
+  authUserLogin: authUserLogin_authUserLogin;
 }
 
-export interface authLoginVariables {
+export interface authUserLoginVariables {
   input: AuthUserCredentialsInput;
 }
 
@@ -28,22 +28,41 @@ export interface authLoginVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authRegister
+// GraphQL mutation operation: authUserLogout
 // ====================================================
 
-export interface authRegister_authRegister {
+export interface authUserLogout_authUserLogout {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authUserLogout {
+  authUserLogout: authUserLogout_authUserLogout;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: authUserSignup
+// ====================================================
+
+export interface authUserSignup_authUserSignup {
   __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
 }
 
-export interface authRegister {
-  authRegister: authRegister_authRegister;
+export interface authUserSignup {
+  authUserSignup: authUserSignup_authUserSignup;
 }
 
-export interface authRegisterVariables {
-  input: AuthUserCreateInput;
+export interface authUserSignupVariables {
+  input: AuthUserSignupInput;
 }
 
 /* tslint:disable */
@@ -52,18 +71,18 @@ export interface authRegisterVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authRefreshToken
+// GraphQL mutation operation: authTokenRefresh
 // ====================================================
 
-export interface authRefreshToken_authRefreshToken {
+export interface authTokenRefresh_authTokenRefresh {
   __typename: "AuthTokenDto";
   ok: boolean;
   token: string;
   message: string | null;
 }
 
-export interface authRefreshToken {
-  authRefreshToken: authRefreshToken_authRefreshToken;
+export interface authTokenRefresh {
+  authTokenRefresh: authTokenRefresh_authTokenRefresh;
 }
 
 /* tslint:disable */
@@ -72,39 +91,20 @@ export interface authRefreshToken {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authLogout
+// GraphQL mutation operation: authEmailVerifyAvailability
 // ====================================================
 
-export interface authLogout_authLogout {
+export interface authEmailVerifyAvailability_authEmailVerifyAvailability {
   __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
 
-export interface authLogout {
-  authLogout: authLogout_authLogout;
+export interface authEmailVerifyAvailability {
+  authEmailVerifyAvailability: authEmailVerifyAvailability_authEmailVerifyAvailability;
 }
 
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: authVerifyEmailAvailability
-// ====================================================
-
-export interface authVerifyEmailAvailability_authVerifyEmailAvailability {
-  __typename: "AuthStatusDto";
-  ok: boolean;
-  message: string | null;
-}
-
-export interface authVerifyEmailAvailability {
-  authVerifyEmailAvailability: authVerifyEmailAvailability_authVerifyEmailAvailability;
-}
-
-export interface authVerifyEmailAvailabilityVariables {
+export interface authEmailVerifyAvailabilityVariables {
   input: AuthEmailVerifyAvailabilityInput;
 }
 
@@ -114,20 +114,20 @@ export interface authVerifyEmailAvailabilityVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authVerifyUser
+// GraphQL mutation operation: authUserVerify
 // ====================================================
 
-export interface authVerifyUser_authVerifyUser {
+export interface authUserVerify_authUserVerify {
   __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
 
-export interface authVerifyUser {
-  authVerifyUser: authVerifyUser_authVerifyUser;
+export interface authUserVerify {
+  authUserVerify: authUserVerify_authUserVerify;
 }
 
-export interface authVerifyUserVariables {
+export interface authUserVerifyVariables {
   input: AuthUserVerifyInput;
 }
 
@@ -137,20 +137,20 @@ export interface authVerifyUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authVerifyCurrentPassword
+// GraphQL mutation operation: authPasswordVerify
 // ====================================================
 
-export interface authVerifyCurrentPassword_authVerifyCurrentPassword {
+export interface authPasswordVerify_authPasswordVerify {
   __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
 
-export interface authVerifyCurrentPassword {
-  authVerifyCurrentPassword: authVerifyCurrentPassword_authVerifyCurrentPassword;
+export interface authPasswordVerify {
+  authPasswordVerify: authPasswordVerify_authPasswordVerify;
 }
 
-export interface authVerifyCurrentPasswordVariables {
+export interface authPasswordVerifyVariables {
   input: AuthPasswordVerifyInput;
 }
 
@@ -183,20 +183,20 @@ export interface authPasswordResetRequestVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authVerifyPasswordResetRequest
+// GraphQL mutation operation: authPasswordVerifyResetRequest
 // ====================================================
 
-export interface authVerifyPasswordResetRequest_authVerifyPasswordResetRequest {
+export interface authPasswordVerifyResetRequest_authPasswordVerifyResetRequest {
   __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
 
-export interface authVerifyPasswordResetRequest {
-  authVerifyPasswordResetRequest: authVerifyPasswordResetRequest_authVerifyPasswordResetRequest;
+export interface authPasswordVerifyResetRequest {
+  authPasswordVerifyResetRequest: authPasswordVerifyResetRequest_authPasswordVerifyResetRequest;
 }
 
-export interface authVerifyPasswordResetRequestVariables {
+export interface authPasswordVerifyResetRequestVariables {
   input: AuthPasswordVerifyResetRequestInput;
 }
 
@@ -206,21 +206,21 @@ export interface authVerifyPasswordResetRequestVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: authPasswordResetPerform
+// GraphQL mutation operation: authPasswordPerformReset
 // ====================================================
 
-export interface authPasswordResetPerform_authPasswordResetPerform {
+export interface authPasswordPerformReset_authPasswordPerformReset {
   __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
 
-export interface authPasswordResetPerform {
-  authPasswordResetPerform: authPasswordResetPerform_authPasswordResetPerform;
+export interface authPasswordPerformReset {
+  authPasswordPerformReset: authPasswordPerformReset_authPasswordPerformReset;
 }
 
-export interface authPasswordResetPerformVariables {
-  input: AuthPasswordResetPerformInput;
+export interface authPasswordPerformResetVariables {
+  input: AuthPasswordPerformResetInput;
 }
 
 /* tslint:disable */
@@ -451,7 +451,7 @@ export interface AuthPasswordChangeRequestInput {
   email: string;
 }
 
-export interface AuthPasswordResetPerformInput {
+export interface AuthPasswordPerformResetInput {
   password: string;
   resetOtherSessions?: boolean | null;
   token: string;
@@ -465,15 +465,15 @@ export interface AuthPasswordVerifyResetRequestInput {
   token: string;
 }
 
-export interface AuthUserCreateInput {
+export interface AuthUserCredentialsInput {
   email: string;
-  firstName: string;
-  lastName: string;
   password: string;
 }
 
-export interface AuthUserCredentialsInput {
+export interface AuthUserSignupInput {
   email: string;
+  firstName: string;
+  lastName: string;
   password: string;
 }
 
