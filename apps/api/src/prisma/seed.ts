@@ -7,9 +7,7 @@
  */
 
 import { Permission, PrismaClient, Role } from '@prisma/client';
-
 import { hash } from 'bcrypt';
-
 import { v4 as uuid_v4 } from 'uuid';
 
 import { environment } from '../environments/environment';

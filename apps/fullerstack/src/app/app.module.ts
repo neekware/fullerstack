@@ -11,7 +11,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-
 import { AuthInterceptor, AuthModule } from '@fullerstack/ngx-auth';
 import { CachifyInterceptor } from '@fullerstack/ngx-cachify';
 import { ConfigModule } from '@fullerstack/ngx-config';
@@ -30,10 +29,8 @@ import { UserModule } from '@fullerstack/ngx-user';
 import { ValidationService } from '@fullerstack/ngx-util';
 
 import { environment } from '../environments/environment';
-
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
-
 import { AboutComponent } from './pages/about/about.component';
 import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
