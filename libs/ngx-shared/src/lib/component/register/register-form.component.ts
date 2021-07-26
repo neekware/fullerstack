@@ -18,11 +18,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { tokenizeFullName } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { UserCreateInput } from '@fullerstack/ngx-gql/schema';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
+
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 
@@ -75,10 +77,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
           [Validators.required, this.validation.validateEmail],
           [this.auth.validateEmailAvailability()],
         ],
-        password: [
-          '',
-          [Validators.required, Validators.minLength(this.validation.PASSWORD_MIN_LEN)],
-        ],
+        password: ['', [Validators.required, this.validation.validatePassword]],
         passwordConfirmation: ['', [Validators.required]],
       },
       { validators: this.validation.matchingPasswords }
