@@ -35,19 +35,26 @@ import {
 import { AuthGuardAnonymousGql } from './auth.guard.anonymous';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
+  AuthEmailChangeRequestInput,
+  AuthEmailVerifyAvailabilityInput,
+  AuthPasswordChangeInput,
+  AuthPasswordChangeRequestInput,
+  AuthPasswordResetPerformInput,
+  AuthPasswordVerifyInput,
+  AuthPasswordVerifyResetRequestInput,
   AuthStatusDto,
   AuthTokenDto,
-  ChangePasswordInput,
-  ChangePasswordRequestInput,
-  PerformPasswordResetPerformInput,
-  UserCreateInput,
-  UserCredentialsInput,
-  UserVerifyInput,
-  VerifyPasswordResetRequestInput,
+  AuthUserCreateInput,
+  AuthUserCredentialsInput,
+  AuthUserVerifyInput,
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
-import { buildPasswordResetLink, buildUserVerificationLink } from './auth.util';
+import {
+  buildEmailChangeLink,
+  buildPasswordResetLink,
+  buildUserVerificationLink,
+} from './auth.util';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
@@ -68,7 +75,7 @@ export class AuthResolver {
     @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: UserCreateInput
+    @Args('input') data: AuthUserCreateInput
   ) {
     const user = await this.auth.createUser(data);
     const token = this.security.issueToken(user, request, response);
@@ -102,7 +109,7 @@ export class AuthResolver {
   async authLogin(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: UserCredentialsInput
+    @Args('input') data: AuthUserCredentialsInput
   ) {
     const user = await this.auth.authenticateUser(data);
     const token = this.security.issueToken(user, request, response);
@@ -141,9 +148,20 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
-  async isEmailAvailable(@Args('email', { type: () => String }) email: string) {
-    const isAvailable = !(await this.auth.isEmailInUse(email));
+  async authVerifyEmailAvailability(@Args('input') data: AuthEmailVerifyAvailabilityInput) {
+    const isAvailable = !(await this.auth.isEmailInUse(data.email));
     return { ok: isAvailable };
+  }
+
+  @UseGuards(AuthGuardGql)
+  @Mutation(() => AuthStatusDto)
+  async authVerifyCurrentPassword(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: AuthPasswordVerifyInput
+  ) {
+    const user = await this.security.validateUser(request.user.id);
+    const isValid = this.security.validatePassword(data.password, user.password);
+    return { ok: isValid };
   }
 
   @UseGuards(AuthGuardGql)
@@ -152,7 +170,7 @@ export class AuthResolver {
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: ChangePasswordInput
+    @Args('input') data: AuthPasswordChangeInput
   ) {
     const user = await this.security.changePassword(
       request.user as User,
@@ -170,7 +188,7 @@ export class AuthResolver {
     @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: ChangePasswordRequestInput
+    @Args('input') data: AuthPasswordChangeRequestInput
   ) {
     const user = await this.security.validateUserByEmail(data.email);
     if (!user) {
@@ -206,7 +224,7 @@ export class AuthResolver {
   @Mutation(() => AuthStatusDto)
   async authVerifyPasswordResetRequest(
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: VerifyPasswordResetRequestInput
+    @Args('input') data: AuthPasswordVerifyResetRequestInput
   ) {
     const user = await this.security.verifyPasswordResetLink(data.token);
     if (!user) {
@@ -220,7 +238,7 @@ export class AuthResolver {
   async authPasswordResetPerform(
     @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: PerformPasswordResetPerformInput
+    @Args('input') data: AuthPasswordResetPerformInput
   ) {
     const user = await this.security.performPasswordReset(
       data.token,
@@ -260,12 +278,51 @@ export class AuthResolver {
   @Mutation(() => AuthStatusDto)
   async authVerifyUser(
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: UserVerifyInput
+    @Args('input') data: AuthUserVerifyInput
   ) {
     const user = await this.security.verifyUser(data.token);
     if (!user) {
       throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
     }
     return { ok: !!user.id };
+  }
+
+  @UseGuards(AuthGuardGql)
+  @Mutation(() => AuthStatusDto)
+  async authEmailChangeRequest(
+    @LocaleDecorator() language: string[],
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse,
+    @Args('input') data: AuthEmailChangeRequestInput
+  ) {
+    const user = await this.security.validateUserByEmail(data.email);
+    if (!user) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidOrInactiveUser };
+    }
+
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexEmailChangeLink: buildEmailChangeLink(
+        user,
+        this.security.siteSecret,
+        this.options.siteUrl
+      ),
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject('email-change-request', locale, emailContext);
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
+
+    return { ok: true };
   }
 }

@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { UserCredentialsInput } from '@fullerstack/ngx-gql/schema';
+import { AuthUserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 import { Subject } from 'rxjs';
@@ -31,7 +31,7 @@ import { Subject } from 'rxjs';
 export class LoginFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
   private destroy$ = new Subject<boolean>();
-  @Output() submit$ = new EventEmitter<UserCredentialsInput>();
+  @Output() submit$ = new EventEmitter<AuthUserCredentialsInput>();
   @Input() title = _('COMMON.LOGIN');
   @Input() subtitle = _('COMMON.ACCOUNT_ACCESS');
   @Input() icon = 'lock-open-outline';

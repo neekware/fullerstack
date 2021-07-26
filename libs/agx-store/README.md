@@ -107,7 +107,7 @@ export class AuthService<T = StoreStateType> {
     });
   }
 
-  loginRequest(input: UserCredentialsInput) {
+  loginRequest(input: AuthUserCredentialsInput) {
     // set auth state to authenticating
     // loading started ...
     this.store.setState(

@@ -7,6 +7,7 @@
  */
 
 import { Directive, Field, InputType, ObjectType } from '@nestjs/graphql';
+
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
 import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constant';
@@ -50,7 +51,7 @@ export class AuthTokenDto {
  * User creation type (client -> server)
  */
 @InputType()
-export class UserCreateInput {
+export class AuthUserCreateInput {
   @Directive('@lowercase')
   @Field()
   @IsEmail()
@@ -71,7 +72,7 @@ export class UserCreateInput {
  * Authentication type (client -> server)
  */
 @InputType()
-export class UserCredentialsInput {
+export class AuthUserCredentialsInput {
   @Directive('@lowercase')
   @Field()
   @IsEmail()
@@ -86,7 +87,7 @@ export class UserCredentialsInput {
  * Authentication type (client -> server)
  */
 @InputType()
-export class UserVerifyInput {
+export class AuthUserVerifyInput {
   @Field()
   @IsNotEmpty()
   token: string;
@@ -96,7 +97,7 @@ export class UserVerifyInput {
  * Authentication type (client -> server)
  */
 @InputType()
-export class PerformPasswordResetPerformInput {
+export class AuthPasswordResetPerformInput {
   @Field()
   @IsNotEmpty()
   token: string;
@@ -113,7 +114,7 @@ export class PerformPasswordResetPerformInput {
  * Authentication type (client -> server)
  */
 @InputType()
-export class VerifyPasswordResetRequestInput {
+export class AuthPasswordVerifyResetRequestInput {
   @Field()
   @IsNotEmpty()
   token: string;
@@ -123,7 +124,7 @@ export class VerifyPasswordResetRequestInput {
  * Password change input type (client -> server)
  */
 @InputType()
-export class ChangePasswordInput {
+export class AuthPasswordChangeInput {
   @Field()
   @IsNotEmpty()
   @MinLength(AUTH_PASSWORD_MIN_LENGTH)
@@ -142,7 +143,31 @@ export class ChangePasswordInput {
 }
 
 @InputType()
-export class ChangePasswordRequestInput {
+export class AuthPasswordChangeRequestInput {
+  @Directive('@lowercase')
+  @Field()
+  @IsEmail()
+  email: string;
+}
+
+@InputType()
+export class AuthPasswordVerifyInput {
+  @Field()
+  @IsNotEmpty()
+  @MinLength(AUTH_PASSWORD_MIN_LENGTH)
+  password: string;
+}
+
+@InputType()
+export class AuthEmailVerifyAvailabilityInput {
+  @Directive('@lowercase')
+  @Field()
+  @IsEmail()
+  email: string;
+}
+
+@InputType()
+export class AuthEmailChangeRequestInput {
   @Directive('@lowercase')
   @Field()
   @IsEmail()

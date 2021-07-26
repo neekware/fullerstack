@@ -9,21 +9,18 @@
 import { ApiError } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { PrismaService, isConstraintError } from '@fullerstack/nsx-prisma';
-
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
-
 import { Prisma, User } from '@prisma/client';
-
 import { v4 as uuid_v4 } from 'uuid';
 
-import { UserCreateInput, UserCredentialsInput } from './auth.model';
+import { AuthUserCreateInput, AuthUserCredentialsInput } from './auth.model';
 import { SecurityService } from './auth.security.service';
 
 @Injectable()
 export class AuthService {
   constructor(readonly prisma: PrismaService, readonly securityService: SecurityService) {}
 
-  async createUser(payload: UserCreateInput): Promise<User> {
+  async createUser(payload: AuthUserCreateInput): Promise<User> {
     let user: User;
     const hashedPassword = await this.securityService.hashPassword(payload.password);
 
@@ -37,7 +34,7 @@ export class AuthService {
           role: 'USER',
           isActive: true,
           lastLoginAt: new Date(),
-        } as Prisma.UserCreateInput,
+        } as Prisma.AuthUserCreateInput,
       });
     } catch (err) {
       if (isConstraintError(err)) {
@@ -58,7 +55,7 @@ export class AuthService {
     return user;
   }
 
-  async authenticateUser(credentials: UserCredentialsInput): Promise<User> {
+  async authenticateUser(credentials: AuthUserCredentialsInput): Promise<User> {
     const user = await this.prisma.user.findUnique({
       where: { email: credentials.email },
     });

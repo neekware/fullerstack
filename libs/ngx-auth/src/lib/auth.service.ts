@@ -17,25 +17,28 @@ import {
 } from '@fullerstack/ngx-config';
 import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import {
-  AuthIsEmailAvailableQuery,
   AuthLoginMutation,
   AuthLogoutMutation,
   AuthPasswordResetPerformMutation,
   AuthPasswordResetRequestMutation,
   AuthRefreshTokenMutation,
   AuthRegisterMutation,
+  AuthVerifyCurrentPasswordQuery,
+  AuthVerifyEmailAvailabilityQuery,
   AuthVerifyPasswordResetRequestMutation,
   AuthVerifyUserMutation,
 } from '@fullerstack/ngx-gql/operations';
 import {
+  AuthEmailVerifyAvailabilityInput,
+  AuthPasswordChangeRequestInput,
+  AuthPasswordResetPerformInput,
+  AuthPasswordVerifyInput,
+  AuthPasswordVerifyResetRequestInput,
   AuthStatus,
   AuthTokenStatus,
-  ChangePasswordRequestInput,
-  PerformPasswordResetPerformInput,
-  UserCreateInput,
-  UserCredentialsInput,
-  UserVerifyInput,
-  VerifyPasswordResetRequestInput,
+  AuthUserCreateInput,
+  AuthUserCredentialsInput,
+  AuthUserVerifyInput,
 } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
@@ -47,7 +50,12 @@ import { Observable, Subject, of, timer } from 'rxjs';
 import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultAuthConfig, DefaultAuthState, DefaultAuthUrls } from './auth.default';
+import {
+  AsyncValidationDebounceTime,
+  DefaultAuthConfig,
+  DefaultAuthState,
+  DefaultAuthUrls,
+} from './auth.default';
 import { AuthState, AuthStateAction, AuthUrls } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
@@ -149,7 +157,7 @@ export class AuthService implements OnDestroy {
     });
   }
 
-  loginRequest$(input: UserCredentialsInput): Observable<AuthState> {
+  loginRequest$(input: AuthUserCredentialsInput): Observable<AuthState> {
     this.store.setState(
       this.claimId,
       {
@@ -207,7 +215,7 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  registerRequest$(input: UserCreateInput): Observable<AuthState> {
+  registerRequest$(input: AuthUserCreateInput): Observable<AuthState> {
     this.store.setState(
       this.claimId,
       {
@@ -337,7 +345,7 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  verifyUserRequest$(input: UserVerifyInput): Observable<AuthStatus> {
+  verifyUserRequest$(input: AuthUserVerifyInput): Observable<AuthStatus> {
     return this.gql.client
       .request<AuthStatus>(AuthVerifyUserMutation, { input })
       .pipe(
@@ -364,7 +372,7 @@ export class AuthService implements OnDestroy {
       ) as Observable<AuthStatus>;
   }
 
-  passwordResetRequest$(input: ChangePasswordRequestInput): Observable<AuthStatus> {
+  passwordResetRequest$(input: AuthPasswordChangeRequestInput): Observable<AuthStatus> {
     return this.gql.client
       .request<AuthStatus>(AuthPasswordResetRequestMutation, { input })
       .pipe(
@@ -388,7 +396,7 @@ export class AuthService implements OnDestroy {
       ) as Observable<AuthStatus>;
   }
 
-  passwordResetPerform$(input: PerformPasswordResetPerformInput): Observable<AuthStatus> {
+  passwordResetPerform$(input: AuthPasswordResetPerformInput): Observable<AuthStatus> {
     return this.gql.client
       .request<AuthStatus>(AuthPasswordResetPerformMutation, { input })
       .pipe(
@@ -410,7 +418,7 @@ export class AuthService implements OnDestroy {
       ) as Observable<AuthStatus>;
   }
 
-  verifyPasswordResetRequest$(input: VerifyPasswordResetRequestInput): Observable<AuthStatus> {
+  verifyPasswordResetRequest$(input: AuthPasswordVerifyResetRequestInput): Observable<AuthStatus> {
     return this.gql.client
       .request<AuthStatus>(AuthVerifyPasswordResetRequestMutation, { input })
       .pipe(
@@ -439,9 +447,32 @@ export class AuthService implements OnDestroy {
       ) as Observable<AuthStatus>;
   }
 
-  isEmailAvailable(email: string): Observable<boolean> {
+  verifyCurrentPassword(input: AuthPasswordVerifyInput): Observable<boolean> {
     return this.gql.client
-      .request<AuthStatus>(AuthIsEmailAvailableQuery, { email })
+      .request<AuthStatus>(AuthVerifyCurrentPasswordQuery, { input })
+      .pipe(
+        map((resp) => resp.ok),
+        catchError((err: GqlErrorsHandler) => {
+          this.logger.error(`[${this.nameSpace}] password verification check ...`, err);
+          return of(false);
+        })
+      );
+  }
+
+  validateCurrentPassword(debounce = AsyncValidationDebounceTime): AsyncValidatorFn {
+    return (
+      control: AbstractControl
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      return timer(debounce).pipe(
+        switchMap(() => this.verifyCurrentPassword(control.value)),
+        map((valid) => (valid ? null : { incorrectPassword: true }))
+      );
+    };
+  }
+
+  verifyEmailAvailability(input: AuthEmailVerifyAvailabilityInput): Observable<boolean> {
+    return this.gql.client
+      .request<AuthStatus>(AuthVerifyEmailAvailabilityQuery, { input })
       .pipe(
         map((resp) => resp.ok),
         catchError((err: GqlErrorsHandler) => {
@@ -451,23 +482,23 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  validateEmailAvailability(debounce = 600): AsyncValidatorFn {
+  validateEmailAvailability(debounce = AsyncValidationDebounceTime): AsyncValidatorFn {
     return (
       control: AbstractControl
     ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       return timer(debounce).pipe(
-        switchMap(() => this.isEmailAvailable(control.value)),
+        switchMap(() => this.verifyEmailAvailability(control.value)),
         map((available) => (available ? null : { emailInUse: true }))
       );
     };
   }
 
-  validateEmailExistence(debounce = 600): AsyncValidatorFn {
+  validateEmailExistence(debounce = AsyncValidationDebounceTime): AsyncValidatorFn {
     return (
       control: AbstractControl
     ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       return timer(debounce).pipe(
-        switchMap(() => this.isEmailAvailable(control.value)),
+        switchMap(() => this.verifyEmailAvailability(control.value)),
         map((available) => (available ? { emailNotFound: true } : null))
       );
     };

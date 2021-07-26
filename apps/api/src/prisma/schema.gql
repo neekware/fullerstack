@@ -2,6 +2,40 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AuthEmailChangeRequestInput {
+  email: String!
+}
+
+input AuthEmailVerifyAvailabilityInput {
+  email: String!
+}
+
+input AuthPasswordChangeInput {
+  newPassword: String!
+  oldPassword: String!
+
+  """Force authentication on all other active sessions"""
+  resetOtherSessions: Boolean = false
+}
+
+input AuthPasswordChangeRequestInput {
+  email: String!
+}
+
+input AuthPasswordResetPerformInput {
+  password: String!
+  resetOtherSessions: Boolean = false
+  token: String!
+}
+
+input AuthPasswordVerifyInput {
+  password: String!
+}
+
+input AuthPasswordVerifyResetRequestInput {
+  token: String!
+}
+
 type AuthStatusDto {
   message: String
   ok: Boolean!
@@ -13,16 +47,20 @@ type AuthTokenDto {
   token: String!
 }
 
-input ChangePasswordInput {
-  newPassword: String!
-  oldPassword: String!
-
-  """Force authentication on all other active sessions"""
-  resetOtherSessions: Boolean = false
+input AuthUserCreateInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
 }
 
-input ChangePasswordRequestInput {
+input AuthUserCredentialsInput {
   email: String!
+  password: String!
+}
+
+input AuthUserVerifyInput {
+  token: String!
 }
 
 """
@@ -31,16 +69,18 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  authChangePassword(input: ChangePasswordInput!): AuthTokenDto!
-  authLogin(input: UserCredentialsInput!): AuthTokenDto!
+  authChangePassword(input: AuthPasswordChangeInput!): AuthTokenDto!
+  authEmailChangeRequest(input: AuthEmailChangeRequestInput!): AuthStatusDto!
+  authLogin(input: AuthUserCredentialsInput!): AuthTokenDto!
   authLogout: AuthStatusDto!
-  authPasswordResetPerform(input: PerformPasswordResetPerformInput!): AuthStatusDto!
-  authPasswordResetRequest(input: ChangePasswordRequestInput!): AuthStatusDto!
+  authPasswordResetPerform(input: AuthPasswordResetPerformInput!): AuthStatusDto!
+  authPasswordResetRequest(input: AuthPasswordChangeRequestInput!): AuthStatusDto!
   authRefreshToken: AuthTokenDto!
-  authRegister(input: UserCreateInput!): AuthTokenDto!
-  authVerifyPasswordResetRequest(input: VerifyPasswordResetRequestInput!): AuthStatusDto!
-  authVerifyUser(input: UserVerifyInput!): AuthStatusDto!
-  isEmailAvailable(email: String!): AuthStatusDto!
+  authRegister(input: AuthUserCreateInput!): AuthTokenDto!
+  authVerifyCurrentPassword(input: AuthPasswordVerifyInput!): AuthStatusDto!
+  authVerifyEmailAvailability(input: AuthEmailVerifyAvailabilityInput!): AuthStatusDto!
+  authVerifyPasswordResetRequest(input: AuthPasswordVerifyResetRequestInput!): AuthStatusDto!
+  authVerifyUser(input: AuthUserVerifyInput!): AuthStatusDto!
 
   """Update user's own info"""
   userSelfUpdate(input: UserSelfUpdateInput!): UserDto!
@@ -53,12 +93,6 @@ type Mutation {
 enum OrderDirection {
   asc
   desc
-}
-
-input PerformPasswordResetPerformInput {
-  password: String!
-  resetOtherSessions: Boolean = false
-  token: String!
 }
 
 """User permission"""
@@ -91,18 +125,6 @@ enum Role {
   STAFF
   SUPERUSER
   USER
-}
-
-input UserCreateInput {
-  email: String!
-  firstName: String!
-  lastName: String!
-  password: String!
-}
-
-input UserCredentialsInput {
-  email: String!
-  password: String!
 }
 
 type UserDto {
@@ -169,14 +191,6 @@ input UserUpdateInput {
   role: Role
 }
 
-input UserVerifyInput {
-  token: String!
-}
-
 input UserWhereByIdInput {
   id: ID!
-}
-
-input VerifyPasswordResetRequestInput {
-  token: String!
 }

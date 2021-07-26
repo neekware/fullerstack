@@ -19,7 +19,7 @@ export interface authLogin {
 }
 
 export interface authLoginVariables {
-  input: UserCredentialsInput;
+  input: AuthUserCredentialsInput;
 }
 
 /* tslint:disable */
@@ -43,7 +43,7 @@ export interface authRegister {
 }
 
 export interface authRegisterVariables {
-  input: UserCreateInput;
+  input: AuthUserCreateInput;
 }
 
 /* tslint:disable */
@@ -91,21 +91,21 @@ export interface authLogout {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: isEmailAvailable
+// GraphQL mutation operation: authVerifyEmailAvailability
 // ====================================================
 
-export interface isEmailAvailable_isEmailAvailable {
+export interface authVerifyEmailAvailability_authVerifyEmailAvailability {
   __typename: "AuthStatusDto";
   ok: boolean;
   message: string | null;
 }
 
-export interface isEmailAvailable {
-  isEmailAvailable: isEmailAvailable_isEmailAvailable;
+export interface authVerifyEmailAvailability {
+  authVerifyEmailAvailability: authVerifyEmailAvailability_authVerifyEmailAvailability;
 }
 
-export interface isEmailAvailableVariables {
-  email: string;
+export interface authVerifyEmailAvailabilityVariables {
+  input: AuthEmailVerifyAvailabilityInput;
 }
 
 /* tslint:disable */
@@ -128,7 +128,30 @@ export interface authVerifyUser {
 }
 
 export interface authVerifyUserVariables {
-  input: UserVerifyInput;
+  input: AuthUserVerifyInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: authVerifyCurrentPassword
+// ====================================================
+
+export interface authVerifyCurrentPassword_authVerifyCurrentPassword {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authVerifyCurrentPassword {
+  authVerifyCurrentPassword: authVerifyCurrentPassword_authVerifyCurrentPassword;
+}
+
+export interface authVerifyCurrentPasswordVariables {
+  input: AuthPasswordVerifyInput;
 }
 
 /* tslint:disable */
@@ -151,7 +174,7 @@ export interface authPasswordResetRequest {
 }
 
 export interface authPasswordResetRequestVariables {
-  input: ChangePasswordRequestInput;
+  input: AuthPasswordChangeRequestInput;
 }
 
 /* tslint:disable */
@@ -174,7 +197,7 @@ export interface authVerifyPasswordResetRequest {
 }
 
 export interface authVerifyPasswordResetRequestVariables {
-  input: VerifyPasswordResetRequestInput;
+  input: AuthPasswordVerifyResetRequestInput;
 }
 
 /* tslint:disable */
@@ -197,7 +220,7 @@ export interface authPasswordResetPerform {
 }
 
 export interface authPasswordResetPerformVariables {
-  input: PerformPasswordResetPerformInput;
+  input: AuthPasswordResetPerformInput;
 }
 
 /* tslint:disable */
@@ -420,26 +443,42 @@ export enum Role {
   USER = "USER",
 }
 
-export interface ChangePasswordRequestInput {
+export interface AuthEmailVerifyAvailabilityInput {
   email: string;
 }
 
-export interface PerformPasswordResetPerformInput {
+export interface AuthPasswordChangeRequestInput {
+  email: string;
+}
+
+export interface AuthPasswordResetPerformInput {
   password: string;
   resetOtherSessions?: boolean | null;
   token: string;
 }
 
-export interface UserCreateInput {
+export interface AuthPasswordVerifyInput {
+  password: string;
+}
+
+export interface AuthPasswordVerifyResetRequestInput {
+  token: string;
+}
+
+export interface AuthUserCreateInput {
   email: string;
   firstName: string;
   lastName: string;
   password: string;
 }
 
-export interface UserCredentialsInput {
+export interface AuthUserCredentialsInput {
   email: string;
   password: string;
+}
+
+export interface AuthUserVerifyInput {
+  token: string;
 }
 
 export interface UserSelfUpdateInput {
@@ -448,16 +487,8 @@ export interface UserSelfUpdateInput {
   lastName?: string | null;
 }
 
-export interface UserVerifyInput {
-  token: string;
-}
-
 export interface UserWhereByIdInput {
   id: string;
-}
-
-export interface VerifyPasswordResetRequestInput {
-  token: string;
 }
 
 //==============================================================

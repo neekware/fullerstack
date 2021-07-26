@@ -11,9 +11,12 @@ import { AuthLogoutMutation, AuthRefreshTokenMutation } from '@fullerstack/ngx-g
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { AuthConfig, AuthState, AuthUrls } from './auth.model';
+
+export const AsyncValidationDebounceTime = 500;
 
 /**
  * Default configuration - Auth module

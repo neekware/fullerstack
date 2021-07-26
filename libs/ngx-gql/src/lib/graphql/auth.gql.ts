@@ -25,7 +25,7 @@ export const AuthTokenStatusFragment = gql`
 
 // auth login
 export const AuthLoginMutation = gql`
-  mutation authLogin($input: UserCredentialsInput!) {
+  mutation authLogin($input: AuthUserCredentialsInput!) {
     authLogin(input: $input) {
       ...AuthTokenStatus
     }
@@ -35,7 +35,7 @@ export const AuthLoginMutation = gql`
 
 // auth register
 export const AuthRegisterMutation = gql`
-  mutation authRegister($input: UserCreateInput!) {
+  mutation authRegister($input: AuthUserCreateInput!) {
     authRegister(input: $input) {
       ...AuthTokenStatus
     }
@@ -64,9 +64,9 @@ export const AuthLogoutMutation = gql`
 `;
 
 // auth email is not in use
-export const AuthIsEmailAvailableQuery = gql`
-  mutation isEmailAvailable($email: String!) {
-    isEmailAvailable(email: $email) {
+export const AuthVerifyEmailAvailabilityQuery = gql`
+  mutation authVerifyEmailAvailability($input: AuthEmailVerifyAvailabilityInput!) {
+    authVerifyEmailAvailability(input: $input) {
       ...AuthStatus
     }
   }
@@ -75,8 +75,18 @@ export const AuthIsEmailAvailableQuery = gql`
 
 // auth verify user
 export const AuthVerifyUserMutation = gql`
-  mutation authVerifyUser($input: UserVerifyInput!) {
+  mutation authVerifyUser($input: AuthUserVerifyInput!) {
     authVerifyUser(input: $input) {
+      ...AuthStatus
+    }
+  }
+  ${AuthStatusFragment}
+`;
+
+// auth verify current password
+export const AuthVerifyCurrentPasswordQuery = gql`
+  mutation authVerifyCurrentPassword($input: AuthPasswordVerifyInput!) {
+    authVerifyCurrentPassword(input: $input) {
       ...AuthStatus
     }
   }
@@ -85,7 +95,7 @@ export const AuthVerifyUserMutation = gql`
 
 // auth password reset request
 export const AuthPasswordResetRequestMutation = gql`
-  mutation authPasswordResetRequest($input: ChangePasswordRequestInput!) {
+  mutation authPasswordResetRequest($input: AuthPasswordChangeRequestInput!) {
     authPasswordResetRequest(input: $input) {
       ...AuthStatus
     }
@@ -95,7 +105,7 @@ export const AuthPasswordResetRequestMutation = gql`
 
 // auth password reset request verification
 export const AuthVerifyPasswordResetRequestMutation = gql`
-  mutation authVerifyPasswordResetRequest($input: VerifyPasswordResetRequestInput!) {
+  mutation authVerifyPasswordResetRequest($input: AuthPasswordVerifyResetRequestInput!) {
     authVerifyPasswordResetRequest(input: $input) {
       ...AuthStatus
     }
@@ -105,7 +115,7 @@ export const AuthVerifyPasswordResetRequestMutation = gql`
 
 // auth verify user
 export const AuthPasswordResetPerformMutation = gql`
-  mutation authPasswordResetPerform($input: PerformPasswordResetPerformInput!) {
+  mutation authPasswordResetPerform($input: AuthPasswordResetPerformInput!) {
     authPasswordResetPerform(input: $input) {
       ...AuthStatus
     }
