@@ -8,11 +8,13 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AuthService } from '@fullerstack/ngx-auth';
 import { AuthUserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
-import { Subject, first, takeUntil } from 'rxjs';
+
+import { Subject, distinctUntilChanged, first, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-login',
@@ -37,7 +39,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.auth.goTo(this.auth.authUrls.landingUrl);
     } else {
       this.buildForm();
-      this.form.valueChanges.subscribe(() => this.auth.msg.reset());
+      this.form.valueChanges
+        .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+        .subscribe(() => this.auth.msg.reset());
     }
   }
 

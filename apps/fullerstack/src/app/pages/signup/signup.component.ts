@@ -8,12 +8,14 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
-import { Subject, takeUntil } from 'rxjs';
+
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-signup',
@@ -41,7 +43,9 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.auth.goTo(redirectUrl);
     } else {
       this.buildForm();
-      this.form.valueChanges.subscribe(() => this.auth.msg.reset());
+      this.form.valueChanges
+        .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+        .subscribe(() => this.auth.msg.reset());
     }
   }
 

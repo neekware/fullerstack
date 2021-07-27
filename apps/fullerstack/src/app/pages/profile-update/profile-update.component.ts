@@ -8,6 +8,7 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { ApiConstants } from '@fullerstack/agx-dto';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -15,7 +16,8 @@ import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
 import { UserService, UserState } from '@fullerstack/ngx-user';
-import { Observable, Subject, first, takeUntil } from 'rxjs';
+
+import { Observable, Subject, distinctUntilChanged, first, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-user-profile-update',
@@ -41,6 +43,9 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
   ) {
     this.user.msg.reset();
     this.buildForm();
+    this.form.valueChanges
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe(() => this.user.msg.reset());
   }
 
   ngOnInit() {
@@ -96,7 +101,6 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
       .subscribe({
         complete: () => {
           this.isLoading = false;
-          this.form.markAsPristine();
         },
       });
   }
