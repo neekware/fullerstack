@@ -35,6 +35,7 @@ import {
 import { AuthGuardAnonymousGql } from './auth.guard.anonymous';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
+  AuthEmailChangePerformInput,
   AuthEmailChangeRequestInput,
   AuthEmailVerifyAvailabilityInput,
   AuthPasswordChangeInput,
@@ -148,8 +149,20 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
+  async authUserVerify(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: AuthUserVerifyInput
+  ) {
+    const user = await this.security.verifyUser(data.token);
+    if (!user) {
+      throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
+    }
+    return { ok: !!user.id };
+  }
+
+  @Mutation(() => AuthStatusDto)
   async authEmailVerifyAvailability(@Args('input') data: AuthEmailVerifyAvailabilityInput) {
-    const isAvailable = !(await this.auth.isEmailInUse(data.email));
+    const isAvailable = !(await this.security.isEmailInUse(data.email));
     return { ok: isAvailable };
   }
 
@@ -172,7 +185,7 @@ export class AuthResolver {
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: AuthPasswordChangeInput
   ) {
-    const user = await this.security.changePassword(
+    const user = await this.auth.changePassword(
       request.user as User,
       data.oldPassword,
       data.newPassword,
@@ -226,8 +239,8 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: AuthPasswordVerifyResetRequestInput
   ) {
-    const user = await this.security.verifyPasswordResetLink(data.token);
-    if (!user) {
+    const valid = await this.security.verifyPasswordResetLink(data.token);
+    if (!valid) {
       return { ok: false, message: ApiError.Error.Auth.InvalidPasswordResetLink };
     }
 
@@ -240,7 +253,7 @@ export class AuthResolver {
     @RequestDecorator() request: HttpRequest,
     @Args('input') data: AuthPasswordPerformResetInput
   ) {
-    const user = await this.security.performPasswordReset(
+    const user = await this.auth.performPasswordReset(
       data.token,
       data.password,
       data.resetOtherSessions
@@ -275,18 +288,6 @@ export class AuthResolver {
     return { ok: true };
   }
 
-  @Mutation(() => AuthStatusDto)
-  async authUserVerify(
-    @RequestDecorator() request: HttpRequest,
-    @Args('input') data: AuthUserVerifyInput
-  ) {
-    const user = await this.security.verifyUser(data.token);
-    if (!user) {
-      throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
-    }
-    return { ok: !!user.id };
-  }
-
   @UseGuards(AuthGuardGql)
   @Mutation(() => AuthStatusDto)
   async authEmailChangeRequest(
@@ -302,6 +303,7 @@ export class AuthResolver {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
       RegexEmailChangeLink: buildEmailChangeLink(
+        user,
         data.email,
         this.security.siteSecret,
         this.options.siteUrl
@@ -318,6 +320,19 @@ export class AuthResolver {
       subject: emailSubjectBody.subject,
       html: emailSubjectBody.html,
     });
+
+    return { ok: true };
+  }
+
+  @Mutation(() => AuthStatusDto)
+  async authEmailChangePerform(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: AuthEmailChangePerformInput
+  ) {
+    const user = await this.auth.performEmailChange(data.token);
+    if (!user) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidPasswordResetLink };
+    }
 
     return { ok: true };
   }

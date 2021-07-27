@@ -135,6 +135,7 @@
   "CONFIRM.ACCOUNT_PASSWORD": "Account password",
   "CONFIRM.CURRENT_PASSWORD": "Confirm your current password",
   "CONFIRM.NEW_EMAIL": "Please enter your new email below",
+  "ERROR.AUTH.EMAIL_CHANGE_INVALID_LINK": "Invalid or expired email change link",
   "ERROR.AUTH.EMAIL_IN_USE": "Email is in use",
   "ERROR.AUTH.FORBIDDEN": "Access denied to forbidden assets",
   "ERROR.AUTH.INVALID_ACCESS_TOKEN": "Invalid access token",

@@ -134,6 +134,7 @@
 	"CONFIRM.ACCOUNT_PASSWORD": "",
 	"CONFIRM.CURRENT_PASSWORD": "Confirma tu contraseña actual",
 	"CONFIRM.NEW_EMAIL": "Por favor ingrese su nuevo correo electrónico debajo",
+	"ERROR.AUTH.EMAIL_CHANGE_INVALID_LINK": "",
 	"ERROR.AUTH.EMAIL_IN_USE": "",
 	"ERROR.AUTH.FORBIDDEN": "",
 	"ERROR.AUTH.INVALID_ACCESS_TOKEN": "",

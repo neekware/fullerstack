@@ -7,6 +7,7 @@
  */
 
 import { Directive, Field, InputType, ObjectType } from '@nestjs/graphql';
+
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
 import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constant';
@@ -171,4 +172,14 @@ export class AuthEmailChangeRequestInput {
   @Field()
   @IsEmail()
   email: string;
+}
+
+/**
+ * Authentication type (client -> server)
+ */
+@InputType()
+export class AuthEmailChangePerformInput {
+  @Field()
+  @IsNotEmpty()
+  token: string;
 }

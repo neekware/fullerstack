@@ -13,6 +13,7 @@ import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
 
 import { AboutComponent } from './pages/about/about.component';
+import { EmailChangePerformComponent } from './pages/email-change-perform/email-change-perform.component';
 import { EmailChangeRequestComponent } from './pages/email-change-request/email-change-request.component';
 import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -121,6 +122,14 @@ export const AppRoutes: Routes = [
     data: {
       title: _('COMMON.EMAIL.CHANGE_REQUEST'),
       description: _('APP.DESCRIPTION.EMAIL_CHANGE_REQUEST'),
+    },
+  },
+  {
+    path: 'auth/email/change/:token',
+    component: EmailChangePerformComponent,
+    data: {
+      title: _('COMMON.ACCOUNT.EMAIL_CHANGE'),
+      description: _('APP.DESCRIPTION.EMAIL_CHANGE'),
     },
   },
   {

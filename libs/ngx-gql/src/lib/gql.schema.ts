@@ -252,6 +252,29 @@ export interface authEmailChangeRequestVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: authEmailChangePerform
+// ====================================================
+
+export interface authEmailChangePerform_authEmailChangePerform {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authEmailChangePerform {
+  authEmailChangePerform: authEmailChangePerform_authEmailChangePerform;
+}
+
+export interface authEmailChangePerformVariables {
+  input: AuthEmailChangePerformInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: userSelf
 // ====================================================
 
@@ -464,6 +487,10 @@ export enum Role {
   STAFF = "STAFF",
   SUPERUSER = "SUPERUSER",
   USER = "USER",
+}
+
+export interface AuthEmailChangePerformInput {
+  token: string;
 }
 
 export interface AuthEmailChangeRequestInput {

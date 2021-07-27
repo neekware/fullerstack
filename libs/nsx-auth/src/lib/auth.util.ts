@@ -74,7 +74,7 @@ export function decodeURITokenComponent<T>(urlEncodedToken: string, secret: stri
 
 /*
  * Generate a safe URL, to verify a new user
- * @param {userId} user id
+ * @param {user} user object
  * @param {secret} site secret
  * @param {baseUrl} base url of the site
  * @returns valid URL
@@ -86,7 +86,7 @@ export function buildUserVerificationLink(user: User, secret: string, baseUrl: s
 
 /*
  * Generate a safe URL, to request a password reset
- * @param {userId} user id
+ * @param {user} user object
  * @param {secret} site secret
  * @param {baseUrl} base url of the site
  * @returns valid URL
@@ -101,12 +101,18 @@ export function buildPasswordResetLink(user: User, secret: string, baseUrl: stri
 
 /*
  * Generate a safe URL, to request an email change
- * @param {email} user id
+ * @param {user} user object
+ * @param {email} new email
  * @param {secret} site secret
  * @param {baseUrl] base url of the site
  * @returns valid URL
  */
-export function buildEmailChangeLink(email: string, secret: string, baseUrl: string): string {
-  const encodedToken = encodeURITokenComponent({ email }, secret);
+export function buildEmailChangeLink(
+  user: User,
+  newEmail: string,
+  secret: string,
+  baseUrl: string
+): string {
+  const encodedToken = encodeURITokenComponent({ currentEmail: user.email, newEmail }, secret);
   return `${baseUrl}/auth/email/change/${encodedToken}`;
 }

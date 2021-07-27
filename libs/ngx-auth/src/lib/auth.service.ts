@@ -18,6 +18,7 @@ import {
 } from '@fullerstack/ngx-config';
 import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import {
+  AuthEmailChangePerformMutation,
   AuthEmailChangeRequestMutation,
   AuthEmailVerifyAvailabilityQuery,
   AuthPasswordPerformResetMutation,
@@ -31,6 +32,7 @@ import {
   AuthUserVerifyMutation,
 } from '@fullerstack/ngx-gql/operations';
 import {
+  AuthEmailChangePerformInput,
   AuthEmailChangeRequestInput,
   AuthEmailVerifyAvailabilityInput,
   AuthPasswordChangeRequestInput,
@@ -488,6 +490,33 @@ export class AuthService implements OnDestroy {
         catchError((err: GqlErrorsHandler) => {
           if (this.state.isLoggedIn) {
             this.logger.error(`[${this.nameSpace}] Email change request failed ...`, err);
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
+  }
+
+  emailChangePerform$(input: AuthEmailChangePerformInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthEmailChangePerformMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(`[${this.nameSpace}] Email change request verification success ...`);
+          } else {
+            this.logger.error(
+              `[${this.nameSpace}] Email change request verification failed ... ${resp.message}`
+            );
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(
+              `[${this.nameSpace}] Email change request verification failed ...`,
+              err
+            );
           }
 
           return of({ ok: false, message: err.topError?.message });
