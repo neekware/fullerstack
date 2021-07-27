@@ -8,8 +8,19 @@
 
 /* eslint-disable */
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 import { tokenizeFullName } from '@fullerstack/agx-util';
+
+export enum compareType {
+  'sameAs' = 'sameAs', // two values to be the same
+  'otherThan' = 'otherThan', // two values not be the same
+}
 
 @Injectable({ providedIn: 'root' })
 export class ValidationService {
@@ -118,11 +129,63 @@ export class ValidationService {
   };
 
   // Value cannot be non-int (int, +ve/-ve)
-  validateInit = (control: FormControl): ValidationErrors | null => {
+  validateInt = (control: FormControl): ValidationErrors | null => {
     const value = parseInt(control.value);
     if (isNaN(value)) {
       return { invalidNumber: true };
     }
     return null;
+  };
+
+  /**
+   * Compares two values to be the same or different
+   * @param givenValue - Value to compare the control's value with
+   * @param operationType - Type of comparison, sameAs, DifferentThan
+   * @param caseInsensitive
+   * @param errorCode
+   */
+  compareFor = (
+    givenValue: string,
+    caseInsensitive = true,
+    operationType = compareType.sameAs,
+    errorCode = 'inputNotAsExpected'
+  ): ValidatorFn => {
+    return (control: AbstractControl): { [key: string]: any } => {
+      if (control.pristine) {
+        return null;
+      }
+
+      const left = caseInsensitive ? control.value.toLowerCase() : control.value;
+      const right = caseInsensitive ? givenValue.toLowerCase() : givenValue;
+
+      let conditionMet = left === right;
+      if (operationType === compareType.otherThan) {
+        conditionMet = left !== right;
+      }
+
+      if (conditionMet) {
+        return null;
+      }
+
+      return { [errorCode]: true };
+    };
+  };
+
+  // Input must be different than the given value
+  matchOtherThan = (
+    givenValue: any,
+    error = 'inputShouldDiffer',
+    caseInsensitive = true
+  ): ValidatorFn => {
+    return this.compareFor(givenValue, caseInsensitive, compareType.otherThan, error);
+  };
+
+  // Input must be the same as the expected value
+  matchExpected = (
+    givenValue: any,
+    error = 'inputNotAsExpected',
+    caseInsensitive = true
+  ): ValidatorFn => {
+    return this.compareFor(givenValue, caseInsensitive, compareType.sameAs, error);
   };
 }

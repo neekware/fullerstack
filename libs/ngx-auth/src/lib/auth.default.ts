@@ -7,13 +7,15 @@
  */
 
 import { getOperationName } from '@fullerstack/ngx-gql';
-import { AuthLogoutMutation, AuthRefreshTokenMutation } from '@fullerstack/ngx-gql/operations';
+import { AuthTokenRefreshMutation, AuthUserLogoutMutation } from '@fullerstack/ngx-gql/operations';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
 import { DeepReadonly } from 'ts-essentials';
 
 import { AuthConfig, AuthState, AuthUrls } from './auth.model';
+
+export const AsyncValidationDebounceTime = 500;
 
 /**
  * Default configuration - Auth module
@@ -23,14 +25,14 @@ export const DefaultAuthConfig: AuthConfig = {
 };
 
 export const AuthResponseOperationName = 'operationName';
-export const AuthRefreshTokenOperation = getOperationName(AuthRefreshTokenMutation);
-export const AuthLogoutOperation = getOperationName(AuthLogoutMutation);
+export const AuthRefreshTokenOperation = getOperationName(AuthTokenRefreshMutation);
+export const AuthLogoutOperation = getOperationName(AuthUserLogoutMutation);
 
 export const DefaultAuthState: DeepReadonly<AuthState> = {
   userId: null,
   isLoading: false,
   isLoggedIn: false,
-  isRegistering: false,
+  isSigningUp: false,
   isAuthenticating: false,
   logoutRequired: false,
   hasError: false,
@@ -50,9 +52,9 @@ export const AuthMessageMap: MessageMap = {
       code: 'SUCCESS.AUTH.LOGOUT',
       level: LogLevel.info,
     },
-    register: {
-      text: _('SUCCESS.AUTH.REGISTER'),
-      code: 'SUCCESS.AUTH.REGISTER',
+    signup: {
+      text: _('SUCCESS.AUTH.SIGNUP'),
+      code: 'SUCCESS.AUTH.SIGNUP',
       level: LogLevel.info,
     },
     refresh: {
@@ -73,9 +75,9 @@ export const AuthMessageMap: MessageMap = {
       code: 'ERROR.AUTH.LOGOUT',
       level: LogLevel.warn,
     },
-    register: {
-      text: _('ERROR.AUTH.REGISTER'),
-      code: 'ERROR.AUTH.REGISTER',
+    signup: {
+      text: _('ERROR.AUTH.SIGNUP'),
+      code: 'ERROR.AUTH.SIGNUP',
       level: LogLevel.warn,
     },
     refresh: {
@@ -95,7 +97,7 @@ export const AuthMessageMap: MessageMap = {
 
 export const DefaultAuthUrls: DeepReadonly<AuthUrls> = {
   loginUrl: '/auth/login',
-  registerUrl: '/auth/register',
+  signupUrl: '/auth/signup',
   loggedInUrl: '/',
   landingUrl: '/',
 };

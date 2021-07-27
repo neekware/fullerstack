@@ -129,7 +129,7 @@ yarn start:fullerstack
 # Visit frontend (on mac use open, on windows, just type it in)
 open http://localhost:4200
 
-# Register / Login and take the site for a spin
+# Signup / Login and take the site for a spin
 # Note superuser account is set in your .env (refer to AUTH_SUPERUSER_EMAIL, AUTH_SUPERUSER_PASSWORD)
 ```
 
@@ -183,18 +183,18 @@ X.Y.Z Version
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             359        18683         2111         3637        12935
- JSON                   137         4858            0            0         4858
+ TypeScript             357        19298         2176         3660        13462
+ JSON                   137         4886            0            0         4886
  Markdown               102         2468          651            0         1817
- Sass                    54         1445          141           35         1269
- HTML                    32         1068           84            5          979
+ Sass                    53         1450          142           35         1273
+ HTML                    31         1296          103            5         1188
  JavaScript              33          643           24           48          571
  CSS                      1           96            7            0           89
  Plain Text               5           94           10            0           84
- SQL                      2           67           13           13           41
+ SQL                      4           72           13           15           44
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  726        29425         3041         3740        22644
+ Total                  724        30306         3126         3765        23415
 --------------------------------------------------------------------------------
 ```
 

@@ -1,3 +1,13 @@
 button {
   width: fit-content;
 }
+
+.mat-form-field-subscript-wrapper {
+  font-size: 80%;
+}
+
+.mat-error,
+.mat-hint {
+  margin-top: -2px;
+  text-align: end;
+}

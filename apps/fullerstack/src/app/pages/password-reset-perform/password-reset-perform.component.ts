@@ -93,10 +93,7 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
   private buildForm() {
     this.form = this.formBuilder.group(
       {
-        password: [
-          '',
-          [Validators.required, Validators.minLength(this.validation.PASSWORD_MIN_LEN)],
-        ],
+        password: ['', [Validators.required, this.validation.validatePassword]],
         passwordConfirmation: ['', [Validators.required]],
         resetOtherSessions: [false, [Validators.required]],
       },
@@ -115,8 +112,6 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (status) => {
-          this.isLoading = false;
-
           if (status.ok) {
             this.status = { ...status, message: _('INFO.PASSWORD.RENEW_SUCCESS') };
             this.form.disable();
@@ -126,6 +121,9 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
               message: status.message || _('INFO.PASSWORD.PASSWORD_RENEW'),
             };
           }
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

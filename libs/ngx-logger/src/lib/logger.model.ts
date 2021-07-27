@@ -25,6 +25,7 @@ export enum LogLevel {
   error,
   warn,
   info,
+  success,
   debug,
   trace,
   none,
@@ -39,6 +40,7 @@ export const LogNames: DeepReadonly<string[]> = [
   'ERROR',
   'WARN',
   'INFO',
+  'SUCCESS',
   'DEBUG',
   'TRACE',
 ];
@@ -52,6 +54,7 @@ export const LogColors: DeepReadonly<string[]> = [
   'OrangeRed ',
   'orange',
   'teal',
+  'green',
   'SlateGrey',
   'LightBlue',
 ];

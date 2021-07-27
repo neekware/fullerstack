@@ -32,8 +32,8 @@ export interface LocalConfig {
   multiTab?: boolean;
   // url to login page for user authentication (for anonymous users only)
   loginPageUrl?: string;
-  // url to sign-up page for user to register (for anonymous users only)
-  registerPageUrl?: string;
+  // url to sign-up page for user to signup (for anonymous users only)
+  signupPageUrl?: string;
   // url to landing page for authenticated users only
   loggedInLandingPageUrl?: string;
   // url to the page where users are redirected to after log-out

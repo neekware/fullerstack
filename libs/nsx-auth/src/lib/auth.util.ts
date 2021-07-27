@@ -11,6 +11,7 @@ import { tryGet } from '@fullerstack/agx-util';
 import { Base64, HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { User } from '@prisma/client';
 import * as jwt from 'jsonwebtoken';
 
 export function convertExecutionContextToGqlContext(context: ExecutionContext) {
@@ -51,6 +52,7 @@ export function getLocalesFromContext(context: ExecutionContext): string[] {
   return langs;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function encodeURITokenComponent(payload: any, secret: string, expiry = '1d'): string {
   const singedToken = jwt.sign(payload, secret, { expiresIn: expiry });
   const b64Encoded = Base64.encode(singedToken);
@@ -70,24 +72,45 @@ export function decodeURITokenComponent<T>(urlEncodedToken: string, secret: stri
 
 /*
  * Generate a safe URL, to verify a new user
- * @param userId user id
- * @param salt site secret
- * @param baseUrl base url of the site
+ * @param {user} user object
+ * @param {secret} site secret
+ * @param {baseUrl} base url of the site
  * @returns valid URL
  */
-export function buildUserVerificationLink(userId: string, secret: string, baseUrl: string): string {
-  const encodedToken = encodeURITokenComponent({ userId }, secret);
+export function buildUserVerificationLink(user: User, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent({ userId: user.id }, secret);
   return `${baseUrl}/auth/user/verify/${encodedToken}`;
 }
 
 /*
  * Generate a safe URL, to request a password reset
- * @param userId user id
- * @param salt site secret
- * @param baseUrl base url of the site
+ * @param {user} user object
+ * @param {secret} site secret
+ * @param {baseUrl} base url of the site
  * @returns valid URL
  */
-export function buildPasswordResetLink(userId: string, secret: string, baseUrl: string): string {
-  const encodedToken = encodeURITokenComponent({ userId }, secret);
+export function buildPasswordResetLink(user: User, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent(
+    { userId: user.id, lastLoginAt: user.lastLoginAt },
+    secret
+  );
   return `${baseUrl}/auth/password/reset/${encodedToken}`;
+}
+
+/*
+ * Generate a safe URL, to request an email change
+ * @param {user} user object
+ * @param {email} new email
+ * @param {secret} site secret
+ * @param {baseUrl] base url of the site
+ * @returns valid URL
+ */
+export function buildEmailChangeLink(
+  user: User,
+  newEmail: string,
+  secret: string,
+  baseUrl: string
+): string {
+  const encodedToken = encodeURITokenComponent({ currentEmail: user.email, newEmail }, secret);
+  return `${baseUrl}/auth/email/change/${encodedToken}`;
 }

@@ -32,19 +32,27 @@ import {
 import { AuthGuardAnonymousGql } from './auth.guard.anonymous';
 import { AuthGuardGql } from './auth.guard.gql';
 import {
+  AuthEmailChangePerformInput,
+  AuthEmailChangeRequestInput,
+  AuthEmailVerifyAvailabilityInput,
+  AuthPasswordChangeInput,
+  AuthPasswordChangeRequestInput,
+  AuthPasswordPerformResetInput,
+  AuthPasswordVerifyInput,
+  AuthPasswordVerifyResetRequestInput,
   AuthStatusDto,
   AuthTokenDto,
-  ChangePasswordInput,
-  ChangePasswordRequestInput,
-  PerformPasswordResetPerformInput,
-  UserCreateInput,
-  UserCredentialsInput,
-  UserVerifyInput,
-  VerifyPasswordResetRequestInput,
+  AuthUserCredentialsInput,
+  AuthUserSignupInput,
+  AuthUserVerifyInput,
 } from './auth.model';
 import { SecurityService } from './auth.security.service';
 import { AuthService } from './auth.service';
-import { buildPasswordResetLink, buildUserVerificationLink } from './auth.util';
+import {
+  buildEmailChangeLink,
+  buildPasswordResetLink,
+  buildUserVerificationLink,
+} from './auth.util';
 
 @Resolver(() => AuthTokenDto)
 export class AuthResolver {
@@ -61,11 +69,11 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthTokenDto)
-  async authRegister(
+  async authUserSignup(
     @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: UserCreateInput
+    @Args('input') data: AuthUserSignupInput
   ) {
     const user = await this.auth.createUser(data);
     const token = this.security.issueToken(user, request, response);
@@ -75,7 +83,7 @@ export class AuthResolver {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
       RegexVerifyLink: buildUserVerificationLink(
-        user.id,
+        user,
         this.security.siteSecret,
         this.options.siteUrl
       ),
@@ -96,10 +104,10 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthTokenDto)
-  async authLogin(
+  async authUserLogin(
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: UserCredentialsInput
+    @Args('input') data: AuthUserCredentialsInput
   ) {
     const user = await this.auth.authenticateUser(data);
     const token = this.security.issueToken(user, request, response);
@@ -107,7 +115,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthTokenDto)
-  async authRefreshToken(
+  async authTokenRefresh(
     @CookiesDecorator() cookies: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse
@@ -132,34 +140,38 @@ export class AuthResolver {
 
   @UseGuards(AuthGuardAnonymousGql)
   @Mutation(() => AuthStatusDto)
-  async authLogout(@ResponseDecorator() response: HttpResponse) {
+  async authUserLogout(@ResponseDecorator() response: HttpResponse) {
     this.security.clearHttpCookie(response);
     return { ok: true };
   }
 
   @Mutation(() => AuthStatusDto)
-  async isEmailAvailable(@Args('email', { type: () => String }) email: string) {
-    const isAvailable = !(await this.auth.isEmailInUse(email));
+  async authUserVerify(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: AuthUserVerifyInput
+  ) {
+    const user = await this.security.verifyUser(data.token);
+    if (!user) {
+      throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
+    }
+    return { ok: !!user.id };
+  }
+
+  @Mutation(() => AuthStatusDto)
+  async authEmailVerifyAvailability(@Args('input') data: AuthEmailVerifyAvailabilityInput) {
+    const isAvailable = !(await this.security.isEmailInUse(data.email));
     return { ok: isAvailable };
   }
 
   @UseGuards(AuthGuardGql)
-  @Mutation(() => AuthTokenDto)
-  async authChangePassword(
-    @CookiesDecorator() cookies: string[],
+  @Mutation(() => AuthStatusDto)
+  async authPasswordVerify(
     @RequestDecorator() request: HttpRequest,
-    @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: ChangePasswordInput
+    @Args('input') data: AuthPasswordVerifyInput
   ) {
-    const user = await this.security.changePassword(
-      request.user as User,
-      data.oldPassword,
-      data.newPassword,
-      data.resetOtherSessions
-    );
-
-    const token = this.security.issueToken(user, request, response);
-    return { ok: true, token };
+    const user = await this.security.validateUser(request.user.id);
+    const isValid = this.security.validatePassword(data.password, user.password);
+    return { ok: isValid };
   }
 
   @Mutation(() => AuthStatusDto)
@@ -167,7 +179,7 @@ export class AuthResolver {
     @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
     @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: ChangePasswordRequestInput
+    @Args('input') data: AuthPasswordChangeRequestInput
   ) {
     const user = await this.security.validateUserByEmail(data.email);
     if (!user) {
@@ -180,7 +192,7 @@ export class AuthResolver {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
       RegexPasswordResetLink: buildPasswordResetLink(
-        user.id,
+        user,
         this.security.siteSecret,
         this.options.siteUrl
       ),
@@ -201,35 +213,148 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthStatusDto)
-  async authVerifyPasswordResetRequest(
+  async authPasswordVerifyResetRequest(
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: VerifyPasswordResetRequestInput
+    @Args('input') data: AuthPasswordVerifyResetRequestInput
   ) {
-    const payload = this.security.validateURIToken(data.token);
-    if (!payload) {
+    const valid = await this.security.verifyPasswordResetLink(data.token);
+    if (!valid) {
       return { ok: false, message: ApiError.Error.Auth.InvalidPasswordResetLink };
     }
+
     return { ok: true };
   }
 
   @Mutation(() => AuthStatusDto)
-  async authPasswordResetPerform(
+  async authPasswordPerformReset(
+    @LocaleDecorator() language: string[],
     @RequestDecorator() request: HttpRequest,
-    @Args('input') data: PerformPasswordResetPerformInput
+    @Args('input') data: AuthPasswordPerformResetInput
   ) {
-    await this.security.performPasswordReset(data.token, data.password, data.resetOtherSessions);
-    return { ok: true };
-  }
+    const user = await this.auth.performPasswordReset(
+      data.token,
+      data.password,
+      data.resetOtherSessions
+    );
 
-  @Mutation(() => AuthStatusDto)
-  async authVerifyUser(
-    @RequestDecorator() request: HttpRequest,
-    @Args('input') data: UserVerifyInput
-  ) {
-    const user = await this.security.verifyUser(data.token);
     if (!user) {
-      throw new UnauthorizedException(ApiError.Error.Auth.FailedToVerifyUser);
+      return { ok: false, message: ApiError.Error.Auth.InvalidOrInactiveUser };
     }
-    return { ok: !!user.id };
+
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject(
+      'password-reset-confirmation',
+      locale,
+      emailContext
+    );
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
+
+    return { ok: true };
+  }
+
+  @UseGuards(AuthGuardGql)
+  @Mutation(() => AuthStatusDto)
+  async authPasswordChange(
+    @LocaleDecorator() language: string[],
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: AuthPasswordChangeInput
+  ) {
+    const user = await this.auth.changePassword(
+      request.user as User,
+      data.oldPassword,
+      data.newPassword,
+      data.resetOtherSessions
+    );
+
+    if (!user) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidOrInactiveUser };
+    }
+
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject(
+      'password-reset-confirmation',
+      locale,
+      emailContext
+    );
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
+
+    return { ok: true };
+  }
+
+  @UseGuards(AuthGuardGql)
+  @Mutation(() => AuthStatusDto)
+  async authEmailChangeRequest(
+    @LocaleDecorator() language: string[],
+    @RequestDecorator() request: HttpRequest,
+    @ResponseDecorator() response: HttpResponse,
+    @Args('input') data: AuthEmailChangeRequestInput
+  ) {
+    const user = request.user;
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexEmailChangeLink: buildEmailChangeLink(
+        user,
+        data.email,
+        this.security.siteSecret,
+        this.options.siteUrl
+      ),
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject('email-change-request', locale, emailContext);
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
+
+    return { ok: true };
+  }
+
+  @Mutation(() => AuthStatusDto)
+  async authEmailChangePerform(
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: AuthEmailChangePerformInput
+  ) {
+    const user = await this.auth.performEmailChange(data.token);
+    if (!user) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidEmailChangeLink };
+    }
+
+    return { ok: true };
   }
 }

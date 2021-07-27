@@ -41,7 +41,7 @@ export class UserService {
     return this.prisma.user.findUnique({ where: userWhereUniqueInput });
   }
 
-  // async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  // async createUser(data: Prisma.AuthUserSignupInput): Promise<User> {
   //   return this.prisma.user.create({
   //     data,
   //   });
