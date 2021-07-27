@@ -153,6 +153,6 @@ export class AuthService {
       }
     }
 
-    throw new BadRequestException(ApiError.Error.Auth.InvalidVerificationLink);
+    throw new BadRequestException(ApiError.Error.Auth.InvalidEmailChangeLink);
   }
 }

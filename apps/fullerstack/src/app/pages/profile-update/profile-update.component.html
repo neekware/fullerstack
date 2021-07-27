@@ -12,5 +12,21 @@
     [progress]="user.state.isLoading"
   >
     <fullerstack-user-profile-form (form$)="formSet($event)"></fullerstack-user-profile-form>
+
+    <mat-divider class="mt1"></mat-divider>
+
+    <div class="mt2" fxLayout="row">
+      <span>
+        [
+        <a routerLink="/auth/email/change/request" class="no-underline"> {{ 'COMMON.EMAIL_CHANGE' | translate }} </a>
+        ]
+      </span>
+      <div fxFlex></div>
+      <span>
+        [
+        <a routerLink="/" class="no-underline"> {{ 'COMMON.HOME' | translate }} </a>
+        ]
+      </span>
+    </div>
   </fullerstack-card>
 </div>

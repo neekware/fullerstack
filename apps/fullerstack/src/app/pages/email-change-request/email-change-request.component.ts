@@ -24,7 +24,7 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
 export class EmailChangeRequestComponent implements OnInit, OnDestroy {
   form: FormGroup;
   private destroy$ = new Subject<boolean>();
-  title = _('COMMON.SETTINGS');
+  title = _('COMMON.EMAIL');
   subtitle = _('COMMON.EMAIL.CHANGE_REQUEST');
   icon = 'email-sync';
   isLoading = false;

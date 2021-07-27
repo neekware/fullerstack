@@ -331,7 +331,7 @@ export class AuthResolver {
   ) {
     const user = await this.auth.performEmailChange(data.token);
     if (!user) {
-      return { ok: false, message: ApiError.Error.Auth.InvalidPasswordResetLink };
+      return { ok: false, message: ApiError.Error.Auth.InvalidEmailChangeLink };
     }
 
     return { ok: true };

@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { UserService } from '@fullerstack/ngx-user';
 import { ValidationService } from '@fullerstack/ngx-util';
 
 import { Subject, filter, first, map, switchMap, takeUntil } from 'rxjs';
@@ -22,8 +23,8 @@ import { Subject, filter, first, map, switchMap, takeUntil } from 'rxjs';
 })
 export class EmailChangePerformComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
-  title = _('COMMON.CHANGE');
-  subtitle = _('COMMON.ACCOUNT.EMAIL');
+  title = _('COMMON.EMAIL');
+  subtitle = _('COMMON.ACCOUNT.EMAIL_CHANGE');
   icon = 'email';
   isLoading = false;
   status = { ok: true, message: '' };
@@ -31,7 +32,8 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
   constructor(
     readonly route: ActivatedRoute,
     readonly validation: ValidationService,
-    readonly auth: AuthService
+    readonly auth: AuthService,
+    readonly user: UserService
   ) {}
 
   ngOnInit() {
@@ -49,22 +51,28 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (resp) => {
           this.isLoading = false;
-          if (!resp.ok) {
+          if (resp.ok) {
+            this.icon = 'email-check';
+            this.status = {
+              ok: true,
+              message: resp.message || _('INFO.EMAIL.CHANGE_SUCCESS'),
+            };
+          } else {
             // handle known errors
-            this.icon = 'account-alert-outline';
+            this.icon = 'email-remove';
             this.status = {
               ok: false,
-              message: resp.message || _('WARN.USER.VERIFICATION_FAILURE'),
+              message: resp.message || _('ERROR.AUTH.EMAIL_CHANGE_INVALID_LINK'),
             };
           }
         },
         error: (err) => {
           // handler server errors
-          this.icon = 'account-alert-outline';
+          this.icon = 'email-remove';
           this.isLoading = false;
           this.status = {
             ok: false,
-            message: err.error?.message || _('WARN.USER.VERIFICATION_FAILURE'),
+            message: err.error?.message || _('ERROR.AUTH.EMAIL_CHANGE_INVALID_LINK'),
           };
         },
       });
