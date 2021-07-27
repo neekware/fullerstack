@@ -8,12 +8,10 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { UserService, UserState } from '@fullerstack/ngx-user';
 import { ValidationService } from '@fullerstack/ngx-util';
-
 import { Subject, debounceTime, takeUntil } from 'rxjs';
 
 @Component({

@@ -15,7 +15,6 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-
 import { tokenizeFullName } from '@fullerstack/agx-util';
 
 export enum compareType {
