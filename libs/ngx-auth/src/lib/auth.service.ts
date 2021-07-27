@@ -152,6 +152,7 @@ export class AuthService implements OnDestroy {
    * Initialize Auth state:slice
    */
   private initState() {
+    this.nextUrl = '';
     this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_INITIALIZE);
   }
 
