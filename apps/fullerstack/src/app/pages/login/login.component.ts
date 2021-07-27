@@ -29,7 +29,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     readonly formBuilder: FormBuilder,
     readonly validation: ValidationService,
     readonly auth: AuthService
-  ) {}
+  ) {
+    this.auth.msg.reset();
+  }
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
