@@ -8,7 +8,7 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { PasswordResetPerformComponent } from './password-reset-perform.component';
+import { PasswordResetPerformComponent } from '../password-reset-perform/password-reset-perform.component';
 
 xdescribe('PasswordResetPerformComponent', () => {
   let component: PasswordResetPerformComponent;
