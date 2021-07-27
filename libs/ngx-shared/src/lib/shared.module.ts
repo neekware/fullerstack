@@ -9,7 +9,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { I18nModule } from '@fullerstack/ngx-i18n';
 import { MaterialModule } from '@fullerstack/ngx-material';
 
@@ -17,21 +16,19 @@ import { AlertComponent } from './component/alert';
 import { BlobComponent } from './component/blob/blob.component';
 import { CardComponent } from './component/card/card.component';
 import { ConfirmationDialogComponent } from './component/confirm/confirm.component';
-import { HintComponent } from './component/hint/hint.component';
 import { LoginFormComponent } from './component/login/login-form.component';
 import { RippleComponent } from './component/ripple/ripple.component';
 import { SignupFormComponent } from './component/signup/signup-form.component';
+import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
 import { AutocompleteDirective } from './directive/autocomplete/autocomplete.directive';
 import { DebounceClickDirective } from './directive/debounce-click/debounce-click.directive';
 import { FormErrorDirective } from './directive/form-error/form-error-directive';
 import { InputFocusDirective } from './directive/input-focus/input-focus.directive';
 import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
-import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule, I18nModule],
   declarations: [
-    HintComponent,
     AlertComponent,
     CardComponent,
     BlobComponent,
@@ -47,7 +44,6 @@ import { UserProfileFormComponent } from './component/user/profile/profile-form.
     InputFocusDirective,
   ],
   exports: [
-    HintComponent,
     AlertComponent,
     CardComponent,
     BlobComponent,

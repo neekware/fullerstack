@@ -10,9 +10,6 @@ export * from './lib/animation/animation.shake';
 export * from './lib/component/alert/alert.component';
 export * from './lib/component/card/card.component';
 export * from './lib/component/confirm/confirm.component';
-export * from './lib/component/hint/hint.model';
-export * from './lib/component/hint/hint.util';
-export * from './lib/component/hint/hint.component';
 
 export * from './lib/component/ripple/ripple.component';
 
