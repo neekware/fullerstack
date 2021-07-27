@@ -36,6 +36,10 @@
         <mat-icon svgIcon="{{ navbarLinks.profile.icon }}"></mat-icon>
         {{ navbarLinks.profile.title | translate }}
       </a>
+      <a [routerLink]="navbarLinks.email.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.email.icon }}"></mat-icon>
+        {{ navbarLinks.email.title | translate }}
+      </a>
       <a [routerLink]="navbarLinks.settings.path" mat-menu-item>
         <mat-icon svgIcon="{{ navbarLinks.settings.icon }}"></mat-icon>
         {{ navbarLinks.settings.title | translate }}

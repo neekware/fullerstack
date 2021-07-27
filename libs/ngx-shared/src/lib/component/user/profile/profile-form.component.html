@@ -26,7 +26,7 @@
   </mat-form-field>
 
   <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
-    <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
+    <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine">
       {{ 'COMMON.UPDATE' | translate }}
     </button>
     <div *ngIf="user?.state.hasError && !formTouched" class="form-status" fxLayout="row" fxLayoutGap="10px">

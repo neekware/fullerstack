@@ -11,20 +11,38 @@
     [icon]="icon"
     [progress]="isLoading"
   >
+    <fullerstack-blob class="mt1" text="{{ 'CONFIRM.NEW_EMAIL' | translate }}." icon="information-outline" iconColor="green">
+    </fullerstack-blob>
+
     <form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="off">
       <mat-form-field>
         <mat-icon matSuffix svgIcon="email"></mat-icon>
-        <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
+        <input matInput formControlName="currentEmail" placeholder="{{ 'COMMON.CURRENT_EMAIL' | translate }}" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="email-sync"></mat-icon>
+        <input matInput #emailInput formControlName="email" placeholder="{{ 'COMMON.NEW_EMAIL' | translate }}" />
         <fullerstack-hint
           [control]="form?.controls?.email"
           [isTouched]="form?.controls?.email?.touched"
-          hint="{{CONFIRM.ACCOUNT_EMAIL' | translate }}"
+          hint="{{ 'CONFIRM.ACCOUNT_EMAIL' | translate }}"
+        ></fullerstack-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="key"></mat-icon>
+        <input matInput type="password" formControlName="password" placeholder="{{ 'CONFIRM.ACCOUNT_PASSWORD' | translate }}" />
+        <fullerstack-hint
+          [control]="form?.controls?.password"
+          [isTouched]="form?.controls?.password?.touched"
+          hint="{{ 'CONFIRM.CURRENT_PASSWORD' | translate }}"
         ></fullerstack-hint>
       </mat-form-field>
 
       <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
-        <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine" class="button-30p">
-          {{ 'COMMON.PASSWORD.RESET_REQUEST' | translate }}
+        <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine" class="button-30p">
+          {{ 'COMMON.EMAIL_CHANGE' | translate }}
         </button>
         <div *ngIf="!status.ok" class="form-status" fxLayout="row" fxLayoutGap="10px">
           <mat-icon color="warn" svgIcon="alert"></mat-icon>
@@ -33,29 +51,13 @@
       </div>
 
       <fullerstack-blob
-        *ngIf="this.form.disabled"
+        *ngIf="form?.disabled"
         class="mt1"
-        text="{{ 'INFO.PASSWORD.RESET_SUCCESS' | translate }}."
+        text="{{ 'INFO.NEW_EMAIL_REQUEST_SENT' | translate }}."
         icon="check-circle-outline"
         iconColor="green"
       >
       </fullerstack-blob>
     </form>
-
-    <mat-divider class="mt1"></mat-divider>
-
-    <div class="mt2" fxLayout="row">
-      <span>
-        [
-        <a routerLink="/auth/login" class="no-underline"> {{ 'COMMON.LOGIN' | translate }} </a>
-        ]
-      </span>
-      <div fxFlex></div>
-      <span>
-        [
-        <a routerLink="/auth/signup" class="no-underline"> {{ 'COMMON.SIGNUP' | translate }} </a>
-        ]
-      </span>
-    </div>
   </fullerstack-card>
 </div>

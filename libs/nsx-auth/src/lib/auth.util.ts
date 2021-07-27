@@ -9,9 +9,12 @@
 import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { Base64, HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
+
 import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+
 import { User } from '@prisma/client';
+
 import * as jwt from 'jsonwebtoken';
 
 export function convertExecutionContextToGqlContext(context: ExecutionContext) {
@@ -103,7 +106,7 @@ export function buildPasswordResetLink(user: User, secret: string, baseUrl: stri
  * @param {baseUrl] base url of the site
  * @returns valid URL
  */
-export function buildEmailChangeLink(user: User, secret: string, baseUrl: string): string {
-  const encodedToken = encodeURITokenComponent({ email: user.email }, secret);
-  return `${baseUrl}/auth/password/reset/${encodedToken}`;
+export function buildEmailChangeLink(email: string, secret: string, baseUrl: string): string {
+  const encodedToken = encodeURITokenComponent({ email }, secret);
+  return `${baseUrl}/auth/email/change/${encodedToken}`;
 }

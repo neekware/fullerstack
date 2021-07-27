@@ -122,3 +122,13 @@ export const AuthPasswordPerformResetMutation = gql`
   }
   ${AuthStatusFragment}
 `;
+
+// auth email change request
+export const AuthEmailChangeRequestMutation = gql`
+  mutation authEmailChangeRequest($input: AuthEmailChangeRequestInput!) {
+    authEmailChangeRequest(input: $input) {
+      ...AuthStatus
+    }
+  }
+  ${AuthStatusFragment}
+`;

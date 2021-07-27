@@ -9,6 +9,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { JwtDto } from '@fullerstack/agx-dto';
 import {
   ApplicationConfig,
@@ -17,6 +18,7 @@ import {
 } from '@fullerstack/ngx-config';
 import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import {
+  AuthEmailChangeRequestMutation,
   AuthEmailVerifyAvailabilityQuery,
   AuthPasswordPerformResetMutation,
   AuthPasswordResetRequestMutation,
@@ -29,6 +31,7 @@ import {
   AuthUserVerifyMutation,
 } from '@fullerstack/ngx-gql/operations';
 import {
+  AuthEmailChangeRequestInput,
   AuthEmailVerifyAvailabilityInput,
   AuthPasswordChangeRequestInput,
   AuthPasswordPerformResetInput,
@@ -45,9 +48,12 @@ import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
+
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
+
 import { Observable, Subject, of, timer } from 'rxjs';
 import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import {
@@ -154,6 +160,12 @@ export class AuthService implements OnDestroy {
         this.state = { ...DefaultAuthState, ...newState };
         this.handleRedirect(prevState);
       },
+    });
+  }
+
+  goTo(url: string) {
+    setTimeout(() => {
+      this.router.navigate([url || '/']);
     });
   }
 
@@ -327,7 +339,7 @@ export class AuthService implements OnDestroy {
     this.logger.debug(`[${this.nameSpace}] Logout request sent ...`);
     this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_LOGIN_REQ_SENT);
 
-    return this.gql.client
+    this.gql.client
       .request<AuthStatus>(AuthUserLogoutMutation)
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
@@ -447,7 +459,7 @@ export class AuthService implements OnDestroy {
       ) as Observable<AuthStatus>;
   }
 
-  verifyCurrentPassword(input: AuthPasswordVerifyInput): Observable<boolean> {
+  verifyUserPassword$(input: AuthPasswordVerifyInput): Observable<boolean> {
     return this.gql.client
       .request<AuthStatus>(AuthPasswordVerifyQuery, { input })
       .pipe(
@@ -459,18 +471,31 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  validateCurrentPassword(debounce = AsyncValidationDebounceTime): AsyncValidatorFn {
-    return (
-      control: AbstractControl
-    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-      return timer(debounce).pipe(
-        switchMap(() => this.verifyCurrentPassword(control.value)),
-        map((valid) => (valid ? null : { incorrectPassword: true }))
-      );
-    };
+  emailChangeRequest$(input: AuthEmailChangeRequestInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthEmailChangeRequestMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(`[${this.nameSpace}] Email change request success ...`);
+          } else {
+            this.logger.error(
+              `[${this.nameSpace}] Email change request failed ... ${resp.message}`
+            );
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(`[${this.nameSpace}] Email change request failed ...`, err);
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
   }
 
-  verifyEmailAvailability(input: AuthEmailVerifyAvailabilityInput): Observable<boolean> {
+  verifyEmailAvailability$(input: AuthEmailVerifyAvailabilityInput): Observable<boolean> {
     return this.gql.client
       .request<AuthStatus>(AuthEmailVerifyAvailabilityQuery, { input })
       .pipe(
@@ -482,12 +507,23 @@ export class AuthService implements OnDestroy {
       );
   }
 
+  validateUserPassword(debounce = AsyncValidationDebounceTime): AsyncValidatorFn {
+    return (
+      control: AbstractControl
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      return timer(debounce).pipe(
+        switchMap(() => this.verifyUserPassword$({ password: control.value })),
+        map((valid) => (valid ? null : { incorrectPassword: true }))
+      );
+    };
+  }
+
   validateEmailAvailability(debounce = AsyncValidationDebounceTime): AsyncValidatorFn {
     return (
       control: AbstractControl
     ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       return timer(debounce).pipe(
-        switchMap(() => this.verifyEmailAvailability(control.value)),
+        switchMap(() => this.verifyEmailAvailability$({ email: control.value })),
         map((available) => (available ? null : { emailInUse: true }))
       );
     };
@@ -498,16 +534,10 @@ export class AuthService implements OnDestroy {
       control: AbstractControl
     ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       return timer(debounce).pipe(
-        switchMap(() => this.verifyEmailAvailability(control.value)),
+        switchMap(() => this.verifyEmailAvailability$({ email: control.value })),
         map((available) => (available ? { emailNotFound: true } : null))
       );
     };
-  }
-
-  goTo(url: string) {
-    setTimeout(() => {
-      this.router.navigate([url || '/']);
-    });
   }
 
   ngOnDestroy() {

@@ -225,7 +225,7 @@
   "VALIDATION.INVALID_FULL_NAME": "Full name must include name and surname",
   "VALIDATION.INVALID_INPUT": "Invalid input",
   "VALIDATION.INVALID_NUMBER": "Invalid number",
-  "VALIDATION.INVALID_PASSWORD": "Invalid password. Minimum of 6 characters and must contain a number",
+  "VALIDATION.INVALID_PASSWORD": "Invalid password. At least 6 characters and contain a number",
   "VALIDATION.INVALID_PASSWORD_CONFIRMATION": "Both passwords must be the same",
   "VALIDATION.MAXIMUM_LENGTH": "Maximum length is {{__value__}}",
   "VALIDATION.MINIMUM_LENGTH": "Minimum length is {{__value__}}",

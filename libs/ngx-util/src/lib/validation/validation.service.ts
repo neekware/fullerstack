@@ -15,6 +15,7 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
+
 import { tokenizeFullName } from '@fullerstack/agx-util';
 
 export enum compareType {
@@ -144,12 +145,12 @@ export class ValidationService {
    * @param caseInsensitive
    * @param errorCode
    */
-  compareFor(
+  compareFor = (
     givenValue: string,
     caseInsensitive = true,
     operationType = compareType.sameAs,
     errorCode = 'inputNotAsExpected'
-  ): ValidatorFn {
+  ): ValidationErrors | null => {
     return (control: AbstractControl): { [key: string]: any } => {
       if (control.pristine) {
         return null;
@@ -169,23 +170,23 @@ export class ValidationService {
 
       return { [errorCode]: true };
     };
-  }
+  };
 
   // Input must be different than the given value
-  matchOtherThan(
+  matchOtherThan = (
     givenValue: any,
     caseInsensitive = true,
     error = 'inputShouldDiffer'
-  ): ValidatorFn {
+  ): ValidationErrors | null => {
     return this.compareFor(givenValue, caseInsensitive, compareType.otherThan, error);
-  }
+  };
 
   // Input must be the same as the expected value
-  matchExpected(
+  matchExpected = (
     givenValue: any,
     caseInsensitive = true,
     error = 'inputNotAsExpected'
-  ): ValidatorFn {
+  ): ValidationErrors | null => {
     return this.compareFor(givenValue, caseInsensitive, compareType.sameAs, error);
-  }
+  };
 }

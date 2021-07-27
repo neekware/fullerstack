@@ -8,10 +8,12 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { UserService, UserState } from '@fullerstack/ngx-user';
 import { ValidationService } from '@fullerstack/ngx-util';
+
 import { Subject, debounceTime, takeUntil } from 'rxjs';
 
 @Component({
@@ -24,7 +26,7 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.SETTINGS');
   subtitle = _('COMMON.EMAIL.CHANGE_REQUEST');
-  icon = 'lock-open-outline';
+  icon = 'email-sync';
   isLoading = false;
   status = { ok: true, message: '' };
 
@@ -36,6 +38,7 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.buildForm();
     this.user.stateSub$.pipe(debounceTime(200), takeUntil(this.destroy$)).subscribe({
       next: (state) => {
         this.buildForm(state);
@@ -43,28 +46,31 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
     });
   }
 
-  private buildForm(state: UserState) {
+  private buildForm(state?: UserState) {
     const caseInsensitiveEmail = true;
     const errorKey = 'emailInUse';
 
     this.form = this.formBuilder.group({
-      password: ['', [Validators.required], [this.auth.validateCurrentPassword]],
+      currentEmail: [{ value: state?.email || '', disabled: true }],
       email: [
-        state.email || '',
+        '',
         [
           Validators.required,
           this.validation.validateEmail,
-          this.validation.matchOtherThan(state.email, caseInsensitiveEmail, errorKey),
+          this.validation.matchOtherThan(state?.email, caseInsensitiveEmail, errorKey),
         ],
-        [this.auth.validateEmailExistence()],
+        [this.auth.validateEmailAvailability()],
       ],
+      password: ['', [Validators.required], [this.auth.validateUserPassword()]],
     });
   }
 
   submit() {
     this.isLoading = true;
+    const { email } = this.form.value;
+
     this.auth
-      .passwordResetRequest$(this.form.value)
+      .emailChangeRequest$({ email })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (status) => {
@@ -76,7 +82,7 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
           } else {
             this.status = {
               ...status,
-              message: status.message || _('INFO.PASSWORD.RESET_SUCCESS'),
+              message: status.message || _('ERROR.USER.EMAIL_CHANGE_REQUEST'),
             };
           }
         },

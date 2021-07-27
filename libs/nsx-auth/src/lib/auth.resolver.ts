@@ -16,10 +16,13 @@ import {
 } from '@fullerstack/nsx-common';
 import { I18nService } from '@fullerstack/nsx-i18n';
 import { MailerService } from '@fullerstack/nsx-mailer';
+
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+
 import { User } from '@prisma/client';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
@@ -292,18 +295,14 @@ export class AuthResolver {
     @ResponseDecorator() response: HttpResponse,
     @Args('input') data: AuthEmailChangeRequestInput
   ) {
-    const user = await this.security.validateUserByEmail(data.email);
-    if (!user) {
-      return { ok: false, message: ApiError.Error.Auth.InvalidOrInactiveUser };
-    }
-
+    const user = request.user;
     const locale = user.language || this.i18n.getPreferredLocale(language);
 
     const emailContext: RenderContext = {
       RegexName: `${user.firstName} ${user.lastName}`,
       RegexSiteUrl: this.options.siteUrl,
       RegexEmailChangeLink: buildEmailChangeLink(
-        user,
+        data.email,
         this.security.siteSecret,
         this.options.siteUrl
       ),

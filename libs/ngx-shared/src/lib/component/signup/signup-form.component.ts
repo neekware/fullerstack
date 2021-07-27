@@ -18,11 +18,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { tokenizeFullName } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { AuthUserSignupInput } from '@fullerstack/ngx-gql/schema';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
+
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 

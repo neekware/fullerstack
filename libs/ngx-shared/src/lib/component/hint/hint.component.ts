@@ -17,8 +17,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+
 import { tryGet } from '@fullerstack/agx-util';
 import { I18nService } from '@fullerstack/ngx-i18n';
+
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first, takeUntil } from 'rxjs/operators';
 
@@ -93,12 +95,12 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       if ((hasError && this._touched) || !this.control.pristine) {
         this.processFeedback(error, this.control.errors[error]);
         this.hasError$.next(!!this.error);
-        this.hasHint$.next(!this.hint && !this.error);
+        this.hasHint$.next(this.hint && !this.error);
         return;
       }
     }
     this.hasError$.next(false);
-    this.hasHint$.next(!this.hint);
+    this.hasHint$.next(!!this.hint);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
