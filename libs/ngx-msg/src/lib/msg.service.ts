@@ -130,6 +130,38 @@ export class MsgService implements OnDestroy {
     this.openSnackBar(msg, SnackbarType.error, config);
   }
 
+  get text() {
+    return this.status.text;
+  }
+
+  get critical() {
+    return this.status.level === LogLevel.critical;
+  }
+
+  get error() {
+    return this.status.level === LogLevel.error;
+  }
+
+  get warn() {
+    return this.status.level === LogLevel.warn;
+  }
+
+  get info() {
+    return this.status.level === LogLevel.info;
+  }
+
+  get success() {
+    return this.status.level === LogLevel.success;
+  }
+
+  get isError() {
+    return this.error || this.warn || this.critical;
+  }
+
+  get isSuccess() {
+    return this.info || this.success;
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();

@@ -30,7 +30,6 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
   subtitle = _('COMMON.PROFILE_UPDATE');
   icon = 'account-edit-outline';
   isLoading = false;
-  status = { ok: true, message: '' };
 
   constructor(
     readonly formBuilder: FormBuilder,
@@ -88,22 +87,15 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
   }
 
   submit() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.isLoading = true;
     const { id, firstName, lastName } = this.form.value;
     this.user
       .userSelfUpdateMutate$({ id, firstName, lastName })
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
+        complete: () => {
           this.isLoading = false;
-          this.status = { ok: true, message: _('SUCCESS.USER.UPDATE') };
-          this.form.disable();
-        },
-        error: (error) => {
-          this.status = {
-            ok: false,
-            message: error.message || _('ERROR.USER.UPDATE'),
-          };
+          this.form.markAsPristine();
         },
       });
   }

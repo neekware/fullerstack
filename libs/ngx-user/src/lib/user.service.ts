@@ -8,7 +8,6 @@
 
 import { Injectable } from '@angular/core';
 import { AuthService } from '@fullerstack/ngx-auth';
-import { interpolate } from '@fullerstack/ngx-cachify';
 import {
   ApplicationConfig,
   ConfigService,
@@ -18,8 +17,8 @@ import { GqlErrorsHandler, GqlService } from '@fullerstack/ngx-gql';
 import { UserSelfQuery, UserSelfUpdateMutation } from '@fullerstack/ngx-gql/operations';
 import { UserSelfUpdateInput } from '@fullerstack/ngx-gql/schema';
 import { GTagService } from '@fullerstack/ngx-gtag';
-import { I18nService } from '@fullerstack/ngx-i18n';
-import { LoggerService } from '@fullerstack/ngx-logger';
+import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
 import { merge as ldNestedMerge } from 'lodash-es';
@@ -65,9 +64,14 @@ export class UserService {
       )
       .subscribe({
         next: (state) => {
+          this.msg.reset();
           if (state?.language?.length && state?.language !== this.i18n.currentLanguage) {
             this.i18n.setCurrentLanguage(state.language);
           }
+        },
+        error: (err) => {
+          this.logger.error(`[${this.nameSpace}] User self query failed ...`, err);
+          this.msg.setMsg({ text: err?.message, level: LogLevel.error });
         },
       });
   }
@@ -98,12 +102,8 @@ export class UserService {
     });
   }
 
-  getUserCacheKey(id: string): string {
-    return interpolate('user/${id}', { id });
-  }
-
   userSelfQuery$(id: string): Observable<UserState> {
-    this.store.setState(this.claimId, { ...DefaultUserState, isLoading: true });
+    this.msg.reset();
     this.logger.debug(`[${this.nameSpace}] Self query request sent ...`);
 
     return this.gql.client
@@ -115,19 +115,15 @@ export class UserService {
         }),
         catchError((err: GqlErrorsHandler) => {
           this.logger.error(`[${this.nameSpace}] Self query request failed ...`, err);
-          return of(
-            this.store.setState<UserState>(this.claimId, {
-              ...DefaultUserState,
-              hasError: true,
-              message: err.topError?.message,
-            })
-          );
+          this.msg.setMsg({ text: err.topError?.message, level: LogLevel.error });
+          return of(this.state as UserState);
         })
       );
   }
 
   userSelfUpdateMutate$(input: UserSelfUpdateInput): Observable<UserState> {
-    this.store.setState(this.claimId, { ...this.state, isLoading: true });
+    this.msg.reset();
+    this.store.setState(this.claimId, this.state);
     this.logger.debug(`[${this.nameSpace}] Self update request sent ...`);
 
     return this.gql.client
@@ -135,18 +131,16 @@ export class UserService {
       .pipe(
         map((resp) => {
           this.logger.debug(`[${this.nameSpace}] Self update request success ...`);
+          this.msg.setMsg({ text: _('SUCCESS.USER.UPDATE'), level: LogLevel.success });
           return this.store.setState<UserState>(this.claimId, { ...DefaultUserState, ...resp });
         }),
         catchError((err: GqlErrorsHandler) => {
           this.logger.error(`[${this.nameSpace}] Self update request failed ...`, err);
-          return of(
-            this.store.setState<UserState>(this.claimId, {
-              ...this.state,
-              isLoading: false,
-              hasError: true,
-              message: err.topError?.message,
-            })
-          );
+          this.msg.setMsg({
+            text: err.topError?.message || _('ERROR.USER.UPDATE'),
+            level: LogLevel.error,
+          });
+          return of(this.state as UserState);
         })
       );
   }
