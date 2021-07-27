@@ -9,6 +9,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { JwtDto } from '@fullerstack/agx-dto';
 import {
   ApplicationConfig,
@@ -48,12 +49,15 @@ import {
 } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { JwtService } from '@fullerstack/ngx-jwt';
-import { LoggerService } from '@fullerstack/ngx-logger';
+import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
+
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
+
 import { Observable, Subject, of, timer } from 'rxjs';
 import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import {
@@ -84,6 +88,7 @@ export class AuthService implements OnDestroy {
     readonly jwt: JwtService,
     readonly gql: GqlService
   ) {
+    this.msg.reset();
     this.options = ldNestedMerge({ auth: DefaultAuthConfig }, this.config.options);
 
     this.authUrls = {
@@ -187,7 +192,10 @@ export class AuthService implements OnDestroy {
         map((resp) => {
           if (resp.ok) {
             this.logger.debug(`[${this.nameSpace}] Login request success ...`);
-            this.msg.successSnackBar(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
+            this.msg.successToast(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
+
+            this.goTo(this.authUrls.loggedInUrl);
+
             return this.store.setState(
               this.claimId,
               {
@@ -200,6 +208,7 @@ export class AuthService implements OnDestroy {
             );
           }
           this.logger.error(`[${this.nameSpace}] Login request failed ... ${resp.message}`);
+          this.msg.setMsg({ text: resp.message || _('ERROR.AUTH.LOGIN'), level: LogLevel.error });
           return this.store.setState(
             this.claimId,
             {
@@ -212,6 +221,11 @@ export class AuthService implements OnDestroy {
         }),
         catchError((err: GqlErrorsHandler) => {
           this.logger.error(`[${this.nameSpace}] Login request failed ...`, err);
+          this.msg.setMsg({
+            text: err.topError?.message || _('ERROR.AUTH.LOGIN'),
+            level: LogLevel.error,
+          });
+
           return of(
             this.store.setState(
               this.claimId,
@@ -228,6 +242,8 @@ export class AuthService implements OnDestroy {
   }
 
   signupRequest$(input: AuthUserSignupInput): Observable<AuthState> {
+    this.msg.reset();
+
     this.store.setState(
       this.claimId,
       {
@@ -245,7 +261,10 @@ export class AuthService implements OnDestroy {
         map((resp) => {
           if (resp.ok) {
             this.logger.debug(`[${this.nameSpace}] Signup request success ...`);
-            this.msg.successSnackBar(_('SUCCESS.AUTH.SIGNUP'), { duration: 3000 });
+            this.msg.successToast(_('SUCCESS.AUTH.SIGNUP'), { duration: 3000 });
+
+            this.goTo(this.authUrls.loggedInUrl);
+
             return this.store.setState(
               this.claimId,
               {
@@ -258,6 +277,7 @@ export class AuthService implements OnDestroy {
             );
           }
           this.logger.error(`[${this.nameSpace}] Signup request failed ... ${resp.message}`);
+          this.msg.setMsg({ text: resp.message || _('ERROR.AUTH.SIGNUP'), level: LogLevel.error });
           return this.store.setState(
             this.claimId,
             {
@@ -270,6 +290,10 @@ export class AuthService implements OnDestroy {
         }),
         catchError((err: GqlErrorsHandler) => {
           this.logger.error(`[${this.nameSpace}] Signup request failed ...`, err);
+          this.msg.setMsg({
+            text: err.topError?.message || _('ERROR.AUTH.SIGNUP'),
+            level: LogLevel.error,
+          });
           return of(
             this.store.setState(
               this.claimId,
@@ -349,9 +373,9 @@ export class AuthService implements OnDestroy {
         complete: () => {
           if (!onError) {
             this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
-            this.msg.successSnackBar(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
+            this.msg.successToast(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
           } else {
-            this.msg.errorSnackBar(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
+            this.msg.errorToast(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
           }
         },
       });

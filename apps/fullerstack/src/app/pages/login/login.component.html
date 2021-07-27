@@ -11,7 +11,29 @@
     [icon]="icon"
     [progress]="auth?.state.isLoading"
   >
-    <fullerstack-login-form (submit$)="submit($event)" fxLayout="column"></fullerstack-login-form>
+    <form [formGroup]="form" (submit)="submit()" fxLayout="column" autocomplete="off">
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="email"></mat-icon>
+        <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" autofocus />
+        <mat-error errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="key-variant"></mat-icon>
+        <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
+        <mat-error errorDirective [control]="form?.controls?.password" [isTouched]="form?.controls?.password?.touched"></mat-error>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
+        <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine">
+          {{ 'COMMON.LOGIN' | translate }}
+        </button>
+        <div *ngIf="auth.msg.isError" class="form-status" fxLayout="row" fxLayoutGap="10px">
+          <mat-icon color="warn" svgIcon="alert"></mat-icon>
+          <span>{{ auth.msg.text | translate }}!</span>
+        </div>
+      </div>
+    </form>
 
     <mat-divider class="mt1"></mat-divider>
 

@@ -7,10 +7,12 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '@fullerstack/ngx-auth';
 import { AuthUserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { ValidationService } from '@fullerstack/ngx-util';
 
 import { Subject, first, takeUntil } from 'rxjs';
 
@@ -20,24 +22,36 @@ import { Subject, first, takeUntil } from 'rxjs';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  form: FormGroup;
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.LOGIN');
   subtitle = _('COMMON.ACCOUNT_ACCESS');
   icon = 'lock-open-outline';
 
-  constructor(readonly auth: AuthService) {}
+  constructor(
+    readonly formBuilder: FormBuilder,
+    readonly validation: ValidationService,
+    readonly auth: AuthService
+  ) {}
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
       this.auth.goTo(this.auth.authUrls.landingUrl);
     }
+    this.buildForm();
+    this.form.valueChanges.subscribe(() => this.auth.msg.reset());
   }
 
-  submit(data: AuthUserCredentialsInput) {
-    this.auth
-      .loginRequest$(data)
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({ next: () => this.auth.goTo(this.auth.authUrls.landingUrl) });
+  private buildForm() {
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.required, this.validation.validateEmail]],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  submit() {
+    const credentials = this.form.value;
+    this.auth.loginRequest$(credentials).pipe(first(), takeUntil(this.destroy$)).subscribe();
   }
 
   ngOnDestroy() {

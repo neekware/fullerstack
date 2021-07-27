@@ -118,15 +118,15 @@ export class MsgService implements OnDestroy {
       });
   }
 
-  successSnackBar(msg: string, config?: MatSnackBarConfig) {
+  successToast(msg: string, config?: MatSnackBarConfig) {
     this.openSnackBar(msg, SnackbarType.success, config);
   }
 
-  warnSnackBar(msg: string, config?: MatSnackBarConfig) {
+  warnToast(msg: string, config?: MatSnackBarConfig) {
     this.openSnackBar(msg, SnackbarType.warn, config);
   }
 
-  errorSnackBar(msg: string, config?: MatSnackBarConfig) {
+  errorToast(msg: string, config?: MatSnackBarConfig) {
     this.openSnackBar(msg, SnackbarType.error, config);
   }
 

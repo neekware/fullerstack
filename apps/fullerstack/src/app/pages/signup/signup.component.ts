@@ -7,11 +7,13 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { AuthUserSignupInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

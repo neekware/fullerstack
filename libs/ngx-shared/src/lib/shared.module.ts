@@ -9,6 +9,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { I18nModule } from '@fullerstack/ngx-i18n';
 import { MaterialModule } from '@fullerstack/ngx-material';
 
@@ -16,7 +17,6 @@ import { AlertComponent } from './component/alert';
 import { BlobComponent } from './component/blob/blob.component';
 import { CardComponent } from './component/card/card.component';
 import { ConfirmationDialogComponent } from './component/confirm/confirm.component';
-import { LoginFormComponent } from './component/login/login-form.component';
 import { RippleComponent } from './component/ripple/ripple.component';
 import { SignupFormComponent } from './component/signup/signup-form.component';
 import { AutocompleteDirective } from './directive/autocomplete/autocomplete.directive';
@@ -33,7 +33,6 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     BlobComponent,
     RippleComponent,
     ConfirmationDialogComponent,
-    LoginFormComponent,
     SignupFormComponent,
     AutocompleteDirective,
     FormErrorDirective,
@@ -47,7 +46,6 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     BlobComponent,
     RippleComponent,
     ConfirmationDialogComponent,
-    LoginFormComponent,
     SignupFormComponent,
     AutocompleteDirective,
     FormErrorDirective,
