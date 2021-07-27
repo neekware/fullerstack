@@ -3,21 +3,21 @@
     <mat-icon matSuffix svgIcon="account"></mat-icon>
     <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" autofocus />
     <mat-hint align="end">{{ nameHint | translate }}</mat-hint>
-    <mat-error processErrors [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched"></mat-error>
+    <mat-error errorDirective [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched"></mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-icon matSuffix svgIcon="email"></mat-icon>
     <input matInput #emailInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
     <mat-hint align="end">{{ emailHint | translate }}</mat-hint>
-    <mat-error processErrors [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
+    <mat-error errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-icon matSuffix svgIcon="key"></mat-icon>
     <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
     <mat-hint align="end">{{ passwordHint | translate }}</mat-hint>
-    <mat-error processErrors [control]="form?.controls?.password" [isTouched]="form?.controls?.password?.touched"></mat-error>
+    <mat-error errorDirective [control]="form?.controls?.password" [isTouched]="form?.controls?.password?.touched"></mat-error>
   </mat-form-field>
 
   <mat-form-field>
@@ -25,7 +25,7 @@
     <input matInput type="password" formControlName="passwordConfirmation" placeholder="{{ 'COMMON.PASSWORD_CONFIRMATION' | translate }}" />
     <mat-hint align="end">{{ passwordConfirmHint | translate }}</mat-hint>
     <mat-error
-      processErrors
+      errorDirective
       [control]="form?.controls?.passwordConfirmation"
       [isTouched]="form?.controls?.passwordConfirmation?.touched"
     ></mat-error>

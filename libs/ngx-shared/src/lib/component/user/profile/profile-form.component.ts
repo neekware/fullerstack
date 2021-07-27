@@ -78,7 +78,6 @@ export class UserProfileFormComponent implements OnInit {
           Validators.maxLength(ApiConstants.LAST_NAME_MAX_LENGTH),
         ],
       ],
-      email: [{ value: state?.email || '', disabled: true }],
     });
     this.form$.emit(this.form);
   }

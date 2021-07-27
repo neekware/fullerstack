@@ -16,7 +16,7 @@ import { debounceTime, distinctUntilChanged, first, takeUntil } from 'rxjs/opera
 import { VALIDATION_DEBOUNCE_TIME, validatorMessage } from './form-error.model';
 
 @Directive({
-  selector: '[processErrors]',
+  selector: '[errorDirective]',
 })
 export class FormErrorDirective implements AfterViewInit, OnDestroy, OnInit {
   private destroy$ = new Subject<boolean>();
