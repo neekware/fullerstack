@@ -140,8 +140,8 @@ export class AuthService {
     if (payload) {
       const user = await this.security.validateUserByEmail(payload.currentEmail);
       if (user) {
-        if (!this.security.isEmailInUse(payload.newEmail)) {
-          return this.prisma.user.update({
+        if (!(await this.security.isEmailInUse(payload.newEmail))) {
+          return await this.prisma.user.update({
             data: {
               email: payload.newEmail,
             },
