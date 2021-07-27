@@ -11,7 +11,41 @@
     [icon]="icon"
     [progress]="user.state.isLoading"
   >
-    <fullerstack-user-profile-form (form$)="formSet($event)"></fullerstack-user-profile-form>
+    <form [formGroup]="form" (submit)="submit()" fxLayout="column" autocomplete="off">
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="account"></mat-icon>
+        <input matInput formControlName="firstName" placeholder="{{ 'COMMON.FIRST_NAME' | translate }}" />
+        <mat-error errorDirective [control]="form?.controls?.firstName" [isTouched]="form?.controls?.firstName?.touched"></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="account-multiple"></mat-icon>
+        <input matInput formControlName="lastName" placeholder="{{ 'COMMON.LAST_NAME' | translate }}" />
+        <mat-error errorDirective [control]="form?.controls?.lastName" [isTouched]="form?.controls?.lastName?.touched"></mat-error>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
+        <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine">
+          {{ 'COMMON.UPDATE' | translate }}
+        </button>
+        <div *ngIf="user?.state.hasError" class="form-status" fxLayout="row" fxLayoutGap="10px">
+          <mat-icon color="warn" svgIcon="alert"></mat-icon>
+          <span>{{ user?.state.message | translate }}!</span>
+        </div>
+      </div>
+    </form>
+
+    <fullerstack-blob
+      *ngIf="status.ok && form?.disabled"
+      class="mt1"
+      text="{{ status.message | translate }}."
+      icon="check-circle-outline"
+      iconColor="green"
+    >
+    </fullerstack-blob>
+
+    <fullerstack-blob *ngIf="!status.ok" class="mt1" text="{{ status.message | translate }}." icon="check-circle-outline" iconColor="red">
+    </fullerstack-blob>
 
     <mat-divider class="mt1"></mat-divider>
 

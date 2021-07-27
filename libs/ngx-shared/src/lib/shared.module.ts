@@ -19,7 +19,6 @@ import { ConfirmationDialogComponent } from './component/confirm/confirm.compone
 import { LoginFormComponent } from './component/login/login-form.component';
 import { RippleComponent } from './component/ripple/ripple.component';
 import { SignupFormComponent } from './component/signup/signup-form.component';
-import { UserProfileFormComponent } from './component/user/profile/profile-form.component';
 import { AutocompleteDirective } from './directive/autocomplete/autocomplete.directive';
 import { DebounceClickDirective } from './directive/debounce-click/debounce-click.directive';
 import { FormErrorDirective } from './directive/form-error/form-error-directive';
@@ -36,7 +35,6 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     ConfirmationDialogComponent,
     LoginFormComponent,
     SignupFormComponent,
-    UserProfileFormComponent,
     AutocompleteDirective,
     FormErrorDirective,
     TmpLetDirective,
@@ -51,7 +49,6 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     ConfirmationDialogComponent,
     LoginFormComponent,
     SignupFormComponent,
-    UserProfileFormComponent,
     AutocompleteDirective,
     FormErrorDirective,
     TmpLetDirective,
