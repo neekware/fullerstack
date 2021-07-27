@@ -7,6 +7,7 @@
  */
 
 import { Routes } from '@angular/router';
+
 import { AuthAnonymousGuard, AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
@@ -18,6 +19,7 @@ import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { PasswordChangeComponent } from './pages/password-change/password-change.component';
 import { PasswordResetPerformComponent } from './pages/password-reset-perform/password-reset-perform.component';
 import { PasswordResetRequestComponent } from './pages/password-reset-request/password-reset-request.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
@@ -94,6 +96,16 @@ export const AppRoutes: Routes = [
     data: {
       title: _('COMMON.PROFILE_UPDATE'),
       description: _('APP.DESCRIPTION.PROFILE_UPDATE'),
+    },
+  },
+  {
+    path: 'auth/password/change',
+    component: PasswordChangeComponent,
+    canActivate: [AuthAuthenticatedGuard],
+    canDeactivate: [DeactivateGuard],
+    data: {
+      title: _('COMMON.PASSWORD_CHANGE'),
+      description: _('APP.DESCRIPTION.PASSWORD_CHANGE'),
     },
   },
   {

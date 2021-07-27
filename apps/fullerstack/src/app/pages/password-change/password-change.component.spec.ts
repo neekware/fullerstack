@@ -8,22 +8,22 @@
 
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { EmailChangeRequestComponent } from './email-change-request.component';
+import { PasswordChangeComponent } from './password-change-perform.component';
 
-xdescribe('EmailChangeRequestComponent', () => {
-  let component: EmailChangeRequestComponent;
-  let fixture: ComponentFixture<EmailChangeRequestComponent>;
+xdescribe('PasswordChangeComponent', () => {
+  let component: PasswordChangeComponent;
+  let fixture: ComponentFixture<PasswordChangeComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [EmailChangeRequestComponent],
+        declarations: [PasswordChangeComponent],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EmailChangeRequestComponent);
+    fixture = TestBed.createComponent(PasswordChangeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

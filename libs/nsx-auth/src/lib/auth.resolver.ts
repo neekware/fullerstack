@@ -16,10 +16,13 @@ import {
 } from '@fullerstack/nsx-common';
 import { I18nService } from '@fullerstack/nsx-i18n';
 import { MailerService } from '@fullerstack/nsx-mailer';
+
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+
 import { User } from '@prisma/client';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { AUTH_SESSION_COOKIE_NAME } from './auth.constant';
@@ -174,25 +177,6 @@ export class AuthResolver {
     return { ok: isValid };
   }
 
-  @UseGuards(AuthGuardGql)
-  @Mutation(() => AuthTokenDto)
-  async authPasswordChange(
-    @CookiesDecorator() cookies: string[],
-    @RequestDecorator() request: HttpRequest,
-    @ResponseDecorator() response: HttpResponse,
-    @Args('input') data: AuthPasswordChangeInput
-  ) {
-    const user = await this.auth.changePassword(
-      request.user as User,
-      data.oldPassword,
-      data.newPassword,
-      data.resetOtherSessions
-    );
-
-    const token = this.security.issueToken(user, request, response);
-    return { ok: true, token };
-  }
-
   @Mutation(() => AuthStatusDto)
   async authPasswordResetRequest(
     @LocaleDecorator() language: string[],
@@ -253,6 +237,49 @@ export class AuthResolver {
     const user = await this.auth.performPasswordReset(
       data.token,
       data.password,
+      data.resetOtherSessions
+    );
+
+    if (!user) {
+      return { ok: false, message: ApiError.Error.Auth.InvalidOrInactiveUser };
+    }
+
+    const locale = user.language || this.i18n.getPreferredLocale(language);
+
+    const emailContext: RenderContext = {
+      RegexName: `${user.firstName} ${user.lastName}`,
+      RegexSiteUrl: this.options.siteUrl,
+      RegexCompanyName: this.options.siteName,
+      RegexSupportEmail: this.options.siteSupportEmail,
+    };
+
+    const emailSubjectBody = getEmailBodySubject(
+      'password-reset-confirmation',
+      locale,
+      emailContext
+    );
+
+    this.mailer.sendMail({
+      from: this.options.siteSupportEmail,
+      to: user.email,
+      subject: emailSubjectBody.subject,
+      html: emailSubjectBody.html,
+    });
+
+    return { ok: true };
+  }
+
+  @UseGuards(AuthGuardGql)
+  @Mutation(() => AuthStatusDto)
+  async authPasswordChange(
+    @LocaleDecorator() language: string[],
+    @RequestDecorator() request: HttpRequest,
+    @Args('input') data: AuthPasswordChangeInput
+  ) {
+    const user = await this.auth.changePassword(
+      request.user as User,
+      data.oldPassword,
+      data.newPassword,
       data.resetOtherSessions
     );
 

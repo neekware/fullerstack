@@ -9,6 +9,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { JwtDto } from '@fullerstack/agx-dto';
 import {
   ApplicationConfig,
@@ -20,6 +21,7 @@ import {
   AuthEmailChangePerformMutation,
   AuthEmailChangeRequestMutation,
   AuthEmailVerifyAvailabilityQuery,
+  AuthPasswordChangeMutation,
   AuthPasswordPerformResetMutation,
   AuthPasswordResetRequestMutation,
   AuthPasswordVerifyQuery,
@@ -34,6 +36,7 @@ import {
   AuthEmailChangePerformInput,
   AuthEmailChangeRequestInput,
   AuthEmailVerifyAvailabilityInput,
+  AuthPasswordChangeInput,
   AuthPasswordChangeRequestInput,
   AuthPasswordPerformResetInput,
   AuthPasswordVerifyInput,
@@ -49,9 +52,12 @@ import { JwtService } from '@fullerstack/ngx-jwt';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
+
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
+
 import { Observable, Subject, of, timer } from 'rxjs';
 import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import {
@@ -375,6 +381,28 @@ export class AuthService implements OnDestroy {
               `[${this.nameSpace}] User verification request request failed ...`,
               err
             );
+          }
+
+          return of({ ok: false, message: err.topError?.message });
+        })
+      ) as Observable<AuthStatus>;
+  }
+
+  passwordChange$(input: AuthPasswordChangeInput): Observable<AuthStatus> {
+    return this.gql.client
+      .request<AuthStatus>(AuthPasswordChangeMutation, { input })
+      .pipe(
+        map((resp) => {
+          if (resp.ok) {
+            this.logger.debug(`[${this.nameSpace}] Password change success ...`);
+          } else {
+            this.logger.error(`[${this.nameSpace}] Password change failed ... ${resp.message}`);
+          }
+          return resp;
+        }),
+        catchError((err: GqlErrorsHandler) => {
+          if (this.state.isLoggedIn) {
+            this.logger.error(`[${this.nameSpace}] Password change failed ...`, err);
           }
 
           return of({ ok: false, message: err.topError?.message });

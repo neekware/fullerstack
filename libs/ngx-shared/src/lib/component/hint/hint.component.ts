@@ -17,9 +17,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+
 import { tryGet } from '@fullerstack/agx-util';
 import { I18nService } from '@fullerstack/ngx-i18n';
-import { BehaviorSubject, Subject } from 'rxjs';
+
+import { BehaviorSubject, Subject, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first, takeUntil } from 'rxjs/operators';
 
 import { HINT_DEBOUNCE_TIME } from './hint.model';
@@ -78,15 +80,13 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
   }
 
   ngAfterViewInit() {
-    if (this.control) {
-      this.control.statusChanges
-        .pipe(debounceTime(HINT_DEBOUNCE_TIME), takeUntil(this.destroy$))
-        .subscribe({
-          next: () => {
-            this.process();
-          },
-        });
-    }
+    merge(this.control.valueChanges, this.control.statusChanges)
+      .pipe(debounceTime(HINT_DEBOUNCE_TIME), takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.process();
+        },
+      });
   }
 
   private setHintOrError(error: boolean, hint: boolean) {

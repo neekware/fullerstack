@@ -160,6 +160,29 @@ export interface authPasswordVerifyVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: authPasswordChange
+// ====================================================
+
+export interface authPasswordChange_authPasswordChange {
+  __typename: "AuthStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface authPasswordChange {
+  authPasswordChange: authPasswordChange_authPasswordChange;
+}
+
+export interface authPasswordChangeVariables {
+  input: AuthPasswordChangeInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: authPasswordResetRequest
 // ====================================================
 
@@ -499,6 +522,12 @@ export interface AuthEmailChangeRequestInput {
 
 export interface AuthEmailVerifyAvailabilityInput {
   email: string;
+}
+
+export interface AuthPasswordChangeInput {
+  newPassword: string;
+  oldPassword: string;
+  resetOtherSessions?: boolean | null;
 }
 
 export interface AuthPasswordChangeRequestInput {

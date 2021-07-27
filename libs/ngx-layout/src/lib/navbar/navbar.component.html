@@ -40,9 +40,9 @@
         <mat-icon svgIcon="{{ navbarLinks.email.icon }}"></mat-icon>
         {{ navbarLinks.email.title | translate }}
       </a>
-      <a [routerLink]="navbarLinks.settings.path" mat-menu-item>
-        <mat-icon svgIcon="{{ navbarLinks.settings.icon }}"></mat-icon>
-        {{ navbarLinks.settings.title | translate }}
+      <a [routerLink]="navbarLinks.password.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.password.icon }}"></mat-icon>
+        {{ navbarLinks.password.title | translate }}
       </a>
       <button mat-menu-item (click)="auth.logoutRequest()">
         <mat-icon svgIcon="{{ navbarLinks.logout.icon }}"></mat-icon>

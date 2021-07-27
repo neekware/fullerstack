@@ -76,7 +76,7 @@ type Mutation {
   authEmailChangePerform(input: AuthEmailChangePerformInput!): AuthStatusDto!
   authEmailChangeRequest(input: AuthEmailChangeRequestInput!): AuthStatusDto!
   authEmailVerifyAvailability(input: AuthEmailVerifyAvailabilityInput!): AuthStatusDto!
-  authPasswordChange(input: AuthPasswordChangeInput!): AuthTokenDto!
+  authPasswordChange(input: AuthPasswordChangeInput!): AuthStatusDto!
   authPasswordPerformReset(input: AuthPasswordPerformResetInput!): AuthStatusDto!
   authPasswordResetRequest(input: AuthPasswordChangeRequestInput!): AuthStatusDto!
   authPasswordVerify(input: AuthPasswordVerifyInput!): AuthStatusDto!
