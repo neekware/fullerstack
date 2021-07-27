@@ -6,14 +6,15 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { tryGet } from '@fullerstack/agx-util';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 
 /**
  * Debounce time for verification and showing the hint
  */
-export const HINT_DEBOUNCE_TIME = 300;
+export const VALIDATION_DEBOUNCE_TIME = 300;
 
-export const ValidatorHintMessages = {
+export const ValidatorMessages = {
   required: _('VALIDATION.REQUIRED'),
   minlength: _('VALIDATION.MINIMUM_LENGTH'),
   maxlength: _('VALIDATION.MAXIMUM_LENGTH'),
@@ -36,4 +37,8 @@ export const ValidatorHintMessages = {
   serverError: _('VALIDATION.SERVER_ERROR'),
   inputNotAsExpected: _('VALIDATION.INPUT_NOT_AS_EXPECTED'),
   inputShouldDiffer: _('VALIDATION.INPUT_SHOULD_DIFFER'),
+};
+
+export const validatorMessage = (key: string): string => {
+  return tryGet(() => ValidatorMessages[key]);
 };

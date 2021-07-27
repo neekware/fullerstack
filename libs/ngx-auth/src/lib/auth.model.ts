@@ -19,7 +19,7 @@ export interface AuthState {
   userId: string;
   isLoading: boolean;
   isLoggedIn: boolean;
-  isRegistering: boolean;
+  isSigningUp: boolean;
   isAuthenticating: boolean;
   logoutRequired: boolean;
   hasError: boolean;
@@ -29,7 +29,7 @@ export interface AuthState {
 
 export interface AuthUrls {
   loginUrl: string;
-  registerUrl: string;
+  signupUrl: string;
   loggedInUrl: string;
   landingUrl: string;
 }
@@ -39,9 +39,9 @@ export enum AuthStateAction {
   AUTH_LOGIN_REQ_SENT = 'AUTH_LOGIN_REQ_SENT',
   AUTH_LOGIN_RES_SUCCESS = 'AUTH_LOGIN_RES_SUCCESS',
   AUTH_LOGIN_RES_FAILED = 'AUTH_LOGIN_RES_FAILED',
-  AUTH_REGISTER_REQ_SENT = 'AUTH_REGISTER_REQ_SENT',
-  AUTH_REGISTER_RES_SUCCESS = 'AUTH_REGISTER_RES_SUCCESS',
-  AUTH_REGISTER_RES_FAILED = 'AUTH_REGISTER_RES_FAILED',
+  AUTH_SIGNUP_REQ_SENT = 'AUTH_SIGNUP_REQ_SENT',
+  AUTH_SIGNUP_RES_SUCCESS = 'AUTH_SIGNUP_RES_SUCCESS',
+  AUTH_SIGNUP_RES_FAILED = 'AUTH_SIGNUP_RES_FAILED',
   AUTH_REFRESH_TOKEN_REQ_SENT = 'AUTH_REFRESH_TOKEN_REQ_SENT',
   AUTH_REFRESH_TOKEN_RES_SUCCESS = 'AUTH_REFRESH_TOKEN_RES_SUCCESS',
   AUTH_REFRESH_TOKEN_RES_FAILED = 'AUTH_REFRESH_TOKEN_RES_FAILED',

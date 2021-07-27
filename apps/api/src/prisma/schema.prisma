@@ -44,7 +44,8 @@ model Group {
 model User {
   id             String       @id @default(cuid())
   createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  lastLoginAt    DateTime
   email          String       @unique
   username       String       @unique
   password       String       @default(cuid())

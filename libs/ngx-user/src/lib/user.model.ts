@@ -19,7 +19,4 @@ export interface UserConfig {
 
 export interface UserState extends Omit<User, '__typename' | 'isActive'> {
   isActive?: boolean;
-  isLoading: boolean;
-  hasError: boolean;
-  message: string;
 }

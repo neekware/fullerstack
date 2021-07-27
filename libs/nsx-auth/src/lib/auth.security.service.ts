@@ -70,6 +70,7 @@ export class SecurityService {
         sessionVersion,
         isActive: true,
         isVerified: true,
+        lastLoginAt: new Date(),
         role: Role.SUPERUSER,
         permissions: [Permission.appALL],
       },
@@ -106,36 +107,6 @@ export class SecurityService {
   async validatePassword(password: string, hashedPassword: string): Promise<boolean> {
     const validPassword = await compare(password, hashedPassword);
     return validPassword;
-  }
-
-  /**
-   * Change password
-   * @param user Current user
-   * @param oldPassword old password
-   * @param newPassword new password
-   * @returns promise of a User
-   */
-  async changePassword(
-    user: User,
-    oldPassword: string,
-    newPassword: string,
-    resetOtherSessions: boolean
-  ): Promise<User> {
-    const validPassword = await this.validatePassword(oldPassword, user.password);
-
-    if (!validPassword) {
-      throw new BadRequestException(ApiError.Error.Auth.InvalidPassword);
-    }
-
-    const hashedPassword = await this.hashPassword(newPassword);
-
-    return this.prisma.user.update({
-      data: {
-        password: hashedPassword,
-        sessionVersion: resetOtherSessions ? user.sessionVersion + 1 : user.sessionVersion,
-      },
-      where: { id: user.id },
-    });
   }
 
   /**
@@ -240,6 +211,18 @@ export class SecurityService {
     return user?.isActive ? user : undefined;
   }
 
+  async isEmailInUse(email: string): Promise<boolean> {
+    const users = await this.prisma.user.findMany({
+      where: { email: { contains: email, mode: 'insensitive' } },
+    });
+    return users?.length > 0;
+  }
+
+  async isUserVerified(userId: string): Promise<boolean> {
+    const user = await this.validateUser(userId);
+    return user ? user.isVerified : false;
+  }
+
   /**
    * Validates a user from an email and returns the user object on success
    * @param email string representation of an email address
@@ -248,11 +231,6 @@ export class SecurityService {
   async validateUserByEmail(email: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { email } });
     return user?.isActive ? user : undefined;
-  }
-
-  validateURIToken(token: string): boolean {
-    const payload = decodeURITokenComponent(token, this.siteSecret);
-    return !!payload;
   }
 
   async verifyUser(token: string): Promise<User> {
@@ -274,21 +252,25 @@ export class SecurityService {
     });
   }
 
-  async performPasswordReset(
-    token: string,
-    password: string,
-    resetOtherSessions = false
-  ): Promise<User> {
-    const payload = decodeURITokenComponent<{ userId: string }>(token, this.siteSecret);
-    if (!payload) {
-      throw new BadRequestException(ApiError.Error.Auth.InvalidPasswordResetLink);
-    }
+  verifyURIToken(token: string): boolean {
+    const payload = decodeURITokenComponent(token, this.siteSecret);
+    return !!payload;
+  }
 
-    const user = await this.prisma.user.findUnique({ where: { id: payload?.userId } });
-    if (!user) {
-      throw new BadRequestException(ApiError.Error.Auth.InvalidOrInactiveUser);
-    }
+  async verifyPasswordResetLink(token: string): Promise<boolean> {
+    const payload = decodeURITokenComponent<{ userId: string; lastLoginAt: Date }>(
+      token,
+      this.siteSecret
+    );
 
-    return this.resetPassword(user, password, resetOtherSessions);
+    if (payload) {
+      const user = await this.validateUser(payload.userId);
+      if (user) {
+        const passwordResetLinkIssuedAt = new Date(payload.lastLoginAt).getTime();
+        const userLastLoggedInAt = new Date(user.lastLoginAt).getTime();
+        return passwordResetLinkIssuedAt >= userLastLoggedInAt;
+      }
+    }
+    throw new BadRequestException(ApiError.Error.Auth.InvalidVerificationLink);
   }
 }

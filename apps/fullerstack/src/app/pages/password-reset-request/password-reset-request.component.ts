@@ -58,8 +58,6 @@ export class PasswordResetRequestComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (status) => {
-          this.isLoading = false;
-
           if (status.ok) {
             this.status = { ...status, message: _('INFO.PASSWORD.RESET_SUCCESS') };
             this.form.disable();
@@ -69,6 +67,9 @@ export class PasswordResetRequestComponent implements OnInit, OnDestroy {
               message: status.message || _('INFO.PASSWORD.RESET_SUCCESS'),
             };
           }
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

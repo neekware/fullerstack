@@ -36,9 +36,13 @@
         <mat-icon svgIcon="{{ navbarLinks.profile.icon }}"></mat-icon>
         {{ navbarLinks.profile.title | translate }}
       </a>
-      <a [routerLink]="navbarLinks.settings.path" mat-menu-item>
-        <mat-icon svgIcon="{{ navbarLinks.settings.icon }}"></mat-icon>
-        {{ navbarLinks.settings.title | translate }}
+      <a [routerLink]="navbarLinks.email.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.email.icon }}"></mat-icon>
+        {{ navbarLinks.email.title | translate }}
+      </a>
+      <a [routerLink]="navbarLinks.password.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.password.icon }}"></mat-icon>
+        {{ navbarLinks.password.title | translate }}
       </a>
       <button mat-menu-item (click)="auth.logoutRequest()">
         <mat-icon svgIcon="{{ navbarLinks.logout.icon }}"></mat-icon>
@@ -50,9 +54,9 @@
         <mat-icon svgIcon="{{ navbarLinks.login.icon }}"></mat-icon>
         {{ navbarLinks.login.title | translate }}
       </a>
-      <a [routerLink]="navbarLinks.register.path" mat-menu-item>
-        <mat-icon svgIcon="{{ navbarLinks.register.icon }}"></mat-icon>
-        {{ navbarLinks.register.title | translate }}
+      <a [routerLink]="navbarLinks.signup.path" mat-menu-item>
+        <mat-icon svgIcon="{{ navbarLinks.signup.icon }}"></mat-icon>
+        {{ navbarLinks.signup.title | translate }}
       </a>
     </div>
   </mat-menu>

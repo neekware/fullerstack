@@ -13,16 +13,17 @@ import { BadRequestException, ConflictException, Injectable } from '@nestjs/comm
 import { Prisma, User } from '@prisma/client';
 import { v4 as uuid_v4 } from 'uuid';
 
-import { UserCreateInput, UserCredentialsInput } from './auth.model';
+import { AuthUserCredentialsInput, AuthUserSignupInput } from './auth.model';
 import { SecurityService } from './auth.security.service';
+import { decodeURITokenComponent } from './auth.util';
 
 @Injectable()
 export class AuthService {
-  constructor(readonly prisma: PrismaService, readonly securityService: SecurityService) {}
+  constructor(readonly prisma: PrismaService, readonly security: SecurityService) {}
 
-  async createUser(payload: UserCreateInput): Promise<User> {
+  async createUser(payload: AuthUserSignupInput): Promise<User> {
     let user: User;
-    const hashedPassword = await this.securityService.hashPassword(payload.password);
+    const hashedPassword = await this.security.hashPassword(payload.password);
 
     try {
       user = await this.prisma.user.create({
@@ -33,6 +34,7 @@ export class AuthService {
           username: uuid_v4(),
           role: 'USER',
           isActive: true,
+          lastLoginAt: new Date(),
         } as Prisma.UserCreateInput,
       });
     } catch (err) {
@@ -54,34 +56,100 @@ export class AuthService {
     return user;
   }
 
-  async authenticateUser(credentials: UserCredentialsInput): Promise<User> {
+  async authenticateUser(credentials: AuthUserCredentialsInput): Promise<User> {
     const user = await this.prisma.user.findUnique({
       where: { email: credentials.email },
     });
 
     if (user) {
-      const passwordValid = await this.securityService.validatePassword(
+      const passwordValid = await this.security.validatePassword(
         credentials.password,
         user.password
       );
 
       if (passwordValid) {
-        return user;
+        return await this.prisma.user.update({
+          where: { email: credentials.email },
+          data: {
+            lastLoginAt: new Date(),
+          },
+        });
       }
     }
 
     throw new BadRequestException(ApiError.Error.Auth.InvalidUserOrPassword);
   }
 
-  async isUserVerified(userId: string): Promise<boolean> {
-    const user = await this.securityService.validateUser(userId);
-    return user ? user.isVerified : false;
+  async performPasswordReset(
+    token: string,
+    password: string,
+    resetOtherSessions = false
+  ): Promise<User> {
+    const payload = decodeURITokenComponent<{ userId: string }>(token, this.security.siteSecret);
+    if (!payload) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidPasswordResetLink);
+    }
+
+    const user = await this.prisma.user.findUnique({ where: { id: payload?.userId } });
+    if (!user) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidOrInactiveUser);
+    }
+
+    return this.security.resetPassword(user, password, resetOtherSessions);
   }
 
-  async isEmailInUse(email: string): Promise<boolean> {
-    const users = await this.prisma.user.findMany({
-      where: { email: { contains: email, mode: 'insensitive' } },
+  /**
+   * Change password
+   * @param user Current user
+   * @param oldPassword old password
+   * @param newPassword new password
+   * @returns promise of a User
+   */
+  async changePassword(
+    user: User,
+    oldPassword: string,
+    newPassword: string,
+    resetOtherSessions: boolean
+  ): Promise<User> {
+    const validPassword = await this.security.validatePassword(oldPassword, user.password);
+
+    if (!validPassword) {
+      throw new BadRequestException(ApiError.Error.Auth.InvalidPassword);
+    }
+
+    const hashedPassword = await this.security.hashPassword(newPassword);
+
+    return this.prisma.user.update({
+      data: {
+        password: hashedPassword,
+        sessionVersion: resetOtherSessions ? user.sessionVersion + 1 : user.sessionVersion,
+      },
+      where: { id: user.id },
     });
-    return users?.length > 0;
+  }
+
+  async performEmailChange(token: string): Promise<User> {
+    const payload = decodeURITokenComponent<{ currentEmail: string; newEmail: string }>(
+      token,
+      this.security.siteSecret
+    );
+
+    if (payload) {
+      const user = await this.security.validateUserByEmail(payload.currentEmail);
+      if (user) {
+        if (!(await this.security.isEmailInUse(payload.newEmail))) {
+          return await this.prisma.user.update({
+            data: {
+              email: payload.newEmail,
+            },
+            where: { email: payload.currentEmail },
+          });
+        } else {
+          throw new BadRequestException(ApiError.Error.Auth.EmailInUse);
+        }
+      }
+    }
+
+    throw new BadRequestException(ApiError.Error.Auth.InvalidEmailChangeLink);
   }
 }

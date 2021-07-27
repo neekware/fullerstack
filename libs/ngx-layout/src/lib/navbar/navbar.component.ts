@@ -34,23 +34,33 @@ export class NavbarComponent implements OnInit, OnDestroy {
   brandImage = '/assets/images/logos/brand-large.png';
   navbarLinks = {
     profile: {
-      title: _('COMMON.PROFILE'),
+      title: _('COMMON.PROFILE_UPDATE'),
       path: '/user/profile/update',
       icon: 'account',
     },
     settings: {
       title: _('COMMON.SETTINGS'),
-      path: '/settings/language/change',
+      path: '/auth/language/change',
       icon: 'cog-outline',
+    },
+    password: {
+      title: _('COMMON.PASSWORD_CHANGE'),
+      path: '/auth/password/change',
+      icon: 'key-change',
+    },
+    email: {
+      title: _('COMMON.EMAIL_CHANGE'),
+      path: '/auth/email/change/request',
+      icon: 'email-sync',
     },
     login: {
       title: _('COMMON.LOGIN'),
       path: '/auth/login',
       icon: 'login',
     },
-    register: {
-      title: _('COMMON.REGISTER'),
-      path: '/auth/register',
+    signup: {
+      title: _('COMMON.SIGNUP'),
+      path: '/auth/signup',
       icon: 'account-plus',
     },
     logout: {

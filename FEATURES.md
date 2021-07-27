@@ -18,7 +18,7 @@ Elegance in simplicity
 Validate data on the client-side
 ```
 
-<img width="auto" src="libs/agx-assets/src/lib/images/misc/register.png">
+<img width="auto" src="libs/agx-assets/src/lib/images/misc/signup.png">
 
 <br/><br/>
 

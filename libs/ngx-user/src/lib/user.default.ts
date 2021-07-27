@@ -23,7 +23,4 @@ export const DefaultUserState: UserState = {
   role: null,
   permissions: [],
   groupId: null,
-  isLoading: false,
-  hasError: false,
-  message: null,
 };

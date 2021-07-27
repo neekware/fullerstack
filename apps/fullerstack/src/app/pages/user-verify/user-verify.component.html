@@ -20,7 +20,7 @@
 
     <mat-divider class="mt1"></mat-divider>
 
-    <div class="mt2" fxLayout="row">
+    <div *ngIf="!auth.state.isLoggedIn" class="mt2" fxLayout="row">
       <span>
         [
         <a routerLink="/auth/login" class="no-underline"> {{ 'COMMON.LOGIN' | translate }} </a>
@@ -30,6 +30,20 @@
       <span>
         [
         <a routerLink="/auth/password/reset/request" class="no-underline"> {{ 'COMMON.FORGOT_PASSWORD' | translate }} </a>
+        ]
+      </span>
+    </div>
+
+    <div *ngIf="auth.state.isLoggedIn" class="mt2" fxLayout="row">
+      <span>
+        [
+        <a routerLink="/user/profile/update" class="no-underline"> {{ 'COMMON.PROFILE' | translate }} </a>
+        ]
+      </span>
+      <div fxFlex></div>
+      <span>
+        [
+        <a routerLink="/" class="no-underline"> {{ 'COMMON.HOME' | translate }} </a>
         ]
       </span>
     </div>
