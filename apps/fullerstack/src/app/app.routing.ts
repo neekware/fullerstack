@@ -75,6 +75,7 @@ export const AppRoutes: Routes = [
     path: 'auth/signup',
     component: SignupComponent,
     canActivate: [AuthAnonymousGuard],
+    canDeactivate: [DeactivateGuard],
     data: {
       title: _('APP.SIGNUP'),
     },

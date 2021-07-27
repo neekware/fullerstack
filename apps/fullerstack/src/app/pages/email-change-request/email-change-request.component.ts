@@ -10,14 +10,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
 import { UserService, UserState } from '@fullerstack/ngx-user';
 import { ValidationService } from '@fullerstack/ngx-util';
-import { Subject, debounceTime, takeUntil } from 'rxjs';
+import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-email-change-request',
   templateUrl: './email-change-request.component.html',
   styleUrls: ['./email-change-request.component.scss'],
+  providers: [ConfirmationDialogService],
 })
 export class EmailChangeRequestComponent implements OnInit, OnDestroy {
   form: FormGroup;
@@ -32,7 +34,8 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
     readonly formBuilder: FormBuilder,
     readonly validation: ValidationService,
     readonly auth: AuthService,
-    readonly user: UserService
+    readonly user: UserService,
+    readonly confirm: ConfirmationDialogService
   ) {}
 
   ngOnInit() {
@@ -84,6 +87,15 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
           }
         },
       });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.form?.disabled && this.form?.dirty && this.auth.state.isLoggedIn) {
+      const title = _('COMMON.LEAVE_PAGE');
+      const info = _('WARN.DISCARD_CHANGES_ACTION');
+      return this.confirm.confirmation(title, info);
+    }
+    return true;
   }
 
   ngOnDestroy() {

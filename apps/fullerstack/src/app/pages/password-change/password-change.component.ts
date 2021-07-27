@@ -11,13 +11,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
 import { ValidationService } from '@fullerstack/ngx-util';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-password-change',
   templateUrl: './password-change.component.html',
   styleUrls: ['./password-change.component.scss'],
+  providers: [ConfirmationDialogService],
 })
 export class PasswordChangeComponent implements OnInit, OnDestroy {
   form: FormGroup;
@@ -38,7 +40,8 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
     readonly route: ActivatedRoute,
     readonly formBuilder: FormBuilder,
     readonly validation: ValidationService,
-    readonly auth: AuthService
+    readonly auth: AuthService,
+    readonly confirm: ConfirmationDialogService
   ) {}
 
   ngOnInit() {
@@ -88,6 +91,15 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
           }
         },
       });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.form?.disabled && this.form?.dirty && this.auth.state.isLoggedIn) {
+      const title = _('COMMON.LEAVE_PAGE');
+      const info = _('WARN.DISCARD_CHANGES_ACTION');
+      return this.confirm.confirmation(title, info);
+    }
+    return true;
   }
 
   ngOnDestroy() {

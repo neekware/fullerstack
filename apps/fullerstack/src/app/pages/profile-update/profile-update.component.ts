@@ -8,7 +8,6 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { ApiConstants } from '@fullerstack/agx-dto';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -16,7 +15,6 @@ import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
 import { UserService, UserState } from '@fullerstack/ngx-user';
-
 import { Observable, Subject, distinctUntilChanged, first, takeUntil } from 'rxjs';
 
 @Component({
@@ -83,15 +81,6 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
     this.form.patchValue({ id, firstName, lastName });
   }
 
-  canDeactivate(): Observable<boolean> | boolean {
-    if (!this.form?.disabled && this.form?.dirty && this.auth.state.isLoggedIn) {
-      const title = _('COMMON.LEAVE_PAGE');
-      const info = _('WARN.DISCARD_CHANGES_ACTION');
-      return this.confirm.confirmation(title, info);
-    }
-    return true;
-  }
-
   submit() {
     this.isLoading = true;
     const { id, firstName, lastName } = this.form.value;
@@ -103,6 +92,15 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
           this.isLoading = false;
         },
       });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.form?.disabled && this.form?.dirty && this.auth.state.isLoggedIn) {
+      const title = _('COMMON.LEAVE_PAGE');
+      const info = _('WARN.DISCARD_CHANGES_ACTION');
+      return this.confirm.confirmation(title, info);
+    }
+    return true;
   }
 
   ngOnDestroy() {

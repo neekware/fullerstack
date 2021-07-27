@@ -8,19 +8,19 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
 import { ValidationService } from '@fullerstack/ngx-util';
-
-import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
+import { Observable, Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
+  providers: [ConfirmationDialogService],
 })
 export class SignupComponent implements OnInit, OnDestroy {
   form: FormGroup;
@@ -34,7 +34,8 @@ export class SignupComponent implements OnInit, OnDestroy {
     public config: ConfigService,
     readonly i18n: I18nService,
     readonly validation: ValidationService,
-    readonly auth: AuthService
+    readonly auth: AuthService,
+    readonly confirm: ConfirmationDialogService
   ) {}
 
   ngOnInit() {
@@ -86,6 +87,15 @@ export class SignupComponent implements OnInit, OnDestroy {
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.form?.disabled && this.form?.dirty && this.auth.state.isLoggedIn) {
+      const title = _('COMMON.LEAVE_PAGE');
+      const info = _('WARN.DISCARD_CHANGES_ACTION');
+      return this.confirm.confirmation(title, info);
+    }
+    return true;
   }
 
   ngOnDestroy() {
