@@ -7,9 +7,11 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { AuthService } from '@fullerstack/ngx-auth';
 import { AuthUserCredentialsInput } from '@fullerstack/ngx-gql/schema';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+
 import { Subject, first, takeUntil } from 'rxjs';
 
 @Component({
@@ -32,7 +34,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit(data: AuthUserCredentialsInput) {
-    this.auth.loginRequest$(data).pipe(first(), takeUntil(this.destroy$)).subscribe();
+    this.auth
+      .loginRequest$(data)
+      .pipe(first(), takeUntil(this.destroy$))
+      .subscribe({ next: () => this.auth.goTo(this.auth.authUrls.landingUrl) });
   }
 
   ngOnDestroy() {
