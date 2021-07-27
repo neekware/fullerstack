@@ -49,7 +49,7 @@
         <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine">
           {{ 'COMMON.SIGNUP' | translate }}
         </button>
-        <div *ngIf="auth.msg.isError" class="form-status" fxLayout="row" fxLayoutGap="10px">
+        <div *ngIf="auth.msg.isError && auth.msg.text" class="form-status" fxLayout="row" fxLayoutGap="10px">
           <mat-icon color="warn" svgIcon="alert"></mat-icon>
           <span>{{ auth.msg.text | translate }}!</span>
         </div>
