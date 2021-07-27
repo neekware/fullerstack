@@ -36,7 +36,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     readonly validation: ValidationService,
     readonly auth: AuthService,
     readonly confirm: ConfirmationDialogService
-  ) {}
+  ) {
+    this.auth.msg.reset();
+  }
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
