@@ -48,7 +48,6 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (resp) => {
-          this.isLoading = false;
           if (resp.ok) {
             this.icon = 'email-check';
             this.status = {
@@ -67,11 +66,13 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
         error: (err) => {
           // handler server errors
           this.icon = 'email-remove';
-          this.isLoading = false;
           this.status = {
             ok: false,
             message: err.error?.message || _('ERROR.AUTH.EMAIL_CHANGE_INVALID_LINK'),
           };
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

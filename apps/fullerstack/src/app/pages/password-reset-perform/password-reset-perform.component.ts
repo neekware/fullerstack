@@ -112,8 +112,6 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (status) => {
-          this.isLoading = false;
-
           if (status.ok) {
             this.status = { ...status, message: _('INFO.PASSWORD.RENEW_SUCCESS') };
             this.form.disable();
@@ -123,6 +121,9 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
               message: status.message || _('INFO.PASSWORD.PASSWORD_RENEW'),
             };
           }
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

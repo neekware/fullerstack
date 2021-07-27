@@ -88,6 +88,9 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
       .userSelfUpdateMutate$({ id, firstName, lastName })
       .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
+        next: () => {
+          this.form.markAsPristine();
+        },
         complete: () => {
           this.isLoading = false;
         },

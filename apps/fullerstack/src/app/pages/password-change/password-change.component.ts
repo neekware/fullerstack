@@ -78,8 +78,6 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (status) => {
-          this.isLoading = false;
-
           if (status.ok) {
             this.status = { ...status, message: _('SUCCESS.USER.PASSWORD_CHANGE') };
             this.form.disable();
@@ -89,6 +87,9 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
               message: status.message || _('ERROR.USER.PASSWORD_CHANGE'),
             };
           }
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

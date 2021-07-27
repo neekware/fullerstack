@@ -74,8 +74,6 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (status) => {
-          this.isLoading = false;
-
           if (status.ok) {
             this.status = { ...status, message: _('INFO.PASSWORD.RESET_SUCCESS') };
             this.form.disable();
@@ -85,6 +83,9 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
               message: status.message || _('ERROR.USER.EMAIL_CHANGE_REQUEST'),
             };
           }
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }
