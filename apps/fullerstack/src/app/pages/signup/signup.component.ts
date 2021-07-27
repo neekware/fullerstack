@@ -7,13 +7,12 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-
-import { tryGet } from '@fullerstack/agx-util';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
-import { AuthUserSignupInput } from '@fullerstack/ngx-gql/schema';
-import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-
+import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { ValidationService } from '@fullerstack/ngx-util';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -22,22 +21,67 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit, OnDestroy {
+  form: FormGroup;
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.SIGNUP');
   subtitle = _('COMMON.ACCOUNT_CREATE');
   icon = 'account-plus-outline';
 
-  constructor(public config: ConfigService, public auth: AuthService) {}
+  constructor(
+    readonly formBuilder: FormBuilder,
+    public config: ConfigService,
+    readonly i18n: I18nService,
+    readonly validation: ValidationService,
+    readonly auth: AuthService
+  ) {}
 
   ngOnInit() {
     if (this.auth.state.isLoggedIn) {
       const redirectUrl = tryGet(() => this.config.options.localConfig.signupLandingPageUrl, '/');
       this.auth.goTo(redirectUrl);
+    } else {
+      this.buildForm();
+      this.form.valueChanges.subscribe(() => this.auth.msg.reset());
     }
   }
 
-  submit(data: AuthUserSignupInput) {
-    this.auth.signupRequest$(data).pipe(takeUntil(this.destroy$)).subscribe();
+  private buildForm() {
+    this.form = this.formBuilder.group(
+      {
+        name: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(this.validation.NAME_MIN_LEN),
+            this.validation.validateFullName,
+          ],
+        ],
+        email: [
+          '',
+          [Validators.required, this.validation.validateEmail],
+          [this.auth.validateEmailAvailability()],
+        ],
+        password: ['', [Validators.required, this.validation.validatePassword]],
+        passwordConfirmation: ['', [Validators.required]],
+      },
+      { validators: this.validation.matchingPasswords }
+    );
+  }
+
+  submit() {
+    const { email, password, name } = this.form.value;
+    const { firstName, lastName } = tokenizeFullName(name);
+    // const language = this.i18n.currentLanguage;
+
+    this.auth
+      .signupRequest$({
+        email,
+        firstName,
+        lastName,
+        password,
+      })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   ngOnDestroy() {

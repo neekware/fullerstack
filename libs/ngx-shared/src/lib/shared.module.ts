@@ -9,7 +9,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { I18nModule } from '@fullerstack/ngx-i18n';
 import { MaterialModule } from '@fullerstack/ngx-material';
 
@@ -18,7 +17,6 @@ import { BlobComponent } from './component/blob/blob.component';
 import { CardComponent } from './component/card/card.component';
 import { ConfirmationDialogComponent } from './component/confirm/confirm.component';
 import { RippleComponent } from './component/ripple/ripple.component';
-import { SignupFormComponent } from './component/signup/signup-form.component';
 import { AutocompleteDirective } from './directive/autocomplete/autocomplete.directive';
 import { DebounceClickDirective } from './directive/debounce-click/debounce-click.directive';
 import { FormErrorDirective } from './directive/form-error/form-error-directive';
@@ -33,7 +31,6 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     BlobComponent,
     RippleComponent,
     ConfirmationDialogComponent,
-    SignupFormComponent,
     AutocompleteDirective,
     FormErrorDirective,
     TmpLetDirective,
@@ -46,7 +43,6 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     BlobComponent,
     RippleComponent,
     ConfirmationDialogComponent,
-    SignupFormComponent,
     AutocompleteDirective,
     FormErrorDirective,
     TmpLetDirective,
