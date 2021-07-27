@@ -18,3 +18,5 @@ export * from './lib/component/ripple/ripple.component';
 
 export * from './lib/service/confirm/confirm.service';
 export * from './lib/service/guard/deactivate.guard';
+
+export * from './lib/directive/form-error/form-error-directive';

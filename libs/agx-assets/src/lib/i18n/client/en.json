@@ -174,7 +174,7 @@
   "ERROR.USER.VERIFY": "Failed to verify user",
   "ERROR.USER.VERIFY_INVALID_LINK": "Failed to verify user.  Invalid or expired link",
   "ERROR.USER.VERIFY_REQUEST": "Failed to send verification request",
-  "INFO.ACTIVE_SESSIONS_RESET": "Reset active sessions on security concern",
+  "INFO.ACTIVE_SESSIONS_RESET": "Reset active sessions on security concerns",
   "INFO.CONTACT_MESSAGE_SENT": "We have received your email. However, we are unable to respond to all messages. But we will try!",
   "INFO.EMAIL.CHANGE_SUCCESS": "Email has changed",
   "INFO.NEW_EMAIL_REQUEST_SENT": "We sent you instruction on activating your email address",
