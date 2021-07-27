@@ -13,7 +13,7 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ValidationService } from '@fullerstack/ngx-util';
 
-import { Subject, filter, first, switchMap, takeUntil } from 'rxjs';
+import { Subject, filter, first, map, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-email-change-perform',
@@ -27,8 +27,6 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
   icon = 'email';
   isLoading = false;
   status = { ok: true, message: '' };
-  emailChangeLinkValid = false;
-  token: string;
 
   constructor(
     readonly route: ActivatedRoute,
@@ -39,21 +37,19 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.paramMap
       .pipe(
-        filter((params) => !!params.get('token')),
+        map((params) => params.get('token')),
+        filter((token) => !!token),
         first(),
-        switchMap((params) => {
+        switchMap((token) => {
           this.isLoading = true;
-          this.token = params.get('token');
-          return this.auth.verifyEmailChangeRequest$({ token: this.token });
+          return this.auth.emailChangePerform$({ token });
         }),
         takeUntil(this.destroy$)
       )
       .subscribe({
         next: (resp) => {
           this.isLoading = false;
-          if (resp.ok) {
-            this.emailChangeLinkValid = true;
-          } else {
+          if (!resp.ok) {
             // handle known errors
             this.icon = 'account-alert-outline';
             this.status = {

@@ -35,6 +35,7 @@ import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 
 import { AboutComponent } from './pages/about/about.component';
+import { EmailChangePerformComponent } from './pages/email-change-perform/email-change-perform.component';
 import { EmailChangeRequestComponent } from './pages/email-change-request/email-change-request.component';
 import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -60,6 +61,7 @@ import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
     PasswordResetRequestComponent,
     PasswordResetPerformComponent,
     EmailChangeRequestComponent,
+    EmailChangePerformComponent,
     ForexComponent,
     PortfolioComponent,
     TrendComponent,
