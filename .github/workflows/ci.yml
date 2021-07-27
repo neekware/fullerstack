@@ -30,7 +30,7 @@ jobs:
   # Continuos Integration
   #
   integration:
-    timeout-minutes: 7
+    timeout-minutes: 10
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
