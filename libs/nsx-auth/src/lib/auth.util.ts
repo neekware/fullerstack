@@ -9,9 +9,12 @@
 import { JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
 import { Base64, HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
+
 import { ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+
 import { User } from '@prisma/client';
+
 import * as jwt from 'jsonwebtoken';
 
 export function convertExecutionContextToGqlContext(context: ExecutionContext) {
@@ -52,6 +55,7 @@ export function getLocalesFromContext(context: ExecutionContext): string[] {
   return langs;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function encodeURITokenComponent(payload: any, secret: string, expiry = '1d'): string {
   const singedToken = jwt.sign(payload, secret, { expiresIn: expiry });
   const b64Encoded = Base64.encode(singedToken);

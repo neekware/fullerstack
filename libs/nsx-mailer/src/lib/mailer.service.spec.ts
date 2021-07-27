@@ -12,6 +12,7 @@ import { Test } from '@nestjs/testing';
 import { MailerService } from './mailer.service';
 
 const getMockConfigService = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   get: (key: string): string => '',
 };
 
