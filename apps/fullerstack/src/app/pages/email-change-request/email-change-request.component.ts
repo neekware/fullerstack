@@ -41,27 +41,26 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
     this.buildForm();
     this.user.stateSub$.pipe(debounceTime(200), takeUntil(this.destroy$)).subscribe({
       next: (state) => {
-        this.buildForm(state);
+        this.updateForm(state);
       },
     });
   }
 
-  private buildForm(state?: UserState) {
-    const caseInsensitiveEmail = true;
-    const errorKey = 'emailInUse';
-
+  private buildForm() {
     this.form = this.formBuilder.group({
-      currentEmail: [{ value: state?.email || '', disabled: true }],
+      currentEmail: [{ value: '', disabled: true }],
       email: [
         '',
-        [
-          Validators.required,
-          this.validation.validateEmail,
-          this.validation.matchOtherThan(state?.email, caseInsensitiveEmail, errorKey),
-        ],
+        [Validators.required, this.validation.validateEmail],
         [this.auth.validateEmailAvailability()],
       ],
       password: ['', [Validators.required], [this.auth.validateUserPassword()]],
+    });
+  }
+
+  private updateForm(state: UserState) {
+    this.form.patchValue({
+      currentEmail: state.email,
     });
   }
 

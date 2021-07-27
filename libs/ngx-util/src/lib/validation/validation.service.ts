@@ -150,7 +150,7 @@ export class ValidationService {
     caseInsensitive = true,
     operationType = compareType.sameAs,
     errorCode = 'inputNotAsExpected'
-  ): ValidationErrors | null => {
+  ): ValidatorFn => {
     return (control: AbstractControl): { [key: string]: any } => {
       if (control.pristine) {
         return null;
@@ -175,18 +175,18 @@ export class ValidationService {
   // Input must be different than the given value
   matchOtherThan = (
     givenValue: any,
-    caseInsensitive = true,
-    error = 'inputShouldDiffer'
-  ): ValidationErrors | null => {
+    error = 'inputShouldDiffer',
+    caseInsensitive = true
+  ): ValidatorFn => {
     return this.compareFor(givenValue, caseInsensitive, compareType.otherThan, error);
   };
 
   // Input must be the same as the expected value
   matchExpected = (
     givenValue: any,
-    caseInsensitive = true,
-    error = 'inputNotAsExpected'
-  ): ValidationErrors | null => {
+    error = 'inputNotAsExpected',
+    caseInsensitive = true
+  ): ValidatorFn => {
     return this.compareFor(givenValue, caseInsensitive, compareType.sameAs, error);
   };
 }

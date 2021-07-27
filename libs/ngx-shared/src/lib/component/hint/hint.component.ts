@@ -51,7 +51,9 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
   error: string = undefined;
   ltrDirection = true;
 
-  constructor(readonly i18n: I18nService) {}
+  constructor(readonly i18n: I18nService) {
+    this.setHintOrError(!!this.error, !!this.hint);
+  }
 
   reset(): void {
     this.error = undefined;
@@ -89,22 +91,30 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
     }
   }
 
+  private setHintOrError(error: boolean, hint: boolean) {
+    if (error) {
+      this.hasError$.next(error);
+      this.hasHint$.next(false);
+    } else if (hint) {
+      this.hasHint$.next(hint);
+      this.hasError$.next(false);
+    }
+  }
+
   process() {
     for (const error in this.control.errors) {
       const hasError = Object.prototype.hasOwnProperty.call(this.control.errors, error);
       if ((hasError && this._touched) || !this.control.pristine) {
         this.processFeedback(error, this.control.errors[error]);
-        this.hasError$.next(!!this.error);
-        this.hasHint$.next(this.hint && !this.error);
+        this.setHintOrError(!!this.error, !!this.hint);
         return;
       }
     }
-    this.hasError$.next(false);
-    this.hasHint$.next(!!this.hint);
+    this.setHintOrError(false, !!this.hint);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  processFeedback(validatorName: string, validatorValue?: any) {
+  private processFeedback(validatorName: string, validatorValue?: any) {
     validatorName = validatorName === 'pattern' ? 'invalidFormat' : validatorName;
 
     if (validatorName === 'minlength') {
@@ -121,7 +131,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
     );
   }
 
-  handleMinimumLength(requiredLength: number) {
+  private handleMinimumLength(requiredLength: number) {
     const message = validatorHintMessage('minlength');
     this.i18n.translate
       .get(message, { __value__: requiredLength })
@@ -131,7 +141,7 @@ export class HintComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
       });
   }
 
-  handleMaximumLength(requiredLength: number) {
+  private handleMaximumLength(requiredLength: number) {
     const message = validatorHintMessage('maxlength');
     this.i18n.translate
       .get(message, { __value__: requiredLength })
