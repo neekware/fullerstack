@@ -20,27 +20,23 @@
           </mat-option>
         </mat-select>
         <mat-error errorDirective [control]="form?.controls?.language" [isTouched]="form?.controls?.language?.touched"></mat-error>
+        <mat-hint align="end">{{ 'INFO.ACCOUNT_LANGUAGE' | translate }}</mat-hint>
       </mat-form-field>
 
       <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
         <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine" class="button-30p">
           {{ 'COMMON.LANGUAGE_CHANGE' | translate }}
         </button>
-        <div *ngIf="!status.ok" class="form-status" fxLayout="row" fxLayoutGap="10px">
+        <div *ngIf="auth.msg.isError && auth.msg.text" class="form-status" fxLayout="row" fxLayoutGap="10px">
           <mat-icon color="warn" svgIcon="alert"></mat-icon>
-          <span>{{ status.message | translate }}!</span>
+          <span>{{ auth.msg.text | translate }}!</span>
+        </div>
+        <div *ngIf="user.msg.isSuccess && auth.msg.text" class="form-status" fxLayout="row" fxLayoutGap="10px">
+          <mat-icon color="green" svgIcon="check-circle-outline"></mat-icon>
+          <span>{{ user.msg.text | translate }}!</span>
         </div>
       </div>
     </form>
-
-    <fullerstack-blob
-      *ngIf="form?.disabled"
-      class="mt1"
-      text="{{ status.message | translate }}."
-      icon="check-circle-outline"
-      iconColor="green"
-    >
-    </fullerstack-blob>
 
     <mat-divider class="mt1"></mat-divider>
 

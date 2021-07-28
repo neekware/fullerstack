@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "updatedAt" DROP DEFAULT,
-ALTER COLUMN "lastLoginAt" DROP DEFAULT;

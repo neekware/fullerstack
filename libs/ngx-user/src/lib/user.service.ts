@@ -65,7 +65,7 @@ export class UserService {
       .subscribe({
         next: (state) => {
           this.msg.reset();
-          if (state?.language?.length && state?.language !== this.i18n.currentLanguage) {
+          if (state?.language !== this.i18n.currentLanguage) {
             this.i18n.setCurrentLanguage(state.language);
           }
         },

@@ -16,7 +16,7 @@ import {
   ValidationService,
 } from '@fullerstack/ngx-shared';
 import { UserService } from '@fullerstack/ngx-user';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, first, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-language-change',
@@ -30,7 +30,6 @@ export class LanguageChangeComponent implements OnInit, OnDestroy {
   title = _('COMMON.SETTINGS');
   subtitle = _('COMMON.LANGUAGE_CHANGE');
   icon = 'translate';
-  status = { ok: true, message: '' };
 
   constructor(
     readonly formBuilder: FormBuilder,
@@ -59,6 +58,14 @@ export class LanguageChangeComponent implements OnInit, OnDestroy {
         }
       },
     });
+
+    this.i18n.languageChanges$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (language) => {
+        if (language) {
+          this.patchForm(language);
+        }
+      },
+    });
   }
 
   private buildForm() {
@@ -82,7 +89,7 @@ export class LanguageChangeComponent implements OnInit, OnDestroy {
   }
 
   private externallyChanged(): boolean {
-    return this.form?.controls.language.value !== this.user?.state.language;
+    return this.form?.controls.language.value !== this.user.state.language;
   }
 
   locallySelected() {
@@ -90,26 +97,32 @@ export class LanguageChangeComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.auth
-      .passwordChange$({
-        oldPassword: this.form.value.oldPassword,
-        newPassword: this.form.value.password,
-        resetOtherSessions: this.form.value?.resetOtherSessions,
+    this.user
+      .userSelfUpdateMutate$({
+        id: this.form?.controls.id.value,
+        language: this.form?.controls.language.value,
       })
-      .pipe(takeUntil(this.destroy$))
+      .pipe(first(), takeUntil(this.destroy$))
       .subscribe({
-        next: (status) => {
-          if (status.ok) {
-            this.status = { ...status, message: _('SUCCESS.USER.PASSWORD_CHANGE') };
-            this.form.disable();
-          } else {
-            this.status = {
-              ...status,
-              message: status.message || _('ERROR.USER.PASSWORD_CHANGE'),
-            };
-          }
+        next: () => {
+          this.form.markAsPristine();
         },
       });
+
+    // .pipe(takeUntil(this.destroy$))
+    // .subscribe({
+    //   next: (status) => {
+    //     if (status.ok) {
+    //       this.status = { ...status, message: _('SUCCESS.USER.LANGUAGE_CHANGE') };
+    //       this.form.disable();
+    //     } else {
+    //       this.status = {
+    //         ...status,
+    //         message: status.message || _('ERROR.USER.LANGUAGE_CHANGE'),
+    //       };
+    //     }
+    //   },
+    // });
   }
 
   canDeactivate(): Observable<boolean> | boolean {

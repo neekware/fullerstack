@@ -54,7 +54,7 @@ model User {
   isActive       Boolean      @default(false)
   firstName      String       @default("")
   lastName       String       @default("")
-  language       String       @default("")
+  language       String       @default("en")
   role           Role         @default(USER)
   permissions    Permission[]
   groupId        String?
