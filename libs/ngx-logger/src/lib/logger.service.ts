@@ -9,15 +9,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
-
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
-
 import { merge as ldNestedMerge } from 'lodash-es';
-
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultLoggerConfig } from './logger.default';

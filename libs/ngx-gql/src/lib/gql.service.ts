@@ -9,16 +9,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
-
 import { merge as ldNestedMerge } from 'lodash-es';
-
 import { DeepReadonly } from 'ts-essentials';
 
 import { GraphQLClient } from './gql.client';

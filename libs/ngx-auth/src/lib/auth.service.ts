@@ -9,7 +9,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { JwtDto } from '@fullerstack/agx-dto';
 import {
   ApplicationConfig,
@@ -52,12 +51,9 @@ import { JwtService } from '@fullerstack/ngx-jwt';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
-
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
-
 import { Observable, Subject, of, timer } from 'rxjs';
 import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
-
 import { DeepReadonly } from 'ts-essentials';
 
 import {
@@ -355,25 +351,27 @@ export class AuthService implements OnDestroy {
   }
 
   logoutRequest(onError = false) {
-    this.logger.debug(`[${this.nameSpace}] Logout request sent ...`);
-    this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_LOGIN_REQ_SENT);
+    if (this.state.isLoggedIn) {
+      this.logger.debug(`[${this.nameSpace}] Logout request sent ...`);
+      this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_LOGIN_REQ_SENT);
 
-    this.gql.client
-      .request<AuthStatus>(AuthUserLogoutMutation)
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        error: (err) => {
-          this.logger.error(`[${this.nameSpace}] `, err);
-        },
-        complete: () => {
-          if (!onError) {
-            this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
-            this.msg.successToast(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
-          } else {
-            this.msg.errorToast(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
-          }
-        },
-      });
+      this.gql.client
+        .request<AuthStatus>(AuthUserLogoutMutation)
+        .pipe(first(), takeUntil(this.destroy$))
+        .subscribe({
+          error: (err) => {
+            this.logger.error(`[${this.nameSpace}] `, err);
+          },
+          complete: () => {
+            if (!onError) {
+              this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
+              this.msg.successToast(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
+            } else {
+              this.msg.errorToast(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
+            }
+          },
+        });
+    }
   }
 
   verifyUserRequest$(input: AuthUserVerifyInput): Observable<AuthStatus> {

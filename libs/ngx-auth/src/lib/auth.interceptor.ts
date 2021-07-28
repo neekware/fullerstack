@@ -14,7 +14,11 @@ import { GqlErrorsHandler, GqlOperationNameKey } from '@fullerstack/ngx-gql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { AuthLogoutOperation, AuthRefreshTokenOperation } from './auth.default';
+import {
+  AuthLogoutOperation,
+  AuthRefreshTokenOperation,
+  AuthSignupOperation,
+} from './auth.default';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -50,6 +54,8 @@ export class AuthInterceptor implements HttpInterceptor {
                 return of(null);
               case AuthLogoutOperation:
                 return of(null);
+              case AuthSignupOperation:
+                return throwError(() => errors);
             }
             return this.retryOperationPostRefreshToken(request, next);
           }

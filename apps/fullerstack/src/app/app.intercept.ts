@@ -7,7 +7,6 @@
  */
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AuthInterceptor } from '@fullerstack/ngx-auth';
 import { CachifyInterceptor } from '@fullerstack/ngx-cachify';
 import { GqlInterceptor } from '@fullerstack/ngx-gql';

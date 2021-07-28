@@ -7,7 +7,11 @@
  */
 
 import { getOperationName } from '@fullerstack/ngx-gql';
-import { AuthTokenRefreshMutation, AuthUserLogoutMutation } from '@fullerstack/ngx-gql/operations';
+import {
+  AuthTokenRefreshMutation,
+  AuthUserLogoutMutation,
+  AuthUserSignupMutation,
+} from '@fullerstack/ngx-gql/operations';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel } from '@fullerstack/ngx-logger';
 import { MessageMap } from '@fullerstack/ngx-msg';
@@ -24,6 +28,7 @@ export const DefaultAuthConfig: AuthConfig = {
   logState: false,
 };
 
+export const AuthSignupOperation = getOperationName(AuthUserSignupMutation);
 export const AuthRefreshTokenOperation = getOperationName(AuthTokenRefreshMutation);
 export const AuthLogoutOperation = getOperationName(AuthUserLogoutMutation);
 

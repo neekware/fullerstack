@@ -7,11 +7,8 @@
  */
 
 import { BaseModelDto, Paginated } from '@fullerstack/nsx-common';
-
 import { Directive, Field, ID, InputType, ObjectType } from '@nestjs/graphql';
-
 import { Permission, Role, User } from '@prisma/client';
-
 import { IsEmail } from 'class-validator';
 
 /**

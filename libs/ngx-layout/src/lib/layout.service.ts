@@ -10,7 +10,6 @@ import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/l
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-
 import { AuthService } from '@fullerstack/ngx-auth';
 import {
   ApplicationConfig,
@@ -22,12 +21,9 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { MenuService } from '@fullerstack/ngx-menu';
 import { StoreService } from '@fullerstack/ngx-store';
 import { UixService } from '@fullerstack/ngx-uix';
-
 import { merge as ldNestedMerge } from 'lodash-es';
-
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultLayoutConfig, DefaultLayoutState } from './layout.default';

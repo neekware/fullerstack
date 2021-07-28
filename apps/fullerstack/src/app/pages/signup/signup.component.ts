@@ -8,7 +8,6 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -18,8 +17,7 @@ import {
   ProgressService,
   ValidationService,
 } from '@fullerstack/ngx-shared';
-
-import { Observable, Subject, distinctUntilChanged, takeUntil } from 'rxjs';
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-signup',
@@ -96,15 +94,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe();
-  }
-
-  canDeactivate(): Observable<boolean> | boolean {
-    if (!this.form?.disabled && this.form?.dirty && this.auth.state.isLoggedIn) {
-      const title = _('COMMON.LEAVE_PAGE');
-      const info = _('WARN.DISCARD_CHANGES_ACTION');
-      return this.confirm.confirmation(title, info);
-    }
-    return true;
   }
 
   ngOnDestroy() {

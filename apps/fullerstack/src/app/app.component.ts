@@ -8,7 +8,6 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
 import { HealthCheck } from '@fullerstack/agx-dto';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -18,7 +17,6 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { StoreService } from '@fullerstack/ngx-store';
 import { UixService } from '@fullerstack/ngx-uix';
 import { UserService } from '@fullerstack/ngx-user';
-
 import { Observable } from 'rxjs';
 
 @Component({
