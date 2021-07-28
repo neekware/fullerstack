@@ -9,6 +9,7 @@
 import { SecurityConfig } from '@fullerstack/nsx-auth';
 import { I18nConfig } from '@fullerstack/nsx-i18n';
 import { MailerConfig } from '@fullerstack/nsx-mailer';
+
 import { NestApplicationOptions } from '@nestjs/common';
 import { ConfigModuleOptions } from '@nestjs/config';
 import { GqlModuleOptions } from '@nestjs/graphql';
@@ -28,8 +29,8 @@ const securityConfig: SecurityConfig = {
 };
 
 const graphqlConfig: GqlModuleOptions = {
-  debug: true,
-  playground: true,
+  debug: false,
+  playground: false,
   autoSchemaFile: 'apps/api/src/prisma/schema.gql',
   cors: {
     credentials: true,
