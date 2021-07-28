@@ -9,7 +9,6 @@
 import { SecurityConfig } from '@fullerstack/nsx-auth';
 import { I18nConfig } from '@fullerstack/nsx-i18n';
 import { MailerConfig } from '@fullerstack/nsx-mailer';
-
 import { NestApplicationOptions } from '@nestjs/common';
 import { ConfigModuleOptions } from '@nestjs/config';
 import { GqlModuleOptions } from '@nestjs/graphql';

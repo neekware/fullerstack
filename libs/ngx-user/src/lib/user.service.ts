@@ -106,19 +106,17 @@ export class UserService {
     this.msg.reset();
     this.logger.debug(`[${this.nameSpace}] Self query request sent ...`);
 
-    return this.gql.client
-      .request<UserState>(UserSelfQuery, { id })
-      .pipe(
-        map((resp) => {
-          this.logger.debug(`[${this.nameSpace}] Self query request success ...`);
-          return this.store.setState<UserState>(this.claimId, { ...DefaultUserState, ...resp });
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          this.logger.error(`[${this.nameSpace}] Self query request failed ...`, err);
-          this.msg.setMsg({ text: err.topError?.message, level: LogLevel.error });
-          return of(this.state as UserState);
-        })
-      );
+    return this.gql.client.request<UserState>(UserSelfQuery, { id }).pipe(
+      map((resp) => {
+        this.logger.debug(`[${this.nameSpace}] Self query request success ...`);
+        return this.store.setState<UserState>(this.claimId, { ...DefaultUserState, ...resp });
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        this.logger.error(`[${this.nameSpace}] Self query request failed ...`, err);
+        this.msg.setMsg({ text: err.topError?.message, level: LogLevel.error });
+        return of(this.state as UserState);
+      })
+    );
   }
 
   userSelfUpdateMutate$(input: UserSelfUpdateInput): Observable<UserState> {
@@ -126,22 +124,20 @@ export class UserService {
     this.store.setState(this.claimId, this.state);
     this.logger.debug(`[${this.nameSpace}] Self update request sent ...`);
 
-    return this.gql.client
-      .request<UserState>(UserSelfUpdateMutation, { input })
-      .pipe(
-        map((resp) => {
-          this.logger.debug(`[${this.nameSpace}] Self update request success ...`);
-          this.msg.setMsg({ text: _('SUCCESS.USER.UPDATE'), level: LogLevel.success });
-          return this.store.setState<UserState>(this.claimId, { ...DefaultUserState, ...resp });
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          this.logger.error(`[${this.nameSpace}] Self update request failed ...`, err);
-          this.msg.setMsg({
-            text: err.topError?.message || _('ERROR.USER.UPDATE'),
-            level: LogLevel.error,
-          });
-          return of(this.state as UserState);
-        })
-      );
+    return this.gql.client.request<UserState>(UserSelfUpdateMutation, { input }).pipe(
+      map((resp) => {
+        this.logger.debug(`[${this.nameSpace}] Self update request success ...`);
+        this.msg.setMsg({ text: _('SUCCESS.USER.UPDATE'), level: LogLevel.success });
+        return this.store.setState<UserState>(this.claimId, { ...DefaultUserState, ...resp });
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        this.logger.error(`[${this.nameSpace}] Self update request failed ...`, err);
+        this.msg.setMsg({
+          text: err.topError?.message || _('ERROR.USER.UPDATE'),
+          level: LogLevel.error,
+        });
+        return of(this.state as UserState);
+      })
+    );
   }
 }
