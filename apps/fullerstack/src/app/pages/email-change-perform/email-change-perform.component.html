@@ -9,7 +9,7 @@
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
-    [progress]="isLoading"
+    [progress]="progress.state$ | async"
   >
     <fullerstack-blob
       *ngIf="status.ok"

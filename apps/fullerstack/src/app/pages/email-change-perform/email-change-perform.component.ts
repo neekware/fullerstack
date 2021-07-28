@@ -10,7 +10,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ValidationService } from '@fullerstack/ngx-shared';
+import { ProgressService, ValidationService } from '@fullerstack/ngx-shared';
 import { UserService } from '@fullerstack/ngx-user';
 import { Subject, filter, first, map, switchMap, takeUntil } from 'rxjs';
 
@@ -24,14 +24,14 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
   title = _('COMMON.EMAIL');
   subtitle = _('COMMON.ACCOUNT.EMAIL_CHANGE');
   icon = 'email';
-  isLoading = false;
   status = { ok: true, message: '' };
 
   constructor(
     readonly route: ActivatedRoute,
     readonly validation: ValidationService,
     readonly auth: AuthService,
-    readonly user: UserService
+    readonly user: UserService,
+    readonly progress: ProgressService
   ) {}
 
   ngOnInit() {
@@ -40,10 +40,7 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
         map((params) => params.get('token')),
         filter((token) => !!token),
         first(),
-        switchMap((token) => {
-          this.isLoading = true;
-          return this.auth.emailChangePerform$({ token });
-        }),
+        switchMap((token) => this.auth.emailChangePerform$({ token })),
         takeUntil(this.destroy$)
       )
       .subscribe({
@@ -70,9 +67,6 @@ export class EmailChangePerformComponent implements OnInit, OnDestroy {
             ok: false,
             message: err.error?.message || _('ERROR.AUTH.EMAIL_CHANGE_INVALID_LINK'),
           };
-        },
-        complete: () => {
-          this.isLoading = false;
         },
       });
   }

@@ -12,7 +12,11 @@ import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ConfirmationDialogService, ValidationService } from '@fullerstack/ngx-shared';
+import {
+  ConfirmationDialogService,
+  ProgressService,
+  ValidationService,
+} from '@fullerstack/ngx-shared';
 import { Observable, Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
@@ -34,6 +38,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     readonly i18n: I18nService,
     readonly validation: ValidationService,
     readonly auth: AuthService,
+    readonly progress: ProgressService,
     readonly confirm: ConfirmationDialogService
   ) {
     this.auth.msg.reset();

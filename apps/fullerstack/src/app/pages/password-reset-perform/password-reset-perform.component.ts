@@ -11,8 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ValidationService } from '@fullerstack/ngx-shared';
-import { Subject, filter, first, switchMap, takeUntil } from 'rxjs';
+import { ProgressService, ValidationService } from '@fullerstack/ngx-shared';
+import { Subject, filter, first, map, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-password-reset-perform',
@@ -25,7 +25,6 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
   title = _('COMMON.RECOVERY');
   subtitle = _('COMMON.PASSWORD.RENEW');
   icon = 'lock-open-outline';
-  isLoading = false;
   status = { ok: true, message: '' };
   resetLinkValid = false;
   token: string;
@@ -39,24 +38,24 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
     readonly route: ActivatedRoute,
     readonly formBuilder: FormBuilder,
     readonly validation: ValidationService,
-    readonly auth: AuthService
+    readonly auth: AuthService,
+    readonly progress: ProgressService
   ) {}
 
   ngOnInit() {
     this.route.paramMap
       .pipe(
-        filter((params) => !!params.get('token')),
+        map((params) => params.get('token')),
+        filter((token) => !!token),
         first(),
-        switchMap((params) => {
-          this.isLoading = true;
-          this.token = params.get('token');
-          return this.auth.verifyPasswordResetRequest$({ token: this.token });
+        switchMap((token) => {
+          this.token = token;
+          return this.auth.verifyPasswordResetRequest$({ token });
         }),
         takeUntil(this.destroy$)
       )
       .subscribe({
         next: (resp) => {
-          this.isLoading = false;
           if (resp.ok) {
             this.resetLinkValid = true;
           } else {
@@ -71,7 +70,6 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
         error: (err) => {
           // handler server errors
           this.icon = 'account-alert-outline';
-          this.isLoading = false;
           this.status = {
             ok: false,
             message: err.error?.message || _('WARN.USER.VERIFICATION_FAILURE'),
@@ -102,7 +100,6 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.isLoading = true;
     this.auth
       .passwordResetPerform$({
         token: this.token,
@@ -121,9 +118,6 @@ export class PasswordResetPerformComponent implements OnInit, OnDestroy {
               message: status.message || _('INFO.PASSWORD.PASSWORD_RENEW'),
             };
           }
-        },
-        complete: () => {
-          this.isLoading = false;
         },
       });
   }

@@ -10,7 +10,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ValidationService } from '@fullerstack/ngx-shared';
+import { ProgressService, ValidationService } from '@fullerstack/ngx-shared';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -24,13 +24,13 @@ export class PasswordResetRequestComponent implements OnInit, OnDestroy {
   title = _('COMMON.PASSWORD');
   subtitle = _('COMMON.PASSWORD.RESET_REQUEST');
   icon = 'lock-open-outline';
-  isLoading = false;
   status = { ok: true, message: '' };
 
   constructor(
     readonly formBuilder: FormBuilder,
     readonly validation: ValidationService,
-    readonly auth: AuthService
+    readonly auth: AuthService,
+    readonly progress: ProgressService
   ) {}
 
   ngOnInit() {
@@ -52,7 +52,6 @@ export class PasswordResetRequestComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.isLoading = true;
     this.auth
       .passwordResetRequest$(this.form.value)
       .pipe(takeUntil(this.destroy$))
@@ -67,9 +66,6 @@ export class PasswordResetRequestComponent implements OnInit, OnDestroy {
               message: status.message || _('INFO.PASSWORD.RESET_SUCCESS'),
             };
           }
-        },
-        complete: () => {
-          this.isLoading = false;
         },
       });
   }

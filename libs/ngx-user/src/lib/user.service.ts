@@ -144,12 +144,4 @@ export class UserService {
         })
       );
   }
-
-  // userQuery(id: string): Observable<User> {
-  //   this.isLoading = true;
-  //   this.msg.reset();
-  //   return this.gql.client
-  //     .request<User>(UserQuery, { id })
-  //     .pipe(tap(() => (this.isLoading = false)));
-  // }
 }

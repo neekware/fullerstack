@@ -11,7 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ConfirmationDialogService, ValidationService } from '@fullerstack/ngx-shared';
+import {
+  ConfirmationDialogService,
+  ProgressService,
+  ValidationService,
+} from '@fullerstack/ngx-shared';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -26,7 +30,6 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
   title = _('COMMON.PASSWORD');
   subtitle = _('COMMON.PASSWORD_CHANGE');
   icon = 'lock-open-outline';
-  isLoading = false;
   status = { ok: true, message: '' };
   token: string;
 
@@ -40,6 +43,7 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
     readonly formBuilder: FormBuilder,
     readonly validation: ValidationService,
     readonly auth: AuthService,
+    readonly progress: ProgressService,
     readonly confirm: ConfirmationDialogService
   ) {}
 
@@ -67,7 +71,6 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.isLoading = true;
     this.auth
       .passwordChange$({
         oldPassword: this.form.value.oldPassword,
@@ -86,9 +89,6 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
               message: status.message || _('ERROR.USER.PASSWORD_CHANGE'),
             };
           }
-        },
-        complete: () => {
-          this.isLoading = false;
         },
       });
   }

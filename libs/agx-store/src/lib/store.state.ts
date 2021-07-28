@@ -78,13 +78,11 @@ export class StoreState<T = StoreStateType> {
    * this.store.setState(this.claimId, {
    *  ...DefaultAuthState,
    *  isSigningUp: true,
-   *  isLoading: true,
    * }, 'AUTH_SIGNUP_REQUEST');
    *
    * this.store.setState(this.claimId, (state) => {
    *  ...state[this.sliceName],
    *  isSigningUp: true,
-   *  isLoading: true,
    * }, 'AUTH_SIGNUP_REQUEST');
    */
   setState<K = any>(claimId: string, updater: StoreStateReducer<T, K>, action?: string): K;

@@ -7,11 +7,11 @@
  */
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AuthInterceptor } from '@fullerstack/ngx-auth';
 import { CachifyInterceptor } from '@fullerstack/ngx-cachify';
 import { GqlInterceptor } from '@fullerstack/ngx-gql';
 import { I18nInterceptor } from '@fullerstack/ngx-i18n';
+import { ProgressInterceptor } from '@fullerstack/ngx-shared';
 
 /**
  * List of interceptors. Order is very important.
@@ -20,6 +20,12 @@ import { I18nInterceptor } from '@fullerstack/ngx-i18n';
  * `HTTP_INTERCEPTORS` token is used to register `multiple` interceptors. (hence `multi: true`)
  */
 export const httpInterceptorProvidersOrderedList = [
+  /**
+   * Progress Interceptor, tracks the progress of all pending requests.
+   * When total progress is 100% then all pending requests are completed.
+   */
+  { provide: HTTP_INTERCEPTORS, useClass: ProgressInterceptor, multi: true },
+
   /**
    * I18n Interceptor, injects the language headers in every request.
    * The language is based on user's profile settings, then the browser's language.

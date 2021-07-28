@@ -10,7 +10,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ConfirmationDialogService, ValidationService } from '@fullerstack/ngx-shared';
+import {
+  ConfirmationDialogService,
+  ProgressService,
+  ValidationService,
+} from '@fullerstack/ngx-shared';
 import { UserService, UserState } from '@fullerstack/ngx-user';
 import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
 
@@ -26,7 +30,6 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
   title = _('COMMON.EMAIL');
   subtitle = _('COMMON.EMAIL.CHANGE_REQUEST');
   icon = 'email-sync';
-  isLoading = false;
   status = { ok: true, message: '' };
 
   constructor(
@@ -34,6 +37,7 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
     readonly validation: ValidationService,
     readonly auth: AuthService,
     readonly user: UserService,
+    readonly progress: ProgressService,
     readonly confirm: ConfirmationDialogService
   ) {}
 
@@ -65,7 +69,6 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.isLoading = true;
     const { email } = this.form.value;
 
     this.auth
@@ -82,9 +85,6 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
               message: status.message || _('ERROR.USER.EMAIL_CHANGE_REQUEST'),
             };
           }
-        },
-        complete: () => {
-          this.isLoading = false;
         },
       });
   }

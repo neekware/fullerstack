@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
+import { ProgressService } from '@fullerstack/ngx-shared';
 import { Subject } from 'rxjs';
 import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -25,12 +26,12 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
   status: string = _('SUCCESS.USER.VERIFY');
   icon = 'account-check-outline';
   isUserVerified = false;
-  isLoading = false;
 
   constructor(
     readonly route: ActivatedRoute,
     readonly i18n: I18nService,
-    readonly auth: AuthService
+    readonly auth: AuthService,
+    readonly progress: ProgressService
   ) {}
 
   ngOnInit() {
@@ -39,7 +40,6 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
         filter((params) => !!params.get('token')),
         first(),
         switchMap((params) => {
-          this.isLoading = true;
           return this.auth.verifyUserRequest$({
             token: params.get('token'),
           });
@@ -48,7 +48,6 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (resp) => {
-          this.isLoading = false;
           if (resp.ok) {
             this.isUserVerified = true;
             if (this.auth.state.isLoggedIn) {
@@ -63,7 +62,6 @@ export class UserVerifyComponent implements OnInit, OnDestroy {
         error: (err) => {
           // handler server errors
           this.icon = 'account-alert-outline';
-          this.isLoading = false;
           this.status = err.error?.message || _('WARN.USER.VERIFICATION_FAILURE');
         },
       });

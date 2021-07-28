@@ -177,7 +177,6 @@ export class AuthService implements OnDestroy {
       {
         ...DefaultAuthState,
         isAuthenticating: true,
-        isLoading: true,
       },
       AuthStateAction.AUTH_LOGIN_REQ_SENT
     );
@@ -246,7 +245,6 @@ export class AuthService implements OnDestroy {
       {
         ...DefaultAuthState,
         isSigningUp: true,
-        isLoading: true,
       },
       AuthStateAction.AUTH_SIGNUP_REQ_SENT
     );
