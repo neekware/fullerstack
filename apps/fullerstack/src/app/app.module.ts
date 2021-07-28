@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+
 import { AuthModule } from '@fullerstack/ngx-auth';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { GqlModule } from '@fullerstack/ngx-gql';
@@ -26,14 +27,17 @@ import { UixModule } from '@fullerstack/ngx-uix';
 import { UserModule } from '@fullerstack/ngx-user';
 
 import { environment } from '../environments/environment';
+
 import { AppComponent } from './app.component';
 import { httpInterceptorProvidersOrderedList } from './app.intercept';
 import { AppRoutes } from './app.routing';
+
 import { AboutComponent } from './pages/about/about.component';
 import { EmailChangePerformComponent } from './pages/email-change-perform/email-change-perform.component';
 import { EmailChangeRequestComponent } from './pages/email-change-request/email-change-request.component';
 import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LanguageChangeComponent } from './pages/language-change/language-change.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { PasswordChangeComponent } from './pages/password-change/password-change.component';
@@ -59,6 +63,7 @@ import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
     PasswordResetPerformComponent,
     EmailChangeRequestComponent,
     EmailChangePerformComponent,
+    LanguageChangeComponent,
     ForexComponent,
     PortfolioComponent,
     TrendComponent,

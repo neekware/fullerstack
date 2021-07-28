@@ -8,10 +8,12 @@
 
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { AuthService, AuthState } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { rotationAnimations, shakeAnimations } from '@fullerstack/ngx-shared';
 import { UixService } from '@fullerstack/ngx-uix';
+
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -52,6 +54,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       title: _('COMMON.EMAIL_CHANGE'),
       path: '/auth/email/change/request',
       icon: 'email-sync',
+    },
+    language: {
+      title: _('COMMON.LANGUAGE_CHANGE'),
+      path: '/user/language/change',
+      icon: 'translate',
     },
     login: {
       title: _('COMMON.LOGIN'),

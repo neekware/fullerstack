@@ -7,8 +7,11 @@
  */
 
 import { BaseModelDto, Paginated } from '@fullerstack/nsx-common';
+
 import { Directive, Field, ID, InputType, ObjectType } from '@nestjs/graphql';
+
 import { Permission, Role, User } from '@prisma/client';
+
 import { IsEmail } from 'class-validator';
 
 /**
@@ -60,6 +63,9 @@ export class UserSelfUpdateInput implements Partial<User> {
 
   @Field({ nullable: true })
   lastName?: string;
+
+  @Field({ nullable: true })
+  language?: string;
 }
 
 @InputType()
@@ -78,6 +84,9 @@ export class UserUpdateInput implements Partial<User> {
 
   @Field({ nullable: true })
   lastName?: string;
+
+  @Field({ nullable: true })
+  language?: string;
 
   @Field(() => Role, { nullable: true })
   role?: Role;

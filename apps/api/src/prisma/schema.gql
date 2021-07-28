@@ -59,6 +59,7 @@ input AuthUserCredentialsInput {
 input AuthUserSignupInput {
   email: String!
   firstName: String!
+  language: String!
   lastName: String!
   password: String!
 }
@@ -178,6 +179,7 @@ enum UserOrderField {
 input UserSelfUpdateInput {
   firstName: String
   id: ID!
+  language: String
   lastName: String
 }
 
@@ -191,6 +193,7 @@ input UserUpdateInput {
 
   """User is verified"""
   isVerified: Boolean
+  language: String
   lastName: String
   permissions: [Permission!]!
   role: Role

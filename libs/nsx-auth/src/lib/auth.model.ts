@@ -7,6 +7,7 @@
  */
 
 import { Directive, Field, InputType, ObjectType } from '@nestjs/graphql';
+
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
 import { AUTH_PASSWORD_MIN_LENGTH } from './auth.constant';
@@ -65,6 +66,9 @@ export class AuthUserSignupInput {
 
   @Field({ nullable: false })
   lastName: string;
+
+  @Field({ nullable: false })
+  language: string;
 }
 
 /**

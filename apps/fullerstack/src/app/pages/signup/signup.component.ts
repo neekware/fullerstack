@@ -8,6 +8,7 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -17,6 +18,7 @@ import {
   ProgressService,
   ValidationService,
 } from '@fullerstack/ngx-shared';
+
 import { Observable, Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
@@ -82,7 +84,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   submit() {
     const { email, password, name } = this.form.value;
     const { firstName, lastName } = tokenizeFullName(name);
-    // const language = this.i18n.currentLanguage;
+    const language = this.i18n.currentLanguage;
 
     this.auth
       .signupRequest$({
@@ -90,6 +92,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         firstName,
         lastName,
         password,
+        language,
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe();

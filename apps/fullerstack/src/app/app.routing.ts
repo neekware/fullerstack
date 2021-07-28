@@ -7,6 +7,7 @@
  */
 
 import { Routes } from '@angular/router';
+
 import { AuthAnonymousGuard, AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
@@ -16,6 +17,7 @@ import { EmailChangePerformComponent } from './pages/email-change-perform/email-
 import { EmailChangeRequestComponent } from './pages/email-change-request/email-change-request.component';
 import { ForexComponent } from './pages/forex/forex.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LanguageChangeComponent } from './pages/language-change/language-change.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { PasswordChangeComponent } from './pages/password-change/password-change.component';
@@ -141,6 +143,16 @@ export const AppRoutes: Routes = [
     data: {
       title: _('COMMON.ACCOUNT.EMAIL_CHANGE'),
       description: _('APP.DESCRIPTION.EMAIL_CHANGE'),
+    },
+  },
+  {
+    path: 'user/language/change',
+    component: LanguageChangeComponent,
+    canActivate: [AuthAuthenticatedGuard],
+    canDeactivate: [DeactivateGuard],
+    data: {
+      title: _('COMMON.LANGUAGE_CHANGE'),
+      description: _('APP.DESCRIPTION.LANGUAGE_CHANGE'),
     },
   },
   {
