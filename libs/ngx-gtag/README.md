@@ -93,7 +93,7 @@ export class AppComponent {
     readonly tagger: GTagService
   ) {
     this.title = this.config.options.appName;
-    this.logger.info('AppComponent loaded ...');
+    this.logger.debug('AppComponent loaded ...');
     // all route changes are tracked automatically from now on
     this.trackDetailedEvent();
     this.trackEvent();

@@ -32,7 +32,7 @@ export class LoggerService {
     this.options = ldNestedMerge({ logger: DefaultLoggerConfig }, this.config.options);
 
     if (!this.config.options.production) {
-      this.info(`[${this.nameSpace}] LogService ready ...`);
+      this.debug(`[${this.nameSpace}] LogService ready ...`);
     }
   }
 

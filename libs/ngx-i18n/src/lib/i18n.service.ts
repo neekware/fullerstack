@@ -45,7 +45,7 @@ export class I18nService {
 
     this.initLanguage();
 
-    this.logger.info(
+    this.logger.debug(
       `[${this.nameSpace}] I18nService ready ... (${this.currentLanguage} - ${this.direction})`
     );
   }
@@ -96,7 +96,7 @@ export class I18nService {
       this.currentLanguage = event.lang;
       this.direction = this.getLanguageDirection(event.lang);
       this.languageChanges$.emit(event.lang);
-      this.logger.info(
+      this.logger.debug(
         `[${this.nameSpace}] I18nService - language changed ... (${this.currentLanguage} - ${this.direction})`
       );
     });

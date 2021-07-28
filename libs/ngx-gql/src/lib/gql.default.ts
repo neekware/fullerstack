@@ -15,3 +15,5 @@ export const GQL_CLIENT_NAME = 'gqlClient';
 export const DefaultGqlConfig: GqlConfig = {
   endpoint: '/graphql',
 };
+
+export const GqlOperationNameKey = 'operationName';

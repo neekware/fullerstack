@@ -11,6 +11,7 @@ import { AuthInterceptor } from '@fullerstack/ngx-auth';
 import { CachifyInterceptor } from '@fullerstack/ngx-cachify';
 import { GqlInterceptor } from '@fullerstack/ngx-gql';
 import { I18nInterceptor } from '@fullerstack/ngx-i18n';
+import { LoggerInterceptor } from '@fullerstack/ngx-logger';
 import { ProgressInterceptor } from '@fullerstack/ngx-shared';
 
 /**
@@ -20,6 +21,12 @@ import { ProgressInterceptor } from '@fullerstack/ngx-shared';
  * `HTTP_INTERCEPTORS` token is used to register `multiple` interceptors. (hence `multi: true`)
  */
 export const httpInterceptorProvidersOrderedList = [
+  /**
+   * Logger Interceptor, tracks and logs all requests and responses.
+   * When a response is received, the elapsed time is logged.
+   */
+  { provide: HTTP_INTERCEPTORS, useClass: LoggerInterceptor, multi: true },
+
   /**
    * Progress Interceptor, tracks the progress of all pending requests.
    * When total progress is 100% then all pending requests are completed.

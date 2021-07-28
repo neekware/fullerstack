@@ -24,7 +24,6 @@ export const DefaultAuthConfig: AuthConfig = {
   logState: false,
 };
 
-export const AuthResponseOperationName = 'operationName';
 export const AuthRefreshTokenOperation = getOperationName(AuthTokenRefreshMutation);
 export const AuthLogoutOperation = getOperationName(AuthUserLogoutMutation);
 

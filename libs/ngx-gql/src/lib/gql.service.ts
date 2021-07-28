@@ -34,7 +34,7 @@ export class GqlService implements OnDestroy {
   ) {
     this.options = ldNestedMerge({ gql: DefaultGqlConfig }, this.config.options);
     this.client = new GraphQLClient(this.http, this.options.gql.endpoint);
-    this.logger.info(`[${this.nameSpace}] GqlService ready ...`);
+    this.logger.debug(`[${this.nameSpace}] GqlService ready ...`);
   }
 
   ngOnDestroy() {

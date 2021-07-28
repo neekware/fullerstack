@@ -27,7 +27,7 @@ export class ConfigService {
     if (!this.options.production) {
       /* istanbul ignore next */
       console.log(
-        `%c${new Date().toISOString()} [INFO]`,
+        `%c${new Date().toISOString()} [DEBUG]`,
         `color:teal`,
         `[${this.nameSpace}] ConfigService ready ...`
       );

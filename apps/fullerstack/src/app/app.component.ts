@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
   ) {
     if (!this.config.options.production) {
       /* istanbul ignore next */
-      this.logger.info('AppComponent starting ... ');
+      this.logger.debug('AppComponent starting ... ');
     }
   }
 

@@ -47,7 +47,7 @@ export class UixService implements OnDestroy {
 
     this.initFullscreen();
     this.loadSvgIcons();
-    this.logger.info(`[${this.nameSpace}] UixService ready ...`);
+    this.logger.debug(`[${this.nameSpace}] UixService ready ...`);
   }
 
   private loadSvgIcons() {

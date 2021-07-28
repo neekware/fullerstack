@@ -35,7 +35,7 @@ export class JwtService {
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ jwt: DefaultJwtConfig }, this.config.options);
 
-    this.logger.info(`[${this.nameSpace}] JwtService ready ...`);
+    this.logger.debug(`[${this.nameSpace}] JwtService ready ...`);
   }
 
   /**

@@ -30,7 +30,7 @@ export class StoreService<T = StoreStateType> {
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ store: DefaultStoreConfig }, this.config.options);
     this.store = new StoreState<T>({} as T, { ...this.options.store });
-    this.logger.info(`[${this.nameSpace}] StoreService ready ...`);
+    this.logger.debug(`[${this.nameSpace}] StoreService ready ...`);
   }
 
   /**

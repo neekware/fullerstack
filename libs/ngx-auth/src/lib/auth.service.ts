@@ -103,7 +103,7 @@ export class AuthService implements OnDestroy {
     this.subState();
     this.tokenRefreshRequest$().pipe(first(), takeUntil(this.destroy$)).subscribe();
 
-    logger.info(
+    logger.debug(
       `[${this.nameSpace}] AuthService ready ... (${
         this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'
       })`

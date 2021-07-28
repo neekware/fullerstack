@@ -27,8 +27,9 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AuthAuthenticatedGuard implements CanActivate, CanActivateChild, CanLoad {
+  private nameSpace = 'AUTH';
   constructor(readonly logger: LoggerService, readonly auth: AuthService) {
-    this.logger.info('[AUTH] AuthAuthenticatedGuard loaded ...');
+    this.logger.debug(`[${this.nameSpace}] AuthAuthenticatedGuard loaded ...`);
   }
 
   canActivate(

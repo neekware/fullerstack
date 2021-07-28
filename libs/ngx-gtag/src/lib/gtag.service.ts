@@ -52,7 +52,7 @@ export class GTagService implements OnDestroy {
       this.loadScript();
       this.initScript();
 
-      this.logger.info(
+      this.logger.debug(
         `[${this.nameSpace}] GTagService ready ... (${this.options.gtag.trackingId})`
       );
 

@@ -79,7 +79,7 @@ export class LayoutService implements OnDestroy {
     this.subStorage();
     this.subRouteChange();
 
-    this.logger.info(`[${this.nameSpace}] LayoutService ready ...`);
+    this.logger.debug(`[${this.nameSpace}] LayoutService ready ...`);
   }
 
   /**

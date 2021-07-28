@@ -10,15 +10,11 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable, Injector } from '@angular/core';
 import { HttpStatusCode, JWT_BEARER_REALM } from '@fullerstack/agx-dto';
 import { tryGet } from '@fullerstack/agx-util';
-import { GqlErrorsHandler } from '@fullerstack/ngx-gql';
+import { GqlErrorsHandler, GqlOperationNameKey } from '@fullerstack/ngx-gql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import {
-  AuthLogoutOperation,
-  AuthRefreshTokenOperation,
-  AuthResponseOperationName,
-} from './auth.default';
+import { AuthLogoutOperation, AuthRefreshTokenOperation } from './auth.default';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -47,7 +43,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((errors) => {
         if (errors instanceof GqlErrorsHandler) {
           if (errors.find(HttpStatusCode.UNAUTHORIZED)) {
-            const operationName = tryGet(() => request?.body[AuthResponseOperationName]);
+            const operationName = tryGet(() => request?.body[GqlOperationNameKey]);
             switch (operationName) {
               case AuthRefreshTokenOperation:
                 this.auth.logoutRequest();

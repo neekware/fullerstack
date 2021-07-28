@@ -28,7 +28,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthAnonymousGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(readonly logger: LoggerService, readonly auth: AuthService) {
-    this.logger.info('[AUTH] AuthAnonymousGuard loaded ...');
+    this.logger.debug('[AUTH] AuthAnonymousGuard loaded ...');
   }
 
   canActivate(
