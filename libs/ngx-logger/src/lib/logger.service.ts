@@ -9,12 +9,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
+
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
+
 import { merge as ldNestedMerge } from 'lodash-es';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultLoggerConfig } from './logger.default';
@@ -32,7 +35,7 @@ export class LoggerService {
     this.options = ldNestedMerge({ logger: DefaultLoggerConfig }, this.config.options);
 
     if (!this.config.options.production) {
-      this.debug(`[${this.nameSpace}] LogService ready ...`);
+      this.info(`[${this.nameSpace}] LogService ready ...`);
     }
   }
 

@@ -89,7 +89,7 @@ export class AppComponent {
   ) {
     this.title = this.config.options.appName;
 
-    this.logger.debug('AppComponent loaded ...');
+    this.logger.info('AppComponent loaded ...');
 
     const someToken = 'some-jwt-token-received-from-server'; // <part-1>.<part-2>.<part-2>
     const payload = this.jwt.getPayload(someToken);

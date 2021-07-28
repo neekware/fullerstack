@@ -9,6 +9,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { JwtDto } from '@fullerstack/agx-dto';
 import {
   ApplicationConfig,
@@ -51,9 +52,12 @@ import { JwtService } from '@fullerstack/ngx-jwt';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
+
 import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
+
 import { Observable, Subject, of, timer } from 'rxjs';
 import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import {
@@ -103,7 +107,7 @@ export class AuthService implements OnDestroy {
     this.subState();
     this.tokenRefreshRequest$().pipe(first(), takeUntil(this.destroy$)).subscribe();
 
-    logger.debug(
+    logger.info(
       `[${this.nameSpace}] AuthService ready ... (${
         this.state.isLoggedIn ? 'loggedIn' : 'Anonymous'
       })`

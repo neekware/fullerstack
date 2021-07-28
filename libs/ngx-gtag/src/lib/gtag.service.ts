@@ -10,15 +10,19 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+
 import { merge as ldNestedMerge } from 'lodash-es';
+
 import { Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultGTagConfig } from './gtag.default';
@@ -52,7 +56,7 @@ export class GTagService implements OnDestroy {
       this.loadScript();
       this.initScript();
 
-      this.logger.debug(
+      this.logger.info(
         `[${this.nameSpace}] GTagService ready ... (${this.options.gtag.trackingId})`
       );
 

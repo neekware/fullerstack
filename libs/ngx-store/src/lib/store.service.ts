@@ -8,6 +8,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Injectable } from '@angular/core';
+
 import { StoreLogger, StoreState, StoreStateReducer, StoreStateType } from '@fullerstack/agx-store';
 import {
   ApplicationConfig,
@@ -15,22 +16,25 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+
 import { merge as ldNestedMerge } from 'lodash-es';
+
 import { Observable } from 'rxjs';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultStoreConfig } from './store.default';
 
 @Injectable()
 export class StoreService<T = StoreStateType> {
-  private nameSpace = 'STORE_SERVICE';
+  private nameSpace = 'STORE';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private store: StoreState;
 
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ store: DefaultStoreConfig }, this.config.options);
     this.store = new StoreState<T>({} as T, { ...this.options.store });
-    this.logger.debug(`[${this.nameSpace}] StoreService ready ...`);
+    this.logger.info(`[${this.nameSpace}] StoreService ready ...`);
   }
 
   /**

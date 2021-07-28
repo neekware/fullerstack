@@ -18,7 +18,9 @@ import {
   UrlSegment,
   UrlTree,
 } from '@angular/router';
+
 import { LoggerService } from '@fullerstack/ngx-logger';
+
 import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
@@ -28,7 +30,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthAnonymousGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(readonly logger: LoggerService, readonly auth: AuthService) {
-    this.logger.debug('[AUTH] AuthAnonymousGuard loaded ...');
+    this.logger.info('[AUTH] AuthAnonymousGuard loaded ...');
   }
 
   canActivate(

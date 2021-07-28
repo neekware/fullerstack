@@ -8,9 +8,12 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+
 import { merge as ldNestedMerge } from 'lodash-es';
+
 import { of } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { DEFAULT_HTTP_TIMEOUT } from './config.constant';
@@ -27,7 +30,7 @@ export class ConfigService {
     if (!this.options.production) {
       /* istanbul ignore next */
       console.log(
-        `%c${new Date().toISOString()} [DEBUG]`,
+        `%c${new Date().toISOString()} [INFO]`,
         `color:teal`,
         `[${this.nameSpace}] ConfigService ready ...`
       );

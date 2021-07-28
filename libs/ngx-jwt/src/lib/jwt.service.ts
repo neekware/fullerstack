@@ -8,14 +8,18 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
+
 import {
   ApplicationConfig,
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
+
 import { Base64 } from 'js-base64';
+
 import { get as ldGet, merge as ldNestedMerge } from 'lodash-es';
+
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultJwtConfig } from './jwt.default';
@@ -35,7 +39,7 @@ export class JwtService {
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
     this.options = ldNestedMerge({ jwt: DefaultJwtConfig }, this.config.options);
 
-    this.logger.debug(`[${this.nameSpace}] JwtService ready ...`);
+    this.logger.info(`[${this.nameSpace}] JwtService ready ...`);
   }
 
   /**
