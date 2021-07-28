@@ -18,10 +18,14 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { cloneDeep } from 'lodash-es';
+
 import * as objectHash from 'object-hash';
+
 import { Observable, of, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
 import { v4 as uuidV4 } from 'uuid';
 
 import { CACHIFY_CONTEXT_TOKEN, DefaultContextMeta } from './cachify.default';
@@ -134,6 +138,7 @@ export class CachifyInterceptor implements HttpInterceptor {
    * Note: blobs are excluded from the key
    */
   private makeRequestCacheKey(req: HttpRequest<any>): string {
+    const hashFun = objectHash;
     const uniqueData = {
       method: req.method,
       responseType: req.responseType,
@@ -141,6 +146,6 @@ export class CachifyInterceptor implements HttpInterceptor {
       ...cloneDeep(req.body || {}),
       ...cloneDeep(req.headers || {}),
     };
-    return objectHash(uniqueData);
+    return hashFun(uniqueData);
   }
 }

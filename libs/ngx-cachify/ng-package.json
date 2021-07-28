@@ -5,7 +5,11 @@
     "entryFile": "src/index.ts",
     "umdModuleIds": {
       "lodash-es": "lodash-es",
-      "uuid": "uuid"
+      "uuid": "uuid",
+      "object-hash": "object-hash",
+      "@fullerstack/agx-store": "agx-store",
+      "@fullerstack/ngx-config": "ngx-config",
+      "@fullerstack/ngx-logger": "ngx-logger"
     }
   }
 }
