@@ -15,11 +15,12 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { tryGet } from '@fullerstack/agx-util';
 import { GqlOperationNameKey } from '@fullerstack/ngx-gql';
-import { Observable, tap } from 'rxjs';
+import { LoggerService } from '@fullerstack/ngx-logger';
 
-import { LoggerService } from './logger.service';
+import { Observable, tap } from 'rxjs';
 
 @Injectable()
 export class LoggerInterceptor implements HttpInterceptor {
