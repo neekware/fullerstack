@@ -11,8 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
-import { ValidationService } from '@fullerstack/ngx-util';
+import { ConfirmationDialogService, ValidationService } from '@fullerstack/ngx-shared';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({

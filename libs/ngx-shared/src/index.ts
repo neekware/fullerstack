@@ -15,5 +15,10 @@ export * from './lib/component/ripple/ripple.component';
 
 export * from './lib/service/confirm/confirm.service';
 export * from './lib/service/guard/deactivate.guard';
+export * from './lib/service/validation/validation.service';
 
 export * from './lib/directive/form-error/form-error-directive';
+
+export * from './lib/util/util.common';
+export * from './lib/util/util.crypto';
+export * from './lib/util/util.form';

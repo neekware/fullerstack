@@ -10,7 +10,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ValidationService } from '@fullerstack/ngx-util';
+import { ValidationService } from '@fullerstack/ngx-shared';
 import { Subject, distinctUntilChanged, first, takeUntil } from 'rxjs';
 
 @Component({

@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 
 import { I18nService } from './i18n.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class I18nInterceptor implements HttpInterceptor {
   private i18n: I18nService;
 

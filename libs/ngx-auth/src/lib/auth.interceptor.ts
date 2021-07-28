@@ -21,7 +21,7 @@ import {
 } from './auth.default';
 import { AuthService } from './auth.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private auth: AuthService;
 

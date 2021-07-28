@@ -21,7 +21,6 @@ module.exports = {
     '<rootDir>/libs/ngx-auth',
     '<rootDir>/libs/ngx-gql',
     '<rootDir>/libs/ngx-uix',
-    '<rootDir>/libs/ngx-util',
     '<rootDir>/libs/ngx-shared',
     '<rootDir>/libs/ngx-user',
     '<rootDir>/libs/ngx-cachify',

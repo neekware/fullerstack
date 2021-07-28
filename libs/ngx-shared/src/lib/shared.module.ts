@@ -22,6 +22,7 @@ import { DebounceClickDirective } from './directive/debounce-click/debounce-clic
 import { FormErrorDirective } from './directive/form-error/form-error-directive';
 import { InputFocusDirective } from './directive/input-focus/input-focus.directive';
 import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
+import { ValidationService } from './service/validation/validation.service';
 
 @NgModule({
   imports: [CommonModule, RouterModule, MaterialModule, I18nModule],
@@ -49,6 +50,6 @@ import { TmpLetDirective } from './directive/tmp-let/tmp-let.directive';
     DebounceClickDirective,
     InputFocusDirective,
   ],
-  providers: [],
+  providers: [ValidationService],
 })
 export class SharedModule {}

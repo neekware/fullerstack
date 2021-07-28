@@ -12,8 +12,7 @@ import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
-import { ValidationService } from '@fullerstack/ngx-util';
+import { ConfirmationDialogService, ValidationService } from '@fullerstack/ngx-shared';
 import { Observable, Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
