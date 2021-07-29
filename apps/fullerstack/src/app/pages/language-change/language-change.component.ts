@@ -8,9 +8,11 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ProgressService, ValidationService } from '@fullerstack/ngx-shared';
 import { UserService } from '@fullerstack/ngx-user';
+
 import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
@@ -51,9 +53,7 @@ export class LanguageChangeComponent implements OnInit, OnDestroy {
   }
 
   onSelect() {
-    if (this.form?.value.language !== this.i18n.currentLanguage) {
-      this.i18n.setCurrentLanguage(this.form?.value.language);
-    }
+    this.i18n.setCurrentLanguage(this.form?.value.language);
   }
 
   ngOnDestroy() {
