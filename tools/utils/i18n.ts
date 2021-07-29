@@ -6,12 +6,16 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { readFile, writeFile } from 'fs';
+import { writeFileSync } from 'fs';
 import * as path from 'path';
 
 import { sync } from 'glob';
 
-import { projDir } from './util';
+import { projDir, sleep } from './util';
+
+const { v4: uuidv4 } = require('uuid');
+
+const axios = require('axios').default;
 
 export const I18nDefaultLanguage = 'en';
 export const I18nActiveLanguages = ['en', 'de', 'fr', 'es', 'he', 'fa', 'zh-hans'];
@@ -19,20 +23,46 @@ export const I18nActiveLanguages = ['en', 'de', 'fr', 'es', 'he', 'fa', 'zh-hans
 export const I18nDirectory = path.join(projDir, 'libs/agx-assets/src/lib/i18n/client');
 export const I18nFilePattern = path.join(I18nDirectory, '**/*.json');
 
-const translate = require('google-translate-api');
-
 interface I18nLanguageIsoPath {
   iso: string;
   path: string;
 }
 
-// google translate iso map
-export function mapIso(iso: string) {
-  const mappedIso = {
-    he: 'iw',
-  };
+// This is azure cognitive service endpoint
+const endpoint = 'https://api.cognitive.microsofttranslator.com';
 
-  return mappedIso[iso] || iso;
+// This is your azure subscription key
+const subscriptionKey = process.env.AZURE_SUBSCRIPTION_KEY;
+
+// This is required if using a Cognitive Services resource. Also known as region and default is (global)
+const location = process.env.AZURE_RESOURCE_LOCATION;
+
+async function translate(text: string, options: { from: string; to: string }): Promise<string> {
+  return axios({
+    baseURL: endpoint,
+    url: '/translate',
+    method: 'post',
+    headers: {
+      'Ocp-Apim-Subscription-Key': subscriptionKey,
+      'Ocp-Apim-Subscription-Region': location,
+      'Content-type': 'application/json',
+      'X-ClientTraceId': uuidv4().toString(),
+    },
+    params: {
+      'api-version': '3.0',
+      from: options.from,
+      to: options.to,
+    },
+    data: [{ text }],
+    responseType: 'json',
+  })
+    .then(function (response) {
+      return response?.data[0]?.translations[0]?.text;
+    })
+    .catch(function (error) {
+      console.error(error);
+      return null;
+    });
 }
 
 /**
@@ -48,23 +78,23 @@ async function processLanguageFileTranslation(fromFile, toFile) {
     const fromValue = fromData[key];
     const toValue = toData[key];
 
-    if (fromValue?.length > 0 && toValue.length < 1) {
-      const resp = await translate(fromData[key], {
+    if (fromValue && !toValue) {
+      sleep(100);
+      const result = await translate(fromData[key], {
         from: I18nDefaultLanguage,
-        to: mapIso(toFile.iso),
+        to: toFile.iso,
       });
-      if (resp?.text?.length > 0) {
-        toNewData[key] = resp.text;
+      console.log(result);
+      if (result) {
+        toNewData[key] = result;
       }
+    } else {
+      toNewData[key] = toValue;
     }
   }
 
   const content = JSON.stringify(toNewData, null, 2);
-  writeFile(toFile, content, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
+  writeFileSync(toFile.path, content, 'utf-8');
 }
 
 function getFromLanguageFile(): I18nLanguageIsoPath {
