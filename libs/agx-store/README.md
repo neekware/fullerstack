@@ -29,7 +29,6 @@ import { DeepReadonly } from 'ts-essentials';
 export interface AuthState {
   userId: string;
   isAnonymous: boolean;
-  isLoading: boolean;
   isLoggedIn: boolean;
   isSigningUp: boolean;
   isAuthenticating: boolean;
@@ -41,7 +40,6 @@ export interface AuthState {
 export const DefaultAuthState: DeepReadonly<AuthState> = {
   userId: null,
   isAnonymous: false,
-  isLoading: false,
   isLoggedIn: false,
   isSigningUp: false,
   isAuthenticating: false,
@@ -115,7 +113,6 @@ export class AuthService<T = StoreStateType> {
       {
         ...this.state,
         isAuthenticating: true,
-        isLoading: true,
       },
       'AUTH_LOGIN_REQ_SENT' // action name (optional)
     );
@@ -181,14 +178,12 @@ export class AuthService<T = StoreStateType> {
 // If a logger is passed in, the action will be missing from state change logs
 this.store.setState(this.claimId, {
   isAuthenticating: true,
-  isLoading: true,
 });
 
 // State can be passed in, along with claimId, as well as an action type
 // If a logger is passed in, the action will in the state change logs
 this.store.setState(this.claimId, {
   isAuthenticating: true,
-  isLoading: true,
 }, 'AUTH_LOGIN_REQ_SENT');
 ```
 
@@ -208,7 +203,6 @@ this.store.setState(this.claimId, (fullStoreState) => {
     return {
       ...fullStoreState[this.sliceName],
       isAuthenticating: true,
-      isLoading: true,
     },
   }
   return {

@@ -65,6 +65,9 @@ export class AuthUserSignupInput {
 
   @Field({ nullable: false })
   lastName: string;
+
+  @Field({ nullable: false })
+  language: string;
 }
 
 /**

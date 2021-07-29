@@ -53,6 +53,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       path: '/auth/email/change/request',
       icon: 'email-sync',
     },
+    language: {
+      title: _('COMMON.LANGUAGE_CHANGE'),
+      path: '/user/language/change',
+      icon: 'translate',
+    },
     login: {
       title: _('COMMON.LOGIN'),
       path: '/auth/login',

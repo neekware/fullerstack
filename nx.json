@@ -100,9 +100,6 @@
     "ngx-user": {
       "tags": ["scope:ngx-util"]
     },
-    "ngx-util": {
-      "tags": ["scope:ngx-util"]
-    },
     "nsx-auth": {
       "tags": ["scope:nsx-util"]
     },

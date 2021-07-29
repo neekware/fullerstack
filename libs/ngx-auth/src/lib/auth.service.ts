@@ -177,65 +177,62 @@ export class AuthService implements OnDestroy {
       {
         ...DefaultAuthState,
         isAuthenticating: true,
-        isLoading: true,
       },
       AuthStateAction.AUTH_LOGIN_REQ_SENT
     );
     this.logger.debug(`[${this.nameSpace}] Login request sent ...`);
 
-    return this.gql.client
-      .request<AuthTokenStatus>(AuthUserLoginMutation, { input })
-      .pipe(
-        map((resp) => {
-          if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Login request success ...`);
-            this.msg.successToast(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
+    return this.gql.client.request<AuthTokenStatus>(AuthUserLoginMutation, { input }).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Login request success ...`);
+          this.msg.successToast(_('SUCCESS.AUTH.LOGIN'), { duration: 3000 });
 
-            this.goTo(this.authUrls.loggedInUrl);
+          this.goTo(this.authUrls.loggedInUrl);
 
-            return this.store.setState(
-              this.claimId,
-              {
-                ...DefaultAuthState,
-                isLoggedIn: true,
-                token: resp.token,
-                userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
-              },
-              AuthStateAction.AUTH_LOGIN_RES_SUCCESS
-            );
-          }
-          this.logger.error(`[${this.nameSpace}] Login request failed ... ${resp.message}`);
-          this.msg.setMsg({ text: resp.message || _('ERROR.AUTH.LOGIN'), level: LogLevel.error });
           return this.store.setState(
             this.claimId,
             {
               ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+            },
+            AuthStateAction.AUTH_LOGIN_RES_SUCCESS
+          );
+        }
+        this.logger.error(`[${this.nameSpace}] Login request failed ... ${resp.message}`);
+        this.msg.setMsg({ text: resp.message || _('ERROR.AUTH.LOGIN'), level: LogLevel.error });
+        return this.store.setState(
+          this.claimId,
+          {
+            ...DefaultAuthState,
+            hasError: true,
+            message: resp.message,
+          },
+          AuthStateAction.AUTH_LOGOUT_RES_FAILED
+        );
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        this.logger.error(`[${this.nameSpace}] Login request failed ...`, err);
+        this.msg.setMsg({
+          text: err.topError?.message || _('ERROR.AUTH.LOGIN'),
+          level: LogLevel.error,
+        });
+
+        return of(
+          this.store.setState(
+            this.claimId,
+            {
+              ...DefaultAuthState,
               hasError: true,
-              message: resp.message,
+              message: err.topError?.message,
             },
             AuthStateAction.AUTH_LOGOUT_RES_FAILED
-          );
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          this.logger.error(`[${this.nameSpace}] Login request failed ...`, err);
-          this.msg.setMsg({
-            text: err.topError?.message || _('ERROR.AUTH.LOGIN'),
-            level: LogLevel.error,
-          });
-
-          return of(
-            this.store.setState(
-              this.claimId,
-              {
-                ...DefaultAuthState,
-                hasError: true,
-                message: err.topError?.message,
-              },
-              AuthStateAction.AUTH_LOGOUT_RES_FAILED
-            )
-          );
-        })
-      );
+          )
+        );
+      })
+    );
   }
 
   signupRequest$(input: AuthUserSignupInput): Observable<AuthState> {
@@ -246,64 +243,61 @@ export class AuthService implements OnDestroy {
       {
         ...DefaultAuthState,
         isSigningUp: true,
-        isLoading: true,
       },
       AuthStateAction.AUTH_SIGNUP_REQ_SENT
     );
     this.logger.debug(`[${this.nameSpace}] Signup request sent ...`);
 
-    return this.gql.client
-      .request<AuthTokenStatus>(AuthUserSignupMutation, { input })
-      .pipe(
-        map((resp) => {
-          if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Signup request success ...`);
-            this.msg.successToast(_('SUCCESS.AUTH.SIGNUP'), { duration: 3000 });
+    return this.gql.client.request<AuthTokenStatus>(AuthUserSignupMutation, { input }).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Signup request success ...`);
+          this.msg.successToast(_('SUCCESS.AUTH.SIGNUP'), { duration: 3000 });
 
-            this.goTo(this.authUrls.loggedInUrl);
+          this.goTo(this.authUrls.loggedInUrl);
 
-            return this.store.setState(
-              this.claimId,
-              {
-                ...DefaultAuthState,
-                isLoggedIn: true,
-                token: resp.token,
-                userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
-              },
-              AuthStateAction.AUTH_SIGNUP_RES_SUCCESS
-            );
-          }
-          this.logger.error(`[${this.nameSpace}] Signup request failed ... ${resp.message}`);
-          this.msg.setMsg({ text: resp.message || _('ERROR.AUTH.SIGNUP'), level: LogLevel.error });
           return this.store.setState(
             this.claimId,
             {
               ...DefaultAuthState,
+              isLoggedIn: true,
+              token: resp.token,
+              userId: this.jwt.getPayload<JwtDto>(resp.token)?.userId,
+            },
+            AuthStateAction.AUTH_SIGNUP_RES_SUCCESS
+          );
+        }
+        this.logger.error(`[${this.nameSpace}] Signup request failed ... ${resp.message}`);
+        this.msg.setMsg({ text: resp.message || _('ERROR.AUTH.SIGNUP'), level: LogLevel.error });
+        return this.store.setState(
+          this.claimId,
+          {
+            ...DefaultAuthState,
+            hasError: true,
+            message: resp.message,
+          },
+          AuthStateAction.AUTH_SIGNUP_RES_FAILED
+        );
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        this.logger.error(`[${this.nameSpace}] Signup request failed ...`, err);
+        this.msg.setMsg({
+          text: err.topError?.message || _('ERROR.AUTH.SIGNUP'),
+          level: LogLevel.error,
+        });
+        return of(
+          this.store.setState(
+            this.claimId,
+            {
+              ...DefaultAuthState,
               hasError: true,
-              message: resp.message,
+              message: err.topError?.message,
             },
             AuthStateAction.AUTH_SIGNUP_RES_FAILED
-          );
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          this.logger.error(`[${this.nameSpace}] Signup request failed ...`, err);
-          this.msg.setMsg({
-            text: err.topError?.message || _('ERROR.AUTH.SIGNUP'),
-            level: LogLevel.error,
-          });
-          return of(
-            this.store.setState(
-              this.claimId,
-              {
-                ...DefaultAuthState,
-                hasError: true,
-                message: err.topError?.message,
-              },
-              AuthStateAction.AUTH_SIGNUP_RES_FAILED
-            )
-          );
-        })
-      );
+          )
+        );
+      })
+    );
   }
 
   tokenRefreshRequest$(): Observable<AuthState> {
@@ -357,120 +351,114 @@ export class AuthService implements OnDestroy {
   }
 
   logoutRequest(onError = false) {
-    this.logger.debug(`[${this.nameSpace}] Logout request sent ...`);
-    this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_LOGIN_REQ_SENT);
+    if (this.state.isLoggedIn) {
+      this.logger.debug(`[${this.nameSpace}] Logout request sent ...`);
+      this.store.setState(this.claimId, DefaultAuthState, AuthStateAction.AUTH_LOGIN_REQ_SENT);
 
-    this.gql.client
-      .request<AuthStatus>(AuthUserLogoutMutation)
-      .pipe(first(), takeUntil(this.destroy$))
-      .subscribe({
-        error: (err) => {
-          this.logger.error(`[${this.nameSpace}] `, err);
-        },
-        complete: () => {
-          if (!onError) {
-            this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
-            this.msg.successToast(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
-          } else {
-            this.msg.errorToast(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
-          }
-        },
-      });
+      this.gql.client
+        .request<AuthStatus>(AuthUserLogoutMutation)
+        .pipe(first(), takeUntil(this.destroy$))
+        .subscribe({
+          error: (err) => {
+            this.logger.error(`[${this.nameSpace}] `, err);
+          },
+          complete: () => {
+            if (!onError) {
+              this.logger.debug(`[${this.nameSpace}] Logout request success ...`);
+              this.msg.successToast(_('SUCCESS.AUTH.LOGOUT'), { duration: 3000 });
+            } else {
+              this.msg.errorToast(_('ERROR.AUTH.LOGOUT'), { duration: 4000 });
+            }
+          },
+        });
+    }
   }
 
   verifyUserRequest$(input: AuthUserVerifyInput): Observable<AuthStatus> {
-    return this.gql.client
-      .request<AuthStatus>(AuthUserVerifyMutation, { input })
-      .pipe(
-        map((resp) => {
-          if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] User verification request success ...`);
-          } else {
-            this.logger.error(
-              `[${this.nameSpace}] User verification request failed ... ${resp.message}`
-            );
-          }
-          return resp;
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          if (this.state.isLoggedIn) {
-            this.logger.error(
-              `[${this.nameSpace}] User verification request request failed ...`,
-              err
-            );
-          }
+    return this.gql.client.request<AuthStatus>(AuthUserVerifyMutation, { input }).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] User verification request success ...`);
+        } else {
+          this.logger.error(
+            `[${this.nameSpace}] User verification request failed ... ${resp.message}`
+          );
+        }
+        return resp;
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        if (this.state.isLoggedIn) {
+          this.logger.error(
+            `[${this.nameSpace}] User verification request request failed ...`,
+            err
+          );
+        }
 
-          return of({ ok: false, message: err.topError?.message });
-        })
-      ) as Observable<AuthStatus>;
+        return of({ ok: false, message: err.topError?.message });
+      })
+    ) as Observable<AuthStatus>;
   }
 
   passwordChange$(input: AuthPasswordChangeInput): Observable<AuthStatus> {
-    return this.gql.client
-      .request<AuthStatus>(AuthPasswordChangeMutation, { input })
-      .pipe(
-        map((resp) => {
-          if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Password change success ...`);
-          } else {
-            this.logger.error(`[${this.nameSpace}] Password change failed ... ${resp.message}`);
-          }
-          return resp;
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          if (this.state.isLoggedIn) {
-            this.logger.error(`[${this.nameSpace}] Password change failed ...`, err);
-          }
+    return this.gql.client.request<AuthStatus>(AuthPasswordChangeMutation, { input }).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Password change success ...`);
+        } else {
+          this.logger.error(`[${this.nameSpace}] Password change failed ... ${resp.message}`);
+        }
+        return resp;
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        if (this.state.isLoggedIn) {
+          this.logger.error(`[${this.nameSpace}] Password change failed ...`, err);
+        }
 
-          return of({ ok: false, message: err.topError?.message });
-        })
-      ) as Observable<AuthStatus>;
+        return of({ ok: false, message: err.topError?.message });
+      })
+    ) as Observable<AuthStatus>;
   }
 
   passwordResetRequest$(input: AuthPasswordChangeRequestInput): Observable<AuthStatus> {
-    return this.gql.client
-      .request<AuthStatus>(AuthPasswordResetRequestMutation, { input })
-      .pipe(
-        map((resp) => {
-          if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Password reset request success ...`);
-          } else {
-            this.logger.error(
-              `[${this.nameSpace}] Password reset request failed ... ${resp.message}`
-            );
-          }
-          return resp;
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          if (this.state.isLoggedIn) {
-            this.logger.error(`[${this.nameSpace}] Password reset request failed ...`, err);
-          }
+    return this.gql.client.request<AuthStatus>(AuthPasswordResetRequestMutation, { input }).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Password reset request success ...`);
+        } else {
+          this.logger.error(
+            `[${this.nameSpace}] Password reset request failed ... ${resp.message}`
+          );
+        }
+        return resp;
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        if (this.state.isLoggedIn) {
+          this.logger.error(`[${this.nameSpace}] Password reset request failed ...`, err);
+        }
 
-          return of({ ok: false, message: err.topError?.message });
-        })
-      ) as Observable<AuthStatus>;
+        return of({ ok: false, message: err.topError?.message });
+      })
+    ) as Observable<AuthStatus>;
   }
 
   passwordResetPerform$(input: AuthPasswordPerformResetInput): Observable<AuthStatus> {
-    return this.gql.client
-      .request<AuthStatus>(AuthPasswordPerformResetMutation, { input })
-      .pipe(
-        map((resp) => {
-          if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Password reset success ...`);
-          } else {
-            this.logger.error(`[${this.nameSpace}] Password reset failed ... ${resp.message}`);
-          }
-          return resp;
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          if (this.state.isLoggedIn) {
-            this.logger.error(`[${this.nameSpace}] Password reset failed ...`, err);
-          }
+    return this.gql.client.request<AuthStatus>(AuthPasswordPerformResetMutation, { input }).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Password reset success ...`);
+        } else {
+          this.logger.error(`[${this.nameSpace}] Password reset failed ... ${resp.message}`);
+        }
+        return resp;
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        if (this.state.isLoggedIn) {
+          this.logger.error(`[${this.nameSpace}] Password reset failed ...`, err);
+        }
 
-          return of({ ok: false, message: err.topError?.message });
-        })
-      ) as Observable<AuthStatus>;
+        return of({ ok: false, message: err.topError?.message });
+      })
+    ) as Observable<AuthStatus>;
   }
 
   verifyPasswordResetRequest$(input: AuthPasswordVerifyResetRequestInput): Observable<AuthStatus> {
@@ -503,78 +491,68 @@ export class AuthService implements OnDestroy {
   }
 
   verifyUserPassword$(input: AuthPasswordVerifyInput): Observable<boolean> {
-    return this.gql.client
-      .request<AuthStatus>(AuthPasswordVerifyQuery, { input })
-      .pipe(
-        map((resp) => resp.ok),
-        catchError((err: GqlErrorsHandler) => {
-          this.logger.error(`[${this.nameSpace}] password verification check ...`, err);
-          return of(false);
-        })
-      );
+    return this.gql.client.request<AuthStatus>(AuthPasswordVerifyQuery, { input }).pipe(
+      map((resp) => resp.ok),
+      catchError((err: GqlErrorsHandler) => {
+        this.logger.error(`[${this.nameSpace}] password verification check ...`, err);
+        return of(false);
+      })
+    );
   }
 
   emailChangeRequest$(input: AuthEmailChangeRequestInput): Observable<AuthStatus> {
-    return this.gql.client
-      .request<AuthStatus>(AuthEmailChangeRequestMutation, { input })
-      .pipe(
-        map((resp) => {
-          if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Email change request success ...`);
-          } else {
-            this.logger.error(
-              `[${this.nameSpace}] Email change request failed ... ${resp.message}`
-            );
-          }
-          return resp;
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          if (this.state.isLoggedIn) {
-            this.logger.error(`[${this.nameSpace}] Email change request failed ...`, err);
-          }
+    return this.gql.client.request<AuthStatus>(AuthEmailChangeRequestMutation, { input }).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Email change request success ...`);
+        } else {
+          this.logger.error(`[${this.nameSpace}] Email change request failed ... ${resp.message}`);
+        }
+        return resp;
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        if (this.state.isLoggedIn) {
+          this.logger.error(`[${this.nameSpace}] Email change request failed ...`, err);
+        }
 
-          return of({ ok: false, message: err.topError?.message });
-        })
-      ) as Observable<AuthStatus>;
+        return of({ ok: false, message: err.topError?.message });
+      })
+    ) as Observable<AuthStatus>;
   }
 
   emailChangePerform$(input: AuthEmailChangePerformInput): Observable<AuthStatus> {
-    return this.gql.client
-      .request<AuthStatus>(AuthEmailChangePerformMutation, { input })
-      .pipe(
-        map((resp) => {
-          if (resp.ok) {
-            this.logger.debug(`[${this.nameSpace}] Email change request verification success ...`);
-          } else {
-            this.logger.error(
-              `[${this.nameSpace}] Email change request verification failed ... ${resp.message}`
-            );
-          }
-          return resp;
-        }),
-        catchError((err: GqlErrorsHandler) => {
-          if (this.state.isLoggedIn) {
-            this.logger.error(
-              `[${this.nameSpace}] Email change request verification failed ...`,
-              err
-            );
-          }
+    return this.gql.client.request<AuthStatus>(AuthEmailChangePerformMutation, { input }).pipe(
+      map((resp) => {
+        if (resp.ok) {
+          this.logger.debug(`[${this.nameSpace}] Email change request verification success ...`);
+        } else {
+          this.logger.error(
+            `[${this.nameSpace}] Email change request verification failed ... ${resp.message}`
+          );
+        }
+        return resp;
+      }),
+      catchError((err: GqlErrorsHandler) => {
+        if (this.state.isLoggedIn) {
+          this.logger.error(
+            `[${this.nameSpace}] Email change request verification failed ...`,
+            err
+          );
+        }
 
-          return of({ ok: false, message: err.topError?.message });
-        })
-      ) as Observable<AuthStatus>;
+        return of({ ok: false, message: err.topError?.message });
+      })
+    ) as Observable<AuthStatus>;
   }
 
   verifyEmailAvailability$(input: AuthEmailVerifyAvailabilityInput): Observable<boolean> {
-    return this.gql.client
-      .request<AuthStatus>(AuthEmailVerifyAvailabilityQuery, { input })
-      .pipe(
-        map((resp) => resp.ok),
-        catchError((err: GqlErrorsHandler) => {
-          this.logger.error(`[${this.nameSpace}] email availability check ...`, err);
-          return of(false);
-        })
-      );
+    return this.gql.client.request<AuthStatus>(AuthEmailVerifyAvailabilityQuery, { input }).pipe(
+      map((resp) => resp.ok),
+      catchError((err: GqlErrorsHandler) => {
+        this.logger.error(`[${this.nameSpace}] email availability check ...`, err);
+        return of(false);
+      })
+    );
   }
 
   validateUserPassword(debounce = AsyncValidationDebounceTime): AsyncValidatorFn {

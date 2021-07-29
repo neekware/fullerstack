@@ -23,7 +23,7 @@ import { DefaultStoreConfig } from './store.default';
 
 @Injectable()
 export class StoreService<T = StoreStateType> {
-  private nameSpace = 'STORE_SERVICE';
+  private nameSpace = 'STORE';
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   private store: StoreState;
 

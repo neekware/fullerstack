@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 
 import { gqlErrorsInterceptor } from './gql.error';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class GqlInterceptor implements HttpInterceptor {
   /**
    *

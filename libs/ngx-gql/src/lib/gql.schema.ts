@@ -556,6 +556,7 @@ export interface AuthUserCredentialsInput {
 export interface AuthUserSignupInput {
   email: string;
   firstName: string;
+  language: string;
   lastName: string;
   password: string;
 }
@@ -567,6 +568,7 @@ export interface AuthUserVerifyInput {
 export interface UserSelfUpdateInput {
   firstName?: string | null;
   id: string;
+  language?: string | null;
   lastName?: string | null;
 }
 

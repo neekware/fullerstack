@@ -63,29 +63,27 @@ export class GqlErrorsHandler {
     let parsed: GraphQLResponseError[] = [];
     if (event.ok) {
       parsed = (event?.body?.errors || [])
-        .map((item: GqlResponse) => {
-          const response = item?.extensions?.exception?.response;
+        .map((error: GqlResponse) => {
+          const response = error?.extensions?.response || error?.extensions?.exception?.response;
           if (response) {
             if (typeof response === 'string') {
               return {
-                operationName: item?.path[0],
-                message: item.error || item.message,
-                statusCode: item?.extensions?.exception?.status,
+                message: error.error || error.message,
+                statusCode: error?.extensions?.status || error?.extensions?.exception?.status,
               };
             }
             return {
-              operationName: item?.path[0],
-              message: response.message || item.message || item.error,
+              message: response.message || error.message || error.error,
               statusCode: response.statusCode,
             };
           }
           return null;
         })
-        .filter((item) => !!item);
+        .filter((error) => !!error);
     } else {
       parsed = (event?.error?.errors || [])
-        .map((item: GqlResponse) => {
-          const code = item?.extensions?.code;
+        .map((error: GqlResponse) => {
+          const code = error?.extensions?.code;
           if (code) {
             return {
               message: code,
@@ -94,7 +92,7 @@ export class GqlErrorsHandler {
           }
           return null;
         })
-        .filter((item) => !!item);
+        .filter((error) => !!error);
     }
 
     return parsed;

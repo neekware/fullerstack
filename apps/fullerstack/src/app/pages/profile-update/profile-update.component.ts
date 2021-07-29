@@ -13,7 +13,7 @@ import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LoggerService } from '@fullerstack/ngx-logger';
-import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
+import { ConfirmationDialogService, ProgressService } from '@fullerstack/ngx-shared';
 import { UserService, UserState } from '@fullerstack/ngx-user';
 import { Observable, Subject, debounceTime, distinctUntilChanged, first, takeUntil } from 'rxjs';
 
@@ -29,7 +29,6 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
   title = _('COMMON.PROFILE');
   subtitle = _('COMMON.PROFILE_UPDATE');
   icon = 'account-edit-outline';
-  isLoading = false;
 
   constructor(
     readonly formBuilder: FormBuilder,
@@ -37,6 +36,7 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
     readonly logger: LoggerService,
     readonly auth: AuthService,
     readonly user: UserService,
+    readonly progress: ProgressService,
     readonly confirm: ConfirmationDialogService
   ) {
     this.user.msg.reset();
@@ -88,7 +88,6 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
   }
 
   submit() {
-    this.isLoading = true;
     const { id, firstName, lastName } = this.form.value;
     this.user
       .userSelfUpdateMutate$({ id, firstName, lastName })
@@ -96,9 +95,6 @@ export class ProfileUpdateComponent implements OnDestroy, OnInit {
       .subscribe({
         next: () => {
           this.form.markAsPristine();
-        },
-        complete: () => {
-          this.isLoading = false;
         },
       });
   }

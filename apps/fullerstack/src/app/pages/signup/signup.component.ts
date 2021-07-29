@@ -12,9 +12,12 @@ import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
-import { ConfirmationDialogService } from '@fullerstack/ngx-shared';
-import { ValidationService } from '@fullerstack/ngx-util';
-import { Observable, Subject, distinctUntilChanged, takeUntil } from 'rxjs';
+import {
+  ConfirmationDialogService,
+  ProgressService,
+  ValidationService,
+} from '@fullerstack/ngx-shared';
+import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fullerstack-signup',
@@ -35,6 +38,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     readonly i18n: I18nService,
     readonly validation: ValidationService,
     readonly auth: AuthService,
+    readonly progress: ProgressService,
     readonly confirm: ConfirmationDialogService
   ) {
     this.auth.msg.reset();
@@ -78,7 +82,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   submit() {
     const { email, password, name } = this.form.value;
     const { firstName, lastName } = tokenizeFullName(name);
-    // const language = this.i18n.currentLanguage;
+    const language = this.i18n.currentLanguage;
 
     this.auth
       .signupRequest$({
@@ -86,18 +90,10 @@ export class SignupComponent implements OnInit, OnDestroy {
         firstName,
         lastName,
         password,
+        language,
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe();
-  }
-
-  canDeactivate(): Observable<boolean> | boolean {
-    if (!this.form?.disabled && this.form?.dirty && this.auth.state.isLoggedIn) {
-      const title = _('COMMON.LEAVE_PAGE');
-      const info = _('WARN.DISCARD_CHANGES_ACTION');
-      return this.confirm.confirmation(title, info);
-    }
-    return true;
   }
 
   ngOnDestroy() {

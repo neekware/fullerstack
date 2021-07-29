@@ -1,0 +1,52 @@
+<mat-toolbar class="fs-page-header" color="primary"> </mat-toolbar>
+<div class="fs-page-content">
+  <fullerstack-card
+    class="fs-page-card"
+    fxLayout="column"
+    fxFlex.xs="100"
+    fxFlex.sm="80"
+    fxFlex.gt-sm="600px"
+    [title]="title"
+    [subtitle]="subtitle"
+    [icon]="icon"
+    [progress]="progress.state$ | async"
+  >
+    <form [formGroup]="form" fxLayout="column" autoCompleteOff autocomplete="off">
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="translate"></mat-icon>
+        <mat-select formControlName="language" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" (ngModelChange)="onSelect()">
+          <mat-option *ngFor="let iso of i18n.enabledLanguages" [value]="iso">
+            {{ i18n.getLanguageName(iso) }}
+          </mat-option>
+        </mat-select>
+        <mat-error errorDirective [control]="form?.controls?.language" [isTouched]="form?.controls?.language?.touched"></mat-error>
+        <mat-hint align="end">{{ 'INFO.ACCOUNT_LANGUAGE' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <div *ngIf="user.msg.isError && user.msg.text" class="form-status" fxLayout="row" fxLayoutGap="10px">
+        <mat-icon color="warn" svgIcon="alert"></mat-icon>
+        <span>{{ user.msg.text | translate }}!</span>
+      </div>
+      <div *ngIf="user.msg.isSuccess && user.msg.text" class="form-status" fxLayout="row" fxLayoutGap="10px">
+        <mat-icon color="green" svgIcon="check-circle-outline"></mat-icon>
+        <span>{{ user.msg.text | translate }}! ({{ i18n.getLanguageName(form?.controls?.language.value) }})</span>
+      </div>
+    </form>
+
+    <mat-divider class="mt1"></mat-divider>
+
+    <div class="mt2" fxLayout="row">
+      <span>
+        [
+        <a routerLink="/user/profile/update" class="no-underline"> {{ 'COMMON.PROFILE_UPDATE' | translate }} </a>
+        ]
+      </span>
+      <div fxFlex></div>
+      <span>
+        [
+        <a routerLink="/" class="no-underline"> {{ 'COMMON.HOME' | translate }} </a>
+        ]
+      </span>
+    </div>
+  </fullerstack-card>
+</div>
