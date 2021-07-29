@@ -2,13 +2,20 @@
   "recommendations": [
     "nrwl.angular-console",
     "angular.ng-template",
-    "ms-vscode.vscode-typescript-tslint-plugin",
-    "esbenp.prettier-vscode",
-    "firsttris.vscode-jest-runner",
+    "streetsidesoftware.code-spell-checker",
     "msjsdiag.debugger-for-chrome",
-    "graphql.vscode-graphql",
-    "prisma.prisma",
+    "ms-azuretools.vscode-docker",
     "mikestead.dotenv",
+    "dbaeumer.vscode-eslint",
+    "github.copilot",
+    "graphql.vscode-graphql",
+    "firsttris.vscode-jest-runner",
+    "esbenp.prettier-vscode",
+    "prisma.prisma",
+    "ms-python.python",
+    "juanblanco.solidity",
+    "bradlc.vscode-tailwindcss",
+    "mike-co.import-sorter",
     "matt-meyers.vscode-dbml"
   ]
 }

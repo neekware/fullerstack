@@ -40,18 +40,21 @@ export class LanguageChangeComponent implements OnInit, OnDestroy {
     this.i18n.stateChange$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe({
       next: (language) => {
         this.form.patchValue({ language });
+        this.form.markAsPristine();
       },
     });
   }
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      language: [this.i18n.defaultLanguage, [Validators.required]],
+      language: [this.i18n.currentLanguage || this.i18n.defaultLanguage, [Validators.required]],
     });
   }
 
   onSelect() {
-    this.i18n.setCurrentLanguage(this.form?.value.language);
+    if (!this.form.pristine) {
+      this.i18n.setCurrentLanguage(this.form?.value.language);
+    }
   }
 
   ngOnDestroy() {
