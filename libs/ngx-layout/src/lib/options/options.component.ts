@@ -27,8 +27,8 @@ import { LayoutService } from '../layout.service';
 })
 export class OptionsComponent implements OnInit, OnDestroy {
   rotateState = 'default';
-  optionState = 'collapsed';
-  optionTitleState = 'expanded';
+  optionState = 'expanded';
+  optionTitleState = 'collapsed';
   currentLanguage: string;
   isExpanded = false;
   hideOptionTitle = false;

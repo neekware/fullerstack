@@ -1,6 +1,7 @@
 .fs-options {
   .options-box {
     padding: 0 15px;
+    margin-top: -31px;
   }
   .divider {
     margin-top: 40px;
@@ -19,7 +20,7 @@
     padding-bottom: 15px;
   }
   @-moz-document url-prefix() {
-    /* Firfox CSS styles go here */
+    /* Firefox CSS styles go here */
     .options-box {
       margin-top: -27px;
     }
