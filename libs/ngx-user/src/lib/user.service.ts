@@ -64,7 +64,6 @@ export class UserService {
       .pipe(
         filter((state) => state.isLoggedIn),
         switchMap((state) => this.userSelfQuery$(state.userId)),
-        filter((state) => !!state?.id),
         takeUntil(this.destroy$)
       )
       .subscribe({
@@ -81,7 +80,7 @@ export class UserService {
     this.i18n.stateChange$
       .pipe(
         debounceTime(200),
-        filter((language) => !!language && language !== this.state.language),
+        filter((language) => this.state.id && language !== this.state.language),
         switchMap((language) => {
           this.msg.reset();
           return this.userSelfUpdateMutate$({ id: this.state.id, language });
