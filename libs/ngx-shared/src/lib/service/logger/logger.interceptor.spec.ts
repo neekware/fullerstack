@@ -8,7 +8,6 @@
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { LogLevel } from '@fullerstack/ngx-logger';
 

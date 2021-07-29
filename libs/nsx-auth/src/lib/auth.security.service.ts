@@ -9,20 +9,13 @@
 import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
-
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
 import { Permission, Role, User } from '@prisma/client';
-
 import { compare, hash } from 'bcrypt';
-
 import * as jwt from 'jsonwebtoken';
-
 import { merge as ldNestMerge } from 'lodash';
-
 import { DeepReadonly } from 'ts-essentials';
-
 import { v4 as uuid_v4 } from 'uuid';
 
 import { AUTH_MODULE_NAME, AUTH_SESSION_COOKIE_NAME } from './auth.constant';

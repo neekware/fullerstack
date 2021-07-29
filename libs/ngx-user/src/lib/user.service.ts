@@ -7,7 +7,6 @@
  */
 
 import { Injectable } from '@angular/core';
-
 import { AuthService } from '@fullerstack/ngx-auth';
 import {
   ApplicationConfig,
@@ -22,12 +21,9 @@ import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
-
 import { merge as ldNestedMerge } from 'lodash-es';
-
 import { Observable, Subject, of } from 'rxjs';
 import { catchError, debounceTime, filter, map, switchMap, takeUntil } from 'rxjs/operators';
-
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultUserConfig, DefaultUserState } from './user.default';
