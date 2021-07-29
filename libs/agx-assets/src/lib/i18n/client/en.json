@@ -211,7 +211,7 @@
   "SUCCESS.USER.EMAIL_CHANGE": "User email changed",
   "SUCCESS.USER.EMAIL_CHANGE_REQUEST": "Check for confirmation link in your new email",
   "SUCCESS.USER.FETCH": "User profile fetched",
-  "SUCCESS.USER.LANGUAGE_CHANGE": "User language changed",
+  "SUCCESS.USER.LANGUAGE_CHANGE": "User profile language changed",
   "SUCCESS.USER.PASSWORD_CHANGE": "User Password changed",
   "SUCCESS.USER.PASSWORD_RENEW": "User password saved",
   "SUCCESS.USER.PASSWORD_RESET": "Password reset request sent",

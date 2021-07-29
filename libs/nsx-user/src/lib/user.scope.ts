@@ -48,6 +48,7 @@ export class UserDataAccessScope {
       email,
       sessionVersion,
       role,
+      language,
       permissions,
       groupId,
       ...prunedUser

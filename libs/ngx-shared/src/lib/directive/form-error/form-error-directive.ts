@@ -38,7 +38,7 @@ export class FormErrorDirective implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.i18n.languageChanges$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe({
+    this.i18n.stateChange$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.process();
       },

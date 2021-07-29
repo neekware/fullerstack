@@ -23,7 +23,7 @@ import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
 import { merge as ldNestedMerge } from 'lodash-es';
 import { Observable, Subject, of } from 'rxjs';
-import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { catchError, debounceTime, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultUserConfig, DefaultUserState } from './user.default';
@@ -74,6 +74,31 @@ export class UserService {
           this.msg.setMsg({ text: err?.message, level: LogLevel.error });
         },
       });
+
+    this.i18n.stateChange$
+      .pipe(
+        debounceTime(200),
+        filter((language) => !!language && language !== this.state.language),
+        switchMap((language) => {
+          this.msg.reset();
+          return this.userSelfUpdateMutate$({ id: this.state.id, language });
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: () => {
+          this.msg.setMsg({
+            text: _('SUCCESS.USER.LANGUAGE_CHANGE'),
+            level: LogLevel.success,
+          });
+        },
+        error: () => {
+          this.msg.setMsg({
+            text: _('ERROR.USER.LANGUAGE_CHANGE'),
+            level: LogLevel.error,
+          });
+        },
+      });
   }
 
   /**
@@ -121,7 +146,6 @@ export class UserService {
 
   userSelfUpdateMutate$(input: UserSelfUpdateInput): Observable<UserState> {
     this.msg.reset();
-    this.store.setState(this.claimId, this.state);
     this.logger.debug(`[${this.nameSpace}] Self update request sent ...`);
 
     return this.gql.client.request<UserState>(UserSelfUpdateMutation, { input }).pipe(

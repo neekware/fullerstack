@@ -27,7 +27,7 @@ import { AvailableLanguage, LanguageDirection } from './i18n.model';
 @Injectable({ providedIn: 'root' })
 export class I18nService {
   private nameSpace = 'I18N';
-  @Output() languageChanges$ = new EventEmitter<string>();
+  @Output() stateChange$ = new EventEmitter<string>();
   private destroy$ = new Subject<boolean>();
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   currentLanguage = DefaultLanguage;
@@ -95,7 +95,7 @@ export class I18nService {
     this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       this.currentLanguage = event.lang;
       this.direction = this.getLanguageDirection(event.lang);
-      this.languageChanges$.emit(event.lang);
+      this.stateChange$.emit(event.lang);
       this.logger.debug(
         `[${this.nameSpace}] I18nService - language changed ... (${this.currentLanguage} - ${this.direction})`
       );

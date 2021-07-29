@@ -19,7 +19,7 @@ import { UserSelfUpdateInput, UserWhereUniqueInput } from './user.model';
 export class UserService {
   constructor(readonly prisma: PrismaService, readonly mailer: MailerService) {}
 
-  updateUser(userId: string, newUserData: UserSelfUpdateInput): Promise<User> {
+  async updateUser(userId: string, newUserData: UserSelfUpdateInput): Promise<User> {
     return this.prisma.user.update({
       data: newUserData,
       where: {

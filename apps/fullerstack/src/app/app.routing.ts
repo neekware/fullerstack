@@ -147,7 +147,6 @@ export const AppRoutes: Routes = [
     path: 'user/language/change',
     component: LanguageChangeComponent,
     canActivate: [AuthAuthenticatedGuard],
-    canDeactivate: [DeactivateGuard],
     data: {
       title: _('COMMON.LANGUAGE_CHANGE'),
       description: _('APP.DESCRIPTION.LANGUAGE_CHANGE'),

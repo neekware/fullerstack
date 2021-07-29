@@ -41,7 +41,7 @@ export class OptionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.i18n.languageChanges$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.i18n.stateChange$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (iso) => {
         this.currentLanguage = iso;
       },
