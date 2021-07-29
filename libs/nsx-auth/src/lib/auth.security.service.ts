@@ -10,7 +10,7 @@ import { ApiError, JwtDto } from '@fullerstack/agx-dto';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { PrismaService } from '@fullerstack/nsx-prisma';
 
-import { BadRequestException, ConsoleLogger, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { Permission, Role, User } from '@prisma/client';
@@ -32,7 +32,7 @@ import { decodeURITokenComponent } from './auth.util';
 
 @Injectable()
 export class SecurityService {
-  readonly logger = new ConsoleLogger(AUTH_MODULE_NAME);
+  readonly logger = new Logger(AUTH_MODULE_NAME);
   readonly options: DeepReadonly<SecurityConfig> = DefaultSecurityConfig;
   readonly siteSecret: string;
 
