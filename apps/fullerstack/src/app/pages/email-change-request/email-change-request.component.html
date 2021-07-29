@@ -9,7 +9,7 @@
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
-    [progress]="isLoading"
+    [progress]="progress.state$ | async"
   >
     <fullerstack-blob class="mt1" text="{{ 'CONFIRM.NEW_EMAIL' | translate }}." icon="information-outline" iconColor="green">
     </fullerstack-blob>

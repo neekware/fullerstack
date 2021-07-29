@@ -28,8 +28,8 @@ const securityConfig: SecurityConfig = {
 };
 
 const graphqlConfig: GqlModuleOptions = {
-  debug: true,
-  playground: true,
+  debug: false,
+  playground: false,
   autoSchemaFile: 'apps/api/src/prisma/schema.gql',
   cors: {
     credentials: true,

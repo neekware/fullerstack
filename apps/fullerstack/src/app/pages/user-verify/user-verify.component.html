@@ -10,7 +10,7 @@
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
-    [progress]="isLoading"
+    [progress]="progress.state$ | async"
   >
     <fullerstack-blob *ngIf="isUserVerified" text="{{ status | translate }}." icon="check-circle-outline" iconColor="green">
     </fullerstack-blob>

@@ -9,7 +9,7 @@
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
-    [progress]="auth?.state.isLoading"
+    [progress]="progress.state$ | async"
   >
     <form [formGroup]="form" (submit)="submit()" fxLayout="column" autocomplete="off">
       <mat-form-field>

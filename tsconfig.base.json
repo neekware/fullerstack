@@ -40,7 +40,6 @@
       "@fullerstack/ngx-subify": ["libs/ngx-subify/src/index.ts"],
       "@fullerstack/ngx-uix": ["libs/ngx-uix/src/index.ts"],
       "@fullerstack/ngx-user": ["libs/ngx-user/src/index.ts"],
-      "@fullerstack/ngx-util": ["libs/ngx-util/src/index.ts"],
       "@fullerstack/nsx-auth": ["libs/nsx-auth/src/index.ts"],
       "@fullerstack/nsx-common": ["libs/nsx-common/src/index.ts"],
       "@fullerstack/nsx-i18n": ["libs/nxs-i18n/src/index.ts"],

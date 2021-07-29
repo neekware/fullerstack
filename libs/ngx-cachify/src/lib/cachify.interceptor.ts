@@ -29,7 +29,7 @@ import { CACHIFY_AUTO_KEY, CachifyContextMeta, CachifyFetchPolicy } from './cach
 import { CachifyService } from './cachify.service';
 import { isPolicyEnabled } from './cachify.util';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class CachifyInterceptor implements HttpInterceptor {
   constructor(readonly cache: CachifyService) {}
 
@@ -134,6 +134,7 @@ export class CachifyInterceptor implements HttpInterceptor {
    * Note: blobs are excluded from the key
    */
   private makeRequestCacheKey(req: HttpRequest<any>): string {
+    const hashFun = objectHash;
     const uniqueData = {
       method: req.method,
       responseType: req.responseType,
@@ -141,6 +142,6 @@ export class CachifyInterceptor implements HttpInterceptor {
       ...cloneDeep(req.body || {}),
       ...cloneDeep(req.headers || {}),
     };
-    return objectHash(uniqueData);
+    return hashFun(uniqueData);
   }
 }

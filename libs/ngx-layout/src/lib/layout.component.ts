@@ -79,6 +79,6 @@ export class LayoutComponent implements OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
-    this.logger.info('LayoutComponent destroyed ...');
+    this.logger.debug('LayoutComponent destroyed ...');
   }
 }

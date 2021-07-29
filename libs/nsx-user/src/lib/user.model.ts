@@ -60,6 +60,9 @@ export class UserSelfUpdateInput implements Partial<User> {
 
   @Field({ nullable: true })
   lastName?: string;
+
+  @Field({ nullable: true })
+  language?: string;
 }
 
 @InputType()
@@ -78,6 +81,9 @@ export class UserUpdateInput implements Partial<User> {
 
   @Field({ nullable: true })
   lastName?: string;
+
+  @Field({ nullable: true })
+  language?: string;
 
   @Field(() => Role, { nullable: true })
   role?: Role;
