@@ -15,6 +15,7 @@ import { I18nService } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { StoreService } from '@fullerstack/ngx-store';
+import { SystemService } from '@fullerstack/ngx-system';
 import { UixService } from '@fullerstack/ngx-uix';
 import { UserService } from '@fullerstack/ngx-user';
 import { Observable } from 'rxjs';
@@ -35,7 +36,8 @@ export class AppComponent implements OnInit {
     readonly i18n: I18nService,
     readonly uix: UixService,
     readonly layout: LayoutService,
-    readonly user: UserService
+    readonly user: UserService,
+    readonly system: SystemService
   ) {
     if (!this.config.options.production) {
       /* istanbul ignore next */
