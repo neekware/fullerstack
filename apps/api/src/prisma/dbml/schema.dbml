@@ -31,6 +31,18 @@ Table User {
   groups Group [not null]
 }
 
+Table ContactMessage {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  email String [not null]
+  subject String [not null]
+  content String [not null]
+  countryCode String [not null]
+  ipAddress String [not null]
+  language String [not null, default: 'en']
+}
+
 Table GroupToUser {
   userId String [ref: > User.id]
   groupsId String [ref: > Group.id]
@@ -55,4 +67,9 @@ Enum Permission {
   userUPDATE
   userDELETE
   userALL
+  contactMessageCREATE
+  contactMessageREAD
+  contactMessageUPDATE
+  contactMessageDELETE
+  contactMessageALL
 }

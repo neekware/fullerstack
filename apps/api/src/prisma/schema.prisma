@@ -30,6 +30,12 @@ enum Permission {
   userUPDATE
   userDELETE
   userALL
+  contactMessageCREATE
+  contactMessageREAD
+  contactMessageUPDATE
+  contactMessageDELETE
+  contactMessageALL
+
 }
 
 model Group {
@@ -59,4 +65,16 @@ model User {
   permissions    Permission[]
   groupId        String?
   groups         Group[]
+}
+
+model ContactMessage {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  email       String
+  subject     String
+  content     String
+  countryCode String
+  ipAddress   String
+  language    String   @default("en")
 }

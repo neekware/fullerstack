@@ -87,6 +87,7 @@ type Mutation {
   authUserLogout: AuthStatusDto!
   authUserSignup(input: AuthUserSignupInput!): AuthTokenDto!
   authUserVerify(input: AuthUserVerifyInput!): AuthStatusDto!
+  systemContactUs(input: SystemContactUsInput!): SystemStatusDto!
 
   """Update user's own info"""
   userSelfUpdate(input: UserSelfUpdateInput!): UserDto!
@@ -104,6 +105,11 @@ enum OrderDirection {
 """User permission"""
 enum Permission {
   appALL
+  contactMessageALL
+  contactMessageCREATE
+  contactMessageDELETE
+  contactMessageREAD
+  contactMessageUPDATE
   groupALL
   groupCREATE
   groupDELETE
@@ -131,6 +137,18 @@ enum Role {
   STAFF
   SUPERUSER
   USER
+}
+
+input SystemContactUsInput {
+  body: String!
+  email: String!
+  name: String!
+  subject: String!
+}
+
+type SystemStatusDto {
+  message: String
+  ok: Boolean!
 }
 
 type UserDto {

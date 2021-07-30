@@ -8,6 +8,7 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiConstants } from '@fullerstack/agx-dto';
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -63,7 +64,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           '',
           [
             Validators.required,
-            Validators.minLength(this.validation.NAME_MIN_LEN),
+            Validators.minLength(ApiConstants.NAME_MIN_LENGTH),
             this.validation.validateFullName,
           ],
         ],

@@ -14,13 +14,13 @@
     <form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="off">
       <mat-form-field>
         <mat-icon matSuffix svgIcon="account"></mat-icon>
-        <input matInput formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" autofocus />
+        <input matInput type="text" formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" autofocus />
         <mat-error errorDirective [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched"></mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-icon matSuffix svgIcon="email"></mat-icon>
-        <input matInput #emailInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
+        <input matInput type="email" formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
         <mat-error errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
       </mat-form-field>
 

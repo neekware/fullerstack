@@ -94,6 +94,9 @@
     "ngx-subify": {
       "tags": ["scope:ngx-util"]
     },
+    "ngx-system": {
+      "tags": ["scope:ngx-util"]
+    },
     "ngx-uix": {
       "tags": ["scope:ngx-ui"]
     },
@@ -111,6 +114,9 @@
     },
     "nsx-prisma": {
       "tags": ["scope:nsx-data"]
+    },
+    "nsx-system": {
+      "tags": ["scope:nsx-util"]
     },
     "nsx-user": {
       "tags": ["scope:nsx-util"]

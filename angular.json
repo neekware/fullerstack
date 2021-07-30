@@ -845,6 +845,28 @@
         }
       }
     },
+    "ngx-system": {
+      "projectType": "library",
+      "root": "libs/ngx-system",
+      "sourceRoot": "libs/ngx-system/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-system"],
+          "options": {
+            "jestConfig": "libs/ngx-system/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/ngx-system/src/**/*.ts", "libs/ngx-system/src/**/*.html"]
+          }
+        }
+      }
+    },
     "ngx-uix": {
       "projectType": "library",
       "root": "libs/ngx-uix",
@@ -968,6 +990,27 @@
           "outputs": ["coverage/libs/nsx-prisma"],
           "options": {
             "jestConfig": "libs/nsx-prisma/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "nsx-system": {
+      "root": "libs/nsx-system",
+      "sourceRoot": "libs/nsx-system/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-system/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-system"],
+          "options": {
+            "jestConfig": "libs/nsx-system/jest.config.js",
             "passWithNoTests": true
           }
         }

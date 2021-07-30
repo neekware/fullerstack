@@ -12,6 +12,7 @@ import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
 
 import { AboutComponent } from './pages/about/about.component';
+import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { EmailChangePerformComponent } from './pages/email-change-perform/email-change-perform.component';
 import { EmailChangeRequestComponent } from './pages/email-change-request/email-change-request.component';
 import { ForexComponent } from './pages/forex/forex.component';
@@ -150,6 +151,15 @@ export const AppRoutes: Routes = [
     data: {
       title: _('COMMON.LANGUAGE_CHANGE'),
       description: _('APP.DESCRIPTION.LANGUAGE_CHANGE'),
+    },
+  },
+  {
+    path: 'contact/us',
+    component: ContactUsComponent,
+    canDeactivate: [DeactivateGuard],
+    data: {
+      title: _('COMMON.CONTACT_US'),
+      description: _('COMMON.CONTACT_US'),
     },
   },
   {

@@ -298,6 +298,29 @@ export interface authEmailChangePerformVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: systemContactUs
+// ====================================================
+
+export interface systemContactUs_systemContactUs {
+  __typename: "SystemStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+export interface systemContactUs {
+  systemContactUs: systemContactUs_systemContactUs;
+}
+
+export interface systemContactUsVariables {
+  input: SystemContactUsInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: userSelf
 // ====================================================
 
@@ -452,6 +475,21 @@ export interface AuthTokenStatus {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: SystemStatus
+// ====================================================
+
+export interface SystemStatus {
+  __typename: "SystemStatusDto";
+  ok: boolean;
+  message: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: User
 // ====================================================
 
@@ -490,6 +528,11 @@ export interface User {
  */
 export enum Permission {
   appALL = "appALL",
+  contactMessageALL = "contactMessageALL",
+  contactMessageCREATE = "contactMessageCREATE",
+  contactMessageDELETE = "contactMessageDELETE",
+  contactMessageREAD = "contactMessageREAD",
+  contactMessageUPDATE = "contactMessageUPDATE",
   groupALL = "groupALL",
   groupCREATE = "groupCREATE",
   groupDELETE = "groupDELETE",
@@ -563,6 +606,13 @@ export interface AuthUserSignupInput {
 
 export interface AuthUserVerifyInput {
   token: string;
+}
+
+export interface SystemContactUsInput {
+  content: string;
+  email: string;
+  name: string;
+  subject: string;
 }
 
 export interface UserSelfUpdateInput {

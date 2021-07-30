@@ -10,6 +10,7 @@ import { AuthModule } from '@fullerstack/nsx-auth';
 import { HttpRequest, HttpResponse } from '@fullerstack/nsx-common';
 import { MailerModule } from '@fullerstack/nsx-mailer';
 import { PrismaModule } from '@fullerstack/nsx-prisma';
+import { SystemModule } from '@fullerstack/nsx-system';
 import { UserModule } from '@fullerstack/nsx-user';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -28,6 +29,7 @@ import { AppService } from './app.service';
     }),
     PrismaModule,
     MailerModule,
+    SystemModule,
     AuthModule,
     UserModule,
     GraphQLModule.forRoot({

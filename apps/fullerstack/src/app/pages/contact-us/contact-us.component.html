@@ -1,0 +1,99 @@
+<mat-toolbar class="fs-page-header" color="primary"> </mat-toolbar>
+<div class="fs-page-content">
+  <fullerstack-card
+    class="fs-page-card"
+    fxLayout="column"
+    fxFlex.xs="100"
+    fxFlex.sm="80"
+    fxFlex.gt-sm="600px"
+    [title]="title"
+    [subtitle]="subtitle"
+    [icon]="icon"
+    [progress]="progress.state$ | async"
+  >
+    <form *ngIf="!isSubmitted && !status?.ok" [formGroup]="form" (submit)="submit()" fxLayout="column">
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="account"></mat-icon>
+        <input matInput type="text" formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" />
+        <mat-error errorDirective [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched"></mat-error>
+        <mat-hint align="end">{{ 'COMMON.HINT.MESSAGE.NAME' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="email"></mat-icon>
+        <input matInput type="email" formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
+        <mat-error errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
+        <mat-hint align="end">{{ 'COMMON.HINT.MESSAGE.EMAIL' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-icon matSuffix svgIcon="comment-text-outline"></mat-icon>
+        <input matInput type="text" formControlName="subject" placeholder="{{ 'COMMON.SUBJECT' | translate }}" />
+        <mat-error errorDirective [control]="form?.controls?.subject" [isTouched]="form?.controls?.subject?.touched"></mat-error>
+        <mat-hint align="end">{{ 'COMMON.HINT.MESSAGE.SUBJECT' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-icon matSuffix class="fs-icon-flip" svgIcon="format-text-rotation-angle-up"></mat-icon>
+        <textarea
+          matInput
+          [matTextareaAutosize]="true"
+          [matAutosizeMinRows]="5"
+          formControlName="body"
+          placeholder="{{ 'COMMON.MESSAGE' | translate }}"
+        ></textarea>
+        <mat-error align="end" errorDirective [control]="form?.controls?.body" [isTouched]="form?.controls?.body?.touched"></mat-error>
+        <mat-hint align="end">{{ 'COMMON.HINT.MESSAGE.DETAIL' | translate }}</mat-hint>
+      </mat-form-field>
+
+      <div fxLayout fxLayoutGap="10px" class="pt0_5">
+        <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid || form.pristine">
+          {{ 'COMMON.SEND_MESSAGE' | translate }}
+        </button>
+        <div *ngIf="isSubmitted && !status?.ok" class="form-status" fxLayout="row" fxLayoutGap="10px">
+          <mat-icon color="warn" svgIcon="alert"></mat-icon>
+          <span>{{ system.msg.text | translate }}!</span>
+        </div>
+      </div>
+    </form>
+
+    <fullerstack-blob
+      *ngIf="isSubmitted && status?.ok"
+      class="mt1"
+      text="{{ 'INFO.CONTACT_MESSAGE_SENT' | translate }}."
+      icon="check-circle-outline"
+      iconColor="green"
+    >
+    </fullerstack-blob>
+
+    <mat-divider class="mt1"></mat-divider>
+
+    <div class="mt2" fxLayout="row" *ngIf="isSubmitted && status?.ok && !auth.state.isLoggedIn">
+      <span>
+        [
+        <a routerLink="/user/signup" class="no-underline"> {{ 'COMMON.SIGNUP' | translate }} </a>
+        ]
+      </span>
+      <div fxFlex></div>
+      <span>
+        [
+        <a routerLink="/auth/login" class="no-underline"> {{ 'COMMON.LOGIN' | translate }} </a>
+        ]
+      </span>
+    </div>
+
+    <div class="mt2" fxLayout="row" *ngIf="isSubmitted && status?.ok && auth.state.isLoggedIn">
+      <span>
+        [
+        <a routerLink="/user/profile/update" class="no-underline"> {{ 'COMMON.UPDATE_PROFILE' | translate }} </a>
+        ]
+      </span>
+      <div fxFlex></div>
+      <span>
+        [
+        <a routerLink="/" class="no-underline"> {{ 'COMMON.HOME' | translate }} </a>
+        ]
+      </span>
+    </div>
+  </fullerstack-card>
+</div>
