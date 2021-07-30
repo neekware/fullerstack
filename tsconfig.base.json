@@ -46,6 +46,7 @@
       "@fullerstack/nsx-mailer": ["libs/nsx-mailer/src/index.ts"],
       "@fullerstack/nsx-prisma": ["libs/nsx-prisma/src/index.ts"],
       "@fullerstack/nsx-prisma/mock": ["libs/nsx-prisma/src/mock.ts"],
+      "@fullerstack/nsx-system": ["libs/nsx-system/src/index.ts"],
       "@fullerstack/nsx-user": ["libs/nsx-user/src/index.ts"],
       "ts-essentials/*": ["node_modules/ts-essentials/*"]
     }

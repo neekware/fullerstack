@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-export * from './sys.gql';
-export * from './auth.gql';
-export * from './user.gql';
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class SystemService {}

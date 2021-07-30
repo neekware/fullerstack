@@ -21,7 +21,7 @@ export declare class MailerMessage {
   from: string;
   to: string;
   subject: string;
-  html: string;
+  html?: string;
   text?: string;
   replayTo?: string;
   cC?: string;

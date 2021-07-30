@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { GqlStatusDto } from '@fullerstack/nsx-common';
 import { Directive, Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
@@ -23,27 +24,15 @@ export interface AuthFilterType<T> {
 }
 
 @ObjectType()
-export class AuthStatusDto {
-  @Field({ nullable: true })
-  message?: string;
-
-  @Field()
-  ok: boolean;
-}
+export class AuthStatusDto extends GqlStatusDto {}
 
 /**
  * Auth token (server -> client)
  */
 @ObjectType()
-export class AuthTokenDto {
+export class AuthTokenDto extends AuthStatusDto {
   @Field()
   token: string;
-
-  @Field({ nullable: true })
-  message?: string;
-
-  @Field()
-  ok?: boolean;
 }
 
 /**

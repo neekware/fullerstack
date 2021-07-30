@@ -973,6 +973,27 @@
         }
       }
     },
+    "nsx-system": {
+      "root": "libs/nsx-system",
+      "sourceRoot": "libs/nsx-system/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nsx-system/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nsx-system"],
+          "options": {
+            "jestConfig": "libs/nsx-system/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "nsx-user": {
       "root": "libs/nsx-user",
       "sourceRoot": "libs/nsx-user/src",

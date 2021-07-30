@@ -2,7 +2,7 @@
 CREATE TYPE "Role" AS ENUM ('USER', 'STAFF', 'ADMIN', 'SUPERUSER');
 
 -- CreateEnum
-CREATE TYPE "Permission" AS ENUM ('appALL', 'groupCREATE', 'groupREAD', 'groupUPDATE', 'groupDELETE', 'groupALL', 'userCREATE', 'userREAD', 'userUPDATE', 'userDELETE', 'userALL');
+CREATE TYPE "Permission" AS ENUM ('appALL', 'groupCREATE', 'groupREAD', 'groupUPDATE', 'groupDELETE', 'groupALL', 'userCREATE', 'userREAD', 'userUPDATE', 'userDELETE', 'userALL', 'contactMessageCREATE', 'contactMessageREAD', 'contactMessageUPDATE', 'contactMessageDELETE', 'contactMessageALL');
 
 -- CreateTable
 CREATE TABLE "Group" (
@@ -33,6 +33,21 @@ CREATE TABLE "User" (
     "role" "Role" NOT NULL DEFAULT E'USER',
     "permissions" "Permission"[],
     "groupId" TEXT,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ContactMessage" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "email" TEXT NOT NULL,
+    "subject" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "countryCode" TEXT NOT NULL,
+    "ipAddress" TEXT NOT NULL,
+    "language" TEXT NOT NULL DEFAULT E'en',
 
     PRIMARY KEY ("id")
 );
