@@ -30,6 +30,7 @@ import { AppComponent } from './app.component';
 import { httpInterceptorProvidersOrderedList } from './app.intercept';
 import { AppRoutes } from './app.routing';
 import { AboutComponent } from './pages/about/about.component';
+import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { EmailChangePerformComponent } from './pages/email-change-perform/email-change-perform.component';
 import { EmailChangeRequestComponent } from './pages/email-change-request/email-change-request.component';
 import { ForexComponent } from './pages/forex/forex.component';
@@ -61,6 +62,7 @@ import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
     EmailChangeRequestComponent,
     EmailChangePerformComponent,
     LanguageChangeComponent,
+    ContactUsComponent,
     ForexComponent,
     PortfolioComponent,
     TrendComponent,
@@ -71,7 +73,10 @@ import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
-    RouterModule.forRoot(AppRoutes),
+    RouterModule.forRoot(AppRoutes, {
+      scrollPositionRestoration: 'enabled',
+      onSameUrlNavigation: 'reload',
+    }),
     ConfigModule.forRoot(environment),
     LoggerModule,
     StoreModule,

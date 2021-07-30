@@ -140,7 +140,7 @@ enum Role {
 }
 
 input SystemContactUsInput {
-  content: String!
+  body: String!
   email: String!
   name: String!
   subject: String!

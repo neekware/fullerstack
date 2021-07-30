@@ -24,9 +24,6 @@ export enum compareType {
 
 @Injectable({ providedIn: 'root' })
 export class ValidationService {
-  readonly NAME_MIN_LEN = 5;
-  readonly PASSWORD_MIN_LEN = 6;
-
   // Visa, MasterCard, American Express, Diners Club, Discover, JCB
   validateCreditCard(control: FormControl): ValidationErrors | null {
     if (

@@ -15,7 +15,7 @@ export const SystemStatusFragment = gql`
   }
 `;
 
-export const SysContactUsMutation = gql`
+export const SystemContactUsMutation = gql`
   mutation systemContactUs($input: SystemContactUsInput!) {
     systemContactUs(input: $input) {
       ...SystemStatus

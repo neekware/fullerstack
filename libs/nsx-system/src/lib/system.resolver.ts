@@ -45,7 +45,7 @@ export class SystemResolver {
       from: this.options.siteSupportEmail,
       to: email,
       subject: `${payload.subject} - (from: ${name})`,
-      text: payload.content,
+      text: payload.body,
     });
 
     return { ok: true };

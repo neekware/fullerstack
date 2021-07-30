@@ -14,7 +14,7 @@
     <form [formGroup]="form" (submit)="submit()" fxLayout="column" autocomplete="off">
       <mat-form-field>
         <mat-icon matSuffix svgIcon="email"></mat-icon>
-        <input matInput formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" autofocus />
+        <input matInput type="email" formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" autofocus />
         <mat-error errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
       </mat-form-field>
 

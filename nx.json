@@ -94,6 +94,9 @@
     "ngx-subify": {
       "tags": ["scope:ngx-util"]
     },
+    "ngx-system": {
+      "tags": ["scope:ngx-util"]
+    },
     "ngx-uix": {
       "tags": ["scope:ngx-ui"]
     },
