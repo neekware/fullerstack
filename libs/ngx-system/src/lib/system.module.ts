@@ -8,8 +8,10 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MsgService } from '@fullerstack/ngx-msg';
 
 @NgModule({
   imports: [CommonModule],
+  providers: [MsgService],
 })
 export class SystemModule {}
