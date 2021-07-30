@@ -27,13 +27,14 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-icon matSuffix svgIcon="key-variant"></mat-icon>
+        <mat-icon matSuffix svgIcon="comment-text-outline"></mat-icon>
         <input matInput type="text" formControlName="subject" placeholder="{{ 'COMMON.SUBJECT' | translate }}" />
         <mat-error errorDirective [control]="form?.controls?.subject" [isTouched]="form?.controls?.subject?.touched"></mat-error>
         <mat-hint align="end">{{ 'COMMON.HINT.MESSAGE.SUBJECT' | translate }}</mat-hint>
       </mat-form-field>
 
       <mat-form-field>
+        <mat-icon matSuffix class="fs-icon-flip" svgIcon="format-text-rotation-angle-up"></mat-icon>
         <textarea
           matInput
           [matTextareaAutosize]="true"
