@@ -161,6 +161,7 @@ export class AuthService<T = StoreStateType> {
 [STORE][PREV][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
 [STORE][NEXT][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
 [AUTH] Login request sent ...
+[INTERCEPT][SUCCESS][userSelf] Http Request took 17 ms!
 [STORE][PREV][AUTH_LOGIN_REQ_SUCCESS] ↠ {AUTH: {…}}
 [STORE][NEXT][AUTH_LOGIN_REQ_SUCCESS] ↠ {AUTH: {…}}
 [AUTH] Login request success ...
