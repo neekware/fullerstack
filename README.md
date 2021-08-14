@@ -71,11 +71,21 @@ npx create-nx-workspace fullerstack
 
 ## Legends
 
-- AG = Agnostic (not target specific, node/browser)
+### Libraries
+
+- AG = Agnostic (not target specific, node &| browser)
+  - AGX = Node/Browser Library
+- BA = Browser Framework Agnostic (not framework specific, browser-only)
+  - BAX = Browser Library
+- NA = Node Application Agnostic (not application specific, node-only)
+  - NAX = Node Library
 - NG = [Angular](angular.io)
   - NGX = Angular Library
 - NS = [Nest](nestjs.com)
   - NSX = NestJs Library
+
+### Applications
+
 - WB = Web (Chrome, Firefox, Safari, Edge, etc)
 - EL = [Electron](electronjs.org)
 - NS = [NativeScript](nativescript.org)
@@ -185,7 +195,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             380        20278         2302         3865        14111
  JSON                   140         4959            0            0         4959
- Markdown               103         2470          654            0         1816
+ Markdown               103         2480          657            0         1823
  HTML                    33         1446          113            5         1328
  Sass                    55         1449          140           35         1274
  JavaScript              34          629           24           48          557
@@ -194,7 +204,7 @@ X.Y.Z Version
  SQL                      1           80           15           13           52
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  753        31504         3265         3968        24271
+ Total                  753        31514         3268         3968        24278
 --------------------------------------------------------------------------------
 ```
 
