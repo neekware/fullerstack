@@ -73,24 +73,24 @@ npx create-nx-workspace fullerstack
 
 ### Libraries
 
-- AG = Agnostic (not target specific, node &| browser)
-  - AGX = Node/Browser Library
-- BA = Browser Framework Agnostic (not framework specific, browser-only)
-  - BAX = Browser Library
-- NA = Node Application Agnostic (not application specific, node-only)
-  - NAX = Node Library
-- NG = [Angular](angular.io)
-  - NGX = Angular Library
-- NS = [Nest](nestjs.com)
-  - NSX = NestJs Library
+- `AG` = Agnostic (not target specific, `node &| browser`)
+  - `AGX` = Node/Browser Library
+- `BA` = Browser Framework/Library Agnostic (not framework/library specific, `browser-only`)
+  - `BAX` = Browser Library
+- `NA` = Node Application Agnostic (not application specific, `node-only`)
+  - `NAX` = Node Library
+- `NG` = [Angular](angular.io)
+  - `NGX` = Angular Library
+- `NS` = [Nest](nestjs.com)
+  - `NSX` = NestJs Library
 
 ### Applications
 
-- WB = Web (Chrome, Firefox, Safari, Edge, etc)
-- EL = [Electron](electronjs.org)
-- NS = [NativeScript](nativescript.org)
-- AD = [Android](android.com)
-- IO = [Ionic](ionicframework.com)
+- `WB` = Web (Chrome, Firefox, Safari, Edge, etc)
+- `EL` = [Electron](electronjs.org)
+- `NS` = [NativeScript](nativescript.org)
+- `AD` = [Android](android.com)
+- `IO` = [Ionic](ionicframework.com)
 
 ## Applications
 
