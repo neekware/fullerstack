@@ -49,6 +49,9 @@
       "tags": ["scope:fullerstack-e2e"],
       "implicitDependencies": ["fullerstack"]
     },
+    "nax-ipware": {
+      "tags": ["scope:nax-util"]
+    },
     "ngx-auth": {
       "tags": ["scope:ngx-util"]
     },
