@@ -1,1 +1,1 @@
-export * from './lib/nax-ipware';
+export * from './lib/ipware';
