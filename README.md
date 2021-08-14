@@ -71,7 +71,7 @@ npx create-nx-workspace fullerstack
 
 ## Legends
 
-- AG = Agnostic (not target specific)
+- AG = Agnostic (not target specific, node/browser)
 - NG = [Angular](angular.io)
   - NGX = Angular Library
 - NS = [Nest](nestjs.com)
@@ -79,8 +79,8 @@ npx create-nx-workspace fullerstack
 - WB = Web (Chrome, Firefox, Safari, Edge, etc)
 - EL = [Electron](electronjs.org)
 - NS = [NativeScript](nativescript.org)
-- AN = Google's [Android](android.com)
-- IC = [Ionic](ionicframework.com)
+- AD = [Android](android.com)
+- IO = [Ionic](ionicframework.com)
 
 ## Applications
 
