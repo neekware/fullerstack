@@ -1,11 +1,16 @@
+import {
+  IpwareCallOptions,
+  IpwareConfigOptions,
+  IpwareIpInfo,
+  IpwareMultiIpDirection,
+} from './ipware.model';
+
 // Search for the real IP address in the following order (user configurable)
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
-// X-Forwarded-For: <client>, <proxy1>, <proxy2>
-
-import { IpwareIpInfo } from './ipware.model';
-
-// Configurable via settings.py
-export const IPWARE_META_PRECEDENCE_ORDER: string[] = [
+// The right-most IP address is always the IP address that connects to the last proxy, which means it is the most reliable source of information.
+// https://en.wikipedia.org/wiki/X-Forwarded-For (
+// X-Forwarded-For: client, proxy1, proxy2
+export const IPWARE_HEADERS_IP_ATTRIBUTES_ORDER: string[] = [
   'X_FORWARDED_FOR', // Load balancers or proxies such as AWS ELB (default client is `left-most` [`<client>, <proxy1>, <proxy2>`])
   'HTTP_X_FORWARDED_FOR',
   'HTTP_CLIENT_IP', // Standard headers used by providers such as Amazon EC2, Heroku etc.
@@ -192,12 +197,26 @@ export const IPWARE_LOOPBACK_PREFIX: string[] = [
 
 export const IPWARE_NON_PUBLIC_IP_PREFIX = [...IPWARE_PRIVATE_IP_PREFIX, ...IPWARE_LOOPBACK_PREFIX];
 
-export enum IPWARE_DEFAULT_IP_DIRECTION {
-  'leftMost' = 'left-most',
-  'rightMost' = 'right-most',
-}
+export const IPWARE_MULTI_IP_DIRECTION: IpwareMultiIpDirection = 'left-most';
 
 export const IPWARE_DEFAULT_IP_INFO: IpwareIpInfo = {
   ip: '',
   routable: false,
+  trustedRoute: false,
+};
+
+export const IpwareConfigOptionsDefault: IpwareConfigOptions = {
+  requestHeadersOrder: IPWARE_HEADERS_IP_ATTRIBUTES_ORDER,
+  privateIpPrefixes: IPWARE_PRIVATE_IP_PREFIX,
+  loopbackIpPrefixes: IPWARE_LOOPBACK_PREFIX,
+  proxyIpPrefixes: [],
+  proxyCount: 0,
+  ipOrder: IPWARE_MULTI_IP_DIRECTION,
+};
+
+export const IpwareCallOptionsDefault: IpwareCallOptions = {
+  requestHeadersOrder: IPWARE_HEADERS_IP_ATTRIBUTES_ORDER,
+  proxyIpPrefixes: [],
+  proxyCount: 0,
+  ipOrder: IPWARE_MULTI_IP_DIRECTION,
 };

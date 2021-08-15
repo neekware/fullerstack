@@ -1,7 +1,7 @@
 {
   "name": "@fullerstack/nax-ipware",
   "version": "0.0.1",
-  "description": "A Node application to retrieve user's real IP address",
+  "description": "A node library for server applications retrieving user's real IP address",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/nax-ipware/README.md",
   "keywords": [
     "ip",
@@ -21,6 +21,7 @@
     "security"
   ],
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "ts-essentials": "^7.0.2"
   }
 }
