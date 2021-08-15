@@ -10,7 +10,7 @@
 
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { merge as ldNestMerge } from 'lodash';
+import { merge as ldNestedMerge } from 'lodash';
 import * as nodemailer from 'nodemailer';
 import { DeepReadonly } from 'ts-essentials';
 
@@ -23,7 +23,7 @@ export class MailerService implements OnModuleDestroy {
   private transporter: any;
 
   constructor(readonly config: ConfigService) {
-    this.options = ldNestMerge(
+    this.options = ldNestedMerge(
       { ...this.options },
       this.config.get<MailerConfig>('appConfig.mailerConfig')
     );

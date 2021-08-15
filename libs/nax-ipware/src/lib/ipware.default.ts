@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import {
   IpwareCallOptions,
   IpwareConfigOptions,
@@ -178,7 +186,7 @@ export const IPWARE_PRIVATE_IP_PREFIX: string[] = [
   ...[
     // ipv6 related
     '::', // Unspecified address
-    '::ffff:',
+    '::ffff:', // prefix for IPv4 mapped addresses (::ffff:192.1.56.10/96 shortened format)
     '2001:10:',
     '2001:20:', // messages to software
     '2001::', // TEREDO

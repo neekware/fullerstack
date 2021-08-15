@@ -1,4 +1,12 @@
-import { merge as ldNestMerge } from 'lodash';
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
+import { mergeWith as ldNestedMergeWith } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 
 import {
@@ -18,8 +26,42 @@ import {
 export class Ipware {
   readonly options: DeepReadonly<IpwareConfigOptions> = IpwareConfigOptionsDefault;
 
-  constructor(readonly config?: IpwareConfigOptions) {
-    this.options = ldNestMerge({ ...this.options }, this.config);
+  constructor(options?: IpwareConfigOptions) {
+    this.options = ldNestedMergeWith(this.options, options, (dest, src) =>
+      Array.isArray(dest) ? src : undefined
+    );
+  }
+
+  /**
+   * Given a string, it returns an object of IpwareIpInfo.
+   */
+  private getInfo(ip: string): IpwareIpInfo {
+    const cleanedIp = cleanUpIP(ip);
+    if (isValidIP(cleanedIp)) {
+      const routable = this.isPublic(cleanedIp);
+      return { ip: cleanedIp, routable, trustedRoute: false };
+    }
+    return { ip: '', routable: false, trustedRoute: false };
+  }
+
+  /**
+   * Given two IP addresses, it returns the the best match ip
+   * Best match order: precedence is (Public, Private, Loopback, null)
+   */
+  private bestMatched(lastIP: string, nextIp: string): string {
+    if (!lastIP) {
+      return nextIp;
+    }
+
+    if (this.isPublic(lastIP) && this.isPrivate(nextIp)) {
+      return lastIP;
+    }
+
+    if (this.isPrivate(lastIP) && this.isLoopback(nextIp)) {
+      return lastIP;
+    }
+
+    return nextIp;
   }
 
   /**
@@ -49,7 +91,9 @@ export class Ipware {
     ];
 
     for (const prefix of nonPublicIpPrefixes) {
-      return ip.startsWith(prefix);
+      if (ip.startsWith(prefix)) {
+        return true;
+      }
     }
 
     return false;
@@ -65,45 +109,13 @@ export class Ipware {
   }
 
   /**
-   * Given a string, it returns an object of IpwareIpInfo.
-   */
-  getInfo(ip: string): IpwareIpInfo {
-    const cleanedIp = cleanUpIP(ip);
-    if (isValidIP(cleanedIp)) {
-      const routable = this.isPublic(cleanedIp);
-      return { ip: cleanedIp, routable, trustedRoute: false };
-    }
-    return { ip: '', routable: false, trustedRoute: false };
-  }
-
-  /**
-   * Given two IP addresses, it returns the the best match ip
-   * Best match order: precedence is (Public, Private, Loopback, null)
-   */
-  bestMatched(lastIP: string, nextIp: string): string {
-    if (!lastIP) {
-      return nextIp;
-    }
-
-    if (this.isPublic(lastIP) && this.isPrivate(nextIp)) {
-      return lastIP;
-    }
-
-    if (this.isPrivate(lastIP) && this.isLoopback(nextIp)) {
-      return lastIP;
-    }
-
-    return nextIp;
-  }
-
-  /**
    * Return the best matched IP, given an optional trusted proxy IP list
    * @param request HTTP request
    * @param options ipware call options
    * @returns IpwareIpInfo
    */
   getClientIP(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
-    callOptions = ldNestMerge(
+    callOptions = ldNestedMergeWith(
       {
         ...IpwareCallOptionsDefault,
         ...{
@@ -113,7 +125,8 @@ export class Ipware {
           ipOrder: this.options.ipOrder,
         },
       },
-      callOptions
+      callOptions,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
     );
 
     let ipInfo: IpwareIpInfo;

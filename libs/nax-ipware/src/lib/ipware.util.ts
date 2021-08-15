@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import { IpwareData, IpwareHeaders } from './ipware.model';
 
 /**
@@ -14,7 +22,8 @@ export function isValidIPv4(ip: string): boolean {
  * Check the validity of an IPv6 address
  */
 export function isValidIPv6(ip: string): boolean {
-  const ipv6_pattern = /^::|^::1|^([a-fA-F0-9]{1,4}::?){1,7}([a-fA-F0-9]{1,4})$/;
+  const ipv6_pattern =
+    /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))/gi;
 
   return ipv6_pattern.test(ip);
 }
@@ -30,8 +39,8 @@ export function isValidIP(ip: string): boolean {
  * Given ip address string, it cleans it up
  */
 export function cleanUpIP(ip: string): string {
-  ip = ip.trim();
-  if (ip.toLowerCase().startsWith('::ffff:')) {
+  ip = ip.toLowerCase().trim();
+  if (ip.startsWith('::ffff:')) {
     return ip.replace('::ffff:', '');
   }
   return ip;
@@ -58,37 +67,53 @@ export function getIPsFromString(str: string): IpwareData {
 export function getHeadersAttribute(headers: IpwareHeaders, attr: string): string {
   for (const key of Object.keys(headers)) {
     if (key === attr) {
-      headers[key];
+      return headers[key];
     }
 
     const upperCaseAttr = attr.toUpperCase();
     if (key === upperCaseAttr) {
-      headers[key];
+      return headers[key];
     }
 
-    const lowerCaseAttr = attr.toUpperCase();
+    const lowerCaseAttr = attr.toLowerCase();
     if (key === lowerCaseAttr) {
-      headers[key];
+      return headers[key];
     }
 
     const dashedAttr = attr.replace(/_/g, '-');
     if (key === dashedAttr) {
-      headers[key];
+      return headers[key];
+    }
+
+    const dashedCapitalizedSnakeCaseAttr = dashedAttr
+      .split('-')
+      .map((part) => `${part.charAt(0).toUpperCase()}${part.substr(1).toLowerCase()}`)
+      .join('-');
+    if (key === dashedCapitalizedSnakeCaseAttr) {
+      return headers[key];
     }
 
     const underscoredAttr = attr.replace(/-/g, '_');
     if (key === underscoredAttr) {
-      headers[key];
+      return headers[key];
+    }
+
+    const underscoredCapitalizedSnakeCaseAttr = underscoredAttr
+      .split('_')
+      .map((part) => `${part.charAt(0).toUpperCase()}${part.substr(1).toLowerCase()}`)
+      .join('_');
+    if (key === underscoredCapitalizedSnakeCaseAttr) {
+      return headers[key];
     }
 
     const dashedAttrUpperCase = dashedAttr.toUpperCase();
     if (key === dashedAttrUpperCase) {
-      headers[key];
+      return headers[key];
     }
 
     const underscoredAttrLowerCase = underscoredAttr.toLowerCase();
     if (key === underscoredAttrLowerCase) {
-      headers[key];
+      return headers[key];
     }
   }
 

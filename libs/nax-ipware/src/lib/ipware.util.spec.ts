@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Neekware Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by a proprietary notice
+ * that can be found at http://neekware.com/license/PRI.html
+ */
+
 import {
   cleanUpIP,
   getHeadersAttribute,
@@ -38,7 +46,7 @@ describe('ipware.util', () => {
   });
 
   it('should clean up IP address', () => {
-    expect(cleanUpIP('::ffF: ')).toEqual('');
+    expect(cleanUpIP('::fffF: ')).toEqual('');
     expect(cleanUpIP('unknown ')).toEqual('unknown');
     expect(cleanUpIP(' 177.139.100.256 ')).toEqual('177.139.100.256');
   });
@@ -52,7 +60,7 @@ describe('ipware.util', () => {
   it('should return ip address list from string', () => {
     const str = '177.139.100.255, 177.139.100.254,177.139.100.253';
     const ips = ['177.139.100.255', '177.139.100.254', '177.139.100.253'];
-    expect(JSON.stringify(getIPsFromString(str))).toEqual(JSON.stringify(ips));
+    expect(JSON.stringify(getIPsFromString(str).ips)).toEqual(JSON.stringify(ips));
   });
 
   it('should return ip address from request', () => {
