@@ -20,20 +20,23 @@ export interface IpwareData {
   ips: string[];
   count: number;
 }
-export type IpwareMultiIpDirection = 'left-most' | 'right-most';
+export type IpwareClientIpOrder = 'left-most' | 'right-most';
+
+export interface IpwareProxyOptions {
+  enabled: boolean;
+  proxyIpPrefixes?: string[];
+  count?: number;
+  order?: string;
+}
 
 export interface IpwareConfigOptions {
   requestHeadersOrder?: string[];
   privateIpPrefixes?: string[];
   loopbackIpPrefixes?: string[];
-  proxyIpPrefixes?: string[];
-  proxyCount?: number;
-  ipOrder?: string;
+  proxy?: IpwareProxyOptions;
 }
 
 export interface IpwareCallOptions {
   requestHeadersOrder?: string[];
-  proxyIpPrefixes?: string[];
-  proxyCount?: number;
-  ipOrder?: string;
+  proxy?: IpwareProxyOptions;
 }

@@ -6,11 +6,14 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { DeepReadonly } from 'ts-essentials';
+
 import {
   IpwareCallOptions,
+  IpwareClientIpOrder,
   IpwareConfigOptions,
   IpwareIpInfo,
-  IpwareMultiIpDirection,
+  IpwareProxyOptions,
 } from './ipware.model';
 
 // Search for the real IP address in the following order (user configurable)
@@ -46,7 +49,7 @@ export const IPWARE_HEADERS_IP_ATTRIBUTES_ORDER: string[] = [
 // http://www.ietf.org/rfc/rfc3330.txt (IPv4)
 // http://www.ietf.org/rfc/rfc5156.txt (IPv6)
 // https://www.ietf.org/rfc/rfc6890.txt
-export const IPWARE_PRIVATE_IP_PREFIX: string[] = [
+export const IPWARE_PRIVATE_IP_PREFIX: DeepReadonly<string[]> = [
   '0.', // messages to software
   '10.', // class A private block
   ...[
@@ -198,14 +201,14 @@ export const IPWARE_PRIVATE_IP_PREFIX: string[] = [
   ],
 ];
 
-export const IPWARE_LOOPBACK_PREFIX: string[] = [
+export const IPWARE_LOOPBACK_PREFIX: DeepReadonly<string[]> = [
   '127.', // IPv4 loopback device (Host)
   '::1', // IPv6 loopback device (Host)
 ];
 
 export const IPWARE_NON_PUBLIC_IP_PREFIX = [...IPWARE_PRIVATE_IP_PREFIX, ...IPWARE_LOOPBACK_PREFIX];
 
-export const IPWARE_MULTI_IP_DIRECTION: IpwareMultiIpDirection = 'left-most';
+export const IPWARE_CLIENT_IP_ORDER_DEFAULT: IpwareClientIpOrder = 'left-most';
 
 export const IPWARE_DEFAULT_IP_INFO: IpwareIpInfo = {
   ip: '',
@@ -213,18 +216,29 @@ export const IPWARE_DEFAULT_IP_INFO: IpwareIpInfo = {
   trustedRoute: false,
 };
 
-export const IpwareConfigOptionsDefault: IpwareConfigOptions = {
+export const IpwareProxyOptionsDefault: DeepReadonly<IpwareProxyOptions> = {
+  enabled: false,
+  proxyIpPrefixes: [],
+  count: 0,
+  order: IPWARE_CLIENT_IP_ORDER_DEFAULT,
+};
+
+export const IpwareConfigOptionsDefault: DeepReadonly<IpwareConfigOptions> = {
   requestHeadersOrder: IPWARE_HEADERS_IP_ATTRIBUTES_ORDER,
   privateIpPrefixes: IPWARE_PRIVATE_IP_PREFIX,
   loopbackIpPrefixes: IPWARE_LOOPBACK_PREFIX,
-  proxyIpPrefixes: [],
-  proxyCount: 0,
-  ipOrder: IPWARE_MULTI_IP_DIRECTION,
+  proxy: IpwareProxyOptionsDefault,
 };
 
-export const IpwareCallOptionsDefault: IpwareCallOptions = {
+export const IpwareCallOptionsDefault: DeepReadonly<IpwareCallOptions> = {
   requestHeadersOrder: IPWARE_HEADERS_IP_ATTRIBUTES_ORDER,
-  proxyIpPrefixes: [],
-  proxyCount: 0,
-  ipOrder: IPWARE_MULTI_IP_DIRECTION,
+  proxy: IpwareProxyOptionsDefault,
+};
+
+export const IPWARE_ERROR_MESSAGE: DeepReadonly<{ [key: string]: string }> = {
+  proxyDisabledOnCallViaProxy:
+    'Misconfigured - Proxy check disabled, yet call to get ip via proxy is made ',
+  proxyEnabledButMisconfigured:
+    'Misconfigured - Proxy check enabled, yet no proxy count nor IP prefixes provided',
+  proxyEnabledButWrongApiCalled: 'Misconfigured - Proxy check enabled, yet wrong API called',
 };
