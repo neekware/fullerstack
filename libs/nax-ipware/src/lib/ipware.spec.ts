@@ -8,9 +8,9 @@
 
 import { Ipware } from './ipware';
 import {
+  IPWARE_ERROR_MESSAGE,
   IPWARE_HEADERS_IP_ATTRIBUTES_ORDER,
   IPWARE_LOOPBACK_PREFIX,
-  IPWARE_MISCONFIGURED_ERROR_MESSAGE,
   IPWARE_PRIVATE_IP_PREFIX,
 } from './ipware.default';
 import { IpwareConfigOptions } from './ipware.model';
@@ -58,7 +58,7 @@ describe('Ipware', () => {
     expect(ipware.isPublic('3ffe:1900:4545:3:200:f8ff:fe21:67cf')).toBeTruthy();
   });
 
-  it('should throw on mis-configured calls/config options', () => {
+  it('should throw on enabled proxy with mis-configured calls/config options', () => {
     const request = {
       headers: {
         HTTP_X_REAL_IP: '177.139.233.132',
@@ -71,7 +71,24 @@ describe('Ipware', () => {
       });
       expect(true).toBe(false); // we should never get here due to mis-configuration exception
     } catch (e) {
-      expect(e.message).toBe(IPWARE_MISCONFIGURED_ERROR_MESSAGE);
+      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledButMisconfigured);
+    }
+  });
+
+  it('should throw on disabled proxy configuration via proxy-aware api calls', () => {
+    const request = {
+      headers: {
+        HTTP_X_REAL_IP: '177.139.233.132',
+      },
+    };
+
+    try {
+      ipware.getClientIpViaProxies(request, {
+        proxy: { enabled: false, order: 'right-most' },
+      });
+      expect(true).toBe(false); // we should never get here due to mis-configuration exception
+    } catch (e) {
+      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledButMisconfigured);
     }
   });
 });
