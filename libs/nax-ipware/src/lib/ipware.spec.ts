@@ -88,7 +88,7 @@ describe('Ipware', () => {
       });
       expect(true).toBe(false); // we should never get here due to mis-configuration exception
     } catch (e) {
-      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledButMisconfigured);
+      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyDisabledOnCallViaProxy);
     }
   });
 });
@@ -107,13 +107,13 @@ describe('Ipware: IPv4', () => {
   it('should skip multiple ips if invalid pattern', function () {
     const request = {
       headers: {
-        HTTP_X_FORWARDED_FOR: '192.168.255.182, 10.0.0.0, 198.84.193.157, 177.139.233.139',
+        HTTP_X_FORWARDED_FOR: '192.168.255.182, 10.0.0.0, 177.139.233.22, 177.139.233.139',
         HTTP_X_REAL_IP: '177.139.233.132',
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
-    expect(ipInfo.ip).toEqual('177.139.233.132');
+    const ipInfo = ipware.getClientIP(request);
+    expect(ipInfo.ip).toEqual('177.139.233.22');
     expect(ipInfo.routable).toBeTruthy();
   });
 
@@ -141,7 +141,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
+    const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.139');
     expect(ipInfo.routable).toBeTruthy();
   });
@@ -155,7 +155,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
+    const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.132');
     expect(ipInfo.routable).toBeTruthy();
   });
@@ -168,7 +168,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
+    const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.139');
     expect(ipInfo.routable).toBeTruthy();
   });
@@ -181,7 +181,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
+    const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.132');
     expect(ipInfo.routable).toBeTruthy();
   });
@@ -194,7 +194,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
+    const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.132');
     expect(ipInfo.routable).toBeTruthy();
   });
@@ -207,7 +207,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
+    const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.132');
     expect(ipInfo.routable).toBeTruthy();
   });
@@ -219,7 +219,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
+    const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.132');
     expect(ipInfo.routable).toBeTruthy();
   });
@@ -232,7 +232,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request);
+    const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.139');
     expect(ipInfo.routable).toBeTruthy();
   });
@@ -246,7 +246,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request, {
+    const ipInfo = ipware.getClientIP(request, {
       requestHeadersOrder: ['HTTP_X_REAL_IP', 'REMOTE_ADDR', 'HTTP_X_FORWARDED_FOR'],
     });
     expect(ipInfo.ip).toEqual('177.139.233.132');

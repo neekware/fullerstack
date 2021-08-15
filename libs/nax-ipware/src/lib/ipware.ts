@@ -110,12 +110,12 @@ export class Ipware {
   }
 
   /**
-   * Return the client IP address as per proxies and configuration
+   * Return the client IP address as per proxies count configuration
    * @param request HTTP request
    * @param options ipware call options
    * @returns IpwareIpInfo
    */
-  getClientIpViaProxies(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
+  getClientIpByProxyCount(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
     const options = ldNestedMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
       Array.isArray(dest) ? src : undefined
     );
@@ -128,18 +128,13 @@ export class Ipware {
         // process the header attribute, we can have multiple ip addresses in the same attribute
         const ipData = getIPsFromString(ipString);
 
-        // expecting at least one IP address, let's look for the next header
-        if (ipData.count < 1) {
-          continue;
-        }
-
         // proxy options not configured, we can't continue
         if (!options.proxy.enabled) {
           throw new Error(IPWARE_ERROR_MESSAGE.proxyDisabledOnCallViaProxy);
         }
 
-        // proxy check enabled, but not configured properly, we can't continue
-        if (options.proxy.count < 1 && options.proxy.proxyIpPrefixes.length < 1) {
+        // proxy check enabled, but count is not configured properly, we can't continue
+        if (options.proxy.count < 1) {
           throw new Error(IPWARE_ERROR_MESSAGE.proxyEnabledButMisconfigured);
         }
 
@@ -148,36 +143,77 @@ export class Ipware {
           continue;
         }
 
-        // we are expecting requests via specific trusted proxy, but the IP counts don't match
-        if (
-          options.proxy.proxyIpPrefixes.length > 0 &&
-          options.proxy.proxyIpPrefixes.length !== ipData.count - 1
-        ) {
+        // some configuration may be `custom` & reverse in direction (`proxy2, proxy1, client`)
+        // the default configuration for most servers is `left-most` (`client, <proxy1, proxy2`)
+        if (options.proxy.order !== IPWARE_CLIENT_IP_ORDER_DEFAULT) {
+          ipData.ips = ipData.ips.reverse();
+        }
+
+        // we matched the proxy information, however, the client IP still may be private
+        // we let the caller to decide what to do with a private client IP
+        ipInfo = this.getInfo(ipData.ips[0]);
+        ipInfo.trustedRoute = true;
+        return ipInfo;
+      }
+    }
+
+    // we did not find any ip address based on the caller requirement
+    return IPWARE_DEFAULT_IP_INFO;
+  }
+
+  /**
+   * Return the client IP address as per proxies ip prefixes configuration
+   * @param request HTTP request
+   * @param options ipware call options
+   * @returns IpwareIpInfo
+   */
+  getClientIpByProxyIpPrefixes(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
+    const options = ldNestedMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
+      Array.isArray(dest) ? src : undefined
+    );
+
+    let ipInfo: IpwareIpInfo;
+
+    for (const key of options.requestHeadersOrder) {
+      const ipString = getHeadersAttribute(request.headers, key);
+      if (ipString) {
+        // process the header attribute, we can have multiple ip addresses in the same attribute
+        const ipData = getIPsFromString(ipString);
+
+        // proxy options not configured, we can't continue
+        if (!options.proxy.enabled) {
+          throw new Error(IPWARE_ERROR_MESSAGE.proxyDisabledOnCallViaProxy);
+        }
+
+        // proxy check enabled, but not configured properly, we can't continue
+        if (options.proxy.proxyIpPrefixes.length < 1) {
+          throw new Error(IPWARE_ERROR_MESSAGE.proxyEnabledButMisconfigured);
+        }
+
+        // we are expecting requests via specific trusted proxies, but specified proxies are more available IP addresses
+        if (options.proxy.proxyIpPrefixes.length > ipData.count - 1) {
           continue;
         }
 
         // some configuration may be `custom` & reverse in direction (`proxy2, proxy1, client`)
         // the default configuration for most servers is `left-most` (`client, <proxy1, proxy2`)
-        if (options.proxy.order !== IPWARE_CLIENT_IP_ORDER_DEFAULT && ipData.count > 1) {
+        if (options.proxy.order !== IPWARE_CLIENT_IP_ORDER_DEFAULT) {
           ipData.ips = ipData.ips.reverse();
         }
 
-        if (options.proxy.enabled && options.proxy.proxyIpPrefixes.length > 0) {
-          for (let idx = 1; idx < options.proxy.proxyIpPrefixes.length; idx++) {
-            // using startWith to allow for partial matches (e.g. `10.`, `10.0.`)
-            // the `right-most` IP is the most trusted proxy, however, we check all proxy prefixes
-            // bail out on first unmatched proxy ip address
-            if (!ipData.ips[idx].startsWith(options.proxy.proxyIpPrefixes[idx])) {
-              return IPWARE_DEFAULT_IP_INFO;
-            }
+        for (let idx = options.proxy.proxyIpPrefixes.length - 1; idx > 1; idx--) {
+          // using startWith to allow for partial matches (e.g. `10.`, `10.0.`)
+          // we match all proxy prefixes in the array, if so we can take the first ip as client IP
+          if (!ipData.ips[idx].startsWith(options.proxy.proxyIpPrefixes[idx])) {
+            return IPWARE_DEFAULT_IP_INFO;
           }
-
-          // we matched the proxy information, however, the client IP still may be private
-          // we let the caller to decide what to do a private client IP
-          ipInfo = this.getInfo(ipData.ips[0]);
-          ipInfo.trustedRoute = true;
-          return ipInfo;
         }
+
+        // we matched the proxy information, however, the client IP still may be private
+        // we let the caller to decide what to do a private client IP
+        ipInfo = this.getInfo(ipData.ips[0]);
+        ipInfo.trustedRoute = true;
+        return ipInfo;
       }
     }
 
