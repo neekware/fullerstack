@@ -1,3 +1,3 @@
-export function ipware(): string {
-  return 'ipware';
+export class Ipware {
+  // constructor() {}
 }
