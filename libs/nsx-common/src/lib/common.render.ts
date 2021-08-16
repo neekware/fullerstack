@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { merge as ldNestedMerge } from 'lodash';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash';
 
 export interface RenderOptions {
   singleSpace: boolean;
@@ -40,7 +40,9 @@ export const renderTemplate = (
   params: RenderContext,
   options?: RenderOptions
 ): string => {
-  options = ldNestedMerge(DefaultRenderOptions, options || {});
+  options = ldMergeWith(ldDeepClone(DefaultRenderOptions), options, (dest, src) =>
+    Array.isArray(dest) ? src : undefined
+  );
   let output = template(inputString, params);
   if (options.singleSpace) {
     output = output.replace(/\s+/g, ' ');

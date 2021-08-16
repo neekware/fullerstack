@@ -21,7 +21,7 @@ import { SystemContactUsInput, SystemStatus } from '@fullerstack/ngx-gql/schema'
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { Observable, Subject, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -49,7 +49,11 @@ export class SystemService implements OnDestroy {
     readonly auth: AuthService
   ) {
     this.msg.reset();
-    this.options = ldNestedMerge({ auth: DefaultAuthConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ auth: DefaultAuthConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
     this.enableRouteDataUpdates();
   }
 

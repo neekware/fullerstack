@@ -51,7 +51,7 @@ import { JwtService } from '@fullerstack/ngx-jwt';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
-import { cloneDeep, merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { Observable, Subject, of, timer } from 'rxjs';
 import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -85,7 +85,11 @@ export class AuthService implements OnDestroy {
     readonly gql: GqlService
   ) {
     this.msg.reset();
-    this.options = ldNestedMerge({ auth: DefaultAuthConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ auth: DefaultAuthConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
 
     this.authUrls = {
       ...this.authUrls,
@@ -158,7 +162,7 @@ export class AuthService implements OnDestroy {
   private subState() {
     this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (newState) => {
-        const prevState = cloneDeep(this.state);
+        const prevState = ldDeepClone(this.state);
         this.state = { ...DefaultAuthState, ...newState };
         this.handleRedirect(prevState);
       },

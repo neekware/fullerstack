@@ -8,7 +8,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { cloneDeep as ldDeepClone, mergeWith as ldNestedMergeWith } from 'lodash';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 
 import {
@@ -27,10 +27,10 @@ import {
 } from './ipware.util';
 
 export class Ipware {
-  readonly options: DeepReadonly<IpwareConfigOptions> = ldDeepClone(IpwareConfigOptionsDefault);
+  readonly options: DeepReadonly<IpwareConfigOptions> = IpwareConfigOptionsDefault;
 
   constructor(options?: IpwareConfigOptions) {
-    this.options = ldNestedMergeWith(this.options, options, (dest, src) =>
+    this.options = ldMergeWith(ldDeepClone(this.options), options, (dest, src) =>
       Array.isArray(dest) ? src : undefined
     );
   }
@@ -118,7 +118,7 @@ export class Ipware {
    * @returns IpwareIpInfo
    */
   getClientIpByProxyCount(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
-    const options = ldNestedMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
+    const options = ldMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
       Array.isArray(dest) ? src : undefined
     );
 
@@ -170,7 +170,7 @@ export class Ipware {
    * @returns IpwareIpInfo
    */
   getClientIpByTrustedProxies(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
-    const options = ldNestedMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
+    const options = ldMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
       Array.isArray(dest) ? src : undefined
     );
 
@@ -230,7 +230,7 @@ export class Ipware {
    * @returns IpwareIpInfo
    */
   getClientIP(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
-    const options = ldNestedMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
+    const options = ldMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
       Array.isArray(dest) ? src : undefined
     );
 

@@ -17,7 +17,7 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultCachifyConfig, DefaultMaxCacheExpiry } from './cachify.default';
@@ -31,7 +31,11 @@ export class CachifyService {
   private cacheStore: StoreState;
 
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
-    this.options = ldNestedMerge({ cachify: DefaultCachifyConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ cachify: DefaultCachifyConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
     this.cacheStore = new StoreState({}, this.options.cachify.immutable);
     this.logger.info(`[${this.nameSpace}] CachifyService ready ...`);
   }

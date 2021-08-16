@@ -8,7 +8,7 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { of } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -23,7 +23,7 @@ export class ConfigService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(readonly http: HttpClient, @Inject(CONFIG_TOKEN) readonly config: ApplicationConfig) {
-    this.options = { ...ldNestedMerge(this.options, config) };
+    this.options = ldMergeWith(ldDeepClone(this.options), config);
     if (!this.options.production) {
       /* istanbul ignore next */
       console.log(

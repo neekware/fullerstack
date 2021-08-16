@@ -14,7 +14,7 @@ import {
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultLoggerConfig } from './logger.default';
@@ -29,7 +29,11 @@ export class LoggerService {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
 
   constructor(readonly config: ConfigService) {
-    this.options = ldNestedMerge({ logger: DefaultLoggerConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ logger: DefaultLoggerConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
 
     if (!this.config.options.production) {
       this.info(`[${this.nameSpace}] LogService ready ...`);

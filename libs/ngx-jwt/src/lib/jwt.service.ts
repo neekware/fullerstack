@@ -15,7 +15,7 @@ import {
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { Base64 } from 'js-base64';
-import { get as ldGet, merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultJwtConfig } from './jwt.default';
@@ -33,7 +33,11 @@ export class JwtService {
    * @param options an optional configuration object
    */
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
-    this.options = ldNestedMerge({ jwt: DefaultJwtConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ jwt: DefaultJwtConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
 
     this.logger.info(`[${this.nameSpace}] JwtService ready ...`);
   }
@@ -117,10 +121,10 @@ export class JwtService {
     if (typeof payload === 'string') {
       payload = this.getPayload(payload);
     }
-    const leeway = ldGet(payload, 'leeway', ldGet(payload, 'lee', this.options.jwt.expiryLeeway));
+    const leeway = payload?.leeway || payload?.lee || this.options?.jwt?.expiryLeeway;
     const range = {
       lower: 1,
-      upper: leeway - this.options.jwt.networkDelay || 2,
+      upper: leeway - this.options?.jwt?.networkDelay || 2,
     };
     return Math.floor(Math.random() * range.upper + range.lower);
   }

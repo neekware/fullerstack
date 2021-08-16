@@ -9,7 +9,7 @@
 import { RenderContext, RenderOptions, renderTemplate } from '@fullerstack/nsx-common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { merge as ldNestedMerge } from 'lodash';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultI18nConfig, RtlLanguageList } from './i18n.default';
@@ -20,9 +20,10 @@ export class I18nService {
   readonly options: DeepReadonly<I18nConfig> = DefaultI18nConfig;
 
   constructor(readonly config: ConfigService) {
-    this.options = ldNestedMerge(
-      { ...this.options },
-      this.config.get<I18nConfig>('appConfig.i18nConfig')
+    this.options = ldMergeWith(
+      ldDeepClone(this.options),
+      this.config.get<I18nConfig>('appConfig.i18nConfig'),
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
     );
   }
 
