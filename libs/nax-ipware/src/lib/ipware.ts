@@ -6,6 +6,8 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { cloneDeep as ldDeepClone, mergeWith as ldNestedMergeWith } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 
