@@ -14,7 +14,7 @@ import { ConfigService } from '@nestjs/config';
 import { Permission, Role, User } from '@prisma/client';
 import { compare, hash } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { merge as ldNestedMerge } from 'lodash';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 import { v4 as uuid_v4 } from 'uuid';
 
@@ -30,9 +30,10 @@ export class SecurityService {
   readonly siteSecret: string;
 
   constructor(readonly prisma: PrismaService, readonly config: ConfigService) {
-    this.options = ldNestedMerge(
-      { ...this.options },
-      this.config.get<SecurityConfig>('appConfig.securityConfig')
+    this.options = ldMergeWith(
+      ldDeepClone(this.options),
+      this.config.get<SecurityConfig>('appConfig.securityConfig'),
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
     );
     this.siteSecret = this.config.get<string>('SITE_SEEKRET_KEY');
     this.rehydrateSuperuser();

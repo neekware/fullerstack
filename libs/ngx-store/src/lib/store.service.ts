@@ -15,7 +15,7 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { Observable } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 
@@ -28,7 +28,11 @@ export class StoreService<T = StoreStateType> {
   private store: StoreState;
 
   constructor(readonly config: ConfigService, readonly logger: LoggerService) {
-    this.options = ldNestedMerge({ store: DefaultStoreConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ store: DefaultStoreConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
     this.store = new StoreState<T>({} as T, { ...this.options.store });
     this.logger.info(`[${this.nameSpace}] StoreService ready ...`);
   }

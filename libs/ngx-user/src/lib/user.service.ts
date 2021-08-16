@@ -21,7 +21,7 @@ import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { Observable, Subject, of } from 'rxjs';
 import { catchError, debounceTime, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -48,7 +48,11 @@ export class UserService {
     readonly i18n: I18nService,
     readonly auth: AuthService
   ) {
-    this.options = ldNestedMerge({ auth: DefaultUserConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ auth: DefaultUserConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
 
     this.stateSub$ = this.store.select$<UserState>(this.nameSpace);
 

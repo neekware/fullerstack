@@ -15,7 +15,7 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
 import { GraphQLClient } from './gql.client';
@@ -32,7 +32,11 @@ export class GqlService implements OnDestroy {
     readonly config: ConfigService,
     readonly logger: LoggerService
   ) {
-    this.options = ldNestedMerge({ gql: DefaultGqlConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ gql: DefaultGqlConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
     this.client = new GraphQLClient(this.http, this.options.gql.endpoint);
     this.logger.info(`[${this.nameSpace}] GqlService ready ...`);
   }

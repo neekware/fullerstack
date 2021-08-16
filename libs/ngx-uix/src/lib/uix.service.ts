@@ -15,7 +15,7 @@ import {
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { MaterialService } from '@fullerstack/ngx-material';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { Subject } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 
@@ -43,7 +43,11 @@ export class UixService implements OnDestroy {
     readonly logger: LoggerService,
     readonly mat: MaterialService
   ) {
-    this.options = ldNestedMerge({ uix: DefaultUixConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ uix: DefaultUixConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
 
     this.initFullscreen();
     this.loadSvgIcons();

@@ -16,7 +16,7 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -42,7 +42,11 @@ export class GTagService implements OnDestroy {
     readonly config: ConfigService,
     readonly logger: LoggerService
   ) {
-    this.options = ldNestedMerge({ gtag: DefaultGTagConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ gtag: DefaultGTagConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
 
     if (this.options.gtag.isEnabled) {
       if (!this.options.gtag.trackingId) {

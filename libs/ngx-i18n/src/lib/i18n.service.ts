@@ -15,7 +15,7 @@ import {
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
 import { TranslateService } from '@ngx-translate/core';
-import { merge as ldNestedMerge } from 'lodash-es';
+import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -41,7 +41,11 @@ export class I18nService {
     readonly logger: LoggerService,
     readonly translate: TranslateService
   ) {
-    this.options = ldNestedMerge({ i18n: DefaultI18nConfig }, this.config.options);
+    this.options = ldMergeWith(
+      ldDeepClone({ i18n: DefaultI18nConfig }),
+      this.config.options,
+      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    );
 
     this.initLanguage();
 
