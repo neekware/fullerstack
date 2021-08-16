@@ -272,7 +272,7 @@ export class Ipware {
     const reqIp = getIpFromRequest(request);
 
     ipInfo = this.getInfo(reqIp);
-    if (ipInfo.ip && ipInfo.routable) {
+    if (ipInfo.ip) {
       return ipInfo;
     }
 

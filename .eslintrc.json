@@ -17,7 +17,7 @@
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
                   "scope:agx-util",
-                  "scope:nax-ipware",
+                  "scope:nax-util",
                   "scope:nsx-data",
                   "scope:nsx-util"
                 ]
