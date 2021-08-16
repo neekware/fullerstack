@@ -378,6 +378,38 @@
         }
       }
     },
+    "nax-ipware": {
+      "root": "libs/nax-ipware",
+      "sourceRoot": "libs/nax-ipware/src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/nax-ipware",
+            "tsConfig": "libs/nax-ipware/tsconfig.lib.json",
+            "packageJson": "libs/nax-ipware/package.json",
+            "main": "libs/nax-ipware/src/index.ts",
+            "assets": ["libs/nax-ipware/*.md"]
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nax-ipware/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nax-ipware"],
+          "options": {
+            "jestConfig": "libs/nax-ipware/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "ngx-auth": {
       "projectType": "library",
       "root": "libs/ngx-auth",

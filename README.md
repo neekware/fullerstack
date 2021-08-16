@@ -71,16 +71,26 @@ npx create-nx-workspace fullerstack
 
 ## Legends
 
-- AG = Agnostic (not target specific)
-- NG = [Angular](angular.io)
-  - NGX = Angular Library
-- NS = [Nest](nestjs.com)
-  - NSX = NestJs Library
-- WB = Web (Chrome, Firefox, Safari, Edge, etc)
-- EL = [Electron](electronjs.org)
-- NS = [NativeScript](nativescript.org)
-- AN = Google's [Android](android.com)
-- IC = [Ionic](ionicframework.com)
+### Libraries
+
+- `AG` = Agnostic (not target specific, `node &| browser`)
+  - `AGX` = Node/Browser Library
+- `BA` = Browser Framework/Library Agnostic (not framework/library specific, `browser-only`)
+  - `BAX` = Browser Library
+- `NA` = Node Application Agnostic (not application specific, `node-only`)
+  - `NAX` = Node Library
+- `NG` = [Angular](angular.io)
+  - `NGX` = Angular Library
+- `NS` = [Nest](nestjs.com)
+  - `NSX` = NestJs Library
+
+### Applications
+
+- `WB` = Web (Chrome, Firefox, Safari, Edge, etc)
+- `EL` = [Electron](electronjs.org)
+- `NS` = [NativeScript](nativescript.org)
+- `AD` = [Android](android.com)
+- `IO` = [Ionic](ionicframework.com)
 
 ## Applications
 
@@ -183,18 +193,18 @@ X.Y.Z Version
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             380        20278         2302         3865        14111
- JSON                   140         4959            0            0         4959
- Markdown               103         2469          654            0         1815
+ TypeScript             387        21365         2428         4016        14921
+ JSON                   144         5055            0            0         5055
+ Markdown               104         2691          706            0         1985
  HTML                    33         1446          113            5         1328
  Sass                    55         1449          140           35         1274
- JavaScript              34          629           24           48          557
+ JavaScript              35          644           24           48          572
  CSS                      1           96            7            0           89
  Plain Text               5           94           10            0           84
  SQL                      1           80           15           13           52
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  753        31503         3265         3968        24270
+ Total                  766        32923         3443         4119        25361
 --------------------------------------------------------------------------------
 ```
 

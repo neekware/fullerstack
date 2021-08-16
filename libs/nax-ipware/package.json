@@ -1,0 +1,27 @@
+{
+  "name": "@fullerstack/nax-ipware",
+  "version": "0.0.1",
+  "description": "A node library for server applications retrieving user's real IP address",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/nax-ipware/README.md",
+  "keywords": [
+    "ip",
+    "ip address",
+    "ipv4",
+    "ipv6",
+    "ipv4 address",
+    "ipv6 address",
+    "ipv4 validation",
+    "ipv6 validation",
+    "ip validation",
+    "ip validation library",
+    "ip validation library for node",
+    "ip validation library for javascript",
+    "ip validation library for javascript in node",
+    "ip filtering",
+    "security"
+  ],
+  "dependencies": {
+    "tslib": "^2.0.0",
+    "ts-essentials": "^7.0.2"
+  }
+}

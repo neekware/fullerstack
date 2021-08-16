@@ -161,6 +161,7 @@ export class AuthService<T = StoreStateType> {
 [STORE][PREV][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
 [STORE][NEXT][AUTH_LOGIN_REQ_SENT] ↠ {AUTH: {…}}
 [AUTH] Login request sent ...
+[INTERCEPT][SUCCESS][userSelf] Http Request took 17 ms!
 [STORE][PREV][AUTH_LOGIN_REQ_SUCCESS] ↠ {AUTH: {…}}
 [STORE][NEXT][AUTH_LOGIN_REQ_SUCCESS] ↠ {AUTH: {…}}
 [AUTH] Login request success ...
@@ -234,3 +235,7 @@ X.Y.Z Version
 [coverage-link]: https://coveralls.io/r/neekware/fullerstack
 [download-image]: https://img.shields.io/npm/dm/@fullerstack/agx-store.svg
 [download-link]: https://www.npmjs.com/package/@fullerstack/agx-store
+
+# Sponsors
+
+[Neekware Inc.](http://neekware.com)
