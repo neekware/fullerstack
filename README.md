@@ -39,9 +39,9 @@ Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app
   - PostgresQL as the 1st class citizen
 - Dark Mode Support
 - Fullscreen
-- Geo Location Support (TBD)
+- Geo Location Support
   - Geo Fencing
-  - IP address filtering
+  - IP address filtering (by: proxy count, proxy nodes, best matched)
 - ...Etc
 
 ### The mono-repo was created via Nrwl/Nx.
@@ -173,7 +173,8 @@ yarn build:ci
 yarn affected:dep-graph --base=<branch-name> --head=HEAD
 ```
 
-<img width="auto" src="libs/agx-assets/src/lib/images/misc/dep-graph.png">
+<img width="auto" src="libs/agx-assets/src/lib/images/tech/dep-graph-back.png">
+<img width="auto" src="libs/agx-assets/src/lib/images/tech/dep-graph-front.png">
 <br/><br/>
 
 ## License
@@ -195,7 +196,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             387        21426         2427         4016        14983
  JSON                   144         5055            0            0         5055
- Markdown               104         2738          716            0         2022
+ Markdown               104         2739          716            0         2023
  HTML                    33         1446          113            5         1328
  Sass                    55         1449          140           35         1274
  JavaScript              35          644           24           48          572
@@ -204,7 +205,7 @@ X.Y.Z Version
  SQL                      1           80           15           13           52
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  766        33031         3452         4119        25460
+ Total                  766        33032         3452         4119        25461
 --------------------------------------------------------------------------------
 ```
 

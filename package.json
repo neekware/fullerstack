@@ -66,8 +66,7 @@
     "pkg:update": "yarn ts-node ./tools/utils/update.ts",
     "loc:generate": "yarn ts-node ./tools/utils/loc.ts",
     "prepare": "husky install",
-    "serve:dist": "cd dist/apps/fullerstack; open http://localhost:8080; python3 -m http.server 8080",
-    "testi": "yarn nx test nax-ipware"
+    "serve:dist": "cd dist/apps/fullerstack; open http://localhost:8080; python3 -m http.server 8080"
   },
   "importSort": {
     ".js, .ts": {

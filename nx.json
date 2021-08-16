@@ -39,7 +39,8 @@
       "tags": ["scope:agx-util"]
     },
     "api": {
-      "tags": ["scope:api-server"]
+      "tags": ["scope:api-server"],
+      "implicitDependencies": ["agx-assets"]
     },
     "fullerstack": {
       "tags": ["scope:fullerstack-client"],
