@@ -1,4 +1,4 @@
-# Django IPware
+# NAX IPware (A Node Application Agnostic Library)
 
 **A node library for server applications retrieving user's real IP address**
 
@@ -13,7 +13,7 @@
 # Notice
 
 There is not a good `out-of-the-box` solution against fake IP addresses, aka _IP Address Spoofing_.
-You are encouraged to read the ([Advanced users](README.md#advanced-users)) section of this page and
+You are encouraged to read the [Advanced users](README.md#advanced-users) section of this page and
 use `trusted proxy prefixes` and/or `proxy count` features to match your needs, especially _if_ you are
 planning to include `ipware` in any authentication, security or `anti-fraud` related architecture.
 
@@ -45,54 +45,88 @@ planning to include `ipware` in any authentication, security or `anti-fraud` rel
 
 ### Precedence Order
 
-The default meta precedence order is top to bottom. However, you may customize the order
-by providing your own `IPWARE_META_PRECEDENCE_ORDER` by adding it to your project's settings.py
+The client IP address can be found in one or more request headers attributes. The lookup order is top to bottom and the default attributes are as follow.
 
 ```typescript
- // The default meta precedence order
+// The default meta precedence order
 export const IPWARE_HEADERS_IP_ATTRIBUTES_ORDER: string[] = [
-  'HTTP_X_FORWARDED_FOR', 'X_FORWARDED_FOR',  // <client>, <proxy1>, <proxy2>
-  'HTTP_CLIENT_IP',
+  'X_FORWARDED_FOR', // Load balancers or proxies such as AWS ELB (default client is `left-most` [`<client>, <proxy1>, <proxy2>`])
+  'HTTP_X_FORWARDED_FOR', // Similar to X_FORWARDED_TO
+  'HTTP_CLIENT_IP', // Standard headers used by providers such as Amazon EC2, Heroku etc.
   'HTTP_X_REAL_IP',
   'HTTP_X_FORWARDED',
   'HTTP_X_CLUSTER_CLIENT_IP',
   'HTTP_FORWARDED_FOR',
   'HTTP_FORWARDED',
   'HTTP_VIA',
-  'REMOTE_ADDR',
-]
+  'X-REAL-IP', // NGINX
+  'X-CLUSTER-CLIENT-IP', // Rackspace Cloud Load Balancers
+  'X_FORWARDED',
+  'FORWARDED_FOR',
+  'CF-CONNECTING-IP', // CloudFlare
+  'TRUE-CLIENT-IP', // CloudFlare Enterprise,
+  'FASTLY-CLIENT-IP', // Firebase, Fastly
+  'FORWARDED',
+];
 ```
 
-**`Alternatively`**, you can provide your custom request header meta precedence order when calling `getClientIP()`.
+You can customize the order by providing your own list during initialization when calling `new Ipware(options)`.
+You can pass your custom list on every call, when calling the api to fetch the ip.
 
 ```typescript
   ipware.getClientIP(request, {
-    requestHeadersOrder: ['X_FORWARDED_FOR'],
+    requestHeadersOrder: ['X_FORWARDED_FOR'], // server deployed on providers that ONLY use `X_FORWARDED_FOR`.
   });
 
   ipware.getClientIP(request, {
-    requestHeadersOrder: ['X_FORWARDED_FOR', 'HTTP_X_FORWARDED_FOR'],
+    requestHeadersOrder: ['X_FORWARDED_FOR', 'HTTP_X_FORWARDED_FOR'], // servers(s) deployed on multiple providers
   });
+
+  // ... etc
 ```
 
 ### Private Prefixes
 
-You may customize the prefixes to indicate an IP address is private. This is done by passing your
-own `IPWARE_HEADERS_IP_ATTRIBUTES_ORDER` during creation of Ipware() object, or through each call.
-IP addresses matching the following prefixes are considered `private` & are **not** publicly routable.
+A default list that holds the private address prefixes is called `IPWARE_PRIVATE_IP_PREFIX`.
+This list is used to determine if an IP address is `public & routable` or `private`.
+
+```typescript
+export const IPWARE_PRIVATE_IP_PREFIX: string[] = [
+  '0.', // messages to software
+  '10.', // class A private block
+  ...[
+    // carrier-grade NAT (IPv4)
+    '100.64.',
+    '100.65.',
+    '100.66.',
+    '100.67.',
+  ],
+  // many more prefixes
+]
+```
+
+You can customize the private IP prefixes by providing your own list during initialization when calling `new Ipware(options)`.
+You can pass your custom list on every call, when calling the api to fetch the ip.
+
+```typescript
+  ipware.getClientIP(request, {
+    privateIpPrefixes: ['0.', '10.'], // your own private IP addresses
+  });
+
+  ipware.getClientIP(request, {
+    privateIpPrefixes: ['0.', '10.', '2001:10:'], // your own private IP addresses
+  });
+
+  // ... etc
+```
 
 ### Trusted Proxies
 
 If your node server is behind one or more known proxy server(s), you can filter out unwanted requests
-by providing the `trusted` proxy list bu calling `ipware.getClientIpByTrustedProxies(request, options);`.
-In the following example, your load balancer (LB) can be seen as a `trusted` proxy.
+by providing a `trusted proxy list`, or a known proxy `count`.
 
-```
- `Real` Client  <public> <---> <public> LB (Server) <private> <--------> <private> Django Server
-                                                                   ^
-                                                                   |
- `Fake` Client  <private> <---> <private> LB (Server) <private> ---^
-```
+You can customize the proxy IP prefixes by providing your own list during initialization when calling `new Ipware(options)`.
+You can pass your custom list on every call, when calling the proxy-aware api to fetch the ip.
 
 ```typescript
 // In the above scenario, use your load balancer IP address as a way to filter out unwanted requests.
@@ -136,18 +170,21 @@ const ipInfo = ipware.getClientIpByTrustedProxies(request, {
 });
 ```
 
+In the following `example`, your public load balancer (LB) can be seen as a `trusted` proxy.
+
+```
+`Real` Client <public> <-> <public> LB (Server) <private> <-----> <private> Node Server
+                                                            ^
+                                                            |
+`Fake` Client <private> <-> <private> LB (Server) <private> -+
+```
+
 ### Proxy Count
 
-If your Django server is behind a `known` number of proxy server(s), you can filter out unwanted requests
-by providing the `number` of proxies when calling `ipware.getClientIpByProxyCount(request, options);`.
-In the following example, your load balancer (LB) can be seen as the `only` proxy.
+If your node server is behind a `known` number of proxies, but your deploy on multiple providers and don't want to track proxy IPs, you still can filter out unwanted requests by providing proxy `count`.
 
-```
- `Real` Client  <public> <---> <public> LB (Server) <private> <--------> <private> Django Server
-                                                                   ^
-                                                                   |
-                                       `Fake` Client  <private> ---^
-```
+You can customize the proxy count by providing your `count` during initialization when calling `new Ipware(options)`.
+You can pass your custom `count` on every call, when calling the proxy-aware api to fetch the ip.
 
 ```typescript
 // In the above scenario, the total number of proxies can be used as a way to filter out unwanted requests.
@@ -168,12 +205,22 @@ const ipInfo = ipware.getClientIpByProxyCount(request, {
 });
 ```
 
+In the following `example`, your public load balancer (LB) can be seen as the `only` proxy.
+
+```
+`Real` Client <public> <-> <public> LB (Server) <private> <---> <private> Node Server
+                                                            ^
+                                                            |
+                                `Fake` Client  <private> ---+
+```
+
 ### Originating Request
 
-If your proxy server is configured such that the right-most IP address is that of the originating client, you
-can indicate `right-most` as your `order` when calling any api.
+If your proxy server has a `custom` configuration where the `right-most` IP address is that of the originating client, you
+can indicate `right-most` as the `order` when calling any api.
 Please note that the [de-facto](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) standard
-for the originating client IP address is the `left-most` as per `client, proxy1, proxy2`.
+for the originating client IP address is the `left-most` as per `client, proxy1, proxy2`, and the `right-most` proxy is the most
+trusted proxy.
 
 # Running the tests
 

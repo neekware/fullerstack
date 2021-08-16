@@ -21,7 +21,7 @@ import {
 // The right-most IP address is always the IP address that connects to the last proxy, which means it is the most reliable source of information.
 // https://en.wikipedia.org/wiki/X-Forwarded-For (
 // X-Forwarded-For: client, proxy1, proxy2
-export const IPWARE_HEADERS_IP_ATTRIBUTES_ORDER: string[] = [
+export const IPWARE_HEADERS_IP_ATTRIBUTES_ORDER: DeepReadonly<string[]> = [
   'X_FORWARDED_FOR', // Load balancers or proxies such as AWS ELB (default client is `left-most` [`<client>, <proxy1>, <proxy2>`])
   'HTTP_X_FORWARDED_FOR',
   'HTTP_CLIENT_IP', // Standard headers used by providers such as Amazon EC2, Heroku etc.
