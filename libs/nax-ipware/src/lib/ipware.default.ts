@@ -235,8 +235,9 @@ export const IpwareCallOptionsDefault: DeepReadonly<IpwareCallOptions> = {
   proxy: IpwareProxyOptionsDefault,
 };
 
-export const IPWARE_ERROR_MESSAGE: DeepReadonly<{ [key: string]: string }> = {
-  proxyDisabledOnCallViaProxy: 'Proxy check disabled, yet call to get ip via proxy is made ',
-  proxyEnabledButMisconfigured: 'Proxy check enabled, yet no proxy count nor IP prefixes provided',
-  proxyEnabledButWrongApiCalled: 'Proxy check enabled, yet wrong API called',
+export const IPWARE_ERROR_MESSAGE = {
+  proxyDisabledOnProxyAwareApi: 'Proxy check disabled, on calls to proxy-aware api',
+  proxyEnabledWithoutProxyCount: 'Proxy check enabled, yet no proxy count not provided',
+  proxyEnabledWithoutTrustedProxies: 'Proxy check enabled, yet no proxy prefixes provided',
+  proxyEnabledOnNonProxyAwareApi: 'Proxy check enabled, yet wrong API called',
 };

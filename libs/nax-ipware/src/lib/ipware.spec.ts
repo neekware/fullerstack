@@ -58,37 +58,47 @@ describe('Ipware', () => {
     expect(ipware.isPublic('3ffe:1900:4545:3:200:f8ff:fe21:67cf')).toBeTruthy();
   });
 
-  it('should throw on enabled proxy with mis-configured calls/config options', () => {
-    const request = {
-      headers: {
-        HTTP_X_REAL_IP: '177.139.233.132',
-      },
-    };
-
+  it('should throw on non-proxy api with enabled proxy config', () => {
+    const request = { headers: { HTTP_X_REAL_IP: '177.139.233.132' } };
     try {
-      ipware.getClientIpViaProxies(request, {
-        proxy: { enabled: true, order: 'right-most' },
+      ipware.getClientIP(request, {
+        proxy: { enabled: true },
       });
       expect(true).toBe(false); // we should never get here due to mis-configuration exception
     } catch (e) {
-      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledButMisconfigured);
+      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledOnNonProxyAwareApi);
     }
   });
 
-  it('should throw on disabled proxy configuration via proxy-aware api calls', () => {
-    const request = {
-      headers: {
-        HTTP_X_REAL_IP: '177.139.233.132',
-      },
-    };
-
+  it('should throw on proxy api with disabled proxy config', () => {
+    const request = { headers: { HTTP_X_REAL_IP: '177.139.233.132' } };
     try {
-      ipware.getClientIpViaProxies(request, {
-        proxy: { enabled: false, order: 'right-most' },
+      ipware.getClientIpByTrustedProxies(request);
+      expect(true).toBe(false); // we should never get here due to mis-configuration exception
+    } catch (e) {
+      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyDisabledOnProxyAwareApi);
+    }
+  });
+
+  it('should throw on proxy api with enabled proxy config without trusted proxy list', () => {
+    const request = { headers: { HTTP_X_REAL_IP: '177.139.233.132' } };
+    try {
+      ipware.getClientIpByTrustedProxies(request, {
+        proxy: { enabled: true },
       });
       expect(true).toBe(false); // we should never get here due to mis-configuration exception
     } catch (e) {
-      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyDisabledOnCallViaProxy);
+      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledWithoutTrustedProxies);
+    }
+  });
+
+  it('should throw on proxy api with enabled proxy config without proxy count', () => {
+    const request = { headers: { HTTP_X_REAL_IP: '177.139.233.132' } };
+    try {
+      ipware.getClientIpByProxyCount(request, { proxy: { enabled: true } });
+      expect(true).toBe(false); // we should never get here due to mis-configuration exception
+    } catch (e) {
+      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledWithoutProxyCount);
     }
   });
 });
@@ -125,7 +135,7 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpViaProxies(request, {
+    const ipInfo = ipware.getClientIpByTrustedProxies(request, {
       proxy: { enabled: true, order: 'right-most', proxyIpPrefixes: ['177.139.233.'] },
     });
     expect(ipInfo.ip).toEqual('177.139.233.139');
@@ -142,7 +152,7 @@ describe('Ipware: IPv4', () => {
       },
     };
     const ipInfo = ipware.getClientIP(request);
-    expect(ipInfo.ip).toEqual('177.139.233.139');
+    expect(ipInfo.ip).toEqual('198.84.193.157');
     expect(ipInfo.routable).toBeTruthy();
   });
 
@@ -156,7 +166,7 @@ describe('Ipware: IPv4', () => {
       },
     };
     const ipInfo = ipware.getClientIP(request);
-    expect(ipInfo.ip).toEqual('177.139.233.132');
+    expect(ipInfo.ip).toEqual('198.84.193.157');
     expect(ipInfo.routable).toBeTruthy();
   });
 

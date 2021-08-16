@@ -130,12 +130,12 @@ export class Ipware {
 
         // proxy options not configured, we can't continue
         if (!options.proxy.enabled) {
-          throw new Error(IPWARE_ERROR_MESSAGE.proxyDisabledOnCallViaProxy);
+          throw new Error(IPWARE_ERROR_MESSAGE.proxyDisabledOnProxyAwareApi);
         }
 
         // proxy check enabled, but count is not configured properly, we can't continue
         if (options.proxy.count < 1) {
-          throw new Error(IPWARE_ERROR_MESSAGE.proxyEnabledButMisconfigured);
+          throw new Error(IPWARE_ERROR_MESSAGE.proxyEnabledWithoutProxyCount);
         }
 
         // we are expecting requests via `x` number of proxies, but the IP counts don't match
@@ -167,7 +167,7 @@ export class Ipware {
    * @param options ipware call options
    * @returns IpwareIpInfo
    */
-  getClientIpByProxyIpPrefixes(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
+  getClientIpByTrustedProxies(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
     const options = ldNestedMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
       Array.isArray(dest) ? src : undefined
     );
@@ -182,12 +182,12 @@ export class Ipware {
 
         // proxy options not configured, we can't continue
         if (!options.proxy.enabled) {
-          throw new Error(IPWARE_ERROR_MESSAGE.proxyDisabledOnCallViaProxy);
+          throw new Error(IPWARE_ERROR_MESSAGE.proxyDisabledOnProxyAwareApi);
         }
 
         // proxy check enabled, but not configured properly, we can't continue
         if (options.proxy.proxyIpPrefixes.length < 1) {
-          throw new Error(IPWARE_ERROR_MESSAGE.proxyEnabledButMisconfigured);
+          throw new Error(IPWARE_ERROR_MESSAGE.proxyEnabledWithoutTrustedProxies);
         }
 
         // we are expecting requests via specific trusted proxies, but specified proxies are more available IP addresses
@@ -247,7 +247,7 @@ export class Ipware {
 
         // proxy check enabled, but not wrong api is called, better not continue for maximum security
         if (options.proxy.enabled) {
-          throw new Error(IPWARE_ERROR_MESSAGE.proxyEnabledButWrongApiCalled);
+          throw new Error(IPWARE_ERROR_MESSAGE.proxyEnabledOnNonProxyAwareApi);
         }
 
         // handle custom ip order
