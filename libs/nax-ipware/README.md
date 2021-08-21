@@ -133,7 +133,7 @@ You can pass your custom list on every call, when calling the proxy-aware api to
 const ipInfo = ipware.getClientIpByTrustedProxies(request, {
   proxy: {
     enabled: true,
-    proxyIpPrefixes: ['177.139.233.132']
+    proxyList: ['177.139.233.132']
   },
 });
 
@@ -141,7 +141,7 @@ const ipInfo = ipware.getClientIpByTrustedProxies(request, {
 const ipInfo = ipware.getClientIpByTrustedProxies(request, {
   proxy: {
     enabled: true,
-    proxyIpPrefixes: ['177.139.233.100', '177.139.233.132']
+    proxyList: ['177.139.233.100', '177.139.233.132']
   },
 });
 
@@ -149,14 +149,14 @@ const ipInfo = ipware.getClientIpByTrustedProxies(request, {
 const ipInfo = ipware.getClientIpByTrustedProxies(request, {
   proxy: {
     enabled: true,
-    proxyIpPrefixes: ['177.139.', '177.140']
+    proxyList: ['177.139.', '177.140']
   },
 });
 
 const ipInfo = ipware.getClientIpByTrustedProxies(request, {
   proxy: {
     enabled: true,
-    proxyIpPrefixes: ['177.139.233.', '177.139.240']
+    proxyList: ['177.139.233.', '177.139.240']
   },
 });
 
@@ -164,7 +164,7 @@ const ipInfo = ipware.getClientIpByTrustedProxies(request, {
 const ipInfo = ipware.getClientIpByTrustedProxies(request, {
   proxy: {
     enabled: true,
-    proxyIpPrefixes: ['177.139.', '177.140'],
+    proxyList: ['177.139.', '177.140'],
     proxyCount: 2 // will be ignored
   },
 });
@@ -200,7 +200,7 @@ const ipInfo = ipware.getClientIpByProxyCount(request, {
   proxy: {
     enabled: true,
     proxyCount: 1,
-    proxyIpPrefixes: ['177.139.233.'] // will be ignored
+    proxyList: ['177.139.233.'] // will be ignored
   },
 });
 ```

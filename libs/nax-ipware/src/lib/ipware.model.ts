@@ -23,10 +23,9 @@ export interface IpwareData {
 export type IpwareClientIpOrder = 'left-most' | 'right-most';
 
 export interface IpwareProxyOptions {
-  enabled: boolean;
-  proxyIpPrefixes?: string[];
+  proxyList?: string[];
   count?: number;
-  order?: string;
+  order?: IpwareClientIpOrder;
 }
 
 export interface IpwareConfigOptions {

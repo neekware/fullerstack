@@ -217,8 +217,7 @@ export const IPWARE_DEFAULT_IP_INFO: IpwareIpInfo = {
 };
 
 export const IpwareProxyOptionsDefault: DeepReadonly<IpwareProxyOptions> = {
-  enabled: false,
-  proxyIpPrefixes: [],
+  proxyList: [],
   count: 0,
   order: IPWARE_CLIENT_IP_ORDER_DEFAULT,
 };
