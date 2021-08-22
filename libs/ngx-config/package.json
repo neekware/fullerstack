@@ -1,6 +1,7 @@
 {
   "version": "0.0.8",
   "name": "@fullerstack/ngx-config",
+  "license": "MIT",
   "description": "A Configuration Utility Library for Angular",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-config/README.md",
   "keywords": [

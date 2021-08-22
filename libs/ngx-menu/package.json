@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "name": "@fullerstack/ngx-menu",
+  "license": "MIT",
   "description": "A Menu Library for Angular",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-menu/README.md",
   "keywords": [

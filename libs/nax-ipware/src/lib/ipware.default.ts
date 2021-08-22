@@ -212,14 +212,15 @@ export const IPWARE_CLIENT_IP_ORDER_DEFAULT: IpwareClientIpOrder = 'left-most';
 
 export const IPWARE_DEFAULT_IP_INFO: IpwareIpInfo = {
   ip: '',
-  routable: false,
-  trustedRoute: false,
+  isPublic: false,
+  isRouteTrusted: false,
 };
 
 export const IpwareProxyOptionsDefault: DeepReadonly<IpwareProxyOptions> = {
   proxyList: [],
   count: 0,
   order: IPWARE_CLIENT_IP_ORDER_DEFAULT,
+  strict: false,
 };
 
 export const IpwareConfigOptionsDefault: DeepReadonly<IpwareConfigOptions> = {
@@ -227,16 +228,11 @@ export const IpwareConfigOptionsDefault: DeepReadonly<IpwareConfigOptions> = {
   privateIpPrefixes: IPWARE_PRIVATE_IP_PREFIX,
   loopbackIpPrefixes: IPWARE_LOOPBACK_PREFIX,
   proxy: IpwareProxyOptionsDefault,
+  publicOnly: false,
 };
 
 export const IpwareCallOptionsDefault: DeepReadonly<IpwareCallOptions> = {
   requestHeadersOrder: IPWARE_HEADERS_IP_ATTRIBUTES_ORDER,
   proxy: IpwareProxyOptionsDefault,
-};
-
-export const IPWARE_ERROR_MESSAGE = {
-  proxyDisabledOnProxyAwareApi: 'Proxy check disabled, on calls to proxy-aware api',
-  proxyEnabledWithoutProxyCount: 'Proxy check enabled, yet no proxy count not provided',
-  proxyEnabledWithoutTrustedProxies: 'Proxy check enabled, yet no proxy prefixes provided',
-  proxyEnabledOnNonProxyAwareApi: 'Proxy check enabled, yet wrong API called',
+  publicOnly: false,
 };

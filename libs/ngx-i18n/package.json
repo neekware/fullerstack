@@ -1,6 +1,7 @@
 {
   "version": "0.0.2",
   "name": "@fullerstack/ngx-i18n",
+  "license": "MIT",
   "description": "A Translation Library for Angular",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-i18n/README.md",
   "keywords": [

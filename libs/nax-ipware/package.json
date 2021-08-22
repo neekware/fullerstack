@@ -1,6 +1,7 @@
 {
+  "version": "0.0.3",
   "name": "@fullerstack/nax-ipware",
-  "version": "0.0.2",
+  "license": "MIT",
   "description": "A node library for server applications retrieving user's real IP address",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/nax-ipware/README.md",
   "keywords": [

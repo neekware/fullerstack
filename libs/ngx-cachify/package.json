@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "name": "@fullerstack/ngx-cachify",
+  "license": "MIT",
   "description": "A Translation Library for Angular",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-cachify/README.md",
   "keywords": [

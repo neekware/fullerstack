@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "name": "@fullerstack/ngx-jwt",
+  "license": "MIT",
   "description": "A simple JWT library for Angular applications",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-jwt/README.md",
   "keywords": [

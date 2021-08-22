@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "name": "@fullerstack/ngx-gtag",
+  "license": "MIT",
   "description": "A simple gTag module for Angular applications",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-gtag/README.md",
   "keywords": [

@@ -36,42 +36,10 @@ export class Ipware {
   private getInfo(ip: string): IpwareIpInfo {
     const cleanedIp = cleanUpIP(ip);
     if (isValidIP(cleanedIp)) {
-      const routable = this.isPublic(cleanedIp);
-      return { ip: cleanedIp, routable, trustedRoute: false };
+      const isPublic = this.isPublic(cleanedIp);
+      return { ip: cleanedIp, isPublic, isRouteTrusted: false };
     }
     return IPWARE_DEFAULT_IP_INFO;
-  }
-
-  /**
-   * Given two IP addresses, it returns the the best match ip
-   * Best match order: precedence is (Public, Private, Loopback, null)
-   */
-  private bestMatched(firstIp: string, secondIP: string): string {
-    if (!firstIp) {
-      return secondIP;
-    }
-
-    if (!secondIP) {
-      return firstIp;
-    }
-
-    if (this.isPublic(firstIp) && this.isPublic(secondIP)) {
-      return firstIp;
-    }
-
-    if (this.isPublic(firstIp) && this.isPrivate(secondIP)) {
-      return firstIp;
-    }
-
-    if (this.isPrivate(firstIp) && this.isPublic(secondIP)) {
-      return secondIP;
-    }
-
-    if (this.isPrivate(firstIp) && this.isLoopback(firstIp)) {
-      return firstIp;
-    }
-
-    return secondIP;
   }
 
   /**
@@ -129,7 +97,8 @@ export class Ipware {
       Array.isArray(dest) ? src : undefined
     );
 
-    const nonRoutableIpList: string[] = [];
+    const privateIPList: IpwareIpInfo[] = [];
+    const loopbackIPList: IpwareIpInfo[] = [];
     let ipInfo: IpwareIpInfo;
 
     for (const key of options.requestHeadersOrder) {
@@ -158,50 +127,67 @@ export class Ipware {
         if (options.proxy.proxyList.length > 0) {
           for (const proxy of options.proxy.proxyList) {
             // the right most ip address is the most trusted proxy
-            // ip spoofing is possible if the hacker gets to send in a fake ip address
-            // ip filtering at firewall level is required to prevent this
+            // ip spoofing is always possible if the hacker guess our proxy's ip address or subnet, and sends in a fake ip address
+            // to prevent ip spoofing, ipware must be combined with ip filtering at firewall level
+            // alternatively you can configure your proxy to send a customer header attribute that is hard to guess, but your server is aware of it
             if (ipData.ips[ipData.count - 1].startsWith(proxy)) {
               ipInfo = this.getInfo(clientIp);
-              if (ipInfo.ip && ipInfo.routable) {
-                ipInfo.trustedRoute = true;
+              if (ipInfo.ip) {
+                ipInfo.isRouteTrusted = true;
+
+                // configuration is strictly looking for a public ip address only, or none at all, continue processing ...
+                if (options.publicOnly && !ipInfo.isPublic) {
+                  continue;
+                }
+
                 return ipInfo;
               }
             }
           }
         } else {
           ipInfo = this.getInfo(clientIp);
-          if (ipInfo.routable) {
-            return ipInfo;
-          } else {
-            nonRoutableIpList.push(ipInfo.ip);
+          if (ipInfo.ip) {
+            // configuration is strictly looking for a public ip address only, or none at all
+            if (options.publicOnly && !ipInfo.isPublic) {
+              this.isLoopback(ipInfo.ip) ? loopbackIPList.push(ipInfo) : privateIPList.push(ipInfo);
+            } else {
+              return ipInfo;
+            }
           }
         }
       }
     }
 
+    // in strict mode, we either return an ip that comes through the matching proxy/count or none
+    if (options.proxy.strict && (options.proxy.proxyList.length > 0 || options.proxy.count > 0)) {
+      return IPWARE_DEFAULT_IP_INFO;
+    }
+
     // no ip address from headers, let's fallback to the request itself
     const reqIp = getIpFromRequest(request);
     ipInfo = this.getInfo(reqIp);
-    if (ipInfo.routable) {
-      return ipInfo;
-    } else {
-      nonRoutableIpList.push(ipInfo.ip);
-    }
-
-    // not `trusted` public IP so far, let's return the first private IP
-    for (let idx = 0; idx < nonRoutableIpList.length; idx++) {
-      ipInfo = this.getInfo(nonRoutableIpList[idx]);
-      if (this.isPrivate(ipInfo.ip)) {
+    if (ipInfo.ip) {
+      // configuration is strictly looking for a public ip address only, or none at all
+      if (options.publicOnly && ipInfo.isPublic) {
         return ipInfo;
+      } else {
+        this.isLoopback(ipInfo.ip) ? loopbackIPList.push(ipInfo) : privateIPList.push(ipInfo);
       }
     }
 
-    // not public, or private IP so far, let's return the first loopback IP
-    for (let idx = 0; idx < nonRoutableIpList.length; idx++) {
-      ipInfo = this.getInfo(nonRoutableIpList[idx]);
-      if (this.isLoopback(ipInfo.ip)) {
-        return ipInfo;
-      }
+    // no public ip address at this point, return empty ip info if configuration is publicOnly
+    if (options.publicOnly) {
+      return IPWARE_DEFAULT_IP_INFO;
+    }
+
+    // the best private ip address is the first one in the list
+    if (privateIPList.length > 0) {
+      return privateIPList[0];
+    }
+
+    // the best loopback ip address is the first one in the list
+    if (loopbackIPList.length > 0) {
+      return loopbackIPList[0];
     }
 
     // unable to find any ip, return empty and let the caller decide what to do

@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "name": "@fullerstack/ngx-store",
+  "license": "MIT",
   "description": "A Simple Redux Flat Store Library for Angular",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-store/README.md",
   "keywords": [

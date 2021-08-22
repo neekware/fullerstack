@@ -32,13 +32,15 @@ planning to include `ipware` in any authentication, security or `anti-fraud` rel
   app.use(function(req, res, next) {
     const clientIp = ipware.getClientIP(req)
     console.log(clientIp);
-    // { ip: '177.139.100.100'', routable: true, trustedProxies: false }
+    // { ip: '177.139.100.100'', isPublic: true, isRouteTrusted: false }
     // do something with the ip address (e.g. pass it within the request)
     // note: ip address doesn't change often, so better cache it for performance
     next();
   });
 
- // Order of precedence is (Public, Private, Loopback, None)
+ // `publicOnly` is `false` by default, if so, the order of precedence is (Public, Private, Loopback, None)
+ // if `publicOnly` is set to `true`, then a public ip is returned or an empty IpwareIpInfo
+ // `isRouteTrusted` is set to `true` if the proxy info matched the proxy configurations
 ```
 
 # Advanced users:
@@ -88,7 +90,7 @@ You can pass your custom list on every call, when calling the api to fetch the i
 ### Private Prefixes
 
 A default list that holds the private address prefixes is called `IPWARE_PRIVATE_IP_PREFIX`.
-This list is used to determine if an IP address is `public & routable` or `private`.
+This list is used to determine if an IP address is `public` or `private`.
 
 ```typescript
 export const IPWARE_PRIVATE_IP_PREFIX: string[] = [
@@ -130,44 +132,48 @@ You can pass your custom list on every call, when calling the proxy-aware api to
 
 ```typescript
 // In the above scenario, use your load balancer IP address as a way to filter out unwanted requests.
-const ipInfo = ipware.getClientIpByTrustedProxies(request, {
+const ipInfo = ipware.getClientIP(request, {
   proxy: {
-    enabled: true,
     proxyList: ['177.139.233.132']
   },
 });
 
 // If you have multiple proxies, simply add them to the list
-const ipInfo = ipware.getClientIpByTrustedProxies(request, {
+const ipInfo = ipware.getClientIP(request, {
   proxy: {
-    enabled: true,
     proxyList: ['177.139.233.100', '177.139.233.132']
   },
 });
 
 // For proxy servers with fixed sub-domain and dynamic IP, use the following pattern.
-const ipInfo = ipware.getClientIpByTrustedProxies(request, {
+const ipInfo = ipware.getClientIP(request, {
   proxy: {
-    enabled: true,
     proxyList: ['177.139.', '177.140']
   },
 });
 
-const ipInfo = ipware.getClientIpByTrustedProxies(request, {
+const ipInfo = ipware.getClientIP(request, {
   proxy: {
-    enabled: true,
     proxyList: ['177.139.233.', '177.139.240']
   },
 });
 
 // For proxy by ip address, count will be ignored
-const ipInfo = ipware.getClientIpByTrustedProxies(request, {
+const ipInfo = ipware.getClientIP(request, {
   proxy: {
-    enabled: true,
     proxyList: ['177.139.', '177.140'],
     proxyCount: 2 // will be ignored
   },
 });
+
+// For strict mode, we either return the ip that matches the proxy info, or none
+const ipInfo = ipware.getClientIP(request, {
+  proxy: {
+    strict: true,
+    proxyList: ['177.139.233.', '177.139.240']
+  },
+});
+
 ```
 
 In the following `example`, your public load balancer (LB) can be seen as a `trusted` proxy.
@@ -188,21 +194,28 @@ You can pass your custom `count` on every call, when calling the proxy-aware api
 
 ```typescript
 // In the above scenario, the total number of proxies can be used as a way to filter out unwanted requests.
-const ipInfo = ipware.getClientIpByProxyCount(request, {
+const ipInfo = ipware.getClientIP(request, {
   proxy: {
-    enabled: true,
-    proxyCount: 1
+    count: 1
   },
 });
 
 // For proxy by count, proxy prefixes will be ignored
-const ipInfo = ipware.getClientIpByProxyCount(request, {
+const ipInfo = ipware.getClientIP(request, {
   proxy: {
-    enabled: true,
-    proxyCount: 1,
+    count: 1
     proxyList: ['177.139.233.'] // will be ignored
   },
 });
+
+// For strict mode, we either return the ip that matches the proxy info, or none
+const ipInfo = ipware.getClientIP(request, {
+  proxy: {
+    strict: true,
+    count: 1
+  },
+});
+
 ```
 
 In the following `example`, your public load balancer (LB) can be seen as the `only` proxy.
@@ -212,6 +225,16 @@ In the following `example`, your public load balancer (LB) can be seen as the `o
                                                             ^
                                                             |
                                 `Fake` Client  <private> ---+
+```
+
+### Public IP Address ONLY (routable on the internet)
+
+```typescript
+// For publicOnly mode, we either return the first public IP address based on order or none
+const ipInfo = ipware.getClientIP(request, {
+  publicOnly: true
+});
+
 ```
 
 ### Originating Request
