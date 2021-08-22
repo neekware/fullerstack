@@ -8,7 +8,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IpwareData, IpwareHeaders } from './ipware.model';
+import { IpwareClientIpOrder, IpwareData, IpwareHeaders } from './ipware.model';
 
 /**
  * Check the validity of an IPv4 address
@@ -50,13 +50,22 @@ export function cleanUpIP(ip: string): string {
 
 /**
  * Given a string, it returns a list of one or more valid IP addresses
+ * @param str - string to be parsed
+ * @param order - client ip order (default is `left-most`)
  */
-export function getIPsFromString(str: string): IpwareData {
+export function getIPsFromString(
+  str: string,
+  order: IpwareClientIpOrder = 'left-most'
+): IpwareData {
   const ipList: IpwareData = { ips: [], count: 0 };
-  for (const ip of str.toLowerCase().split(',').map(cleanUpIP).filter(isValidIP)) {
-    ipList.ips.push(ip);
+  for (const ip of str
+    .toLowerCase()
+    .split(',')
+    .map(cleanUpIP)
+    .filter((ip) => ip)) {
+    order === 'left-most' ? ipList.ips.push(ip) : ipList.ips.unshift(ip);
   }
-  ipList.count = ipList.ips.length || 0;
+  ipList.count = ipList.ips.length;
 
   return ipList;
 }

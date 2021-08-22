@@ -12,8 +12,8 @@ export interface IpwareHeaders {
 
 export interface IpwareIpInfo {
   ip: string;
-  routable: boolean;
-  trustedRoute?: boolean;
+  isPublic: boolean; // routable on the internet
+  isRouteTrusted?: boolean;
 }
 
 export interface IpwareData {
@@ -23,10 +23,10 @@ export interface IpwareData {
 export type IpwareClientIpOrder = 'left-most' | 'right-most';
 
 export interface IpwareProxyOptions {
-  enabled: boolean;
-  proxyIpPrefixes?: string[];
+  proxyList?: string[];
   count?: number;
-  order?: string;
+  order?: IpwareClientIpOrder;
+  strict?: boolean;
 }
 
 export interface IpwareConfigOptions {
@@ -34,9 +34,11 @@ export interface IpwareConfigOptions {
   privateIpPrefixes?: string[];
   loopbackIpPrefixes?: string[];
   proxy?: IpwareProxyOptions;
+  publicOnly?: boolean;
 }
 
 export interface IpwareCallOptions {
   requestHeadersOrder?: string[];
   proxy?: IpwareProxyOptions;
+  publicOnly?: boolean;
 }

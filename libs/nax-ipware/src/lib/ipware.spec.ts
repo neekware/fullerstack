@@ -8,7 +8,6 @@
 
 import { Ipware } from './ipware';
 import {
-  IPWARE_ERROR_MESSAGE,
   IPWARE_HEADERS_IP_ATTRIBUTES_ORDER,
   IPWARE_LOOPBACK_PREFIX,
   IPWARE_PRIVATE_IP_PREFIX,
@@ -36,7 +35,7 @@ describe('Ipware', () => {
       IPWARE_HEADERS_IP_ATTRIBUTES_ORDER.length
     );
     expect(ipware.options.privateIpPrefixes.length).toEqual(IPWARE_PRIVATE_IP_PREFIX.length);
-    expect(ipware.options.proxy.proxyIpPrefixes.length).toEqual(0);
+    expect(ipware.options.proxy.proxyList.length).toEqual(0);
     expect(ipware.options.loopbackIpPrefixes.length).toEqual(IPWARE_LOOPBACK_PREFIX.length);
   });
 
@@ -57,50 +56,6 @@ describe('Ipware', () => {
     expect(ipware.isPublic('177.139.100.100')).toBeTruthy();
     expect(ipware.isPublic('3ffe:1900:4545:3:200:f8ff:fe21:67cf')).toBeTruthy();
   });
-
-  it('should throw on non-proxy api with enabled proxy config', () => {
-    const request = { headers: { HTTP_X_REAL_IP: '177.139.233.132' } };
-    try {
-      ipware.getClientIP(request, {
-        proxy: { enabled: true },
-      });
-      expect(true).toBe(false); // we should never get here due to mis-configuration exception
-    } catch (e) {
-      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledOnNonProxyAwareApi);
-    }
-  });
-
-  it('should throw on proxy api with disabled proxy config', () => {
-    const request = { headers: { HTTP_X_REAL_IP: '177.139.233.132' } };
-    try {
-      ipware.getClientIpByTrustedProxies(request);
-      expect(true).toBe(false); // we should never get here due to mis-configuration exception
-    } catch (e) {
-      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyDisabledOnProxyAwareApi);
-    }
-  });
-
-  it('should throw on proxy api with enabled proxy config without trusted proxy list', () => {
-    const request = { headers: { HTTP_X_REAL_IP: '177.139.233.132' } };
-    try {
-      ipware.getClientIpByTrustedProxies(request, {
-        proxy: { enabled: true },
-      });
-      expect(true).toBe(false); // we should never get here due to mis-configuration exception
-    } catch (e) {
-      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledWithoutTrustedProxies);
-    }
-  });
-
-  it('should throw on proxy api with enabled proxy config without proxy count', () => {
-    const request = { headers: { HTTP_X_REAL_IP: '177.139.233.132' } };
-    try {
-      ipware.getClientIpByProxyCount(request, { proxy: { enabled: true } });
-      expect(true).toBe(false); // we should never get here due to mis-configuration exception
-    } catch (e) {
-      expect(e.message).toBe(IPWARE_ERROR_MESSAGE.proxyEnabledWithoutProxyCount);
-    }
-  });
 });
 
 describe('Ipware: IPv4', () => {
@@ -114,17 +69,58 @@ describe('Ipware: IPv4', () => {
     ipware = null;
   });
 
-  it('should skip multiple ips if invalid pattern', function () {
+  it('should return public ip via proxy - precedent headers attribute order', function () {
     const request = {
       headers: {
-        HTTP_X_FORWARDED_FOR: '192.168.255.182, 10.0.0.0, 177.139.233.22, 177.139.233.139',
+        HTTP_X_FORWARDED_FOR: '177.139.22.20, 177.139.233.21, 177.139.233.22, 177.139.233.139',
         HTTP_X_REAL_IP: '177.139.233.132',
         REMOTE_ADDR: '177.139.233.133',
       },
     };
     const ipInfo = ipware.getClientIP(request);
-    expect(ipInfo.ip).toEqual('177.139.233.22');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.ip).toEqual('177.139.22.20');
+    expect(ipInfo.isPublic).toBeTruthy();
+  });
+
+  it('should skip invalid ips received via proxy, fallback onto the next headers attribute', function () {
+    const request = {
+      headers: {
+        HTTP_X_FORWARDED_FOR: 'unknown, 177.139.233.21, 177.139.233.22, 177.139.233.139',
+        HTTP_X_REAL_IP: '177.139.233.132',
+        REMOTE_ADDR: '177.139.233.133',
+      },
+    };
+    const ipInfo = ipware.getClientIP(request);
+    expect(ipInfo.ip).toEqual('177.139.233.132');
+    expect(ipInfo.isPublic).toBeTruthy();
+  });
+
+  it('should return a private client ips received via proxy, of publicOnly is not specified', function () {
+    const request = {
+      headers: {
+        HTTP_X_FORWARDED_FOR: '10.10.10.10, 177.139.233.21, 177.139.233.22, 177.139.233.139',
+        HTTP_X_REAL_IP: '177.139.233.132',
+        REMOTE_ADDR: '177.139.233.133',
+      },
+    };
+    const ipInfo = ipware.getClientIP(request);
+    expect(ipInfo.ip).toEqual('10.10.10.10');
+    expect(ipInfo.isPublic).toBeFalsy();
+  });
+
+  it('should skip a private client ips received via proxy, of publicOnly is true', function () {
+    const request = {
+      headers: {
+        HTTP_X_FORWARDED_FOR: '10.10.10.10, 177.139.233.21, 177.139.233.22, 177.139.233.139',
+        HTTP_X_REAL_IP: '177.139.233.132',
+        REMOTE_ADDR: '177.139.233.133',
+      },
+    };
+    const ipInfo = ipware.getClientIP(request, {
+      publicOnly: true,
+    });
+    expect(ipInfo.ip).toEqual('177.139.233.132');
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
   it('should return correct public from HTTP_X_FORWARDED_FOR with multiple ips, with right-most', function () {
@@ -135,11 +131,11 @@ describe('Ipware: IPv4', () => {
         REMOTE_ADDR: '177.139.233.133',
       },
     };
-    const ipInfo = ipware.getClientIpByTrustedProxies(request, {
-      proxy: { enabled: true, order: 'right-most', proxyIpPrefixes: ['177.139.233.'] },
+    const ipInfo = ipware.getClientIP(request, {
+      proxy: { order: 'right-most', proxyList: ['177.139.233.'] },
     });
     expect(ipInfo.ip).toEqual('177.139.233.139');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
   it('should return correct public from HTTP_X_FORWARDED_FOR with multiple ips', function () {
@@ -152,8 +148,8 @@ describe('Ipware: IPv4', () => {
       },
     };
     const ipInfo = ipware.getClientIP(request);
-    expect(ipInfo.ip).toEqual('198.84.193.157');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.ip).toEqual('192.168.255.182');
+    expect(ipInfo.isPublic).toBeFalsy();
   });
 
   it('should return correct public IPv4 HTTP_X_FORWARDED_FOR with invalid multiple ips', function () {
@@ -166,8 +162,8 @@ describe('Ipware: IPv4', () => {
       },
     };
     const ipInfo = ipware.getClientIP(request);
-    expect(ipInfo.ip).toEqual('198.84.193.157');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.ip).toEqual('177.139.233.132');
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
   it('should return correct public IPv4 HTTP_X_FORWARDED_FOR with singleton ip', function () {
@@ -180,10 +176,10 @@ describe('Ipware: IPv4', () => {
     };
     const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.139');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
-  it('should return correct public IPv4 HTTP_X_FORWARDED_FOR with singleton private ip', function () {
+  it('should return correct private IPv4 HTTP_X_FORWARDED_FOR with singleton private ip', function () {
     const request = {
       headers: {
         HTTP_X_FORWARDED_FOR: '192.168.255.182',
@@ -192,8 +188,21 @@ describe('Ipware: IPv4', () => {
       },
     };
     const ipInfo = ipware.getClientIP(request);
+    expect(ipInfo.ip).toEqual('192.168.255.182');
+    expect(ipInfo.isPublic).toBeFalsy();
+  });
+
+  it('should skip private IPv4 HTTP_X_FORWARDED_FOR with singleton private ip, return the next public', function () {
+    const request = {
+      headers: {
+        HTTP_X_FORWARDED_FOR: '192.168.255.182',
+        HTTP_X_REAL_IP: '177.139.233.132',
+        REMOTE_ADDR: '177.139.233.133',
+      },
+    };
+    const ipInfo = ipware.getClientIP(request, { publicOnly: true });
     expect(ipInfo.ip).toEqual('177.139.233.132');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
   it('should return correct public IPv4 HTTP_X_FORWARDED_FOR fallback on HTTP_X_REAL_IP', function () {
@@ -206,7 +215,7 @@ describe('Ipware: IPv4', () => {
     };
     const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.132');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
   it('should return correct public IPv4 empty HTTP_X_FORWARDED_FOR fallback on HTTP_X_REAL_IP', function () {
@@ -219,7 +228,7 @@ describe('Ipware: IPv4', () => {
     };
     const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.132');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
   it('should return correct public IPv4 missing HTTP_X_FORWARDED_FOR fallback on HTTP_X_REAL_IP', function () {
@@ -231,7 +240,7 @@ describe('Ipware: IPv4', () => {
     };
     const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.132');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
   it('should return correct public IPv4 X-Forwarded-For', function () {
@@ -244,7 +253,7 @@ describe('Ipware: IPv4', () => {
     };
     const ipInfo = ipware.getClientIP(request);
     expect(ipInfo.ip).toEqual('177.139.233.139');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.isPublic).toBeTruthy();
   });
 
   it('should return correct public IPv4 with custom headers precedence', function () {
@@ -260,7 +269,33 @@ describe('Ipware: IPv4', () => {
       requestHeadersOrder: ['HTTP_X_REAL_IP', 'REMOTE_ADDR', 'HTTP_X_FORWARDED_FOR'],
     });
     expect(ipInfo.ip).toEqual('177.139.233.132');
-    expect(ipInfo.routable).toBeTruthy();
+    expect(ipInfo.isPublic).toBeTruthy();
+  });
+
+  it('should return correct public from HTTP_X_FORWARDED_FOR with multiple ips and valid proxy count', function () {
+    const request = {
+      headers: {
+        HTTP_X_FORWARDED_FOR:
+          '192.168.255.182, 10.0.0.0, 127.0.0.1, 198.84.193.157, 177.139.233.139',
+        HTTP_X_REAL_IP: '177.139.233.132',
+        REMOTE_ADDR: '177.139.233.133',
+      },
+    };
+    const ipInfo = ipware.getClientIP(request, { proxy: { count: 4 } });
+    expect(ipInfo.ip).toEqual('192.168.255.182');
+    expect(ipInfo.isPublic).toBeFalsy();
+  });
+
+  it('should return loopback public from HTTP_X_FORWARDED_FOR with multiple ips and invalid proxy count', function () {
+    const request = {
+      headers: {
+        HTTP_X_FORWARDED_FOR: '192.168.255.182, 10.0.0.0, 198.84.193.157, 177.139.233.139',
+        HTTP_X_REAL_IP: '177.139.233.132',
+        REMOTE_ADDR: '177.139.233.133',
+      },
+    };
+    const ipInfo = ipware.getClientIP(request, { proxy: { count: 5 } });
+    expect(ipInfo.ip).toEqual('127.0.0.1');
   });
 });
 
@@ -268,11 +303,11 @@ describe('Ipware', () => {
   let ipware: Ipware;
   const options: IpwareConfigOptions = {
     proxy: {
-      enabled: true,
       order: 'right-most',
-      proxyIpPrefixes: ['10.0.0.0', '172.16.0.0', '192.168.0.0'],
+      proxyList: ['172.16.', '172.16.1.', '172.16.2.0'],
     },
     requestHeadersOrder: ['X-Forwarded-For', 'X-Real-IP'],
+    publicOnly: true,
   };
 
   beforeAll(() => {
@@ -286,9 +321,38 @@ describe('Ipware', () => {
   it('should overwrite options', () => {
     expect(ipware.options.proxy.order).toEqual('right-most');
     expect(ipware.options.requestHeadersOrder.length).toEqual(options.requestHeadersOrder.length);
-    expect(ipware.options.proxy.proxyIpPrefixes.length).toEqual(
-      options.proxy.proxyIpPrefixes.length
-    );
+    expect(ipware.options.proxy.proxyList.length).toEqual(options.proxy.proxyList.length);
     expect(ipware.options.loopbackIpPrefixes.length).toEqual(IPWARE_LOOPBACK_PREFIX.length);
+  });
+
+  it('should return no ip address custom headers precedence and publicOnly set to true', function () {
+    const request = {
+      headers: {
+        HTTP_X_FORWARDED_FOR: '192.168.255.182, 10.0.0.0, 127.0.0.1, 198.84.193.157, 172.16..0',
+        HTTP_X_REAL_IP: '177.139.233.132',
+        REMOTE_ADDR: '177.139.233.133',
+      },
+    };
+    const ipInfo = ipware.getClientIP(request, {
+      requestHeadersOrder: ['HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'],
+    });
+    expect(ipInfo.ip).toEqual('');
+  });
+
+  it('should return private ip address custom headers precedence and publicOnly set to false', function () {
+    const request = {
+      headers: {
+        HTTP_X_FORWARDED_FOR: '192.168.255.182, 10.0.0.0, 127.0.0.1, 198.84.193.157, 172.16.0',
+        HTTP_X_REAL_IP: '177.139.233.132',
+        REMOTE_ADDR: '177.139.233.133',
+      },
+    };
+    const ipInfo = ipware.getClientIP(request, {
+      requestHeadersOrder: ['HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'],
+      publicOnly: false,
+      proxy: { order: 'left-most' },
+    });
+    expect(ipInfo.ip).toEqual('192.168.255.182');
+    expect(ipInfo.isPublic).toBeFalsy();
   });
 });

@@ -1,6 +1,7 @@
 {
   "version": "0.0.2",
   "name": "@fullerstack/ngx-logger",
+  "license": "MIT",
   "description": "A Logger Utility Library for Angular",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-logger/README.md",
   "keywords": [
