@@ -41,7 +41,7 @@ Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app
 - Fullscreen
 - Geo Location Support
   - Geo Fencing
-  - IP address filtering (by: proxy count, proxy nodes, best matched)
+  - IP address filtering (by: proxy count, proxy nodes, public only, best matched)
 - ...Etc
 
 ### The mono-repo was created via Nrwl/Nx.
