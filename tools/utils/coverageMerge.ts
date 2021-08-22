@@ -46,7 +46,7 @@ async function combineLcovFiles(
  * Execute coverage merge command
  */
 async function main() {
-  const coverageGlobPattern = `${coverageDir}/**/lcov.info`;
+  const coverageGlobPattern = `${coverageDir}/**/libs/lcov.info`;
   const coverageComboFilePath = `${coverageDir}/lcov.combo.info`;
   if (program.verbose) {
     console.log(coverageGlobPattern, coverageComboFilePath, coverageDir);
