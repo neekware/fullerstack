@@ -23,8 +23,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
   app.use(function (req, res, next) {
-    const clientIp = ipware.getClientIP(req);
-    console.log(clientIp);
+    req.ipInfo = ipware.getClientIP(req);
     next();
   });
   const port = process.env.PORT || environment.port || 3333;

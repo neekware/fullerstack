@@ -53,6 +53,10 @@
                 ]
               },
               {
+                "sourceTag": "scope:nax-util",
+                "onlyDependOnLibsWithTags": ["scope:agx-data", "scope:agx-util", "scope:nax-util"]
+              },
+              {
                 "sourceTag": "scope:agx-data",
                 "onlyDependOnLibsWithTags": ["scope:agx-data"]
               },
@@ -84,6 +88,7 @@
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
                   "scope:agx-util",
+                  "scope:nax-util",
                   "scope:nsx-data",
                   "scope:nsx-util"
                 ]
