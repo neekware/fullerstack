@@ -30,11 +30,11 @@ planning to include `ipware` in any authentication, security or `anti-fraud` rel
   import {Ipware} from '@fullerstack/nax-ipware';
   const ipware = new Ipware();
   app.use(function(req, res, next) {
-    const clientIp = ipware.getClientIP(req)
-    console.log(clientIp);
-    // { ip: '177.139.100.100'', isPublic: true, isRouteTrusted: false }
-    // do something with the ip address (e.g. pass it within the request)
-    // note: ip address doesn't change often, so better cache it for performance
+    req.ipInfo = ipware.getClientIP(req)
+    // { ip: '177.139.100.100', isPublic: true, isRouteTrusted: false }
+    // do something with the ip address (e.g. pass it down through the request)
+    // note: ip address doesn't change often, so better cache it for performance,
+    // you should have distinct session ID for public and anonymous users to cache the ip address
     next();
   });
 
@@ -44,6 +44,18 @@ planning to include `ipware` in any authentication, security or `anti-fraud` rel
 ```
 
 # Advanced users:
+
+|        Flags ⇩ | ⇩ Description                                                                                  |
+| -------------: | :--------------------------------------------------------------------------------------------- |
+|      `count` ⇨ | : Total number of expected proxies (e.g. `count = 2` if `client, proxy1, proxy2`)              |
+|  `proxyList` ⇨ | : List of trusted proxies (e.g. `proxyList = ['177.22.']` if `client, proxy1, 177.22.22.22`) ) |
+| `publicOnly` ⇨ | : Return only public and internet routable IP or null                                          |
+
+|     Output Field ⇩ | ⇩ Description                                                   |
+| -----------------: | :-------------------------------------------------------------- | ------------------------------------------------------ |
+|             `ip` ⇨ | : Ip address of the client                                      |
+|       `isPublic` ⇨ | : If `ip` is public and internet routable, `true`, else `false` |
+| `isRouteTrusted` ⇨ | : If proxy `count` &                                            | `proxyList` provided and matched, `true`, else `false` |
 
 ### Precedence Order
 
@@ -158,7 +170,7 @@ const ipInfo = ipware.getClientIP(request, {
   },
 });
 
-// For proxy by ip address, count will be ignored
+// For proxy by ip address
 const ipInfo = ipware.getClientIP(request, {
   proxy: {
     proxyList: ['177.139.', '177.140'],
