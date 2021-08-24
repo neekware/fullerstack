@@ -1,5 +1,5 @@
 {
-  "version": "0.0.3",
+  "version": "0.0.4",
   "name": "@fullerstack/nax-ipware",
   "license": "MIT",
   "description": "A node library for server applications retrieving user's real IP address",
