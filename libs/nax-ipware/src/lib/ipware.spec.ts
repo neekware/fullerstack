@@ -336,7 +336,7 @@ describe('Ipware', () => {
     const ipInfo = ipware.getClientIP(request, {
       requestHeadersOrder: ['HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'],
     });
-    expect(ipInfo.ip).toEqual('');
+    expect(ipInfo).toBeNull();
   });
 
   it('should return private ip address custom headers precedence and publicOnly set to false', function () {

@@ -45,17 +45,17 @@ planning to include `ipware` in any authentication, security or `anti-fraud` rel
 
 # Advanced users:
 
-|        Flags ⇩ | ⇩ Description                                                                                  |
-| -------------: | :--------------------------------------------------------------------------------------------- |
-|      `count` ⇨ | : Total number of expected proxies (e.g. `count = 2` if `client, proxy1, proxy2`)              |
-|  `proxyList` ⇨ | : List of trusted proxies (e.g. `proxyList = ['177.22.']` if `client, proxy1, 177.22.22.22`) ) |
-| `publicOnly` ⇨ | : Return only public and internet routable IP or null                                          |
+|        Flags ⇩ | ⇩ Description                                                                                                                                                                                                                                                                                                                                                  |
+| -------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|      `count` ⇨ | : Total number of expected proxies (pattern: `client, proxy1, ..., proxy2`)<br>: if `count = 0` then `client`<br>: if `count = 1` then `client, proxy1`<br>: if `count = 2` then `client, proxy1, proxy2` <br>: if `count = 3` then `client, proxy1, proxy2 proxy3`                                                                                            |
+|  `proxyList` ⇨ | : List of trusted proxies (pattern: `client, proxy1, ..., proxy2`)<br>: if `proxyList = ['10.1.']` then `client, 10.1.1.1` OR `client, proxy1, 10.1.1.1`<br>: if `proxyList = ['10.1', '10.2.']` then `client, 10.1.1.1` OR `client, proxy1, 10.2.2.2`<br>: if `proxyList = ['10.1', '10.2.']` then `client, 10.1.1.1 10.2.2.2` OR `client, 10.1.1.1 10.2.2.2` |
+| `publicOnly` ⇨ | : Returns only public and internet routable IP or null                                                                                                                                                                                                                                                                                                         |
 
-|     Output Field ⇩ | ⇩ Description                                                   |
-| -----------------: | :-------------------------------------------------------------- | ------------------------------------------------------ |
-|             `ip` ⇨ | : Ip address of the client                                      |
-|       `isPublic` ⇨ | : If `ip` is public and internet routable, `true`, else `false` |
-| `isRouteTrusted` ⇨ | : If proxy `count` &                                            | `proxyList` provided and matched, `true`, else `false` |
+|     Output Field ⇩ | ⇩ Description                                                                    |
+| -----------------: | :------------------------------------------------------------------------------- |
+|             `ip` ⇨ | : IP address of the client                                                       |
+|       `isPublic` ⇨ | : If `ip` is public and internet routable, `true`, else `false`                  |
+| `isRouteTrusted` ⇨ | : If proxy `count` and/or `proxyList` provided and matched, `true`, else `false` |
 
 ### Precedence Order
 
@@ -89,11 +89,11 @@ You can pass your custom list on every call, when calling the api to fetch the i
 
 ```typescript
   ipware.getClientIP(request, {
-    requestHeadersOrder: ['X_FORWARDED_FOR'], // server deployed on providers that ONLY use `X_FORWARDED_FOR`.
+    requestHeadersOrder: ['X_FORWARDED_FOR'],
   });
 
   ipware.getClientIP(request, {
-    requestHeadersOrder: ['X_FORWARDED_FOR', 'HTTP_X_FORWARDED_FOR'], // servers(s) deployed on multiple providers
+    requestHeadersOrder: ['X_FORWARDED_FOR', 'HTTP_X_FORWARDED_FOR'],
   });
 
   // ... etc
@@ -101,8 +101,10 @@ You can pass your custom list on every call, when calling the api to fetch the i
 
 ### Private Prefixes
 
-A default list that holds the private address prefixes is called `IPWARE_PRIVATE_IP_PREFIX`.
+A default list that holds the private IP prefixes is called `IPWARE_PRIVATE_IP_PREFIX`.
 This list is used to determine if an IP address is `public` or `private`.
+
+It is recommended that you send us any `private` IP addresses that we have missed, to be included in the default list.
 
 ```typescript
 export const IPWARE_PRIVATE_IP_PREFIX: string[] = [
@@ -170,11 +172,11 @@ const ipInfo = ipware.getClientIP(request, {
   },
 });
 
-// For proxy by ip address
+// For proxy by ip address and count
 const ipInfo = ipware.getClientIP(request, {
   proxy: {
     proxyList: ['177.139.', '177.140'],
-    proxyCount: 2 // will be ignored
+    count: 2
   },
 });
 
@@ -212,11 +214,11 @@ const ipInfo = ipware.getClientIP(request, {
   },
 });
 
-// For proxy by count, proxy prefixes will be ignored
+// For proxy by count, and proxy list
 const ipInfo = ipware.getClientIP(request, {
   proxy: {
     count: 1
-    proxyList: ['177.139.233.'] // will be ignored
+    proxyList: ['177.139.233.']
   },
 });
 

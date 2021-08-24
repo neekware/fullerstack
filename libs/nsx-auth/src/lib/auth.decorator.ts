@@ -8,8 +8,6 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { tryGet } from '@fullerstack/agx-util';
-import { IPWARE_DEFAULT_IP_INFO, IpwareIpInfo } from '@fullerstack/nax-ipware';
 import { ExecutionContext, SetMetadata, createParamDecorator } from '@nestjs/common';
 import { Permission, Role, User } from '@prisma/client';
 
@@ -46,7 +44,7 @@ export const LocaleDecorator = createParamDecorator((data: unknown, context: Exe
 
 export const IpInfoDecorator = createParamDecorator((data: unknown, context: ExecutionContext) => {
   const request = getRequestFromContext(context);
-  return tryGet<IpwareIpInfo>(() => (request as any).ipInfo, IPWARE_DEFAULT_IP_INFO);
+  return (request as any)?.ipInfo;
 });
 
 /**

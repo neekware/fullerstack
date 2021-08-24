@@ -11,7 +11,7 @@
 import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 
-import { IPWARE_DEFAULT_IP_INFO, IpwareConfigOptionsDefault } from './ipware.default';
+import { IpwareConfigOptionsDefault } from './ipware.default';
 import { IpwareCallOptions, IpwareConfigOptions, IpwareIpInfo } from './ipware.model';
 import {
   cleanUpIP,
@@ -94,7 +94,7 @@ export class Ipware {
    * @param options ipware call options
    * @returns IpwareIpInfo
    */
-  getClientIP(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo {
+  getClientIP(request: any, callOptions?: IpwareCallOptions): IpwareIpInfo | null {
     const options = ldMergeWith(ldDeepClone(this.options), callOptions, (dest, src) =>
       Array.isArray(dest) ? src : undefined
     );
@@ -162,7 +162,7 @@ export class Ipware {
 
     // in strict mode, we either return an ip that comes through the matching proxy/count or none
     if (options.proxy.strict && (options.proxy.proxyList.length > 0 || options.proxy.count > 0)) {
-      return IPWARE_DEFAULT_IP_INFO;
+      return null;
     }
 
     // no ip address from headers, let's fallback to the request itself
@@ -179,7 +179,7 @@ export class Ipware {
 
     // no public ip address at this point, return empty ip info if configuration is publicOnly
     if (options.publicOnly) {
-      return IPWARE_DEFAULT_IP_INFO;
+      return null;
     }
 
     // the best private ip address is the first one in the list
@@ -193,6 +193,6 @@ export class Ipware {
     }
 
     // unable to find any ip, return empty and let the caller decide what to do
-    return IPWARE_DEFAULT_IP_INFO;
+    return null;
   }
 }
