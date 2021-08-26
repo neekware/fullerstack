@@ -63,6 +63,20 @@ npx create-nx-workspace fullerstack
 [<img style="margin-bottom: -4px" width="18" src="libs/agx-assets/src/lib/images/tech/jest-x250.png">](https://jestjs.io/docs/getting-started)
 [<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/cypress-x250.png">](https://www.cypress.io/)
 
+## Publishable Libraries
+
+- [@fullerstack/agx-store](https://www.npmjs.com/package/@fullerstack/agx-store) (state management based on KISS principle)
+- [@fullerstack/nax-ipware](https://www.npmjs.com/package/@fullerstack/nax-ipware) (best attempt to grab client's read ip)
+- [@fullerstack/ngx-cachify](https://www.npmjs.com/package/@fullerstack/ngx-cachify) (intuitive caching of http calls)
+- [@fullerstack/ngx-config](https://www.npmjs.com/package/@fullerstack/ngx-config) (injectable angular environment)
+- [@fullerstack/ngx-gtag](https://www.npmjs.com/package/@fullerstack/ngx-gtag) (google analytics api for angular)
+- [@fullerstack/ngx-i18n](https://www.npmjs.com/package/@fullerstack/ngx-i18n) (i18n support for angular - single compilation)
+- [@fullerstack/ngx-jwt](https://www.npmjs.com/package/@fullerstack/ngx-jwt) (jwt utility for angular)
+- [@fullerstack/ngx-logger](https://www.npmjs.com/package/@fullerstack/ngx-logger) (logger for angular)
+- [@fullerstack/ngx-menu](https://www.npmjs.com/package/@fullerstack/ngx-menu) (advanced menu for angular)
+- [@fullerstack/ngx-store](https://www.npmjs.com/package/@fullerstack/ngx-store) (simple store management for angular - redux)
+- [@fullerstack/ngx-subify](https://www.npmjs.com/package/@fullerstack/ngx-subify) (rxjs subscription management utility for angular)
+
 ## Supported Platforms
 
 - Browsers (Angular)
@@ -188,14 +202,14 @@ X.Y.Z Version
     `MINOR` version -- adding functionality in a backwards-compatible manner
     `PATCH` version -- making backwards-compatible bug fixes
 
-## Lines of Code
+## Lines of Code (auto-generated)
 
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             386        21412         2415         3989        15008
+ TypeScript             386        21413         2415         3989        15009
  JSON                   144         5067            0            0         5067
- Markdown               104         2772          725            0         2047
+ Markdown               104         2786          727            0         2059
  HTML                    33         1446          113            5         1328
  Sass                    55         1449          140           35         1274
  JavaScript              35          644           24           48          572
@@ -204,7 +218,7 @@ X.Y.Z Version
  SQL                      1           80           15           13           52
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  765        33063         3449         4092        25522
+ Total                  765        33078         3451         4092        25535
 --------------------------------------------------------------------------------
 ```
 
