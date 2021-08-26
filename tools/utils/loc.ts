@@ -15,6 +15,7 @@ import { execute } from './util';
 
 const DEBUG = false;
 const excludeDirs = ['node_modules', 'tmp', 'coverage', 'dist', 'gql.schema.ts', 'graph'];
+const sectionName = 'Lines of Code (auto-generated)';
 
 /**
  * Note, the "Lines of Code" section cannot be at the end
@@ -24,7 +25,7 @@ async function main() {
   const loc = await execute(`loc . --exclude ${excludeDirs.join(' ')}`, !DEBUG);
   let readMe = fs.readFileSync('README.md', 'utf-8');
 
-  readMe = replaceSection(readMe, 'Lines of Code', '```txt<br>' + loc + '```', false);
+  readMe = replaceSection(readMe, sectionName, '```txt<br>' + loc + '```', false);
 
   fs.writeFileSync('README.md', readMe, 'utf-8');
 }

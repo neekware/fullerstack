@@ -16,6 +16,7 @@ There is not a good `out-of-the-box` solution against fake IP addresses, aka _IP
 You are encouraged to read the [Advanced users](README.md#advanced-users) section of this page and
 use `trusted proxy prefixes` and/or `proxy count` features to match your needs, especially _if_ you are
 planning to include `ipware` in any authentication, security or `anti-fraud` related architecture.
+You are also encouraged to use ip filtering alongside `ipware` for optimal result.
 
 # How to install
 
@@ -37,10 +38,6 @@ planning to include `ipware` in any authentication, security or `anti-fraud` rel
     // you should have distinct session ID for public and anonymous users to cache the ip address
     next();
   });
-
- // `publicOnly` is `false` by default, if so, the order of precedence is (Public, Private, Loopback, None)
- // if `publicOnly` is set to `true`, then a public ip is returned or an empty IpwareIpInfo
- // `isRouteTrusted` is set to `true` if the proxy info matched the proxy configurations
 ```
 
 # Advanced users:
@@ -194,8 +191,8 @@ In the following `example`, your public load balancer (LB) can be seen as a `tru
 
 ```
 `Real` Client <public> <-> <public> LB (Server) <private> <-----> <private> Node Server
-                                                            ^
-                                                            |
+                                                             ^
+                                                             |
 `Fake` Client <private> <-> <private> LB (Server) <private> -+
 ```
 
