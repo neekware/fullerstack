@@ -131,7 +131,8 @@ export class CachifyInterceptor implements HttpInterceptor {
   /**
    * Given a request object, it will return a unique string to be used as cache key
    * @param request Http request object
-   * Note: blobs are excluded from the key
+   * @returns Unique string to be used as cache key
+   * note: object-hash doesn't support blobs yet, so we need to force http calls through if they contain blobs
    */
   private makeRequestCacheKey(req: HttpRequest<any>): string {
     const hashFun = objectHash;
@@ -142,6 +143,8 @@ export class CachifyInterceptor implements HttpInterceptor {
       ...cloneDeep(req.body || {}),
       ...cloneDeep(req.headers || {}),
     };
-    return hashFun(uniqueData);
+    return hashFun(uniqueData, {
+      replacer: (value) => (value instanceof Blob ? uuidV4() : value),
+    });
   }
 }
