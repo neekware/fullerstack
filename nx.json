@@ -39,15 +39,15 @@
       "tags": ["lib:agx-util", "scope:agx-util"]
     },
     "api": {
-      "tags": ["server:api-server"],
+      "tags": ["app-server:api-nest"],
       "implicitDependencies": ["agx-assets"]
     },
     "fullerstack": {
-      "tags": ["client:fullerstack-client"],
+      "tags": ["app-client:fullerstack-angular"],
       "implicitDependencies": ["agx-assets"]
     },
     "fullerstack-e2e": {
-      "tags": ["e2e:fullerstack-e2e"],
+      "tags": ["app-e2e:fullerstack-angular-e2e"],
       "implicitDependencies": ["fullerstack"]
     },
     "nax-ipware": {

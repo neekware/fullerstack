@@ -13,7 +13,7 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "scope:api-server",
+                "sourceTag": "app-server:api-nest",
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
                   "scope:agx-util",
@@ -23,7 +23,7 @@
                 ]
               },
               {
-                "sourceTag": "scope:fullerstack-client",
+                "sourceTag": "app-client:fullerstack-angular",
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
                   "scope:agx-util",
@@ -32,6 +32,10 @@
                   "scope:ngx-ui",
                   "scope:ngx-shared"
                 ]
+              },
+              {
+                "sourceTag": "app-e2e:fullerstack-angular-e2e",
+                "onlyDependOnLibsWithTags": ["app:client-fullerstack-angular"]
               },
               {
                 "sourceTag": "scope:ngx-util",
