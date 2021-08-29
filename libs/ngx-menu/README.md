@@ -1,4 +1,4 @@
-# @fullerstack/ngx-menu <img style="margin-bottom: -6px" width="30" src="../../libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
+# @fullerstack/ngx-menu <img style="margin-bottom: -6px" width="30" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
 **A simple menu library for Angular applications**
 
