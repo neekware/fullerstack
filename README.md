@@ -1,4 +1,4 @@
-# Fullerstack <img style="margin-bottom: -6px" width="30" src="libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
+# Fullerstack <img style="margin-bottom: -6px" width="30" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/fullerstack-x250.png">
 
 [![status-image]][status-link]
 [![coverage-image]][coverage-link]
@@ -13,9 +13,9 @@ To create an open source dashboard from the ground-up. `Quality of Experience` i
 
 ## `Elegance in simplicity`
 
-<img width="auto" src="libs/agx-assets/src/lib/images/misc/login.png">
+<img width="auto" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/misc/login.png">
 
-Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app.avidtrader.co/) )
+Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app.avidtrader.co/forex/100/USD/EUR) )
 
 <br/>
 
@@ -50,18 +50,18 @@ npx create-nx-workspace fullerstack
 
 ### Powered By
 
-[<img style="margin-bottom: 1px" width="60" src="libs/agx-assets/src/lib/images/tech/nx-x250.png">](https://nx.dev/)
-[<img style="margin-bottom: -6px" width="30" src="libs/agx-assets/src/lib/images/tech/angular-x250.png">](https://angular.io)
-[<img style="margin-bottom: -5px" width="27" src="libs/agx-assets/src/lib/images/tech/nestjs-x250.png">](https://nestjs.com/)
-[<img style="margin-bottom: -7px" width="30" src="libs/agx-assets/src/lib/images/tech/prisma-x250.png">](https://www.prisma.io/)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/graphql-x250.png">](https://graphql.org/)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/apollo-x250.png">](https://www.apollographql.com/)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/html5-x250.png">](https://en.wikipedia.org/wiki/HTML5)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/css3-x250.png">](https://www.w3.org/)
-[<img style="margin-bottom: -4px" width="22" src="libs/agx-assets/src/lib/images/tech/scss-x250.png">](https://sass-lang.com/)
-[<img style="margin-bottom: -4px" width="22" src="libs/agx-assets/src/lib/images/tech/psql-x250.png">](https://www.postgresql.org/)
-[<img style="margin-bottom: -4px" width="18" src="libs/agx-assets/src/lib/images/tech/jest-x250.png">](https://jestjs.io/docs/getting-started)
-[<img style="margin-bottom: -4px" width="24" src="libs/agx-assets/src/lib/images/tech/cypress-x250.png">](https://www.cypress.io/)
+[<img style="margin-bottom: 1px" width="60" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/nx-x250.png">](https://nx.dev/)
+[<img style="margin-bottom: -6px" width="30" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/angular-x250.png">](https://angular.io)
+[<img style="margin-bottom: -5px" width="27" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/nestjs-x250.png">](https://nestjs.com/)
+[<img style="margin-bottom: -7px" width="30" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/prisma-x250.png">](https://www.prisma.io/)
+[<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/graphql-x250.png">](https://graphql.org/)
+[<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/apollo-x250.png">](https://www.apollographql.com/)
+[<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/html5-x250.png">](https://en.wikipedia.org/wiki/HTML5)
+[<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/css3-x250.png">](https://www.w3.org/)
+[<img style="margin-bottom: -4px" width="22" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/scss-x250.png">](https://sass-lang.com/)
+[<img style="margin-bottom: -4px" width="22" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/psql-x250.png">](https://www.postgresql.org/)
+[<img style="margin-bottom: -4px" width="18" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/jest-x250.png">](https://jestjs.io/docs/getting-started)
+[<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/cypress-x250.png">](https://www.cypress.io/)
 
 ## Publishable Libraries
 
@@ -102,9 +102,8 @@ npx create-nx-workspace fullerstack
 
 - `WB` = Web (Chrome, Firefox, Safari, Edge, etc)
 - `EL` = [Electron](electronjs.org)
-- `NS` = [NativeScript](nativescript.org)
-- `AD` = [Android](android.com)
-- `IO` = [Ionic](ionicframework.com)
+- `NS` = [NativeScript](nativescript.org) (Android // iOS)
+- `IO` = [Ionic](ionicframework.com) (Android // iOS)
 
 ## Applications
 
@@ -187,8 +186,8 @@ yarn build:ci
 yarn affected:dep-graph --base=<branch-name> --head=HEAD
 ```
 
-<img width="auto" src="libs/agx-assets/src/lib/images/tech/dep-graph-back.png">
-<img width="auto" src="libs/agx-assets/src/lib/images/tech/dep-graph-front.png">
+<img width="auto" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/dep-graph-back.png">
+<img width="auto" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/dep-graph-front.png">
 
 ## License
 
@@ -209,7 +208,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             386        21413         2415         3989        15009
  JSON                   144         5067            0            0         5067
- Markdown               104         2786          727            0         2059
+ Markdown               104         2785          727            0         2058
  HTML                    33         1446          113            5         1328
  Sass                    55         1449          140           35         1274
  JavaScript              35          644           24           48          572
@@ -218,7 +217,7 @@ X.Y.Z Version
  SQL                      1           80           15           13           52
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  765        33078         3451         4092        25535
+ Total                  765        33077         3451         4092        25534
 --------------------------------------------------------------------------------
 ```
 
