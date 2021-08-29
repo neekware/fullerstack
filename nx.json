@@ -27,106 +27,106 @@
   },
   "projects": {
     "agx-assets": {
-      "tags": ["scope:agx-data"]
+      "tags": ["lib:agx-assets", "scope:agx-data"]
     },
     "agx-dto": {
-      "tags": ["scope:agx-data"]
+      "tags": ["lib:agx-dto", "scope:agx-data"]
     },
     "agx-store": {
-      "tags": ["scope:agx-data"]
+      "tags": ["lib:agx-store", "scope:agx-data"]
     },
     "agx-util": {
-      "tags": ["scope:agx-util"]
+      "tags": ["lib:agx-util", "scope:agx-util"]
     },
     "api": {
-      "tags": ["scope:api-server"],
+      "tags": ["server:api-server"],
       "implicitDependencies": ["agx-assets"]
     },
     "fullerstack": {
-      "tags": ["scope:fullerstack-client"],
+      "tags": ["client:fullerstack-client"],
       "implicitDependencies": ["agx-assets"]
     },
     "fullerstack-e2e": {
-      "tags": ["scope:fullerstack-e2e"],
+      "tags": ["e2e:fullerstack-e2e"],
       "implicitDependencies": ["fullerstack"]
     },
     "nax-ipware": {
-      "tags": ["scope:nax-util"]
+      "tags": ["lib:nax-ipware", "scope:nax-util"]
     },
     "ngx-auth": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-auth", "scope:ngx-util"]
     },
     "ngx-cachify": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-cachify", "scope:ngx-util"]
     },
     "ngx-config": {
-      "tags": ["scope:ngx-data"]
+      "tags": ["lib:ngx-config", "scope:ngx-data"]
     },
     "ngx-gql": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-gql", "scope:ngx-util"]
     },
     "ngx-gtag": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-gtag", "scope:ngx-util"]
     },
     "ngx-i18n": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-i18n", "scope:ngx-util"]
     },
     "ngx-jwt": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-jwt", "scope:ngx-util"]
     },
     "ngx-layout": {
-      "tags": ["scope:ngx-ui"]
+      "tags": ["lib:ngx-layout", "scope:ngx-ui"]
     },
     "ngx-logger": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-logger", "scope:ngx-util"]
     },
     "ngx-material": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-material", "scope:ngx-util"]
     },
     "ngx-menu": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-menu", "scope:ngx-util"]
     },
     "ngx-msg": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-msg", "scope:ngx-util"]
     },
     "ngx-shared": {
-      "tags": ["scope:ngx-shared"]
+      "tags": ["lib:ngx-shared", "scope:ngx-shared"]
     },
     "ngx-store": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-store", "scope:ngx-util"]
     },
     "ngx-subify": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-subify", "scope:ngx-util"]
     },
     "ngx-system": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-system", "scope:ngx-util"]
     },
     "ngx-uix": {
-      "tags": ["scope:ngx-ui"]
+      "tags": ["lib:ngx-uix", "scope:ngx-ui"]
     },
     "ngx-user": {
-      "tags": ["scope:ngx-util"]
+      "tags": ["lib:ngx-user", "scope:ngx-util"]
     },
     "nsx-auth": {
-      "tags": ["scope:nsx-util"]
+      "tags": ["lib:nsx-auth", "scope:nsx-util"]
     },
     "nsx-common": {
-      "tags": ["scope:nsx-data"]
+      "tags": ["lib:nsx-common", "scope:nsx-data"]
     },
     "nsx-mailer": {
-      "tags": ["scope:nsx-util"]
+      "tags": ["lib:nsx-mailer", "scope:nsx-util"]
     },
     "nsx-prisma": {
-      "tags": ["scope:nsx-data"]
+      "tags": ["lib:nsx-prisma", "scope:nsx-data"]
     },
     "nsx-system": {
-      "tags": ["scope:nsx-util"]
+      "tags": ["lib:nsx-system", "scope:nsx-util"]
     },
     "nsx-user": {
-      "tags": ["scope:nsx-util"]
+      "tags": ["lib:nsx-user", "scope:nsx-util"]
     },
     "nxs-i18n": {
-      "tags": ["scope:nsx-data"]
+      "tags": ["lib:nsx-i18n", "scope:nsx-data"]
     }
   },
   "targetDependencies": {
