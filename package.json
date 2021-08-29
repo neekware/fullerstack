@@ -138,7 +138,7 @@
     "@mdi/angular-material": "5.9.55",
     "@mdi/font": "5.9.55",
     "@nestjs/schematics": "7.0.0",
-    "@nestjs/testing": "7.0.0",
+    "@nestjs/testing": "8.0.6",
     "@nrwl/cli": "12.8.0",
     "@nrwl/cypress": "12.8.0",
     "@nrwl/eslint-plugin-nx": "12.8.0",
