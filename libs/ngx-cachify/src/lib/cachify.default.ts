@@ -7,6 +7,7 @@
  */
 
 import { HttpContextToken } from '@angular/common/http';
+import { DeepReadonly } from 'ts-essentials';
 
 import { CachifyConfig, CachifyContextMeta, CachifyFetchPolicy } from './cachify.model';
 
@@ -14,20 +15,6 @@ import { CachifyConfig, CachifyContextMeta, CachifyFetchPolicy } from './cachify
  * Max cache is one month
  */
 export const DefaultMaxCacheExpiry = 60 * 60 * 24 * 30;
-
-/**
- * Default configuration - Cachify module
- */
-export const DefaultCachifyConfig: CachifyConfig = {
-  // by default cache is disabled
-  disabled: true,
-
-  // freeze state
-  immutable: true,
-
-  // by default, expiry time of http cache is 60 seconds
-  ttl: DefaultMaxCacheExpiry,
-};
 
 /**
  * Enabled fetch policy
@@ -40,6 +27,23 @@ export const DefaultFetchPolicies = [
   CachifyFetchPolicy.NetworkFirst,
   CachifyFetchPolicy.CacheAndNetwork,
 ];
+
+/**
+ * Default configuration - Cachify module
+ */
+export const DefaultCachifyConfig: DeepReadonly<CachifyConfig> = {
+  // by default cache is disabled
+  disabled: false,
+
+  // by default the following policies are enabled
+  policies: DefaultFetchPolicies,
+
+  // freeze state
+  immutable: true,
+
+  // by default, expiry time of http cache is 60 seconds
+  ttl: DefaultMaxCacheExpiry,
+} as const;
 
 /**
  * Default fetch policy

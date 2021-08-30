@@ -18,10 +18,10 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep as ldDeepClone } from 'lodash-es';
 import * as objectHash from 'object-hash';
 import { Observable, of, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
 import { CACHIFY_CONTEXT_TOKEN, DefaultContextMeta } from './cachify.default';
@@ -53,7 +53,7 @@ export class CachifyInterceptor implements HttpInterceptor {
 
         case CachifyFetchPolicy.CacheAndNetwork:
           if (cachedResponse) {
-            this.playItForward(request, next, meta).subscribe();
+            this.playItForward(request, next, meta).pipe(first()).subscribe();
             return of(cachedResponse);
           }
           return this.playItForward(request, next, meta);
@@ -140,8 +140,8 @@ export class CachifyInterceptor implements HttpInterceptor {
       method: req.method,
       responseType: req.responseType,
       urlWithParams: req.urlWithParams,
-      ...cloneDeep(req.body || {}),
-      ...cloneDeep(req.headers || {}),
+      ...ldDeepClone(req.body || {}),
+      ...ldDeepClone(req.headers || {}),
     };
     return hashFun(uniqueData, {
       replacer: (value) => (value instanceof Blob ? uuidV4() : value),
