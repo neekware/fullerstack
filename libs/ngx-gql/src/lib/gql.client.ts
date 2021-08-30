@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient } from '@angular/common/http';
 import { tryGet } from '@fullerstack/agx-util';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep as ldDeepClone } from 'lodash-es';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -27,7 +27,7 @@ export class GraphQLClient {
   ): Observable<T> {
     const body = createGqlBody(query, variables || {});
     const newOptions = {
-      ...cloneDeep(options),
+      ...ldDeepClone(options),
       headers: createGqlHeaders(options?.headers),
       responseType: options?.responseType ?? 'json',
       withCredentials: options?.withCredentials ?? true,

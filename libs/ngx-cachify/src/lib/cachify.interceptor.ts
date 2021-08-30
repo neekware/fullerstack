@@ -18,7 +18,7 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep as ldDeepClone } from 'lodash-es';
 import * as objectHash from 'object-hash';
 import { Observable, of, throwError } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
@@ -140,8 +140,8 @@ export class CachifyInterceptor implements HttpInterceptor {
       method: req.method,
       responseType: req.responseType,
       urlWithParams: req.urlWithParams,
-      ...cloneDeep(req.body || {}),
-      ...cloneDeep(req.headers || {}),
+      ...ldDeepClone(req.body || {}),
+      ...ldDeepClone(req.headers || {}),
     };
     return hashFun(uniqueData, {
       replacer: (value) => (value instanceof Blob ? uuidV4() : value),

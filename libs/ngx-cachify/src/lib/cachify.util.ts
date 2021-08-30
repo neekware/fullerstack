@@ -83,8 +83,8 @@ export function isPolicyEnabled(policy: string): boolean {
  * @param meta http metadata passed in as context
  * @returns context object
  */
-export function makeCachifyContext(meta: CachifyContextMeta) {
-  return new HttpContext().set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, {
+export function makeCachifyContext(meta: CachifyContextMeta, ctx?: HttpContext): HttpContext {
+  return (ctx || new HttpContext()).set<CachifyContextMeta>(CACHIFY_CONTEXT_TOKEN, {
     ...meta,
     policy: meta.policy || CachifyFetchPolicy.NetworkFirst,
   });

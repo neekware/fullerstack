@@ -17,6 +17,9 @@ export class CachifyConfig {
   // disable cache globally
   disabled?: boolean;
 
+  // enabled policies
+  policies?: CachifyFetchPolicy[];
+
   // freeze state, full or partial
   immutable?: boolean;
 

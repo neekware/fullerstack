@@ -107,8 +107,6 @@ const store: StoreConfig = {
 } as const;
 
 const cachify: CachifyConfig = {
-  disabled: false,
-  immutable: false, // mainly caches responses, so set to false
   ttl: 30, // 30 seconds
 } as const;
 
