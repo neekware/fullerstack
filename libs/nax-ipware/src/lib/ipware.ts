@@ -23,11 +23,17 @@ import {
 
 export class Ipware {
   readonly options: DeepReadonly<IpwareConfigOptions> = IpwareConfigOptionsDefault;
+  private nonPublicIpPrefixes: string[] = [];
 
   constructor(options?: IpwareConfigOptions) {
     this.options = ldMergeWith(ldDeepClone(this.options), options, (dest, src) =>
       Array.isArray(dest) ? src : undefined
     );
+
+    this.nonPublicIpPrefixes = [
+      ...this.options.privateIpPrefixes,
+      ...this.options.loopbackIpPrefixes,
+    ];
   }
 
   /**
@@ -65,12 +71,7 @@ export class Ipware {
   isPrivate(ip: string): boolean {
     ip = ip.toLowerCase();
 
-    const nonPublicIpPrefixes = [
-      ...this.options.privateIpPrefixes,
-      ...this.options.loopbackIpPrefixes,
-    ];
-
-    for (const prefix of nonPublicIpPrefixes) {
+    for (const prefix of this.nonPublicIpPrefixes) {
       if (ip.startsWith(prefix)) {
         return true;
       }
