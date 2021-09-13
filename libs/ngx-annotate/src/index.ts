@@ -1,1 +1,1 @@
-export * from './lib/ngx-annotate.module';
+export * from './lib/annotate.module';
