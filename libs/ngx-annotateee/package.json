@@ -1,9 +1,9 @@
 {
   "version": "0.0.1",
-  "name": "@fullerstack/ngx-annotator",
+  "name": "@fullerstack/ngx-annotateee",
   "license": "MIT",
   "description": "An Annotation Library for Angular",
-  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-annotator/README.md",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-annotateee/README.md",
   "keywords": [
     "ng",
     "angular",
