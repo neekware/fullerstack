@@ -13,6 +13,12 @@
       "path": "./tsconfig.editor.json"
     }
   ],
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
+  },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictTemplates": true

@@ -1,12 +1,14 @@
 {
   "version": "0.0.1",
-  "name": "@fullerstack/ngx-annotate",
+  "name": "@fullerstack/ngx-annotator",
   "license": "MIT",
   "description": "An Annotation Library for Angular",
-  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-annotate/README.md",
+  "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/ngx-annotator/README.md",
   "keywords": [
     "ng",
     "angular",
+    "annotate",
+    "annotator",
     "annotation",
     "telestation",
     "video annotation"

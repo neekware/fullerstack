@@ -418,43 +418,46 @@
         }
       }
     },
-    "ngx-annotate": {
+    "ngx-annotator": {
       "projectType": "library",
-      "root": "libs/ngx-annotate",
-      "sourceRoot": "libs/ngx-annotate/src",
+      "root": "libs/ngx-annotator",
+      "sourceRoot": "libs/ngx-annotator/src",
       "prefix": "fullerstack",
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
-          "outputs": ["dist/libs/ngx-annotate"],
+          "outputs": ["dist/libs/ngx-annotator"],
           "options": {
-            "project": "libs/ngx-annotate/ng-package.json"
+            "project": "libs/ngx-annotator/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/ngx-annotate/tsconfig.lib.prod.json"
+              "tsConfig": "libs/ngx-annotator/tsconfig.lib.prod.json"
             },
             "ci": {
-              "tsConfig": "libs/ngx-annotate/tsconfig.lib.prod.json"
+              "tsConfig": "libs/ngx-annotator/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "libs/ngx-annotate/tsconfig.lib.json"
+              "tsConfig": "libs/ngx-annotator/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ngx-annotate"],
+          "outputs": ["coverage/libs/ngx-annotator"],
           "options": {
-            "jestConfig": "libs/ngx-annotate/jest.config.js",
+            "jestConfig": "libs/ngx-annotator/jest.config.js",
             "passWithNoTests": true
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/ngx-annotate/src/**/*.ts", "libs/ngx-annotate/src/**/*.html"]
+            "lintFilePatterns": [
+              "libs/ngx-annotator/src/**/*.ts",
+              "libs/ngx-annotator/src/**/*.html"
+            ]
           }
         }
       }

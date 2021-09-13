@@ -1,17 +1,17 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { AnnotateModule } from './annotate.module';
+import { AnnotatorModule } from './annotator.module';
 
-describe('AnnotateModule', () => {
+describe('AnnotatorService', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [AnnotateModule],
+        imports: [AnnotatorModule],
       }).compileComponents();
     })
   );
 
   it('should have a module definition', () => {
-    expect(AnnotateModule).toBeDefined();
+    expect(AnnotatorModule).toBeDefined();
   });
 });

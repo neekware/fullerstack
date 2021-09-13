@@ -163,6 +163,10 @@ export const AppRoutes: Routes = [
     },
   },
   {
+    path: 'annotate',
+    loadChildren: () => import('./pages/annotate/annotate.module').then((m) => m.AnnotateModule),
+  },
+  {
     path: '**',
     component: NotfoundComponent,
   },
