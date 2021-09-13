@@ -418,6 +418,47 @@
         }
       }
     },
+    "ngx-annotate": {
+      "projectType": "library",
+      "root": "libs/ngx-annotate",
+      "sourceRoot": "libs/ngx-annotate/src",
+      "prefix": "fullerstack",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "outputs": ["dist/libs/ngx-annotate"],
+          "options": {
+            "project": "libs/ngx-annotate/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngx-annotate/tsconfig.lib.prod.json"
+            },
+            "ci": {
+              "tsConfig": "libs/ngx-annotate/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/ngx-annotate/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ngx-annotate"],
+          "options": {
+            "jestConfig": "libs/ngx-annotate/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/ngx-annotate/src/**/*.ts", "libs/ngx-annotate/src/**/*.html"]
+          }
+        }
+      }
+    },
     "ngx-auth": {
       "projectType": "library",
       "root": "libs/ngx-auth",

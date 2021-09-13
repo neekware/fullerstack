@@ -53,6 +53,9 @@
     "nax-ipware": {
       "tags": ["lib:nax-ipware", "scope:nax-util"]
     },
+    "ngx-annotate": {
+      "tags": ["lib:ngx-annotate", "scope:ngx-ui"]
+    },
     "ngx-auth": {
       "tags": ["lib:ngx-auth", "scope:ngx-util"]
     },
