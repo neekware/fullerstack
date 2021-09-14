@@ -165,9 +165,9 @@ export class LayoutService implements OnDestroy {
 
   private subFullscreen() {
     this.uix.fullscreen$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (isFullscreen) => {
-        if (this.state.isFullscreen && !isFullscreen) {
-          this.setFullscreen(isFullscreen);
+      next: (isFullScreen) => {
+        if (this.state.isFullScreen && !isFullScreen) {
+          this.setFullscreen(isFullScreen);
           this.uix.fullscreenOff();
         }
       },
@@ -232,10 +232,10 @@ export class LayoutService implements OnDestroy {
     });
   }
 
-  setFullscreen(isFullscreen: boolean) {
+  setFullscreen(isFullScreen: boolean) {
     this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
-      isFullscreen,
+      isFullScreen,
     });
     this.uix.fullscreenOff();
   }
@@ -243,7 +243,7 @@ export class LayoutService implements OnDestroy {
   toggleFullscreen() {
     this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
-      isFullscreen: !this.state.isFullscreen,
+      isFullScreen: !this.state.isFullScreen,
     });
     this.uix.toggleFullscreen();
   }

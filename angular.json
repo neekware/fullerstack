@@ -418,36 +418,17 @@
         }
       }
     },
-    "ngx-annotateee": {
+    "ngx-annotator": {
       "projectType": "library",
-      "root": "libs/ngx-annotateee",
-      "sourceRoot": "libs/ngx-annotateee/src",
+      "root": "libs/ngx-annotator",
+      "sourceRoot": "libs/ngx-annotator/src",
       "prefix": "fullerstack",
       "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "outputs": ["dist/libs/ngx-annotateee"],
-          "options": {
-            "project": "libs/ngx-annotateee/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/ngx-annotateee/tsconfig.lib.prod.json"
-            },
-            "ci": {
-              "tsConfig": "libs/ngx-annotateee/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "libs/ngx-annotateee/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ngx-annotateee"],
+          "outputs": ["coverage/libs/ngx-annotator"],
           "options": {
-            "jestConfig": "libs/ngx-annotateee/jest.config.js",
+            "jestConfig": "libs/ngx-annotator/jest.config.js",
             "passWithNoTests": true
           }
         },
@@ -455,8 +436,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/ngx-annotateee/src/**/*.ts",
-              "libs/ngx-annotateee/src/**/*.html"
+              "libs/ngx-annotator/src/**/*.ts",
+              "libs/ngx-annotator/src/**/*.html"
             ]
           }
         }

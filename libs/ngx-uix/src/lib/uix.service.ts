@@ -67,8 +67,8 @@ export class UixService implements OnDestroy {
   initFullscreen() {
     // if (screenfull.enabled()) {
     //   screenfull.on('change', () => {
-    //     this.fullscreen$.emit(screenfull.isFullscreen);
-    //     this.logger.debug(`Fullscreen: (${screenfull.isFullscreen})`);
+    //     this.fullscreen$.emit(screenfull.isFullScreen);
+    //     this.logger.debug(`Fullscreen: (${screenfull.isFullScreen})`);
     //   });
     // }
   }

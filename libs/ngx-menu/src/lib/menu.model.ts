@@ -15,6 +15,10 @@ export interface MenuItem {
   link?: string;
   // hides menu, navigation, popups (ex: calendar page is fullspan)
   fullspan?: boolean;
+  // if true, this will be a fullscreen page
+  fullscreen?: boolean;
+  // if true, this will be a fullscreen page without header and footer
+  headless?: boolean;
   // if external link
   external?: boolean;
   // open in new tab (_blank)

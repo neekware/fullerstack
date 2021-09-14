@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'ngx-annotateee',
+  displayName: 'ngx-annotator',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/libs/ngx-annotateee',
+  coverageDirectory: '../../coverage/libs/ngx-annotator',
   transform: {
     '^.+\\.(ts|js|html)$': 'jest-preset-angular',
   },

@@ -17,9 +17,7 @@ export class AnnotatorComponent implements OnInit {
     // https://editor.p5js.org/Janglee123/sketches/HJ2RnrQzN
     const sketch = (s) => {
       s.setup = () => {
-        const canvas2 = s.createCanvas(s.windowWidth - 200, s.windowHeight - 200);
-        // creating a reference to the div here positions it so you can put things above and below
-        // where the sketch is displayed
+        const canvas2 = s.createCanvas(s.windowWidth, s.windowHeight);
         canvas2.parent('sketch-holder');
 
         s.background(255);
@@ -52,7 +50,7 @@ export class AnnotatorComponent implements OnInit {
         // modulo math forces the color to swap through the array provided
         this.strokeColor = (this.strokeColor + 1) % this.c.length;
         s.stroke(this.c[this.strokeColor]);
-        console.log(`color is now ${this.c[this.strokeColor]}`);
+        // console.log(`color is now ${this.c[this.strokeColor]}`);
       };
 
       s.keyPressed = () => {

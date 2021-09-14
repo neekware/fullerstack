@@ -5,6 +5,7 @@ import { AnnotatorComponent } from './canvas/annotator.component';
 
 @NgModule({
   imports: [CommonModule],
+  exports: [AnnotatorComponent],
   declarations: [AnnotatorComponent],
 })
 export class AnnotatorModule {}

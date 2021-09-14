@@ -108,6 +108,13 @@ export const layoutMenuTree: MenuItem[] = [
     disabled: true,
   },
   {
+    name: _('COMMON.ANNOTATE'),
+    icon: 'draw',
+    link: 'annotate',
+    fullscreen: true,
+    headless: true,
+  },
+  {
     name: _('COMMON.YOUTUBE'),
     icon: 'youtube',
     link: 'https://youtube.com',

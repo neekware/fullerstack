@@ -41,7 +41,8 @@ export interface LayoutState {
   isHandset: boolean;
   isPortrait: boolean;
   isDarkTheme: boolean;
-  isFullscreen: boolean;
+  isFullScreen: boolean;
+  isHeadless: boolean;
   menuOpen: boolean;
   notifyOpen: boolean;
   navbarMode: NavbarMode;

@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   rootNode: MenuNode;
 
   constructor(
-    readonly chRef: ChangeDetectorRef,
+    readonly cdRef: ChangeDetectorRef,
     readonly router: Router,
     readonly layout: LayoutService,
     readonly auth: AuthService
@@ -53,7 +53,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.chRef.markForCheck();
+        this.cdRef.markForCheck();
       }
     });
   }

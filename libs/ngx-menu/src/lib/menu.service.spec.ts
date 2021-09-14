@@ -143,7 +143,7 @@ describe('MenuService', () => {
     expect(subscriptions[0].fullspan).toEqual(true);
   });
 
-  it('should create menu - isActive, isLink, isNode, isFullSpan', () => {
+  it('should create menu - isActive, isLink, isNode, isFullSpan, isFullScreen', () => {
     service.setPermissionVerificationFunction(hasPermission);
     const menuTree = service.buildMenuTree(DefaultMenuTree);
     const admin = menuTree.children.filter((node) => node.name === 'Admin');
@@ -157,6 +157,8 @@ describe('MenuService', () => {
     expect(subscriptions[0].isActive('/admin/accounts/Subscriptions')).toEqual(true);
     expect(subscriptions[0].isActive('/invalid/link')).toEqual(false);
     expect(admin[0].isFullSpan).toEqual(false);
+    expect(admin[0].isFullScreen).toEqual(false);
+    expect(admin[0].isHeadless).toEqual(false);
     expect(subscriptions[0].isInternalLink).toEqual(true);
   });
 
