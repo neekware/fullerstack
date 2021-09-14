@@ -6,8 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
@@ -35,7 +34,6 @@ export class LayoutComponent implements OnDestroy, AfterViewInit {
   allowScroll = true;
 
   constructor(
-    @Inject(DOCUMENT) readonly document: Document,
     public logger: LoggerService,
     public i18n: I18nService,
     public auth: AuthService,

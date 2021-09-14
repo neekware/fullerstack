@@ -46,12 +46,12 @@ export class AnnotatorComponent implements OnInit {
         }
       };
 
-      s.mouseReleased = () => {
-        // modulo math forces the color to swap through the array provided
-        this.strokeColor = (this.strokeColor + 1) % this.c.length;
-        s.stroke(this.c[this.strokeColor]);
-        // console.log(`color is now ${this.c[this.strokeColor]}`);
-      };
+      // s.mouseReleased = () => {
+      //   // modulo math forces the color to swap through the array provided
+      //   this.strokeColor = (this.strokeColor + 1) % this.c.length;
+      //   s.stroke(this.c[this.strokeColor]);
+      //   // console.log(`color is now ${this.c[this.strokeColor]}`);
+      // };
 
       s.keyPressed = () => {
         if (s.key === 'c') {

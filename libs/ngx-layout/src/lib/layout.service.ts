@@ -8,7 +8,8 @@
 
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Injectable, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, OnDestroy, Renderer2, RendererFactory2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import {
@@ -43,8 +44,11 @@ export class LayoutService implements OnDestroy {
   routeReady = false;
   isDarkTheme = false;
   navbarModeClass = null;
+  renderer: Renderer2;
 
   constructor(
+    @Inject(DOCUMENT) readonly document: Document,
+    readonly rendererFactory: RendererFactory2,
     readonly router: Router,
     readonly overlay: OverlayContainer,
     readonly bpObs: BreakpointObserver,
@@ -56,6 +60,8 @@ export class LayoutService implements OnDestroy {
     readonly auth: AuthService,
     readonly store: StoreService
   ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+
     this.options = ldMergeWith(
       ldDeepClone({ layout: DefaultLayoutConfig }),
       this.config.options,
@@ -271,6 +277,14 @@ export class LayoutService implements OnDestroy {
       isDarkTheme,
     });
     this.isDarkTheme = isDarkTheme;
+  }
+
+  addClass(className: string, tagName: string) {
+    this.renderer.addClass(this.document[tagName], className);
+  }
+
+  removeClass(className: string, tagName: string) {
+    this.renderer.removeClass(this.document[tagName], className);
   }
 
   private toggleOverlayThemeClass() {

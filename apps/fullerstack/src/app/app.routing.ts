@@ -7,7 +7,6 @@
  */
 
 import { Routes } from '@angular/router';
-import { AnnotatorComponent } from '@fullerstack/ngx-annotator';
 import { AuthAnonymousGuard, AuthAuthenticatedGuard } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { DeactivateGuard } from '@fullerstack/ngx-shared';
@@ -165,13 +164,9 @@ export const AppRoutes: Routes = [
   },
   {
     path: 'annotate',
-    component: AnnotatorComponent,
     // canActivate: [AuthAuthenticatedGuard],
     // canDeactivate: [DeactivateGuard],
-    data: {
-      title: _('COMMON.ANNOTATE'),
-      description: _('COMMON.ANNOTATE.DESCRIPTION'),
-    },
+    loadChildren: () => import('@fullerstack/ngx-annotator').then((m) => m.AnnotatorModule),
   },
   {
     path: '**',

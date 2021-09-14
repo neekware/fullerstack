@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { AnnotatorModule } from '@fullerstack/ngx-annotator';
 import { AuthModule } from '@fullerstack/ngx-auth';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { GqlModule } from '@fullerstack/ngx-gql';
@@ -30,7 +31,6 @@ import { AppComponent } from './app.component';
 import { httpInterceptorProvidersOrderedList } from './app.intercept';
 import { AppRoutes } from './app.routing';
 import { AboutComponent } from './pages/about/about.component';
-import { AnnotateModule } from './pages/annotate/annotate.module';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { EmailChangePerformComponent } from './pages/email-change-perform/email-change-perform.component';
 import { EmailChangeRequestComponent } from './pages/email-change-request/email-change-request.component';
@@ -90,7 +90,7 @@ import { UserVerifyComponent } from './pages/user-verify/user-verify.component';
     UserModule,
     UixModule,
     LayoutModule,
-    AnnotateModule,
+    AnnotatorModule,
   ],
   providers: [...httpInterceptorProvidersOrderedList],
 
