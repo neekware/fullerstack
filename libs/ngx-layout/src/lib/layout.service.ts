@@ -90,8 +90,11 @@ export class LayoutService implements OnDestroy {
    * Claim Auth state:slice
    */
   private claimSlice() {
-    const logger = this.options?.layout?.logState ? this.logger.debug.bind(this.logger) : undefined;
-    this.claimId = this.store.claimSlice(this.nameSpace, logger);
+    if (!this.options?.layout?.logState) {
+      this.claimId = this.store.claimSlice(this.nameSpace);
+    } else {
+      this.claimId = this.store.claimSlice(this.nameSpace, this.logger.debug.bind(this.logger));
+    }
   }
 
   /**

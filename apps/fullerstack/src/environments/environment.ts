@@ -12,6 +12,7 @@ import { ApplicationConfig } from '@fullerstack/ngx-config';
 import { GqlConfig } from '@fullerstack/ngx-gql';
 import { GTagConfig } from '@fullerstack/ngx-gtag';
 import { I18nConfig } from '@fullerstack/ngx-i18n';
+import { LayoutConfig } from '@fullerstack/ngx-layout';
 import { LogLevel, LoggerConfig } from '@fullerstack/ngx-logger';
 import { StoreConfig } from '@fullerstack/ngx-store';
 import { UserConfig } from '@fullerstack/ngx-user';
@@ -110,6 +111,10 @@ const cachify: CachifyConfig = {
   ttl: 30, // 30 seconds
 } as const;
 
+const layout: LayoutConfig = {
+  logState: true,
+} as const;
+
 export const environment: Readonly<ApplicationConfig> = {
   version: '0.0.1',
   production: false,
@@ -122,4 +127,5 @@ export const environment: Readonly<ApplicationConfig> = {
   user,
   store,
   cachify,
+  layout,
 };
