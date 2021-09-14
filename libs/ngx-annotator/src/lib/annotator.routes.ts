@@ -13,7 +13,7 @@ import { AnnotatorComponent } from './canvas/annotator.component';
 
 export const annotatorRoutes: Routes = [
   {
-    path: '',
+    path: 'draw',
     children: [
       {
         path: '',

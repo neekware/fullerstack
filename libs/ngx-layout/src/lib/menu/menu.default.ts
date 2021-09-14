@@ -110,7 +110,7 @@ export const layoutMenuTree: MenuItem[] = [
   {
     name: _('COMMON.ANNOTATE'),
     icon: 'draw',
-    link: '/annotate',
+    link: '/annotate/draw',
     fullscreen: true,
     headless: true,
   },

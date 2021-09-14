@@ -257,6 +257,13 @@ export class LayoutService implements OnDestroy {
     this.uix.toggleFullscreen();
   }
 
+  setHeadless(isHeadless: boolean) {
+    this.store.setState<LayoutState>(this.claimId, {
+      ...this.state,
+      isHeadless: isHeadless,
+    });
+  }
+
   setIsHandset(isHandset: boolean) {
     this.store.setState<LayoutState>(this.claimId, {
       ...this.state,

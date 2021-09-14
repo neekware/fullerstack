@@ -27,9 +27,15 @@ export class MenuLinkComponent {
     readonly layout: LayoutService
   ) {}
 
-  handleToggle(node: MenuNode) {
+  handleClicks(node: MenuNode) {
     if ((node.isFullSpan || this.layout.state.isHandset) && this.layout.state.menuOpen) {
       this.layout.toggleMenu();
+    }
+
+    if (node.isHeadless && !this.layout.state.isHeadless) {
+      this.layout.setHeadless(true);
+    } else {
+      this.layout.setHeadless(false);
     }
   }
 }
