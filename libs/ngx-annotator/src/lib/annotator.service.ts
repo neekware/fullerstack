@@ -11,6 +11,7 @@ import { ANNOTATOR_URL } from './annotator.model';
 })
 export class AnnotatorService implements OnDestroy {
   private destroy$ = new Subject<boolean>();
+  private lastUrl: string;
 
   constructor(
     readonly router: Router,
@@ -20,17 +21,18 @@ export class AnnotatorService implements OnDestroy {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        pairwise(),
-        tap(([lastRoute, currentRoute]) => {
-          if ((currentRoute as NavigationEnd).url?.startsWith(ANNOTATOR_URL)) {
-            this.layout.setHeadless(true);
-          } else if ((lastRoute as NavigationEnd).url?.startsWith(ANNOTATOR_URL)) {
-            this.layout.setHeadless(false);
-          }
-        }),
         takeUntil(this.destroy$)
       )
-      .subscribe();
+      .subscribe({
+        next: () => {
+          if (this.router.url?.startsWith(ANNOTATOR_URL)) {
+            this.layout.setHeadless(true);
+          } else if (this.lastUrl?.startsWith(ANNOTATOR_URL)) {
+            this.layout.setHeadless(false);
+          }
+          this.lastUrl = this.router.url;
+        },
+      });
   }
 
   ngOnDestroy() {
