@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import p5 from 'p5';
 
+import { AnnotatorService } from '../annotator.service';
+
 @Component({
   selector: 'fullerstack-annotator',
   templateUrl: './annotator.component.html',
   styleUrls: ['./annotator.component.scss'],
 })
 export class AnnotatorComponent implements OnInit {
+  constructor(readonly annotatorService: AnnotatorService) {}
+
   canvas: any;
   sw = 2;
   c = [];
