@@ -27,5 +27,14 @@
       <span fxFlex>{{ 'COMMON.DARK' | translate }}</span>
       <mat-slide-toggle [(ngModel)]="isDarkTheme" (change)="layout.setDarkTheme($event.checked)"></mat-slide-toggle>
     </div>
+
+    <div *ngIf="layout.uix.isFullscreenCapable" fxLayout="row" fxLayoutAlign="start center" class="option-item">
+      <span fxFlex>{{ 'COMMON.FULLSCREEN' | translate }}</span>
+      <mat-slide-toggle
+        [checked]="layout.state.isFullScreen"
+        (change)="layout.toggleFullscreen()"
+        aria-label="{{ 'COMMON.FULLSCREEN' | translate }}"
+      ></mat-slide-toggle>
+    </div>
   </div>
 </div>

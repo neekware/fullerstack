@@ -17,18 +17,11 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { MaterialService } from '@fullerstack/ngx-material';
 import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { Subject } from 'rxjs';
+import * as fullscreen from 'screenfull';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultUixConfig, UIX_MDI_ICONS } from './uix.default';
 import { SvgIcons } from './uix.icon';
-
-// import * as fullscreen from 'screenfull';
-export const screenfull = {
-  on: () => {},
-  off: () => {},
-  enabled: () => {},
-  toggle: () => {},
-};
 
 @Injectable({ providedIn: 'root' })
 export class UixService implements OnDestroy {
@@ -64,34 +57,38 @@ export class UixService implements OnDestroy {
     this.mat.registerSvgIconSet(UIX_MDI_ICONS, this.options.uix.cacheBustingHash);
   }
 
-  initFullscreen() {
-    // if (screenfull.enabled()) {
-    //   screenfull.on('change', () => {
-    //     this.fullscreen$.emit(screenfull.isFullScreen);
-    //     this.logger.debug(`Fullscreen: (${screenfull.isFullScreen})`);
-    //   });
-    // }
+  private initFullscreen() {
+    if (fullscreen.isEnabled) {
+      fullscreen.on('change', () => {
+        this.fullscreen$.emit(this.fsObj.isFullscreen);
+        this.logger.debug(`Fullscreen: (${this.fsObj.isFullscreen})`);
+      });
+    }
+  }
+
+  get fsObj(): fullscreen.Screenfull {
+    return fullscreen as fullscreen.Screenfull;
   }
 
   get isFullscreenCapable() {
-    return screenfull.enabled;
+    return this.fsObj.isEnabled;
   }
 
   fullscreenOn(): void {
-    if (this.isFullscreenCapable) {
-      screenfull.on();
+    if (this.fsObj.isEnabled) {
+      this.fsObj.request();
     }
   }
 
   fullscreenOff(): void {
-    if (this.isFullscreenCapable) {
-      screenfull.off();
+    if (this.fsObj.isEnabled) {
+      this.fsObj.exit();
     }
   }
 
   toggleFullscreen(): void {
-    if (this.isFullscreenCapable) {
-      screenfull.toggle();
+    if (fullscreen.isEnabled) {
+      this.fsObj.toggle();
     }
   }
 
