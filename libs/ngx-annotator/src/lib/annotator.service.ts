@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LayoutService } from '@fullerstack/ngx-layout';
 import { SystemService } from '@fullerstack/ngx-system';
-import { Subject, filter, pairwise, takeUntil, tap } from 'rxjs';
+import { Subject, filter, takeUntil } from 'rxjs';
 
 import { ANNOTATOR_URL } from './annotator.model';
 

@@ -9,7 +9,7 @@
 import { Routes } from '@angular/router';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 
-import { AnnotatorComponent } from './canvas/annotator.component';
+import { DrawComponent } from './draw/draw.component';
 
 export const annotatorRoutes: Routes = [
   {
@@ -17,7 +17,7 @@ export const annotatorRoutes: Routes = [
     children: [
       {
         path: '',
-        component: AnnotatorComponent,
+        component: DrawComponent,
         data: {
           title: _('COMMON.ANNOTATE'),
           description: _('APP.DESCRIPTION.ANNOTATE'),

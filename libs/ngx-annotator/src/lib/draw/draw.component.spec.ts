@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AnnotatorComponent } from './annotator.component';
+import { AnnotatorComponent } from './draw.component';
 
 describe('AnnotatorComponent', () => {
   let component: AnnotatorComponent;
