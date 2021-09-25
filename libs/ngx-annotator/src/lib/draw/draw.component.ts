@@ -13,8 +13,6 @@ import { Point } from './draw.model';
   styleUrls: ['./draw.component.scss'],
 })
 export class DrawComponent implements AfterViewInit, OnDestroy {
-  @Input() width = 100;
-  @Input() height = 100;
   @ViewChild('canvas') canvas: ElementRef | undefined;
   uniqId = uuidV4();
   private destroy$ = new Subject<boolean>();
@@ -39,8 +37,8 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private resizeCanvas(canvasEl: HTMLCanvasElement) {
     this.uix.reSizeSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (size) => {
-        canvasEl.width = this.width = size.x;
-        canvasEl.height = this.height = size.y;
+        canvasEl.width = size.x;
+        canvasEl.height = size.y;
       },
     });
   }
