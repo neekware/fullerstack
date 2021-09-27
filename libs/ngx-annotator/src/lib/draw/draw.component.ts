@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { UixService } from '@fullerstack/ngx-uix';
 import { cloneDeep as ldDeepClone } from 'lodash-es';
 import { Subject, fromEvent } from 'rxjs';
