@@ -168,7 +168,7 @@
     "@typescript-eslint/parser": "4.28.5",
     "apollo": "2.33.4",
     "autoprefixer": "10.2.5",
-    "axios": "0.21.1",
+    "axios": "0.21.4",
     "commander": "2.20.3",
     "coveralls": "3.1.0",
     "cypress": "6.0.1",

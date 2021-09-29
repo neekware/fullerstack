@@ -18,7 +18,8 @@ const DEBUG = false;
 /**
  * Update packages
  */
-async function update2Latest(pkgName: string, devDep = true) {
+async function update2Latest(pkgName: string) {
+  const devDep = program.dev;
   const pkgMgr = program.manager || 'yarn';
   let cmd = `yarn add ${pkgName}`;
   let devFlag = '-D';
@@ -29,6 +30,9 @@ async function update2Latest(pkgName: string, devDep = true) {
 
   if (devDep) {
     cmd = `${cmd} ${devFlag}`;
+    console.log(`\nUpdating DevDependencies to latest version\n`);
+  } else {
+    console.log(`\nUpdating Dependencies to latest version\n`);
   }
 
   console.log(`Updating ${pkgName} ...`);
@@ -41,7 +45,7 @@ async function updateDependencies() {
       (key) => !depSkip.some((name) => key.startsWith(name))
     );
 
-    await update2Latest(updateList.join(' '), false);
+    await update2Latest(updateList.join(' '));
   }
 }
 
@@ -50,18 +54,28 @@ async function updateDevDependencies() {
     const updateList = Object.keys(projPkgJson.dependencies).filter(
       (key) => !devDepSkip.some((name) => key.startsWith(name))
     );
-    await update2Latest(updateList.join(' '), false);
+    await update2Latest(updateList.join(' '));
   }
 }
 
 async function main() {
-  await updateDependencies();
-  await updateDevDependencies();
+  const devDep = program.dev;
+  const allDep = program.all;
+
+  if (allDep || devDep) {
+    await updateDevDependencies();
+  }
+
+  if (allDep || !devDep) {
+    await updateDependencies();
+  }
 }
 
 program
   .version('0.0.1', '-v, --version')
-  .option('-m', '--manager <manager>', 'Package manager, [yarn | npm] (default: yarn)')
+  .option('-m, --manager <manager>', 'Package manager, [yarn | npm] (default: yarn)')
+  .option('-d, --dev', 'Dev dependency mode')
+  .option('-a, --all', 'All dependencies mode')
   .parse(process.argv);
 
 main().catch((err) => {
