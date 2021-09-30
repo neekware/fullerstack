@@ -1,0 +1,23 @@
+{
+  "root": "libs/agx-assets",
+  "sourceRoot": "libs/agx-assets/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/agx-assets/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/agx-assets"],
+      "options": {
+        "jestConfig": "libs/agx-assets/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:agx-assets", "scope:agx-data"]
+}

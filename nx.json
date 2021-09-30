@@ -26,9 +26,6 @@
     }
   },
   "projects": {
-    "agx-assets": {
-      "tags": ["lib:agx-assets", "scope:agx-data"]
-    },
     "agx-dto": {
       "tags": ["lib:agx-dto", "scope:agx-data"]
     },

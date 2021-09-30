@@ -34,28 +34,7 @@
   },
   "defaultProject": "avidtrader",
   "projects": {
-    "agx-assets": {
-      "root": "libs/agx-assets",
-      "sourceRoot": "libs/agx-assets/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/agx-assets/**/*.ts"]
-          },
-          "outputs": ["{options.outputFile}"]
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/agx-assets"],
-          "options": {
-            "jestConfig": "libs/agx-assets/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
+    "agx-assets": "libs/agx-assets",
     "agx-dto": {
       "root": "libs/agx-dto",
       "sourceRoot": "libs/agx-dto/src",
@@ -204,6 +183,8 @@
         }
       }
     },
+    "avidtrader": "apps/avidtrader",
+    "avidtrader-e2e": "apps/avidtrader-e2e",
     "nax-ipware": {
       "root": "libs/nax-ipware",
       "sourceRoot": "libs/nax-ipware/src",
@@ -237,8 +218,6 @@
         }
       }
     },
-    "avidtrader": "apps/avidtrader",
-    "avidtrader-e2e": "apps/avidtrader-e2e",
     "ngx-auth": {
       "projectType": "library",
       "root": "libs/ngx-auth",
