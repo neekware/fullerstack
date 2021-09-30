@@ -58,7 +58,7 @@
     "prisma:migrate:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
     "prisma:migrate:dev": "node ./node_modules/.bin/prisma migrate dev --schema=apps/api/src/prisma/schema.prisma",
     "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:seed": "./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature",
+    "prisma:seed": "./node_modules/.bin/prisma db seed",
     "i18n:extract": "node ./node_modules/.bin/ngx-translate-extract -i ./apps ./libs -o ./libs/agx-assets/src/lib/i18n/client/{en,fr,de,es,he,fa,zh-hans}.json -m _ --sort",
     "i18n:translate": "yarn ts-node ./tools/utils/i18n.ts",
     "gql:generate": "yarn ts-node ./tools/utils/gql.ts",
@@ -69,6 +69,9 @@
     "serve:dist": "cd dist/apps/fullerstack; open http://localhost:8080; python3 -m http.server 8080",
     "<--------- [ test related ] ------->": "test related",
     "test:ipware": "yarn nx test nax-ipware"
+  },
+  "prisma": {
+    "seed": "ts-node ./apps/api/src/prisma/seed.ts"
   },
   "importSort": {
     ".js, .ts": {
