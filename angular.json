@@ -62,10 +62,10 @@
     "ngx-user": "libs/ngx-user",
     "nsx-auth": "libs/nsx-auth",
     "nsx-common": "libs/nsx-common",
+    "nsx-i18n": "libs/nsx-i18n",
     "nsx-mailer": "libs/nsx-mailer",
     "nsx-prisma": "libs/nsx-prisma",
     "nsx-system": "libs/nsx-system",
-    "nsx-user": "libs/nsx-user",
-    "nsx-i18n": "libs/nsx-i18n"
+    "nsx-user": "libs/nsx-user"
   }
 }
