@@ -16,7 +16,7 @@
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main && yarn prisma:generate && husky install",
     "start": "ng serve",
-    "start:fullerstack": "ng serve fullerstack",
+    "start:dash": "ng serve avidtrader",
     "start:api": "ng serve api",
     "build": "ng build",
     "test": "ng test",
@@ -58,7 +58,7 @@
     "prisma:migrate:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
     "prisma:migrate:dev": "node ./node_modules/.bin/prisma migrate dev --schema=apps/api/src/prisma/schema.prisma",
     "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:seed": "./node_modules/.bin/prisma db seed --schema=apps/api/src/prisma/schema.prisma --preview-feature",
+    "prisma:seed": "./node_modules/.bin/prisma db seed",
     "i18n:extract": "node ./node_modules/.bin/ngx-translate-extract -i ./apps ./libs -o ./libs/agx-assets/src/lib/i18n/client/{en,fr,de,es,he,fa,zh-hans}.json -m _ --sort",
     "i18n:translate": "yarn ts-node ./tools/utils/i18n.ts",
     "gql:generate": "yarn ts-node ./tools/utils/gql.ts",
@@ -69,6 +69,9 @@
     "serve:dist": "cd dist/apps/fullerstack; open http://localhost:8080; python3 -m http.server 8080",
     "<--------- [ test related ] ------->": "test related",
     "test:ipware": "yarn nx test nax-ipware"
+  },
+  "prisma": {
+    "seed": "ts-node ./apps/api/src/prisma/seed.ts"
   },
   "importSort": {
     ".js, .ts": {
@@ -150,6 +153,7 @@
     "@nrwl/tao": "12.9.0",
     "@nrwl/web": "12.9.0",
     "@nrwl/workspace": "12.9.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.5.0-rc.2",
     "@types/cookie-parser": "1.4.2",
     "@types/crypto-js": "4.0.1",
     "@types/gtag.js": "0.0.4",
@@ -170,6 +174,7 @@
     "autoprefixer": "10.2.5",
     "axios": "0.21.4",
     "commander": "2.20.3",
+    "copy-webpack-plugin": "9.0.1",
     "coveralls": "3.1.0",
     "cypress": "6.0.1",
     "dotenv": "10.0.0",
@@ -184,17 +189,26 @@
     "jest-preset-angular": "9.0.7",
     "lodash": "4.17.21",
     "markdown-replace-section": "0.4.0",
+    "mini-css-extract-plugin": "2.1.0",
     "ng-packagr": "12.2.1",
     "ngx-translate-extract": "1.0.0",
     "pinst": "2.1.6",
     "postcss": "8.2.13",
     "prettier": "2.3.2",
     "prettier-plugin-import-sort": "0.0.6",
-    "prisma": "2.30.0",
+    "prisma": "3.1.1",
     "prisma-dbml-generator": "0.7.0",
+    "react-refresh": "0.10.0",
+    "source-map-loader": "3.0.0",
+    "terser-webpack-plugin": "5.1.1",
     "ts-jest": "27.0.3",
     "ts-node": "9.1.1",
     "typescript": "4.3.5",
-    "webpack-bundle-analyzer": "4.4.0"
+    "webpack": "5.47.0",
+    "webpack-bundle-analyzer": "4.4.0",
+    "webpack-dev-server": "4.0.0-rc.0",
+    "webpack-merge": "5.8.0",
+    "webpack-node-externals": "3.0.0",
+    "webpack-sources": "3.0.2"
   }
 }

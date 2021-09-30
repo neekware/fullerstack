@@ -9,7 +9,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthModule } from '@fullerstack';
+import { AuthModule } from '@fullerstack/ngx-auth';
 import { ApplicationConfig, ConfigModule } from '@fullerstack/ngx-config';
 import { GqlModule } from '@fullerstack/ngx-gql';
 import { makeMockI18nModule } from '@fullerstack/ngx-i18n/mock';

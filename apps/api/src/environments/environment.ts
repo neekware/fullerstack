@@ -57,9 +57,9 @@ const i18nConfig: I18nConfig = {
 };
 
 export const environment = {
-  siteName: 'Fullerstack',
+  siteName: 'Avidtrader',
   siteUrl: 'http://localhost:4200',
-  siteSupportEmail: 'support@fullerstack.net',
+  siteSupportEmail: 'support@avidtrader.co',
   production: false,
   port: 4201,
   prefix: 'api',

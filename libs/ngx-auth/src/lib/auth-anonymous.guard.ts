@@ -53,6 +53,7 @@ export class AuthAnonymousGuard implements CanActivate, CanActivateChild, CanLoa
       return true;
     }
     this.auth.goTo(this.auth.authUrls.landingUrl);
+    return false;
   }
 
   private handleRequest(url?: string): boolean {

@@ -10,13 +10,11 @@ import { Permission, PrismaClient, Role } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { v4 as uuid_v4 } from 'uuid';
 
-import { environment } from '../environments/environment';
-
 const prisma = new PrismaClient();
 
 async function hashPassword(password?: string): Promise<string> {
   password = password || uuid_v4();
-  return await hash(password, environment.securityConfig.bcryptSaltOrRound);
+  return await hash(password, 10);
 }
 
 /**

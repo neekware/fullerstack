@@ -100,7 +100,7 @@ const cachify: CachifyConfig = {
 export const environment: Readonly<ApplicationConfig> = {
   version: '0.0.1',
   production: false,
-  appName: 'FullerStack-CI',
+  appName: 'AvidTrader',
   logger,
   i18n,
   gql,

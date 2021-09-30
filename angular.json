@@ -1,11 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "cli": {
     "defaultCollection": "@nrwl/angular",
     "packageManager": "yarn"
   },
-  "defaultProject": "fullerstack",
-  "schematics": {
+  "generators": {
     "@nrwl/angular": {
       "application": {
         "linter": "eslint"
@@ -33,21 +32,22 @@
       "style": "scss"
     }
   },
+  "defaultProject": "avidtrader",
   "projects": {
     "agx-assets": {
       "root": "libs/agx-assets",
       "sourceRoot": "libs/agx-assets/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/agx-assets/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/agx-assets"],
           "options": {
             "jestConfig": "libs/agx-assets/jest.config.js",
@@ -60,9 +60,9 @@
       "root": "libs/agx-dto",
       "sourceRoot": "libs/agx-dto/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/agx-dto/**/*.ts"]
           },
@@ -74,9 +74,9 @@
       "root": "libs/agx-store",
       "sourceRoot": "libs/agx-store/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/workspace:tsc",
+          "executor": "@nrwl/workspace:tsc",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/libs/agx-store",
@@ -86,14 +86,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/agx-store/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/agx-store"],
           "options": {
             "jestConfig": "libs/agx-store/jest.config.js",
@@ -106,16 +106,16 @@
       "root": "libs/agx-util",
       "sourceRoot": "libs/agx-util/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/agx-util/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/agx-util"],
           "options": {
             "jestConfig": "libs/agx-util/jest.config.js",
@@ -129,9 +129,9 @@
       "sourceRoot": "apps/api/src",
       "projectType": "application",
       "prefix": "api",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "executor": "@nrwl/node:build",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/api",
@@ -172,7 +172,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "executor": "@nrwl/node:execute",
           "options": {
             "buildTarget": "api:build",
             "inspect": true,
@@ -188,14 +188,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/api/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/api"],
           "options": {
             "jestConfig": "apps/api/jest.config.js",
@@ -204,194 +204,13 @@
         }
       }
     },
-    "fullerstack": {
-      "projectType": "application",
-      "root": "apps/fullerstack",
-      "sourceRoot": "apps/fullerstack/src",
-      "prefix": "fullerstack",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "allowedCommonJsDependencies": ["zen-observable", "graphql-tag"],
-            "outputPath": "dist/apps/fullerstack",
-            "index": "apps/fullerstack/src/index.html",
-            "main": "apps/fullerstack/src/main.ts",
-            "polyfills": "apps/fullerstack/src/polyfills.ts",
-            "tsConfig": "apps/fullerstack/tsconfig.app.json",
-            "assets": [
-              "apps/fullerstack/src/favicon.ico",
-              "apps/fullerstack/src/assets",
-              {
-                "glob": "**/*",
-                "input": "libs/agx-assets/src/lib/styles/css",
-                "output": "assets/css"
-              },
-              {
-                "glob": "**/*",
-                "input": "libs/agx-assets/src/lib/images",
-                "output": "assets/images"
-              },
-              {
-                "glob": "**/*",
-                "input": "libs/agx-assets/src/lib/i18n/client",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.svg",
-                "input": "node_modules/@mdi/angular-material",
-                "output": "assets/fonts"
-              }
-            ],
-            "styles": [
-              {
-                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
-              },
-              {
-                "input": "apps/fullerstack/src/styles.scss"
-              }
-            ],
-            "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/fullerstack/src/environments/environment.ts",
-                  "with": "apps/fullerstack/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            },
-            "ci": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/fullerstack/src/environments/environment.ts",
-                  "with": "apps/fullerstack/src/environments/environment.ci.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            },
-            "development": {}
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "fullerstack:build:development",
-            "proxyConfig": "apps/fullerstack/proxy/proxy.dev.json"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "fullerstack:build:production",
-              "proxyConfig": "apps/fullerstack/proxy/proxy.prod.json",
-              "port": 4300
-            },
-            "ci": {
-              "browserTarget": "fullerstack:build:ci",
-              "proxyConfig": "apps/fullerstack/proxy/proxy.ci.json",
-              "port": 4400
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/fullerstack/src/**/*.ts", "apps/fullerstack/src/**/*.html"]
-          },
-          "outputs": ["{options.outputFile}"]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/fullerstack"],
-          "options": {
-            "jestConfig": "apps/fullerstack/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "fullerstack-e2e": {
-      "root": "apps/fullerstack-e2e",
-      "sourceRoot": "apps/fullerstack-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/fullerstack-e2e/cypress.json",
-            "tsConfig": "apps/fullerstack-e2e/tsconfig.e2e.json",
-            "devServerTarget": "fullerstack:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "fullerstack:serve:production",
-              "port": 4300
-            },
-            "ci": {
-              "devServerTarget": "fullerstack:serve:ci",
-              "port": 4400
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/fullerstack-e2e/**/*.{js,ts}"]
-          },
-          "outputs": ["{options.outputFile}"]
-        }
-      }
-    },
     "nax-ipware": {
       "root": "libs/nax-ipware",
       "sourceRoot": "libs/nax-ipware/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/node:package",
+          "executor": "@nrwl/node:package",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/libs/nax-ipware",
@@ -402,14 +221,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/nax-ipware/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nax-ipware"],
           "options": {
             "jestConfig": "libs/nax-ipware/jest.config.js",
@@ -418,21 +237,23 @@
         }
       }
     },
+    "avidtrader": "apps/avidtrader",
+    "avidtrader-e2e": "apps/avidtrader-e2e",
     "ngx-auth": {
       "projectType": "library",
       "root": "libs/ngx-auth",
       "sourceRoot": "libs/ngx-auth/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-auth/src/**/*.ts", "libs/ngx-auth/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-auth"],
           "options": {
             "jestConfig": "libs/ngx-auth/jest.config.js",
@@ -446,9 +267,9 @@
       "root": "libs/ngx-cachify",
       "sourceRoot": "libs/ngx-cachify/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "outputs": ["dist/libs/ngx-cachify"],
           "options": {
             "project": "libs/ngx-cachify/ng-package.json"
@@ -464,7 +285,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-cachify"],
           "options": {
             "jestConfig": "libs/ngx-cachify/jest.config.js",
@@ -472,7 +293,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-cachify/src/**/*.ts", "libs/ngx-cachify/src/**/*.html"]
           },
@@ -484,10 +305,10 @@
       "projectType": "library",
       "root": "libs/ngx-config",
       "sourceRoot": "libs/ngx-config/src",
-      "prefix": "fullerstack-ngx-config",
-      "architect": {
+      "prefix": "fullerstack",
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-config/tsconfig.lib.json",
             "project": "libs/ngx-config/ng-package.json"
@@ -502,14 +323,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-config/src/**/*.ts", "libs/ngx-config/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-config"],
           "options": {
             "jestConfig": "libs/ngx-config/jest.config.js",
@@ -523,16 +344,16 @@
       "root": "libs/ngx-gql",
       "sourceRoot": "libs/ngx-gql/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-gql/src/**/*.ts", "libs/ngx-gql/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-gql"],
           "options": {
             "jestConfig": "libs/ngx-gql/jest.config.js",
@@ -546,9 +367,9 @@
       "root": "libs/ngx-gtag",
       "sourceRoot": "libs/ngx-gtag/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-gtag/tsconfig.lib.json",
             "project": "libs/ngx-gtag/ng-package.json"
@@ -563,14 +384,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-gtag/src/**/*.ts", "libs/ngx-gtag/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-gtag"],
           "options": {
             "jestConfig": "libs/ngx-gtag/jest.config.js",
@@ -584,9 +405,9 @@
       "root": "libs/ngx-i18n",
       "sourceRoot": "libs/ngx-i18n/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-i18n/tsconfig.lib.json",
             "project": "libs/ngx-i18n/ng-package.json"
@@ -601,14 +422,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-i18n/src/**/*.ts", "libs/ngx-i18n/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-i18n"],
           "options": {
             "jestConfig": "libs/ngx-i18n/jest.config.js",
@@ -622,9 +443,9 @@
       "root": "libs/ngx-jwt",
       "sourceRoot": "libs/ngx-jwt/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-jwt/tsconfig.lib.json",
             "project": "libs/ngx-jwt/ng-package.json"
@@ -639,14 +460,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-jwt/src/**/*.ts", "libs/ngx-jwt/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-jwt"],
           "options": {
             "jestConfig": "libs/ngx-jwt/jest.config.js",
@@ -660,16 +481,16 @@
       "root": "libs/ngx-layout",
       "sourceRoot": "libs/ngx-layout/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-layout/src/**/*.ts", "libs/ngx-layout/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-layout"],
           "options": {
             "jestConfig": "libs/ngx-layout/jest.config.js",
@@ -683,9 +504,9 @@
       "root": "libs/ngx-logger",
       "sourceRoot": "libs/ngx-logger/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-logger/tsconfig.lib.json",
             "project": "libs/ngx-logger/ng-package.json"
@@ -700,14 +521,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-logger/src/**/*.ts", "libs/ngx-logger/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-logger"],
           "options": {
             "jestConfig": "libs/ngx-logger/jest.config.js",
@@ -721,16 +542,16 @@
       "root": "libs/ngx-material",
       "sourceRoot": "libs/ngx-material/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-material/src/**/*.ts", "libs/ngx-material/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-material"],
           "options": {
             "jestConfig": "libs/ngx-material/jest.config.js",
@@ -744,9 +565,9 @@
       "root": "libs/ngx-menu",
       "sourceRoot": "libs/ngx-menu/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-menu/tsconfig.lib.json",
             "project": "libs/ngx-menu/ng-package.json"
@@ -761,14 +582,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-menu/src/**/*.ts", "libs/ngx-menu/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-menu"],
           "options": {
             "jestConfig": "libs/ngx-menu/jest.config.js",
@@ -782,16 +603,16 @@
       "root": "libs/ngx-msg",
       "sourceRoot": "libs/ngx-msg/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-msg/src/**/*.ts", "libs/ngx-msg/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-msg"],
           "options": {
             "jestConfig": "libs/ngx-msg/jest.config.js",
@@ -805,16 +626,16 @@
       "root": "libs/ngx-shared",
       "sourceRoot": "libs/ngx-shared/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-shared/src/**/*.ts", "libs/ngx-shared/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-shared"],
           "options": {
             "jestConfig": "libs/ngx-shared/jest.config.js",
@@ -828,9 +649,9 @@
       "root": "libs/ngx-store",
       "sourceRoot": "libs/ngx-store/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "outputs": ["dist/libs/ngx-store"],
           "options": {
             "project": "libs/ngx-store/ng-package.json"
@@ -846,7 +667,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-store"],
           "options": {
             "jestConfig": "libs/ngx-store/jest.config.js",
@@ -854,7 +675,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-store/src/**/*.ts", "libs/ngx-store/src/**/*.html"]
           },
@@ -867,9 +688,9 @@
       "root": "libs/ngx-subify",
       "sourceRoot": "libs/ngx-subify/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "executor": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-subify/tsconfig.lib.json",
             "project": "libs/ngx-subify/ng-package.json"
@@ -884,14 +705,14 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-subify/src/**/*.ts", "libs/ngx-subify/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-subify"],
           "options": {
             "jestConfig": "libs/ngx-subify/jest.config.js",
@@ -905,9 +726,9 @@
       "root": "libs/ngx-system",
       "sourceRoot": "libs/ngx-system/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-system"],
           "options": {
             "jestConfig": "libs/ngx-system/jest.config.js",
@@ -915,7 +736,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-system/src/**/*.ts", "libs/ngx-system/src/**/*.html"]
           },
@@ -928,16 +749,16 @@
       "root": "libs/ngx-uix",
       "sourceRoot": "libs/ngx-uix/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-uix/src/**/*.ts", "libs/ngx-uix/src/**/*.html"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-uix"],
           "options": {
             "jestConfig": "libs/ngx-uix/jest.config.js",
@@ -951,9 +772,9 @@
       "root": "libs/ngx-user",
       "sourceRoot": "libs/ngx-user/src",
       "prefix": "fullerstack",
-      "architect": {
+      "targets": {
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ngx-user"],
           "options": {
             "jestConfig": "libs/ngx-user/jest.config.js",
@@ -961,7 +782,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-user/src/**/*.ts", "libs/ngx-user/src/**/*.html"]
           },
@@ -973,16 +794,16 @@
       "root": "libs/nsx-auth",
       "sourceRoot": "libs/nsx-auth/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/nsx-auth/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nsx-auth"],
           "options": {
             "jestConfig": "libs/nsx-auth/jest.config.js",
@@ -995,16 +816,16 @@
       "root": "libs/nsx-common",
       "sourceRoot": "libs/nsx-common/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/nsx-common/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nsx-common"],
           "options": {
             "jestConfig": "libs/nsx-common/jest.config.js",
@@ -1017,16 +838,16 @@
       "root": "libs/nsx-mailer",
       "sourceRoot": "libs/nsx-mailer/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/nsx-mailer/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nsx-mailer"],
           "options": {
             "jestConfig": "libs/nsx-mailer/jest.config.js",
@@ -1039,16 +860,16 @@
       "root": "libs/nsx-prisma",
       "sourceRoot": "libs/nsx-prisma/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/nsx-prisma/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nsx-prisma"],
           "options": {
             "jestConfig": "libs/nsx-prisma/jest.config.js",
@@ -1061,16 +882,16 @@
       "root": "libs/nsx-system",
       "sourceRoot": "libs/nsx-system/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/nsx-system/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nsx-system"],
           "options": {
             "jestConfig": "libs/nsx-system/jest.config.js",
@@ -1083,16 +904,16 @@
       "root": "libs/nsx-user",
       "sourceRoot": "libs/nsx-user/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/nsx-user/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nsx-user"],
           "options": {
             "jestConfig": "libs/nsx-user/jest.config.js",
@@ -1105,16 +926,16 @@
       "root": "libs/nxs-i18n",
       "sourceRoot": "libs/nxs-i18n/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/nxs-i18n/**/*.ts"]
           },
           "outputs": ["{options.outputFile}"]
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/nxs-i18n"],
           "options": {
             "jestConfig": "libs/nxs-i18n/jest.config.js",
