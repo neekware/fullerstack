@@ -1,0 +1,23 @@
+{
+  "root": "libs/agx-util",
+  "sourceRoot": "libs/agx-util/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/agx-util/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/agx-util"],
+      "options": {
+        "jestConfig": "libs/agx-util/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:agx-util", "scope:agx-util"]
+}

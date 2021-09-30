@@ -1,0 +1,23 @@
+{
+  "root": "libs/nsx-mailer",
+  "sourceRoot": "libs/nsx-mailer/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/nsx-mailer/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/nsx-mailer"],
+      "options": {
+        "jestConfig": "libs/nsx-mailer/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:nsx-mailer", "scope:nsx-util"]
+}

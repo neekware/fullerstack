@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-gql",
+  "sourceRoot": "libs/ngx-gql/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-gql/src/**/*.ts", "libs/ngx-gql/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-gql"],
+      "options": {
+        "jestConfig": "libs/ngx-gql/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-gql", "scope:ngx-util"]
+}

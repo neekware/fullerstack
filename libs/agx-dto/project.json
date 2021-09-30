@@ -1,0 +1,15 @@
+{
+  "root": "libs/agx-dto",
+  "sourceRoot": "libs/agx-dto/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/agx-dto/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": ["lib:agx-dto", "scope:agx-data"]
+}

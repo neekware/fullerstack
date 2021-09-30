@@ -1,0 +1,23 @@
+{
+  "root": "libs/nsx-prisma",
+  "sourceRoot": "libs/nsx-prisma/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/nsx-prisma/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/nsx-prisma"],
+      "options": {
+        "jestConfig": "libs/nsx-prisma/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:nsx-prisma", "scope:nsx-data"]
+}

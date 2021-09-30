@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-config",
+  "sourceRoot": "libs/ngx-config/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "options": {
+        "tsConfig": "libs/ngx-config/tsconfig.lib.json",
+        "project": "libs/ngx-config/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-config/tsconfig.lib.prod.json"
+        },
+        "ci": {
+          "tsConfig": "libs/ngx-config/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-config/src/**/*.ts", "libs/ngx-config/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-config"],
+      "options": {
+        "jestConfig": "libs/ngx-config/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-config", "scope:ngx-data"]
+}

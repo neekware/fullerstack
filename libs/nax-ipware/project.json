@@ -1,0 +1,34 @@
+{
+  "root": "libs/nax-ipware",
+  "sourceRoot": "libs/nax-ipware/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/nax-ipware",
+        "tsConfig": "libs/nax-ipware/tsconfig.lib.json",
+        "packageJson": "libs/nax-ipware/package.json",
+        "main": "libs/nax-ipware/src/index.ts",
+        "assets": ["libs/nax-ipware/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/nax-ipware/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/nax-ipware"],
+      "options": {
+        "jestConfig": "libs/nax-ipware/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:nax-ipware", "scope:nax-util"]
+}

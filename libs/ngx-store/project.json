@@ -1,0 +1,40 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-store",
+  "sourceRoot": "libs/ngx-store/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/ngx-store"],
+      "options": {
+        "project": "libs/ngx-store/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-store/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ngx-store/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-store"],
+      "options": {
+        "jestConfig": "libs/ngx-store/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-store/src/**/*.ts", "libs/ngx-store/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": ["lib:ngx-store", "scope:ngx-util"]
+}

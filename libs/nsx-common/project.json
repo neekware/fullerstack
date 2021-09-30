@@ -1,0 +1,23 @@
+{
+  "root": "libs/nsx-common",
+  "sourceRoot": "libs/nsx-common/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/nsx-common/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/nsx-common"],
+      "options": {
+        "jestConfig": "libs/nsx-common/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:nsx-common", "scope:nsx-data"]
+}

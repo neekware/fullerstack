@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-i18n",
+  "sourceRoot": "libs/ngx-i18n/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "options": {
+        "tsConfig": "libs/ngx-i18n/tsconfig.lib.json",
+        "project": "libs/ngx-i18n/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-i18n/tsconfig.lib.prod.json"
+        },
+        "ci": {
+          "tsConfig": "libs/ngx-i18n/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-i18n/src/**/*.ts", "libs/ngx-i18n/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-i18n"],
+      "options": {
+        "jestConfig": "libs/ngx-i18n/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-i18n", "scope:ngx-util"]
+}

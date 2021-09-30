@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-auth",
+  "sourceRoot": "libs/ngx-auth/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-auth/src/**/*.ts", "libs/ngx-auth/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-auth"],
+      "options": {
+        "jestConfig": "libs/ngx-auth/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-auth", "scope:ngx-util"]
+}

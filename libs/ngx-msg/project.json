@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-msg",
+  "sourceRoot": "libs/ngx-msg/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-msg/src/**/*.ts", "libs/ngx-msg/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-msg"],
+      "options": {
+        "jestConfig": "libs/ngx-msg/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-msg", "scope:ngx-util"]
+}

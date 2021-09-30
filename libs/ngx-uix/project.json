@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-uix",
+  "sourceRoot": "libs/ngx-uix/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-uix/src/**/*.ts", "libs/ngx-uix/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-uix"],
+      "options": {
+        "jestConfig": "libs/ngx-uix/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-uix", "scope:ngx-ui"]
+}

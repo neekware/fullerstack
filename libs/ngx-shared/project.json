@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-shared",
+  "sourceRoot": "libs/ngx-shared/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-shared/src/**/*.ts", "libs/ngx-shared/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-shared"],
+      "options": {
+        "jestConfig": "libs/ngx-shared/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-shared", "scope:ngx-shared"]
+}

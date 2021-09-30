@@ -1,0 +1,23 @@
+{
+  "root": "libs/nsx-user",
+  "sourceRoot": "libs/nsx-user/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/nsx-user/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/nsx-user"],
+      "options": {
+        "jestConfig": "libs/nsx-user/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:nsx-user", "scope:nsx-util"]
+}

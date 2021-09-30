@@ -1,0 +1,33 @@
+{
+  "root": "libs/agx-store",
+  "sourceRoot": "libs/agx-store/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/agx-store",
+        "main": "libs/agx-store/src/index.ts",
+        "tsConfig": "libs/agx-store/tsconfig.lib.json",
+        "assets": ["libs/agx-store/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/agx-store/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/agx-store"],
+      "options": {
+        "jestConfig": "libs/agx-store/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:agx-store", "scope:agx-data"]
+}

@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-gtag",
+  "sourceRoot": "libs/ngx-gtag/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "options": {
+        "tsConfig": "libs/ngx-gtag/tsconfig.lib.json",
+        "project": "libs/ngx-gtag/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-gtag/tsconfig.lib.prod.json"
+        },
+        "ci": {
+          "tsConfig": "libs/ngx-gtag/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-gtag/src/**/*.ts", "libs/ngx-gtag/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-gtag"],
+      "options": {
+        "jestConfig": "libs/ngx-gtag/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-gtag", "scope:ngx-util"]
+}

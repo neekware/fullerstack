@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-logger",
+  "sourceRoot": "libs/ngx-logger/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "options": {
+        "tsConfig": "libs/ngx-logger/tsconfig.lib.json",
+        "project": "libs/ngx-logger/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-logger/tsconfig.lib.prod.json"
+        },
+        "ci": {
+          "tsConfig": "libs/ngx-logger/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-logger/src/**/*.ts", "libs/ngx-logger/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-logger"],
+      "options": {
+        "jestConfig": "libs/ngx-logger/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-logger", "scope:ngx-util"]
+}

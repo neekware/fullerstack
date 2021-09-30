@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'nxs-i18n',
+  displayName: 'nsx-i18n',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/nxs-i18n',
+  coverageDirectory: '../../coverage/libs/nsx-i18n',
 };

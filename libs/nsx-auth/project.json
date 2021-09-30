@@ -1,0 +1,23 @@
+{
+  "root": "libs/nsx-auth",
+  "sourceRoot": "libs/nsx-auth/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/nsx-auth/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/nsx-auth"],
+      "options": {
+        "jestConfig": "libs/nsx-auth/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:nsx-auth", "scope:nsx-util"]
+}

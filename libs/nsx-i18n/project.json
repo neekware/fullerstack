@@ -1,0 +1,23 @@
+{
+  "root": "libs/nsx-i18n",
+  "sourceRoot": "libs/nsx-i18n/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/nsx-i18n/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/nsx-i18n"],
+      "options": {
+        "jestConfig": "libs/nsx-i18n/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:nsx-i18n", "scope:nsx-data"]
+}

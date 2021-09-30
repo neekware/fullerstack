@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-subify",
+  "sourceRoot": "libs/ngx-subify/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "options": {
+        "tsConfig": "libs/ngx-subify/tsconfig.lib.json",
+        "project": "libs/ngx-subify/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-subify/tsconfig.lib.prod.json"
+        },
+        "ci": {
+          "tsConfig": "libs/ngx-subify/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-subify/src/**/*.ts", "libs/ngx-subify/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-subify"],
+      "options": {
+        "jestConfig": "libs/ngx-subify/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lib:ngx-subify", "scope:ngx-util"]
+}
