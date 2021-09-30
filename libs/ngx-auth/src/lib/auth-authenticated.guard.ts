@@ -54,6 +54,7 @@ export class AuthAuthenticatedGuard implements CanActivate, CanActivateChild, Ca
       return true;
     }
     this.auth.goTo(this.auth.authUrls.loginUrl);
+    return false;
   }
 
   private handleRequest(url?: string): boolean {

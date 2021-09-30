@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fullerstack": ["libs/ngx-auth/src/index.ts"],
       "@fullerstack/agx-dto": ["libs/agx-dto/src/index.ts"],
       "@fullerstack/agx-store": ["libs/agx-store/src/index.ts"],
       "@fullerstack/agx-util": ["libs/agx-util/src/index.ts"],

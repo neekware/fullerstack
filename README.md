@@ -131,8 +131,8 @@ git clone https://github.com/neekware/fullerstack.git
 cd fullerstack
 yarn install
 
-# Create a database (postgres)
-createdb fullerstack
+# Create a database (postgres) for the angular app
+createdb avidtrader
 
 # Copy environment variables and update
 cp env.example .env
@@ -147,7 +147,7 @@ yarn prisma:seed
 yarn start:api
 
 # Start the frontend (in terminal #2)
-yarn start:fullerstack
+yarn start:avidtrader
 
 # Visit frontend (on mac use open, on windows, just type it in)
 open http://localhost:4200
@@ -160,7 +160,7 @@ open http://localhost:4200
 
 ```bash
 # Webpack analyzer
-yarn nx build fullerstack --stats-json --prod && yarn stats
+yarn nx build avidtrader --stats-json --prod && yarn stats
 
 # Format changed files
 yarn format:all
@@ -206,18 +206,18 @@ X.Y.Z Version
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             386        21432         2419         3992        15021
- JSON                   144         5111            0            0         5111
+ TypeScript             394        21566         2436         4040        15090
+ JSON                   145         5088            0            0         5088
  Markdown               104         2970          759            0         2211
- HTML                    33         1446          113            5         1328
- Sass                    55         1449          140           35         1274
- JavaScript              35          644           24           48          572
+ HTML                    35         1565          117            5         1443
+ Sass                    57         1583          158           39         1386
+ JavaScript              35          645           23           48          574
  CSS                      1           96            7            0           89
  Plain Text               5           94           10            0           84
  SQL                      1           80           15           13           52
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  765        33325         3487         4095        25743
+ Total                  778        33690         3525         4147        26018
 --------------------------------------------------------------------------------
 ```
 

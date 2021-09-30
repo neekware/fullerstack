@@ -4,7 +4,6 @@
     "defaultCollection": "@nrwl/angular",
     "packageManager": "yarn"
   },
-  "defaultProject": "fullerstack",
   "generators": {
     "@nrwl/angular": {
       "application": {
@@ -33,6 +32,7 @@
       "style": "scss"
     }
   },
+  "defaultProject": "avidtrader",
   "projects": {
     "agx-assets": {
       "root": "libs/agx-assets",
@@ -204,187 +204,6 @@
         }
       }
     },
-    "fullerstack": {
-      "projectType": "application",
-      "root": "apps/fullerstack",
-      "sourceRoot": "apps/fullerstack/src",
-      "prefix": "fullerstack",
-      "targets": {
-        "build": {
-          "executor": "@angular-devkit/build-angular:browser",
-          "options": {
-            "allowedCommonJsDependencies": ["zen-observable", "graphql-tag"],
-            "outputPath": "dist/apps/fullerstack",
-            "index": "apps/fullerstack/src/index.html",
-            "main": "apps/fullerstack/src/main.ts",
-            "polyfills": "apps/fullerstack/src/polyfills.ts",
-            "tsConfig": "apps/fullerstack/tsconfig.app.json",
-            "assets": [
-              "apps/fullerstack/src/favicon.ico",
-              "apps/fullerstack/src/assets",
-              {
-                "glob": "**/*",
-                "input": "libs/agx-assets/src/lib/styles/css",
-                "output": "assets/css"
-              },
-              {
-                "glob": "**/*",
-                "input": "libs/agx-assets/src/lib/images",
-                "output": "assets/images"
-              },
-              {
-                "glob": "**/*",
-                "input": "libs/agx-assets/src/lib/i18n/client",
-                "output": "assets/i18n"
-              },
-              {
-                "glob": "**/*.svg",
-                "input": "node_modules/@mdi/angular-material",
-                "output": "assets/fonts"
-              }
-            ],
-            "styles": [
-              {
-                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
-              },
-              {
-                "input": "apps/fullerstack/src/styles.scss"
-              }
-            ],
-            "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/fullerstack/src/environments/environment.ts",
-                  "with": "apps/fullerstack/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            },
-            "ci": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/fullerstack/src/environments/environment.ts",
-                  "with": "apps/fullerstack/src/environments/environment.ci.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            },
-            "development": {}
-          }
-        },
-        "serve": {
-          "executor": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "fullerstack:build:development",
-            "proxyConfig": "apps/fullerstack/proxy/proxy.dev.json"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "fullerstack:build:production",
-              "proxyConfig": "apps/fullerstack/proxy/proxy.prod.json",
-              "port": 4300
-            },
-            "ci": {
-              "browserTarget": "fullerstack:build:ci",
-              "proxyConfig": "apps/fullerstack/proxy/proxy.ci.json",
-              "port": 4400
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/fullerstack/src/**/*.ts", "apps/fullerstack/src/**/*.html"]
-          },
-          "outputs": ["{options.outputFile}"]
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/fullerstack"],
-          "options": {
-            "jestConfig": "apps/fullerstack/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "fullerstack-e2e": {
-      "root": "apps/fullerstack-e2e",
-      "sourceRoot": "apps/fullerstack-e2e/src",
-      "projectType": "application",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/fullerstack-e2e/cypress.json",
-            "tsConfig": "apps/fullerstack-e2e/tsconfig.e2e.json",
-            "devServerTarget": "fullerstack:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "fullerstack:serve:production",
-              "port": 4300
-            },
-            "ci": {
-              "devServerTarget": "fullerstack:serve:ci",
-              "port": 4400
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/fullerstack-e2e/**/*.{js,ts}"]
-          },
-          "outputs": ["{options.outputFile}"]
-        }
-      }
-    },
     "nax-ipware": {
       "root": "libs/nax-ipware",
       "sourceRoot": "libs/nax-ipware/src",
@@ -418,6 +237,8 @@
         }
       }
     },
+    "avidtrader": "apps/avidtrader",
+    "avidtrader-e2e": "apps/avidtrader-e2e",
     "ngx-auth": {
       "projectType": "library",
       "root": "libs/ngx-auth",
@@ -484,7 +305,7 @@
       "projectType": "library",
       "root": "libs/ngx-config",
       "sourceRoot": "libs/ngx-config/src",
-      "prefix": "fullerstack-ngx-config",
+      "prefix": "fullerstack",
       "targets": {
         "build": {
           "executor": "@nrwl/angular:package",

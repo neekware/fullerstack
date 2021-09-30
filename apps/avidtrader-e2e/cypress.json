@@ -3,10 +3,10 @@
   "fixturesFolder": "./src/fixtures",
   "integrationFolder": "./src/integration",
   "modifyObstructiveCode": false,
-  "pluginsFile": "./src/plugins/index",
   "supportFile": "./src/support/index.ts",
+  "pluginsFile": "./src/plugins/index",
   "video": true,
-  "videosFolder": "../../dist/cypress/apps/fullerstack-e2e/videos",
-  "screenshotsFolder": "../../dist/cypress/apps/fullerstack-e2e/screenshots",
+  "videosFolder": "../../../dist/cypress/apps/avidtrader-e2e/videos",
+  "screenshotsFolder": "../../../dist/cypress/apps/avidtrader-e2e/screenshots",
   "chromeWebSecurity": false
 }
