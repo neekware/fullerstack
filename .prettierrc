@@ -2,9 +2,9 @@
   "singleQuote": true,
   "overrides": [
     {
-      "files": "**/*.html",
+      "files": "**/*.js",
       "options": {
-        "printWidth": 140
+        "printWidth": 100
       }
     },
     {
@@ -14,13 +14,19 @@
       }
     },
     {
-      "files": "**/*.json",
+      "files": "**/*.tsx",
       "options": {
-        "printWidth": 100
+        "printWidth": 120
       }
     },
     {
-      "files": "**/*.js",
+      "files": "**/*.html",
+      "options": {
+        "printWidth": 140
+      }
+    },
+    {
+      "files": "**/*.json",
       "options": {
         "printWidth": 100
       }
