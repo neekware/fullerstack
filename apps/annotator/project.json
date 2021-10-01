@@ -1,0 +1,75 @@
+{
+  "root": "apps/annotator",
+  "sourceRoot": "apps/annotator/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/annotator",
+        "index": "apps/annotator/src/index.html",
+        "main": "apps/annotator/src/main.tsx",
+        "polyfills": "apps/annotator/src/polyfills.ts",
+        "tsConfig": "apps/annotator/tsconfig.app.json",
+        "assets": ["apps/annotator/src/favicon.ico", "apps/annotator/src/assets"],
+        "styles": ["apps/annotator/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/annotator/src/environments/environment.ts",
+              "with": "apps/annotator/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "annotator:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "annotator:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/annotator/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/annotator"],
+      "options": {
+        "jestConfig": "apps/annotator/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["app-client:annotator"]
+}

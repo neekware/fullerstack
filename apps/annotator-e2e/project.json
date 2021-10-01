@@ -1,0 +1,29 @@
+{
+  "root": "apps/annotator-e2e",
+  "sourceRoot": "apps/annotator-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/annotator-e2e/cypress.json",
+        "devServerTarget": "annotator:serve",
+        "tsConfig": "apps/annotator-e2e/tsconfig.json"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "annotator:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/annotator-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["annotator"]
+}

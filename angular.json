@@ -30,6 +30,20 @@
     },
     "@nrwl/angular:component": {
       "style": "scss"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
   "defaultProject": "avidtrader",
@@ -38,6 +52,8 @@
     "agx-dto": "libs/agx-dto",
     "agx-store": "libs/agx-store",
     "agx-util": "libs/agx-util",
+    "annotator": "apps/annotator",
+    "annotator-e2e": "apps/annotator-e2e",
     "api": "apps/api",
     "avidtrader": "apps/avidtrader",
     "avidtrader-e2e": "apps/avidtrader-e2e",
