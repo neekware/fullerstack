@@ -46,10 +46,15 @@
       "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "annotator:build",
+        "port": 5500,
         "hmr": true
       },
       "configurations": {
         "production": {
+          "buildTarget": "annotator:build:production",
+          "hmr": false
+        },
+        "ci": {
           "buildTarget": "annotator:build:production",
           "hmr": false
         }
