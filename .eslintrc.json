@@ -13,6 +13,14 @@
             "allow": [],
             "depConstraints": [
               {
+                "sourceTag": "app-client:annotator",
+                "onlyDependOnLibsWithTags": ["scope:agx-data", "scope:agx-util", "scope:rcx-ui"]
+              },
+              {
+                "sourceTag": "app-e2e:annotator-e2e",
+                "onlyDependOnLibsWithTags": ["app-client:annotator"]
+              },
+              {
                 "sourceTag": "app-server:api-nest",
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
@@ -73,17 +81,6 @@
                 "onlyDependOnLibsWithTags": ["scope:agx-data", "scope:agx-util", "scope:ngx-data"]
               },
               {
-                "sourceTag": "scope:ngx-ui",
-                "onlyDependOnLibsWithTags": [
-                  "scope:agx-data",
-                  "scope:agx-util",
-                  "scope:ngx-data",
-                  "scope:ngx-util",
-                  "scope:ngx-shared",
-                  "scope:ngx-ui"
-                ]
-              },
-              {
                 "sourceTag": "scope:nsx-data",
                 "onlyDependOnLibsWithTags": ["scope:agx-data", "scope:agx-util", "scope:nsx-data"]
               },
@@ -96,6 +93,21 @@
                   "scope:nsx-data",
                   "scope:nsx-util"
                 ]
+              },
+              {
+                "sourceTag": "scope:ngx-ui",
+                "onlyDependOnLibsWithTags": [
+                  "scope:agx-data",
+                  "scope:agx-util",
+                  "scope:ngx-data",
+                  "scope:ngx-util",
+                  "scope:ngx-shared",
+                  "scope:ngx-ui"
+                ]
+              },
+              {
+                "sourceTag": "scope:rcx-ui",
+                "onlyDependOnLibsWithTags": ["scope:agx-data", "scope:agx-util", "scope:rcx-ui"]
               }
             ]
           }

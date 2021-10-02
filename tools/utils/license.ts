@@ -21,7 +21,13 @@ const licenseContent = `/**
 
 `;
 
-const licensableFiles = ['./apps/**/*.ts', './libs/**/*.ts', './tools/**/*.ts'];
+const licensableFiles = [
+  './apps/**/*.ts',
+  './libs/**/*.ts',
+  './apps/**/*.tsx',
+  './libs/**/*.tsx',
+  './tools/**/*.ts',
+];
 const fileSkipList = [
   'index.ts',
   'test-setup.ts',

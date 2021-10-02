@@ -2,7 +2,6 @@
   "root": "libs/rcx-annotator",
   "sourceRoot": "libs/rcx-annotator/src",
   "projectType": "library",
-  "tags": ["lib:rcx-annotator", "scope:rcx-ui"],
   "targets": {
     "build": {
       "executor": "@nrwl/web:package",
@@ -38,5 +37,6 @@
         "passWithNoTests": true
       }
     }
-  }
+  },
+  "tags": ["lib:rcx-annotator", "scope:rcx-ui"]
 }
