@@ -8,11 +8,11 @@
 
 import { render } from '@testing-library/react';
 
-import { RcxAnnotator } from './rcx-annotator';
+import Menu from './menu';
 
-describe('RcxAnnotator', () => {
+describe('Menu', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<RcxAnnotator />);
+    const { baseElement } = render(<Menu />);
     expect(baseElement).toBeTruthy();
   });
 });

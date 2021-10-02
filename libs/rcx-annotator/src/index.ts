@@ -1,1 +1,2 @@
-export * from './lib/rcx-annotator';
+export * from './lib/menu/menu';
+export * from './lib/annotator';
