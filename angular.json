@@ -82,6 +82,7 @@
     "nsx-mailer": "libs/nsx-mailer",
     "nsx-prisma": "libs/nsx-prisma",
     "nsx-system": "libs/nsx-system",
-    "nsx-user": "libs/nsx-user"
+    "nsx-user": "libs/nsx-user",
+    "rcx-annotator": "libs/rcx-annotator"
   }
 }

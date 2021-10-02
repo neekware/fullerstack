@@ -1,0 +1,42 @@
+{
+  "root": "libs/rcx-annotator",
+  "sourceRoot": "libs/rcx-annotator/src",
+  "projectType": "library",
+  "tags": ["lib:rcx-annotator", "scope:rcx-ui"],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/rcx-annotator",
+        "tsConfig": "libs/rcx-annotator/tsconfig.lib.json",
+        "project": "libs/rcx-annotator/package.json",
+        "entryFile": "libs/rcx-annotator/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "assets": [
+          {
+            "glob": "libs/rcx-annotator/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/rcx-annotator/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/rcx-annotator"],
+      "options": {
+        "jestConfig": "libs/rcx-annotator/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

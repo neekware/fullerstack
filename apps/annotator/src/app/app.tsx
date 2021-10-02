@@ -1,5 +1,6 @@
 import './app.scss';
 
+import { RcxAnnotator } from '@fullerstack/rcx-annotator';
 import { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
 
@@ -25,6 +26,9 @@ export class App extends Component {
               <Link to="/">Home</Link>
             </li>
             <li>
+              <Link to="/rcx-annotator">RcxAnnotator</Link>
+            </li>
+            <li>
               <Link to="/page-2">Page 2</Link>
             </li>
           </ul>
@@ -39,6 +43,7 @@ export class App extends Component {
             </div>
           )}
         />
+        <Route path="/rcx-annotator" component={RcxAnnotator} />
 
         <Route
           path="/page-2"
