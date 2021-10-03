@@ -1,7 +1,2 @@
 <canvas id="{{ uniqId }}" [ngStyle]="{ 'z-index': attr.canvas.zIndex }" #canvas></canvas>
-<button
-  mat-icon-button
-  [ngStyle]="{ 'z-index': attr.button.zIndex, position: attr.button.position, top: attr.button.top, right: attr.button.right }"
->
-  <mat-icon svgIcon="menu"></mat-icon>
-</button>
+<fullerstack-menu> </fullerstack-menu>

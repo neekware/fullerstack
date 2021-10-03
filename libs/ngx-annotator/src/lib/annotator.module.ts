@@ -13,12 +13,14 @@ import { MaterialModule } from '@fullerstack/ngx-material';
 
 import { annotatorRoutes } from './annotator.routes';
 import { AnnotatorService } from './annotator.service';
+import { ConfigComponent } from './config/config.component';
 import { DrawComponent } from './draw/draw.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, RouterModule.forChild(annotatorRoutes)],
-  exports: [DrawComponent],
-  declarations: [DrawComponent],
+  exports: [DrawComponent, MenuComponent],
+  declarations: [DrawComponent, MenuComponent, ConfigComponent],
   providers: [AnnotatorService],
 })
 export class AnnotatorModule {}

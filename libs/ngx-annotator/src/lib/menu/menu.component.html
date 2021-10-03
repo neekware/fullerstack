@@ -1,0 +1,8 @@
+<div
+  fxLayout="column"
+  [ngStyle]="{ 'z-index': attr.button.zIndex, position: attr.button.position, top: attr.button.top, right: attr.button.right }"
+>
+  <button mat-icon-button>
+    <mat-icon svgIcon="menu" (click)="openDialog()"></mat-icon>
+  </button>
+</div>
