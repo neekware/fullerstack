@@ -8,20 +8,20 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AnnotatorComponent } from './draw.component';
+import { DrawComponent } from './draw.component';
 
-describe('AnnotatorComponent', () => {
-  let component: AnnotatorComponent;
-  let fixture: ComponentFixture<AnnotatorComponent>;
+describe('DrawComponent', () => {
+  let component: DrawComponent;
+  let fixture: ComponentFixture<DrawComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AnnotatorComponent],
+      declarations: [DrawComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AnnotatorComponent);
+    fixture = TestBed.createComponent(DrawComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
