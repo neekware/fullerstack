@@ -20,6 +20,7 @@
       "@fullerstack/agx-util": ["libs/agx-util/src/index.ts"],
       "@fullerstack/assets": ["libs/agx-assets/src/index.ts"],
       "@fullerstack/nax-ipware": ["libs/nax-ipware/src/index.ts"],
+      "@fullerstack/ngx-annotator": ["libs/ngx-annotator/src/index.ts"],
       "@fullerstack/ngx-auth": ["libs/ngx-auth/src/index.ts"],
       "@fullerstack/ngx-cachify": ["libs/ngx-cachify/src/index.ts"],
       "@fullerstack/ngx-config": ["libs/ngx-config/src/index.ts"],

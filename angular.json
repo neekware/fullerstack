@@ -42,6 +42,7 @@
     "avidtrader": "apps/avidtrader",
     "avidtrader-e2e": "apps/avidtrader-e2e",
     "nax-ipware": "libs/nax-ipware",
+    "ngx-annotator": "libs/ngx-annotator",
     "ngx-auth": "libs/ngx-auth",
     "ngx-cachify": "libs/ngx-cachify",
     "ngx-config": "libs/ngx-config",

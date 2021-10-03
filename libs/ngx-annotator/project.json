@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-annotator",
+  "sourceRoot": "libs/ngx-annotator/src",
+  "prefix": "fullerstack",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/ngx-annotator"],
+      "options": {
+        "project": "libs/ngx-annotator/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-annotator/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ngx-annotator/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ngx-annotator"],
+      "options": {
+        "jestConfig": "libs/ngx-annotator/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-annotator/src/**/*.ts", "libs/ngx-annotator/src/**/*.html"]
+      }
+    }
+  },
+  "tags": ["lib:libs/ngx-annotator", "scope:ngx-ui"]
+}
