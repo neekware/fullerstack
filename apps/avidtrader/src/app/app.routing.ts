@@ -163,6 +163,12 @@ export const AppRoutes: Routes = [
     },
   },
   {
+    path: 'annotate',
+    // canActivate: [AuthAuthenticatedGuard],
+    // canDeactivate: [DeactivateGuard],
+    loadChildren: () => import('@fullerstack/ngx-annotator').then((m) => m.AnnotatorModule),
+  },
+  {
     path: '**',
     component: NotfoundComponent,
   },
