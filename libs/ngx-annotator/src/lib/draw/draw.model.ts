@@ -11,6 +11,11 @@ export interface Point {
   y: number;
 }
 
+export interface DrawPoint extends Point {
+  strokeStyle?: string;
+  lineWidth?: number;
+}
+
 export interface CanvasButtonAttributes {
   canvas: {
     zIndex: number | string;

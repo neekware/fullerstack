@@ -14,7 +14,7 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
 import { DefaultCanvasButtonAttributes } from './draw.default';
-import { Point } from './draw.model';
+import { DrawPoint, Point } from './draw.model';
 
 @Component({
   selector: 'fullerstack-draw',
@@ -28,8 +28,8 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
   private canvasEl: HTMLCanvasElement | undefined | null;
   private ctx: CanvasRenderingContext2D | undefined | null;
-  private activePoints: Point[][] = [];
-  private shadowPoints: Point[][] = [];
+  private activePoints: DrawPoint[][] = [];
+  private shadowPoints: DrawPoint[][] = [];
 
   constructor(readonly uix: UixService) {}
 
