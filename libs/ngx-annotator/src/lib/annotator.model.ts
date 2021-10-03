@@ -7,3 +7,19 @@
  */
 
 export const ANNOTATOR_URL = '/annotate';
+
+/**
+ * Layout config declaration
+ */
+export interface AnnotatorConfig {
+  logState?: boolean;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [id: string]: any;
+}
+
+export interface AnnotatorState {
+  lineWidth: number;
+  lineCap: string;
+  strokeStyle: string;
+}

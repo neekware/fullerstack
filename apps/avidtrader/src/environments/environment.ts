@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { AnnotatorConfig } from '@fullerstack/ngx-annotator';
 import { AuthConfig } from '@fullerstack/ngx-auth';
 import { CachifyConfig } from '@fullerstack/ngx-cachify';
 import { ApplicationConfig } from '@fullerstack/ngx-config';
@@ -115,6 +116,10 @@ const layout: LayoutConfig = {
   logState: true,
 } as const;
 
+const annotator: AnnotatorConfig = {
+  logState: true,
+} as const;
+
 export const environment: Readonly<ApplicationConfig> = {
   version: '0.0.1',
   production: false,
@@ -128,4 +133,5 @@ export const environment: Readonly<ApplicationConfig> = {
   store,
   cachify,
   layout,
+  annotator,
 };
