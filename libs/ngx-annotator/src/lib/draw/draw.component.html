@@ -1,1 +1,2 @@
-<canvas id="{{ uniqId }}" #canvas></canvas>
+<canvas id="{{ uniqId }}" [ngStyle]="{ 'z-index': attributes.zIndex }" #canvas></canvas>
+<input type="button" style="z-index: 2; position: absolute; top: 10; left: 0" value="test" />

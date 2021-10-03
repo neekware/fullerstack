@@ -6,13 +6,14 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 import { UixService } from '@fullerstack/ngx-uix';
 import { cloneDeep as ldDeepClone } from 'lodash-es';
 import { EMPTY, Observable, Subject, fromEvent, merge } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
+import { DefaultCanvasButtonAttributes } from './draw.default';
 import { Point } from './draw.model';
 
 @Component({
@@ -22,6 +23,7 @@ import { Point } from './draw.model';
 })
 export class DrawComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') canvas: ElementRef | undefined;
+  @Input() attributes = DefaultCanvasButtonAttributes;
   uniqId = uuidV4();
   private destroy$ = new Subject<boolean>();
   private canvasEl: HTMLCanvasElement | undefined | null;
@@ -61,7 +63,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
       .pipe(
         tap((event) => {
           if (event.type === 'touchstart') {
-            this.uix.addClassToBody('active-canvas');
+            this.uix.addClassToBody('fullscreen-canvas');
           }
           if (segment.length) {
             this.activePoints.push([...segment]);
@@ -116,6 +118,6 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
-    this.uix.removeClassFromBody('active-canvas');
+    this.uix.removeClassFromBody('fullscreen-canvas');
   }
 }

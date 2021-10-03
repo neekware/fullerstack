@@ -8,7 +8,8 @@
 
 import { Injectable } from '@angular/core';
 
-import { CANVAS_MIN_POINTS_TO_DRAW, Point } from './draw.model';
+import { CANVAS_MIN_POINTS_TO_DRAW } from './draw.default';
+import { Point } from './draw.model';
 
 @Injectable({
   providedIn: 'root',

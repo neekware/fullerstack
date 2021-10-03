@@ -6,9 +6,15 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-export const CANVAS_MIN_POINTS_TO_DRAW = 6;
-
 export interface Point {
   x: number;
   y: number;
+}
+
+export interface CanvasButtonAttributes {
+  zIndex: number;
+  color?: string;
+  top?: number;
+  left?: number;
+  position?: string;
 }
