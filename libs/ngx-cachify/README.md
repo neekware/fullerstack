@@ -94,7 +94,7 @@ import {
 import { CachifyService } from '@fullerstack/ngx-cachify';
 
 @Component({
-  selector: 'fullerstack-root',
+  selector: 'avidtrader-root',
   template: `<h1>Welcome to {{ title }}!</h1>`,
 })
 export class AppComponent {

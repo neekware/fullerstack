@@ -85,7 +85,7 @@ import { Component } from '@angular/core';
 import { I18nService } from '@fullerstack/ngx-i18n';
 
 @Component({
-  selector: 'fullerstack-root',
+  selector: 'avidtrader-root',
   template: `<h1>{{ 'COMMON.WELCOME' | translate }} to {{ title }}!</h1>`,
 })
 export class AppComponent {
@@ -122,7 +122,7 @@ import { Component } from '@angular/core';
 import { I18nService } from '@fullerstack/ngx-i18n';
 
 @Component({
-  selector: 'fullerstack-root',
+  selector: 'avidtrader-root',
   template: `<h1>{{ 'COMMON.WELCOME' | translate }} to {{ title }}!</h1>`,
 })
 export class AppComponent {

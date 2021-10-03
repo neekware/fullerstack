@@ -82,7 +82,7 @@ import { LogService } from '@fullerstack/ngx-logger';
 import { GTagService } from '@fullerstack/ngx-gtag';
 
 @Component({
-  selector: 'fullerstack-root',
+  selector: 'avidtrader-root',
   template: `<h1>Welcome to {{ title }}!</h1>`,
 })
 export class AppComponent {

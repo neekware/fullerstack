@@ -21,7 +21,7 @@ import { UserService } from '@fullerstack/ngx-user';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'fullerstack-root',
+  selector: 'avidtrader-root',
   template: '<fullerstack-layout></fullerstack-layout>',
 })
 export class AppComponent implements OnInit {

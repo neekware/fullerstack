@@ -37,13 +37,13 @@ mat-sidenav-container {
   }
 }
 
-.fs-noscroll {
+.fs-no-scroll {
   position: fixed;
   width: 100%;
 }
 
 .fs-handset {
-  .fs-noscroll {
+  .fs-no-scroll {
     -webkit-overflow-scrolling: auto;
   }
 }

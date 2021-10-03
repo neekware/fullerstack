@@ -9,10 +9,11 @@
   [class.fs-theme-dark]="layout.state.isDarkTheme"
   [@fadeOutInSlow]="layout.state.isDarkTheme ? 'out' : 'in'"
 >
-  <fullerstack-navbar [authState]="auth.state" [layoutState]="layout.state"></fullerstack-navbar>
+  <fullerstack-navbar *ngIf="!layout?.state?.isHeadless" [authState]="auth.state" [layoutState]="layout.state"></fullerstack-navbar>
 
-  <mat-sidenav-container [class.fs-noscroll]="!allowScroll">
+  <mat-sidenav-container [class.fs-no-scroll]="!allowScroll">
     <mat-sidenav
+      *ngIf="!layout?.state?.isHeadless"
       #sideMenu
       position="start"
       [fixedTopGap]="layout.state.isHandset ? 56 : 64"
@@ -26,6 +27,7 @@
     </mat-sidenav>
 
     <mat-sidenav
+      *ngIf="!layout?.state?.isHeadless"
       #notifyMenu
       position="end"
       [fixedTopGap]="layout.state.isHandset ? 56 : 64"
@@ -41,7 +43,7 @@
     <mat-sidenav-content [@slideIn]="routeState(outlet)">
       <div>
         <router-outlet #outlet="outlet"></router-outlet>
-        <fullerstack-footer [appName]="layout.state.appName"></fullerstack-footer>
+        <fullerstack-footer *ngIf="!layout?.state?.isHeadless" [appName]="layout.state.appName"></fullerstack-footer>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

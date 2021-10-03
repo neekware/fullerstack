@@ -8,7 +8,8 @@
 
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Injectable, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, OnDestroy, Renderer2, RendererFactory2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import {
@@ -43,8 +44,11 @@ export class LayoutService implements OnDestroy {
   routeReady = false;
   isDarkTheme = false;
   navbarModeClass = null;
+  renderer: Renderer2;
 
   constructor(
+    @Inject(DOCUMENT) readonly document: Document,
+    readonly rendererFactory: RendererFactory2,
     readonly router: Router,
     readonly overlay: OverlayContainer,
     readonly bpObs: BreakpointObserver,
@@ -56,6 +60,8 @@ export class LayoutService implements OnDestroy {
     readonly auth: AuthService,
     readonly store: StoreService
   ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+
     this.options = ldMergeWith(
       ldDeepClone({ layout: DefaultLayoutConfig }),
       this.config.options,
@@ -90,8 +96,11 @@ export class LayoutService implements OnDestroy {
    * Claim Auth state:slice
    */
   private claimSlice() {
-    const logger = this.options?.layout?.logState ? this.logger.debug.bind(this.logger) : undefined;
-    this.claimId = this.store.claimSlice(this.nameSpace, logger);
+    if (!this.options?.layout?.logState) {
+      this.claimId = this.store.claimSlice(this.nameSpace);
+    } else {
+      this.claimId = this.store.claimSlice(this.nameSpace, this.logger.debug.bind(this.logger));
+    }
   }
 
   /**
@@ -165,9 +174,9 @@ export class LayoutService implements OnDestroy {
 
   private subFullscreen() {
     this.uix.fullscreen$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (isFullscreen) => {
-        if (this.state.isFullscreen && !isFullscreen) {
-          this.setFullscreen(isFullscreen);
+      next: (isFullScreen) => {
+        if (this.state.isFullScreen && !isFullScreen) {
+          this.setFullscreen(isFullScreen);
           this.uix.fullscreenOff();
         }
       },
@@ -232,10 +241,10 @@ export class LayoutService implements OnDestroy {
     });
   }
 
-  setFullscreen(isFullscreen: boolean) {
+  setFullscreen(isFullScreen: boolean) {
     this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
-      isFullscreen,
+      isFullScreen,
     });
     this.uix.fullscreenOff();
   }
@@ -243,9 +252,16 @@ export class LayoutService implements OnDestroy {
   toggleFullscreen() {
     this.store.setState<LayoutState>(this.claimId, {
       ...this.state,
-      isFullscreen: !this.state.isFullscreen,
+      isFullScreen: !this.state.isFullScreen,
     });
     this.uix.toggleFullscreen();
+  }
+
+  setHeadless(isHeadless: boolean) {
+    this.store.setState<LayoutState>(this.claimId, {
+      ...this.state,
+      isHeadless: isHeadless,
+    });
   }
 
   setIsHandset(isHandset: boolean) {
@@ -268,6 +284,14 @@ export class LayoutService implements OnDestroy {
       isDarkTheme,
     });
     this.isDarkTheme = isDarkTheme;
+  }
+
+  addClass(className: string, tagName: string) {
+    this.renderer.addClass(this.document[tagName], className);
+  }
+
+  removeClass(className: string, tagName: string) {
+    this.renderer.removeClass(this.document[tagName], className);
   }
 
   private toggleOverlayThemeClass() {

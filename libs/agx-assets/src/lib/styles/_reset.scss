@@ -6,6 +6,11 @@ body {
   height: 100%;
 }
 
+body-reset {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 // no highlights - NOTE:  if enabled, it will freeze input fields on Safari
 // * {
 //   -webkit-user-select: none;

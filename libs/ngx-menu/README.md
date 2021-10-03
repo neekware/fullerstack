@@ -121,7 +121,7 @@ export const AppMenuTree: MenuItem[] = [
 ];
 
 @Component({
-  selector: 'fullerstack-root',
+  selector: 'avidtrader-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -176,7 +176,7 @@ export class AppComponent {
 The following is the list of available options for each menu item.
 
 ```typescript
-export class MenuItem {
+export interface MenuItem {
   // translatable name of this menu
   name: string;
   // icon for the menu
@@ -185,6 +185,10 @@ export class MenuItem {
   link?: string;
   // hides menu, navigation, popups (ex: calendar page is fullspan)
   fullspan?: boolean;
+  // if true, this will be a fullscreen page
+  fullscreen?: boolean;
+  // if true, this will be a fullscreen page without header and footer
+  headless?: boolean;
   // if external link
   external?: boolean;
   // open in new tab (_blank)
@@ -210,7 +214,9 @@ for (const node in menuTree.children) {
   // node..hasChildren - has children?
   // node..isInternalLink - is a link & internal (ex: /dashboard/)
   // node..isExternalLink - is a link * external (ex: www.youtube.com)
-  // node..isFullSpan - is link that requires menu to slide away
+  // node..isFullSpan - is a link that requires menu(s) to slide away
+  // node..isFullScreen - is a link that requires the page be in fullscreen mode
+  // node..isHeadless - is a link that requires header/footer to hide away
   // node..offset(value: number, unit = 'px') - offset for multi-level menu (for margin or padding)
   // node..isActive(url: string) - is this node active for the active route
 }

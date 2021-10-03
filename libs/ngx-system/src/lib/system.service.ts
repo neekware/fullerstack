@@ -22,7 +22,7 @@ import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
-import { Observable, Subject, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
 
@@ -32,8 +32,9 @@ import { DeepReadonly } from 'ts-essentials';
 export class SystemService implements OnDestroy {
   private nameSpace = 'SYSTEM';
   private destroy$ = new Subject<boolean>();
+  private routeDataSubject = new BehaviorSubject<Data>(null);
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
-  routeData: Data;
+  routeData$: Observable<Data>;
 
   constructor(
     public router: Router,
@@ -48,7 +49,10 @@ export class SystemService implements OnDestroy {
     readonly i18n: I18nService,
     readonly auth: AuthService
   ) {
+    this.routeData$ = this.routeDataSubject.asObservable();
+
     this.msg.reset();
+
     this.options = ldMergeWith(
       ldDeepClone({ auth: DefaultAuthConfig }),
       this.config.options,
@@ -67,7 +71,7 @@ export class SystemService implements OnDestroy {
       )
       .subscribe({
         next: (data) => {
-          this.routeData = { ...data };
+          this.routeDataSubject.next({ ...data });
           this.setPageTitle(data);
           this.setPageDescription(data);
         },
@@ -75,12 +79,12 @@ export class SystemService implements OnDestroy {
 
     this.i18n.stateChange$
       .pipe(
-        filter(() => Object.keys(this.routeData).length > 0),
-        map(() => this.routeData),
+        filter(() => Object.keys(this.routeDataSubject.value).length > 0),
+        map(() => this.routeDataSubject.value),
         takeUntil(this.destroy$)
       )
       .subscribe((data) => {
-        this.routeData = { ...data };
+        this.routeDataSubject.next({ ...data });
         this.setPageTitle(data);
         this.setPageDescription(data);
       });

@@ -11,21 +11,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ProgressService {
-  private subject = new BehaviorSubject<boolean>(false);
+  private stateSubject = new BehaviorSubject<boolean>(false);
   private inflight = 0;
   state$: Observable<boolean>;
 
   constructor() {
-    this.state$ = this.subject.asObservable();
+    this.state$ = this.stateSubject.asObservable();
   }
 
   start() {
     this.inflight++;
-    this.subject.next(this.inflight > 0);
+    this.stateSubject.next(this.inflight > 0);
   }
 
   end() {
     this.inflight--;
-    this.subject.next(this.inflight > 0);
+    this.stateSubject.next(this.inflight > 0);
   }
 }

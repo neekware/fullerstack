@@ -15,6 +15,8 @@ export class MenuNode implements MenuItem {
   target = null;
   external = false;
   fullspan = false;
+  fullscreen = false;
+  headless = false;
   allowed = true;
   disabled = false;
   permissions: string[] = [];
@@ -79,6 +81,20 @@ export class MenuNode implements MenuItem {
    */
   get isFullSpan(): boolean {
     return this.isLink && this.fullspan;
+  }
+
+  /**
+   * @returns true if node is a link that requires the header/footer to be hidden
+   */
+  get isFullScreen(): boolean {
+    return this.isLink && this.fullscreen;
+  }
+
+  /**
+   * @returns true if node is a link that requires the header/footer to be hidden
+   */
+  get isHeadless(): boolean {
+    return this.isLink && this.headless;
   }
 
   /**
