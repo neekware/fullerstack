@@ -109,6 +109,30 @@ export class UixService implements OnDestroy {
     }
   }
 
+  addClass(el: HTMLElement, className: string): void {
+    if (el.classList) {
+      el.classList.add(className);
+    } else {
+      el.className += ' ' + className;
+    }
+  }
+
+  addClassToBody(className: string): void {
+    this.document.body.classList.add(className);
+  }
+
+  removeClass(el: HTMLElement, className: string): void {
+    if (el.classList) {
+      el.classList.remove(className);
+    } else {
+      el.className += ' ' + className;
+    }
+  }
+
+  removeClassFromBody(className: string): void {
+    this.document.body.classList.remove(className);
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();

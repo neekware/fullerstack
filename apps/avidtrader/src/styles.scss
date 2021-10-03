@@ -33,3 +33,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
 }
+
+.active-canvas {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  -webkit-overflow-scrolling: unset;
+}

@@ -9,5 +9,9 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictTemplates": true
+  }
 }

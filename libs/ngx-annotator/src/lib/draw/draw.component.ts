@@ -9,7 +9,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { UixService } from '@fullerstack/ngx-uix';
 import { cloneDeep as ldDeepClone } from 'lodash-es';
-import { Subject, fromEvent } from 'rxjs';
+import { EMPTY, Observable, Subject, fromEvent, merge } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
@@ -42,6 +42,10 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
     this.captureEvents(this.canvasEl);
   }
 
+  private fromEvents(canvasEl: HTMLCanvasElement, eventNames: string[]): Observable<Event> {
+    return eventNames.reduce((prev, name) => merge(prev, fromEvent(canvasEl, name)), EMPTY);
+  }
+
   private resizeCanvas(canvasEl: HTMLCanvasElement) {
     this.uix.reSizeSub$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (size) => {
@@ -53,9 +57,12 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
 
   private captureEvents(canvasEl: HTMLCanvasElement) {
     let segment: Point[] = [];
-    fromEvent(canvasEl, 'mousedown')
+    this.fromEvents(canvasEl, ['mousedown', 'touchstart'])
       .pipe(
-        tap(() => {
+        tap((event) => {
+          if (event.type === 'touchstart') {
+            this.uix.addClassToBody('active-canvas');
+          }
           if (segment.length) {
             this.activePoints.push([...segment]);
             this.shadowPoints.push(ldDeepClone(segment));
@@ -63,16 +70,24 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
           }
         }),
         switchMap(() => {
-          return fromEvent(canvasEl, 'mousemove').pipe(
+          return this.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
             takeUntil(fromEvent(canvasEl, 'mouseup')),
-            takeUntil(fromEvent(canvasEl, 'mouseleave'))
+            takeUntil(fromEvent(canvasEl, 'mouseleave')),
+            takeUntil(fromEvent(canvasEl, 'touchend'))
           );
         }),
         takeUntil(this.destroy$)
       )
-      .subscribe((event: MouseEvent) => {
+      .subscribe((event: MouseEvent | TouchEvent) => {
         const rect = canvasEl.getBoundingClientRect();
-        segment.push({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+        if (event instanceof MouseEvent) {
+          segment.push({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+        } else if (event instanceof TouchEvent) {
+          segment.push({
+            x: event.touches[0].clientX - rect.left,
+            y: event.touches[0].clientY - rect.top,
+          });
+        }
         this.drawOnCanvas(segment);
       });
   }
@@ -101,5 +116,6 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+    this.uix.removeClassFromBody('active-canvas');
   }
 }
