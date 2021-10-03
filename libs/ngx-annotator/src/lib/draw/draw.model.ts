@@ -12,9 +12,19 @@ export interface Point {
 }
 
 export interface CanvasButtonAttributes {
-  zIndex: number;
-  color?: string;
-  top?: number;
-  left?: number;
-  position?: string;
+  canvas: {
+    zIndex: number | string;
+    width: number | string;
+    height: number | string;
+    border: number | string;
+  };
+  button: {
+    zIndex: number | string;
+    color?: number | string;
+    top?: number | string;
+    left?: number | string;
+    bottom?: number | string;
+    right?: number | string;
+    position?: number | string;
+  };
 }

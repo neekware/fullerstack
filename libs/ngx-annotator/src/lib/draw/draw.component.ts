@@ -23,7 +23,7 @@ import { Point } from './draw.model';
 })
 export class DrawComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') canvas: ElementRef | undefined;
-  @Input() attributes = DefaultCanvasButtonAttributes;
+  @Input() attr = DefaultCanvasButtonAttributes;
   uniqId = uuidV4();
   private destroy$ = new Subject<boolean>();
   private canvasEl: HTMLCanvasElement | undefined | null;

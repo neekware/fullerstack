@@ -11,9 +11,19 @@ import { CanvasButtonAttributes } from './draw.model';
 export const CANVAS_MIN_POINTS_TO_DRAW = 6;
 
 export const DefaultCanvasButtonAttributes: CanvasButtonAttributes = {
-  zIndex: 1,
-  color: 'inherit',
-  top: 0,
-  left: 100,
-  position: 'absolute',
+  canvas: {
+    zIndex: 1,
+    width: '100%',
+    height: '100%',
+    border: 0,
+  },
+  button: {
+    zIndex: 2,
+    color: 'primary',
+    top: 0,
+    right: 0,
+    bottom: 'unset',
+    left: 'unset',
+    position: 'absolute',
+  },
 };

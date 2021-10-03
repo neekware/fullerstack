@@ -9,13 +9,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '@fullerstack/ngx-material';
 
 import { annotatorRoutes } from './annotator.routes';
 import { AnnotatorService } from './annotator.service';
 import { DrawComponent } from './draw/draw.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(annotatorRoutes)],
+  imports: [CommonModule, MaterialModule, RouterModule.forChild(annotatorRoutes)],
   exports: [DrawComponent],
   declarations: [DrawComponent],
   providers: [AnnotatorService],
