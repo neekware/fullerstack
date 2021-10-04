@@ -117,7 +117,6 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
         }),
         switchMap(() => {
           return this.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
-            pairwise(),
             takeUntil(fromEvent(canvasEl, 'mouseup')),
             takeUntil(fromEvent(canvasEl, 'mouseleave')),
             takeUntil(fromEvent(canvasEl, 'touchend'))
@@ -126,34 +125,28 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe({
-        next: ([prevEvent, currEvent]) => {
-          let to: Point;
-          let from: Point;
+        next: (event: MouseEvent | TouchEvent) => {
           const rect = canvasEl.getBoundingClientRect();
 
-          if (prevEvent instanceof MouseEvent && currEvent instanceof MouseEvent) {
-            to = {
-              x: prevEvent.clientX - rect.left,
-              y: prevEvent.clientY - rect.top,
-            };
-            from = {
-              x: currEvent.clientX - rect.left,
-              y: currEvent.clientY - rect.top,
-            };
-          } else if (prevEvent instanceof TouchEvent && currEvent instanceof TouchEvent) {
-            to = {
-              x: currEvent.touches[0].clientX - rect.left,
-              y: currEvent.touches[0].clientY - rect.top,
-            };
-            from = {
-              x: currEvent.touches[0].clientX - rect.left,
-              y: currEvent.touches[0].clientY - rect.top,
-            };
+          if (event instanceof MouseEvent) {
+            line.points.push({
+              x: event.clientX - rect.left,
+              y: event.clientY - rect.top,
+            });
+          } else if (event instanceof TouchEvent) {
+            line.points.push({
+              x: event.touches[0].clientX - rect.left,
+              y: event.touches[0].clientY - rect.top,
+            });
           }
 
-          this.drawFromToOnCanvas(from, to, line.attributes);
-
-          this.lines.push(line);
+          if (line.points.length > 1) {
+            this.drawFromToOnCanvas(
+              line.points[line.points.length - 2],
+              line.points[line.points.length - 1],
+              line.attributes
+            );
+          }
         },
       });
   }
