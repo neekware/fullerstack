@@ -13,6 +13,7 @@ import { EMPTY, Observable, Subject, fromEvent, merge } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
+import { AnnotatorService } from '../annotator.service';
 import { DefaultCanvasButtonAttributes } from './draw.default';
 import { DrawPoint, Point } from './draw.model';
 
@@ -31,7 +32,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private activePoints: DrawPoint[][] = [];
   private shadowPoints: DrawPoint[][] = [];
 
-  constructor(readonly uix: UixService) {}
+  constructor(readonly uix: UixService, readonly annotatorService: AnnotatorService) {}
 
   ngAfterViewInit() {
     this.canvasEl = this.canvas?.nativeElement;

@@ -25,9 +25,7 @@ import { DeepReadonly } from 'ts-essentials';
 import { DefaultAnnotatorConfig, DefaultAnnotatorState } from './annotator.default';
 import { ANNOTATOR_URL, AnnotatorState } from './annotator.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AnnotatorService implements OnDestroy {
   private nameSpace = 'ANNOTATOR';
   private claimId: string;
