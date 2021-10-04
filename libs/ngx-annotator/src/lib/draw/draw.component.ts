@@ -16,7 +16,6 @@ import { v4 as uuidV4 } from 'uuid';
 import { AnnotatorService } from '../annotator.service';
 import { DefaultCanvasButtonAttributes, DefaultLine } from './draw.default';
 import { Line, LineAttributes, Point } from './draw.model';
-import { CanvasService } from './draw.service';
 
 @Component({
   selector: 'fullerstack-draw',
@@ -32,11 +31,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private ctx: CanvasRenderingContext2D | undefined | null;
   private lines: Line[] = [];
 
-  constructor(
-    readonly uix: UixService,
-    readonly annotatorService: AnnotatorService,
-    readonly canvasService: CanvasService
-  ) {
+  constructor(readonly uix: UixService, readonly annotatorService: AnnotatorService) {
     this.uix.addClassToBody('annotation-canvas');
   }
 
