@@ -39,6 +39,6 @@ export class MenuComponent implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
-    this.dialogRef.close();
+    this.dialogRef?.close();
   }
 }

@@ -23,6 +23,6 @@ export class ConfigComponent {
   }
 
   onClose(): void {
-    this.dialogRef.close();
+    this.dialogRef?.close();
   }
 }
