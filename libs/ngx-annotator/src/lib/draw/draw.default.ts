@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { Line } from './draw.model';
 import { CanvasButtonAttributes } from './draw.model';
 
 export const CANVAS_MIN_POINTS_TO_DRAW = 6;
@@ -26,4 +27,11 @@ export const DefaultCanvasButtonAttributes: CanvasButtonAttributes = {
     left: 'unset',
     position: 'absolute',
   },
+};
+
+export const DefaultLine: Line = {
+  points: [],
+  lineCap: 'round',
+  lineWidth: 2.5,
+  strokeStyle: '#000',
 };

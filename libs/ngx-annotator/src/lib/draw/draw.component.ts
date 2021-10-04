@@ -14,8 +14,8 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
 import { AnnotatorService } from '../annotator.service';
-import { DefaultCanvasButtonAttributes } from './draw.default';
-import { DrawPoint, Point } from './draw.model';
+import { DefaultCanvasButtonAttributes, DefaultLine } from './draw.default';
+import { Line } from './draw.model';
 
 @Component({
   selector: 'fullerstack-draw',
@@ -29,21 +29,53 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
   private canvasEl: HTMLCanvasElement | undefined | null;
   private ctx: CanvasRenderingContext2D | undefined | null;
-  private activePoints: DrawPoint[][] = [];
-  private shadowPoints: DrawPoint[][] = [];
+  private lines: Line[] = [];
 
-  constructor(readonly uix: UixService, readonly annotatorService: AnnotatorService) {}
+  constructor(readonly uix: UixService, readonly annotatorService: AnnotatorService) {
+    this.uix.addClassToBody('annotation-canvas');
+  }
 
   ngAfterViewInit() {
     this.canvasEl = this.canvas?.nativeElement;
     this.ctx = this.canvasEl.getContext('2d');
 
-    this.ctx.lineWidth = this.annotatorService.state.lineWidth;
     this.ctx.lineCap = 'round';
+    this.ctx.lineWidth = this.annotatorService.state.lineWidth;
     this.ctx.strokeStyle = this.annotatorService.state.strokeStyle;
 
     this.resizeCanvas(this.canvasEl);
     this.captureEvents(this.canvasEl);
+    this.handleTrash();
+    this.handleUndo();
+  }
+
+  private handleTrash() {
+    this.annotatorService.trash$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.doTrash();
+      },
+    });
+  }
+
+  doTrash() {
+    this.lines = [];
+    this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+  }
+
+  private handleUndo() {
+    this.annotatorService.undo$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.doUndo();
+      },
+    });
+  }
+
+  doUndo() {
+    if (this.lines.length) {
+      this.lines.pop();
+      this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+      this.lines.forEach((line) => this.drawOnCanvas(line));
+    }
   }
 
   private fromEvents(canvasEl: HTMLCanvasElement, eventNames: string[]): Observable<Event> {
@@ -55,22 +87,27 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
       next: (size) => {
         canvasEl.width = size.x;
         canvasEl.height = size.y;
+        this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+        this.lines.forEach((line) => this.drawOnCanvas(line));
       },
     });
   }
 
   private captureEvents(canvasEl: HTMLCanvasElement) {
-    let segment: Point[] = [];
+    let line: Line = ldDeepClone({
+      ...DefaultLine,
+      lineCap: this.annotatorService.state.lineCap,
+      lineWidth: this.annotatorService.state.lineWidth,
+      strokeStyle: this.annotatorService.state.strokeStyle,
+    });
+
     this.fromEvents(canvasEl, ['mousedown', 'touchstart'])
       .pipe(
-        tap((event) => {
-          if (event.type === 'touchstart') {
-            this.uix.addClassToBody('fullscreen-canvas');
-          }
-          if (segment.length) {
-            this.activePoints.push([...segment]);
-            this.shadowPoints.push(ldDeepClone(segment));
-            segment = [];
+        tap(() => {
+          if (line.points.length) {
+            this.lines.push(ldDeepClone(line));
+            line = ldDeepClone(DefaultLine);
+            line.points = [];
           }
         }),
         switchMap(() => {
@@ -85,31 +122,34 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
       .subscribe((event: MouseEvent | TouchEvent) => {
         const rect = canvasEl.getBoundingClientRect();
         if (event instanceof MouseEvent) {
-          segment.push({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+          line.points.push({
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top,
+          });
         } else if (event instanceof TouchEvent) {
-          segment.push({
+          line.points.push({
             x: event.touches[0].clientX - rect.left,
             y: event.touches[0].clientY - rect.top,
           });
         }
-        this.drawOnCanvas(segment);
+        this.drawOnCanvas(line);
       });
   }
 
-  private drawOnCanvas(segment: Point[]) {
+  private drawOnCanvas(line: Line) {
     if (!this.ctx) {
       return;
     }
 
     this.ctx.beginPath();
 
-    if (segment.length > 1) {
-      const from = segment[segment.length - 2];
-      const to = segment[segment.length - 1];
+    if (line.points.length > 1) {
+      const from = line.points[line.points.length - 2];
+      const to = line.points[line.points.length - 1];
 
-      this.ctx.lineWidth = this.annotatorService.state.lineWidth;
       this.ctx.lineCap = 'round';
-      this.ctx.strokeStyle = this.annotatorService.state.strokeStyle;
+      this.ctx.lineWidth = line.lineWidth;
+      this.ctx.strokeStyle = line.strokeStyle;
 
       this.ctx.moveTo(from.x, from.y);
       this.ctx.lineTo(to.x, to.y);
@@ -120,6 +160,6 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
-    this.uix.removeClassFromBody('fullscreen-canvas');
+    this.uix.removeClassFromBody('annotation-canvas');
   }
 }

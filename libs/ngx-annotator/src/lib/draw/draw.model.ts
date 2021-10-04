@@ -9,11 +9,14 @@
 export interface Point {
   x: number;
   y: number;
+  visible?: boolean;
 }
 
-export interface DrawPoint extends Point {
+export interface Line {
+  points: Point[];
   strokeStyle?: string;
   lineWidth?: number;
+  lineCap?: string;
 }
 
 export interface CanvasButtonAttributes {

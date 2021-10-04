@@ -32,6 +32,12 @@ export class AnnotatorService implements OnDestroy {
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
   state: DeepReadonly<AnnotatorState> = DefaultAnnotatorState;
   stateSub$: Observable<AnnotatorState>;
+  private undoObs$ = new Subject<void>();
+  private redoObs$ = new Subject<void>();
+  private rashObs$ = new Subject<void>();
+  undo$ = this.undoObs$.asObservable();
+  redo$ = this.redoObs$.asObservable();
+  trash$ = this.rashObs$.asObservable();
   private destroy$ = new Subject<boolean>();
   private lastUrl: string;
 
@@ -110,6 +116,18 @@ export class AnnotatorService implements OnDestroy {
       ...this.state,
       ...newState,
     });
+  }
+
+  undo() {
+    this.undoObs$.next();
+  }
+
+  redo() {
+    this.redoObs$.next();
+  }
+
+  trash() {
+    this.rashObs$.next();
   }
 
   ngOnDestroy() {

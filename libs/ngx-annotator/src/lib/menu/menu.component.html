@@ -2,7 +2,19 @@
   fxLayout="column"
   [ngStyle]="{ 'z-index': attr.button.zIndex, position: attr.button.position, top: attr.button.top, right: attr.button.right }"
 >
-  <button mat-icon-button>
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="menuIconState">
     <mat-icon class="clickable-menu-icon" svgIcon="menu" (click)="openDialog()"></mat-icon>
+  </button>
+
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="trashIconState">
+    <mat-icon class="clickable-menu-icon" svgIcon="trash-can-outline" (click)="trash()"></mat-icon>
+  </button>
+
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="undoIconState">
+    <mat-icon class="clickable-menu-icon" svgIcon="undo-variant" (click)="undo()"></mat-icon>
+  </button>
+
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="redoIconState">
+    <mat-icon class="clickable-menu-icon" svgIcon="redo-variant" (click)="redo()"></mat-icon>
   </button>
 </div>
