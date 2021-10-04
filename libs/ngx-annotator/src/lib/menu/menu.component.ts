@@ -31,7 +31,7 @@ export class MenuComponent implements OnDestroy {
   undoIconState = 'back';
   redoIconState = 'back';
 
-  constructor(readonly dialog: MatDialog, readonly annotationService: AnnotatorService) {}
+  constructor(readonly dialog: MatDialog, readonly annotation: AnnotatorService) {}
 
   openDialog(): void {
     this.menuIconState = this.menuIconState === 'back' ? 'forth' : 'back';
@@ -48,17 +48,17 @@ export class MenuComponent implements OnDestroy {
 
   trash() {
     this.trashIconState = this.trashIconState === 'back' ? 'forth' : 'back';
-    this.annotationService.trash();
+    this.annotation.trash();
   }
 
   undo() {
     this.undoIconState = this.undoIconState === 'back' ? 'forth' : 'back';
-    this.annotationService.undo();
+    this.annotation.undo();
   }
 
   redo() {
     this.redoIconState = this.redoIconState === 'back' ? 'forth' : 'back';
-    this.annotationService.redo();
+    this.annotation.redo();
   }
 
   ngOnDestroy() {

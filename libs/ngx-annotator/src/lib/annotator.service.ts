@@ -196,9 +196,49 @@ export class AnnotatorService implements OnDestroy {
   drawLineOnCanvas(line: Line, ctx?: CanvasRenderingContext2D) {
     if (line.points.length) {
       for (let i = 0; i < line.points.length - 1; i++) {
+        if (!line.visible) {
+          return;
+        }
         const from = line.points[i];
         const to = line.points[i + 1];
         this.drawFromToOnCanvas(from, to, ctx, line.attributes);
+      }
+    }
+  }
+
+  /**
+   * Make the last visible line hidden
+   * @param lines lines to draw
+   */
+  undoLastLine(lines: Line[]) {
+    // working from the end of the array, make n + 1 hidden, where n is the last visible line
+    for (let i = lines.length - 1; i >= 0; i--) {
+      if (lines[i].visible) {
+        lines[i].visible = false;
+        return;
+      }
+    }
+  }
+
+  /**
+   * Make the first hidden line visible
+   * @param lines lines to draw
+   */
+  redoLastLine(lines: Line[]) {
+    // handle when all are hidden
+    if (lines.length) {
+      if (!lines[0].visible) {
+        lines[0].visible = true;
+        return;
+      }
+    }
+
+    // checking from end, make n + 1 visible, where n is the last visible line
+    for (let i = lines.length - 1; i >= 0; i--) {
+      if (lines[i].visible) {
+        const idx = i === lines.length - 1 ? i : i + 1;
+        lines[idx].visible = true;
+        return;
       }
     }
   }

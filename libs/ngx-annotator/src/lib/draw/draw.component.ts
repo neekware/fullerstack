@@ -42,6 +42,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
     this.captureEvents(this.canvasEl);
     this.trashSub();
     this.undoSub();
+    this.redoSub();
   }
 
   private trashSub() {
@@ -67,7 +68,23 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
 
   doUndo() {
     if (this.lines.length) {
-      this.lines.pop();
+      this.annotator.undoLastLine(this.lines);
+      this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+      this.lines.forEach((line) => this.annotator.drawLineOnCanvas(line, this.ctx));
+    }
+  }
+
+  private redoSub() {
+    this.annotator.redo$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.doRedo();
+      },
+    });
+  }
+
+  doRedo() {
+    if (this.lines.length) {
+      this.annotator.redoLastLine(this.lines);
       this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
       this.lines.forEach((line) => this.annotator.drawLineOnCanvas(line, this.ctx));
     }
@@ -94,7 +111,10 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
           return this.annotator.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
             finalize(() => {
               if (line.points.length) {
-                this.lines.push(line);
+                // abandon hidden lines "undo(s)" on any further update
+                this.lines = this.lines
+                  .filter((line) => line.visible)
+                  .concat({ ...line, visible: true });
                 line = this.annotator.cloneLine();
               }
             }),
