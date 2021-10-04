@@ -7,6 +7,25 @@
   -webkit-overflow-scrolling: unset;
 }
 
+::ng-deep .mat-dialog-container {
+  background-color: #d7d2d2;
+}
+
 .config:hover {
   cursor: pointer;
+}
+
+mat-card {
+  padding: 40px;
+}
+
+mat-slider {
+  width: 300px;
+}
+
+md-slider[md-discrete] .md-sign,
+md-slider[md-discrete] .md-sign:after {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
 }

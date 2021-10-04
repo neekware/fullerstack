@@ -105,6 +105,13 @@ export class AnnotatorService implements OnDestroy {
     });
   }
 
+  setState(newState: Partial<AnnotatorState>) {
+    this.store.setState(this.claimId, {
+      ...this.state,
+      ...newState,
+    });
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();

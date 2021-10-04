@@ -1,6 +1,23 @@
-<div mat-dialog-content class="config">
-  <p>Full Screen Overlay!</p>
-</div>
+<mat-card>
+  <mat-card-title>Line With</mat-card-title>
+  <mat-card-subtitle>{{ annotatorService.state.lineWidth }}</mat-card-subtitle>
+  <mat-card-actions>
+    <div fxFlex fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+      <mat-slider
+        thumbLabel
+        tickInterval=".1"
+        step=".1"
+        min="1"
+        max="10"
+        aria-label="units"
+        (change)="setLineWidth($event)"
+        [value]="annotatorService.state.lineWidth"
+      ></mat-slider>
+      <mat-divider [ngStyle]="{ 'border-top': annotatorService.state.lineWidth * 2 + 'px solid black' }"></mat-divider>
+    </div>
+  </mat-card-actions>
+</mat-card>
+
 <div mat-dialog-actions>
   <button mat-button (click)="onClose()">Close</button>
 </div>

@@ -37,9 +37,10 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.canvasEl = this.canvas?.nativeElement;
     this.ctx = this.canvasEl.getContext('2d');
-    this.ctx.lineWidth = 5;
+
+    this.ctx.lineWidth = this.annotatorService.state.lineWidth;
     this.ctx.lineCap = 'round';
-    this.ctx.strokeStyle = '#000';
+    this.ctx.strokeStyle = this.annotatorService.state.strokeStyle;
 
     this.resizeCanvas(this.canvasEl);
     this.captureEvents(this.canvasEl);
@@ -106,9 +107,9 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
       const from = segment[segment.length - 2];
       const to = segment[segment.length - 1];
 
-      this.ctx.lineWidth = 2.5;
+      this.ctx.lineWidth = this.annotatorService.state.lineWidth;
       this.ctx.lineCap = 'round';
-      this.ctx.strokeStyle = '#000';
+      this.ctx.strokeStyle = this.annotatorService.state.strokeStyle;
 
       this.ctx.moveTo(from.x, from.y);
       this.ctx.lineTo(to.x, to.y);

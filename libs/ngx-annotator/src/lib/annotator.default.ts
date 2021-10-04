@@ -3,7 +3,7 @@ import { AnnotatorConfig, AnnotatorState } from './annotator.model';
 export const DefaultAnnotatorState: AnnotatorState = {
   lineCap: 'round',
   lineWidth: 2.5,
-  strokeStyle: '#ffffff',
+  strokeStyle: '#000',
 };
 
 /**
