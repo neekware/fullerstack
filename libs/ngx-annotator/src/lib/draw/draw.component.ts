@@ -107,7 +107,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private captureEvents(canvasEl: HTMLCanvasElement) {
     let line: Line = this.cloneLine();
 
-    this.fromEvents(canvasEl, ['mousedown', 'mouseleave', 'touchstart'])
+    this.fromEvents(canvasEl, ['mousedown', 'touchstart'])
       .pipe(
         tap(() => {
           if (line.points.length) {
