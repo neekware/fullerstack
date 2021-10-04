@@ -1,3 +1,7 @@
+<div mat-dialog-actions class="mb1">
+  <button mat-button color="primary" (click)="onClose()">Close</button>
+</div>
+
 <mat-card>
   <mat-card-title>Line With</mat-card-title>
   <mat-card-subtitle>{{ annotatorService.state.lineWidth }}</mat-card-subtitle>
@@ -17,7 +21,3 @@
     </div>
   </mat-card-actions>
 </mat-card>
-
-<div mat-dialog-actions>
-  <button mat-button (click)="onClose()">Close</button>
-</div>
