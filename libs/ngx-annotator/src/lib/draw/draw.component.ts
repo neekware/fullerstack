@@ -10,12 +10,13 @@ import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } fro
 import { UixService } from '@fullerstack/ngx-uix';
 import { cloneDeep as ldDeepClone } from 'lodash-es';
 import { EMPTY, Observable, Subject, fromEvent, merge } from 'rxjs';
-import { pairwise, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
 import { AnnotatorService } from '../annotator.service';
 import { DefaultCanvasButtonAttributes, DefaultLine } from './draw.default';
 import { Line, LineAttributes, Point } from './draw.model';
+import { CanvasService } from './draw.service';
 
 @Component({
   selector: 'fullerstack-draw',
@@ -31,7 +32,11 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private ctx: CanvasRenderingContext2D | undefined | null;
   private lines: Line[] = [];
 
-  constructor(readonly uix: UixService, readonly annotatorService: AnnotatorService) {
+  constructor(
+    readonly uix: UixService,
+    readonly annotatorService: AnnotatorService,
+    readonly canvasService: CanvasService
+  ) {
     this.uix.addClassToBody('annotation-canvas');
   }
 
@@ -90,7 +95,10 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   }
 
   private fromEvents(canvasEl: HTMLCanvasElement, eventNames: string[]): Observable<Event> {
-    return eventNames.reduce((prev, name) => merge(prev, fromEvent(canvasEl, name)), EMPTY);
+    return eventNames.reduce(
+      (prev, name) => merge(prev, fromEvent(canvasEl, name, { passive: true })),
+      EMPTY
+    );
   }
 
   private resizeCanvas(canvasEl: HTMLCanvasElement) {
@@ -109,14 +117,15 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
 
     this.fromEvents(canvasEl, ['mousedown', 'touchstart'])
       .pipe(
-        tap(() => {
-          if (line.points.length) {
-            this.lines.push(line);
-            line = this.cloneLine();
-          }
-        }),
         switchMap(() => {
           return this.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
+            finalize(() => {
+              if (line.points.length) {
+                this.lines.push(line);
+                line = this.cloneLine();
+                console.log(this.lines.length);
+              }
+            }),
             takeUntil(fromEvent(canvasEl, 'mouseup')),
             takeUntil(fromEvent(canvasEl, 'mouseleave')),
             takeUntil(fromEvent(canvasEl, 'touchend'))
