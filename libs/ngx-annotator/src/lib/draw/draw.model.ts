@@ -9,14 +9,18 @@
 export interface Point {
   x: number;
   y: number;
-  visible?: boolean;
+}
+
+export interface LineAttributes {
+  strokeStyle?: string;
+  lineWidth?: number;
+  lineCap?: CanvasLineCap;
 }
 
 export interface Line {
   points: Point[];
-  strokeStyle?: string;
-  lineWidth?: number;
-  lineCap?: string;
+  attributes: LineAttributes;
+  visible?: boolean;
 }
 
 export interface CanvasButtonAttributes {
@@ -36,3 +40,5 @@ export interface CanvasButtonAttributes {
     position?: number | string;
   };
 }
+
+export type InputEvents = MouseEvent | TouchEvent;

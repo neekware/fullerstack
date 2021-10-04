@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+import { DefaultAnnotatorState } from '../annotator.default';
 import { Line } from './draw.model';
 import { CanvasButtonAttributes } from './draw.model';
 
@@ -31,7 +32,10 @@ export const DefaultCanvasButtonAttributes: CanvasButtonAttributes = {
 
 export const DefaultLine: Line = {
   points: [],
-  lineCap: 'round',
-  lineWidth: 2.5,
-  strokeStyle: '#000',
+  attributes: {
+    lineCap: DefaultAnnotatorState.lineCap,
+    lineWidth: DefaultAnnotatorState.lineWidth,
+    strokeStyle: DefaultAnnotatorState.strokeStyle,
+  },
+  visible: false,
 };

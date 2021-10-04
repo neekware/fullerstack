@@ -20,6 +20,6 @@ export interface AnnotatorConfig {
 
 export interface AnnotatorState {
   lineWidth: number;
-  lineCap: string;
+  lineCap: CanvasLineCap;
   strokeStyle: string;
 }

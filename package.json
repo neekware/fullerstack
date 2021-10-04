@@ -15,7 +15,7 @@
     "ts-node": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json",
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main && yarn prisma:generate && husky install",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0 ",
     "start:dash": "ng serve avidtrader",
     "start:api": "ng serve api",
     "build": "ng build",
