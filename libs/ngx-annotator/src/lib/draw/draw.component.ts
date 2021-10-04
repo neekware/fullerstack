@@ -146,7 +146,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
               line.points[line.points.length - 2],
               line.points[line.points.length - 1],
               this.ctx,
-              line.attributes
+              this.annotator.getCanvasAttributes()
             );
           }
         },

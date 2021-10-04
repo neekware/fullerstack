@@ -160,6 +160,18 @@ export class AnnotatorService implements OnDestroy {
   }
 
   /**
+   * Returns the current attributes of canvas
+   * @returns line attributes
+   */
+  getCanvasAttributes(): LineAttributes {
+    return {
+      lineCap: this.state.lineCap,
+      lineWidth: this.state.lineWidth,
+      strokeStyle: this.state.strokeStyle,
+    };
+  }
+
+  /**
    * Given an attribute object, it applies the attribute to the line object
    * @param attr canvas context attributes
    * @param ctx canvas context

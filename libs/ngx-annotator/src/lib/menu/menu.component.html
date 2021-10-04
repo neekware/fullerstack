@@ -17,4 +17,24 @@
   <button mat-icon-button class="quick-menu-button" [@wiggleIt]="redoIconState">
     <mat-icon class="clickable-menu-icon" svgIcon="redo-variant" (click)="redo()"></mat-icon>
   </button>
+
+  <button mat-icon-button class="quick-menu-button" [matMenuTriggerFor]="lineWidthPicker">
+    <mat-icon class="clickable-menu-icon" svgIcon="format-line-weight"></mat-icon>
+  </button>
+  <mat-menu #lineWidthPicker="matMenu">
+    <!-- <mat-divider class="line-width" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
+    <mat-divider class="line-width" [ngStyle]="{ 'border-top': '3px solid black' }"></mat-divider> -->
+
+    <mat-slider
+      color="primary"
+      thumbLabel
+      tickInterval=".01"
+      step=".1"
+      min="1"
+      max="10"
+      aria-label="units"
+      (change)="setLineWidth($event)"
+      [value]="annotation.state.lineWidth"
+    ></mat-slider>
+  </mat-menu>
 </div>

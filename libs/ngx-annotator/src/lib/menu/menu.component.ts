@@ -8,6 +8,7 @@
 
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSliderChange } from '@angular/material/slider';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
 import { Subject } from 'rxjs';
 
@@ -59,6 +60,10 @@ export class MenuComponent implements OnDestroy {
   redo() {
     this.redoIconState = this.redoIconState === 'back' ? 'forth' : 'back';
     this.annotation.redo();
+  }
+
+  setLineWidth(event: MatSliderChange) {
+    this.annotation.setState({ lineWidth: event.value });
   }
 
   ngOnDestroy() {
