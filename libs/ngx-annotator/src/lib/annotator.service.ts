@@ -19,11 +19,11 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { StoreService } from '@fullerstack/ngx-store';
 import { SystemService } from '@fullerstack/ngx-system';
 import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
-import { Observable, Subject, filter, takeUntil } from 'rxjs';
+import { EMPTY, Observable, Subject, filter, fromEvent, merge, takeUntil } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultAnnotatorConfig, DefaultAnnotatorState } from './annotator.default';
-import { ANNOTATOR_URL, AnnotatorState } from './annotator.model';
+import { DefaultAnnotatorConfig, DefaultAnnotatorState, DefaultLine } from './annotator.default';
+import { ANNOTATOR_URL, AnnotatorState, Line, LineAttributes, Point } from './annotator.model';
 
 @Injectable()
 export class AnnotatorService implements OnDestroy {
@@ -128,6 +128,79 @@ export class AnnotatorService implements OnDestroy {
 
   trash() {
     this.rashObs$.next();
+  }
+
+  /**
+   * Merges canvas events into a single stream
+   * @param canvasEl canvas element
+   * @param eventNames event names
+   * @returns observable of events
+   */
+  fromEvents(canvasEl: HTMLCanvasElement, eventNames: string[]): Observable<Event> {
+    return eventNames.reduce(
+      (prev, name) => merge(prev, fromEvent(canvasEl, name, { passive: true })),
+      EMPTY
+    );
+  }
+
+  /**
+   * Given an optional line object, it returns the line object with attributes
+   * @param initial initial line object
+   * @returns line object
+   */
+  cloneLine(initial?: Line) {
+    return ldDeepClone({
+      ...(initial || DefaultLine),
+      attributes: {
+        lineCap: this.state.lineCap,
+        lineWidth: this.state.lineWidth,
+        strokeStyle: this.state.strokeStyle,
+      },
+    });
+  }
+
+  /**
+   * Given an attribute object, it applies the attribute to the line object
+   * @param attr canvas context attributes
+   * @param ctx canvas context
+   */
+  setCanvasAttributes(ctx: CanvasRenderingContext2D, attr?: LineAttributes) {
+    if (attr) {
+      ctx.lineCap = attr.lineCap;
+      ctx.lineWidth = attr.lineWidth;
+      ctx.strokeStyle = attr.strokeStyle;
+    } else {
+      ctx.lineCap = this.state.lineCap;
+      ctx.lineWidth = this.state.lineWidth;
+      ctx.strokeStyle = this.state.strokeStyle;
+    }
+  }
+
+  /**
+   * Given two points, draws a line between them on the canvas
+   * @param to coordinates of the end point
+   * @param from coordinates of the start point
+   */
+  drawFromToOnCanvas(to: Point, from: Point, ctx: CanvasRenderingContext2D, attr?: LineAttributes) {
+    this.setCanvasAttributes(ctx, attr);
+    ctx.beginPath();
+    ctx.moveTo(from.x, from.y);
+    ctx.lineTo(to.x, to.y);
+    ctx.stroke();
+  }
+
+  /**
+   * Given multiple points, draw a line between them
+   * @param line line information including points and attributes of a line
+   */
+  drawLineOnCanvas(line: Line, ctx?: CanvasRenderingContext2D) {
+    if (line.points.length) {
+      for (let i = 0; i < line.points.length - 1; i++) {
+        const from = line.points[i];
+        const to = line.points[i + 1];
+        this.drawFromToOnCanvas(from, to, ctx, line.attributes);
+      }
+    }
   }
 
   ngOnDestroy() {
