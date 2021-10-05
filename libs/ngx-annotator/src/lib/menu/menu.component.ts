@@ -32,6 +32,7 @@ export class MenuComponent implements OnDestroy {
   trashIconState = 'back';
   undoIconState = 'back';
   redoIconState = 'back';
+  cursorIconState = 'back';
   isFullscreen = false;
 
   constructor(
@@ -77,6 +78,11 @@ export class MenuComponent implements OnDestroy {
     setTimeout(() => {
       this.isFullscreen = this.uix.isFullscreen();
     }, 100);
+  }
+
+  toggleCursor() {
+    this.cursorIconState = this.cursorIconState === 'back' ? 'forth' : 'back';
+    this.annotation.setState({ cursor: !this.annotation.state.cursor });
   }
 
   ngOnDestroy() {

@@ -38,6 +38,13 @@
     ></mat-slider>
   </mat-menu>
 
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="cursorIconState" (click)="toggleCursor()">
+    <mat-icon
+      class="clickable-menu-icon"
+      [svgIcon]="annotation.state.cursor ? 'cursor-default-click' : 'cursor-default-click-outline'"
+    ></mat-icon>
+  </button>
+
   <button mat-icon-button class="quick-menu-button" (click)="toggleFullscreen()">
     <mat-icon class="clickable-menu-icon" [svgIcon]="isFullscreen ? 'arrow-collapse-all' : 'arrow-expand-all'"></mat-icon>
   </button>

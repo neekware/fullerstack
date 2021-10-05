@@ -22,6 +22,8 @@ export interface AnnotatorState {
   lineWidth: number;
   lineCap: CanvasLineCap;
   strokeStyle: string;
+  cursor: boolean;
+  fullscreen: boolean;
 }
 
 export interface Point {

@@ -4,6 +4,8 @@ export const DefaultAnnotatorState: AnnotatorState = {
   lineCap: 'round',
   lineWidth: 2.5,
   strokeStyle: '#000',
+  cursor: false,
+  fullscreen: true,
 };
 
 /**
