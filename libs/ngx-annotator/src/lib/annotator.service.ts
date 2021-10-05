@@ -197,7 +197,19 @@ export class AnnotatorService implements OnDestroy {
     this.setCanvasAttributes(ctx, attr);
     ctx.beginPath();
     ctx.moveTo(from.x, from.y);
-    ctx.lineTo(to.x, to.y);
+
+    const drawMidPoint = false; // whether to use midpoint to further smooth lines
+    if (drawMidPoint) {
+      const midPoint: Point = {
+        x: (to.x + from.x) / 2,
+        y: (to.y + from.y) / 2,
+      };
+      ctx.quadraticCurveTo(from.x, from.y, midPoint.x, midPoint.y);
+      ctx.quadraticCurveTo(midPoint.x, midPoint.y, to.x, to.y);
+    } else {
+      ctx.lineTo(to.x, to.y);
+    }
+
     ctx.stroke();
   }
 
