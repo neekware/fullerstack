@@ -74,7 +74,9 @@ export class MenuComponent implements OnDestroy {
 
   toggleFullscreen() {
     this.uix.toggleFullscreen();
-    this.isFullscreen = this.uix.isFullscreen();
+    setTimeout(() => {
+      this.isFullscreen = this.uix.isFullscreen();
+    }, 100);
   }
 
   ngOnDestroy() {
