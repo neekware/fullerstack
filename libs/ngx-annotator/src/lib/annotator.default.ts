@@ -13,6 +13,7 @@ export const DefaultAnnotatorState: AnnotatorState = {
     showLineWidthButton: true,
     showCursorButton: true,
     showFullscreenButton: true,
+    showRefreshButton: true,
   },
 };
 

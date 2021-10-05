@@ -113,7 +113,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
               if (line.points.length) {
                 // abandon hidden lines "undo(s)" on any further update
                 this.lines = this.lines
-                  .filter((line) => line.visible)
+                  .filter((lineItem) => lineItem.visible)
                   .concat({ ...line, visible: true });
                 line = this.annotation.cloneLine();
               }

@@ -4,7 +4,7 @@
 >
   <button
     mat-icon-button
-    class="quick-menu-button material-icons color_black"
+    class="quick-menu-button material-icons color-black"
     [@wiggleIt]="menuIconState"
     [matMenuTriggerFor]="menuOptions"
   >
@@ -102,7 +102,7 @@
   <button
     *ngIf="annotation.state.menuOptions.showTrashButton"
     mat-icon-button
-    class="quick-menu-button material-icons color_black"
+    class="quick-menu-button material-icons color-black"
     [@wiggleIt]="trashIconState"
     (click)="trash()"
   >
@@ -112,7 +112,7 @@
   <button
     *ngIf="annotation.state.menuOptions.showUndoButton"
     mat-icon-button
-    class="quick-menu-button material-icons color_black"
+    class="quick-menu-button material-icons color-black"
     [@wiggleIt]="undoIconState"
     (click)="undo()"
   >
@@ -122,7 +122,7 @@
   <button
     *ngIf="annotation.state.menuOptions.showRedoButton"
     mat-icon-button
-    class="quick-menu-button material-icons color_black"
+    class="quick-menu-button material-icons color-black"
     [@wiggleIt]="redoIconState"
     (click)="redo()"
   >
@@ -132,7 +132,7 @@
   <button
     *ngIf="annotation.state.menuOptions.showLineWidthButton"
     mat-icon-button
-    class="quick-menu-button material-icons color_black"
+    class="quick-menu-button material-icons color-black"
     [matMenuTriggerFor]="lineWidthPicker"
   >
     <mat-icon class="clickable-menu-icon" svgIcon="format-line-weight"></mat-icon>
@@ -157,7 +157,7 @@
   <button
     *ngIf="annotation.state.menuOptions.showCursorButton"
     mat-icon-button
-    class="quick-menu-button material-icons color_black"
+    class="quick-menu-button material-icons color-black"
     [@wiggleIt]="cursorIconState"
     (click)="toggleCursor()"
   >
@@ -170,9 +170,18 @@
   <button
     *ngIf="annotation.state.menuOptions.showFullscreenButton"
     mat-icon-button
-    class="quick-menu-button material-icons color_black"
+    class="quick-menu-button material-icons color-black"
     (click)="toggleFullscreen()"
   >
     <mat-icon class="clickable-menu-icon" [svgIcon]="isFullscreen ? 'arrow-collapse-all' : 'arrow-expand-all'"></mat-icon>
+  </button>
+
+  <button
+    *ngIf="annotation.state.menuOptions.showRefreshButton"
+    mat-icon-button
+    class="quick-menu-button material-icons color-black"
+    (click)="uix.refreshPage()"
+  >
+    <mat-icon class="clickable-menu-icon" svgIcon="web-refresh"></mat-icon>
   </button>
 </div>

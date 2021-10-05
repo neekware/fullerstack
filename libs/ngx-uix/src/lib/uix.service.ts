@@ -137,6 +137,10 @@ export class UixService implements OnDestroy {
     this.document.body.classList.remove(className);
   }
 
+  refreshPage() {
+    this.document.defaultView.location.reload();
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();

@@ -2003,15 +2003,15 @@
     semver "^7.3.4"
     tar "^6.1.0"
 
-"@mdi/angular-material@5.9.55":
-  version "5.9.55"
-  resolved "https://registry.yarnpkg.com/@mdi/angular-material/-/angular-material-5.9.55.tgz#e4fad2ae73d630f0853dc67e509ca50ea0cbef03"
-  integrity sha512-RAQlvSI90eJHW9o6uSN5KKH8SJ61ZQuXVCjLDpQWtKQX8aTRPTJkruZ1M2U0YT6AtxKY4hPW7qyHH7VTJdTXRA==
+"@mdi/angular-material@6.2.95":
+  version "6.2.95"
+  resolved "https://registry.yarnpkg.com/@mdi/angular-material/-/angular-material-6.2.95.tgz#e23a891f6a00fa78ba72ca8cc94cb5196ef21a1c"
+  integrity sha512-04LJq+8277RAVYSdMT/mhwCrKuTkEpUVeUlD1t7KNQsYbhBeTqqcr/laZlIdS/AGjWO49ZhIId5DG0KD7oVdBA==
 
-"@mdi/font@5.9.55":
-  version "5.9.55"
-  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-5.9.55.tgz#41acd50b88073ded7095fc3029d8712b6e12f38e"
-  integrity sha512-jswRF6q3eq8NWpWiqct6q+6Fg/I7nUhrxYJfiEM8JJpap0wVJLQdbKtyS65GdlK7S7Ytnx3TTi/bmw+tBhkGmg==
+"@mdi/font@6.2.95":
+  version "6.2.95"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-6.2.95.tgz#7084ad939253a3d62e38f77d85f6c0c38508fbb2"
+  integrity sha512-0RKkhabkFZP3ALwKqrjhdKdhydQpoydIjX6cvjIwLyjADCsE0pG68YkGY+S3qnfdErmhS4m8adwvgrAFXp2AYQ==
 
 "@nestjs/common@8.0.8":
   version "8.0.8"

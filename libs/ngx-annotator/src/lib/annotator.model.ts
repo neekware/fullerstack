@@ -34,6 +34,7 @@ export interface AnnotatorState extends LineAttributes {
     showLineWidthButton: boolean;
     showCursorButton: boolean;
     showFullscreenButton: boolean;
+    showRefreshButton: boolean;
   };
 }
 
