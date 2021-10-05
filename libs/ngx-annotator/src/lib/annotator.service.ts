@@ -197,19 +197,7 @@ export class AnnotatorService implements OnDestroy {
     this.setCanvasAttributes(ctx, attr);
     ctx.beginPath();
     ctx.moveTo(from.x, from.y);
-
-    const drawMidPoint = false; // whether to use midpoint to further smooth lines
-    if (drawMidPoint) {
-      const midPoint: Point = {
-        x: (to.x + from.x) / 2,
-        y: (to.y + from.y) / 2,
-      };
-      ctx.quadraticCurveTo(from.x, from.y, midPoint.x, midPoint.y);
-      ctx.quadraticCurveTo(midPoint.x, midPoint.y, to.x, to.y);
-    } else {
-      ctx.lineTo(to.x, to.y);
-    }
-
+    ctx.lineTo(to.x, to.y);
     ctx.stroke();
   }
 
@@ -218,15 +206,30 @@ export class AnnotatorService implements OnDestroy {
    * @param line line information including points and attributes of a line
    */
   drawLineOnCanvas(line: Line, ctx?: CanvasRenderingContext2D) {
-    if (line.points.length) {
-      for (let i = 0; i < line.points.length - 1; i++) {
-        if (!line.visible) {
-          return;
+    const { visible, points } = line;
+    if (visible && points.length) {
+      const start = points[0];
+      ctx.beginPath();
+
+      if (points.length < 3) {
+        ctx.arc(start.x, start.y, ctx.lineWidth / 2, 0, Math.PI * 2, !0);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.lineTo(start.x, start.y);
+        let idx: number;
+        for (idx = 1; idx < points.length - 2; idx++) {
+          const from = points[idx];
+          const to = points[idx + 1];
+          const mid: Point = {
+            x: (to.x + from.x) / 2,
+            y: (to.y + from.y) / 2,
+          };
+          ctx.quadraticCurveTo(from.x, from.y, mid.x, mid.y);
         }
-        const from = line.points[i];
-        const to = line.points[i + 1];
-        this.drawFromToOnCanvas(from, to, ctx, line.attributes);
+        ctx.quadraticCurveTo(points[idx].x, points[idx].y, points[idx + 1].x, points[idx + 1].y);
       }
+      ctx.stroke();
     }
   }
 
