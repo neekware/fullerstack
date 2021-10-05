@@ -10,6 +10,7 @@ import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSliderChange } from '@angular/material/slider';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
+import { UixService } from '@fullerstack/ngx-uix';
 import { Subject } from 'rxjs';
 
 import { AnnotatorService } from '../annotator.service';
@@ -31,8 +32,13 @@ export class MenuComponent implements OnDestroy {
   trashIconState = 'back';
   undoIconState = 'back';
   redoIconState = 'back';
+  isFullscreen = false;
 
-  constructor(readonly dialog: MatDialog, readonly annotation: AnnotatorService) {}
+  constructor(
+    readonly dialog: MatDialog,
+    readonly uix: UixService,
+    readonly annotation: AnnotatorService
+  ) {}
 
   openDialog(): void {
     this.menuIconState = this.menuIconState === 'back' ? 'forth' : 'back';
@@ -64,6 +70,11 @@ export class MenuComponent implements OnDestroy {
 
   setLineWidth(event: MatSliderChange) {
     this.annotation.setState({ lineWidth: event.value });
+  }
+
+  toggleFullscreen() {
+    this.uix.toggleFullscreen();
+    this.isFullscreen = this.uix.isFullscreen();
   }
 
   ngOnDestroy() {

@@ -109,6 +109,10 @@ export class UixService implements OnDestroy {
     }
   }
 
+  isFullscreen(): boolean {
+    return this.fsObj.isFullscreen;
+  }
+
   addClass(el: HTMLElement, className: string): void {
     if (el.classList) {
       el.classList.add(className);

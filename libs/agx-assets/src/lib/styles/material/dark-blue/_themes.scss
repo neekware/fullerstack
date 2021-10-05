@@ -11,6 +11,10 @@
   color: rgb(59, 155, 214);
 }
 
+.mat-inverse {
+  color: rgb(0, 0, 0);
+}
+
 // Secondary Theme
 .fs-theme-dark {
   @include angular-material-theme($dark-theme);
@@ -21,6 +25,10 @@
 
   .mat-info {
     color: rgb(112, 182, 226);
+  }
+
+  .mat-inverse {
+    color: rgb(255, 255, 255);
   }
 }
 

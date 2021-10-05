@@ -2,20 +2,20 @@
   fxLayout="column"
   [ngStyle]="{ 'z-index': attr.button.zIndex, position: attr.button.position, top: attr.button.top, right: attr.button.right }"
 >
-  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="menuIconState">
-    <mat-icon class="clickable-menu-icon" svgIcon="menu" (click)="openDialog()"></mat-icon>
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="menuIconState" (click)="openDialog()">
+    <mat-icon class="clickable-menu-icon" svgIcon="menu"></mat-icon>
   </button>
 
-  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="trashIconState">
-    <mat-icon class="clickable-menu-icon" svgIcon="trash-can-outline" (click)="trash()"></mat-icon>
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="trashIconState" (click)="trash()">
+    <mat-icon class="clickable-menu-icon" svgIcon="trash-can-outline"></mat-icon>
   </button>
 
-  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="undoIconState">
-    <mat-icon class="clickable-menu-icon" svgIcon="undo-variant" (click)="undo()"></mat-icon>
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="undoIconState" (click)="undo()">
+    <mat-icon class="clickable-menu-icon" svgIcon="undo-variant"></mat-icon>
   </button>
 
   <button mat-icon-button class="quick-menu-button" [@wiggleIt]="redoIconState">
-    <mat-icon class="clickable-menu-icon" svgIcon="redo-variant" (click)="redo()"></mat-icon>
+    <mat-icon class="clickable-menu-icon" svgIcon="redo-variant"></mat-icon>
   </button>
 
   <button mat-icon-button class="quick-menu-button" [matMenuTriggerFor]="lineWidthPicker">
@@ -37,4 +37,8 @@
       [value]="annotation.state.lineWidth"
     ></mat-slider>
   </mat-menu>
+
+  <button mat-icon-button class="quick-menu-button" (click)="toggleFullscreen()">
+    <mat-icon class="clickable-menu-icon" [svgIcon]="isFullscreen ? 'arrow-collapse-all' : 'arrow-expand-all'"></mat-icon>
+  </button>
 </div>
