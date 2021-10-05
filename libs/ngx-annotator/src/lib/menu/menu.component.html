@@ -11,77 +11,91 @@
     <mat-icon class="clickable-menu-icon" svgIcon="dots-horizontal"></mat-icon>
   </button>
 
-  <mat-menu fxLayout="column" #menuOptions="matMenu">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showTrashButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showTrashButton($event)"
-      >
-      </mat-checkbox>
-      <div>Trash</div>
-      <mat-icon svgIcon="trash-can-outline"></mat-icon>
-    </div>
+  <mat-menu #menuOptions="matMenu">
+    <div fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <mat-checkbox
+            [checked]="annotation.state.menuOptions.showTrashButton"
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="showTrashButton($event)"
+          >
+          </mat-checkbox>
+          <div>Trash</div>
+        </div>
+        <mat-icon svgIcon="trash-can-outline"></mat-icon>
+      </div>
 
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showUndoButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showUndoButton($event)"
-      >
-      </mat-checkbox>
-      <div>Undo</div>
-      <mat-icon svgIcon="undo-variant"></mat-icon>
-    </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <mat-checkbox
+            [checked]="annotation.state.menuOptions.showUndoButton"
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="showUndoButton($event)"
+          >
+          </mat-checkbox>
+          <div>Undo</div>
+        </div>
+        <mat-icon svgIcon="undo-variant"></mat-icon>
+      </div>
 
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showRedoButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showRedoButton($event)"
-      >
-      </mat-checkbox>
-      <div>Redo</div>
-      <mat-icon svgIcon="redo-variant"></mat-icon>
-    </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <mat-checkbox
+            [checked]="annotation.state.menuOptions.showRedoButton"
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="showRedoButton($event)"
+          >
+          </mat-checkbox>
+          <div>Redo</div>
+        </div>
+        <mat-icon svgIcon="redo-variant"></mat-icon>
+      </div>
 
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showLineWidthButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showLineWidthButton($event)"
-      >
-      </mat-checkbox>
-      <div>Line</div>
-      <mat-icon svgIcon="format-line-weight"></mat-icon>
-    </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <mat-checkbox
+            [checked]="annotation.state.menuOptions.showLineWidthButton"
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="showLineWidthButton($event)"
+          >
+          </mat-checkbox>
+          <div>Line</div>
+        </div>
+        <mat-icon svgIcon="format-line-weight"></mat-icon>
+      </div>
 
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showCursorButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showCursorButton($event)"
-      >
-      </mat-checkbox>
-      <div>Cursor</div>
-      <mat-icon svgIcon="cursor-default-click"></mat-icon>
-    </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <mat-checkbox
+            [checked]="annotation.state.menuOptions.showCursorButton"
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="showCursorButton($event)"
+          >
+          </mat-checkbox>
+          <div>Cursor</div>
+        </div>
+        <mat-icon svgIcon="cursor-default-click"></mat-icon>
+      </div>
 
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showFullscreenButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showFullscreenButton($event)"
-      >
-      </mat-checkbox>
-      <div>Fullscreen</div>
-      <mat-icon svgIcon="arrow-expand-all"></mat-icon>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <mat-checkbox
+            [checked]="annotation.state.menuOptions.showFullscreenButton"
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="showFullscreenButton($event)"
+          >
+          </mat-checkbox>
+          <div>Fullscreen</div>
+        </div>
+        <mat-icon svgIcon="arrow-expand-all"></mat-icon>
+      </div>
     </div>
   </mat-menu>
 
