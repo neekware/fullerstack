@@ -30,14 +30,14 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private ctx: CanvasRenderingContext2D | undefined | null;
   private lines: Line[] = [];
 
-  constructor(readonly uix: UixService, readonly annotator: AnnotatorService) {
+  constructor(readonly uix: UixService, readonly annotation: AnnotatorService) {
     this.uix.addClassToBody('annotation-canvas');
   }
 
   ngAfterViewInit() {
     this.canvasEl = this.canvas?.nativeElement;
     this.ctx = this.canvasEl.getContext('2d');
-    this.annotator.setCanvasAttributes(this.ctx);
+    this.annotation.setCanvasAttributes(this.ctx);
     this.resizeCanvas(this.canvasEl);
     this.captureEvents(this.canvasEl);
     this.trashSub();
@@ -46,7 +46,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   }
 
   private trashSub() {
-    this.annotator.trash$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.annotation.trash$.pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.doTrash();
       },
@@ -59,7 +59,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   }
 
   private undoSub() {
-    this.annotator.undo$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.annotation.undo$.pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.doUndo();
       },
@@ -68,14 +68,14 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
 
   doUndo() {
     if (this.lines.length) {
-      this.annotator.undoLastLine(this.lines);
+      this.annotation.undoLastLine(this.lines);
       this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
-      this.lines.forEach((line) => this.annotator.drawLineOnCanvas(line, this.ctx));
+      this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
     }
   }
 
   private redoSub() {
-    this.annotator.redo$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.annotation.redo$.pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.doRedo();
       },
@@ -84,9 +84,9 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
 
   doRedo() {
     if (this.lines.length) {
-      this.annotator.redoLastLine(this.lines);
+      this.annotation.redoLastLine(this.lines);
       this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
-      this.lines.forEach((line) => this.annotator.drawLineOnCanvas(line, this.ctx));
+      this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
     }
   }
 
@@ -96,26 +96,26 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
         canvasEl.width = size.x;
         canvasEl.height = size.y;
         this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
-        this.lines.forEach((line) => this.annotator.drawLineOnCanvas(line, this.ctx));
+        this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
       },
     });
   }
 
   private captureEvents(canvasEl: HTMLCanvasElement) {
-    let line: Line = this.annotator.cloneLine();
+    let line: Line = this.annotation.cloneLine();
 
-    this.annotator
+    this.annotation
       .fromEvents(canvasEl, ['mousedown', 'touchstart'])
       .pipe(
         switchMap(() => {
-          return this.annotator.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
+          return this.annotation.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
             finalize(() => {
               if (line.points.length) {
                 // abandon hidden lines "undo(s)" on any further update
                 this.lines = this.lines
                   .filter((line) => line.visible)
                   .concat({ ...line, visible: true });
-                line = this.annotator.cloneLine();
+                line = this.annotation.cloneLine();
               }
             }),
             takeUntil(fromEvent(canvasEl, 'mouseup')),
@@ -142,11 +142,11 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
           }
 
           if (line.points.length > 1) {
-            this.annotator.drawFromToOnCanvas(
+            this.annotation.drawFromToOnCanvas(
               line.points[line.points.length - 2],
               line.points[line.points.length - 1],
               this.ctx,
-              this.annotator.getCanvasAttributes()
+              this.annotation.getCanvasAttributes()
             );
           }
         },
