@@ -18,23 +18,28 @@ export interface AnnotatorConfig {
   [id: string]: any;
 }
 
-export interface AnnotatorState {
-  lineWidth: number;
-  lineCap: CanvasLineCap;
-  strokeStyle: string;
+export interface LineAttributes {
+  strokeStyle?: string;
+  lineWidth?: number;
+  lineCap?: CanvasLineCap;
+}
+
+export interface AnnotatorState extends LineAttributes {
   cursor: boolean;
   fullscreen: boolean;
+  menuOptions: {
+    showTrashButton: boolean;
+    showUndoButton: boolean;
+    showRedoButton: boolean;
+    showLineWidthButton: boolean;
+    showCursorButton: boolean;
+    showFullscreenButton: boolean;
+  };
 }
 
 export interface Point {
   x: number;
   y: number;
-}
-
-export interface LineAttributes {
-  strokeStyle?: string;
-  lineWidth?: number;
-  lineCap?: CanvasLineCap;
 }
 
 export interface Line {

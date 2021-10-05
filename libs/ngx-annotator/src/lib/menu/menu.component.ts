@@ -7,6 +7,7 @@
  */
 
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSliderChange } from '@angular/material/slider';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
@@ -83,6 +84,42 @@ export class MenuComponent implements OnDestroy {
   toggleCursor() {
     this.cursorIconState = this.cursorIconState === 'back' ? 'forth' : 'back';
     this.annotation.setState({ cursor: !this.annotation.state.cursor });
+  }
+
+  showTrashButton(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, showTrashButton: event.checked },
+    });
+  }
+
+  showUndoButton(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, showUndoButton: event.checked },
+    });
+  }
+
+  showRedoButton(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, showRedoButton: event.checked },
+    });
+  }
+
+  showLineWidthButton(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, showLineWidthButton: event.checked },
+    });
+  }
+
+  showCursorButton(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, showCursorButton: event.checked },
+    });
+  }
+
+  showFullscreenButton(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, showFullscreenButton: event.checked },
+    });
   }
 
   ngOnDestroy() {

@@ -15,3 +15,14 @@
 .material-icons.color_black {
   color: #000000;
 }
+
+.mat-menu-content ng-tns-c248-1 {
+  padding: 10px;
+}
+
+::ng-deep .mat-menu-panel {
+  transform-origin: right top;
+  padding: 15px;
+  margin-top: -27px;
+  margin-right: 31px;
+}

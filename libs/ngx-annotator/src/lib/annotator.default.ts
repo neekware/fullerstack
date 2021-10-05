@@ -2,10 +2,18 @@ import { AnnotatorConfig, AnnotatorState, CanvasButtonAttributes, Line } from '.
 
 export const DefaultAnnotatorState: AnnotatorState = {
   lineCap: 'round',
-  lineWidth: 2.5,
+  lineWidth: 3,
   strokeStyle: '#000',
-  cursor: false,
+  cursor: true,
   fullscreen: true,
+  menuOptions: {
+    showTrashButton: true,
+    showUndoButton: true,
+    showRedoButton: true,
+    showLineWidthButton: true,
+    showCursorButton: true,
+    showFullscreenButton: true,
+  },
 };
 
 /**

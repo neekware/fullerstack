@@ -2,23 +2,125 @@
   fxLayout="column"
   [ngStyle]="{ 'z-index': attr.button.zIndex, position: attr.button.position, top: attr.button.top, right: attr.button.right }"
 >
-  <button mat-icon-button class="quick-menu-button material-icons color_black" [@wiggleIt]="menuIconState" (click)="openDialog()">
-    <mat-icon class="clickable-menu-icon" svgIcon="menu"></mat-icon>
+  <button
+    mat-icon-button
+    class="quick-menu-button material-icons color_black"
+    [@wiggleIt]="menuIconState"
+    [matMenuTriggerFor]="menuOptions"
+  >
+    <mat-icon class="clickable-menu-icon" svgIcon="dots-horizontal"></mat-icon>
   </button>
 
-  <button mat-icon-button class="quick-menu-button material-icons color_black" [@wiggleIt]="trashIconState" (click)="trash()">
+  <mat-menu fxLayout="column" #menuOptions="matMenu">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-checkbox
+        [checked]="annotation.state.menuOptions.showTrashButton"
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="showTrashButton($event)"
+      >
+      </mat-checkbox>
+      <div>Trash</div>
+      <mat-icon svgIcon="trash-can-outline"></mat-icon>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-checkbox
+        [checked]="annotation.state.menuOptions.showUndoButton"
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="showUndoButton($event)"
+      >
+      </mat-checkbox>
+      <div>Undo</div>
+      <mat-icon svgIcon="undo-variant"></mat-icon>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-checkbox
+        [checked]="annotation.state.menuOptions.showRedoButton"
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="showRedoButton($event)"
+      >
+      </mat-checkbox>
+      <div>Redo</div>
+      <mat-icon svgIcon="redo-variant"></mat-icon>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-checkbox
+        [checked]="annotation.state.menuOptions.showLineWidthButton"
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="showLineWidthButton($event)"
+      >
+      </mat-checkbox>
+      <div>Line</div>
+      <mat-icon svgIcon="format-line-weight"></mat-icon>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-checkbox
+        [checked]="annotation.state.menuOptions.showCursorButton"
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="showCursorButton($event)"
+      >
+      </mat-checkbox>
+      <div>Cursor</div>
+      <mat-icon svgIcon="cursor-default-click"></mat-icon>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-checkbox
+        [checked]="annotation.state.menuOptions.showFullscreenButton"
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="showFullscreenButton($event)"
+      >
+      </mat-checkbox>
+      <div>Fullscreen</div>
+      <mat-icon svgIcon="arrow-expand-all"></mat-icon>
+    </div>
+  </mat-menu>
+
+  <button
+    *ngIf="annotation.state.menuOptions.showTrashButton"
+    mat-icon-button
+    class="quick-menu-button material-icons color_black"
+    [@wiggleIt]="trashIconState"
+    (click)="trash()"
+  >
     <mat-icon class="clickable-menu-icon" svgIcon="trash-can-outline"></mat-icon>
   </button>
 
-  <button mat-icon-button class="quick-menu-button material-icons color_black" [@wiggleIt]="undoIconState" (click)="undo()">
+  <button
+    *ngIf="annotation.state.menuOptions.showUndoButton"
+    mat-icon-button
+    class="quick-menu-button material-icons color_black"
+    [@wiggleIt]="undoIconState"
+    (click)="undo()"
+  >
     <mat-icon class="clickable-menu-icon" svgIcon="undo-variant"></mat-icon>
   </button>
 
-  <button mat-icon-button class="quick-menu-button material-icons color_black" [@wiggleIt]="redoIconState" (click)="redo()">
+  <button
+    *ngIf="annotation.state.menuOptions.showRedoButton"
+    mat-icon-button
+    class="quick-menu-button material-icons color_black"
+    [@wiggleIt]="redoIconState"
+    (click)="redo()"
+  >
     <mat-icon class="clickable-menu-icon" svgIcon="redo-variant"></mat-icon>
   </button>
 
-  <button mat-icon-button class="quick-menu-button material-icons color_black" [matMenuTriggerFor]="lineWidthPicker">
+  <button
+    *ngIf="annotation.state.menuOptions.showLineWidthButton"
+    mat-icon-button
+    class="quick-menu-button material-icons color_black"
+    [matMenuTriggerFor]="lineWidthPicker"
+  >
     <mat-icon class="clickable-menu-icon" svgIcon="format-line-weight"></mat-icon>
   </button>
   <mat-menu #lineWidthPicker="matMenu">
@@ -38,14 +140,25 @@
     ></mat-slider>
   </mat-menu>
 
-  <button mat-icon-button class="quick-menu-button material-icons color_black" [@wiggleIt]="cursorIconState" (click)="toggleCursor()">
+  <button
+    *ngIf="annotation.state.menuOptions.showCursorButton"
+    mat-icon-button
+    class="quick-menu-button material-icons color_black"
+    [@wiggleIt]="cursorIconState"
+    (click)="toggleCursor()"
+  >
     <mat-icon
       class="clickable-menu-icon"
       [svgIcon]="annotation.state.cursor ? 'cursor-default-click' : 'cursor-default-click-outline'"
     ></mat-icon>
   </button>
 
-  <button mat-icon-button class="quick-menu-button material-icons color_black" (click)="toggleFullscreen()">
+  <button
+    *ngIf="annotation.state.menuOptions.showFullscreenButton"
+    mat-icon-button
+    class="quick-menu-button material-icons color_black"
+    (click)="toggleFullscreen()"
+  >
     <mat-icon class="clickable-menu-icon" [svgIcon]="isFullscreen ? 'arrow-collapse-all' : 'arrow-expand-all'"></mat-icon>
   </button>
 </div>
