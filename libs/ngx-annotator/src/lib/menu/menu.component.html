@@ -14,7 +14,7 @@
     <mat-icon class="clickable-menu-icon" svgIcon="undo-variant"></mat-icon>
   </button>
 
-  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="redoIconState">
+  <button mat-icon-button class="quick-menu-button" [@wiggleIt]="redoIconState" (click)="redo()">
     <mat-icon class="clickable-menu-icon" svgIcon="redo-variant"></mat-icon>
   </button>
 
