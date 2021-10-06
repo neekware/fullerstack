@@ -15,6 +15,7 @@ import { MaterialModule } from '@fullerstack/ngx-material';
 import { annotatorRoutes } from './annotator.routes';
 import { AnnotatorService } from './annotator.service';
 import { DrawComponent } from './draw/draw.component';
+import { HideMenuComponent } from './menu/hide/hide.component';
 import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
@@ -25,7 +26,7 @@ import { MenuComponent } from './menu/menu.component';
     I18nModule.forChild(),
   ],
   exports: [DrawComponent, MenuComponent],
-  declarations: [DrawComponent, MenuComponent],
+  declarations: [DrawComponent, HideMenuComponent, MenuComponent],
   providers: [AnnotatorService],
 })
 export class AnnotatorModule {}
