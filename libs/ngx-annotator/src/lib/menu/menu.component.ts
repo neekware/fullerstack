@@ -34,41 +34,41 @@ export class MenuComponent implements OnDestroy {
 
   constructor(readonly uix: UixService, readonly annotation: AnnotatorService) {}
 
-  get topPosition(): string | number {
+  get topPosition(): string {
     switch (this.annotation.state.menuOptions.position) {
       case 'top-left':
       case 'top-right':
-        return 0;
+        return '2px';
       default:
         return 'unset';
     }
   }
 
-  get bottomPosition(): string | number {
+  get bottomPosition(): string {
     switch (this.annotation.state.menuOptions.position) {
       case 'bottom-left':
       case 'bottom-right':
-        return 0;
+        return '2px';
       default:
         return 'unset';
     }
   }
 
-  get leftPosition(): string | number {
+  get leftPosition(): string {
     switch (this.annotation.state.menuOptions.position) {
       case 'top-left':
       case 'bottom-left':
-        return 0;
+        return '2px';
       default:
         return 'unset';
     }
   }
 
-  get rightPosition(): string | number {
+  get rightPosition(): string {
     switch (this.annotation.state.menuOptions.position) {
       case 'top-right':
       case 'bottom-right':
-        return 0;
+        return '2px';
       default:
         return 'unset';
     }
