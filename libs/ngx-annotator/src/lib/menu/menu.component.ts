@@ -74,6 +74,12 @@ export class MenuComponent implements OnDestroy {
     }
   }
 
+  get flexLayout(): string {
+    let layout = this.annotation.state.menuOptions.vertical ? 'column' : 'row';
+    layout = this.annotation.state.menuOptions.reverse ? `${layout}-reverse` : layout;
+    return layout;
+  }
+
   options(): void {
     this.optionsIconState = this.optionsIconState === 'back' ? 'forth' : 'back';
   }

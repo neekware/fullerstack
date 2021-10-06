@@ -1,5 +1,5 @@
 <div
-  fxLayout="column"
+  [fxLayout]="flexLayout"
   [ngStyle]="{ 'z-index': 2, position: 'absolute', top: topPosition, bottom: bottomPosition, left: leftPosition, right: rightPosition }"
 >
   <button
@@ -13,7 +13,7 @@
   </button>
 
   <mat-menu #menuOptions="matMenu">
-    <div fxLayout="row" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutGap="30px">
       <fullerstack-menu-position></fullerstack-menu-position>
       <fullerstack-hide-menu></fullerstack-hide-menu>
     </div>
