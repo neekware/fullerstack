@@ -68,6 +68,7 @@ export class AnnotatorService implements OnDestroy {
     this.claimSlice();
     this.subState();
     this.subStorage();
+    this.initState();
     this.logger.info(`[${this.nameSpace}] AnnotatorService ready ...`);
   }
 
@@ -86,8 +87,10 @@ export class AnnotatorService implements OnDestroy {
    * Initialize Layout state
    */
   private initState() {
+    const storageState = localStorage.getItem(ANNOTATOR_STORAGE_KEY);
+    const state = sanitizeJsonStringOrObject<AnnotatorState>(storageState);
     this.store.setState(this.claimId, {
-      ...DefaultAnnotatorState,
+      ...(state || DefaultAnnotatorState),
       appName: this.options.appName,
     });
   }
