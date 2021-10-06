@@ -20,6 +20,7 @@ const DefaultAnnotatorState: AnnotatorState = {
     showRefreshButton: true,
     position: 'top-left',
     vertical: true,
+    reverse: false,
   },
 };
 

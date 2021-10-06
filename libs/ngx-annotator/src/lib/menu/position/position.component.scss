@@ -4,6 +4,7 @@
 
 ::ng-deep .mat-menu-panel {
   padding: 15px;
+  max-width: 320px;
 }
 
 .text {
@@ -16,4 +17,14 @@
 .quick-menu-button {
   margin-top: 3px;
   margin-bottom: 3px;
+}
+
+.reverse-icon-rotate {
+  transform: rotate(90deg);
+}
+
+.header {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
 }

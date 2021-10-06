@@ -1,11 +1,12 @@
-{{ 'COMMON.MENU_POSITION' | translate }}
+<div class="header">{{ 'COMMON.MENU_POSITION' | translate }}</div>
 <mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
 
 <div class="mb1">
-  <mat-radio-group (click)="$event.stopPropagation()">
+  <mat-radio-group (click)="$event.stopPropagation()" fxLayout="column">
     <mat-radio-button
       class="quick-menu-button"
       value="top-right"
+      [checked]="annotation.state.menuOptions.position === 'top-right'"
       color="primary"
       (change)="setPosition($event)"
       (click)="$event.stopPropagation()"
@@ -16,6 +17,7 @@
     <mat-radio-button
       class="quick-menu-button"
       value="top-left"
+      [checked]="annotation.state.menuOptions.position === 'top-left'"
       color="primary"
       (change)="setPosition($event)"
       (click)="$event.stopPropagation()"
@@ -26,6 +28,7 @@
     <mat-radio-button
       class="quick-menu-button"
       value="bottom-right"
+      [checked]="annotation.state.menuOptions.position === 'bottom-right'"
       color="primary"
       (change)="setPosition($event)"
       (click)="$event.stopPropagation()"
@@ -36,27 +39,48 @@
     <mat-radio-button
       class="quick-menu-button"
       value="bottom-left"
+      [checked]="annotation.state.menuOptions.position === 'bottom-left'"
       color="primary"
       (change)="setPosition($event)"
       (click)="$event.stopPropagation()"
     >
       {{ 'COMMON.POSITION.BOTTOM_LEFT' | translate }}
     </mat-radio-button>
-
-    <mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
-
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="row" fxLayoutGap="8px">
-        <mat-checkbox
-          [checked]="annotation.state.menuOptions.vertical"
-          color="primary"
-          (click)="$event.stopPropagation()"
-          (change)="setVertical($event)"
-        >
-        </mat-checkbox>
-        <div class="text">{{ 'COMMON.POSITION.VERTICAL' | translate }}</div>
-      </div>
-      <mat-icon [svgIcon]="annotation.state.menuOptions.vertical ? 'arrow-expand-vertical' : 'arrow-expand-horizontal'"></mat-icon>
-    </div>
   </mat-radio-group>
+</div>
+
+<div class="header">{{ 'COMMON.MENU_ORIENTATION' | translate }}</div>
+<mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
+
+<div class="mb1" fxLayout="column" fxLayoutGap="5px">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <mat-checkbox
+        [checked]="annotation.state.menuOptions.vertical"
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="setVertical($event)"
+      >
+      </mat-checkbox>
+      <div class="text">{{ 'COMMON.POSITION.VERTICAL' | translate }}</div>
+    </div>
+    <mat-icon [svgIcon]="annotation.state.menuOptions.vertical ? 'arrow-expand-vertical' : 'arrow-expand-horizontal'"></mat-icon>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <mat-checkbox
+        [checked]="annotation.state.menuOptions.reverse"
+        color="primary"
+        (click)="$event.stopPropagation()"
+        (change)="setReverse($event)"
+      >
+      </mat-checkbox>
+      <div class="text">{{ 'COMMON.POSITION.REVERSE' | translate }}</div>
+    </div>
+    <mat-icon
+      [class.reverse-icon-rotate]="!annotation.state.menuOptions.vertical"
+      [svgIcon]="annotation.state.menuOptions.reverse ? 'sort-ascending' : 'sort-descending'"
+    ></mat-icon>
+  </div>
 </div>

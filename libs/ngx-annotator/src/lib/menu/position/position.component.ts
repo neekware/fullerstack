@@ -38,6 +38,12 @@ export class MenuPositionComponent implements OnDestroy {
     });
   }
 
+  setReverse(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, reverse: event.checked },
+    });
+  }
+
   showTrashButton(event: MatCheckboxChange) {
     this.annotation.setState({
       menuOptions: { ...this.annotation.state.menuOptions, showTrashButton: event.checked },

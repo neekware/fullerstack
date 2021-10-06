@@ -42,6 +42,7 @@ export interface AnnotatorState extends LineAttributes {
     showRefreshButton: boolean;
     position: MenuPosition;
     vertical: boolean;
+    reverse: boolean;
   };
 }
 
