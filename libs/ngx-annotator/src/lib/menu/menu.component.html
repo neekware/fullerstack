@@ -13,6 +13,9 @@
   </button>
 
   <mat-menu #menuOptions="matMenu">
+    {{ 'COMMON.HIDE_BUTTONS' | translate }}
+    <mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
+
     <div fxLayout="column" fxLayoutGap="5px">
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row" fxLayoutGap="8px">
