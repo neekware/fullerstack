@@ -122,6 +122,12 @@ export class MenuComponent implements OnDestroy {
     });
   }
 
+  showRefreshButton(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, showRefreshButton: event.checked },
+    });
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();

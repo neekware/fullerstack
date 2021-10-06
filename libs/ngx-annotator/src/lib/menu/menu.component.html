@@ -96,6 +96,20 @@
         </div>
         <mat-icon svgIcon="arrow-expand-all"></mat-icon>
       </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <mat-checkbox
+            [checked]="annotation.state.menuOptions.showFullscreenButton"
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="showRefreshButton($event)"
+          >
+          </mat-checkbox>
+          <div>Fullscreen</div>
+        </div>
+        <mat-icon svgIcon="web-refresh"></mat-icon>
+      </div>
     </div>
   </mat-menu>
 
