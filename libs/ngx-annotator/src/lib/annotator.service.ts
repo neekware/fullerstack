@@ -16,6 +16,7 @@ import {
 import { I18nService } from '@fullerstack/ngx-i18n';
 import { LayoutService } from '@fullerstack/ngx-layout';
 import { LoggerService } from '@fullerstack/ngx-logger';
+import { sanitizeJsonStringOrObject, signObject } from '@fullerstack/ngx-shared';
 import { StoreService } from '@fullerstack/ngx-store';
 import { SystemService } from '@fullerstack/ngx-system';
 import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
@@ -23,7 +24,14 @@ import { EMPTY, Observable, Subject, filter, fromEvent, merge, takeUntil } from 
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultAnnotatorConfig, DefaultAnnotatorState, DefaultLine } from './annotator.default';
-import { ANNOTATOR_URL, AnnotatorState, Line, LineAttributes, Point } from './annotator.model';
+import {
+  ANNOTATOR_STORAGE_KEY,
+  ANNOTATOR_URL,
+  AnnotatorState,
+  Line,
+  LineAttributes,
+  Point,
+} from './annotator.model';
 
 @Injectable()
 export class AnnotatorService implements OnDestroy {
@@ -56,25 +64,11 @@ export class AnnotatorService implements OnDestroy {
       (dest, src) => (Array.isArray(dest) ? src : undefined)
     );
 
-    this.router.events
-      .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: () => {
-          if (this.router.url?.startsWith(ANNOTATOR_URL)) {
-            this.layout.setHeadless(true);
-          } else if (this.lastUrl?.startsWith(ANNOTATOR_URL)) {
-            this.layout.setHeadless(false);
-          }
-          this.lastUrl = this.router.url;
-        },
-      });
-
+    this.subRouteChange();
     this.claimSlice();
-    this.initState();
     this.subState();
+    this.subStorage();
+    this.logger.info(`[${this.nameSpace}] AnnotatorService ready ...`);
   }
 
   /**
@@ -98,17 +92,54 @@ export class AnnotatorService implements OnDestroy {
     });
   }
 
+  private subRouteChange() {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: () => {
+          if (this.router.url?.startsWith(ANNOTATOR_URL)) {
+            this.layout.setHeadless(true);
+          } else if (this.lastUrl?.startsWith(ANNOTATOR_URL)) {
+            this.layout.setHeadless(false);
+          }
+          this.lastUrl = this.router.url;
+        },
+      });
+  }
+
   /**
    * Subscribe to Layout state changes
    */
   private subState() {
     this.stateSub$ = this.store.select$<AnnotatorState>(this.nameSpace);
 
-    this.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (newState) => {
-        this.state = { ...DefaultAnnotatorState, ...newState };
+    this.stateSub$
+      .pipe(
+        filter((state) => !!state),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (newState) => {
+          this.state = { ...DefaultAnnotatorState, ...newState };
+          localStorage.setItem(ANNOTATOR_STORAGE_KEY, JSON.stringify(signObject(this.state)));
+        },
+      });
+  }
+
+  private subStorage() {
+    addEventListener(
+      'storage',
+      (event) => {
+        if (event.key === ANNOTATOR_STORAGE_KEY) {
+          const state = sanitizeJsonStringOrObject<AnnotatorState>(event.newValue);
+          this.setState(state || DefaultAnnotatorState);
+        }
       },
-    });
+      false
+    );
   }
 
   setState(newState: Partial<AnnotatorState>) {

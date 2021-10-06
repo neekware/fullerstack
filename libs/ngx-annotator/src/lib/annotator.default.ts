@@ -1,6 +1,7 @@
 import { AnnotatorConfig, AnnotatorState, CanvasButtonAttributes, Line } from './annotator.model';
 
 export const DefaultAnnotatorState: AnnotatorState = {
+  signature: '',
   lineCap: 'round',
   lineJoin: 'round',
   lineWidth: 3,

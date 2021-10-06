@@ -23,19 +23,19 @@ export function signObject<T extends { signature: string }>(obj: T): T {
 
 export function sanitizeJsonStringOrObject<T extends { signature: string }>(
   obj: T | string
-): T | boolean {
+): T | undefined {
   let origObj: T;
 
   if (typeof obj === 'string') {
     try {
       origObj = JSON.parse(obj) as T;
     } catch (e) {
-      return false;
+      return undefined;
     }
   } else {
     origObj = obj;
   }
 
   const testObj = signObject<T>(origObj);
-  return origObj?.signature === testObj?.signature ? origObj : false;
+  return origObj?.signature === testObj?.signature ? origObj : undefined;
 }

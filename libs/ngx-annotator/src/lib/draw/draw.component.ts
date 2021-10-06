@@ -9,7 +9,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 import { UixService } from '@fullerstack/ngx-uix';
 import { Subject, fromEvent } from 'rxjs';
-import { finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
 import { DefaultCanvasButtonAttributes } from '../annotator.default';
@@ -94,16 +94,21 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   }
 
   private stateSub() {
-    this.annotation.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (state) => {
-        this.annotation.setCanvasAttributes(this.ctx, {
-          lineCap: state.lineCap,
-          lineJoin: state.lineJoin,
-          lineWidth: state.lineWidth,
-          strokeStyle: state.strokeStyle,
-        });
-      },
-    });
+    this.annotation.stateSub$
+      .pipe(
+        filter((state) => !!state),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (state) => {
+          this.annotation.setCanvasAttributes(this.ctx, {
+            lineCap: state.lineCap,
+            lineJoin: state.lineJoin,
+            lineWidth: state.lineWidth,
+            strokeStyle: state.strokeStyle,
+          });
+        },
+      });
   }
 
   private resizeCanvas(canvasEl: HTMLCanvasElement) {

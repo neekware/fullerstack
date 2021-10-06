@@ -6,6 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
+export const ANNOTATOR_STORAGE_KEY = 'annotator';
 export const ANNOTATOR_URL = '/annotate';
 
 /**
@@ -26,6 +27,7 @@ export interface LineAttributes {
 }
 
 export interface AnnotatorState extends LineAttributes {
+  signature: string;
   cursor: boolean;
   fullscreen: boolean;
   menuOptions: {
