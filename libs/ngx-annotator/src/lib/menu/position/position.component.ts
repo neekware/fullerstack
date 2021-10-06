@@ -12,7 +12,6 @@ import { MatRadioChange } from '@angular/material/radio';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
 import { Subject } from 'rxjs';
 
-import { MenuPosition } from '../../annotator.model';
 import { AnnotatorService } from '../../annotator.service';
 
 @Component({
@@ -30,6 +29,12 @@ export class MenuPositionComponent implements OnDestroy {
   setPosition(event: MatRadioChange) {
     this.annotation.setState({
       menuOptions: { ...this.annotation.state.menuOptions, position: event.value },
+    });
+  }
+
+  setVertical(event: MatCheckboxChange) {
+    this.annotation.setState({
+      menuOptions: { ...this.annotation.state.menuOptions, vertical: event.checked },
     });
   }
 

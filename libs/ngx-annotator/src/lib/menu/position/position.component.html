@@ -42,5 +42,21 @@
     >
       {{ 'COMMON.POSITION.BOTTOM_LEFT' | translate }}
     </mat-radio-button>
+
+    <mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutGap="8px">
+        <mat-checkbox
+          [checked]="annotation.state.menuOptions.vertical"
+          color="primary"
+          (click)="$event.stopPropagation()"
+          (change)="setVertical($event)"
+        >
+        </mat-checkbox>
+        <div class="text">{{ 'COMMON.POSITION.VERTICAL' | translate }}</div>
+      </div>
+      <mat-icon [svgIcon]="annotation.state.menuOptions.vertical ? 'arrow-expand-vertical' : 'arrow-expand-horizontal'"></mat-icon>
+    </div>
   </mat-radio-group>
 </div>
