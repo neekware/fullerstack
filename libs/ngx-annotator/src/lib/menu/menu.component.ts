@@ -8,14 +8,12 @@
 
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSliderChange } from '@angular/material/slider';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
 import { UixService } from '@fullerstack/ngx-uix';
 import { Subject } from 'rxjs';
 
 import { AnnotatorService } from '../annotator.service';
-import { ConfigComponent } from '../config/config.component';
 import { DefaultCanvasMenuAttributes } from './menu.default';
 
 @Component({
@@ -28,31 +26,18 @@ import { DefaultCanvasMenuAttributes } from './menu.default';
 export class MenuComponent implements OnDestroy {
   @Input() attr = DefaultCanvasMenuAttributes;
   private destroy$ = new Subject<boolean>();
-  private dialogRef: MatDialogRef<ConfigComponent>;
-  menuIconState = 'back';
+
+  optionsIconState = 'back';
   trashIconState = 'back';
   undoIconState = 'back';
   redoIconState = 'back';
   cursorIconState = 'back';
   isFullscreen = false;
 
-  constructor(
-    readonly dialog: MatDialog,
-    readonly uix: UixService,
-    readonly annotation: AnnotatorService
-  ) {}
+  constructor(readonly uix: UixService, readonly annotation: AnnotatorService) {}
 
-  openDialog(): void {
-    this.menuIconState = this.menuIconState === 'back' ? 'forth' : 'back';
-
-    this.dialogRef = this.dialog.open(ConfigComponent, {
-      width: '100vw',
-      height: '100vh',
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      hasBackdrop: false,
-      panelClass: 'annotation-canvas',
-    });
+  options(): void {
+    this.optionsIconState = this.optionsIconState === 'back' ? 'forth' : 'back';
   }
 
   trash() {
@@ -131,6 +116,5 @@ export class MenuComponent implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
-    this.dialogRef?.close();
   }
 }

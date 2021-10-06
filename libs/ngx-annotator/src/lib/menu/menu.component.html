@@ -5,8 +5,9 @@
   <button
     mat-icon-button
     class="quick-menu-button material-icons color-black"
-    [@wiggleIt]="menuIconState"
+    [@wiggleIt]="optionsIconState"
     [matMenuTriggerFor]="menuOptions"
+    (click)="options()"
   >
     <mat-icon class="clickable-menu-icon" svgIcon="dots-horizontal"></mat-icon>
   </button>
