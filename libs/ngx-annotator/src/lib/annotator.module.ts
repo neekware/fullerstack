@@ -19,7 +19,12 @@ import { DrawComponent } from './draw/draw.component';
 import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, I18nModule, RouterModule.forChild(annotatorRoutes)],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    RouterModule.forChild(annotatorRoutes),
+    I18nModule.forChild(),
+  ],
   exports: [DrawComponent, MenuComponent],
   declarations: [DrawComponent, MenuComponent, ConfigComponent],
   providers: [AnnotatorService],
