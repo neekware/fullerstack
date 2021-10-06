@@ -37,12 +37,15 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.canvasEl = this.canvas?.nativeElement;
     this.ctx = this.canvasEl.getContext('2d');
-    this.annotation.setCanvasAttributes(this.ctx);
+    setTimeout(() => {
+      this.annotation.setCanvasAttributes(this.ctx);
+    }, 100);
     this.resizeCanvas(this.canvasEl);
     this.captureEvents(this.canvasEl);
     this.trashSub();
     this.undoSub();
     this.redoSub();
+    this.stateSub();
   }
 
   private trashSub() {
@@ -88,6 +91,19 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
       this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
       this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
     }
+  }
+
+  private stateSub() {
+    this.annotation.stateSub$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (state) => {
+        this.annotation.setCanvasAttributes(this.ctx, {
+          lineCap: state.lineCap,
+          lineJoin: state.lineJoin,
+          lineWidth: state.lineWidth,
+          strokeStyle: state.strokeStyle,
+        });
+      },
+    });
   }
 
   private resizeCanvas(canvasEl: HTMLCanvasElement) {
@@ -147,8 +163,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
             this.annotation.drawFromToOnCanvas(
               line.points[line.points.length - 2],
               line.points[line.points.length - 1],
-              this.ctx,
-              this.annotation.getCanvasAttributes()
+              this.ctx
             );
           }
         },

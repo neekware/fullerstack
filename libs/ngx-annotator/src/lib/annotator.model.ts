@@ -22,6 +22,7 @@ export interface LineAttributes {
   strokeStyle?: string;
   lineWidth?: number;
   lineCap?: CanvasLineCap;
+  lineJoin?: CanvasLineJoin;
 }
 
 export interface AnnotatorState extends LineAttributes {

@@ -2,6 +2,7 @@ import { AnnotatorConfig, AnnotatorState, CanvasButtonAttributes, Line } from '.
 
 export const DefaultAnnotatorState: AnnotatorState = {
   lineCap: 'round',
+  lineJoin: 'round',
   lineWidth: 3,
   strokeStyle: '#000',
   cursor: true,

@@ -183,6 +183,7 @@ export class AnnotatorService implements OnDestroy {
       ctx.strokeStyle = attr.strokeStyle;
     } else {
       ctx.lineCap = this.state.lineCap;
+      ctx.lineJoin = this.state.lineJoin;
       ctx.lineWidth = this.state.lineWidth;
       ctx.strokeStyle = this.state.strokeStyle;
     }
@@ -193,8 +194,7 @@ export class AnnotatorService implements OnDestroy {
    * @param to coordinates of the end point
    * @param from coordinates of the start point
    */
-  drawFromToOnCanvas(to: Point, from: Point, ctx: CanvasRenderingContext2D, attr?: LineAttributes) {
-    this.setCanvasAttributes(ctx, attr);
+  drawFromToOnCanvas(to: Point, from: Point, ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.moveTo(from.x, from.y);
     ctx.lineTo(to.x, to.y);
@@ -205,7 +205,7 @@ export class AnnotatorService implements OnDestroy {
    * Given multiple points, draw a line between them
    * @param line line information including points and attributes of a line
    */
-  drawLineOnCanvas(line: Line, ctx?: CanvasRenderingContext2D) {
+  drawLineOnCanvas(line: Line, ctx: CanvasRenderingContext2D) {
     const { visible, points } = line;
     if (visible && points.length) {
       const start = points[0];
@@ -268,6 +268,15 @@ export class AnnotatorService implements OnDestroy {
         return;
       }
     }
+  }
+
+  /**
+   * Resets the canvas
+   * @param canvasEl canvas element
+   * @param ctx canvas context
+   */
+  resetCanvas(canvasEl: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+    ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
   }
 
   ngOnDestroy() {
