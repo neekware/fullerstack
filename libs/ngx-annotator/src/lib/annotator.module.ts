@@ -9,6 +9,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { I18nModule } from '@fullerstack/ngx-i18n';
 import { MaterialModule } from '@fullerstack/ngx-material';
 
 import { annotatorRoutes } from './annotator.routes';
@@ -18,7 +19,7 @@ import { DrawComponent } from './draw/draw.component';
 import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, RouterModule.forChild(annotatorRoutes)],
+  imports: [CommonModule, MaterialModule, I18nModule, RouterModule.forChild(annotatorRoutes)],
   exports: [DrawComponent, MenuComponent],
   declarations: [DrawComponent, MenuComponent, ConfigComponent],
   providers: [AnnotatorService],
