@@ -12,7 +12,7 @@ import { Subject, fromEvent } from 'rxjs';
 import { filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { v4 as uuidV4 } from 'uuid';
 
-import { DefaultCanvasButtonAttributes } from '../annotator.default';
+import { DefaultCanvasMenuAttributes } from '../annotator.default';
 import { Line } from '../annotator.model';
 import { AnnotatorService } from '../annotator.service';
 
@@ -23,7 +23,7 @@ import { AnnotatorService } from '../annotator.service';
 })
 export class DrawComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') canvas: ElementRef | undefined;
-  @Input() attr = DefaultCanvasButtonAttributes;
+  @Input() attr = DefaultCanvasMenuAttributes;
   uniqId = uuidV4();
   private destroy$ = new Subject<boolean>();
   private canvasEl: HTMLCanvasElement | undefined | null;

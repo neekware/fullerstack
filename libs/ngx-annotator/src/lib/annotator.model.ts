@@ -71,3 +71,21 @@ export interface CanvasButtonAttributes {
 }
 
 export type InputEvents = MouseEvent | TouchEvent;
+
+export interface CanvasMenuAttributes {
+  canvas: {
+    zIndex: number | string;
+    width: number | string;
+    height: number | string;
+    border: number | string;
+  };
+  button: {
+    zIndex: number | string;
+    color?: number | string;
+    top?: number | string;
+    left?: number | string;
+    bottom?: number | string;
+    right?: number | string;
+    position?: number | string;
+  };
+}

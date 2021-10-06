@@ -13,8 +13,8 @@ import { shakeAnimations } from '@fullerstack/ngx-shared';
 import { UixService } from '@fullerstack/ngx-uix';
 import { Subject } from 'rxjs';
 
+import { DefaultCanvasMenuAttributes } from '../annotator.default';
 import { AnnotatorService } from '../annotator.service';
-import { DefaultCanvasMenuAttributes } from './menu.default';
 
 @Component({
   selector: 'fullerstack-menu',

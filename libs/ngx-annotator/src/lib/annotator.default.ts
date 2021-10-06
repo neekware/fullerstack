@@ -1,4 +1,4 @@
-import { AnnotatorConfig, AnnotatorState, CanvasButtonAttributes, Line } from './annotator.model';
+import { AnnotatorConfig, AnnotatorState, CanvasMenuAttributes, Line } from './annotator.model';
 
 export const DefaultAnnotatorState: AnnotatorState = {
   signature: '',
@@ -26,7 +26,7 @@ export const DefaultAnnotatorConfig: AnnotatorConfig = {
   logState: false,
 };
 
-export const DefaultCanvasButtonAttributes: CanvasButtonAttributes = {
+export const DefaultCanvasMenuAttributes: CanvasMenuAttributes = {
   canvas: {
     zIndex: 1,
     width: '100%',
