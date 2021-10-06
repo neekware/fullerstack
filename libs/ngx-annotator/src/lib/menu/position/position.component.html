@@ -1,0 +1,46 @@
+{{ 'COMMON.MENU_POSITION' | translate }}
+<mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
+
+<div class="mb1">
+  <mat-radio-group (click)="$event.stopPropagation()">
+    <mat-radio-button
+      class="quick-menu-button"
+      value="top-right"
+      color="primary"
+      (change)="setPosition($event)"
+      (click)="$event.stopPropagation()"
+    >
+      {{ 'COMMON.POSITION.TOP_RIGHT' | translate }}
+    </mat-radio-button>
+
+    <mat-radio-button
+      class="quick-menu-button"
+      value="top-left"
+      color="primary"
+      (change)="setPosition($event)"
+      (click)="$event.stopPropagation()"
+    >
+      {{ 'COMMON.POSITION.TOP_LEFT' | translate }}
+    </mat-radio-button>
+
+    <mat-radio-button
+      class="quick-menu-button"
+      value="bottom-right"
+      color="primary"
+      (change)="setPosition($event)"
+      (click)="$event.stopPropagation()"
+    >
+      {{ 'COMMON.POSITION.BOTTOM_RIGHT' | translate }}
+    </mat-radio-button>
+
+    <mat-radio-button
+      class="quick-menu-button"
+      value="bottom-left"
+      color="primary"
+      (change)="setPosition($event)"
+      (click)="$event.stopPropagation()"
+    >
+      {{ 'COMMON.POSITION.BOTTOM_LEFT' | translate }}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>

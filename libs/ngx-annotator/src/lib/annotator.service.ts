@@ -23,7 +23,7 @@ import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
 import { EMPTY, Observable, Subject, filter, fromEvent, merge, takeUntil } from 'rxjs';
 import { DeepReadonly } from 'ts-essentials';
 
-import { DefaultAnnotatorConfig, DefaultAnnotatorState, DefaultLine } from './annotator.default';
+import { defaultAnnotatorConfig, defaultAnnotatorState, defaultLine } from './annotator.default';
 import {
   ANNOTATOR_STORAGE_KEY,
   ANNOTATOR_URL,
@@ -38,7 +38,7 @@ export class AnnotatorService implements OnDestroy {
   private nameSpace = 'ANNOTATOR';
   private claimId: string;
   options: DeepReadonly<ApplicationConfig> = DefaultApplicationConfig;
-  state: DeepReadonly<AnnotatorState> = DefaultAnnotatorState;
+  state: DeepReadonly<AnnotatorState> = defaultAnnotatorState();
   stateSub$: Observable<AnnotatorState>;
   private undoObs$ = new Subject<void>();
   private redoObs$ = new Subject<void>();
@@ -59,7 +59,7 @@ export class AnnotatorService implements OnDestroy {
     readonly i18n: I18nService
   ) {
     this.options = ldMergeWith(
-      ldDeepClone({ layout: DefaultAnnotatorConfig }),
+      ldDeepClone({ layout: defaultAnnotatorConfig() }),
       this.config.options,
       (dest, src) => (Array.isArray(dest) ? src : undefined)
     );
@@ -88,9 +88,12 @@ export class AnnotatorService implements OnDestroy {
    */
   private initState() {
     const storageState = localStorage.getItem(ANNOTATOR_STORAGE_KEY);
-    const state = sanitizeJsonStringOrObject<AnnotatorState>(storageState);
+    let state = sanitizeJsonStringOrObject<AnnotatorState>(storageState);
+    state = ldMergeWith(defaultAnnotatorState(), state, (dest, src) =>
+      Array.isArray(dest) ? src : undefined
+    );
     this.store.setState(this.claimId, {
-      ...(state || DefaultAnnotatorState),
+      ...state,
       appName: this.options.appName,
     });
   }
@@ -126,7 +129,7 @@ export class AnnotatorService implements OnDestroy {
       )
       .subscribe({
         next: (newState) => {
-          this.state = { ...DefaultAnnotatorState, ...newState };
+          this.state = { ...defaultAnnotatorState(), ...newState };
           localStorage.setItem(ANNOTATOR_STORAGE_KEY, JSON.stringify(signObject(this.state)));
         },
       });
@@ -138,7 +141,7 @@ export class AnnotatorService implements OnDestroy {
       (event) => {
         if (event.key === ANNOTATOR_STORAGE_KEY) {
           const state = sanitizeJsonStringOrObject<AnnotatorState>(event.newValue);
-          this.setState(state || DefaultAnnotatorState);
+          this.setState({ ...defaultAnnotatorState(), ...state });
         }
       },
       false
@@ -184,7 +187,7 @@ export class AnnotatorService implements OnDestroy {
    */
   cloneLine(initial?: Line) {
     return ldDeepClone({
-      ...(initial || DefaultLine),
+      ...(initial || defaultLine()),
       attributes: {
         lineCap: this.state.lineCap,
         lineWidth: this.state.lineWidth,

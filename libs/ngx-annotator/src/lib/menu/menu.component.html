@@ -1,6 +1,6 @@
 <div
   fxLayout="column"
-  [ngStyle]="{ 'z-index': attr.button.zIndex, position: attr.button.position, top: attr.button.top, right: attr.button.right }"
+  [ngStyle]="{ 'z-index': 2, position: 'absolute', top: topPosition, bottom: bottomPosition, left: leftPosition, right: rightPosition }"
 >
   <button
     mat-icon-button
@@ -13,6 +13,7 @@
   </button>
 
   <mat-menu #menuOptions="matMenu">
+    <fullerstack-menu-position></fullerstack-menu-position>
     <fullerstack-hide-menu></fullerstack-hide-menu>
   </mat-menu>
 

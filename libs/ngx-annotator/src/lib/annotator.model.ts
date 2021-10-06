@@ -19,6 +19,8 @@ export interface AnnotatorConfig {
   [id: string]: any;
 }
 
+export type MenuPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+
 export interface LineAttributes {
   strokeStyle?: string;
   lineWidth?: number;
@@ -38,6 +40,8 @@ export interface AnnotatorState extends LineAttributes {
     showCursorButton: boolean;
     showFullscreenButton: boolean;
     showRefreshButton: boolean;
+    position: MenuPosition;
+    vertical: boolean;
   };
 }
 
@@ -50,42 +54,4 @@ export interface Line {
   points: Point[];
   attributes: LineAttributes;
   visible?: boolean;
-}
-
-export interface CanvasButtonAttributes {
-  canvas: {
-    zIndex: number | string;
-    width: number | string;
-    height: number | string;
-    border: number | string;
-  };
-  button: {
-    zIndex: number | string;
-    color?: number | string;
-    top?: number | string;
-    left?: number | string;
-    bottom?: number | string;
-    right?: number | string;
-    position?: number | string;
-  };
-}
-
-export type InputEvents = MouseEvent | TouchEvent;
-
-export interface CanvasMenuAttributes {
-  canvas: {
-    zIndex: number | string;
-    width: number | string;
-    height: number | string;
-    border: number | string;
-  };
-  button: {
-    zIndex: number | string;
-    color?: number | string;
-    top?: number | string;
-    left?: number | string;
-    bottom?: number | string;
-    right?: number | string;
-    position?: number | string;
-  };
 }

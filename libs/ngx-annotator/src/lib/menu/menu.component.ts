@@ -6,14 +6,13 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSliderChange } from '@angular/material/slider';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
 import { UixService } from '@fullerstack/ngx-uix';
 import { Subject } from 'rxjs';
 
-import { DefaultCanvasMenuAttributes } from '../annotator.default';
 import { AnnotatorService } from '../annotator.service';
 
 @Component({
@@ -24,7 +23,6 @@ import { AnnotatorService } from '../annotator.service';
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class MenuComponent implements OnDestroy {
-  @Input() attr = DefaultCanvasMenuAttributes;
   private destroy$ = new Subject<boolean>();
 
   optionsIconState = 'back';
@@ -35,6 +33,46 @@ export class MenuComponent implements OnDestroy {
   isFullscreen = false;
 
   constructor(readonly uix: UixService, readonly annotation: AnnotatorService) {}
+
+  get topPosition(): string | number {
+    switch (this.annotation.state.menuOptions.position) {
+      case 'top-left':
+      case 'top-right':
+        return 0;
+      default:
+        return 'unset';
+    }
+  }
+
+  get bottomPosition(): string | number {
+    switch (this.annotation.state.menuOptions.position) {
+      case 'bottom-left':
+      case 'bottom-right':
+        return 0;
+      default:
+        return 'unset';
+    }
+  }
+
+  get leftPosition(): string | number {
+    switch (this.annotation.state.menuOptions.position) {
+      case 'top-left':
+      case 'bottom-left':
+        return 0;
+      default:
+        return 'unset';
+    }
+  }
+
+  get rightPosition(): string | number {
+    switch (this.annotation.state.menuOptions.position) {
+      case 'top-right':
+      case 'bottom-right':
+        return 0;
+      default:
+        return 'unset';
+    }
+  }
 
   options(): void {
     this.optionsIconState = this.optionsIconState === 'back' ? 'forth' : 'back';

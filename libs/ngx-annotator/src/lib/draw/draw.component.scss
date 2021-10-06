@@ -1,5 +1,31 @@
-canvas {
+.canvas {
   z-index: 1;
   display: block;
   border: 0;
+  position: absolute;
+}
+
+.menu {
+  z-index: 2;
+  position: relative;
+}
+
+.top-left {
+  top: 0 !important;
+  left: 0 !important;
+}
+
+.top-right {
+  top: 0 !important;
+  right: 0 !important;
+}
+
+.bottom-left {
+  bottom: 0 !important;
+  left: 0 !important;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
 }

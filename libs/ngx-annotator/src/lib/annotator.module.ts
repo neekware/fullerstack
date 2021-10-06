@@ -17,6 +17,7 @@ import { AnnotatorService } from './annotator.service';
 import { DrawComponent } from './draw/draw.component';
 import { HideMenuComponent } from './menu/hide/hide.component';
 import { MenuComponent } from './menu/menu.component';
+import { MenuPositionComponent } from './menu/position/position.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { MenuComponent } from './menu/menu.component';
     I18nModule.forChild(),
   ],
   exports: [DrawComponent, MenuComponent],
-  declarations: [DrawComponent, HideMenuComponent, MenuComponent],
+  declarations: [DrawComponent, HideMenuComponent, MenuPositionComponent, MenuComponent],
   providers: [AnnotatorService],
 })
 export class AnnotatorModule {}

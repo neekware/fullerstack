@@ -1,6 +1,8 @@
-import { AnnotatorConfig, AnnotatorState, CanvasMenuAttributes, Line } from './annotator.model';
+import { cloneDeep as ldDeepClone } from 'lodash-es';
 
-export const DefaultAnnotatorState: AnnotatorState = {
+import { AnnotatorConfig, AnnotatorState, Line } from './annotator.model';
+
+const DefaultAnnotatorState: AnnotatorState = {
   signature: '',
   lineCap: 'round',
   lineJoin: 'round',
@@ -16,35 +18,27 @@ export const DefaultAnnotatorState: AnnotatorState = {
     showCursorButton: true,
     showFullscreenButton: true,
     showRefreshButton: true,
+    position: 'top-left',
+    vertical: true,
   },
+};
+
+export const defaultAnnotatorState = (): AnnotatorState => {
+  return ldDeepClone(DefaultAnnotatorState);
 };
 
 /**
  * Default configuration - Layout module
  */
-export const DefaultAnnotatorConfig: AnnotatorConfig = {
+const DefaultAnnotatorConfig: AnnotatorConfig = {
   logState: false,
 };
 
-export const DefaultCanvasMenuAttributes: CanvasMenuAttributes = {
-  canvas: {
-    zIndex: 1,
-    width: '100%',
-    height: '100%',
-    border: 0,
-  },
-  button: {
-    zIndex: 2,
-    color: 'primary',
-    top: 0,
-    right: 0,
-    bottom: 'unset',
-    left: 'unset',
-    position: 'absolute',
-  },
+export const defaultAnnotatorConfig = (): AnnotatorConfig => {
+  return ldDeepClone(DefaultAnnotatorConfig);
 };
 
-export const DefaultLine: Line = {
+const DefaultLine: Line = {
   points: [],
   attributes: {
     lineCap: DefaultAnnotatorState.lineCap,
@@ -52,4 +46,8 @@ export const DefaultLine: Line = {
     strokeStyle: DefaultAnnotatorState.strokeStyle,
   },
   visible: false,
+};
+
+export const defaultLine = (): Line => {
+  return ldDeepClone(DefaultLine);
 };
