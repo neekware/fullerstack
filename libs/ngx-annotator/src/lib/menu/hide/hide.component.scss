@@ -18,3 +18,16 @@
   font-weight: 600;
   color: #000000;
 }
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: black !important;
+}
+
+::ng-deep .mat-radio-button.mat-primary .mat-radio-inner-circle {
+  background-color: black !important;
+}
+
+::ng-deep.mat-radio-button.mat-primary.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color: black !important;
+}
