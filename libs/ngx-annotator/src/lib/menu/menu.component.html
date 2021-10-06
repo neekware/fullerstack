@@ -9,7 +9,10 @@
     [matMenuTriggerFor]="menuOptions"
     (click)="options()"
   >
-    <mat-icon class="clickable-menu-icon" svgIcon="dots-horizontal"></mat-icon>
+    <mat-icon
+      class="clickable-menu-icon"
+      [svgIcon]="annotation.state.menuOptions.vertical ? 'dots-horizontal' : 'dots-vertical'"
+    ></mat-icon>
   </button>
 
   <mat-menu #menuOptions="matMenu">
