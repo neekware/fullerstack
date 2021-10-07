@@ -2,13 +2,7 @@
   [fxLayout]="flexLayout"
   [ngStyle]="{ 'z-index': 2, position: 'absolute', top: topPosition, bottom: bottomPosition, left: leftPosition, right: rightPosition }"
 >
-  <button
-    mat-icon-button
-    class="quick-menu-button material-icons color-black"
-    [@wiggleIt]="optionsIconState"
-    [matMenuTriggerFor]="menuOptions"
-    (click)="options()"
-  >
+  <button mat-icon-button class="quick-menu-button material-icons color-black" [matMenuTriggerFor]="menuOptions">
     <mat-icon
       class="clickable-menu-icon"
       [svgIcon]="annotation.state.menuOptions.vertical ? 'dots-horizontal' : 'dots-vertical'"

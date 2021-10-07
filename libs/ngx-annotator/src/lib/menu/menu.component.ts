@@ -80,22 +80,24 @@ export class MenuComponent implements OnDestroy {
     return layout;
   }
 
-  options(): void {
-    this.optionsIconState = this.optionsIconState === 'back' ? 'forth' : 'back';
-  }
-
   trash() {
-    this.trashIconState = this.trashIconState === 'back' ? 'forth' : 'back';
+    if (this.annotation.state.menuOptions.vertical) {
+      this.trashIconState = this.trashIconState === 'back' ? 'forth' : 'back';
+    }
     this.annotation.trash();
   }
 
   undo() {
-    this.undoIconState = this.undoIconState === 'back' ? 'forth' : 'back';
+    if (this.annotation.state.menuOptions.vertical) {
+      this.undoIconState = this.undoIconState === 'back' ? 'forth' : 'back';
+    }
     this.annotation.undo();
   }
 
   redo() {
-    this.redoIconState = this.redoIconState === 'back' ? 'forth' : 'back';
+    if (this.annotation.state.menuOptions.vertical) {
+      this.redoIconState = this.redoIconState === 'back' ? 'forth' : 'back';
+    }
     this.annotation.redo();
   }
 
@@ -111,7 +113,9 @@ export class MenuComponent implements OnDestroy {
   }
 
   toggleCursor() {
-    this.cursorIconState = this.cursorIconState === 'back' ? 'forth' : 'back';
+    if (this.annotation.state.menuOptions.vertical) {
+      this.cursorIconState = this.cursorIconState === 'back' ? 'forth' : 'back';
+    }
     this.annotation.setState({ cursor: !this.annotation.state.cursor });
   }
 
