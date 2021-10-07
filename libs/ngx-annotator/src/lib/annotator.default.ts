@@ -46,7 +46,7 @@ const DefaultLine: Line = {
     lineWidth: DefaultAnnotatorState.lineWidth,
     strokeStyle: DefaultAnnotatorState.strokeStyle,
   },
-  visible: false,
+  visible: true,
 };
 
 export const defaultLine = (): Line => {

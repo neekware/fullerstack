@@ -185,7 +185,7 @@ export class AnnotatorService implements OnDestroy {
    * @param initial initial line object
    * @returns line object
    */
-  cloneLine(initial?: Line) {
+  cloneLine(initial?: Partial<Line>): Line {
     return ldDeepClone({
       ...(initial || defaultLine()),
       attributes: {
@@ -193,7 +193,7 @@ export class AnnotatorService implements OnDestroy {
         lineWidth: this.state.lineWidth,
         strokeStyle: this.state.strokeStyle,
       },
-    });
+    }) as Line;
   }
 
   /**
