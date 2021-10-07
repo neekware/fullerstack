@@ -25,45 +25,66 @@ export class HideMenuComponent implements OnDestroy {
 
   constructor(readonly annotation: AnnotatorService) {}
 
-  showTrashButton(event: MatCheckboxChange) {
+  showTrashButton() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showTrashButton: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        showTrashButton: !this.annotation.state.menuOptions.showTrashButton,
+      },
     });
   }
 
-  showUndoButton(event: MatCheckboxChange) {
+  showUndoButton() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showUndoButton: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        showUndoButton: !this.annotation.state.menuOptions.showUndoButton,
+      },
     });
   }
 
-  showRedoButton(event: MatCheckboxChange) {
+  showRedoButton() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showRedoButton: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        showRedoButton: !this.annotation.state.menuOptions.showRedoButton,
+      },
     });
   }
 
-  showLineWidthButton(event: MatCheckboxChange) {
+  showLineWidthButton() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showLineWidthButton: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        showLineWidthButton: !this.annotation.state.menuOptions.showLineWidthButton,
+      },
     });
   }
 
-  showCursorButton(event: MatCheckboxChange) {
+  showCursorButton() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showCursorButton: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        showCursorButton: !this.annotation.state.menuOptions.showCursorButton,
+      },
     });
   }
 
-  showFullscreenButton(event: MatCheckboxChange) {
+  showFullscreenButton() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showFullscreenButton: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        showFullscreenButton: !this.annotation.state.menuOptions.showFullscreenButton,
+      },
     });
   }
 
-  showRefreshButton(event: MatCheckboxChange) {
+  showRefreshButton() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showRefreshButton: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        showRefreshButton: !this.annotation.state.menuOptions.showRefreshButton,
+      },
     });
   }
 

@@ -22,7 +22,7 @@
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
-    "prod": "lite-server -c ./tools/config/bs-server.json --baseDir=./dist/apps/avidtrader",
+    "prod": "yarn build avidtrader && lite-server -c ./tools/config/bs-server.json --baseDir=./dist/apps/avidtrader",
     "<--------- [ affected related ] ------->": "affected related",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",

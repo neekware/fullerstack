@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { UixService } from '@fullerstack/ngx-uix';
 import { Subject, fromEvent } from 'rxjs';
 import { filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
@@ -28,7 +28,11 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   private ctx: CanvasRenderingContext2D | undefined | null;
   private lines: Line[] = [];
 
-  constructor(readonly uix: UixService, readonly annotation: AnnotatorService) {
+  constructor(
+    readonly zone: NgZone,
+    readonly uix: UixService,
+    readonly annotation: AnnotatorService
+  ) {
     this.uix.addClassToBody('annotation-canvas');
   }
 
@@ -127,52 +131,57 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
 
   private captureEvents(canvasEl: HTMLCanvasElement) {
     let line: Line = this.annotation.cloneLine();
-
-    this.annotation
-      .fromEvents(canvasEl, ['mousedown', 'touchstart'])
-      .pipe(
-        switchMap(() => {
-          return this.annotation.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
-            finalize(() => {
-              if (line.points.length) {
-                // abandon hidden lines "the undo(s)" on any further update
-                this.lines = this.lines.filter((lineItem) => lineItem.visible).concat(line);
-                this.annotation.drawDotOnCanvas(line.points[0], this.ctx);
-                line = this.annotation.cloneLine();
-              }
-            }),
-            takeUntil(fromEvent(canvasEl, 'mouseup')),
-            takeUntil(fromEvent(canvasEl, 'mouseleave')),
-            takeUntil(fromEvent(canvasEl, 'touchend'))
-          );
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (event: MouseEvent | TouchEvent) => {
-          const rect = canvasEl.getBoundingClientRect();
-
-          if (event instanceof MouseEvent) {
-            line.points.push({
-              x: event.clientX - rect.left,
-              y: event.clientY - rect.top,
-            });
-          } else if (event instanceof TouchEvent) {
-            line.points.push({
-              x: event.touches[0].clientX - rect.left,
-              y: event.touches[0].clientY - rect.top,
-            });
-          }
-
-          if (line.points.length > 1) {
-            this.annotation.drawFromToOnCanvas(
-              line.points[line.points.length - 2],
-              line.points[line.points.length - 1],
-              this.ctx
+    this.zone.runOutsideAngular(() => {
+      this.annotation
+        .fromEvents(canvasEl, ['mousedown', 'touchstart'])
+        .pipe(
+          switchMap(() => {
+            return this.annotation.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
+              finalize(() => {
+                if (line.points.length) {
+                  // abandon hidden lines "the undo(s)" on any further update
+                  this.lines = this.lines.filter((lineItem) => lineItem.visible).concat(line);
+                  this.zone.run(() => {
+                    this.annotation.drawDotOnCanvas(line.points[0], this.ctx);
+                  });
+                  line = this.annotation.cloneLine();
+                }
+              }),
+              takeUntil(fromEvent(canvasEl, 'mouseup')),
+              takeUntil(fromEvent(canvasEl, 'mouseleave')),
+              takeUntil(fromEvent(canvasEl, 'touchend'))
             );
-          }
-        },
-      });
+          }),
+          takeUntil(this.destroy$)
+        )
+        .subscribe({
+          next: (event: MouseEvent | TouchEvent) => {
+            const rect = canvasEl.getBoundingClientRect();
+
+            if (event instanceof MouseEvent) {
+              line.points.push({
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top,
+              });
+            } else if (event instanceof TouchEvent) {
+              line.points.push({
+                x: event.touches[0].clientX - rect.left,
+                y: event.touches[0].clientY - rect.top,
+              });
+            }
+
+            if (line.points.length > 1) {
+              this.zone.run(() => {
+                this.annotation.drawFromToOnCanvas(
+                  line.points[line.points.length - 2],
+                  line.points[line.points.length - 1],
+                  this.ctx
+                );
+              });
+            }
+          },
+        });
+    });
   }
 
   ngOnDestroy() {

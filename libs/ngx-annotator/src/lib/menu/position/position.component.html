@@ -3,56 +3,48 @@
 
 <div class="mb1">
   <mat-radio-group (click)="$event.stopPropagation()" fxLayout="column">
-    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+    <div class="selection-box" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center" (click)="setPosition('top-right')">
       <mat-radio-button
         class="quick-menu-button"
         value="top-right"
         [checked]="annotation.state.menuOptions.position === 'top-right'"
         color="primary"
-        (change)="setPosition($event)"
-        (click)="$event.stopPropagation()"
       >
         {{ 'COMMON.POSITION.TOP_RIGHT' | translate }}
       </mat-radio-button>
       <mat-icon class="flip-vertical" svgIcon="select-drag"></mat-icon>
     </div>
 
-    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+    <div class="selection-box" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center" (click)="setPosition('top-left')">
       <mat-radio-button
         class="quick-menu-button"
         value="top-left"
         [checked]="annotation.state.menuOptions.position === 'top-left'"
         color="primary"
-        (change)="setPosition($event)"
-        (click)="$event.stopPropagation()"
       >
         {{ 'COMMON.POSITION.TOP_LEFT' | translate }}
       </mat-radio-button>
       <mat-icon class="flip-vertical-horizontal" svgIcon="select-drag"></mat-icon>
     </div>
 
-    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+    <div class="selection-box" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center" (click)="setPosition('bottom-right')">
       <mat-radio-button
         class="quick-menu-button"
         value="bottom-right"
         [checked]="annotation.state.menuOptions.position === 'bottom-right'"
         color="primary"
-        (change)="setPosition($event)"
-        (click)="$event.stopPropagation()"
       >
         {{ 'COMMON.POSITION.BOTTOM_RIGHT' | translate }}
       </mat-radio-button>
       <mat-icon svgIcon="select-drag"></mat-icon>
     </div>
 
-    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+    <div class="selection-box" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center" (click)="setPosition('bottom-left')">
       <mat-radio-button
         class="quick-menu-button"
         value="bottom-left"
         [checked]="annotation.state.menuOptions.position === 'bottom-left'"
         color="primary"
-        (change)="setPosition($event)"
-        (click)="$event.stopPropagation()"
       >
         {{ 'COMMON.POSITION.BOTTOM_LEFT' | translate }}
       </mat-radio-button>
@@ -65,29 +57,17 @@
 <mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
 
 <div class="mb1" fxLayout="column" fxLayoutGap="5px">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleVertical()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.vertical"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="setVertical($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.vertical" color="primary"></mat-checkbox>
       <div class="text">{{ 'COMMON.POSITION.VERTICAL' | translate }}</div>
     </div>
     <mat-icon [svgIcon]="annotation.state.menuOptions.vertical ? 'arrow-expand-vertical' : 'arrow-expand-horizontal'"></mat-icon>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleRevere()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.reverse"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="setReverse($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.reverse" color="primary"> </mat-checkbox>
       <div class="text">{{ 'COMMON.POSITION.REVERSE' | translate }}</div>
     </div>
     <mat-icon

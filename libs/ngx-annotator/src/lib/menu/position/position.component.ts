@@ -7,11 +7,10 @@
  */
 
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatRadioChange } from '@angular/material/radio';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
 import { Subject } from 'rxjs';
 
+import { MenuPosition } from '../../annotator.model';
 import { AnnotatorService } from '../../annotator.service';
 
 @Component({
@@ -26,63 +25,27 @@ export class MenuPositionComponent implements OnDestroy {
 
   constructor(readonly annotation: AnnotatorService) {}
 
-  setPosition(event: MatRadioChange) {
+  setPosition(position: MenuPosition) {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, position: event.value },
+      menuOptions: { ...this.annotation.state.menuOptions, position },
     });
   }
 
-  setVertical(event: MatCheckboxChange) {
+  toggleVertical() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, vertical: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        vertical: !this.annotation.state.menuOptions.vertical,
+      },
     });
   }
 
-  setReverse(event: MatCheckboxChange) {
+  toggleRevere() {
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, reverse: event.checked },
-    });
-  }
-
-  showTrashButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showTrashButton: event.checked },
-    });
-  }
-
-  showUndoButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showUndoButton: event.checked },
-    });
-  }
-
-  showRedoButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showRedoButton: event.checked },
-    });
-  }
-
-  showLineWidthButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showLineWidthButton: event.checked },
-    });
-  }
-
-  showCursorButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showCursorButton: event.checked },
-    });
-  }
-
-  showFullscreenButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showFullscreenButton: event.checked },
-    });
-  }
-
-  showRefreshButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showRefreshButton: event.checked },
+      menuOptions: {
+        ...this.annotation.state.menuOptions,
+        reverse: !this.annotation.state.menuOptions.reverse,
+      },
     });
   }
 

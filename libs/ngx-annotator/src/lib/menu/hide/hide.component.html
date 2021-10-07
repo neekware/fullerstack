@@ -1,16 +1,10 @@
-<div class="header">{{ 'COMMON.HIDE_BUTTONS' | translate }}</div>
+<div class="header">{{ 'COMMON.SHOW_BUTTONS' | translate }}</div>
 <mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
 
 <div fxLayout="column" fxLayoutGap="5px">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="showTrashButton()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showTrashButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showTrashButton($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.showTrashButton" color="primary"></mat-checkbox>
       <div class="text">{{ 'COMMON.TRASH' | translate }}</div>
     </div>
     <div>
@@ -19,15 +13,9 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="showUndoButton()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showUndoButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showUndoButton($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.showUndoButton" color="primary"></mat-checkbox>
       <div class="text">{{ 'COMMON.UNDO' | translate }}</div>
     </div>
     <div>
@@ -36,15 +24,9 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="showRedoButton()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showRedoButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showRedoButton($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.showRedoButton" color="primary"></mat-checkbox>
       <div class="text">{{ 'COMMON.REDO' | translate }}</div>
     </div>
     <div>
@@ -53,15 +35,9 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="showLineWidthButton()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showLineWidthButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showLineWidthButton($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.showLineWidthButton" color="primary"></mat-checkbox>
       <div class="text">{{ 'COMMON.LINE_WEIGHT' | translate }}</div>
     </div>
     <div>
@@ -70,15 +46,9 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="showCursorButton()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showCursorButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showCursorButton($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.showCursorButton" color="primary"> </mat-checkbox>
       <div class="text">{{ 'COMMON.CURSOR' | translate }}</div>
     </div>
     <div>
@@ -87,15 +57,9 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="showFullscreenButton()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showFullscreenButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showFullscreenButton($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.showFullscreenButton" color="primary"></mat-checkbox>
       <div class="text">{{ 'COMMON.FULLSCREEN' | translate }}</div>
     </div>
     <div>
@@ -104,15 +68,9 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="showRefreshButton()">
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox
-        [checked]="annotation.state.menuOptions.showRefreshButton"
-        color="primary"
-        (click)="$event.stopPropagation()"
-        (change)="showRefreshButton($event)"
-      >
-      </mat-checkbox>
+      <mat-checkbox [checked]="annotation.state.menuOptions.showRefreshButton" color="primary"></mat-checkbox>
       <div class="text">{{ 'COMMON.REFRESH' | translate }}</div>
     </div>
     <div>

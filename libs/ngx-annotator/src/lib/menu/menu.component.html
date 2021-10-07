@@ -10,7 +10,7 @@
   </button>
 
   <mat-menu #menuOptions="matMenu">
-    <div fxLayout="row" fxLayoutGap="18px">
+    <div fxLayout="row" fxLayoutGap="18px" (click)="$event.stopPropagation()">
       <fullerstack-menu-position></fullerstack-menu-position>
       <fullerstack-hide-menu></fullerstack-hide-menu>
     </div>
