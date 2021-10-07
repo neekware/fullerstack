@@ -2,11 +2,6 @@
   color: #000000;
 }
 
-::ng-deep .mat-menu-panel {
-  padding: 15px;
-  max-width: 320px;
-}
-
 .text {
   font-size: 14px;
   font-weight: 500;
@@ -27,4 +22,16 @@
   font-size: 16px;
   font-weight: 600;
   color: #000000;
+}
+
+.flip-horizontal {
+  transform: rotate(360deg) scaleX(-1);
+}
+
+.flip-vertical {
+  transform: rotate(360deg) scaleY(-1);
+}
+
+.flip-vertical-horizontal {
+  transform: rotate(360deg) scaleX(-1) scaleY(-1);
 }

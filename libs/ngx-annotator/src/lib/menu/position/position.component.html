@@ -3,49 +3,61 @@
 
 <div class="mb1">
   <mat-radio-group (click)="$event.stopPropagation()" fxLayout="column">
-    <mat-radio-button
-      class="quick-menu-button"
-      value="top-right"
-      [checked]="annotation.state.menuOptions.position === 'top-right'"
-      color="primary"
-      (change)="setPosition($event)"
-      (click)="$event.stopPropagation()"
-    >
-      {{ 'COMMON.POSITION.TOP_RIGHT' | translate }}
-    </mat-radio-button>
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+      <mat-radio-button
+        class="quick-menu-button"
+        value="top-right"
+        [checked]="annotation.state.menuOptions.position === 'top-right'"
+        color="primary"
+        (change)="setPosition($event)"
+        (click)="$event.stopPropagation()"
+      >
+        {{ 'COMMON.POSITION.TOP_RIGHT' | translate }}
+      </mat-radio-button>
+      <mat-icon class="flip-vertical" svgIcon="select-drag"></mat-icon>
+    </div>
 
-    <mat-radio-button
-      class="quick-menu-button"
-      value="top-left"
-      [checked]="annotation.state.menuOptions.position === 'top-left'"
-      color="primary"
-      (change)="setPosition($event)"
-      (click)="$event.stopPropagation()"
-    >
-      {{ 'COMMON.POSITION.TOP_LEFT' | translate }}
-    </mat-radio-button>
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+      <mat-radio-button
+        class="quick-menu-button"
+        value="top-left"
+        [checked]="annotation.state.menuOptions.position === 'top-left'"
+        color="primary"
+        (change)="setPosition($event)"
+        (click)="$event.stopPropagation()"
+      >
+        {{ 'COMMON.POSITION.TOP_LEFT' | translate }}
+      </mat-radio-button>
+      <mat-icon class="flip-vertical-horizontal" svgIcon="select-drag"></mat-icon>
+    </div>
 
-    <mat-radio-button
-      class="quick-menu-button"
-      value="bottom-right"
-      [checked]="annotation.state.menuOptions.position === 'bottom-right'"
-      color="primary"
-      (change)="setPosition($event)"
-      (click)="$event.stopPropagation()"
-    >
-      {{ 'COMMON.POSITION.BOTTOM_RIGHT' | translate }}
-    </mat-radio-button>
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+      <mat-radio-button
+        class="quick-menu-button"
+        value="bottom-right"
+        [checked]="annotation.state.menuOptions.position === 'bottom-right'"
+        color="primary"
+        (change)="setPosition($event)"
+        (click)="$event.stopPropagation()"
+      >
+        {{ 'COMMON.POSITION.BOTTOM_RIGHT' | translate }}
+      </mat-radio-button>
+      <mat-icon svgIcon="select-drag"></mat-icon>
+    </div>
 
-    <mat-radio-button
-      class="quick-menu-button"
-      value="bottom-left"
-      [checked]="annotation.state.menuOptions.position === 'bottom-left'"
-      color="primary"
-      (change)="setPosition($event)"
-      (click)="$event.stopPropagation()"
-    >
-      {{ 'COMMON.POSITION.BOTTOM_LEFT' | translate }}
-    </mat-radio-button>
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between center">
+      <mat-radio-button
+        class="quick-menu-button"
+        value="bottom-left"
+        [checked]="annotation.state.menuOptions.position === 'bottom-left'"
+        color="primary"
+        (change)="setPosition($event)"
+        (click)="$event.stopPropagation()"
+      >
+        {{ 'COMMON.POSITION.BOTTOM_LEFT' | translate }}
+      </mat-radio-button>
+      <mat-icon class="flip-horizontal" svgIcon="select-drag"></mat-icon>
+    </div>
   </mat-radio-group>
 </div>
 

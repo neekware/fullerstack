@@ -22,6 +22,8 @@
 
 ::ng-deep .mat-menu-panel {
   padding: 15px;
+  min-width: unset;
+  max-width: unset;
 }
 
 .text {
