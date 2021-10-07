@@ -138,6 +138,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
                   .filter((lineItem) => lineItem.visible)
                   .concat({ ...line, visible: true });
                 line = this.annotation.cloneLine();
+                this.annotation.drawDotOnCanvas(line.points[0], this.ctx);
               }
             }),
             takeUntil(fromEvent(canvasEl, 'mouseup')),

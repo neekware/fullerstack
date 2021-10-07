@@ -239,6 +239,17 @@ export class AnnotatorService implements OnDestroy {
   }
 
   /**
+   * Draw a single dot on the canvas
+   * @param dot coordinate of a dot
+   * @param ctx canvas context
+   */
+  drawDotOnCanvas(dot: Point, ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.moveTo(dot.x, dot.y);
+    ctx.stroke();
+  }
+
+  /**
    * Given multiple points, draw a line between them
    * @param line line information including points and attributes of a line
    */
