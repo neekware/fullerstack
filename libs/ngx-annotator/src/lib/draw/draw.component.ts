@@ -133,7 +133,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
           return this.annotation.fromEvents(canvasEl, ['mousemove', 'touchmove']).pipe(
             finalize(() => {
               if (line.points.length) {
-                // abandon hidden lines "undo(s)" on any further update
+                // abandon hidden lines "the undo(s)" on any further update
                 this.lines = this.lines
                   .filter((lineItem) => lineItem.visible)
                   .concat({ ...line, visible: true });
