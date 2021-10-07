@@ -38,7 +38,16 @@ const graphqlConfig: GqlModuleOptions = {
   },
   cors: {
     credentials: true,
-    origin: 'http://localhost:4200',
+    origin: [
+      'http://0.0.0.0:4200',
+      'http://0.0.0.0:4201',
+      'http://0.0.0.0:4201',
+      'http://0.0.0.0:8000',
+      'http://localhost:4200',
+      'http://localhost:4201',
+      'http://localhost:4201',
+      'http://localhost:8000',
+    ],
   },
 };
 
