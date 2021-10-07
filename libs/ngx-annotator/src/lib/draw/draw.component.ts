@@ -117,6 +117,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
         canvasEl.style.width = `${size.x}px`;
         canvasEl.style.height = `${size.y}px`;
         this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+        this.annotation.setCanvasAttributes(this.ctx);
         this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
       },
     });
