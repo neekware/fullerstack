@@ -10,17 +10,17 @@ const DefaultAnnotatorState: AnnotatorState = {
   strokeStyle: '#000',
   cursor: true,
   fullscreen: true,
-  menuOptions: {
-    showTrashButton: true,
-    showUndoButton: true,
-    showRedoButton: true,
-    showLineWidthButton: true,
-    showCursorButton: true,
-    showFullscreenButton: true,
-    showRefreshButton: true,
-    position: 'top-left',
-    vertical: true,
-    reverse: false,
+  position: 'top-left',
+  vertical: true,
+  reverse: false,
+  buttonVisibility: {
+    trash: true,
+    undo: true,
+    redo: true,
+    lineWidth: true,
+    cursor: true,
+    fullscreen: true,
+    refresh: true,
   },
 };
 

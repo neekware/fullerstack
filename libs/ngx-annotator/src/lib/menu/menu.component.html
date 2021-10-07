@@ -2,22 +2,19 @@
   [fxLayout]="flexLayout"
   [ngStyle]="{ 'z-index': 2, position: 'absolute', top: topPosition, bottom: bottomPosition, left: leftPosition, right: rightPosition }"
 >
-  <button mat-icon-button class="quick-menu-button material-icons color-black" [matMenuTriggerFor]="menuOptions">
-    <mat-icon
-      class="clickable-menu-icon"
-      [svgIcon]="annotation.state.menuOptions.vertical ? 'dots-horizontal' : 'dots-vertical'"
-    ></mat-icon>
+  <button mat-icon-button class="quick-menu-button material-icons color-black" [matMenuTriggerFor]="buttonVisibility">
+    <mat-icon class="clickable-menu-icon" [svgIcon]="annotation.state.vertical ? 'dots-horizontal' : 'dots-vertical'"></mat-icon>
   </button>
 
-  <mat-menu #menuOptions="matMenu">
-    <div fxLayout="row" fxLayoutGap="18px" (click)="$event.stopPropagation()">
+  <mat-menu #buttonVisibility="matMenu">
+    <div fxLayout="row" fxLayoutGap="18px">
       <fullerstack-menu-position></fullerstack-menu-position>
       <fullerstack-hide-menu></fullerstack-hide-menu>
     </div>
   </mat-menu>
 
   <button
-    *ngIf="annotation.state.menuOptions.showTrashButton"
+    *ngIf="annotation.state.buttonVisibility.trash"
     mat-icon-button
     class="quick-menu-button material-icons color-black"
     [@wiggleIt]="trashIconState"
@@ -27,7 +24,7 @@
   </button>
 
   <button
-    *ngIf="annotation.state.menuOptions.showUndoButton"
+    *ngIf="annotation.state.buttonVisibility.undo"
     mat-icon-button
     class="quick-menu-button material-icons color-black"
     [@wiggleIt]="undoIconState"
@@ -37,7 +34,7 @@
   </button>
 
   <button
-    *ngIf="annotation.state.menuOptions.showRedoButton"
+    *ngIf="annotation.state.buttonVisibility.redo"
     mat-icon-button
     class="quick-menu-button material-icons color-black"
     [@wiggleIt]="redoIconState"
@@ -47,7 +44,7 @@
   </button>
 
   <button
-    *ngIf="annotation.state.menuOptions.showLineWidthButton"
+    *ngIf="annotation.state.buttonVisibility.lineWidth"
     mat-icon-button
     class="quick-menu-button material-icons color-black"
     [matMenuTriggerFor]="lineWidthPicker"
@@ -69,7 +66,7 @@
   </mat-menu>
 
   <button
-    *ngIf="annotation.state.menuOptions.showCursorButton"
+    *ngIf="annotation.state.buttonVisibility.cursor"
     mat-icon-button
     class="quick-menu-button material-icons color-black"
     [@wiggleIt]="cursorIconState"
@@ -82,7 +79,7 @@
   </button>
 
   <button
-    *ngIf="annotation.state.menuOptions.showFullscreenButton"
+    *ngIf="annotation.state.buttonVisibility.fullscreen"
     mat-icon-button
     class="quick-menu-button material-icons color-black"
     (click)="toggleFullscreen()"
@@ -91,7 +88,7 @@
   </button>
 
   <button
-    *ngIf="annotation.state.menuOptions.showRefreshButton"
+    *ngIf="annotation.state.buttonVisibility.refresh"
     mat-icon-button
     class="quick-menu-button material-icons color-black"
     (click)="uix.refreshPage()"

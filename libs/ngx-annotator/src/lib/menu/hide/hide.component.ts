@@ -7,10 +7,10 @@
  */
 
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
 import { Subject } from 'rxjs';
 
+import { ButtonType } from '../../annotator.model';
 import { AnnotatorService } from '../../annotator.service';
 
 @Component({
@@ -25,65 +25,12 @@ export class HideMenuComponent implements OnDestroy {
 
   constructor(readonly annotation: AnnotatorService) {}
 
-  showTrashButton() {
+  toggleButtonVisibility(event: Event, buttonType: ButtonType) {
+    event.stopPropagation();
     this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        showTrashButton: !this.annotation.state.menuOptions.showTrashButton,
-      },
-    });
-  }
-
-  showUndoButton() {
-    this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        showUndoButton: !this.annotation.state.menuOptions.showUndoButton,
-      },
-    });
-  }
-
-  showRedoButton() {
-    this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        showRedoButton: !this.annotation.state.menuOptions.showRedoButton,
-      },
-    });
-  }
-
-  showLineWidthButton() {
-    this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        showLineWidthButton: !this.annotation.state.menuOptions.showLineWidthButton,
-      },
-    });
-  }
-
-  showCursorButton() {
-    this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        showCursorButton: !this.annotation.state.menuOptions.showCursorButton,
-      },
-    });
-  }
-
-  showFullscreenButton() {
-    this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        showFullscreenButton: !this.annotation.state.menuOptions.showFullscreenButton,
-      },
-    });
-  }
-
-  showRefreshButton() {
-    this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        showRefreshButton: !this.annotation.state.menuOptions.showRefreshButton,
+      buttonVisibility: {
+        ...this.annotation.state.buttonVisibility,
+        [buttonType]: !this.annotation.state.buttonVisibility[buttonType],
       },
     });
   }

@@ -25,27 +25,27 @@ export class MenuPositionComponent implements OnDestroy {
 
   constructor(readonly annotation: AnnotatorService) {}
 
-  setPosition(position: MenuPosition) {
+  setPosition(event: Event, position: MenuPosition) {
+    event.stopPropagation();
     this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, position },
+      ...this.annotation.state,
+      position,
     });
   }
 
-  toggleVertical() {
+  toggleVertical(event: Event) {
+    event.stopPropagation();
     this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        vertical: !this.annotation.state.menuOptions.vertical,
-      },
+      ...this.annotation.state,
+      vertical: !this.annotation.state.vertical,
     });
   }
 
-  toggleRevere() {
+  toggleRevere(event: Event) {
+    event.stopPropagation();
     this.annotation.setState({
-      menuOptions: {
-        ...this.annotation.state.menuOptions,
-        reverse: !this.annotation.state.menuOptions.reverse,
-      },
+      ...this.annotation.state,
+      reverse: !this.annotation.state.reverse,
     });
   }
 

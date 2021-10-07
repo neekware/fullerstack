@@ -7,7 +7,6 @@
  */
 
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSliderChange } from '@angular/material/slider';
 import { shakeAnimations } from '@fullerstack/ngx-shared';
 import { UixService } from '@fullerstack/ngx-uix';
@@ -35,7 +34,7 @@ export class MenuComponent implements OnDestroy {
   constructor(readonly uix: UixService, readonly annotation: AnnotatorService) {}
 
   get topPosition(): string {
-    switch (this.annotation.state.menuOptions.position) {
+    switch (this.annotation.state.position) {
       case 'top-left':
       case 'top-right':
         return '2px';
@@ -45,7 +44,7 @@ export class MenuComponent implements OnDestroy {
   }
 
   get bottomPosition(): string {
-    switch (this.annotation.state.menuOptions.position) {
+    switch (this.annotation.state.position) {
       case 'bottom-left':
       case 'bottom-right':
         return '2px';
@@ -55,7 +54,7 @@ export class MenuComponent implements OnDestroy {
   }
 
   get leftPosition(): string {
-    switch (this.annotation.state.menuOptions.position) {
+    switch (this.annotation.state.position) {
       case 'top-left':
       case 'bottom-left':
         return '2px';
@@ -65,7 +64,7 @@ export class MenuComponent implements OnDestroy {
   }
 
   get rightPosition(): string {
-    switch (this.annotation.state.menuOptions.position) {
+    switch (this.annotation.state.position) {
       case 'top-right':
       case 'bottom-right':
         return '2px';
@@ -75,27 +74,27 @@ export class MenuComponent implements OnDestroy {
   }
 
   get flexLayout(): string {
-    let layout = this.annotation.state.menuOptions.vertical ? 'column' : 'row';
-    layout = this.annotation.state.menuOptions.reverse ? `${layout}-reverse` : layout;
+    let layout = this.annotation.state.vertical ? 'column' : 'row';
+    layout = this.annotation.state.reverse ? `${layout}-reverse` : layout;
     return layout;
   }
 
   trash() {
-    if (this.annotation.state.menuOptions.vertical) {
+    if (this.annotation.state.vertical) {
       this.trashIconState = this.trashIconState === 'back' ? 'forth' : 'back';
     }
     this.annotation.trash();
   }
 
   undo() {
-    if (this.annotation.state.menuOptions.vertical) {
+    if (this.annotation.state.vertical) {
       this.undoIconState = this.undoIconState === 'back' ? 'forth' : 'back';
     }
     this.annotation.undo();
   }
 
   redo() {
-    if (this.annotation.state.menuOptions.vertical) {
+    if (this.annotation.state.vertical) {
       this.redoIconState = this.redoIconState === 'back' ? 'forth' : 'back';
     }
     this.annotation.redo();
@@ -113,52 +112,10 @@ export class MenuComponent implements OnDestroy {
   }
 
   toggleCursor() {
-    if (this.annotation.state.menuOptions.vertical) {
+    if (this.annotation.state.vertical) {
       this.cursorIconState = this.cursorIconState === 'back' ? 'forth' : 'back';
     }
     this.annotation.setState({ cursor: !this.annotation.state.cursor });
-  }
-
-  showTrashButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showTrashButton: event.checked },
-    });
-  }
-
-  showUndoButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showUndoButton: event.checked },
-    });
-  }
-
-  showRedoButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showRedoButton: event.checked },
-    });
-  }
-
-  showLineWidthButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showLineWidthButton: event.checked },
-    });
-  }
-
-  showCursorButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showCursorButton: event.checked },
-    });
-  }
-
-  showFullscreenButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showFullscreenButton: event.checked },
-    });
-  }
-
-  showRefreshButton(event: MatCheckboxChange) {
-    this.annotation.setState({
-      menuOptions: { ...this.annotation.state.menuOptions, showRefreshButton: event.checked },
-    });
   }
 
   ngOnDestroy() {
