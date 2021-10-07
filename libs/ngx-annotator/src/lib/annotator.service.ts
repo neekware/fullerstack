@@ -227,6 +227,19 @@ export class AnnotatorService implements OnDestroy {
   }
 
   /**
+   * Draw a single dot on the canvas
+   * @param dot coordinate of a dot
+   * @param ctx canvas context
+   */
+  drawDotOnCanvas(dot: Point, ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.moveTo(dot.x, dot.y);
+    ctx.closePath();
+    ctx.stroke();
+    console.log('drawDotOnCanvas', dot);
+  }
+
+  /**
    * Given two points, draws a line between them on the canvas
    * @param to coordinates of the end point
    * @param from coordinates of the start point
@@ -235,18 +248,9 @@ export class AnnotatorService implements OnDestroy {
     ctx.beginPath();
     ctx.moveTo(from.x, from.y);
     ctx.lineTo(to.x, to.y);
+    ctx.closePath();
     ctx.stroke();
-  }
-
-  /**
-   * Draw a single dot on the canvas
-   * @param dot coordinate of a dot
-   * @param ctx canvas context
-   */
-  drawDotOnCanvas(dot: Point, ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.moveTo(dot.x, dot.y);
-    ctx.stroke();
+    console.log('drawFromToOnCanvas', to, from);
   }
 
   /**
@@ -261,8 +265,8 @@ export class AnnotatorService implements OnDestroy {
 
       if (points.length < 3) {
         ctx.arc(start.x, start.y, ctx.lineWidth / 2, 0, Math.PI * 2, !0);
-        ctx.closePath();
         ctx.fill();
+        console.log('drawLineOnCanvas Start', start);
       } else {
         ctx.lineTo(start.x, start.y);
         let idx: number;
@@ -276,6 +280,7 @@ export class AnnotatorService implements OnDestroy {
           ctx.quadraticCurveTo(from.x, from.y, mid.x, mid.y);
         }
         ctx.quadraticCurveTo(points[idx].x, points[idx].y, points[idx + 1].x, points[idx + 1].y);
+        console.log('drawLineOnCanvas End', points[idx + 1]);
       }
       ctx.stroke();
     }

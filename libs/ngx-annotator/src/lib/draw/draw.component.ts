@@ -68,7 +68,8 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   }
 
   doUndo() {
-    if (this.lines.length) {
+    const atLeastOneVisibleLineToUndo = this.lines[0]?.visible;
+    if (atLeastOneVisibleLineToUndo) {
       this.annotation.undoLastLine(this.lines);
       this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
       this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
@@ -84,7 +85,8 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
   }
 
   doRedo() {
-    if (this.lines.length) {
+    const atLeastOneInvisibleLineToRedo = !this.lines[this.lines.length - 1].visible;
+    if (atLeastOneInvisibleLineToRedo) {
       this.annotation.redoLastLine(this.lines);
       this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
       this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
