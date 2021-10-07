@@ -136,11 +136,9 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
             finalize(() => {
               if (line.points.length) {
                 // abandon hidden lines "the undo(s)" on any further update
-                this.lines = this.lines
-                  .filter((lineItem) => lineItem.visible)
-                  .concat({ ...line, visible: true });
-                line = this.annotation.cloneLine();
+                this.lines = this.lines.filter((lineItem) => lineItem.visible).concat(line);
                 this.annotation.drawDotOnCanvas(line.points[0], this.ctx);
+                line = this.annotation.cloneLine();
               }
             }),
             takeUntil(fromEvent(canvasEl, 'mouseup')),
