@@ -2,7 +2,7 @@
 <mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
 
 <div class="mb1">
-  <mat-radio-group (click)="$event.stopPropagation()" fxLayout="column">
+  <mat-radio-group fxLayout="column">
     <div
       *ngFor="let corner of corners"
       class="selection-box"
@@ -11,7 +11,7 @@
       fxLayoutAlign="space-between center"
       (click)="setPosition($event, corner.position)"
     >
-      <mat-radio-button class="quick-menu-button" value="top-right" [checked]="isPosition(corner.position)" color="primary">
+      <mat-radio-button class="quick-menu-button" [value]="corner.position" [checked]="isPosition(corner.position)" color="primary">
         {{ corner.label | translate }}
       </mat-radio-button>
       <mat-icon [ngClass]="corner.class" [svgIcon]="corner.icon"></mat-icon>

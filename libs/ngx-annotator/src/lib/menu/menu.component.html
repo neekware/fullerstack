@@ -1,4 +1,5 @@
 <div
+  (click)="$event.stopPropagation()"
   [fxLayout]="flexLayout"
   [ngStyle]="{ 'z-index': 2, position: 'absolute', top: topPosition, bottom: bottomPosition, left: leftPosition, right: rightPosition }"
 >
