@@ -24,6 +24,11 @@
   padding: 15px;
   min-width: unset;
   max-width: unset;
+  box-shadow: unset;
+}
+
+::ng-deep .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
+  background-color: black;
 }
 
 .text {
