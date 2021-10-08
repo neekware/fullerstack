@@ -55,14 +55,16 @@
     <mat-slider
       color="primary"
       thumbLabel
-      tickInterval=".01"
-      step=".1"
-      min="1"
+      tickInterval=".1"
+      step=".5"
+      min="2"
       max="10"
+      bubbles="true"
       aria-label="units"
       (change)="setLineWidth($event)"
       [value]="annotation.state.lineWidth"
     ></mat-slider>
+    <mat-divider class="slider-line-width" [ngStyle]="{ 'border-top': annotation.state.lineWidth * 1.4 + 'px solid black' }"></mat-divider>
   </mat-menu>
 
   <button
