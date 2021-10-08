@@ -60,7 +60,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
 
   doTrash() {
     this.lines = [];
-    this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+    this.annotation.resetCanvas(this.canvasEl, this.ctx);
   }
 
   private undoSub() {
@@ -75,7 +75,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
     const atLeastOneVisibleLineToUndo = this.lines[0]?.visible;
     if (atLeastOneVisibleLineToUndo) {
       this.annotation.undoLastLine(this.lines);
-      this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+      this.annotation.resetCanvas(this.canvasEl, this.ctx);
       this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
     }
   }
@@ -92,7 +92,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
     const atLeastOneInvisibleLineToRedo = !this.lines[this.lines.length - 1].visible;
     if (atLeastOneInvisibleLineToRedo) {
       this.annotation.redoLastLine(this.lines);
-      this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+      this.annotation.resetCanvas(this.canvasEl, this.ctx);
       this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
     }
   }
@@ -122,7 +122,7 @@ export class DrawComponent implements AfterViewInit, OnDestroy {
         canvasEl.height = size.y;
         canvasEl.style.width = `${size.x}px`;
         canvasEl.style.height = `${size.y}px`;
-        this.ctx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+        this.annotation.resetCanvas(this.canvasEl, this.ctx);
         this.annotation.setCanvasAttributes(this.ctx);
         this.lines.forEach((line) => this.annotation.drawLineOnCanvas(line, this.ctx));
       },
