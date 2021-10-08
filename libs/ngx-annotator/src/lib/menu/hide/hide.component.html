@@ -7,14 +7,13 @@
     class="selection-box"
     fxLayout="row"
     fxLayoutAlign="space-between center"
+    fxLayoutGap="3px"
     (click)="toggleButtonVisibility($event, actionButton.type)"
   >
-    <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox [checked]="isButtonVisible(actionButton.type)" color="primary"></mat-checkbox>
-      <div class="text">{{ actionButton.label | translate }}</div>
-    </div>
+    <mat-icon [svgIcon]="isButtonVisible(actionButton.type) ? 'checkbox-marked' : 'checkbox-blank-outline'"></mat-icon>
+    <div fxFlex="auto" class="text">{{ actionButton.label | translate }}</div>
     <div>
-      <mat-icon [svgIcon]="isButtonVisible(actionButton.type) ? 'eye' : 'eye-off'"></mat-icon>
+      <mat-icon [svgIcon]="isButtonVisible(actionButton.type) ? 'eye-off' : 'eye'"></mat-icon>
       <mat-icon [svgIcon]="actionButton.icon"></mat-icon>
     </div>
   </div>
