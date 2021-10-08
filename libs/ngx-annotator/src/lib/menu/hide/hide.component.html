@@ -2,80 +2,20 @@
 <mat-divider class="mb1" [ngStyle]="{ 'border-top': '2px solid black' }"></mat-divider>
 
 <div fxLayout="column" fxLayoutGap="5px">
-  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleButtonVisibility($event, 'trash')">
+  <div
+    *ngFor="let actionButton of actionButtons"
+    class="selection-box"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    (click)="toggleButtonVisibility($event, actionButton.type)"
+  >
     <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox [checked]="annotation.state.buttonVisibility.trash" color="primary"></mat-checkbox>
-      <div class="text">{{ 'COMMON.TRASH' | translate }}</div>
+      <mat-checkbox [checked]="isButtonVisible(actionButton.type)" color="primary"></mat-checkbox>
+      <div class="text">{{ actionButton.label | translate }}</div>
     </div>
     <div>
-      <mat-icon [svgIcon]="annotation.state.buttonVisibility.trash ? 'eye' : 'eye-off'"></mat-icon>
-      <mat-icon svgIcon="trash-can-outline"></mat-icon>
-    </div>
-  </div>
-
-  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleButtonVisibility($event, 'undo')">
-    <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox [checked]="annotation.state.buttonVisibility.undo" color="primary"></mat-checkbox>
-      <div class="text">{{ 'COMMON.UNDO' | translate }}</div>
-    </div>
-    <div>
-      <mat-icon [svgIcon]="annotation.state.buttonVisibility.undo ? 'eye' : 'eye-off'"></mat-icon>
-      <mat-icon svgIcon="undo"></mat-icon>
-    </div>
-  </div>
-
-  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleButtonVisibility($event, 'redo')">
-    <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox [checked]="annotation.state.buttonVisibility.redo" color="primary"></mat-checkbox>
-      <div class="text">{{ 'COMMON.REDO' | translate }}</div>
-    </div>
-    <div>
-      <mat-icon [svgIcon]="annotation.state.buttonVisibility.redo ? 'eye' : 'eye-off'"></mat-icon>
-      <mat-icon svgIcon="redo"></mat-icon>
-    </div>
-  </div>
-
-  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleButtonVisibility($event, 'lineWidth')">
-    <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox [checked]="annotation.state.buttonVisibility.lineWidth" color="primary"></mat-checkbox>
-      <div class="text">{{ 'COMMON.LINE_WEIGHT' | translate }}</div>
-    </div>
-    <div>
-      <mat-icon [svgIcon]="annotation.state.buttonVisibility.lineWidth ? 'eye' : 'eye-off'"></mat-icon>
-      <mat-icon svgIcon="format-line-weight"></mat-icon>
-    </div>
-  </div>
-
-  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleButtonVisibility($event, 'cursor')">
-    <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox [checked]="annotation.state.buttonVisibility.cursor" color="primary"> </mat-checkbox>
-      <div class="text">{{ 'COMMON.CURSOR' | translate }}</div>
-    </div>
-    <div>
-      <mat-icon [svgIcon]="annotation.state.buttonVisibility.cursor ? 'eye' : 'eye-off'"></mat-icon>
-      <mat-icon svgIcon="cursor-default-click"></mat-icon>
-    </div>
-  </div>
-
-  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleButtonVisibility($event, 'fullscreen')">
-    <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox [checked]="annotation.state.buttonVisibility.fullscreen" color="primary"></mat-checkbox>
-      <div class="text">{{ 'COMMON.FULLSCREEN' | translate }}</div>
-    </div>
-    <div>
-      <mat-icon [svgIcon]="annotation.state.buttonVisibility.fullscreen ? 'eye' : 'eye-off'"></mat-icon>
-      <mat-icon svgIcon="arrow-expand-all"></mat-icon>
-    </div>
-  </div>
-
-  <div class="selection-box" fxLayout="row" fxLayoutAlign="space-between center" (click)="toggleButtonVisibility($event, 'refresh')">
-    <div fxLayout="row" fxLayoutGap="8px">
-      <mat-checkbox [checked]="annotation.state.buttonVisibility.refresh" color="primary"></mat-checkbox>
-      <div class="text">{{ 'COMMON.REFRESH' | translate }}</div>
-    </div>
-    <div>
-      <mat-icon [svgIcon]="annotation.state.buttonVisibility.refresh ? 'eye' : 'eye-off'"></mat-icon>
-      <mat-icon svgIcon="web-refresh"></mat-icon>
+      <mat-icon [svgIcon]="isButtonVisible(actionButton.type) ? 'eye' : 'eye-off'"></mat-icon>
+      <mat-icon [svgIcon]="actionButton.icon"></mat-icon>
     </div>
   </div>
 </div>

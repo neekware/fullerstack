@@ -4,65 +4,17 @@
 <div class="mb1">
   <mat-radio-group (click)="$event.stopPropagation()" fxLayout="column">
     <div
+      *ngFor="let corner of corners"
       class="selection-box"
       fxLayout="row"
       fxLayoutGap="8px"
       fxLayoutAlign="space-between center"
-      (click)="setPosition($event, 'top-right')"
+      (click)="setPosition($event, corner.position)"
     >
-      <mat-radio-button class="quick-menu-button" value="top-right" [checked]="annotation.state.position === 'top-right'" color="primary">
-        {{ 'COMMON.POSITION.TOP_RIGHT' | translate }}
+      <mat-radio-button class="quick-menu-button" value="top-right" [checked]="isPosition(corner.position)" color="primary">
+        {{ corner.label | translate }}
       </mat-radio-button>
-      <mat-icon class="flip-vertical" svgIcon="select-drag"></mat-icon>
-    </div>
-
-    <div
-      class="selection-box"
-      fxLayout="row"
-      fxLayoutGap="8px"
-      fxLayoutAlign="space-between center"
-      (click)="setPosition($event, 'top-left')"
-    >
-      <mat-radio-button class="quick-menu-button" value="top-left" [checked]="annotation.state.position === 'top-left'" color="primary">
-        {{ 'COMMON.POSITION.TOP_LEFT' | translate }}
-      </mat-radio-button>
-      <mat-icon class="flip-vertical-horizontal" svgIcon="select-drag"></mat-icon>
-    </div>
-
-    <div
-      class="selection-box"
-      fxLayout="row"
-      fxLayoutGap="8px"
-      fxLayoutAlign="space-between center"
-      (click)="setPosition($event, 'bottom-right')"
-    >
-      <mat-radio-button
-        class="quick-menu-button"
-        value="bottom-right"
-        [checked]="annotation.state.position === 'bottom-right'"
-        color="primary"
-      >
-        {{ 'COMMON.POSITION.BOTTOM_RIGHT' | translate }}
-      </mat-radio-button>
-      <mat-icon svgIcon="select-drag"></mat-icon>
-    </div>
-
-    <div
-      class="selection-box"
-      fxLayout="row"
-      fxLayoutGap="8px"
-      fxLayoutAlign="space-between center"
-      (click)="setPosition($event, 'bottom-left')"
-    >
-      <mat-radio-button
-        class="quick-menu-button"
-        value="bottom-left"
-        [checked]="annotation.state.position === 'bottom-left'"
-        color="primary"
-      >
-        {{ 'COMMON.POSITION.BOTTOM_LEFT' | translate }}
-      </mat-radio-button>
-      <mat-icon class="flip-horizontal" svgIcon="select-drag"></mat-icon>
+      <mat-icon [ngClass]="corner.class" [svgIcon]="corner.icon"></mat-icon>
     </div>
   </mat-radio-group>
 </div>
