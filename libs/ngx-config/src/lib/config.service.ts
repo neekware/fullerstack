@@ -8,7 +8,7 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
 import { of } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';

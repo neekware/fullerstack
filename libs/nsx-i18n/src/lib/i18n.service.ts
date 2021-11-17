@@ -9,7 +9,7 @@
 import { RenderContext, RenderOptions, renderTemplate } from '@fullerstack/nsx-common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultI18nConfig, RtlLanguageList } from './i18n.default';

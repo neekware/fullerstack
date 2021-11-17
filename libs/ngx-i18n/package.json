@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.3",
   "name": "@fullerstack/ngx-i18n",
   "license": "MIT",
   "description": "A Translation Library for Angular",

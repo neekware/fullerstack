@@ -1,5 +1,5 @@
 {
-  "version": "0.0.3",
+  "version": "0.0.4",
   "name": "@fullerstack/ngx-jwt",
   "license": "MIT",
   "description": "A simple JWT library for Angular applications",

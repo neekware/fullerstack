@@ -6,7 +6,7 @@
  * that can be found at http://neekware.com/license/PRI.html
  */
 
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
 
 /**
  * Options for interpolation

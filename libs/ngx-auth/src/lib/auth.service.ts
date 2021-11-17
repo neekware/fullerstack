@@ -51,7 +51,7 @@ import { JwtService } from '@fullerstack/ngx-jwt';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
 import { StoreService } from '@fullerstack/ngx-store';
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
 import { Observable, Subject, of, timer } from 'rxjs';
 import { catchError, first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';

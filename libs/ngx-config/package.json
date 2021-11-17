@@ -1,5 +1,5 @@
 {
-  "version": "0.0.8",
+  "version": "0.0.9",
   "name": "@fullerstack/ngx-config",
   "license": "MIT",
   "description": "A Configuration Utility Library for Angular",

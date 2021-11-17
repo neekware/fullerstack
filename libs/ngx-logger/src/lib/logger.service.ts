@@ -14,7 +14,7 @@ import {
   ConfigService,
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultLoggerConfig } from './logger.default';

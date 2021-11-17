@@ -17,7 +17,7 @@ import {
   DefaultApplicationConfig,
 } from '@fullerstack/ngx-config';
 import { LoggerService } from '@fullerstack/ngx-logger';
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultCachifyConfig, DefaultMaxCacheExpiry } from './cachify.default';

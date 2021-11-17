@@ -21,7 +21,7 @@ import { SystemContactUsInput, SystemStatus } from '@fullerstack/ngx-gql/schema'
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
 import { Observable, Subject, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';

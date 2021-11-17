@@ -14,7 +14,7 @@ import { ConfigService } from '@nestjs/config';
 import { Permission, Role, User } from '@prisma/client';
 import { compare, hash } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash';
 import { DeepReadonly } from 'ts-essentials';
 import { v4 as uuid_v4 } from 'uuid';
 

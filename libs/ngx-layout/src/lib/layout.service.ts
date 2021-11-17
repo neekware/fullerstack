@@ -21,7 +21,7 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { MenuService } from '@fullerstack/ngx-menu';
 import { StoreService } from '@fullerstack/ngx-store';
 import { UixService } from '@fullerstack/ngx-uix';
-import { cloneDeep as ldDeepClone, merge as ldMergeWith } from 'lodash-es';
+import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
