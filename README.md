@@ -5,7 +5,7 @@
 
 ## Description
 
-This project is a mono-repo for FullerStack which is an open source dashboard powered by Angular for the frontend and NetJs for the backend.
+This project is a mono-repo for FullerStack which is an open source dashboard powered by Angular for the frontend and NestJs for the backend.
 
 ## Mission
 
