@@ -18,6 +18,7 @@ import { LogLevel, LoggerModule } from '@fullerstack/ngx-logger';
 import { MsgModule } from '@fullerstack/ngx-msg';
 import { StoreModule } from '@fullerstack/ngx-store';
 
+import { SystemModule } from './system.module';
 import { SystemService } from './system.service';
 
 export const environment: ApplicationConfig = {
@@ -45,10 +46,10 @@ describe('SystemService', () => {
           JwtModule,
           GqlModule,
           MsgModule,
-          AuthModule,
           StoreModule,
+          AuthModule,
+          SystemModule,
         ],
-        providers: [SystemService],
       });
 
       service = TestBed.inject(SystemService);

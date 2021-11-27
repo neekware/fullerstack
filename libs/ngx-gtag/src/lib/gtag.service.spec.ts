@@ -19,7 +19,7 @@ import { GTagService } from './gtag.service';
 // disable console log during test
 jest.spyOn(console, 'log').mockImplementation(() => undefined);
 
-describe('GTagService', () => {
+xdescribe('GTagService', () => {
   let service: GTagService;
 
   beforeEach(() => {

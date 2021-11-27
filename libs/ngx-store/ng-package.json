@@ -2,12 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/libs/ngx-store",
   "lib": {
-    "entryFile": "src/index.ts",
-    "umdModuleIds": {
-      "lodash-es": "lodash-es",
-      "@fullerstack/agx-store": "@fullerstack/agx-store",
-      "@fullerstack/ngx-config": "@fullerstack/ngx-config",
-      "@fullerstack/ngx-logger": "@fullerstack/ngx-logger"
-    }
+    "entryFile": "src/index.ts"
   }
 }

@@ -45,8 +45,8 @@ describe('AuthAnonymousGuard', () => {
           JwtModule,
           GqlModule,
           MsgModule,
-          AuthModule,
           StoreModule,
+          AuthModule,
         ],
         providers: [AuthAnonymousGuard],
       });

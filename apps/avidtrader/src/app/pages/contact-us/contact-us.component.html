@@ -37,8 +37,8 @@
         <mat-icon matSuffix class="fs-icon-flip" svgIcon="format-text-rotation-angle-up"></mat-icon>
         <textarea
           matInput
-          [matTextareaAutosize]="true"
-          [matAutosizeMinRows]="5"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="5"
           formControlName="body"
           placeholder="{{ 'COMMON.MESSAGE' | translate }}"
         ></textarea>

@@ -45,10 +45,9 @@ describe('AuthService', () => {
           JwtModule,
           GqlModule,
           MsgModule,
-          AuthModule,
           StoreModule,
+          AuthModule,
         ],
-        providers: [AuthService],
       });
 
       service = TestBed.inject(AuthService);

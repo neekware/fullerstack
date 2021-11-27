@@ -92,12 +92,12 @@
     "@angular/platform-browser-dynamic": "13.0.2",
     "@angular/router": "13.0.2",
     "@fullerstack/ngx-menu": "^0.0.4",
-    "@nestjs/common": "8.0.8",
+    "@nestjs/common": "^8.0.0",
     "@nestjs/config": "1.0.1",
-    "@nestjs/core": "8.0.8",
+    "@nestjs/core": "^8.0.0",
     "@nestjs/graphql": "9.0.5",
     "@nestjs/passport": "8.0.1",
-    "@nestjs/platform-express": "8.0.8",
+    "@nestjs/platform-express": "^8.0.0",
     "@ngx-translate/core": "13.0.0",
     "@ngx-translate/http-loader": "6.0.0",
     "@nrwl/angular": "13.2.2",
@@ -142,8 +142,8 @@
     "@biesbjerg/ngx-translate-extract": "7.0.4",
     "@mdi/angular-material": "5.9.55",
     "@mdi/font": "5.9.55",
-    "@nestjs/schematics": "7.0.0",
-    "@nestjs/testing": "8.0.6",
+    "@nestjs/schematics": "^8.0.0",
+    "@nestjs/testing": "^8.0.0",
     "@nrwl/cli": "13.2.2",
     "@nrwl/cypress": "13.2.2",
     "@nrwl/eslint-plugin-nx": "13.2.2",
@@ -206,4 +206,3 @@
     "webpack-bundle-analyzer": "4.4.0"
   }
 }
-
