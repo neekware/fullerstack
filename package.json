@@ -123,6 +123,7 @@
     "passport-jwt": "4.0.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.3.0",
+    "screenfull": "5.1.0",
     "showdown": "1.9.1",
     "ts-essentials": "9.0.0",
     "tslib": "2.3.1",

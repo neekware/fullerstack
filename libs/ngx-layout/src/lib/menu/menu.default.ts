@@ -85,7 +85,6 @@ export const layoutMenuTree: MenuItem[] = [
   {
     name: _('COMMON.ETFS'),
     icon: 'trending-up',
-    disabled: true,
     children: [
       {
         name: _('COMMON.PORTFOLIO'),
