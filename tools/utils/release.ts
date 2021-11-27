@@ -13,7 +13,7 @@ import * as program from 'commander';
 import * as ld from 'lodash';
 import * as semver from 'semver';
 
-import { distDir, execute, projPkgJson } from './util';
+import { distDir, execute, libDir, projPkgJson } from './util';
 
 /**
  * Returns the path to library's package.json
@@ -73,12 +73,13 @@ async function syncPackageData(moduleBuildPath: string): Promise<void> {
  * Builds a production build of a given library with its deps, from the current branch
  * @returns build status
  */
-async function buildPackage(prod: boolean) {
+async function buildPackage(isNg: boolean) {
   if (program.build) {
-    const cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache ${
-      prod ? '--prod' : ''
-    }`;
-    console.log(cmd);
+    let cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache`;
+    if (isNg && !program.dev) {
+      cmd = `${cmd} --prod`;
+    }
+
     await execute(cmd).catch((error) => {
       console.log(`Failed to build ${program.library} ... ${error}`);
       return false;
@@ -118,13 +119,11 @@ async function main() {
     return 1;
   }
 
+  const moduleSrcPath = path.join(libDir, program.library);
   const moduleBuildPath = path.join(distDir, 'libs', program.library);
-  let prod = false;
-  if (fs.existsSync(path.join(moduleBuildPath, 'ng-package.json'))) {
-    prod = true;
-  }
+  const isNg = fs.existsSync(path.join(moduleSrcPath, 'ng-package.json'));
 
-  const built = await buildPackage(prod);
+  const built = await buildPackage(isNg);
   if (!built) {
     return 1;
   }
