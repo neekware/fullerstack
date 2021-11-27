@@ -80,6 +80,8 @@ async function buildPackage(isNg: boolean) {
       cmd = `${cmd} --prod`;
     }
 
+    console.log(cmd);
+
     await execute(cmd).catch((error) => {
       console.log(`Failed to build ${program.library} ... ${error}`);
       return false;
