@@ -83,7 +83,7 @@ export class I18nModule {
 
   static forChild() {
     return {
-      ngModule: TranslateModule,
+      ngModule: TranslateModule.forChild(),
     };
   }
 }
