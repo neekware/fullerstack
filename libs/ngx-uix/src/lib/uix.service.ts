@@ -18,7 +18,7 @@ import { LoggerService } from '@fullerstack/ngx-logger';
 import { MaterialService } from '@fullerstack/ngx-material';
 import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
 import { BehaviorSubject, Subject, distinctUntilChanged } from 'rxjs';
-import * as fullscreen from 'screenfull';
+import screenfull from 'screenfull';
 import { DeepReadonly } from 'ts-essentials';
 
 import { DefaultUixConfig, UIX_MDI_ICONS } from './uix.default';
@@ -79,42 +79,42 @@ export class UixService implements OnDestroy {
   }
 
   private initFullscreen() {
-    if (fullscreen.isEnabled) {
-      fullscreen.on('change', () => {
-        this.fullscreen$.emit(this.fsObj.isFullscreen);
-        this.logger.debug(`Fullscreen: (${this.fsObj.isFullscreen})`);
+    if (this.fullscreen.isEnabled) {
+      this.fullscreen.on('change', () => {
+        this.fullscreen$.emit(this.fullscreen.isFullscreen);
+        this.logger.debug(`Fullscreen: (${this.fullscreen.isFullscreen})`);
       });
     }
   }
 
-  get fsObj(): fullscreen.Screenfull {
-    return fullscreen as fullscreen.Screenfull;
+  get fullscreen() {
+    return screenfull;
   }
 
   get isFullscreenCapable() {
-    return this.fsObj.isEnabled;
+    return this.fullscreen.isEnabled;
   }
 
   fullscreenOn(): void {
-    if (this.fsObj.isEnabled) {
-      this.fsObj.request();
+    if (this.fullscreen.isEnabled) {
+      this.fullscreen.request();
     }
   }
 
   fullscreenOff(): void {
-    if (this.fsObj.isEnabled) {
-      this.fsObj.exit();
+    if (this.fullscreen.isEnabled) {
+      this.fullscreen.exit();
     }
   }
 
   toggleFullscreen(): void {
-    if (fullscreen.isEnabled) {
-      this.fsObj.toggle();
+    if (this.fullscreen.isEnabled) {
+      this.fullscreen.toggle();
     }
   }
 
   isFullscreen(): boolean {
-    return this.fsObj.isFullscreen;
+    return this.fullscreen.isFullscreen;
   }
 
   addClass(el: HTMLElement, className: string): void {
