@@ -595,7 +595,7 @@ export class AuthService implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
-    this.store.releaseSlice(this.nameSpace);
+    this.store.releaseSlice(this.claimId);
     this.logger.debug(`[${this.nameSpace}] AuthService destroyed ...`);
   }
 }

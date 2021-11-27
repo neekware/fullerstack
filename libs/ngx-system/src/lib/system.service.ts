@@ -9,7 +9,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Data, NavigationEnd, Router } from '@angular/router';
-import { AuthService, DefaultAuthConfig } from '@fullerstack/ngx-auth';
 import {
   ApplicationConfig,
   ConfigService,
@@ -21,7 +20,7 @@ import { SystemContactUsInput, SystemStatus } from '@fullerstack/ngx-gql/schema'
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { LogLevel, LoggerService } from '@fullerstack/ngx-logger';
 import { MsgService } from '@fullerstack/ngx-msg';
-import { cloneDeep as ldDeepClone, mergeWith as ldMergeWith } from 'lodash-es';
+import { mergeWith as ldMergeWith } from 'lodash-es';
 import { Observable, Subject, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { DeepReadonly } from 'ts-essentials';
@@ -45,14 +44,11 @@ export class SystemService implements OnDestroy {
     readonly gql: GqlService,
     readonly gtag: GqlService,
     readonly logger: LoggerService,
-    readonly i18n: I18nService,
-    readonly auth: AuthService
+    readonly i18n: I18nService
   ) {
     this.msg.reset();
-    this.options = ldMergeWith(
-      ldDeepClone({ auth: DefaultAuthConfig }),
-      this.config.options,
-      (dest, src) => (Array.isArray(dest) ? src : undefined)
+    this.options = ldMergeWith(this.config.options, (dest, src) =>
+      Array.isArray(dest) ? src : undefined
     );
     this.enableRouteDataUpdates();
   }

@@ -17,6 +17,8 @@ require('dotenv').config();
 export const projName = 'fullerstack';
 export const projDir = path.resolve(__dirname, '../..');
 export const coverageDir = path.resolve(path.join(projDir, 'coverage'));
+export const libDir = path.resolve(path.join(projDir, 'libs'));
+export const appsDir = path.resolve(path.join(projDir, 'apps'));
 export const distDir = path.resolve(path.join(projDir, 'dist'));
 export const projPkgJson = require(path.join(projDir, 'package.json'));
 

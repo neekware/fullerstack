@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.3",
   "name": "@fullerstack/ngx-gtag",
   "license": "MIT",
   "description": "A simple gTag module for Angular applications",

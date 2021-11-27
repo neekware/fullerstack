@@ -150,7 +150,7 @@ export class AuthService<T = StoreStateType> {
   // clean up and free up resources prior to class instance `destroy`
   cleanUp() {
     this.stateSub$.unsubscribe();
-    this.store.releaseSlice(this.nameSpace);
+    this.store.releaseSlice(this.claimId);
     this.store = undefined;
   }
 }

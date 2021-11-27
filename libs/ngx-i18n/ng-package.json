@@ -2,13 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/libs/ngx-i18n",
   "lib": {
-    "entryFile": "src/index.ts",
-    "umdModuleIds": {
-      "lodash-es": "lodash-es",
-      "@fullerstack/ngx-config": "@fullerstack/ngx-config",
-      "@fullerstack/ngx-logger": "@fullerstack/ngx-logger",
-      "@ngx-translate/core": "@ngx-translate/core",
-      "@ngx-translate/http-loader": "@ngx-translate/http-loader"
-    }
+    "entryFile": "src/index.ts"
   }
 }

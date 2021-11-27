@@ -13,6 +13,14 @@ import { ConfigModule } from '@fullerstack/ngx-config';
 import { UixModule } from './uix.module';
 import { UixService } from './uix.service';
 
+window.ResizeObserver =
+  window.ResizeObserver ||
+  jest.fn().mockImplementation(() => ({
+    disconnect: jest.fn(),
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+  }));
+
 describe('UixService', () => {
   let service: UixService;
 
