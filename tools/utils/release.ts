@@ -76,7 +76,7 @@ async function syncPackageData(moduleBuildPath: string): Promise<void> {
 async function buildPackage(isNg: boolean) {
   if (program.build) {
     let cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache`;
-    if (isNg && !program.dev) {
+    if (isNg) {
       cmd = `${cmd} --prod`;
     }
 
