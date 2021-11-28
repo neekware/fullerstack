@@ -7,7 +7,8 @@
  */
 
 import { Direction } from '@angular/cdk/bidi';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import {
   ApplicationConfig,
   ConfigService,
@@ -26,6 +27,7 @@ import { AvailableLanguage, LanguageDirection } from './i18n.model';
 
 @Injectable({ providedIn: 'root' })
 export class I18nService {
+  window: Window;
   private nameSpace = 'I18N';
   @Output() stateChange$ = new EventEmitter<string>();
   private destroy$ = new Subject<boolean>();
@@ -37,6 +39,7 @@ export class I18nService {
   enabledLanguages: string[] = [];
 
   constructor(
+    @Inject(DOCUMENT) readonly document: Document,
     readonly config: ConfigService,
     readonly logger: LoggerService,
     readonly translate: TranslateService
@@ -52,6 +55,7 @@ export class I18nService {
     this.logger.info(
       `[${this.nameSpace}] I18nService ready ... (${this.currentLanguage} - ${this.direction})`
     );
+    this.window = document.defaultView;
   }
 
   isLanguageEnabled(iso: string): boolean {
@@ -90,7 +94,7 @@ export class I18nService {
   }
 
   getBrowserLangs(): Readonly<string[]> {
-    return window?.navigator?.languages || ([] as string[]);
+    return this.window?.navigator?.languages || ([] as string[]);
   }
 
   private initLanguage() {
