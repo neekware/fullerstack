@@ -97,7 +97,7 @@
     "@nestjs/graphql": "9.1.2",
     "@nestjs/passport": "8.0.1",
     "@nestjs/platform-express": "8.2.3",
-    "@ngx-translate/core": "13.0.0",
+    "@ngx-translate/core": "14.0.0",
     "@ngx-translate/http-loader": "7.0.0",
     "@nrwl/angular": "13.2.2",
     "@prisma/client": "3.5.0",
