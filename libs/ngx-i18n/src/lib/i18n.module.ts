@@ -62,7 +62,8 @@ export function HttpLoaderFactory(http: HttpClient, config: ConfigService) {
   );
 }
 
-export const TranslateModuleInitialized = TranslateModule.forRoot({
+// AoT requires an exported function for factories
+export const TranslateModuleCustomLoader = TranslateModule.forRoot({
   loader: {
     provide: TranslateLoader,
     useFactory: HttpLoaderFactory,
@@ -71,19 +72,13 @@ export const TranslateModuleInitialized = TranslateModule.forRoot({
 });
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, TranslateModuleInitialized],
+  imports: [CommonModule, HttpClientModule, TranslateModuleCustomLoader],
   exports: [TranslateModule],
 })
 export class I18nModule {
   static forRoot() {
     return {
       ngModule: I18nModule,
-    };
-  }
-
-  static forChild() {
-    return {
-      ngModule: TranslateModule,
     };
   }
 }
