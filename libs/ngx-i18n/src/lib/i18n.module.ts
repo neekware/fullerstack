@@ -8,7 +8,7 @@
 
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -62,7 +62,8 @@ export function HttpLoaderFactory(http: HttpClient, config: ConfigService) {
   );
 }
 
-export const TranslateModuleInitialized = TranslateModule.forRoot({
+// AoT requires an exported function for factories
+export const TranslateModuleCustomLoader = TranslateModule.forRoot({
   loader: {
     provide: TranslateLoader,
     useFactory: HttpLoaderFactory,
@@ -71,17 +72,17 @@ export const TranslateModuleInitialized = TranslateModule.forRoot({
 });
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, TranslateModuleInitialized],
+  imports: [CommonModule, HttpClientModule, TranslateModuleCustomLoader],
   exports: [TranslateModule],
 })
 export class I18nModule {
-  static forRoot() {
+  static forRoot(): ModuleWithProviders<I18nModule> {
     return {
       ngModule: I18nModule,
     };
   }
 
-  static forChild() {
+  static forChild(): ModuleWithProviders<TranslateModule> {
     return {
       ngModule: TranslateModule,
     };

@@ -7,7 +7,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { DeepReadonly } from 'ts-essentials';
 
 import { CONFIG_TOKEN } from './config.default';
@@ -30,7 +30,7 @@ export class ConfigModule {
     }
   }
 
-  static forRoot(options?: DeepReadonly<ApplicationConfig>) {
+  static forRoot(options?: DeepReadonly<ApplicationConfig>): ModuleWithProviders<ConfigModule> {
     return {
       ngModule: ConfigModule,
       providers: [
