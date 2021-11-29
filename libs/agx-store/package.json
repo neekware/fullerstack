@@ -1,5 +1,5 @@
 {
-  "version": "0.0.5",
+  "version": "0.0.6",
   "name": "@fullerstack/agx-store",
   "description": "A simple flat state/store that helps implementing lite-redux patterns",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/agx-store/README.md",
