@@ -8,7 +8,7 @@
 
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ConfigService } from '@fullerstack/ngx-config';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -76,9 +76,15 @@ export const TranslateModuleCustomLoader = TranslateModule.forRoot({
   exports: [TranslateModule],
 })
 export class I18nModule {
-  static forRoot() {
+  static forRoot(): ModuleWithProviders<I18nModule> {
     return {
       ngModule: I18nModule,
+    };
+  }
+
+  static forChild(): ModuleWithProviders<TranslateModule> {
+    return {
+      ngModule: TranslateModule,
     };
   }
 }
