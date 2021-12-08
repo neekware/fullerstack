@@ -201,7 +201,7 @@ X.Y.Z Version
     `MINOR` version -- adding functionality in a backwards-compatible manner
     `PATCH` version -- making backwards-compatible bug fixes
 
-## Lines of Code (auto-generated)
+## Lines of Code (auto-generated stats)
 
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
