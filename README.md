@@ -66,7 +66,7 @@ npx create-nx-workspace fullerstack
 ## Publishable Libraries
 
 - [@fullerstack/agx-store](https://www.npmjs.com/package/@fullerstack/agx-store) (state management based on KISS principle)
-- [@fullerstack/nax-ipware](https://www.npmjs.com/package/@fullerstack/nax-ipware) (best attempt to grab client's read ip)
+- [@fullerstack/nax-ipware](https://www.npmjs.com/package/@fullerstack/nax-ipware) (best attempt to grab client's real ip)
 - [@fullerstack/ngx-cachify](https://www.npmjs.com/package/@fullerstack/ngx-cachify) (intuitive caching of http calls)
 - [@fullerstack/ngx-config](https://www.npmjs.com/package/@fullerstack/ngx-config) (injectable angular environment)
 - [@fullerstack/ngx-gtag](https://www.npmjs.com/package/@fullerstack/ngx-gtag) (google analytics api for angular)
@@ -201,7 +201,7 @@ X.Y.Z Version
     `MINOR` version -- adding functionality in a backwards-compatible manner
     `PATCH` version -- making backwards-compatible bug fixes
 
-## Lines of Code (auto-generated)
+## Lines of Code (auto-generated stats)
 
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code

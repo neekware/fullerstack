@@ -17,7 +17,7 @@ Till `Angular` natively supports something like, `import { environment } from '@
 
 Alternatively, you can have a simple lib such as `@fullerstack/ngx-config` to receive the `environment` object and provide it to all other publishable libs via an injectable service such as `ConfigService`.
 
-**@fullerstack/ngx-config** attempts to streamline the sharing of the content of the `environment.ts` while promoting DRY **DRY**.
+**@fullerstack/ngx-config** attempts to streamline the sharing of the content of the `environment.ts` while promoting **DRY**.
 
 # How to install
 
