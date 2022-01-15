@@ -15,7 +15,7 @@ import { execute } from './util';
 
 const DEBUG = false;
 const excludeDirs = ['node_modules', 'tmp', 'coverage', 'dist', 'gql.schema.ts', 'graph'];
-const sectionName = 'Lines of Code (auto-generated)';
+const sectionName = 'Lines of Code (auto-generated stats)';
 
 /**
  * Note, the "Lines of Code" section cannot be at the end
