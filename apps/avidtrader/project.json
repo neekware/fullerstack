@@ -14,7 +14,6 @@
         "main": "apps/avidtrader/src/main.ts",
         "polyfills": "apps/avidtrader/src/polyfills.ts",
         "tsConfig": "apps/avidtrader/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
         "assets": [
           "apps/avidtrader/src/favicon.ico",
           "apps/avidtrader/src/assets",
