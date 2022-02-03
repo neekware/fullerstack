@@ -1,5 +1,5 @@
 {
-  "version": "0.0.5",
+  "version": "0.0.6",
   "name": "@fullerstack/ngx-gtag",
   "license": "MIT",
   "description": "A simple gTag module for Angular applications",
@@ -16,10 +16,10 @@
     "@angular/core": "^13.1.1",
     "lodash-es": "^4.17.21",
     "ts-essentials": "^7.0.2",
-    "@fullerstack/ngx-config": "^0.1.2",
-    "@fullerstack/ngx-logger": "^0.0.7"
+    "@fullerstack/ngx-config": "^0.1.3",
+    "@fullerstack/ngx-logger": "^0.0.8"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.1"
   }
 }

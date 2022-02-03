@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "name": "@fullerstack/ngx-config",
   "license": "MIT",
   "description": "A Configuration Utility Library for Angular",
@@ -20,6 +20,6 @@
     "ts-essentials": "^7.0.2"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.1"
   }
 }
