@@ -8,7 +8,9 @@
     "ng",
     "angular",
     "redux",
-    "store"
+    "store",
+    "ngrx alternative",
+    "ngsx alternative"
   ],
   "peerDependencies": {
     "@angular/common": "^13.1.1",
