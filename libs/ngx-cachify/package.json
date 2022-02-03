@@ -12,8 +12,15 @@
     "i10n"
   ],
   "peerDependencies": {
-    "@angular/common": "^12.0.2",
-    "@angular/core": "^12.0.2"
+    "@angular/common": "^13.1.1",
+    "@angular/core": "^13.1.1",
+    "uuid": "^8.3.2",
+    "lodash-es": "^4.17.21",
+    "ts-essentials": "^7.0.2",
+    "object-hash": "^2.2.0",
+    "@fullerstack/agx-store": "^0.0.6",
+    "@fullerstack/ngx-config": "^0.1.2",
+    "@fullerstack/ngx-logger": "^0.0.7"
   },
   "dependencies": {
     "tslib": "^2.0.0"

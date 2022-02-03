@@ -23,6 +23,7 @@
   ],
   "dependencies": {
     "tslib": "^2.0.0",
-    "ts-essentials": "^7.0.2"
+    "ts-essentials": "^7.0.2",
+    "lodash": "^4.17.21"
   }
 }

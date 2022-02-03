@@ -5,10 +5,11 @@
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/agx-store/README.md",
   "keywords": [
     "redux",
-    "store"
+    "store",
+    "redux-patterns"
   ],
   "peerDependencies": {
-    "rxjs": "^7.1.0"
+    "rxjs": "^7.5.1"
   },
   "dependencies": {
     "tslib": "^2.0.0"
