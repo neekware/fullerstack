@@ -1,16 +1,17 @@
 {
-  "version": "0.0.6",
+  "version": "0.0.7",
   "name": "@fullerstack/agx-store",
   "description": "A simple flat state/store that helps implementing lite-redux patterns",
   "homepage": "https://github.com/neekware/fullerstack/blob/main/libs/agx-store/README.md",
   "keywords": [
     "redux",
-    "store"
+    "store",
+    "redux-patterns"
   ],
   "peerDependencies": {
-    "rxjs": "^7.1.0"
+    "rxjs": "^7.5.1"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.1"
   }
 }

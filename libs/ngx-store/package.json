@@ -1,5 +1,5 @@
 {
-  "version": "0.0.6",
+  "version": "0.0.7",
   "name": "@fullerstack/ngx-store",
   "license": "MIT",
   "description": "A Simple Redux Flat Store Library for Angular",
@@ -11,10 +11,15 @@
     "store"
   ],
   "peerDependencies": {
-    "@angular/common": "^12.0.2",
-    "@angular/core": "^12.0.2"
+    "@angular/common": "^13.1.1",
+    "@angular/core": "^13.1.1",
+    "lodash-es": "^4.17.21",
+    "ts-essentials": "^7.0.2",
+    "@fullerstack/agx-store": "^0.0.7",
+    "@fullerstack/ngx-config": "^0.1.3",
+    "@fullerstack/ngx-logger": "^0.0.8"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.1"
   }
 }
