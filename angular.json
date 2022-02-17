@@ -5,7 +5,7 @@
     "agx-dto": "libs/agx-dto",
     "agx-store": "libs/agx-store",
     "agx-util": "libs/agx-util",
-    "api": "apps/api",
+    "api-nest": "apps/api-nest",
     "avidtrader": "apps/avidtrader",
     "avidtrader-e2e": "apps/avidtrader-e2e",
     "nax-ipware": "libs/nax-ipware",

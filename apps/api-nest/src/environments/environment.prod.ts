@@ -28,9 +28,9 @@ const securityConfig: SecurityConfig = {
 };
 
 const graphqlConfig: GqlModuleOptions = {
-  debug: true,
-  playground: true,
-  autoSchemaFile: 'apps/api/src/prisma/schema.gql',
+  debug: false,
+  playground: false,
+  autoSchemaFile: 'apps/api-nest/src/prisma/schema.gql',
   cors: {
     credentials: true,
     origin: 'http://localhost:4201',
@@ -56,8 +56,8 @@ export const environment = {
   siteUrl: 'https://avidtrader.co',
   siteSupportEmail: 'support@avidtrader.co',
   production: false,
-  port: 4401,
-  prefix: 'api',
+  port: 4301,
+  prefix: 'api-nest',
   serverConfig,
   appConfig,
   graphqlConfig,

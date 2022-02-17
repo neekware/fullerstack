@@ -144,7 +144,7 @@ yarn prisma:migrate:dev
 yarn prisma:seed
 
 # Start the backend (in terminal #1)
-yarn start:api
+yarn start:api-nest
 
 # Start the frontend (in terminal #2)
 yarn start:avidtrader

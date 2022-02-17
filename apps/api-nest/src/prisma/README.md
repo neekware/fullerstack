@@ -30,7 +30,7 @@ verification of our `database schema`
 Description: A `schema.gql` is created/updated upon running the backend server
 to reflect the latest of the main `schema.prisma` file
 
-- to create/update: `yarn serve api`
+- to create/update: `yarn serve api-nest`
 
 ### `seed.ts`
 
@@ -38,7 +38,7 @@ Description: A `seed.ts` is manually created to insert initial fixture into the 
 This is a great tool for creating things like groups, superuser, etc. It also can be a great
 tool for manually overwriting a superuser account in case of a security breach.
 
-- to create/update: `yarn serve api`
+- to create/update: `yarn serve api-nest`
 
 ## Note
 

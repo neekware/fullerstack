@@ -32,7 +32,7 @@ const graphqlConfig: GqlModuleOptions = {
   playground: true,
   sortSchema: true,
   installSubscriptionHandlers: true,
-  autoSchemaFile: 'apps/api/src/prisma/schema.gql',
+  autoSchemaFile: 'apps/api-nest/src/prisma/schema.gql',
   buildSchemaOptions: {
     numberScalarMode: 'integer',
   },
@@ -62,7 +62,7 @@ export const environment = {
   siteSupportEmail: 'support@avidtrader.co',
   production: false,
   port: 4201,
-  prefix: 'api',
+  prefix: 'api-nest',
   serverConfig,
   appConfig,
   graphqlConfig,
