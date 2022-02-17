@@ -15,7 +15,7 @@
           "apps/api-nest/src/assets",
           {
             "glob": "**/*",
-            "input": "libs/agx-assets/src/lib/i18n/api-nest",
+            "input": "libs/agx-assets/src/lib/i18n/api",
             "output": "assets/i18n"
           }
         ]
