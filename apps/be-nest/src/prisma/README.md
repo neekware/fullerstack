@@ -14,15 +14,15 @@ Description: All files in the migration directory are automatically generated
 When `schema.prisma` is altered the following command must be run to ensure
 our `database schema` reflects our new changes in `schema.prisma`.
 
-- to create: `yarn prisma:migration:create
-- to apply: `yarn prisma:migration:apply
+- to create: `yarn prisma:be-nest:migration:create
+- to apply: `yarn prisma:be-nest:migration:apply
 
 ### `dbml/\*`
 
 Description: A `schema.dbml` file is generated to visually assist with the
 verification of our `database schema`
 
-- to create/update: `yarn prisma:generate`
+- to create/update: `yarn prisma:be-nest:generate`
 - to view: upload the `schema.dbml` file to https://dbdiagram.io/d
 
 ### `schema.gql`
