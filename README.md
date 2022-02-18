@@ -15,7 +15,7 @@ To create an open source dashboard from the ground-up. `Quality of Experience` i
 
 <img width="auto" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/misc/login.png">
 
-Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app.avidtrader.co/forex/100/USD/EUR) )
+Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [fe-avidtrader.co](https://app.fe-avidtrader.co/forex/100/USD/EUR) )
 
 <br/>
 
@@ -98,28 +98,35 @@ npx create-nx-workspace fullerstack
 - `NS` = [Nest](nestjs.com)
   - `NSX` = NestJs Library
 
-### Applications
+### Applications Types
 
 - `WB` = Web (Chrome, Firefox, Safari, Edge, etc)
 - `EL` = [Electron](electronjs.org)
 - `NS` = [NativeScript](nativescript.org) (Android // iOS)
 - `IO` = [Ionic](ionicframework.com) (Android // iOS)
 
-## Applications
+## Applications Names
 
-- appname = Web (Chrome, Firefox, Safari, Edge, etc)
-- appname-el = Desktop (Electron Application - Linux, MacOS, Windows)
-- appname-ns = NativeScript (Android, iOS)
-- appname-ic = Ionic (Android, iOS)
+- `fe-<appname>` = Frontend Web (Chrome, Firefox, Safari, Edge, etc)
+- `fe-<appname>-el` = Frontend Desktop (Electron Application - Linux, MacOS, Windows)
+- `fe-<appname>-ns` = Frontend NativeScript (Android, iOS)
+- `fe-<appname>-ic` = Frontend Ionic (Android, iOS)
+- `be-nest` = Backend with Nest
+- `be-next` = Backend with Next
 
-## Applications (End2End)
+## Applications Names (End2End)
 
-- appname-e2e = Web (Chrome, Firefox, Safari, Edge, etc)
-- appname-el-e2e = Desktop (Electron Application - Linux, MacOS, Windows)
-- appname-ns-e2e = NativeScript (Android, iOS)
-- appname-ic-e2e = Ionic (Android, iOS)
+- `fe-<appname>-e2e` = Frontend Web (Chrome, Firefox, Safari, Edge, etc)
+- `fe-<appname>-el-e2e` = Frontend Desktop (Electron Application - Linux, MacOS, Windows)
+- `fe-<appname>-ns-e2e` = Frontend NativeScript (Android, iOS)
+- `fe-<appname>-ic-e2e` = Frontend Ionic (Android, iOS)
+- `be-next-e2e` = Backend with Next
 
 ## Instruction (for developers)
+
+- Use email for any `security related issues`
+- Use github issues for everything else
+- Respect the code of conduct which is: `be respectful of others`
 
 ### Installation
 
@@ -132,22 +139,22 @@ cd fullerstack
 yarn install
 
 # Create a database (postgres) for the angular app
-createdb avidtrader
+createdb fe-avidtrader
 
 # Copy environment variables and update
 cp env.example .env
 
 # Migrate the database
-yarn prisma:migrate:dev
+yarn prisma:be-nest:migrate:dev
 
 # Seed your database
-yarn prisma:seed
+yarn prisma:be-nest:seed
 
 # Start the backend (in terminal #1)
-yarn start:api
+yarn start:be-nest
 
 # Start the frontend (in terminal #2)
-yarn start:avidtrader
+yarn start:fe-avidtrader
 
 # Visit frontend (on mac use open, on windows, just type it in)
 open http://localhost:4200
@@ -160,7 +167,7 @@ open http://localhost:4200
 
 ```bash
 # Webpack analyzer
-yarn nx build avidtrader --stats-json --prod && yarn stats
+yarn nx build fe-avidtrader --stats-json --prod && yarn stats
 
 # Format changed files
 yarn format:all
@@ -207,8 +214,8 @@ X.Y.Z Version
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
  TypeScript             386        21513         2434         3985        15094
- JSON                   176         5049            0            0         5049
- Markdown               104         2976          759            0         2217
+ JSON                   176         5044            0            0         5044
+ Markdown               105         2993          762            0         2231
  HTML                    33         1453          114            5         1334
  Sass                    55         1449          140           35         1274
  JavaScript              35          700           23           48          629
@@ -217,7 +224,7 @@ X.Y.Z Version
  SQL                      2           88           17           16           55
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  798        33421         3504         4091        25826
+ Total                  799        33433         3507         4091        25835
 --------------------------------------------------------------------------------
 ```
 

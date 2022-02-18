@@ -1,6 +1,6 @@
 {
   "name": "fullerstack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "author": "Val Neekman",
   "repository": {
@@ -14,10 +14,10 @@
   "scripts": {
     "ts-node": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json",
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main && yarn prisma:generate && husky install",
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main && yarn prisma:be-nest:generate && husky install",
     "start": "ng serve",
-    "start:dash": "ng serve avidtrader",
-    "start:api": "ng serve api",
+    "start:dash": "ng serve fe-avidtrader",
+    "start:be-nest": "ng serve be-nest",
     "build": "ng build",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
@@ -40,25 +40,25 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "stats:build": "yarn build fullerstack --configuration=production --stats-json",
-    "stats:show": "webpack-bundle-analyzer dist/apps/fullerstack/stats.json",
+    "stats:build": "yarn build fe-avidtrader --configuration=production --stats-json",
+    "stats:show": "webpack-bundle-analyzer dist/apps/fe-avidtrader/stats.json",
     "<--------- [ ci related ] ------->": "ci related",
     "nx:ci": "node ./node_modules/@nrwl/cli/bin/nx.js",
     "format:ci": "yarn nx:ci format:check",
     "lint:ci": "yarn nx:ci  run-many --target=lint --all --configuration=ci --parallel",
     "build:ci": "yarn nx:ci  run-many --target=build --all --configuration=ci --parallel",
     "test:ci": "yarn nx:ci  run-many --target=test --codeCoverage --all --configuration=ci --parallel",
-    "e2e:ci": "yarn nx:ci  e2e fullerstack-e2e --configuration=ci --headless",
-    "api:ci": "yarn nx:ci  serve api --configuration=ci",
-    "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=fullerstack-e2e",
+    "e2e:ci": "yarn nx:ci  e2e fe-avidtrader-e2e --configuration=ci --headless",
+    "be-nest:ci": "yarn nx:ci  serve be-nest --configuration=ci",
+    "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=fe-avidtrader-e2e",
     "coverage:merge": "yarn ts-node ./tools/utils/coverageMerge.ts",
     "release": "yarn ts-node ./tools/utils/release.ts",
     "<--------- [ prisma related ] ------->": "prisma related",
-    "prisma:migrate:create": "node ./node_modules/.bin/prisma migrate dev --create-only --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:migrate:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:migrate:dev": "node ./node_modules/.bin/prisma migrate dev --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:generate": "node ./node_modules/.bin/prisma generate --schema=apps/api/src/prisma/schema.prisma",
-    "prisma:seed": "./node_modules/.bin/prisma db seed",
+    "prisma:be-nest:migrate:create": "node ./node_modules/.bin/prisma migrate dev --create-only --schema=apps/be-nest/src/prisma/schema.prisma",
+    "prisma:be-nest:migrate:apply": "node ./node_modules/.bin/prisma migrate deploy --schema=apps/be-nest/src/prisma/schema.prisma",
+    "prisma:be-nest:migrate:dev": "node ./node_modules/.bin/prisma migrate dev --schema=apps/be-nest/src/prisma/schema.prisma",
+    "prisma:be-nest:generate": "node ./node_modules/.bin/prisma generate --schema=apps/be-nest/src/prisma/schema.prisma",
+    "prisma:be-nest:seed": "./node_modules/.bin/prisma db seed --schema=apps/be-nest/src/prisma/schema.prisma",
     "i18n:extract": "node ./node_modules/.bin/ngx-translate-extract -i ./apps ./libs -o ./libs/agx-assets/src/lib/i18n/client/{en,fr,de,es,he,fa,zh-hans}.json -m _ --sort",
     "i18n:translate": "yarn ts-node ./tools/utils/i18n.ts",
     "gql:generate": "yarn ts-node ./tools/utils/gql.ts",
@@ -71,7 +71,7 @@
     "test:ipware": "yarn nx test nax-ipware"
   },
   "prisma": {
-    "seed": "ts-node ./apps/api/src/prisma/seed.ts"
+    "seed": "ts-node ./apps/be-nest/src/prisma/seed.ts"
   },
   "importSort": {
     ".js, .ts": {
