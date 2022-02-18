@@ -1,0 +1,55 @@
+{
+  "root": "apps/be-next",
+  "sourceRoot": "apps/be-next",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/be-next",
+        "outputPath": "dist/apps/be-next"
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "options": {
+        "buildTarget": "be-next:build",
+        "dev": true,
+        "port": 5200
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "be-next:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "be-next:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/be-next"],
+      "options": {
+        "jestConfig": "apps/be-next/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/be-next/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": ["app:be-next"]
+}

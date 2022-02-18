@@ -6,6 +6,8 @@
     "agx-store": "libs/agx-store",
     "agx-util": "libs/agx-util",
     "be-nest": "apps/be-nest",
+    "be-next": "apps/be-next",
+    "be-next-e2e": "apps/be-next-e2e",
     "fe-avidtrader": "apps/fe-avidtrader",
     "fe-avidtrader-e2e": "apps/fe-avidtrader-e2e",
     "nax-ipware": "libs/nax-ipware",

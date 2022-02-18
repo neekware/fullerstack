@@ -1,0 +1,29 @@
+{
+  "root": "apps/be-next-e2e",
+  "sourceRoot": "apps/be-next-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/be-next-e2e/cypress.json",
+        "devServerTarget": "be-next:serve",
+        "tsConfig": "apps/be-next-e2e/tsconfig.json"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "be-next:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/be-next-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["be-next"]
+}
