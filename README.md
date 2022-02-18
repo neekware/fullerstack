@@ -98,21 +98,21 @@ npx create-nx-workspace fullerstack
 - `NS` = [Nest](nestjs.com)
   - `NSX` = NestJs Library
 
-### Applications
+### Applications Types
 
 - `WB` = Web (Chrome, Firefox, Safari, Edge, etc)
 - `EL` = [Electron](electronjs.org)
 - `NS` = [NativeScript](nativescript.org) (Android // iOS)
 - `IO` = [Ionic](ionicframework.com) (Android // iOS)
 
-## Applications
+## Applications Names
 
 - appname = Web (Chrome, Firefox, Safari, Edge, etc)
 - appname-el = Desktop (Electron Application - Linux, MacOS, Windows)
 - appname-ns = NativeScript (Android, iOS)
 - appname-ic = Ionic (Android, iOS)
 
-## Applications (End2End)
+## Applications Names (End2End)
 
 - appname-e2e = Web (Chrome, Firefox, Safari, Edge, etc)
 - appname-el-e2e = Desktop (Electron Application - Linux, MacOS, Windows)
@@ -120,6 +120,10 @@ npx create-nx-workspace fullerstack
 - appname-ic-e2e = Ionic (Android, iOS)
 
 ## Instruction (for developers)
+
+- Use email for any `security related issues`
+- Use github issues for everything else
+- Respect the code of conduct which is: `be respectful of others`
 
 ### Installation
 
@@ -138,10 +142,10 @@ createdb avidtrader
 cp env.example .env
 
 # Migrate the database
-yarn prisma:migrate:dev
+yarn prisma:api-nest:migrate:dev
 
 # Seed your database
-yarn prisma:seed
+yarn prisma:api-nest:seed
 
 # Start the backend (in terminal #1)
 yarn start:api-nest
@@ -208,7 +212,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             386        21513         2434         3985        15094
  JSON                   176         5049            0            0         5049
- Markdown               104         2976          759            0         2217
+ Markdown               105         2990          762            0         2228
  HTML                    33         1453          114            5         1334
  Sass                    55         1449          140           35         1274
  JavaScript              35          700           23           48          629
@@ -217,7 +221,7 @@ X.Y.Z Version
  SQL                      2           88           17           16           55
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  798        33421         3504         4091        25826
+ Total                  799        33435         3507         4091        25837
 --------------------------------------------------------------------------------
 ```
 
