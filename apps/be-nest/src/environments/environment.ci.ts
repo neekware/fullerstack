@@ -14,7 +14,7 @@ import { ConfigModuleOptions } from '@nestjs/config';
 import { GqlModuleOptions } from '@nestjs/graphql';
 
 const serverConfig: NestApplicationOptions = {
-  logger: ['error', 'warn', 'log', 'debug', 'verbose'],
+  logger: ['error', 'warn'],
 };
 
 const appConfig: ConfigModuleOptions = {
@@ -22,30 +22,25 @@ const appConfig: ConfigModuleOptions = {
 };
 
 const securityConfig: SecurityConfig = {
-  accessTokenExpiry: '30s',
-  sessionTokenExpiry: '24h',
-  bcryptSaltOrRound: 2,
+  accessTokenExpiry: '5m',
+  sessionTokenExpiry: '7d',
+  bcryptSaltOrRound: 10,
 };
 
 const graphqlConfig: GqlModuleOptions = {
   debug: true,
   playground: true,
-  sortSchema: true,
-  installSubscriptionHandlers: true,
-  autoSchemaFile: 'apps/api/src/prisma/schema.gql',
-  buildSchemaOptions: {
-    numberScalarMode: 'integer',
-  },
+  autoSchemaFile: 'apps/be-nest/src/prisma/schema.gql',
   cors: {
     credentials: true,
-    origin: 'http://localhost:4200',
+    origin: 'http://localhost:4201',
   },
 };
 
 const mailerConfig: MailerConfig = {
   providerName: 'postmark',
   host: 'smtp.postmarkapp.com',
-  secureConnection: false, // true for 465, false for other ports
+  secureConnection: false, // true for port 465, false for port 587
   port: 587,
 };
 
@@ -58,11 +53,11 @@ const i18nConfig: I18nConfig = {
 
 export const environment = {
   siteName: 'Avidtrader',
-  siteUrl: 'http://localhost:4200',
-  siteSupportEmail: 'support@avidtrader.co',
+  siteUrl: 'https://fe-avidtrader.co',
+  siteSupportEmail: 'support@fe-avidtrader.co',
   production: false,
-  port: 4201,
-  prefix: 'api',
+  port: 4401,
+  prefix: 'be-nest',
   serverConfig,
   appConfig,
   graphqlConfig,

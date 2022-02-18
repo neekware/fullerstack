@@ -32,7 +32,7 @@
     },
     {
       "type": "npm",
-      "script": "start:api",
+      "script": "start:be-nest",
       "isBackground": true,
       "presentation": {
         "focus": true,

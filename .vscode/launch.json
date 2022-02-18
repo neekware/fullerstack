@@ -13,9 +13,9 @@
       "type": "node",
       "request": "launch",
       "name": "Launch NestJS",
-      "preLaunchTask": "npm: start:api",
-      "localRoot": "${workspaceFolder}/apps/api/src",
-      "remoteRoot": "${workspaceFolder}/dist/apps/api",
+      "preLaunchTask": "npm: start:be-nest",
+      "localRoot": "${workspaceFolder}/apps/be-nest/src",
+      "remoteRoot": "${workspaceFolder}/dist/apps/be-nest",
       "console": "integratedTerminal",
       "autoAttachChildProcesses": true
     },
@@ -37,7 +37,7 @@
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "trace": "all"
+      "trace": true
     }
   ],
   "inputs": [
@@ -48,7 +48,7 @@
       "options": [
         "fullerstack-e2e",
         "fullerstack",
-        "api",
+        "be-nest",
         "ngx-config",
         "ngx-logger",
         "agx-dto",

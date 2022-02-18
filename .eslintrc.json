@@ -13,7 +13,7 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "app-server:api-nest",
+                "sourceTag": "app-server:be-nest",
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
                   "scope:agx-util",
@@ -23,7 +23,7 @@
                 ]
               },
               {
-                "sourceTag": "app-client:avidtrader",
+                "sourceTag": "app-client:fe-avidtrader",
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
                   "scope:agx-util",
@@ -34,8 +34,8 @@
                 ]
               },
               {
-                "sourceTag": "app-e2e:avidtrader-e2e",
-                "onlyDependOnLibsWithTags": ["app-client:avidtrader"]
+                "sourceTag": "app-e2e:fe-avidtrader-e2e",
+                "onlyDependOnLibsWithTags": ["app-client:fe-avidtrader"]
               },
               {
                 "sourceTag": "scope:ngx-util",

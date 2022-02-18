@@ -1,0 +1,29 @@
+{
+  "root": "apps/fe-avidtrader-e2e",
+  "sourceRoot": "apps/fe-avidtrader-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/fe-avidtrader-e2e/cypress.json",
+        "devServerTarget": "fe-avidtrader:serve:development",
+        "tsConfig": "apps/fe-avidtrader-e2e/tsconfig.json"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "fe-avidtrader:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/fe-avidtrader-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["fe-avidtrader"]
+}
