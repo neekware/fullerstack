@@ -55,7 +55,7 @@ jobs:
         run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
       - name: Prisma generate
-        run: yarn prisma:generate
+        run: yarn prisma:be-nest:generate
 
       - name: Run linter
         run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci
