@@ -59,7 +59,7 @@ const i18nConfig: I18nConfig = {
 export const environment = {
   siteName: 'Avidtrader',
   siteUrl: 'http://localhost:4200',
-  siteSupportEmail: 'support@fe-avidtrader.co',
+  siteSupportEmail: 'support@avidtrader-client.co',
   production: false,
   port: 4201,
   prefix: 'avidtrader-api',

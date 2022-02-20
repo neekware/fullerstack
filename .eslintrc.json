@@ -20,10 +20,11 @@
                   "scope:nax-util",
                   "scope:nsx-data",
                   "scope:nsx-util"
-                ]
+                ],
+                "bannedExternalImports": ["@angular/*"]
               },
               {
-                "sourceTag": "app-client:fe-avidtrader",
+                "sourceTag": "app-client:avidtrader-client",
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
                   "scope:agx-util",
@@ -31,11 +32,13 @@
                   "scope:ngx-util",
                   "scope:ngx-ui",
                   "scope:ngx-shared"
-                ]
+                ],
+                "bannedExternalImports": ["@nestjs/*"]
               },
               {
-                "sourceTag": "app-e2e:fe-avidtrader-e2e",
-                "onlyDependOnLibsWithTags": ["app-client:fe-avidtrader"]
+                "sourceTag": "app-e2e:avidtrader-client-e2e",
+                "onlyDependOnLibsWithTags": ["app-client:avidtrader-client"],
+                "bannedExternalImports": ["@angular/*", "@nestjs/*"]
               },
               {
                 "sourceTag": "scope:ngx-util",
@@ -44,7 +47,8 @@
                   "scope:agx-util",
                   "scope:ngx-data",
                   "scope:ngx-util"
-                ]
+                ],
+                "bannedExternalImports": ["@nestjs/*"]
               },
               {
                 "sourceTag": "scope:ngx-shared",

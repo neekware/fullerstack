@@ -8,7 +8,7 @@
 
 import { getGreeting } from '../support/app.po';
 
-describe('fe-avidtrader', () => {
+describe('avidtrader-client', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {
@@ -16,6 +16,6 @@ describe('fe-avidtrader', () => {
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome to fe-avidtrader!');
+    getGreeting().contains('Welcome to avidtrader-client!');
   });
 });

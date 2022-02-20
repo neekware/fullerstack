@@ -1,22 +1,22 @@
 {
   "projectType": "application",
-  "root": "apps/fe-avidtrader",
-  "sourceRoot": "apps/fe-avidtrader/src",
-  "prefix": "fe-avidtrader",
+  "root": "apps/avidtrader-client",
+  "sourceRoot": "apps/avidtrader-client/src",
+  "prefix": "avidtrader-client",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
         "allowedCommonJsDependencies": ["zen-observable", "graphql-tag"],
-        "outputPath": "dist/apps/fe-avidtrader",
-        "index": "apps/fe-avidtrader/src/index.html",
-        "main": "apps/fe-avidtrader/src/main.ts",
-        "polyfills": "apps/fe-avidtrader/src/polyfills.ts",
-        "tsConfig": "apps/fe-avidtrader/tsconfig.app.json",
+        "outputPath": "dist/apps/avidtrader-client",
+        "index": "apps/avidtrader-client/src/index.html",
+        "main": "apps/avidtrader-client/src/main.ts",
+        "polyfills": "apps/avidtrader-client/src/polyfills.ts",
+        "tsConfig": "apps/avidtrader-client/tsconfig.app.json",
         "assets": [
-          "apps/fe-avidtrader/src/favicon.ico",
-          "apps/fe-avidtrader/src/assets",
+          "apps/avidtrader-client/src/favicon.ico",
+          "apps/avidtrader-client/src/assets",
           {
             "glob": "**/*",
             "input": "libs/agx-assets/src/lib/styles/css",
@@ -43,7 +43,7 @@
             "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
           },
           {
-            "input": "apps/fe-avidtrader/src/styles.scss"
+            "input": "apps/avidtrader-client/src/styles.scss"
           }
         ],
         "scripts": []
@@ -64,8 +64,8 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/fe-avidtrader/src/environments/environment.ts",
-              "with": "apps/fe-avidtrader/src/environments/environment.prod.ts"
+              "replace": "apps/avidtrader-client/src/environments/environment.ts",
+              "with": "apps/avidtrader-client/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all"
@@ -85,44 +85,47 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "fe-avidtrader:build:production",
-          "proxyConfig": "apps/fe-avidtrader/proxy/proxy.prod.json"
+          "browserTarget": "avidtrader-client:build:production",
+          "proxyConfig": "apps/avidtrader-client/proxy/proxy.prod.json"
         },
         "ci": {
-          "browserTarget": "fe-avidtrader:build:production",
-          "proxyConfig": "apps/fe-avidtrader/proxy/proxy.ci.json"
+          "browserTarget": "avidtrader-client:build:production",
+          "proxyConfig": "apps/avidtrader-client/proxy/proxy.ci.json"
         },
         "development": {
-          "browserTarget": "fe-avidtrader:build:development"
+          "browserTarget": "avidtrader-client:build:development"
         }
       },
       "defaultConfiguration": "development",
       "options": {
-        "browserTarget": "fe-avidtrader:build:development",
-        "proxyConfig": "apps/fe-avidtrader/proxy/proxy.dev.json"
+        "browserTarget": "avidtrader-client:build:development",
+        "proxyConfig": "apps/avidtrader-client/proxy/proxy.dev.json"
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "fe-avidtrader:build"
+        "browserTarget": "avidtrader-client:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/fe-avidtrader/src/**/*.ts", "apps/fe-avidtrader/src/**/*.html"]
+        "lintFilePatterns": [
+          "apps/avidtrader-client/src/**/*.ts",
+          "apps/avidtrader-client/src/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/fe-avidtrader"],
+      "outputs": ["coverage/apps/avidtrader-client"],
       "options": {
-        "jestConfig": "apps/fe-avidtrader/jest.config.js",
+        "jestConfig": "apps/avidtrader-client/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": ["app-client:fe-avidtrader"],
+  "tags": ["app-client:avidtrader-client"],
   "implicitDependencies": ["agx-assets"]
 }
