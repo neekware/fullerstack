@@ -13,9 +13,9 @@
       "type": "node",
       "request": "launch",
       "name": "Launch NestJS",
-      "preLaunchTask": "npm: start:be-nest",
-      "localRoot": "${workspaceFolder}/apps/be-nest/src",
-      "remoteRoot": "${workspaceFolder}/dist/apps/be-nest",
+      "preLaunchTask": "npm: start:avidtrader-api",
+      "localRoot": "${workspaceFolder}/apps/avidtrader-api/src",
+      "remoteRoot": "${workspaceFolder}/dist/apps/avidtrader-api",
       "console": "integratedTerminal",
       "autoAttachChildProcesses": true
     },
@@ -48,7 +48,7 @@
       "options": [
         "fullerstack-e2e",
         "fullerstack",
-        "be-nest",
+        "avidtrader-api",
         "ngx-config",
         "ngx-logger",
         "agx-dto",

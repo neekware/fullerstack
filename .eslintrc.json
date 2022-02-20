@@ -13,7 +13,7 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "app-server:be-nest",
+                "sourceTag": "app-server:avidtrader-api",
                 "onlyDependOnLibsWithTags": [
                   "scope:agx-data",
                   "scope:agx-util",

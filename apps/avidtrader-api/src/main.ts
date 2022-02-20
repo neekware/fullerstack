@@ -18,7 +18,7 @@ async function bootstrap() {
   const ipware = new Ipware();
   const app = await NestFactory.create(AppModule, environment.serverConfig);
 
-  const globalPrefix = 'be-nest';
+  const globalPrefix = 'avidtrader-api';
   app.setGlobalPrefix(environment.prefix || globalPrefix);
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());

@@ -15,7 +15,7 @@ To create an open source dashboard from the ground-up. `Quality of Experience` i
 
 <img width="auto" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/misc/login.png">
 
-Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [fe-avidtrader.co](https://app.fe-avidtrader.co/forex/100/USD/EUR) )
+Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app.avidtrader.co/forex/100/USD/EUR) )
 
 <br/>
 
@@ -107,20 +107,19 @@ npx create-nx-workspace fullerstack
 
 ## Applications Names
 
-- `fe-<appname>` = Frontend Web (Chrome, Firefox, Safari, Edge, etc)
-- `fe-<appname>-el` = Frontend Desktop (Electron Application - Linux, MacOS, Windows)
-- `fe-<appname>-ns` = Frontend NativeScript (Android, iOS)
-- `fe-<appname>-ic` = Frontend Ionic (Android, iOS)
-- `be-nest` = Backend with Nest
-- `be-next` = Backend with Next
+- `appname` = Frontend Web (Chrome, Firefox, Safari, Edge, etc)
+- `appname-el` = Frontend Desktop (Electron Application - Linux, MacOS, Windows)
+- `appname-ns` = Frontend NativeScript (Android, iOS)
+- `appname-ic` = Frontend Ionic (Android, iOS)
+- `appname-api` = Backend for app
 
 ## Applications Names (End2End)
 
-- `fe-<appname>-e2e` = Frontend Web (Chrome, Firefox, Safari, Edge, etc)
-- `fe-<appname>-el-e2e` = Frontend Desktop (Electron Application - Linux, MacOS, Windows)
-- `fe-<appname>-ns-e2e` = Frontend NativeScript (Android, iOS)
-- `fe-<appname>-ic-e2e` = Frontend Ionic (Android, iOS)
-- `be-next-e2e` = Backend with Next
+- `appname-e2e` = Frontend E2E Web (Chrome, Firefox, Safari, Edge, etc)
+- `appname-el-e2e` = Frontend E2E Desktop (Electron Application - Linux, MacOS, Windows)
+- `appname-ns-e2e` = Frontend E2E NativeScript (Android, iOS)
+- `appname-ic-e2e` = Frontend E2E Ionic (Android, iOS)
+- `appname-api-e2e` = Backend E2E for nest
 
 ## Instruction (for developers)
 
@@ -139,22 +138,22 @@ cd fullerstack
 yarn install
 
 # Create a database (postgres) for the angular app
-createdb fe-avidtrader
+createdb avidtrader
 
 # Copy environment variables and update
 cp env.example .env
 
 # Migrate the database
-yarn prisma:be-nest:migrate:dev
+yarn prisma:avidtrader-api:migrate:dev
 
 # Seed your database
-yarn prisma:be-nest:seed
+yarn prisma:avidtrader-api:seed
 
 # Start the backend (in terminal #1)
-yarn start:be-nest
+yarn start:avidtrader-api
 
 # Start the frontend (in terminal #2)
-yarn start:fe-avidtrader
+yarn start:avidtrader
 
 # Visit frontend (on mac use open, on windows, just type it in)
 open http://localhost:4200
@@ -167,7 +166,7 @@ open http://localhost:4200
 
 ```bash
 # Webpack analyzer
-yarn nx build fe-avidtrader --stats-json --prod && yarn stats
+yarn nx build avidtrader --stats-json --prod && yarn stats
 
 # Format changed files
 yarn format:all
@@ -215,7 +214,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             386        21513         2434         3985        15094
  JSON                   176         5044            0            0         5044
- Markdown               105         2993          762            0         2231
+ Markdown               105         2988          762            0         2226
  HTML                    33         1453          114            5         1334
  Sass                    55         1449          140           35         1274
  JavaScript              35          700           23           48          629
@@ -224,7 +223,7 @@ X.Y.Z Version
  SQL                      2           88           17           16           55
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  799        33433         3507         4091        25835
+ Total                  799        33428         3507         4091        25830
 --------------------------------------------------------------------------------
 ```
 
