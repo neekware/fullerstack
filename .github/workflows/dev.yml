@@ -56,7 +56,7 @@ jobs:
         run: echo ::set-output name=current_branch::${GITHUB_REF#refs/*/}
 
       - name: Prisma generate
-        run: yarn prisma:be-nest:generate
+        run: yarn prisma:avidtrader-api:generate
 
       - name: Run linter
         run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn lint:ci

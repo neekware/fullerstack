@@ -1,18 +1,18 @@
 {
-  "root": "apps/be-nest",
-  "sourceRoot": "apps/be-nest/src",
+  "root": "apps/avidtrader-api",
+  "sourceRoot": "apps/avidtrader-api/src",
   "projectType": "application",
-  "prefix": "be-nest",
+  "prefix": "avidtrader-api",
   "targets": {
     "build": {
       "executor": "@nrwl/node:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/be-nest",
-        "main": "apps/be-nest/src/main.ts",
-        "tsConfig": "apps/be-nest/tsconfig.app.json",
+        "outputPath": "dist/apps/avidtrader-api",
+        "main": "apps/avidtrader-api/src/main.ts",
+        "tsConfig": "apps/avidtrader-api/tsconfig.app.json",
         "assets": [
-          "apps/be-nest/src/assets",
+          "apps/avidtrader-api/src/assets",
           {
             "glob": "**/*",
             "input": "libs/agx-assets/src/lib/i18n/api",
@@ -27,8 +27,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/be-nest/src/environments/environment.ts",
-              "with": "apps/be-nest/src/environments/environment.prod.ts"
+              "replace": "apps/avidtrader-api/src/environments/environment.ts",
+              "with": "apps/avidtrader-api/src/environments/environment.prod.ts"
             }
           ]
         },
@@ -38,8 +38,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/be-nest/src/environments/environment.ts",
-              "with": "apps/be-nest/src/environments/environment.ci.ts"
+              "replace": "apps/avidtrader-api/src/environments/environment.ts",
+              "with": "apps/avidtrader-api/src/environments/environment.ci.ts"
             }
           ]
         }
@@ -48,35 +48,35 @@
     "serve": {
       "executor": "@nrwl/node:execute",
       "options": {
-        "buildTarget": "be-nest:build",
+        "buildTarget": "avidtrader-api:build",
         "inspect": true,
         "port": 9229
       },
       "configurations": {
         "production": {
-          "buildTarget": "be-nest:build:production"
+          "buildTarget": "avidtrader-api:build:production"
         },
         "ci": {
-          "buildTarget": "be-nest:build:ci"
+          "buildTarget": "avidtrader-api:build:ci"
         }
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/be-nest/**/*.ts"]
+        "lintFilePatterns": ["apps/avidtrader-api/**/*.ts"]
       },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/be-nest"],
+      "outputs": ["coverage/apps/avidtrader-api"],
       "options": {
-        "jestConfig": "apps/be-nest/jest.config.js",
+        "jestConfig": "apps/avidtrader-api/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": ["app-server:be-nest"],
+  "tags": ["app-server:avidtrader-api"],
   "implicitDependencies": ["agx-assets"]
 }

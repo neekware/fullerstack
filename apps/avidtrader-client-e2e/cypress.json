@@ -6,7 +6,7 @@
   "supportFile": "./src/support/index.ts",
   "pluginsFile": "./src/plugins/index",
   "video": true,
-  "videosFolder": "../../../dist/cypress/apps/fe-avidtrader-e2e/videos",
-  "screenshotsFolder": "../../../dist/cypress/apps/fe-avidtrader-e2e/screenshots",
+  "videosFolder": "../../../dist/cypress/apps/avidtrader-client-e2e/videos",
+  "screenshotsFolder": "../../../dist/cypress/apps/avidtrader-client-e2e/screenshots",
   "chromeWebSecurity": false
 }

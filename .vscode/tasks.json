@@ -32,7 +32,7 @@
     },
     {
       "type": "npm",
-      "script": "start:be-nest",
+      "script": "start:avidtrader-api",
       "isBackground": true,
       "presentation": {
         "focus": true,

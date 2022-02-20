@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'fe-avidtrader',
+  displayName: 'avidtrader-client',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/fe-avidtrader',
+  coverageDirectory: '../../coverage/apps/avidtrader-client',
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
