@@ -53,8 +53,8 @@ const i18nConfig: I18nConfig = {
 
 export const environment = {
   siteName: 'Avidtrader',
-  siteUrl: 'https://avidtrader-client.co',
-  siteSupportEmail: 'support@avidtrader-client.co',
+  siteUrl: 'https://avidtrader.co',
+  siteSupportEmail: 'support@avidtrader.co',
   production: false,
   port: 4301,
   prefix: 'avidtrader-api',

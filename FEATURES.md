@@ -62,4 +62,4 @@ Alert and Notification
 
 <br/><br/>
 
-# Explore more features at: ( [avidtrader-client.co](https://app.avidtrader-client.co/forex/100/USD/EUR) )
+# Explore more features at: ( [avidtrader.co](https://app.avidtrader.co/forex/100/USD/EUR) )
