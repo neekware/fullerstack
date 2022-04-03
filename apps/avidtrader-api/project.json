@@ -5,7 +5,7 @@
   "prefix": "avidtrader-api",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/node:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/avidtrader-api",
@@ -46,7 +46,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "avidtrader-api:build",
         "inspect": true,
