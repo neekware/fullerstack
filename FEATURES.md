@@ -60,6 +60,4 @@ Alert and Notification
 
 <img width="auto" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/misc/notify.png">
 
-<br/><br/>
-
-# Explore more features at: ( [avidtrader.co](https://app.avidtrader.co/forex/100/USD/EUR) )
+<br/>
