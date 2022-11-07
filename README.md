@@ -15,7 +15,7 @@ To create an open source dashboard from the ground-up. `Quality of Experience` i
 
 <img width="auto" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/misc/login.png">
 
-Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app.avidtrader.co/forex/100/USD/EUR) )
+Screenshots: ([screenshots](FEATURES.md))
 
 <br/>
 
