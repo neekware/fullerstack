@@ -48,7 +48,7 @@
     "lint:ci": "yarn nx:ci  run-many --target=lint --all --configuration=ci --parallel",
     "build:ci": "yarn nx:ci  run-many --target=build --all --configuration=ci --parallel",
     "test:ci": "yarn nx:ci  run-many --target=test --codeCoverage --all --configuration=ci --parallel",
-    "e2e:ci": "yarn nx:ci  e2e avidtrader-client-e2e --configuration=ci --headless",
+    "e2e:ci": "yarn nx:ci  e2e avidtrader-client-e2e --configuration=ci",
     "avidtrader-api:ci": "yarn nx:ci  serve avidtrader-api --configuration=ci",
     "dep-graph:main": " yarn nx:ci  dep-graph --file=graph/index.html --focus=avidtrader-client-e2e",
     "coverage:merge": "yarn ts-node ./tools/utils/coverageMerge.ts",
