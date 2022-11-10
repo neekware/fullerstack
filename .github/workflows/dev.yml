@@ -67,6 +67,9 @@ jobs:
       - name: Run tester
         run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn test:ci
 
+      - name: Run e2e
+        run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
+
       - name: Combine coverage
         run: |
           NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn coverage:merge
