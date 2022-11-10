@@ -7,7 +7,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiConstants } from '@fullerstack/agx-dto';
 import { tokenizeFullName, tryGet } from '@fullerstack/agx-util';
 import { AuthService } from '@fullerstack/ngx-auth';
@@ -27,14 +27,14 @@ import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
   providers: [ConfirmationDialogService],
 })
 export class SignupComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.SIGNUP');
   subtitle = _('COMMON.ACCOUNT_CREATE');
   icon = 'account-plus-outline';
 
   constructor(
-    readonly formBuilder: FormBuilder,
+    readonly formBuilder: UntypedFormBuilder,
     public config: ConfigService,
     readonly i18n: I18nService,
     readonly validation: ValidationService,

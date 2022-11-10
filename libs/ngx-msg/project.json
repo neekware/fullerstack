@@ -1,6 +1,7 @@
 {
+  "name": "ngx-msg",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-msg",
   "sourceRoot": "libs/ngx-msg/src",
   "prefix": "fullerstack",
   "targets": {
@@ -13,9 +14,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-msg"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-msg"],
       "options": {
-        "jestConfig": "libs/ngx-msg/jest.config.js",
+        "jestConfig": "libs/ngx-msg/jest.config.ts",
         "passWithNoTests": true
       }
     }

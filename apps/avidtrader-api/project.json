@@ -1,11 +1,12 @@
 {
-  "root": "apps/avidtrader-api",
+  "name": "avidtrader-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/avidtrader-api/src",
   "projectType": "application",
   "prefix": "avidtrader-api",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/avidtrader-api",
@@ -18,7 +19,9 @@
             "input": "libs/agx-assets/src/lib/i18n/api",
             "output": "assets/i18n"
           }
-        ]
+        ],
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {
@@ -70,9 +73,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/avidtrader-api"],
+      "outputs": ["{workspaceRoot}/coverage/apps/avidtrader-api"],
       "options": {
-        "jestConfig": "apps/avidtrader-api/jest.config.js",
+        "jestConfig": "apps/avidtrader-api/jest.config.ts",
         "passWithNoTests": true
       }
     }

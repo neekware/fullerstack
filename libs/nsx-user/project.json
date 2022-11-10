@@ -1,5 +1,6 @@
 {
-  "root": "libs/nsx-user",
+  "name": "nsx-user",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/nsx-user/src",
   "projectType": "library",
   "targets": {
@@ -12,9 +13,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/nsx-user"],
+      "outputs": ["{workspaceRoot}/coverage/libs/nsx-user"],
       "options": {
-        "jestConfig": "libs/nsx-user/jest.config.js",
+        "jestConfig": "libs/nsx-user/jest.config.ts",
         "passWithNoTests": true
       }
     }

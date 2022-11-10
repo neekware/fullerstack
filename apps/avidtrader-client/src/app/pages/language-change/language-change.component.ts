@@ -7,7 +7,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { I18nService, i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ProgressService, ValidationService } from '@fullerstack/ngx-shared';
 import { UserService } from '@fullerstack/ngx-user';
@@ -19,14 +19,14 @@ import { Subject, distinctUntilChanged, takeUntil } from 'rxjs';
   styleUrls: ['./language-change.component.scss'],
 })
 export class LanguageChangeComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.SETTINGS');
   subtitle = _('COMMON.LANGUAGE_CHANGE');
   icon = 'translate';
 
   constructor(
-    readonly formBuilder: FormBuilder,
+    readonly formBuilder: UntypedFormBuilder,
     readonly i18n: I18nService,
     readonly validation: ValidationService,
     readonly user: UserService,

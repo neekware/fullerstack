@@ -1,6 +1,7 @@
 {
+  "name": "ngx-subify",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-subify",
   "sourceRoot": "libs/ngx-subify/src",
   "prefix": "fullerstack",
   "targets": {
@@ -28,9 +29,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-subify"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-subify"],
       "options": {
-        "jestConfig": "libs/ngx-subify/jest.config.js",
+        "jestConfig": "libs/ngx-subify/jest.config.ts",
         "passWithNoTests": true
       }
     }

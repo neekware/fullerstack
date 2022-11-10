@@ -66,7 +66,7 @@ function symlinkNgCLItoNxCLI() {
 
 try {
   symlinkNgCLItoNxCLI();
-  require('nx/src/cli/decorate-cli').decorateCli();
+  require('nx/src/adapter/decorate-cli').decorateCli();
   output.log({
     title: 'Angular CLI has been decorated to enable computation caching.',
   });

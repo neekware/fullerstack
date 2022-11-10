@@ -1,6 +1,7 @@
 {
+  "name": "ngx-config",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-config",
   "sourceRoot": "libs/ngx-config/src",
   "prefix": "fullerstack",
   "targets": {
@@ -28,9 +29,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-config"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-config"],
       "options": {
-        "jestConfig": "libs/ngx-config/jest.config.js",
+        "jestConfig": "libs/ngx-config/jest.config.ts",
         "passWithNoTests": true
       }
     }

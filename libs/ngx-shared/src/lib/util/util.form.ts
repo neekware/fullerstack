@@ -6,9 +6,9 @@
  * that can be found at http://neekware.com/license/MIT.html
  */
 
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { tryGet } from '@fullerstack/agx-util';
 
-export function getControl(name: string): FormControl {
-  return tryGet<FormControl>(() => this.form.controls[name] as FormControl);
+export function getControl(name: string): UntypedFormControl {
+  return tryGet<UntypedFormControl>(() => this.form.controls[name] as UntypedFormControl);
 }

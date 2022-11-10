@@ -1,6 +1,7 @@
 {
+  "name": "ngx-uix",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-uix",
   "sourceRoot": "libs/ngx-uix/src",
   "prefix": "fullerstack",
   "targets": {
@@ -13,9 +14,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-uix"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-uix"],
       "options": {
-        "jestConfig": "libs/ngx-uix/jest.config.js",
+        "jestConfig": "libs/ngx-uix/jest.config.ts",
         "passWithNoTests": true
       }
     }

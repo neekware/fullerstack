@@ -1,5 +1,6 @@
 {
-  "root": "libs/nax-ipware",
+  "name": "nax-ipware",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/nax-ipware/src",
   "projectType": "library",
   "targets": {
@@ -23,9 +24,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/nax-ipware"],
+      "outputs": ["{workspaceRoot}/coverage/libs/nax-ipware"],
       "options": {
-        "jestConfig": "libs/nax-ipware/jest.config.js",
+        "jestConfig": "libs/nax-ipware/jest.config.ts",
         "passWithNoTests": true
       }
     }

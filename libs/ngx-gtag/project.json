@@ -1,6 +1,7 @@
 {
+  "name": "ngx-gtag",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-gtag",
   "sourceRoot": "libs/ngx-gtag/src",
   "prefix": "fullerstack",
   "targets": {
@@ -28,9 +29,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-gtag"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-gtag"],
       "options": {
-        "jestConfig": "libs/ngx-gtag/jest.config.js",
+        "jestConfig": "libs/ngx-gtag/jest.config.ts",
         "passWithNoTests": true
       }
     }

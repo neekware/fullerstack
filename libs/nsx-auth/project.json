@@ -1,5 +1,6 @@
 {
-  "root": "libs/nsx-auth",
+  "name": "nsx-auth",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/nsx-auth/src",
   "projectType": "library",
   "targets": {
@@ -12,9 +13,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/nsx-auth"],
+      "outputs": ["{workspaceRoot}/coverage/libs/nsx-auth"],
       "options": {
-        "jestConfig": "libs/nsx-auth/jest.config.js",
+        "jestConfig": "libs/nsx-auth/jest.config.ts",
         "passWithNoTests": true
       }
     }

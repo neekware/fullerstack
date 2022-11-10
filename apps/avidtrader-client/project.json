@@ -1,6 +1,7 @@
 {
+  "name": "avidtrader-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "apps/avidtrader-client",
   "sourceRoot": "apps/avidtrader-client/src",
   "prefix": "avidtrader-client",
   "targets": {
@@ -119,9 +120,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/avidtrader-client"],
+      "outputs": ["{workspaceRoot}/coverage/apps/avidtrader-client"],
       "options": {
-        "jestConfig": "apps/avidtrader-client/jest.config.js",
+        "jestConfig": "apps/avidtrader-client/jest.config.ts",
         "passWithNoTests": true
       }
     }

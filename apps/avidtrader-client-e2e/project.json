@@ -1,5 +1,6 @@
 {
-  "root": "apps/avidtrader-client-e2e",
+  "name": "avidtrader-client-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/avidtrader-client-e2e/src",
   "projectType": "application",
   "targets": {

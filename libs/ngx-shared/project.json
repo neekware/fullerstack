@@ -1,6 +1,7 @@
 {
+  "name": "ngx-shared",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-shared",
   "sourceRoot": "libs/ngx-shared/src",
   "prefix": "fullerstack",
   "targets": {
@@ -13,9 +14,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-shared"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-shared"],
       "options": {
-        "jestConfig": "libs/ngx-shared/jest.config.js",
+        "jestConfig": "libs/ngx-shared/jest.config.ts",
         "passWithNoTests": true
       }
     }
