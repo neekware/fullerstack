@@ -1,5 +1,6 @@
 {
-  "root": "libs/nsx-mailer",
+  "name": "nsx-mailer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/nsx-mailer/src",
   "projectType": "library",
   "targets": {
@@ -12,9 +13,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/nsx-mailer"],
+      "outputs": ["{workspaceRoot}/coverage/libs/nsx-mailer"],
       "options": {
-        "jestConfig": "libs/nsx-mailer/jest.config.js",
+        "jestConfig": "libs/nsx-mailer/jest.config.ts",
         "passWithNoTests": true
       }
     }

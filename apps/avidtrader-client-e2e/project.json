@@ -1,14 +1,16 @@
 {
-  "root": "apps/avidtrader-client-e2e",
+  "name": "avidtrader-client-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/avidtrader-client-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/avidtrader-client-e2e/cypress.json",
+        "cypressConfig": "apps/avidtrader-client-e2e/cypress.config.ts",
         "devServerTarget": "avidtrader-client:serve:development",
-        "tsConfig": "apps/avidtrader-client-e2e/tsconfig.json"
+        "tsConfig": "apps/avidtrader-client-e2e/tsconfig.json",
+        "testingType": "e2e"
       },
       "configurations": {
         "production": {

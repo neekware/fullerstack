@@ -1,5 +1,6 @@
 {
-  "root": "libs/agx-dto",
+  "name": "agx-dto",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/agx-dto/src",
   "projectType": "library",
   "targets": {

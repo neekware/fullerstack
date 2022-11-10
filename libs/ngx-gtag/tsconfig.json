@@ -16,5 +16,8 @@
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictTemplates": true
+  },
+  "compilerOptions": {
+    "target": "es2020"
   }
 }

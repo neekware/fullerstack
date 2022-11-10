@@ -7,7 +7,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiConstants } from '@fullerstack/agx-dto';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { ConfigService } from '@fullerstack/ngx-config';
@@ -25,13 +25,13 @@ import { Observable, Subject, debounceTime, distinctUntilChanged, first, takeUnt
 })
 export class ProfileUpdateComponent implements OnDestroy, OnInit {
   private destroy$ = new Subject<boolean>();
-  form: FormGroup;
+  form: UntypedFormGroup;
   title = _('COMMON.PROFILE');
   subtitle = _('COMMON.PROFILE_UPDATE');
   icon = 'account-edit-outline';
 
   constructor(
-    readonly formBuilder: FormBuilder,
+    readonly formBuilder: UntypedFormBuilder,
     readonly config: ConfigService,
     readonly logger: LoggerService,
     readonly auth: AuthService,

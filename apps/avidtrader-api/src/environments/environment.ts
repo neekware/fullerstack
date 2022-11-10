@@ -9,9 +9,9 @@
 import { SecurityConfig } from '@fullerstack/nsx-auth';
 import { I18nConfig } from '@fullerstack/nsx-i18n';
 import { MailerConfig } from '@fullerstack/nsx-mailer';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { NestApplicationOptions } from '@nestjs/common';
 import { ConfigModuleOptions } from '@nestjs/config';
-import { GqlModuleOptions } from '@nestjs/graphql';
 
 const serverConfig: NestApplicationOptions = {
   logger: ['error', 'warn', 'log', 'debug', 'verbose'],
@@ -27,7 +27,7 @@ const securityConfig: SecurityConfig = {
   bcryptSaltOrRound: 2,
 };
 
-const graphqlConfig: GqlModuleOptions = {
+const graphqlConfig: ApolloDriverConfig = {
   debug: true,
   playground: true,
   sortSchema: true,
@@ -40,6 +40,7 @@ const graphqlConfig: GqlModuleOptions = {
     credentials: true,
     origin: 'http://localhost:4200',
   },
+  driver: ApolloDriver,
 };
 
 const mailerConfig: MailerConfig = {

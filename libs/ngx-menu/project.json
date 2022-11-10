@@ -1,6 +1,7 @@
 {
+  "name": "ngx-menu",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-menu",
   "sourceRoot": "libs/ngx-menu/src",
   "prefix": "fullerstack",
   "targets": {
@@ -28,9 +29,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-menu"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-menu"],
       "options": {
-        "jestConfig": "libs/ngx-menu/jest.config.js",
+        "jestConfig": "libs/ngx-menu/jest.config.ts",
         "passWithNoTests": true
       }
     }
