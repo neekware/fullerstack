@@ -75,7 +75,7 @@ async function syncPackageData(moduleBuildPath: string): Promise<void> {
  */
 async function buildPackage(isNg: boolean) {
   if (program.build) {
-    let cmd = `yarn nx build ${program.library} --with-deps --skip-nx-cache`;
+    let cmd = `yarn nx build ${program.library} --skip-nx-cache`;
     if (isNg) {
       cmd = `${cmd} --prod`;
     }
@@ -97,8 +97,8 @@ async function buildPackage(isNg: boolean) {
 async function getVersion(moduleBuildPath: string, isDev = false) {
   const modulePkg = await getModulePackage(moduleBuildPath);
 
-  const version: semver.SemVer = semver.parse(modulePkg.version);
-  const semVer = `${version.major}.${version.minor}.${version.patch}`;
+  const version: semver.SemVer = semver.parse(modulePkg.version) as semver.SemVer;
+  const semVer = `${version?.major}.${version?.minor}.${version?.patch}`;
   if (!isDev) {
     return semVer;
   }

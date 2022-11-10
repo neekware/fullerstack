@@ -1,12 +1,13 @@
 {
+  "name": "ngx-store",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-store",
   "sourceRoot": "libs/ngx-store/src",
   "prefix": "fullerstack",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/ngx-store"],
+      "outputs": ["{workspaceRoot}/dist/libs/ngx-store"],
       "options": {
         "project": "libs/ngx-store/ng-package.json"
       },
@@ -22,9 +23,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-store"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-store"],
       "options": {
-        "jestConfig": "libs/ngx-store/jest.config.js",
+        "jestConfig": "libs/ngx-store/jest.config.ts",
         "passWithNoTests": true
       }
     },

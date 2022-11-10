@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '12'
+          node-version: '16'
 
       - name: Get branch name
         id: branch
@@ -66,6 +66,9 @@ jobs:
 
       - name: Run tester
         run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn test:ci
+
+      - name: Run e2e
+        run: NX_BRANCH=${{ steps.vars.outputs.current_branch }} yarn e2e:ci
 
       - name: Combine coverage
         run: |

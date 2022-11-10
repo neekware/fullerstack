@@ -7,7 +7,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import {
@@ -25,7 +25,7 @@ import { Observable, Subject, debounceTime, takeUntil } from 'rxjs';
   providers: [ConfirmationDialogService],
 })
 export class EmailChangeRequestComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.EMAIL');
   subtitle = _('COMMON.EMAIL.CHANGE_REQUEST');
@@ -33,7 +33,7 @@ export class EmailChangeRequestComponent implements OnInit, OnDestroy {
   status = { ok: true, message: '' };
 
   constructor(
-    readonly formBuilder: FormBuilder,
+    readonly formBuilder: UntypedFormBuilder,
     readonly validation: ValidationService,
     readonly auth: AuthService,
     readonly user: UserService,

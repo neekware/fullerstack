@@ -1,6 +1,7 @@
 {
+  "name": "ngx-material",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-material",
   "sourceRoot": "libs/ngx-material/src",
   "prefix": "fullerstack",
   "targets": {
@@ -13,9 +14,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-material"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-material"],
       "options": {
-        "jestConfig": "libs/ngx-material/jest.config.js",
+        "jestConfig": "libs/ngx-material/jest.config.ts",
         "passWithNoTests": true
       }
     }

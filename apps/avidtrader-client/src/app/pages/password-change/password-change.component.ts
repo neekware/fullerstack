@@ -7,7 +7,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
@@ -25,7 +25,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
   providers: [ConfirmationDialogService],
 })
 export class PasswordChangeComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.PASSWORD');
   subtitle = _('COMMON.PASSWORD_CHANGE');
@@ -40,7 +40,7 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
 
   constructor(
     readonly route: ActivatedRoute,
-    readonly formBuilder: FormBuilder,
+    readonly formBuilder: UntypedFormBuilder,
     readonly validation: ValidationService,
     readonly auth: AuthService,
     readonly progress: ProgressService,
