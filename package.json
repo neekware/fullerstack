@@ -14,7 +14,7 @@
   "scripts": {
     "ts-node": "./node_modules/.bin/ts-node -P ./tools/tsconfig.tools.json",
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main && yarn prisma:avidtrader-api:generate && husky install",
+    "postinstall": "node ./decorate-angular-cli.js && yarn prisma:avidtrader-api:generate && husky install",
     "start": "ng serve",
     "start:dash": "ng serve avidtrader-client",
     "start:avidtrader-api": "ng serve avidtrader-api",
