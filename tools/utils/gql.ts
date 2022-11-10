@@ -16,7 +16,7 @@ const gqlLib = `${projDir}/libs/ngx-gql/src/lib`;
 
 const gqlPort = '4201';
 const gqlEndpoint = `http://localhost:${gqlPort}/graphql`;
-const gqlBlobPattern = `${gqlLib}/graphql/**/*.gql.ts`;
+const gqlBlobPattern = `${gqlLib}/graphql/**/*\\.gql.ts`;
 const gqlDocumentPath = `${tmpDir}/document-temp.json`;
 const gqlSchemaPath = `${gqlLib}/gql.schema.ts`;
 const gqlSchemaPathTemp = `${tmpDir}/schema-temp.ts`;

@@ -1,5 +1,6 @@
 {
-  "root": "libs/agx-store",
+  "name": "agx-store",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/agx-store/src",
   "projectType": "library",
   "targets": {
@@ -22,9 +23,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/agx-store"],
+      "outputs": ["{workspaceRoot}/coverage/libs/agx-store"],
       "options": {
-        "jestConfig": "libs/agx-store/jest.config.js",
+        "jestConfig": "libs/agx-store/jest.config.ts",
         "passWithNoTests": true
       }
     }

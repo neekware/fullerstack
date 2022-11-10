@@ -7,7 +7,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { i18nExtractor as _ } from '@fullerstack/ngx-i18n';
 import { ProgressService, ValidationService } from '@fullerstack/ngx-shared';
@@ -19,7 +19,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./password-reset-request.component.scss'],
 })
 export class PasswordResetRequestComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   private destroy$ = new Subject<boolean>();
   title = _('COMMON.PASSWORD');
   subtitle = _('COMMON.PASSWORD.RESET_REQUEST');
@@ -27,7 +27,7 @@ export class PasswordResetRequestComponent implements OnInit, OnDestroy {
   status = { ok: true, message: '' };
 
   constructor(
-    readonly formBuilder: FormBuilder,
+    readonly formBuilder: UntypedFormBuilder,
     readonly validation: ValidationService,
     readonly auth: AuthService,
     readonly progress: ProgressService

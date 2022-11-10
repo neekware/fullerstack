@@ -1,6 +1,7 @@
 {
+  "name": "ngx-gql",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-gql",
   "sourceRoot": "libs/ngx-gql/src",
   "prefix": "fullerstack",
   "targets": {
@@ -13,9 +14,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-gql"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-gql"],
       "options": {
-        "jestConfig": "libs/ngx-gql/jest.config.js",
+        "jestConfig": "libs/ngx-gql/jest.config.ts",
         "passWithNoTests": true
       }
     }

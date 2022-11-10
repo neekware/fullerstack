@@ -15,7 +15,7 @@ To create an open source dashboard from the ground-up. `Quality of Experience` i
 
 <img width="auto" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/misc/login.png">
 
-Screenshots: ([screenshots](FEATURES.md)) // Demo: ( [avidtrader.co](https://app.avidtrader.co/forex/100/USD/EUR) )
+Screenshots: ([screenshots](FEATURES.md))
 
 <br/>
 
@@ -212,18 +212,18 @@ X.Y.Z Version
 ```txt<br>--------------------------------------------------------------------------------
  Language             Files        Lines        Blank      Comment         Code
 --------------------------------------------------------------------------------
- TypeScript             386        21513         2434         3985        15094
- JSON                   176         5047            0            0         5047
- Markdown               105         2989          762            0         2227
+ TypeScript             419        22147         2450         4017        15680
+ JSON                   175         5221            0            0         5221
+ Markdown               105         2987          761            0         2226
  HTML                    33         1453          114            5         1334
  Sass                    55         1449          140           35         1274
- JavaScript              35          700           23           48          629
  CSS                      1           96            7            0           89
  Plain Text               5           94           10            0           84
+ JavaScript               2           97            4           34           59
  SQL                      2           88           17           16           55
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  799        33432         3507         4091        25834
+ Total                  798        33635         3503         4109        26023
 --------------------------------------------------------------------------------
 ```
 

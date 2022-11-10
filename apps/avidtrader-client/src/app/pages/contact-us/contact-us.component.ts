@@ -7,7 +7,7 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiConstants } from '@fullerstack/agx-dto';
 import { AuthService } from '@fullerstack/ngx-auth';
 import { SystemStatus } from '@fullerstack/ngx-gql/schema';
@@ -29,7 +29,7 @@ import { Observable, Subject, distinctUntilChanged, filter, takeUntil, tap } fro
 })
 export class ContactUsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
-  form: FormGroup;
+  form: UntypedFormGroup;
   title = _('COMMON.CONTACT');
   subtitle = _('COMMON.CONTACT_US');
   icon = 'send';
@@ -37,7 +37,7 @@ export class ContactUsComponent implements OnInit, OnDestroy {
   status: SystemStatus;
 
   constructor(
-    readonly formBuilder: FormBuilder,
+    readonly formBuilder: UntypedFormBuilder,
     readonly validation: ValidationService,
     readonly i18n: I18nService,
     readonly auth: AuthService,

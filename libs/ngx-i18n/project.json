@@ -1,6 +1,7 @@
 {
+  "name": "ngx-i18n",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-i18n",
   "sourceRoot": "libs/ngx-i18n/src",
   "prefix": "fullerstack",
   "targets": {
@@ -28,9 +29,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-i18n"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-i18n"],
       "options": {
-        "jestConfig": "libs/ngx-i18n/jest.config.js",
+        "jestConfig": "libs/ngx-i18n/jest.config.ts",
         "passWithNoTests": true
       }
     }

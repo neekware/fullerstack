@@ -1,6 +1,7 @@
 {
+  "name": "avidtrader-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "apps/avidtrader-client",
   "sourceRoot": "apps/avidtrader-client/src",
   "prefix": "avidtrader-client",
   "targets": {
@@ -8,12 +9,13 @@
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "allowedCommonJsDependencies": ["zen-observable", "graphql-tag"],
+        "allowedCommonJsDependencies": ["zen-observable", "graphql-tag", "object-hash"],
         "outputPath": "dist/apps/avidtrader-client",
         "index": "apps/avidtrader-client/src/index.html",
         "main": "apps/avidtrader-client/src/main.ts",
         "polyfills": "apps/avidtrader-client/src/polyfills.ts",
         "tsConfig": "apps/avidtrader-client/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
         "assets": [
           "apps/avidtrader-client/src/favicon.ico",
           "apps/avidtrader-client/src/assets",
@@ -119,9 +121,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/avidtrader-client"],
+      "outputs": ["{workspaceRoot}/coverage/apps/avidtrader-client"],
       "options": {
-        "jestConfig": "apps/avidtrader-client/jest.config.js",
+        "jestConfig": "apps/avidtrader-client/jest.config.ts",
         "passWithNoTests": true
       }
     }

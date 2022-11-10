@@ -10,7 +10,7 @@
 import { Injectable } from '@angular/core';
 import {
   AbstractControl,
-  FormControl,
+  UntypedFormControl,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
@@ -25,7 +25,7 @@ export enum compareType {
 @Injectable({ providedIn: 'root' })
 export class ValidationService {
   // Visa, MasterCard, American Express, Diners Club, Discover, JCB
-  validateCreditCard(control: FormControl): ValidationErrors | null {
+  validateCreditCard(control: UntypedFormControl): ValidationErrors | null {
     if (
       control.value.match(
         /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/
@@ -39,7 +39,7 @@ export class ValidationService {
   }
 
   // RFC 2822 compliant regex
-  validateEmail(control: FormControl): ValidationErrors | null {
+  validateEmail(control: UntypedFormControl): ValidationErrors | null {
     if (
       control.value.match(
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -53,7 +53,7 @@ export class ValidationService {
   }
 
   // Password is between 6 and 100 characters and has at least one number.
-  validatePassword(control: FormControl): ValidationErrors | null {
+  validatePassword(control: UntypedFormControl): ValidationErrors | null {
     if (control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/)) {
       return null;
     } else {
@@ -81,7 +81,7 @@ export class ValidationService {
   }
 
   // Full name should not have numbers, must have at least one space and each part must be at least 2 char long
-  validateFullName(control: FormControl): ValidationErrors | null {
+  validateFullName(control: UntypedFormControl): ValidationErrors | null {
     const { firstName, lastName } = tokenizeFullName(control.value);
     if (firstName.length < 2) {
       return { invalidFirstName: true };
@@ -93,7 +93,7 @@ export class ValidationService {
   }
 
   // Value cannot be less than zero (int/float)
-  validateNonNegative = (control: FormControl): ValidationErrors | null => {
+  validateNonNegative = (control: UntypedFormControl): ValidationErrors | null => {
     const value = parseFloat(control.value);
     if (isNaN(value)) {
       return { invalidNumber: true };
@@ -105,7 +105,7 @@ export class ValidationService {
   };
 
   // Value cannot be a zero (int/float, +ve/-ve)
-  validateNonZero = (control: FormControl): ValidationErrors | null => {
+  validateNonZero = (control: UntypedFormControl): ValidationErrors | null => {
     const value = parseFloat(control.value);
     if (isNaN(value)) {
       return { invalidNumber: true };
@@ -117,7 +117,7 @@ export class ValidationService {
   };
 
   // Value cannot be non-float (float, +ve/-ve)
-  validateFloat = (control: FormControl): ValidationErrors | null => {
+  validateFloat = (control: UntypedFormControl): ValidationErrors | null => {
     const value = parseFloat(control.value);
     if (isNaN(value)) {
       return { invalidNumber: true };
@@ -126,7 +126,7 @@ export class ValidationService {
   };
 
   // Value cannot be non-int (int, +ve/-ve)
-  validateInt = (control: FormControl): ValidationErrors | null => {
+  validateInt = (control: UntypedFormControl): ValidationErrors | null => {
     const value = parseInt(control.value);
     if (isNaN(value)) {
       return { invalidNumber: true };

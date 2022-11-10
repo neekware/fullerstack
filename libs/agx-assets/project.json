@@ -1,5 +1,6 @@
 {
-  "root": "libs/agx-assets",
+  "name": "agx-assets",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/agx-assets/src",
   "projectType": "library",
   "targets": {
@@ -12,9 +13,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/agx-assets"],
+      "outputs": ["{workspaceRoot}/coverage/libs/agx-assets"],
       "options": {
-        "jestConfig": "libs/agx-assets/jest.config.js",
+        "jestConfig": "libs/agx-assets/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,14 +1,15 @@
 {
+  "name": "ngx-user",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-user",
   "sourceRoot": "libs/ngx-user/src",
   "prefix": "fullerstack",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-user"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-user"],
       "options": {
-        "jestConfig": "libs/ngx-user/jest.config.js",
+        "jestConfig": "libs/ngx-user/jest.config.ts",
         "passWithNoTests": true
       }
     },

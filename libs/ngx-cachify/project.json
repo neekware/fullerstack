@@ -1,12 +1,13 @@
 {
+  "name": "ngx-cachify",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/ngx-cachify",
   "sourceRoot": "libs/ngx-cachify/src",
   "prefix": "fullerstack",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/ngx-cachify"],
+      "outputs": ["{workspaceRoot}/dist/libs/ngx-cachify"],
       "options": {
         "project": "libs/ngx-cachify/ng-package.json"
       },
@@ -22,9 +23,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ngx-cachify"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ngx-cachify"],
       "options": {
-        "jestConfig": "libs/ngx-cachify/jest.config.js",
+        "jestConfig": "libs/ngx-cachify/jest.config.ts",
         "passWithNoTests": true
       }
     },
