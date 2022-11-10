@@ -21,7 +21,7 @@ export const I18nDefaultLanguage = 'en';
 export const I18nActiveLanguages = ['en', 'de', 'fr', 'es', 'he', 'fa', 'zh-hans'];
 
 export const I18nDirectory = path.join(projDir, 'libs/agx-assets/src/lib/i18n/client');
-export const I18nFilePattern = path.join(I18nDirectory, '**/*.json');
+export const I18nFilePattern = path.join(I18nDirectory, '**/*\\.json');
 
 interface I18nLanguageIsoPath {
   iso: string;
