@@ -2,18 +2,19 @@
   *ngIf="link.isInternalLink"
   routerLink="{{ link.link }}"
   (click)="handleToggle(link)"
+  class="w-240"
   [class.active]="link.isActive(router.url)"
   [class.disabled]="link.disabled"
 >
-  <div fxLayoutGap="14px" class="-top-{{ link.offset(16) }}">
-    <mat-icon [class.text-color-muted]="link.disabled" *ngIf="link?.icon" svgIcon="{{ link.icon }}"></mat-icon>
+  <div class="flex gap-{{ link.offset(8) }} justify-start">
+    <mat-icon class="pr-1 mt-2" [class.text-color-muted]="link.disabled" *ngIf="link?.icon" svgIcon="{{ link.icon }}"></mat-icon>
     <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
   </div>
 </a>
 
 <a *ngIf="link.isExternalLink" href="{{ link.link }}" target="{{ link.target }}" [class.disabled]="link.disabled">
-  <div fxLayoutGap="14px" class="-top-{{ link.offset(16) }}">
-    <mat-icon [class.text-color-muted]="link.disabled" svgIcon="{{ link.icon }}"></mat-icon>
+  <div class="flex gap-{{ link.offset(8) }} justify-start">
+    <mat-icon class="pr-1 mt-2" [class.text-color-muted]="link.disabled" svgIcon="{{ link.icon }}"></mat-icon>
     <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
   </div>
 </a>

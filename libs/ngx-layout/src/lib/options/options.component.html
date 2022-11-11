@@ -1,15 +1,17 @@
-<div class="fs-options pb4">
+<div class="fs-options pb-1">
   <mat-divider class="divider"></mat-divider>
-  <div fxLayout="column" fxLayoutAlign="center center">
-    <button mat-fab color="warn" class="option-trigger" (click)="toggleMenu()">
-      <mat-icon [@rotate180]="rotateState" svgIcon="tune"></mat-icon>
-    </button>
-    <div class="option-title" [@expandFade]="optionTitleState">{{ 'COMMON.OPTIONS' | translate }}</div>
+  <div class="flex-col">
+    <div class="flex justify-center">
+      <button mat-fab color="warn" class="-top-8" (click)="toggleMenu()">
+        <mat-icon [@rotate180]="rotateState" svgIcon="tune"></mat-icon>
+      </button>
+    </div>
+    <div class="-top-7 relative flex justify-center" [@expandFade]="optionTitleState">{{ 'COMMON.OPTIONS' | translate }}</div>
   </div>
 
-  <div fxLayout="column" fxLayoutGap="8px" [@expandFade]="optionState" class="options-box">
-    <div fxFlex fxLayout fxLayoutAlign="start center" *ngIf="i18n.enabledLanguages.length > 1" class="option-item language">
-      <mat-form-field fxFlex="100">
+  <div class="options-box flex-col gap-1" [@expandFade]="optionState">
+    <div class="option-item language flex justify-start" *ngIf="i18n.enabledLanguages.length > 1">
+      <mat-form-field>
         <mat-select
           placeholder="{{ 'COMMON.LANGUAGE' | translate }}"
           #ctrl="ngModel"
@@ -23,14 +25,15 @@
       </mat-form-field>
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" class="option-item">
-      <span fxFlex>{{ 'COMMON.DARK' | translate }}</span>
-      <mat-slide-toggle [(ngModel)]="isDarkTheme" (change)="layout.setDarkTheme($event.checked)"></mat-slide-toggle>
+    <div class="option-item flex justify-between">
+      <span>{{ 'COMMON.DARK' | translate }}</span>
+      <mat-slide-toggle class="mt-2.5" [(ngModel)]="isDarkTheme" (change)="layout.setDarkTheme($event.checked)"></mat-slide-toggle>
     </div>
 
-    <div *ngIf="layout.uix.isFullscreenCapable" fxLayout="row" fxLayoutAlign="start center" class="option-item">
-      <span fxFlex>{{ 'COMMON.FULLSCREEN' | translate }}</span>
+    <div *ngIf="layout.uix.isFullscreenCapable" class="option-item flex justify-between">
+      <span>{{ 'COMMON.FULLSCREEN' | translate }}</span>
       <mat-slide-toggle
+        class="mt-2.5"
         [checked]="layout.state.isFullscreen"
         (change)="layout.toggleFullscreen()"
         aria-label="{{ 'COMMON.FULLSCREEN' | translate }}"

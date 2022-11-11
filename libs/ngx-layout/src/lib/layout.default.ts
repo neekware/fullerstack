@@ -23,7 +23,7 @@ export const DefaultLayoutState: LayoutState = {
   isPortrait: false,
   isDarkTheme: false,
   isFullscreen: false,
-  menuOpen: false,
+  menuOpen: true,
   notifyOpen: false,
   navbarMode: NavbarMode.moveWithScroll,
   menuRole: SidenavRole.navigation,

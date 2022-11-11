@@ -22,9 +22,11 @@
   mat-icon svg {
     vertical-align: middle;
   }
+
   mat-expansion-panel-header {
-    padding: 0 16px;
+    padding: 0 !important;
   }
+
   mat-expansion-panel-header:hover {
     background: rgba(0, 0, 0, 0.04);
   }

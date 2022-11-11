@@ -68,7 +68,7 @@
 
     <mat-divider class="mt1"></mat-divider>
 
-    <div class="mt2" fxLayout="row" *ngIf="isSubmitted && status?.ok && !auth.state.isLoggedIn">
+    <div class="mt-1" fxLayout="row" *ngIf="isSubmitted && status?.ok && !auth.state.isLoggedIn">
       <span>
         [
         <a routerLink="/user/signup" class="no-underline"> {{ 'COMMON.SIGNUP' | translate }} </a>
@@ -82,7 +82,7 @@
       </span>
     </div>
 
-    <div class="mt2" fxLayout="row" *ngIf="isSubmitted && status?.ok && auth.state.isLoggedIn">
+    <div class="mt-1" fxLayout="row" *ngIf="isSubmitted && status?.ok && auth.state.isLoggedIn">
       <span>
         [
         <a routerLink="/user/profile/update" class="no-underline"> {{ 'COMMON.UPDATE_PROFILE' | translate }} </a>
