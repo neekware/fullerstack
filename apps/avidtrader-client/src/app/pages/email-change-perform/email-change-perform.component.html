@@ -1,11 +1,7 @@
 <mat-toolbar class="fs-page-header" color="primary"> </mat-toolbar>
-<div class="fs-page-content">
+<div class="flex justify-center min-h-[70vh] px-2">
   <fullerstack-card
-    class="fs-page-card"
-    fxLayout="column"
-    fxFlex.xs="100"
-    fxFlex.sm="80"
-    fxFlex.gt-sm="600px"
+    class="-m-[83px] w-full sm:w-[90vw] md:w-[80vw] lg:w-[50vw]"
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
@@ -23,15 +19,14 @@
     <fullerstack-blob *ngIf="!status.ok" class="mt-0" text="{{ status.message | translate }}." icon="alert-circle" iconColor="red">
     </fullerstack-blob>
 
-    <mat-divider class="mt-0"></mat-divider>
+    <mat-divider class="mt-1"></mat-divider>
 
-    <div *ngIf="auth.state.isLoggedIn" class="mt-1" fxLayout="row">
+    <div *ngIf="auth.state.isLoggedIn" class="flex justify-between mt-3">
       <span>
         [
         <a routerLink="/user/profile/update" class="no-underline"> {{ 'COMMON.PROFILE' | translate }} </a>
         ]
       </span>
-      <div fxFlex></div>
       <span>
         [
         <a routerLink="/" class="no-underline"> {{ 'COMMON.HOME' | translate }} </a>
@@ -39,13 +34,12 @@
       </span>
     </div>
 
-    <div *ngIf="!auth.state.isLoggedIn" class="mt-1" fxLayout="row">
+    <div *ngIf="!auth.state.isLoggedIn" class="flex justify-between mt-3">
       <span>
         [
         <a routerLink="/auth/login" class="no-underline"> {{ 'COMMON.LOGIN' | translate }} </a>
         ]
       </span>
-      <div fxFlex></div>
       <span>
         [
         <a routerLink="/auth/signup" class="no-underline"> {{ 'COMMON.SIGNUP' | translate }} </a>
