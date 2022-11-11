@@ -15,10 +15,10 @@
     <fullerstack-blob *ngIf="isUserVerified" text="{{ status | translate }}." icon="check-circle-outline" iconColor="green">
     </fullerstack-blob>
 
-    <fullerstack-blob *ngIf="!isUserVerified" class="mt1 color-warn" text="{{ status | translate }}." icon="alert-circle">
+    <fullerstack-blob *ngIf="!isUserVerified" class="mt-0 color-warn" text="{{ status | translate }}." icon="alert-circle">
     </fullerstack-blob>
 
-    <mat-divider class="mt1"></mat-divider>
+    <mat-divider class="mt-0"></mat-divider>
 
     <div *ngIf="!auth.state.isLoggedIn" class="mt-1" fxLayout="row">
       <span>

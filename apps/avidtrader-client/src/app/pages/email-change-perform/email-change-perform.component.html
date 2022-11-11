@@ -13,17 +13,17 @@
   >
     <fullerstack-blob
       *ngIf="status.ok"
-      class="mt1"
+      class="mt-0"
       text="{{ status.message | translate }}. {{ user.state.email }}"
       icon="check-circle-outline"
       iconColor="green"
     >
     </fullerstack-blob>
 
-    <fullerstack-blob *ngIf="!status.ok" class="mt1" text="{{ status.message | translate }}." icon="alert-circle" iconColor="red">
+    <fullerstack-blob *ngIf="!status.ok" class="mt-0" text="{{ status.message | translate }}." icon="alert-circle" iconColor="red">
     </fullerstack-blob>
 
-    <mat-divider class="mt1"></mat-divider>
+    <mat-divider class="mt-0"></mat-divider>
 
     <div *ngIf="auth.state.isLoggedIn" class="mt-1" fxLayout="row">
       <span>

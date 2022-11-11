@@ -2,6 +2,10 @@
   display: none;
 }
 
+mat-card {
+  padding: 0 !important;
+}
+
 .card-header-icon {
   -webkit-transform: rotate(10deg) scale(2);
   -ms-transform: rotate(10deg) scale(2);
@@ -10,10 +14,6 @@
 
 .mat-divider {
   border-top-width: 2px;
-}
-
-mat-card-header {
-  padding: 15px;
 }
 
 .menu-button {

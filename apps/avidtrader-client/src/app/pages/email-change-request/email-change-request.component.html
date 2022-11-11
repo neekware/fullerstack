@@ -11,7 +11,7 @@
     [icon]="icon"
     [progress]="progress.state$ | async"
   >
-    <fullerstack-blob class="mt1" text="{{ 'CONFIRM.NEW_EMAIL' | translate }}." icon="information-outline" iconColor="green">
+    <fullerstack-blob class="mt-0" text="{{ 'CONFIRM.NEW_EMAIL' | translate }}." icon="information-outline" iconColor="green">
     </fullerstack-blob>
 
     <form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="off">
@@ -46,7 +46,7 @@
 
       <fullerstack-blob
         *ngIf="form?.disabled"
-        class="mt1"
+        class="mt-0"
         text="{{ 'INFO.NEW_EMAIL_REQUEST_SENT' | translate }}."
         icon="check-circle-outline"
         iconColor="green"
@@ -54,7 +54,7 @@
       </fullerstack-blob>
     </form>
 
-    <mat-divider class="mt1"></mat-divider>
+    <mat-divider class="mt-0"></mat-divider>
 
     <div class="mt-1" fxLayout="row">
       <span>

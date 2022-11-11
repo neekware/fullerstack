@@ -1,49 +1,47 @@
 <mat-toolbar class="fs-page-header" color="primary"> </mat-toolbar>
-<div class="fs-page-content">
+<div class="flex justify-center min-h-[70vh] px-2">
   <fullerstack-card
-    class="fs-page-card"
-    fxLayout="column"
-    fxFlex.xs="100"
-    fxFlex.sm="80"
-    fxFlex.gt-sm="600px"
+    class="-m-[83px] w-full sm:w-[90vw] md:w-[80vw] lg:w-[50vw]"
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
     [progress]="progress.state$ | async"
   >
-    <form [formGroup]="form" (submit)="submit()" fxLayout="column" autocomplete="off">
-      <mat-form-field>
+    <form class="flex-col" [formGroup]="form" (submit)="submit()" autocomplete="off">
+      <mat-form-field class="flex w-full">
         <mat-icon matSuffix svgIcon="email"></mat-icon>
         <input matInput type="email" formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" autofocus />
         <mat-error errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="flex w-full">
         <mat-icon matSuffix svgIcon="key-variant"></mat-icon>
         <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
         <mat-error errorDirective [control]="form?.controls?.password" [isTouched]="form?.controls?.password?.touched"></mat-error>
       </mat-form-field>
 
-      <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
-        <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine">
-          {{ 'COMMON.LOGIN' | translate }}
-        </button>
-        <div *ngIf="auth.msg.isError && auth.msg.text" class="form-status" fxLayout="row" fxLayoutGap="10px">
+      <div class="flex pt-0 pb-4 gap-3 justify-start">
+        <div>
+          <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine">
+            {{ 'COMMON.LOGIN' | translate }}
+          </button>
+        </div>
+        <div *ngIf="auth.msg.isError && auth.msg.text" class="flex gap-2 mt-[5px]">
           <mat-icon color="warn" svgIcon="alert"></mat-icon>
-          <span>{{ auth.msg.text | translate }}!</span>
+          <span class="flex mt-[3px]">{{ auth.msg.text | translate }}!</span>
         </div>
       </div>
     </form>
 
-    <mat-divider class="mt1"></mat-divider>
+    <mat-divider class="mt-1"></mat-divider>
 
-    <div class="mt-1" fxLayout="row">
+    <div class="flex justify-between mt-3">
       <span>
         [
         <a routerLink="/auth/signup" class="no-underline"> {{ 'COMMON.SIGNUP' | translate }} </a>
         ]
       </span>
-      <div fxFlex></div>
+      <div></div>
       <span>
         [
         <a routerLink="/auth/password/reset/request" class="no-underline"> {{ 'COMMON.FORGOT_PASSWORD' | translate }} </a>

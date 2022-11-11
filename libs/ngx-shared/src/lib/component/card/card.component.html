@@ -1,15 +1,13 @@
-<mat-card fxLayout="column" style="padding: 0">
-  <mat-card-header fxLayout="row" class="header-box">
-    <div fxLayout="column" fxLayoutAlign="center">
-      <mat-card-title style="margin-bottom: 0; font-size: 1.2rem">{{ title | translate }}</mat-card-title>
-      <mat-card-subtitle *ngIf="subtitle" style="margin: 5px 0 0 0">{{ subtitle | translate }}</mat-card-subtitle>
+<mat-card class="mat-card">
+  <mat-card-header class="flex-col justify-between p-4 pb-0">
+    <div>
+      <mat-card-title class="text-base">{{ title | translate }}</mat-card-title>
+      <mat-card-subtitle *ngIf="subtitle" class="">{{ subtitle | translate }}</mat-card-subtitle>
     </div>
 
-    <div fxFlex></div>
-
     <div *ngIf="icon && !hasMenu">
-      <mat-icon *ngIf="!isMainColor" [style.color]="iconColor" svgIcon="{{ icon }}" class="card-header-icon mt0_5"></mat-icon>
-      <mat-icon *ngIf="isMainColor" color="iconColor" svgIcon="{{ icon }}" class="card-header-icon mt0_5"></mat-icon>
+      <mat-icon class="card-header-icon mt-3" *ngIf="!isMainColor" [style.color]="iconColor" svgIcon="{{ icon }}"></mat-icon>
+      <mat-icon class="card-header-icon mt-3" *ngIf="isMainColor" color="iconColor" svgIcon="{{ icon }}"></mat-icon>
     </div>
 
     <div *ngIf="hasMenu">
@@ -33,10 +31,10 @@
     </div>
   </mat-card-header>
 
-  <mat-divider *ngIf="!progress" class="border-t-2"></mat-divider>
+  <mat-divider *ngIf="!progress" class="bt-1"></mat-divider>
   <mat-progress-bar *ngIf="progress" color="warn" mode="indeterminate"></mat-progress-bar>
 
-  <mat-card-content style="padding: 15px">
+  <mat-card-content class="p-4">
     <ng-content></ng-content>
   </mat-card-content>
 </mat-card>
