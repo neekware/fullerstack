@@ -4,12 +4,14 @@
     <p>{{ title | translate }}</p>
   </mat-toolbar>
 
-  <div>
+  <div class="mt-2">
     <p *ngIf="info">{{ info | translate }}.</p>
     <p>{{ question | translate }}</p>
   </div>
-  <div class="flex gap-[12px] justify-center">
-    <button type="button" mat-raised-button (click)="dialogRef.close()">{{ 'COMMON.NO' | translate }}</button>
-    <button type="button" mat-raised-button color="accent" (click)="dialogRef.close(true)">{{ 'COMMON.YES' | translate }}</button>
+  <div class="flex gap-2 mt-2 justify-between">
+    <button class="w-2/3" type="button" mat-raised-button (click)="dialogRef.close(false)">{{ 'COMMON.NO' | translate }}</button>
+    <button class="w-1/3" type="button" mat-raised-button color="accent" (click)="dialogRef.close(true)">
+      {{ 'COMMON.YES' | translate }}
+    </button>
   </div>
 </div>
