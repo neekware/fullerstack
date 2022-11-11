@@ -27,6 +27,10 @@
         <mat-icon color="green" svgIcon="check-circle-outline"></mat-icon>
         <span>{{ user.msg.text | translate }}! ({{ i18n.getLanguageName(form?.controls?.language.value) }})</span>
       </div>
+      <div *ngIf="!(user.msg.isSuccess || (user.msg.isError && user.msg.text))" class="flex pt-0 pb-4 gap-3 justify-start">
+        <mat-icon color="blue" svgIcon="check-circle-outline"></mat-icon>
+        <span>{{ 'INFO.ACCOUNT_LANGUAGE' | translate }} ({{ i18n.getLanguageName(form?.controls?.language.value) }})</span>
+      </div>
     </form>
 
     <mat-divider class="mt-1"></mat-divider>
