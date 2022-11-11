@@ -17,7 +17,7 @@ import { LoggerInterceptor, ProgressInterceptor } from '@fullerstack/ngx-shared'
  * List of interceptors. Order is very important.
  * Request is processed from top to bottom.
  * Response is processed from bottom to top.
- * `HTTP_INTERCEPTORS` token is used to register `multiple` interceptors. (hence `multi: true`)
+ * `HTTP_INTERCEPTORS` token is used to register `multiple` interceptors. (hence `multi: true`).
  */
 export const httpInterceptorProvidersOrderedList = [
   /**
