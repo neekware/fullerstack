@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     readonly system: SystemService
   ) {
     if (!this.config.options.production) {
-      /* istanbul ignore next */
+      /* Istanbul ignore next */
       this.logger.info('AppComponent starting ... ');
     }
   }
