@@ -46,23 +46,15 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: Cache Node Modules 🛢️
-        id: cache-node-modules
+      - name: Cache Deps 🛢️
+        id: cache-deps
         uses: actions/cache@v2
         with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('yarn.lock') }}
-
-      - name: Cache Cypress Binary 🛢️
-        id: cache-cypress-binary
-        uses: actions/cache@v2
-        with:
-          path: cypress/cache
-          key: cypress-binary-${{ hashFiles('yarn.lock') }}
+          path: ~/.cache
 
       - name: Install Dependencies 🔧
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: yarn install --prefer-offline --frozen-lockfile
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
 
       - name: Get branch name
         id: branch
