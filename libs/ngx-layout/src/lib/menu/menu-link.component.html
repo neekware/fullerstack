@@ -5,14 +5,14 @@
   [class.active]="link.isActive(router.url)"
   [class.disabled]="link.disabled"
 >
-  <div fxLayoutGap="14px" [fxFlexOffset]="link.offset(16)">
+  <div class="flex flex-row box-border gap-4 ml-3">
     <mat-icon [class.text-color-muted]="link.disabled" *ngIf="link?.icon" svgIcon="{{ link.icon }}"></mat-icon>
     <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
   </div>
 </a>
 
 <a *ngIf="link.isExternalLink" href="{{ link.link }}" target="{{ link.target }}" [class.disabled]="link.disabled">
-  <div fxLayoutGap="14px" [fxFlexOffset]="link.offset(16)">
+  <div class="flex flex-row box-border gap-4 ml-3">
     <mat-icon [class.text-color-muted]="link.disabled" svgIcon="{{ link.icon }}"></mat-icon>
     <span [class.text-color-muted]="link.disabled">{{ link.name | translate }}</span>
   </div>

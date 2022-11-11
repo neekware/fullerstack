@@ -1,12 +1,5 @@
-<div class="fs-footer" fxLayout="column">
-  <div
-    class="fs-footer-top"
-    fxFlex="100"
-    fxLayout="column"
-    fxLayout.gt-xs="row"
-    fxLayoutAlign.gt-xs="space-evenly center"
-    fxLayoutAlign="center center"
-  >
+<div class="fs-footer">
+  <div class="fs-footer-top flex flex-row justify-around">
     <mat-list *ngFor="let footer of footers">
       <h1 mat-subheader>{{ footer.type | translate }}</h1>
       <mat-list-item *ngFor="let link of footer.links">
@@ -19,7 +12,7 @@
     </mat-list>
   </div>
 
-  <div class="fs-footer-credit" fxLayoutAlign="center center">
+  <div class="fs-footer-credit flex flex-row justify-center">
     <a routerLink="/" class="no-underline">
       <strong>{{ appName }} &nbsp;</strong> © {{ today | date: 'y' }}
     </a>

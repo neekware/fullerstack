@@ -1,4 +1,4 @@
-<mat-toolbar class="main-navbar" color="primary">
+<mat-toolbar class="main-navbar flex flex-row box-border justify-between" color="primary">
   <button (click)="layout.toggleMenu()" mat-icon-button aria-label="Toggle sidenav">
     <mat-icon [@rotate90]="menuIconState" [svgIcon]="layoutState.menuOpen ? 'close' : 'menu'"></mat-icon>
   </button>
