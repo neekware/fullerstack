@@ -1,16 +1,25 @@
-<div class="bulletin-board bulletin-background" [class.small]="handSet" [class.large]="!handSet" [class.auth]="auth.state.isLoggedIn">
-  <div class="flex-col gap-10 justify-center">
-    <img src="/assets/images/logos/logo-{{ logoSize }}.png" />
-    <h1 class="headline">{{ 'APP.HEADLINE' | translate }}</h1>
-    <h3 class="message">{{ 'APP.SUB_HEADLINE' | translate }}</h3>
-    <button mat-raised-button *ngIf="!auth.state.isLoggedIn" (click)="auth.goTo(layout.auth.authUrls.loginUrl)">
-      {{ 'COMMON.GET_STARTED' | translate }}
-    </button>
+<div
+  class="bulletin-board bulletin-background flex justify-center"
+  [class.small]="handSet"
+  [class.large]="!handSet"
+  [class.auth]="auth.state.isLoggedIn"
+>
+  <div>
+    <div class="flex justify-center">
+      <img class="" src="/assets/images/logos/logo-{{ logoSize }}.png" />
+    </div>
+    <h1 class="headline flex justify-center">{{ 'APP.HEADLINE' | translate }}</h1>
+    <h3 class="message flex justify-center">{{ 'APP.SUB_HEADLINE' | translate }}</h3>
+    <div class="flex justify-center">
+      <button mat-raised-button *ngIf="!auth.state.isLoggedIn" (click)="auth.goTo(layout.auth.authUrls.loginUrl)">
+        {{ 'COMMON.GET_STARTED' | translate }}
+      </button>
+    </div>
   </div>
 </div>
 
 <div class="fs-promo">
-  <div class="flex-col gap-10 justify-center">
+  <div class="flex-col gap-10 content-center">
     <div *ngFor="let pitch of pitchList; let even = even" class="flex-col row gap-20 ustify-evenly">
       <div class="pitch">
         <h3 class="title">{{ pitch.title | translate }}</h3>
