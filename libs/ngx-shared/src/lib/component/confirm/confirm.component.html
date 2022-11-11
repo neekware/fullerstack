@@ -1,5 +1,5 @@
-<div [dir]="i18n.direction" fxFlex fxLayout="column" fxLayoutGap="10px">
-  <mat-toolbar color="accent" fxLayout="row" fxLayoutGap="10px" class="pt1 pb1">
+<div [dir]="i18n.direction" class="flex-col gap-[10px]">
+  <mat-toolbar color="accent" class="flex gap-[10px] pt-0 pb-0">
     <mat-icon svgIcon="alert-outline"></mat-icon>
     <p>{{ title | translate }}</p>
   </mat-toolbar>
@@ -8,8 +8,8 @@
     <p *ngIf="info">{{ info | translate }}.</p>
     <p>{{ question | translate }}</p>
   </div>
-  <div fxFlex="row" fxLayoutGap="12px" fxLayoutAlign="center center">
-    <button fxFlex type="button" mat-raised-button (click)="dialogRef.close()">{{ 'COMMON.NO' | translate }}</button>
+  <div class="flex gap-[12px] justify-center">
+    <button type="button" mat-raised-button (click)="dialogRef.close()">{{ 'COMMON.NO' | translate }}</button>
     <button type="button" mat-raised-button color="accent" (click)="dialogRef.close(true)">{{ 'COMMON.YES' | translate }}</button>
   </div>
 </div>

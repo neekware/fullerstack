@@ -1,52 +1,50 @@
 <mat-toolbar class="fs-page-header" color="primary"> </mat-toolbar>
-<div class="fs-page-content">
+<div class="flex justify-center min-h-[70vh] px-2">
   <fullerstack-card
-    class="fs-page-card"
-    fxLayout="column"
-    fxFlex.xs="100"
-    fxFlex.sm="80"
-    fxFlex.gt-sm="600px"
+    class="-m-[83px] w-full sm:w-[90vw] md:w-[80vw] lg:w-[50vw]"
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
     [progress]="progress.state$ | async"
   >
-    <fullerstack-blob class="mt1" text="{{ 'CONFIRM.NEW_EMAIL' | translate }}." icon="information-outline" iconColor="green">
+    <fullerstack-blob class="mt-0" text="{{ 'CONFIRM.NEW_EMAIL' | translate }}." icon="information-outline" iconColor="green">
     </fullerstack-blob>
 
-    <form [formGroup]="form" (submit)="submit()" fxLayout="column" autoCompleteOff autocomplete="off">
-      <mat-form-field>
+    <form class="flex-col" [formGroup]="form" (submit)="submit()" autocomplete="off">
+      <mat-form-field class="flex w-full">
         <mat-icon matSuffix svgIcon="email"></mat-icon>
         <input matInput type="email" formControlName="currentEmail" placeholder="{{ 'COMMON.CURRENT_EMAIL' | translate }}" />
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="flex w-full">
         <mat-icon matSuffix svgIcon="email-sync"></mat-icon>
         <input matInput type="email" formControlName="email" placeholder="{{ 'COMMON.NEW_EMAIL' | translate }}" />
         <mat-hint align="end">{{ 'CONFIRM.ACCOUNT_EMAIL' | translate }}"</mat-hint>
         <mat-error errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="flex w-full">
         <mat-icon matSuffix svgIcon="key"></mat-icon>
         <input matInput type="password" formControlName="password" placeholder="{{ 'CONFIRM.ACCOUNT_PASSWORD' | translate }}" />
         <mat-hint align="end">{{ 'CONFIRM.CURRENT_PASSWORD' | translate }}"</mat-hint>
         <mat-error errorDirective [control]="form?.controls?.password" [isTouched]="form?.controls?.password?.touched"></mat-error>
       </mat-form-field>
 
-      <div fxLayout="row" fxLayoutGap="10px" class="pt0_5">
-        <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine" class="button-30p">
-          {{ 'COMMON.EMAIL_CHANGE' | translate }}
-        </button>
-        <div *ngIf="!status.ok" class="form-status" fxLayout="row" fxLayoutGap="10px">
+      <div class="flex pt-0 pb-4 gap-3 justify-start">
+        <div>
+          <button mat-raised-button type="submit" color="primary" [disabled]="!form?.valid || form?.pristine">
+            {{ 'COMMON.EMAIL_CHANGE' | translate }}
+          </button>
+        </div>
+        <div *ngIf="!status.ok" class="flex gap-2 mt-[5px]">
           <mat-icon color="warn" svgIcon="alert"></mat-icon>
-          <span>{{ status.message | translate }}!</span>
+          <span class="flex mt-[3px]">{{ status.message | translate }}!</span>
         </div>
       </div>
 
       <fullerstack-blob
         *ngIf="form?.disabled"
-        class="mt1"
+        class="mt-0"
         text="{{ 'INFO.NEW_EMAIL_REQUEST_SENT' | translate }}."
         icon="check-circle-outline"
         iconColor="green"
@@ -54,15 +52,14 @@
       </fullerstack-blob>
     </form>
 
-    <mat-divider class="mt1"></mat-divider>
+    <mat-divider class="mt-1"></mat-divider>
 
-    <div class="mt2" fxLayout="row">
+    <div class="flex justify-between mt-3">
       <span>
         [
         <a routerLink="/user/profile/update" class="no-underline"> {{ 'COMMON.UPDATE_PROFILE' | translate }} </a>
         ]
       </span>
-      <div fxFlex></div>
       <span>
         [
         <a routerLink="/" class="no-underline"> {{ 'COMMON.HOME' | translate }} </a>

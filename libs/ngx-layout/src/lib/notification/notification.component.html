@@ -5,17 +5,17 @@
         <mat-icon class="mr0_5" color="primary" svgIcon="update"></mat-icon>
         {{ 'COMMON.LATEST' | translate }}
       </ng-template>
-      <mat-list fxFlex fxLayout="column">
+      <mat-list class="flex-col w-full">
         <h3 class="mb-1" mat-subheader>Today</h3>
         <div class="update-box">
-          <div fxLayout="row">
-            <h2 fxFlex>{{ currentTime$ | async | date }}</h2>
+          <div class="flex">
+            <h2 class="flex w-full">{{ currentTime$ | async | date }}</h2>
             <h4>{{ currentTime$ | async | date: 'shortTime' }}</h4>
           </div>
-          <div fxLayout="row" class="mt-1_5">
-            <h4 fxFlex>San Diego, CA</h4>
-            <div fxLayout="row">
-              <h4>21°</h4>
+          <div class="mt-1 flex justify-between">
+            <h4>San Diego, CA</h4>
+            <div class="flex">
+              <span>21°</span>
               <mat-icon class="color-accent weather-icon" svgIcon="white-balance-sunny"></mat-icon>
             </div>
           </div>
@@ -51,7 +51,7 @@
         <mat-icon class="mr0_5" color="warn" svgIcon="bell"></mat-icon>
         {{ 'COMMON.ALERT' | translate }}
       </ng-template>
-      <div class="scrollbox" fxFlex fxLayout="column">
+      <div class="scrollbox flex-col">
         <mat-list>
           <mat-list-item *ngFor="let notify of notifications">
             <mat-icon matListIcon color="{{ notify.color }}" svgIcon="{{ notify.icon }}"></mat-icon>

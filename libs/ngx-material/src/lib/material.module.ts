@@ -17,7 +17,6 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -59,7 +58,6 @@ import { MaterialService } from './material.service';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    FlexLayoutModule,
     A11yModule,
     CdkAccordionModule,
     MatAutocompleteModule,
@@ -107,7 +105,6 @@ import { MaterialService } from './material.service';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    FlexLayoutModule,
     A11yModule,
     CdkAccordionModule,
     MatAutocompleteModule,

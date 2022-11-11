@@ -21,7 +21,7 @@
   opacity: 0.85;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 639px) {
   .mat-list .mat-list-item {
     display: block;
     text-decoration: none;
@@ -29,7 +29,6 @@
     margin-bottom: 8px;
     border-radius: 3px;
     line-height: 40px;
-    width: 300px;
     padding: 0;
   }
   .mat-list .mat-subheader {
