@@ -1,10 +1,10 @@
 .bulletin-board.large {
   height: 480px;
   margin-top: 64px;
-  // img {
-  //   margin-top: 15px;
-  //   margin-bottom: -10px !important;
-  // }
+  img {
+    margin-top: 15px;
+    margin-bottom: -10px !important;
+  }
   .headline {
     font-size: 2rem;
   }
@@ -23,10 +23,10 @@
 .bulletin-board.small {
   height: 340px;
   margin-top: 56px;
-  // img {
-  //   margin-top: 10px;
-  //   margin-bottom: 0px;
-  // }
+  img {
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
   .headline {
     font-size: 1.1rem;
     margin-top: -10px;

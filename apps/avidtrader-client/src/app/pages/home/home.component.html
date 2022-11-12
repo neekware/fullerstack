@@ -19,14 +19,22 @@
 </div>
 
 <div class="fs-promo">
-  <div class="flex-col gap-10 content-center">
-    <div *ngFor="let pitch of pitchList; let even = even" class="flex-col row gap-20 ustify-evenly">
-      <div class="pitch">
-        <h3 class="title">{{ pitch.title | translate }}</h3>
-        <p class="description">{{ pitch.description | translate }}</p>
-      </div>
-      <div class="flex justify-center image">
-        <img src="{{ pitch.image }}" alt="{{ pitch.title | translate }}" />
+  <div class="flex-col gap-[24px] justify-center">
+    <div *ngFor="let pitch of pitchList; let even = even">
+      <div
+        [ngClass]="{
+          'md:flex-reverse': even,
+          'md:flex-row-reverse': !even
+        }"
+        class="mb-3 sm:max-sm:flex-col md:flex gap-[20px] justify-evenly"
+      >
+        <div class="pitch md:w-1/2">
+          <h3 class="title">{{ pitch.title | translate }}</h3>
+          <p class="description">{{ pitch.description | translate }}</p>
+        </div>
+        <div class="image md:w-1/2">
+          <img src="{{ pitch.image }}" alt="{{ pitch.title | translate }}" />
+        </div>
       </div>
     </div>
   </div>
