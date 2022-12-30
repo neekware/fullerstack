@@ -7,7 +7,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatChip, MatChipList } from '@angular/material/chips';
+import { MatChip, MatChipListbox } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfigModule } from '@fullerstack/ngx-config';
 import { I18nModule } from '@fullerstack/ngx-i18n';
@@ -31,7 +31,7 @@ xdescribe('AlertComponent', () => {
         I18nModule,
         MsgModule,
       ],
-      providers: [MatSnackBar, MatChipList, MatChip],
+      providers: [MatSnackBar, MatChipListbox, MatChip],
       declarations: [AlertComponent],
     }).compileComponents();
   });
