@@ -16,7 +16,8 @@
     }
   },
   "cli": {
-    "packageManager": "yarn"
+    "packageManager": "yarn",
+    "analytics": false
   },
   "generators": {
     "@nrwl/angular": {
