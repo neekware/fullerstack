@@ -11,3 +11,8 @@ button {
   margin-top: -2px;
   text-align: end;
 }
+
+.mat-mdc-form-field-focus-overlay,
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
+}

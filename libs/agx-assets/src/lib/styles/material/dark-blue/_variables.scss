@@ -1,5 +1,5 @@
-// https://github.com/angular/material2/blob/master/src/lib/core/theming/_palette.scss
-@import '../../../../../../../node_modules/@angular/material/theming';
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
 
 // Primary color (light)
 $mat-light-blue: (
@@ -38,7 +38,19 @@ $mat-light-blue: (
 $primary: mat-palette($mat-light-blue);
 $accent: mat-palette($mat-amber, A200, A100, A400);
 $warn: mat-palette($mat-red);
-$theme: mat-light-theme($primary, $accent, $warn);
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+// $theme: mat-light-theme($primary, $accent, $warn);
 $background: map-get($theme, background);
 $foreground: map-get($theme, foreground);
 
@@ -85,7 +97,19 @@ $mat-dark-brown: (
 $dark-primary: mat-palette($mat-dark-brown);
 $dark-accent: mat-palette($mat-amber, A200, A100, A400);
 $dark-warn: mat-palette($mat-deep-orange);
-$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$dark-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+// $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 $dark-background: map-get($dark-theme, background);
 $dark-foreground: map-get($dark-theme, foreground);
 

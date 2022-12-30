@@ -1,40 +1,42 @@
 <mat-card class="mat-card">
-  <mat-card-header class="flex-col justify-between p-4 pb-0">
-    <div>
-      <mat-card-title class="text-base">{{ title | translate }}</mat-card-title>
-      <mat-card-subtitle *ngIf="subtitle" class="">{{ subtitle | translate }}</mat-card-subtitle>
-    </div>
+  <mat-card-header>
+    <div class="flex justify-between pt-0 p-4 pb-1 w-full">
+      <div class="">
+        <mat-card-title class="text-base">{{ title | translate }}</mat-card-title>
+        <mat-card-subtitle *ngIf="subtitle" class="">{{ subtitle | translate }}</mat-card-subtitle>
+      </div>
 
-    <div *ngIf="icon && !hasMenu">
-      <mat-icon class="card-header-icon mt-3" *ngIf="!isMainColor" [style.color]="iconColor" svgIcon="{{ icon }}"></mat-icon>
-      <mat-icon class="card-header-icon mt-3" *ngIf="isMainColor" color="iconColor" svgIcon="{{ icon }}"></mat-icon>
-    </div>
+      <div *ngIf="icon && !hasMenu">
+        <mat-icon class="card-header-icon mt-3" *ngIf="!isMainColor" [style.color]="iconColor" svgIcon="{{ icon }}"></mat-icon>
+        <mat-icon class="card-header-icon mt-3" *ngIf="isMainColor" color="iconColor" svgIcon="{{ icon }}"></mat-icon>
+      </div>
 
-    <div *ngIf="hasMenu">
-      <button
-        [matMenuTriggerFor]="optionMenu"
-        mat-icon-button
-        class="menu-button"
-        matTooltip="{{ 'COMMON.ACTIONS' | translate }}"
-        [matTooltipPosition]="optionMenuTooltipPosition"
-      >
-        <mat-icon [@wiggleIt]="wiggleState" svgIcon="dots-vertical" class="option-icon"></mat-icon>
-      </button>
+      <div *ngIf="hasMenu">
+        <button
+          [matMenuTriggerFor]="optionMenu"
+          mat-icon-button
+          class="menu-button"
+          matTooltip="{{ 'COMMON.ACTIONS' | translate }}"
+          [matTooltipPosition]="optionMenuTooltipPosition"
+        >
+          <mat-icon [@wiggleIt]="wiggleState" svgIcon="dots-vertical" class="option-icon"></mat-icon>
+        </button>
 
-      <mat-menu #optionMenu="matMenu" x-position="before">
-        <a *ngFor="let item of menu" [routerLink]="item.path" mat-menu-item>
-          <mat-icon *ngIf="item.icon" color="{{ item.iconColor }}" svgIcon="{{ item.icon }}"></mat-icon>
-          <mat-icon *ngIf="!item.icon"></mat-icon>
-          {{ item.name | translate }}
-        </a>
-      </mat-menu>
+        <mat-menu #optionMenu="matMenu" x-position="before">
+          <a *ngFor="let item of menu" [routerLink]="item.path" mat-menu-item>
+            <mat-icon *ngIf="item.icon" color="{{ item.iconColor }}" svgIcon="{{ item.icon }}"></mat-icon>
+            <mat-icon *ngIf="!item.icon"></mat-icon>
+            {{ item.name | translate }}
+          </a>
+        </mat-menu>
+      </div>
     </div>
   </mat-card-header>
 
   <mat-divider *ngIf="!progress" class="bt-1"></mat-divider>
   <mat-progress-bar *ngIf="progress" color="warn" mode="indeterminate"></mat-progress-bar>
 
-  <mat-card-content class="p-4">
+  <mat-card-content class="p-4 mt-4">
     <ng-content></ng-content>
   </mat-card-content>
 </mat-card>
