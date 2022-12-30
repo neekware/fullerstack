@@ -56,17 +56,19 @@
         <mat-icon class="mr0_5" color="warn" svgIcon="bell"></mat-icon>
         {{ 'COMMON.ALERT' | translate }}
       </ng-template>
-      <div class="scrollbox flex-col">
+      <div class="">
         <mat-list>
-          <mat-list-item *ngFor="let notify of notifications">
-            <mat-icon matListIcon color="{{ notify.color }}" svgIcon="{{ notify.icon }}"></mat-icon>
-            <h3 matLine>{{ notify.title }}</h3>
-            <p matLine>
-              <span>{{ notify.message }}</span>
-            </p>
-            <span>
-              <mat-icon svgIcon="dots-vertical"></mat-icon>
-            </span>
+          <mat-list-item class="mt-5" *ngFor="let notify of notifications">
+            <div class="flex gap-1 mt-1">
+              <mat-icon matListIcon color="{{ notify.color }}" svgIcon="{{ notify.icon }}"></mat-icon>
+              <h3 matLine>{{ notify.title }}</h3>
+            </div>
+            <div class="flex justify-between">
+              <p matLine>
+                <span>{{ notify.message }}</span>
+              </p>
+              <div><mat-icon svgIcon="dots-vertical"></mat-icon></div>
+            </div>
           </mat-list-item>
         </mat-list>
       </div>

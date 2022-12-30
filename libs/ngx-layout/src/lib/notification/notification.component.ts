@@ -28,7 +28,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   notifications = [
     {
       title: 'Account',
-      message: 'Account needs post registration verification',
+      message: 'Account needs verification',
       icon: 'account',
       color: 'primary',
     },
