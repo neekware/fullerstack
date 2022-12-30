@@ -14595,7 +14595,7 @@ postcss-place@^7.0.5:
   dependencies:
     postcss-value-parser "^4.2.0"
 
-postcss-preset-env@^7.8.3:
+postcss-preset-env@7.8.3:
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-7.8.3.tgz#2a50f5e612c3149cc7af75634e202a5b2ad4f1e2"
   integrity sha512-T1LgRm5uEVFSEF83vHZJV2z19lHg4yJuZ6gXZZkqVsqv63nlr6zabMH3l4Pc01FQCyfWVrh2GaUeCVy9Po+Aag==
@@ -14707,7 +14707,7 @@ postcss-unique-selectors@^5.1.1:
   dependencies:
     postcss-selector-parser "^6.0.5"
 
-postcss-url@^10.1.3:
+postcss-url@10.1.3, postcss-url@^10.1.3:
   version "10.1.3"
   resolved "https://registry.yarnpkg.com/postcss-url/-/postcss-url-10.1.3.tgz#54120cc910309e2475ec05c2cfa8f8a2deafdf1e"
   integrity sha512-FUzyxfI5l2tKmXdYc6VTu3TWZsInayEKPbiyW+P6vmmIrrb4I6CGX0BFoewgYHLK+oIL5FECEK02REYRpBvUCw==
