@@ -25,23 +25,28 @@
       <mat-list class="update-list">
         <h3 mat-subheader>Markets</h3>
         <mat-list-item *ngFor="let market of markets">
-          <span matLine>{{ market.ticker }}</span>
-          <p matLine>
-            <span [style.color]="market.color">{{ market.change }}</span>
-          </p>
-          <span>{{ market.price }}</span>
+          <div class="flex justify-between">
+            <span matLine>{{ market.ticker }}</span>
+            <p matLine>
+              <span class="px-3" [style.color]="market.color">{{ market.change }}</span>
+              <span>{{ market.price }}</span>
+            </p>
+          </div>
         </mat-list-item>
       </mat-list>
 
       <mat-divider></mat-divider>
+
       <mat-list class="update-list">
         <h3 mat-subheader>Stocks</h3>
         <mat-list-item *ngFor="let stock of stocks">
-          <span matLine>{{ stock.ticker }}</span>
-          <p matLine>
-            <span [style.color]="stock.color">{{ stock.change }}</span>
-          </p>
-          <span>{{ stock.price }}</span>
+          <div class="flex justify-between">
+            <span matLine>{{ stock.ticker }}</span>
+            <p matLine>
+              <span class="px-3" [style.color]="stock.color">{{ stock.change }}</span>
+              <span>{{ stock.price }}</span>
+            </p>
+          </div>
         </mat-list-item>
       </mat-list>
     </mat-tab>

@@ -22,7 +22,7 @@ import { LayoutService } from '../layout.service';
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
-  activeTabIndex = sample([0, 1]);
+  activeTabIndex = sample([1, 0]);
   currentTime$: Observable<Date>;
 
   notifications = [
