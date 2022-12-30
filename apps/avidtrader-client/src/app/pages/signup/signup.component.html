@@ -1,7 +1,7 @@
 <mat-toolbar class="fs-page-header" color="primary"> </mat-toolbar>
 <div class="flex justify-center min-h-[70vh] px-2">
   <fullerstack-card
-    class="-m-[83px] w-full sm:w-[90vw] md:w-[80vw] lg:w-[50vw]"
+    class="-m-[76px] w-full sm:w-[90vw] md:w-[80vw] lg:w-[50vw]"
     [title]="title"
     [subtitle]="subtitle"
     [icon]="icon"
@@ -11,19 +11,24 @@
       <mat-form-field class="flex w-full">
         <mat-icon matSuffix svgIcon="account"></mat-icon>
         <input matInput type="text" formControlName="name" placeholder="{{ 'COMMON.NAME' | translate }}" autofocus />
-        <mat-error errorDirective [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched"></mat-error>
+        <mat-error align="end" errorDirective [control]="form?.controls?.name" [isTouched]="form?.controls?.name?.touched"></mat-error>
       </mat-form-field>
 
       <mat-form-field class="flex w-full">
         <mat-icon matSuffix svgIcon="email"></mat-icon>
         <input matInput type="email" formControlName="email" placeholder="{{ 'COMMON.EMAIL' | translate }}" />
-        <mat-error errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
+        <mat-error align="end" errorDirective [control]="form?.controls?.email" [isTouched]="form?.controls?.email?.touched"></mat-error>
       </mat-form-field>
 
       <mat-form-field class="flex w-full">
         <mat-icon matSuffix svgIcon="key"></mat-icon>
         <input matInput type="password" formControlName="password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" />
-        <mat-error errorDirective [control]="form?.controls?.password" [isTouched]="form?.controls?.password?.touched"></mat-error>
+        <mat-error
+          align="end"
+          errorDirective
+          [control]="form?.controls?.password"
+          [isTouched]="form?.controls?.password?.touched"
+        ></mat-error>
       </mat-form-field>
 
       <mat-form-field class="flex w-full">
@@ -35,6 +40,7 @@
           placeholder="{{ 'COMMON.PASSWORD_CONFIRMATION' | translate }}"
         />
         <mat-error
+          align="end"
           errorDirective
           [control]="form?.controls?.passwordConfirmation"
           [isTouched]="form?.controls?.passwordConfirmation?.touched"
