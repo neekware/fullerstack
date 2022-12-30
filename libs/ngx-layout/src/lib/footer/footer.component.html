@@ -4,11 +4,13 @@
       <h1 mat-subheader>{{ footer.type | translate }}</h1>
       <div *ngFor="let link of footer.links">
         <mat-list-item>
-          <mat-icon matListIcon svgIcon="{{ link.icon }}"></mat-icon>
-          <p matLine>
-            <a *ngIf="link.external" class="no-underline" href="{{ link.link }}">{{ link.name | translate }}</a>
-            <a *ngIf="!link.external" class="no-underline" routerLink="{{ link.link }}">{{ link.name | translate }}</a>
-          </p>
+          <div class="flex text-white">
+            <mat-icon matListIcon svgIcon="{{ link.icon }}"></mat-icon>
+            <p matLine class="pl-2">
+              <a *ngIf="link.external" class="no-underline" href="{{ link.link }}">{{ link.name | translate }}</a>
+              <a *ngIf="!link.external" class="no-underline" routerLink="{{ link.link }}">{{ link.name | translate }}</a>
+            </p>
+          </div>
         </mat-list-item>
       </div>
     </mat-list>
