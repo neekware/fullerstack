@@ -1,10 +1,10 @@
-<div [dir]="i18n.direction" class="flex-col gap-[10px]">
-  <mat-toolbar color="accent" class="flex gap-[10px] pt-0 pb-0">
+<div [dir]="i18n.direction" class="flex-col gap-[10px] p-6 min-w-[500px] max-w-sm">
+  <mat-toolbar color="accent" class="flex gap-[10px] pt-0 pb-0 rounded-md">
     <mat-icon svgIcon="alert-outline"></mat-icon>
     <p>{{ title | translate }}</p>
   </mat-toolbar>
 
-  <div class="mt-2">
+  <div class="my-4">
     <p *ngIf="info">{{ info | translate }}.</p>
     <p>{{ question | translate }}</p>
   </div>
