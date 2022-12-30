@@ -14,3 +14,6 @@ button {
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent !important;
 }
+.mdc-text-field {
+  padding: 0 !important;
+}
