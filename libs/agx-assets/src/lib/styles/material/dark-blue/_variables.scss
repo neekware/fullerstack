@@ -97,7 +97,7 @@ $mat-dark-brown: (
 $dark-primary: mat-palette($mat-dark-brown);
 $dark-accent: mat-palette($mat-amber, A200, A100, A400);
 $dark-warn: mat-palette($mat-deep-orange);
-$dark-theme: mat.define-light-theme(
+$dark-theme: mat.define-dark-theme(
   (
     color: (
       primary: $dark-primary,

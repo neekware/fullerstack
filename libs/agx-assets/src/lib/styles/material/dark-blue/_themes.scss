@@ -14,7 +14,7 @@
 
 // Secondary Theme
 .fs-theme-dark {
-  @include mat.button-color($dark-theme);
+  @include mat.all-component-colors($dark-theme);
 
   .mat-success {
     color: rgb(92, 224, 136);
