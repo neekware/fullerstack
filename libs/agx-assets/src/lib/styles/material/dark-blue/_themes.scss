@@ -1,7 +1,8 @@
+@use '@angular/material' as mat;
 @import 'variables';
 
 // Primary Theme (Default)
-@include angular-material-theme($theme);
+@include mat.all-component-themes($theme);
 
 .mat-success {
   color: rgb(28, 184, 176);
@@ -13,7 +14,7 @@
 
 // Secondary Theme
 .fs-theme-dark {
-  @include angular-material-theme($dark-theme);
+  @include mat.all-component-colors($dark-theme);
 
   .mat-success {
     color: rgb(92, 224, 136);
