@@ -43,11 +43,6 @@ Table ContactMessage {
   language String [not null, default: 'en']
 }
 
-Table GroupToUser {
-  userId String [ref: > User.id]
-  groupsId String [ref: > Group.id]
-}
-
 Enum Role {
   USER
   STAFF
