@@ -58,6 +58,7 @@ npx create-nx-workspace fullerstack
 [<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/apollo-x250.png">](https://www.apollographql.com/)
 [<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/html5-x250.png">](https://en.wikipedia.org/wiki/HTML5)
 [<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/css3-x250.png">](https://www.w3.org/)
+[<img style="margin-bottom: -4px" width="24" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/tailwindcss-x250.png">](https://tailwindcss.com/)
 [<img style="margin-bottom: -4px" width="22" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/scss-x250.png">](https://sass-lang.com/)
 [<img style="margin-bottom: -4px" width="22" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/psql-x250.png">](https://www.postgresql.org/)
 [<img style="margin-bottom: -4px" width="18" src="https://raw.githubusercontent.com/neekware/fullerstack/main/libs/agx-assets/src/lib/images/tech/jest-x250.png">](https://jestjs.io/docs/getting-started)
@@ -214,7 +215,7 @@ X.Y.Z Version
 --------------------------------------------------------------------------------
  TypeScript             419        22144         2450         4017        15677
  JSON                   175        12083            0            0        12083
- Markdown               105         2987          761            0         2226
+ Markdown               105         2988          761            0         2227
  HTML                    33         1461          110            5         1346
  Sass                    54         1341          141           33         1167
  CSS                      1           96            7            0           89
@@ -223,7 +224,7 @@ X.Y.Z Version
  SQL                      2           88           17           16           55
  Toml                     1            3            0            2            1
 --------------------------------------------------------------------------------
- Total                  798        40416         3501         4111        32804
+ Total                  798        40417         3501         4111        32805
 --------------------------------------------------------------------------------
 ```
 
